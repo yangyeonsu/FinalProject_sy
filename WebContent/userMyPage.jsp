@@ -18,7 +18,7 @@ String cp = request.getContextPath();
 </head>
 <body>
 
-	<c:import url="header_userMain.jsp"></c:import>
+	<c:import url="header_user_sh.jsp"></c:import>
 
 	<div class="container">
 
