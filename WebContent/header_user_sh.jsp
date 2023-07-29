@@ -25,34 +25,58 @@
 	
 	#store_header
 	{
-		display: flex;
+		/* display: flex;
 		width: 88vw;
 		align-items: center;
-		padding-top: 5vh;
+		padding-top: 5vh; */
+		
+		/* 0730수정 */
+		position: relative;
+		display: flex;
+	    width: 88vw;
+	    align-items: flex-start;
+	    padding-top: 1vh;
+	    margin-left: 6vw;
+	    height: 10vh;
+		max-height: 10vh;
+
 	}
 	
 	#headerLogo
 	{
+		display: flex;
+		justify-content: flex-end;	
 		max-width: 8vw;
 	}
 	
+	/* 0730 수정
 	.headerImg
 	{
 		padding-left: 10vw;
-	}
+	} 
+	*/
 	
 	#headerAlarm
 	{
 		width: 80vw;
+		/*0730 수정*/
+		padding-left: 12vw;
 	}
 	
 
 	.headerBtn
 	{
-		display: flex;
-	    width: 10vw;	/*수정*/
+		/* display: flex;
+	    width: 10vw;	--수정
 	    margin-top: 3vh;
-	    padding-left: 55vw;  /*수정*/
+	    padding-left: 55vw; --수정*/
+	    
+	    /* 0730 수정 */
+	    display: flex;
+	    width: 10vw;
+	    margin-top: 3vh;
+	    padding-left: 55vw;
+	    justify-content: space-between;
 	}
 	
 	.menuBtn
@@ -84,6 +108,7 @@
 		display: flex;
 		flex-direction: row-reverse;
 		width: 63vw;
+		margin-left: 4.3vw;
 	}
 	
 	.mypage_menu
@@ -92,13 +117,26 @@
 		transition-duration: 0.5s;
 		font-size: 0.8vw;
 		padding-right: 1.8vw;
-		
+		background-color: #f5f3e7;
+		padding-right: 4vw;
 	}
 	
-	.person_listA, .person_listB
+	.person_listA
 	{
-		background-color: #f5f3e7;
 		padding-bottom: 0.6vh;
+		width: 16vh;
+		height: 4em;
+		margin-bottom: 2vh;
+		margin-top: 1vh;
+	}
+	
+	.person_listB
+	{
+		padding-bottom: 0.6vh;
+		width: 16vh;
+		height: 9em;
+		margin-bottom: 2vh;
+		margin-top: 1vh;
 	}
 	
 	.person_listA li, .person_listB li
@@ -110,9 +148,9 @@
 	
 	.alarm_menu
 	{
-		position: relative;
 		transition-duration: 0.5s;
 		font-size: 0.8vw;
+		background-color: #f5f3e7;
 	}
 	
 	.person_listA, .person_listB

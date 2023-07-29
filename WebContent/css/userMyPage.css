@@ -1,19 +1,24 @@
 @charset "UTF-8";
 
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500&display=swap');
+
+body {
+	width: 97vw;
+	font-family: 'IBM Plex Sans KR', sans-serif;
+	margin: 0;
+}
+
+/* 0730 수정
 * {
 	margin: 0px;
 	padding: 0px;
-}
+} */
 
 /* 전체 틀 */
 .container {
 	width: 100%;
 	align-items: stretch;
 	padding: 0px;
-}
-
-body {
-	width: 97vw;
 }
 
 .middle {
@@ -55,7 +60,8 @@ body {
 }
 
 .col-md-8 {
-	width: 69vw;
+	/* width: 69vw; */
+	width: 71vw;
 }
 
 .col-md-2 {
@@ -214,4 +220,19 @@ body {
 	font-size: 3vw;
 	margin-top: 8vh;
 	color: #f7f4ea;
+}
+
+/* (0730)추가 */
+footer {
+    display: flex;
+    width: 94.9vw;
+    height: 25vh;
+    font-size: 0.8vw;
+    color: #9b9b9b;
+    background-color: #f9f9f9;
+    padding-top: 20vh;
+    padding-left: 4vw;
+    margin-top: 5vh;
+    justify-content: space-around;
+    align-items: flex-start;
 }
