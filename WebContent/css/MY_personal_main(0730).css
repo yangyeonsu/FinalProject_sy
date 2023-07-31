@@ -284,10 +284,10 @@ span
 	flex-direction: column;
 	align-items: center;
 	justify-content: flex-start;
-	width: 250px;
-	height: 270px;
-	margin-right: 5px;
-	margin-left: 8px;
+	width: 14vw;
+	height: 30vh;
+	margin-right: 1vw;
+	margin-left: 1vw;
 	/*border: 1px solid #ef6351;*/
 	border-radius: 5px;
 	background-color: #f7f4ea;
@@ -296,8 +296,8 @@ span
 /* 한 가게 이미지 + 찜, 비교함 버튼 구역 DIV */
 .stImgBtnDiv
 {
-	width: 230px;
-	height: 220px;
+	width: 14vw;
+	height: 24vh;
 	display: flex;
 	flex-direction: column;
    	align-items: center;
@@ -308,8 +308,8 @@ span
 /* 한 가게 이미지 구역 DIV */
 .stImgDiv img
 {
-	width: 230px;
-	height: 230px;
+	width: 14vw;
+	height: 25vh;
 	object-fit: cover;
 	cursor: pointer;
 }
@@ -317,17 +317,15 @@ span
 /* 한 가게 찜, 비교함 추가 버튼 구역 DIV*/
 .likeComAddBtn
 {
-	width: 215px;
+	width: 13vw;
 	height: 25px;
 	margin-left: 5px;
 	margin-right: 5px;
-	padding-top: 2px;
-	padding-bottom: 5px;
 	display: flex;
 	flex-direction: row;
    	justify-content: space-between;
    	position: relative;
-   	bottom: 225px;
+   	bottom: 25.5vh;
    	
 }
 
@@ -365,8 +363,8 @@ span
 /* 가게 대표이미지 크기 조정 */
 .stImg
 {
-	max-width: 220px;
-	max-height: 220px;
+	max-width: 13vw;
+	max-height: 25vh;
 	border-radius: 5px;
 	background-size: cover;
 	/* border: 1px solid #ef6351;
@@ -380,8 +378,9 @@ span
 {
 	padding-top: 3px;
 	display: flex;
-	width: 210px;
-	height: 40px;
+	width: 13vw;
+	height: 5vh;
+	margin-top: 0.8vh;
 	margin-left: 3px;
 	margin-right: 2px;
 	flex-direction: row;
@@ -446,7 +445,7 @@ span
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	height: 9vw;
+	height: 15vh;
 }
 
 /* 비교함의 가게영역의 가게 이미지 */
