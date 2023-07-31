@@ -293,7 +293,7 @@
 	{ 
 		display: flex;
 		justify-content: center;
-		width: 14vh;
+		width: 14.5vh;
 		height: 3vh;
 		margin-bottom: 1.5vh;
 		cursor: pointer;
