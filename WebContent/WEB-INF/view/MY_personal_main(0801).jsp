@@ -21,7 +21,7 @@
 <body>
 
 
-<c:import url="header_user_sh(0801).jsp"></c:import>
+<c:import url="header_user_sh(main)(0801).jsp"></c:import>
 
 <div class=container>
 
