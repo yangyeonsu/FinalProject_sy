@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yameokja.mc.IstDetailDAO_userView">
+	<!-- 리뷰신고리스트 -->
+	<select id="rvList" resultType="com.yameokja.mc.rvListDTO">
+		CREATE OR REPLACE VIEW RV_REPORT_VIEW
+		AS
+		SELECT RA.REG_DATE AS REG_DATE, UV.USER_ID AS USER_ID, T.ACCU_NUM AS ACCU_NUM
+	     	, F.ST_NAME AS ST_NAME,
+	     	,A.ADMIN_ID
+	     	, 
+		    CASE WHEN RA.ADMIN_READ_DATE IS NULL THEN '미확인'
+		         WHEN (SELECT RA.ADMIN_READ_DATE
+		               FROM REP_APPLY RA
+		               LEFT JOIN REP_PROCESS RP
+		               ON RA.REP_APPLY_NUM = RP.REP_APPLY_NUM) IS NOT NULL THEN '처리완료'
+			ELSE '진행중'
+			END AS STATE  
+			, 
+			CASE WHEN ( SELECT RA.ADMIN_READ_DATE
+						FROM REP_APPLY RA
+						LEFT JOIN REP_PROCESS RP
+						ON RA.REP_APPLY_NUM = RP.REP_APPLY_NUM) IS NOT NULL 
+						THEN (SELECT RP.FINAL_DATE
+						    FROM REP_APPLY RA
+						    LEFT JOIN REP_PROCESS RP
+						    ON RA.REP_APPLY_NUM = RP.REP_APPLY_NUM)
+			ELSE '-'
+			END AS DATE
+			, 
+			CASE WHEN (SELECT RA.ADMIN_READ_DATE
+			           FROM REP_APPLY RA
+			           LEFT JOIN REP_PROCESS RP
+			           ON RA.REP_APPLY_NUM = RP.REP_APPLY_NUM) IS NOT NULL 
+			           THEN (SELECT A.ADMIN_ID
+			               FROM REP_APPLY RA
+			               LEFT JOIN REP_PROCESS RP
+			               ON RA.REP_APPLY_NUM = RP.REP_APPLY_NUM
+			               LEFT JOIN ADMIN A
+			               ON RP.ADMIN_NUM = A.ADMIN_NUM)
+			ELSE '-'
+			END AS ADMIN_ID
+		FROM REP_APPLY RA 
+		LEFT JOIN USER_VIEW UV
+		ON RA.USER_NUM = UV.USER_NUM
+		LEFT JOIN
+				(SELECT RB.RV_NUM AS RV_NUM, UU.USER_NUM AS ACCU_NUM
+				 FROM RV_BOX RB LEFT JOIN USING_USER UU
+				 ON RB.USER_NUM = UU.USER_NUM) T
+		ON RA.RV_NUM = T.V_NUM
+		LEFT JOIN
+		        (SELECT RB.RV_NUM AS RV_NUM, SV.ST_NAME
+		         FROM RV_BOX RB LEFT JOIN STORE_VIEW SV
+		         ON RB.ST_NUM = SV.ST_NUM) F
+		ON RA.RV_NUM = F.RV_NUM
+		LEFT JOIN ADMIN A
+		ON RA.ADMIN_ID = A.ADMIN_ID
+		LEFT JOIN REP_PROCESS RP
+		ON RA.REP_APPLY_NUM = RP.REP_APPLY_NUM;
+	</select>
+	
+	
+	<!-- 가게정보수정요청리스트 -->
+	<select id="reqList" resultType="">
+		SELECT RA.REG_DATE AS REG_DATE, UV.USER_ID AS USER_ID
+			, F.ST_NAME AS ST_NAME
+			, 
+			CASE WHEN RA.ADMIN_READ_DATE IS NULL THEN '미확인'
+			     WHEN (SELECT RA.ADMIN_READ_DATE
+			           FROM REQ_APPLY RA
+			           LEFT JOIN REQ_PROCESS RP
+			           ON RA.REQ_APPLY_NUM = RP.REQ_APPLY_NUM) IS NOT NULL THEN '처리완료'
+			ELSE '진행중'
+			END AS STATE
+			, 
+			CASE WHEN (SELECT RA.ADMIN_READ_DATE
+			           FROM REP_APPLY RA
+			           LEFT JOIN REP_PROCESS RP
+			           ON RA.REP_APPLY_NUM = RP.REP_APPLY_NUM) IS NOT NULL 
+			           THEN (SELECT RP.FINAL_DATE
+			               FROM REP_APPLY RA
+			               LEFT JOIN REP_PROCESS RP
+			               ON RA.REP_APPLY_NUM = RP.REP_APPLY_NUM)
+			ELSE '-'
+			END AS DATE
+			, 
+			CASE WHEN (SELECT RA.ADMIN_READ_DATE
+			           FROM REQ_APPLY RA
+			           LEFT JOIN REQ_PROCESS RP
+			           ON RA.REQ_APPLY_NUM = RQ.REQ_APPLY_NUM) IS NOT NULL 
+			           THEN (SELECT A.ADMIN_ID
+			               FROM REQ_APPLY RA
+			               LEFT JOIN REQ_PROCESS RP
+			               ON RA.REQ_APPLY_NUM = RP.REQ_APPLY_NUM
+			               LEFT JOIN ADMIN A
+			               ON RP.ADMIN_NUM = A.ADMIN_NUM)
+			ELSE '-'
+			END AS ADMIN_ID
+		FROM REQ_APPLY RA 
+		LEFT JOIN USER_VIEW UV
+		ON RA.USER_NUM = UV.USER_NUM    
+		LEFT JOIN
+		        (SELECT SC.ST_CHBOX_NUM AS ST_CHBOX_NUM, SV.ST_NAME
+		         FROM ST_CHBOX SC LEFT JOIN STORE_VIEW SV
+		         ON SC.ST_NUM = SV.ST_NUM) F
+		ON RA.ST_CHBOX_NUM = F.ST_CHBOX_NUM
+	</select>
+	
+	
+	<!-- 이의제기리스트 -->
+	<select id="objList" resultType="">
+		SELECT OA.OBJ_APPLY_NUM AS OBJ_APPLY_NUM
+			,
+			,
+			CASE WHEN OA.ADMIN_READ_DATE IS NULL THEN '미확인'
+			     WHEN (SELECT OA.ADMIN_READ_DATE
+			           FROM OBJ_APPLY OA
+			           LEFT JOIN OBJ_PROCESS OP
+			           ON OA.OBJ_APPLY_NUM = OP.OBJ_APPLY_NUM) IS NOT NULL THEN '최종처리완료'
+			ELSE '진행중'
+			END AS STATE
+			, 
+			CASE WHEN (SELECT OA.ADMIN_READ_DATE
+			           FROM OBJ_APPLY OA
+			           LEFT JOIN OBJ_PROCESS OP
+			           ON OA.OBJ_APPLY_NUM = OP.OBJ_APPLY_NUM) IS NOT NULL 
+			           THEN (SELECT OP.FINAL_DATE
+			               FROM OBJ_APPLY OA
+			               LEFT JOIN OBJ_PROCESS OP
+			               ON OA.OBJ_APPLY_NUM = OP.OBJ_APPLY_NUM)
+			ELSE '-'
+			END AS DATE
+			, 
+			CASE WHEN (SELECT RA.ADMIN_READ_DATE
+			           FROM REQ_APPLY RA
+			           LEFT JOIN REQ_PROCESS RP
+			           ON RA.REQ_APPLY_NUM = RQ.REQ_APPLY_NUM) IS NOT NULL 
+			           THEN (SELECT A.ADMIN_ID
+			               FROM REQ_APPLY RA
+			               LEFT JOIN REQ_PROCESS RP
+			               ON RA.REQ_APPLY_NUM = RP.REQ_APPLY_NUM
+			               LEFT JOIN ADMIN A
+			               ON RP.ADMIN_NUM = A.ADMIN_NUM)
+			ELSE '-'
+			END AS ADMIN_ID
+		FROM OBJ_APPLY OA
+		LEFT JOIN
+	</select>
+	
+	
+	<!-- 패널티회수요청리스트 -->
+	<select id="revoList" resultType="">
+		SELECT REG_DATE
+			, 
+			, F.ST_NAME AS ST_NAME
+			CASE WHEN RA.ADMIN_READ_DATE IS NULL THEN '미확인'
+			     WHEN (SELECT RA.ADMIN_READ_DATE
+			           FROM REQ_APPLY RA
+			           LEFT JOIN REQ_PROCESS RP
+			           ON RA.REQ_APPLY_NUM = RP.REQ_APPLY_NUM) IS NOT NULL THEN '최종처리완료'
+			ELSE '진행중'
+			END AS STATE
+			, 
+			CASE WHEN (SELECT RA.ADMIN_READ_DATE
+			           FROM REVO_APPLY RA
+			           LEFT JOIN REVO_PROCESS RP
+			           ON RA.REVO_APPLY_NUM = RP.REVO_APPLY_NUM) IS NOT NULL 
+			           THEN (SELECT RP.FINAL_DATE
+			               FROM REVO_APPLY RA
+			               LEFT JOIN REVO_PROCESS RP
+			               ON RA.REVO_APPLY_NUM = RP.REVO_APPLY_NUM)
+			ELSE '-'
+			END AS DATE
+			, 
+			CASE WHEN (SELECT RA.ADMIN_READ_DATE
+			           FROM REVO_APPLY RA
+			           LEFT JOIN REVO_PROCESS RP
+			           ON RA.REVO_APPLY_NUM = RQ.REVO_APPLY_NUM) IS NOT NULL 
+			           THEN (SELECT A.ADMIN_ID
+			               FROM REVO_APPLY RA
+			               LEFT JOIN REVO_PROCESS RP
+			               ON RA.REVO_APPLY_NUM = RP.REVO_APPLY_NUM
+			               LEFT JOIN ADMIN A
+			               ON RP.ADMIN_NUM = A.ADMIN_NUM)
+			ELSE '-'
+			END AS ADMIN_ID
+		FROM REVO_APPLY RA
+		LEFT JOIN
+		        (SELECT SC.ST_CHBOX_NUM AS ST_CHBOX_NUM, SV.ST_NAME
+		         FROM ST_CHBOX SC LEFT JOIN STORE_VIEW SV
+		         ON SC.ST_NUM = SV.ST_NUM) F
+		ON RA.ST_CHBOX_NUM = F.ST_CHBOX_NUM
+	</select>
+	
+	
+	<!-- 가게등폐업요청리스트 -->
+	<select id="applyList" resultType="">
+		SELECT CASE WHEN OA.REG_DATE IS NULL THEN IA.REG_DATE
+			   ELSE OA.REG_DATE
+			   END AS REG_DATE
+			 , UU.USER_ID
+			 , 
+		FROM IN_APPLY IA 
+		LEFT JOIN IN_PROCESS IP
+		ON IA.IN_APPLY_NUM = IP.IN_APPLY_NUM
+		LEFT JOIN OUT_APPLY OA
+		ON IP.IN_PROCESS_NUM = OA.IN_PROCESS_NUM
+		LEFT JOIN USING_USER UU
+		ON IA.USER_NUM = UU.USER_NUM
+		LEFT JOIN USER_LIST UL
+		ON IA.USER_NUM = UL.USER_NUM
+	</select>
+</mapper>
