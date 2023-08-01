@@ -148,6 +148,7 @@ String cp = request.getContextPath();
 				$('.overlay').css("height", "0%");
 				$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
 				$('.overlay').css("z-index", "0");
+				$('.header').css("z-index", "0");
 				$('#checkOverlay').attr("value", "false");
 			} else
 			{
@@ -156,6 +157,7 @@ String cp = request.getContextPath();
 				$('.overlay').css("height", "100%");
 				$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
 				$('.overlay').css("z-index", "3");
+				$('.header').css("z-index", "3");
 				$('.overlay').css("margin-top", "1.011vh");
 				$('#checkOverlay').attr("value", "true");
 			}
@@ -176,6 +178,7 @@ String cp = request.getContextPath();
 			$('.overlay').css("height", "0%");
 			$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
 			$('.overlay').css("z-index", "0");
+			$('.header').css("z-index", "0");
 			$('#checkOverlay').attr("value", "false");
 		});
 	});
