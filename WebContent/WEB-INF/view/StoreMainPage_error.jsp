@@ -45,7 +45,7 @@
 		background: #ef6351;
 		border-right: 1px solid rgba(0, 0, 0, 0.07);
 		height: 90%;
-		margin-top: 6.2vh;
+		margin-top: 5.43vh;
 		position: fixed;
 		align-items: center;
 	}
@@ -74,7 +74,7 @@
 		left: 5.07vw;
 		background: white;
 		height: 90%;
-		margin-top: 5.4vh;
+		margin-top: 5.43vh;
 	}
 
 	.sub_menu 
@@ -190,26 +190,22 @@
 		flex-direction: column;
 	}
 	
+	.storemain_rekey
+	{
+		display: flex;
+	    max-width: 65vw;
+	    flex-direction: column
+	}
+	
 	.doughnutChart
 	{
-		width: 55vw;
+		width: 50vw;
 		margin-bottom: 10vh;
 	}
 	
 	.chart_content
 	{
-		max-width: 100%
-	}
-	
-	canvas
-	{
-		width: 80vw;
-		heigt: 40vh;
-	}
-	
-	.chart_name
-	{
-		padding-left: 36vw;
+		max-width: 65vw;
 	}
 	
 	h2
@@ -224,15 +220,20 @@
 		align-content: flex-start; 
 		flex-direction:column; 
 		flex-wrap:wrap;
-		width: 100%;
-		height: 25vh;
+		height: 38vh;
 	}
 	
 	.review_keyword li
 	{
 		width: 15vw;
-		margin-bottom: 3vh;
-		font-size: 1vw;
+		margin-bottom: 2vh;
+		font-size: 0.8vw;
+		margin-left: 5vw;
+	}
+	
+	.storemain_review
+	{
+		max_width: 65vw;
 	}
 	
 	h3
@@ -242,7 +243,6 @@
 	
 	.review
 	{
-		width: 76vw;
 		height: 6em;
 		margin-bottom: 1vh;
 		background-color: #f5f3e7;
@@ -328,7 +328,7 @@
 		font-size: small;
 		width: 6vw;
 		height: 5vh;
-		margin-top: 3.1vw;
+		margin-top: 4.3vw;
 		margin-left: 2vh;
 	}
 	
@@ -401,7 +401,7 @@ $(function () {
 <body>
 
 
-<c:import url="header_user_sh.jsp"></c:import>
+<c:import url="header_user_sh(0801).jsp"></c:import>
 
 <div class="container">
 	<!-- 왼쪽 메뉴 -->
@@ -479,7 +479,7 @@ $(function () {
 			<div class="storemain_chart">
 				<!--차트가 그려질 부분-->
 				<div class="chart_name"><h2>별점 추이</h2></div>
-				<div class="chart_content"><canvas id="myChart" height="270px"></canvas></div>
+				<div class="chart_content"><canvas id="myChart" width="800px" height="300px"></canvas></div>
 			</div>
 			<div class="storemain_rekey">
 				<h3>선택된 리뷰 키워드</h3>
