@@ -2,10 +2,10 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.test.mvc.IMainDAO">
+<mapper namespace="com.yameokja.mc.IMainDAO">
 
 	
-	<select id="getStoreList" resultType="com.test.mvc.StoreDTO">
+	<select id="getStoreList" resultType="com.yameokja.mc.StoreDTO">
 		SELECT ST_NUM, ST_NAME, PHOTO_LINK, STAR_AVG, RV_COUNT
 		FROM
 		(
@@ -118,7 +118,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<![CDATA[WHERE ROWNUM <= 5]]>
 	</select>
 	
-	<select id="getStoreSearchList" resultType="com.test.mvc.StoreDTO">
+	<select id="getStoreSearchList" resultType="com.yameokja.mc.StoreDTO">
 		
 	</select>
 
