@@ -14,14 +14,14 @@
 <!-- jquery -->
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 
-<link rel="stylesheet" type="text/css" href="<%=cp %>/css/MY_personal_main(0730).css">
+<link rel="stylesheet" type="text/css" href="<%=cp %>/css/MY_personal_main(0801).css">
 
 </head>
 
 <body>
 
 
-<c:import url="header_user_sh(main)(0730).jsp"></c:import>
+<c:import url="header_user_sh(main)(0801).jsp"></c:import>
 
 <div class=container>
 

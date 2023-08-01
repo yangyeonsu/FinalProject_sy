@@ -23,12 +23,6 @@
 	
 	#store_header
 	{
-		/* display: flex;
-		width: 88vw;
-		align-items: center;
-		padding-top: 5vh; */
-		
-		/* 0730수정 */
 		position: relative;
 		display: flex;
 	    width: 88vw;
@@ -37,7 +31,6 @@
 	    margin-left: 6vw;
 	    height: 10vh;
 		max-height: 10vh;
-
 	}
 	
 	#headerLogo
@@ -47,33 +40,19 @@
 		max-width: 8vw;
 	}
 	
-	/* 0730 수정
-	.headerImg
-	{
-		padding-left: 10vw;
-	} 
-	*/
-	
 	#headerAlarm
 	{
-		width: 80vw;
-		/*0730 수정*/
-		padding-left: 12vw;
+		width: 70vw;
+		padding-left: 9.45vw;
 	}
 	
 
 	.headerBtn
 	{
-		/* display: flex;
-	    width: 10vw;	--수정
-	    margin-top: 3vh;
-	    padding-left: 55vw; --수정*/
-	    
-	    /* 0730 수정 */
 	    display: flex;
 	    width: 10vw;
 	    margin-top: 3vh;
-	    padding-left: 55vw;
+	    padding-left: 57.5vw;
 	    justify-content: space-between;
 	    align-items: center;
 	}
@@ -84,11 +63,6 @@
 		width: 7vw;
 	}
 	
-	#alarm
-	{
-		padding-top: 0.2vh;
-	}
-	
 	a
 	{
 		text-decoration-line: none;
@@ -96,7 +70,7 @@
 	
 	#mypage a
 	{
-		font-size: 1.2vw;
+		font-size: 0.9vw;
 		font-weight: bold;
 		color: black;
 	}
@@ -104,19 +78,18 @@
 	.sub_list
 	{
 		position: relative;
-		display: flex;
-		flex-direction: row-reverse;
-		width: 65vw;
+	    display: flex;
+	    flex-direction: row-reverse;
+	    width: 68vw;
 	}
 	
 	.mypage_menu
 	{
 		position: relative;
-		transition-duration: 0.5s;
-		font-size: 0.8vw;
-		padding-right: 1.8vw;
-		background-color: #f5f3e7;
-		margin-right: 4vw;
+	    transition-duration: 0.5s;
+	    font-size: 0.8vw;
+	    background-color: #f5f3e7;
+	    margin-right: 5.5vw;
 	}
 	
 	.person_listA
@@ -155,6 +128,13 @@
 	{
 		list-style-type: none;
 		padding: 0;
+	}
+	
+	.alarm_cl
+	{
+		font-size: 0.9vw;
+    	font-weight: bold;
+    	color: black;
 	}
 </style>
 
@@ -227,4 +207,3 @@ $(function() {
 		</div>
 	</header>
 </body>
-
