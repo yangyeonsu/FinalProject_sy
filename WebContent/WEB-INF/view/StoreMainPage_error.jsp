@@ -37,6 +37,14 @@
 		margin: 0;
 	}
 	
+	header
+	{
+		position: sticky;
+  		top: 0;
+  		background-color: white;
+	
+	}
+	
 	.side-menu 
 	{
 		top: 50px;
@@ -168,7 +176,7 @@
 		flex-direction: column;
 		width: 50%;
 		height: 100%;
-		margin-left: 10vw;
+		margin-left: 25vw;
 	}
 	
 	.storemain_bodyTop
@@ -233,7 +241,7 @@
 	
 	.storemain_review
 	{
-		max_width: 65vw;
+		width: 56vw;
 	}
 	
 	h3
@@ -266,7 +274,7 @@
 	.error
 	{
 		display: flex;
-		width: 84.1vw;
+		width: 56vw;
 		height: 6em;
 		justify-content: center;
 		align-items: center;
@@ -401,9 +409,10 @@ $(function () {
 <body>
 
 
-<c:import url="header_user_sh(0801).jsp"></c:import>
+<header><c:import url="header_user_sh(0801).jsp"></c:import></header>
 
 <div class="container">
+	
 	<!-- 왼쪽 메뉴 -->
 	<div class="left side-menu">
 	    <div class="sidebar-inner">
@@ -479,7 +488,7 @@ $(function () {
 			<div class="storemain_chart">
 				<!--차트가 그려질 부분-->
 				<div class="chart_name"><h2>별점 추이</h2></div>
-				<div class="chart_content"><canvas id="myChart" width="800px" height="300px"></canvas></div>
+				<div class="chart_content"><canvas id="myChart" width="1100px" height="300px"></canvas></div>
 			</div>
 			<div class="storemain_rekey">
 				<h3>선택된 리뷰 키워드</h3>
