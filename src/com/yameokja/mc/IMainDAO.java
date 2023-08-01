@@ -1,4 +1,4 @@
-package com.test.mvc;
+package com.yameokja.mc;
 
 import java.util.ArrayList;
 import java.util.List;

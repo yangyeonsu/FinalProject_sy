@@ -1,4 +1,4 @@
-package com.test.mvc;
+package com.yameokja.mc;
 
 public class StoreDTO
 {

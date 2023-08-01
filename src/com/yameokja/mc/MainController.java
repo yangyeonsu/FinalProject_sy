@@ -1,4 +1,4 @@
-package com.test.mvc;
+package com.yameokja.mc;
 
 import java.util.List;
 
@@ -33,7 +33,7 @@ public class MainController
 		model.addAttribute("hot_list", dao.getStoreList(hot_list));
 		 
 		
-		result = "MY_personal_main.jsp";
+		result = "/WEB-INF/view/MY_personal_main(0801).jsp";
 		
 		return result;
 	}
