@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yameokja.mc.IMainDAO">
+
+	
+	<select id="getStoreList" resultType="com.yameokja.mc.StoreDTO">
+		SELECT ST_NUM, ST_NAME, PHOTO_LINK, STAR_AVG, RV_COUNT
+		FROM
+		(
+		    SELECT T.ST_NUM AS ST_NUM, T.ST_NAME AS ST_NAME, T.PHOTO_LINK AS PHOTO_LINK
+		        , AVG(STAR_SCORE) OVER (PARTITION BY T.ST_NUM) AS STAR_AVG, COUNT(*) OVER (PARTITION BY T.ST_NUM) AS RV_COUNT
+		    FROM
+		    (
+		        SELECT ST.ST_NUM AS ST_NUM, IA.ST_NAME AS ST_NAME, P.PHOTO_LINK AS PHOTO_LINK
+		            , R.STAR_SCORE AS STAR_SCORE
+		        FROM ST_LIST ST JOIN IN_PROCESS IP
+		        ON ST.IN_PROCESS_NUM = IP.IN_PROCESS_NUM 
+		        JOIN IN_APPLY IA
+		        ON IP.IN_APPLY_NUM = IA.IN_APPLY_NUM
+		        JOIN RV_BOX R
+		        ON R.ST_NUM = ST.ST_NUM
+		        JOIN ST_PHOTO P
+		        ON ST.ST_NUM = P.ST_NUM
+		        JOIN MAIN_PHOTO MP
+		        ON P.ST_PHOTO_NUM = MP.ST_PHOTO_NUM
+		    ) T
+		)
+		WHERE ST_NUM IN (1,2,3)
+	</select>
+	
+	<select id="getIbmatStNumber" resultType="java.lang.Integer">
+		SELECT F.ST_NUM
+		FROM
+		(
+		    SELECT ROWNUM, T.ST_NUM
+		    FROM
+		    (
+		        SELECT ST_NUM, COUNT(USER_NUM) AS COUNT
+		        FROM COMPARED_BOX
+		        WHERE USER_NUM IN (
+		                              SELECT U.USER_NUM
+		                              FROM
+		                              (
+		                                  SELECT ROWNUM, I.*
+		                                  FROM
+		                                  (
+		                                      SELECT USER_NUM, COUNT(TASTE_NUM) AS COUNT
+		                                      FROM USER_TASTE
+		                                      WHERE TASTE_NUM IN (    
+		                                                           SELECT TASTE_NUM
+		                                                           FROM USER_TASTE
+		                                                           WHERE USER_NUM = '1' 
+		                                                         )
+		                                      GROUP BY USER_NUM
+		                                      ORDER BY COUNT DESC
+		                                  ) I
+		                              ) U
+		                              <![CDATA[WHERE ROWNUM<=5]]> 
+		                           ) 
+		        <![CDATA[AND ADD_MONTHS(SYSDATE, -6) < REG_DATE]]>
+		        GROUP BY ST_NUM 
+		        ORDER BY COUNT DESC 
+		    ) T
+		) F
+		<![CDATA[WHERE ROWNUM <= 5]]>
+	</select>
+
+	<select id="getJjimStNumber" resultType="java.lang.Integer">
+		SELECT F.ST_NUM
+		FROM
+		(
+		    SELECT ROWNUM, ST_NUM
+		    FROM ST_KEY
+		    WHERE ST_KEY_NUM
+		    IN
+		    (
+		        SELECT T.ST_KEY_NUM
+		        FROM
+		        (
+		            SELECT ROWNUM, K.*
+		            FROM 
+		            (
+		                SELECT SK.ST_KEY_NUM, COUNT(ST.ST_NUM) AS COUNT 
+		                FROM ST_KEY SK LEFT JOIN (
+		                                            SELECT ST_NUM
+		                                            FROM LIKE_BOX
+		                                            WHERE USER_NUM='1' 
+		                                         ) ST
+		                ON SK.ST_NUM = ST.ST_NUM
+		                GROUP BY SK.ST_KEY_NUM  
+		                ORDER BY COUNT DESC
+		            ) K 
+		        )T
+		        <![CDATA[WHERE ROWNUM<=5]]>
+		    )
+		    ORDER BY DBMS_RANDOM.RANDOM 
+		)F
+		<![CDATA[WHERE ROWNUM<=5]]>
+	</select>
+	
+	<select id="getHotStNumber" resultType="java.lang.Integer">
+		SELECT T.ST_NUM
+		FROM
+		(
+		    SELECT ROWNUM, L.*
+		    FROM
+		    (
+		        SELECT ST_NUM, COUNT(LIKE_NUM) AS COUNT
+		        FROM LIKE_BOX
+		        <![CDATA[WHERE ADD_MONTHS(SYSDATE, -3) < REG_DATE]]>
+		        <![CDATA[AND REG_DATE <= SYSDATE]]>
+		        GROUP BY ST_NUM
+		        ORDER BY COUNT DESC
+		    ) L
+		) T
+		<![CDATA[WHERE ROWNUM <= 5]]>
+	</select>
+	
+	<select id="getStoreSearchList" resultType="com.yameokja.mc.StoreDTO">
+		
+	</select>
+
+</mapper>
