@@ -13,7 +13,7 @@ public class UserMypageController
 	@Autowired
 	private SqlSession sqlSession;
 	
-	@RequestMapping(value="/usermypage.action", method = RequestMethod.GET)	
+	@RequestMapping(value="/usermainpage.action", method = RequestMethod.GET)	
 	public String studentList(Model model)
 	{
 		String result = null;
@@ -24,8 +24,10 @@ public class UserMypageController
 		model.addAttribute("usermp_rvlist", dao.usermp_rvlist());
 		model.addAttribute("dao.usermp_risonstlist", dao.usermp_risonstlist()); 
 		model.addAttribute("usermp_compare_box", dao.usermp_compare_box()); 
-		/* model.addAttribute("usermp_npk", dao.usermp_npk()); */
-		
+		model.addAttribute("usermp_ni", dao.usermp_ni()); 
+		model.addAttribute("usermp_ukeyword", dao.usermp_ukeyword());
+		model.addAttribute("usermp_point", dao.usermp_point());
+		model.addAttribute("usermp_grade", dao.usermp_grade());
 		
 		result = "WEB-INF/view/userMyPage(0801).jsp";
 		

@@ -2,9 +2,12 @@ package com.yameokja.mc;
 
 public class UserMypageDTO
 {
-	private int rvnum, point;
-	private String rvstname, rvcontent, rbregdate, cbphoto, cbstname, cblphoto, cblstname, cbregdate, jjimphoto, jjimstname, userid, nickname;
+	private int rvnum;
+	private String rvstname, rvcontent, rbregdate, cbphoto, cbstname, cblphoto, cblstname, cbregdate, jjimphoto, jjimstname, userid, nickname, ukeyword, point, grade;
 	public int getRvnum()
+	
+	
+	// getter / setter
 	{
 		return rvnum;
 	}
@@ -92,14 +95,6 @@ public class UserMypageDTO
 	{
 		this.jjimstname = jjimstname;
 	}
-	public int getPoint()
-	{
-		return point;
-	}
-	public void setPoint(int point)
-	{
-		this.point = point;
-	}
 	public String getUserid()
 	{
 		return userid;
@@ -116,8 +111,33 @@ public class UserMypageDTO
 	{
 		this.nickname = nickname;
 	}
+	public String getUkeyword()
+	{
+		return ukeyword;
+	}
+	public void setUkeyword(String ukeyword)
+	{
+		this.ukeyword = ukeyword;
+	}
+	public String getPoint()
+	{
+		return point;
+	}
+	public void setPoint(String point)
+	{
+		this.point = point;
+	}
+	public String getGrade()
+	{
+		return grade;
+	}
+	public void setGrade(String grade)
+	{
+		this.grade = grade;
+	}
 	
-	// getter / setter
+	
+
 	
 	
 }
