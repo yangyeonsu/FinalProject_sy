@@ -3,7 +3,7 @@
 
 <mapper namespace="com.yameokja.mc.IstDetailDAO_userView">
 	<!-- 리뷰신고리스트 -->
-	<select id="rvList" resultType="com.yameokja.mc.rvListDTO">
+	<select id="rvList" resultType="com.yameokja.mc.StoreDTO">
 		CREATE OR REPLACE VIEW RV_REPORT_VIEW
 		AS
 		SELECT RA.REG_DATE AS REG_DATE, UV.USER_ID AS USER_ID, T.ACCU_NUM AS ACCU_NUM
@@ -62,7 +62,7 @@
 	
 	
 	<!-- 가게정보수정요청리스트 -->
-	<select id="reqList" resultType="">
+	<select id="reqList" resultType="com.yameokja.mc.StoreDTO">
 		SELECT RA.REG_DATE AS REG_DATE, UV.USER_ID AS USER_ID
 			, F.ST_NAME AS ST_NAME
 			, 
@@ -109,7 +109,7 @@
 	
 	
 	<!-- 이의제기리스트 -->
-	<select id="objList" resultType="">
+	<select id="objList" resultType="com.yameokja.mc.StoreDTO">
 		SELECT OA.OBJ_APPLY_NUM AS OBJ_APPLY_NUM
 			,
 			,
@@ -150,7 +150,7 @@
 	
 	
 	<!-- 패널티회수요청리스트 -->
-	<select id="revoList" resultType="">
+	<select id="revoList" resultType="com.yameokja.mc.StoreDTO">
 		SELECT REG_DATE
 			, 
 			, F.ST_NAME AS ST_NAME
@@ -195,7 +195,7 @@
 	
 	
 	<!-- 가게등폐업요청리스트 -->
-	<select id="applyList" resultType="">
+	<select id="applyList" resultType="com.yameokja.mc.StoreDTO">
 		SELECT CASE WHEN OA.REG_DATE IS NULL THEN IA.REG_DATE
 			   ELSE OA.REG_DATE
 			   END AS REG_DATE
