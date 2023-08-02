@@ -23,8 +23,12 @@ public interface IUserMypageDAO
 	public ArrayList<UserMypageDTO> usermp_ukeyword();
 	
 	// 포인트
-	public ArrayList<UserMypageDTO> usermp_point();
+	public ArrayList<UserMypageDTO> usermp_point1();
+	// 포인트
+	public ArrayList<UserMypageDTO> usermp_point2();
 	
 	// 등급
-	public ArrayList<UserMypageDTO> usermp_grade();
+	public ArrayList<UserMypageDTO> usermp_grade1();
+	// 등급
+	public ArrayList<UserMypageDTO> usermp_grade2();
 }
