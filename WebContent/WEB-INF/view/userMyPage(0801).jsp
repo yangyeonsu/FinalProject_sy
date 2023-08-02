@@ -277,11 +277,11 @@ String cp = request.getContextPath();
 						</div>
 						<div class="id1">
 							<div class="title9">포인트</div>
-							<div class="sub9"><c:forEach var="id" items="${usermp_point }">${point.point }</c:forEach>pt</div>
+							<div class="sub9"><c:forEach var="point" items="${usermp_point }">${point.point }</c:forEach>pt</div>
 						</div>
 						<div class="id1">
 							<div class="title9">키워드</div>
-							<div class="sub9"><c:forEach var="keyword" items="${usermp_ukeyword }">${keyword.ukeyword }</c:forEach> </div>
+							<div class="sub9"><c:forEach var="keyword" items="${usermp_ukeyword }">${keyword.ukeyword } </c:forEach> </div>
 						</div>
 				</div>
 
@@ -298,7 +298,7 @@ String cp = request.getContextPath();
 						<c:forEach var="jjim" items="${usermp_likelist }">
 						<div class="jimstore">
 							<div class="jimstoreImg">
-								<img src="${jjimphoto }" class="jimstImg" alt="...">
+								<img src="<%=cp %>/${jjim.jjimphoto }" class="jimstImg" alt="...">
 							</div>
 							<div class="jimstoreName">
 								${jjim.jjimstname }
@@ -313,7 +313,7 @@ String cp = request.getContextPath();
 				<!-- 개인이 비교했던 가게목록 -->
 				<div class="jjimlist">
 					<div class="ta">
-						<div class="title">비교했던 가게목록</div>
+						<div class="title">찜한가게 목록</div>
 						<div class="ado" id="ado">
 							<a href="" class="adoi">더보기+</a>
 						</div>
@@ -323,7 +323,7 @@ String cp = request.getContextPath();
 						<c:forEach var="rgstli" items="${usermp_risonstlist }">
 							<div class="jimstore">
 								<div class="jimstoreImg">
-									<img src="${rgstli.cbphoto }" class="jimstImg" alt="...">
+									<img src="<%=cp %>/${rgstli.cblphoto }" class="jimstImg" alt="...">
 								</div>
 								<div class="jimstoreName">
 									${rgstli.cblstname }
@@ -331,9 +331,10 @@ String cp = request.getContextPath();
 								
 							</div>
 						</c:forEach>
+						
 					</div><!-- .jimlist end -->
-				</div>
-				<!-- .stalist end -->
+				</div><!-- .jjimlist end -->
+				
 				
 				
 				<!-- 개인이 작성한 리뷰목록 -->

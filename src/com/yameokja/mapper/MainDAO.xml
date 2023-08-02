@@ -2,32 +2,16 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yameokja.mc.IMainDAO">
+<mapper namespace="com.test.mvc.IMainDAO">
 
-	
-	<select id="getStoreList" resultType="com.yameokja.mc.StoreDTO">
-		SELECT ST_NUM, ST_NAME, PHOTO_LINK, STAR_AVG, RV_COUNT
-		FROM
-		(
-		    SELECT T.ST_NUM AS ST_NUM, T.ST_NAME AS ST_NAME, T.PHOTO_LINK AS PHOTO_LINK
-		        , AVG(STAR_SCORE) OVER (PARTITION BY T.ST_NUM) AS STAR_AVG, COUNT(*) OVER (PARTITION BY T.ST_NUM) AS RV_COUNT
-		    FROM
-		    (
-		        SELECT ST.ST_NUM AS ST_NUM, IA.ST_NAME AS ST_NAME, P.PHOTO_LINK AS PHOTO_LINK
-		            , R.STAR_SCORE AS STAR_SCORE
-		        FROM ST_LIST ST JOIN IN_PROCESS IP
-		        ON ST.IN_PROCESS_NUM = IP.IN_PROCESS_NUM 
-		        JOIN IN_APPLY IA
-		        ON IP.IN_APPLY_NUM = IA.IN_APPLY_NUM
-		        JOIN RV_BOX R
-		        ON R.ST_NUM = ST.ST_NUM
-		        JOIN ST_PHOTO P
-		        ON ST.ST_NUM = P.ST_NUM
-		        JOIN MAIN_PHOTO MP
-		        ON P.ST_PHOTO_NUM = MP.ST_PHOTO_NUM
-		    ) T
-		)
-		WHERE ST_NUM IN (1,2,3)
+	<select id="getStoreList" resultType="com.test.mvc.StoreDTO">
+		SELECT ST_NAME, PHOTO_LINK, STAR_AVG, RV_COUNT
+		FROM STORE_VIEW
+		WHERE ST_NUM IN (
+							<foreach collection="list" item="st_num" separator=","> 
+								#{st_num} 
+							</foreach>
+						)
 	</select>
 	
 	<select id="getIbmatStNumber" resultType="java.lang.Integer">
@@ -57,7 +41,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		                                      ORDER BY COUNT DESC
 		                                  ) I
 		                              ) U
-		                              <![CDATA[WHERE ROWNUM<=5]]> 
+		                              <![CDATA[WHERE ROWNUM<=10]]> 
 		                           ) 
 		        <![CDATA[AND ADD_MONTHS(SYSDATE, -6) < REG_DATE]]>
 		        GROUP BY ST_NUM 
@@ -101,25 +85,59 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="getHotStNumber" resultType="java.lang.Integer">
-		SELECT T.ST_NUM
+		SELECT L.ST_NUM
 		FROM
-		(
-		    SELECT ROWNUM, L.*
+		(SELECT T.ST_NUM
 		    FROM
-		    (
-		        SELECT ST_NUM, COUNT(LIKE_NUM) AS COUNT
-		        FROM LIKE_BOX
-		        <![CDATA[WHERE ADD_MONTHS(SYSDATE, -3) < REG_DATE]]>
-		        <![CDATA[AND REG_DATE <= SYSDATE]]>
-		        GROUP BY ST_NUM
-		        ORDER BY COUNT DESC
-		    ) L
-		) T
-		<![CDATA[WHERE ROWNUM <= 5]]>
+		    (SELECT ST_NUM, COUNT(LIKE_NUM) AS COUNT
+		          , ROW_NUMBER() OVER(ORDER BY COUNT(LIKE_NUM) DESC)
+		            FROM LIKE_BOX
+		            <![CDATA[WHERE EXTRACT(MONTH FROM SYSDATE) - 3 <= EXTRACT(MONTH FROM REG_DATE)]]>
+		            GROUP BY ST_NUM
+		            ORDER BY COUNT DESC) T
+		    <![CDATA[WHERE ROWNUM <= 100]]>
+		    ORDER BY DBMS_RANDOM.VALUE) L
+		<![CDATA[WHERE ROWNUM <= 5]]>;
 	</select>
 	
-	<select id="getStoreSearchList" resultType="com.yameokja.mc.StoreDTO">
-		
+	<select id="getStoreSearchList" resultType="java.lang.Integer">
+		SELECT ST_NUM
+		FROM STORE_VIEW
+		WHERE ST_NAME LIKE #{keyword}
+		   OR ST_LOCATION LIKE #{keyword}
+		   OR FOOD_NAME LIKE #{keyword}
+		UNION
+		SELECT ST_NUM
+		FROM MENU
+		WHERE MENU_NAME LIKE #{keyword} 
+		UNION
+		SELECT T1.ST_NUM
+		FROM
+		(
+		    SELECT ST_NUM, SKL.ST_KEYWORD AS ST_KEYWORD
+		    FROM ST_KEY SK LEFT JOIN ST_KEY_LABEL SKL
+		    ON SK.ST_KEY_NUM = SKL.ST_KEY_NUM 
+		    WHERE ST_KEYWORD LIKE #{keyword}         
+		) T1
+		UNION
+		SELECT T2.ST_NUM
+		FROM
+		(
+		    SELECT RB.ST_NUM, RKL.RV_KEY_NAME AS RV_KEY_NAME
+		    FROM RV_KEY RK LEFT JOIN RV_KEY_LABEL RKL
+		    ON RK.RV_KEY_NUM = RKL.RV_KEY_NUM
+		    LEFT JOIN RV_BOX RB
+		    ON RK.RV_NUM = RB.RV_NUM
+		    WHERE RKL.RV_KEY_NAME LIKE #{keyword}    
+		) T2
+	</select>
+	
+	<select id="getStoreComList" resultType="java.lang.Integer">
+		SELECT ST_NAME, PHOTO_LINK
+		FROM STORE_VIEW
+		WHERE ST_NUM IN (SELECT ST_NUM
+		                FROM COMPARING_BOX
+		                WHERE USER_NUM = #{user_num})
 	</select>
 
 </mapper>

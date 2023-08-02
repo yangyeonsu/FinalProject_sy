@@ -5,8 +5,8 @@
 	<!-- 리뷰신고리스트 -->
 	<select id="rvList" resultType="com.yameokja.mc.rvListDTO">
 		SELECT REG_DATE, USER_ID, ACCU_NUM, ST_NAME, STATE, FINAL_DATE, ADMIN_ID
-		FROM RV_REPORT_VIEW;
-	</select>
+		FROM RV_REPORT_VIEW
+  </select>
 	
 	
 	<!-- 가게정보수정요청리스트 -->
@@ -19,20 +19,21 @@
 	<!-- 이의제기리스트 -->
 	<select id="objList" resultType="com.yameokja.mc.objListDTO">
 		SELECT OBJ_APPLY_NUM, ST_NAME, STATE, FINAL_DATE, ADMIN_ID
-		FROM OBJ_APPLY_VIEW;
+		FROM OBJ_APPLY_VIEW
+
 	</select>
 	
 	
 	<!-- 패널티회수요청리스트 -->
 	<select id="revoList" resultType="com.yameokja.mc.revoListDTO">
 		SELECT REG_DATE, ST_NAME, REG_STATE, FINAL_DATE, ADMIN_ID
-		FROM REVO_APPLY_VIEW;
+		FROM REVO_APPLY_VIEW
 	</select>
 	
 	
 	<!-- 가게등폐업요청리스트 -->
 	<select id="applyList" resultType="">
 		SELECT CAT, REG_DATE, USER_ID, FINAL_DATE, ADMIN_ID, STATE
-		FROM INOUT_APPLY_VIEW;
+		FROM INOUT_APPLY_VIEW
 	</select>
 </mapper>
