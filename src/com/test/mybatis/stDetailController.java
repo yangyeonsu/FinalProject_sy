@@ -1,4 +1,4 @@
-package com.yameokja.mc;
+package com.test.mybatis;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -225,8 +225,8 @@
 	.review_keyword
 	{
 		display:flex;
-		align-content: flex-start; 
-		flex-direction:column; 
+		flex-direction:column;
+		align-items: center; 
 		flex-wrap:wrap;
 		height: 38vh;
 	}
@@ -236,7 +236,7 @@
 		width: 15vw;
 		margin-bottom: 2vh;
 		font-size: 0.8vw;
-		margin-left: 5vw;
+		margin-left: 2.8vw;
 	}
 	
 	.storemain_review
@@ -336,7 +336,7 @@
 		font-size: small;
 		width: 6vw;
 		height: 5vh;
-		margin-top: 4.3vw;
+		margin-top: 3.2vw;
 		margin-left: 2vh;
 	}
 	
@@ -487,7 +487,7 @@ $(function () {
 		<div class="storemain_content">
 			<div class="storemain_chart">
 				<!--차트가 그려질 부분-->
-				<div class="chart_name"><h2>별점 추이</h2></div>
+				<div class="chart_name"><h3>별점 추이</h3></div>
 				<div class="chart_content"><canvas id="myChart" width="1100px" height="300px"></canvas></div>
 			</div>
 			<div class="storemain_rekey">

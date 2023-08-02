@@ -33,8 +33,8 @@ String cp = request.getContextPath();
 		margin-top: 8.2vh;
 		position: fixed;
 		align-items: center; */
-		top: 50px;
-	    width: 5vw;
+		top: 65.5px;
+	    width: 4vw;
 	    z-index: 10;
 	    background: #ef6351;
 	    border-right: 1px solid rgba(0, 0, 0, 0.07);
@@ -66,10 +66,10 @@ String cp = request.getContextPath();
 		height: 90%;
 		margin-top: 5.7vh; */
 		position: fixed;
-	    top: 50px;
+	    top: 65.5px;
 	    width: 18vw;
 	    z-index: 10;
-	    left: 5.07vw;
+	    left: 4vw;
 	    background: white;
 	    height: 90%;
 	    margin-top: 3.9vh;
@@ -149,7 +149,7 @@ String cp = request.getContextPath();
 	
 	.has_sub {
 		width: 100%;
-	}
+	}	
 </style>
 
 <script type="text/javascript">
@@ -266,23 +266,24 @@ String cp = request.getContextPath();
 				
 				<!-- 개인 정보 영역 -->
 				<div class="id">
-					
+					<c:forEach var="id" items="${usermp_npk }">
 						<div class="id1">
 							<div class="title9">닉네임(아이디)</div>
-							<div class="sub9"><c:forEach var="id" items="${usermp_ni }">${id.nickname }(${id.userid })</c:forEach></div>
+							<div class="sub9">${id.nickname }(${id.userid })</div>
 						</div>
 						<div class="id1">
 							<div class="title9">등급</div>
-							<div class="sub9"><c:forEach var="grade" items="${usermp_grade }">${grade.grade }</c:forEach></div>
+							<div class="sub9">크랩</div>
 						</div>
 						<div class="id1">
 							<div class="title9">포인트</div>
-							<div class="sub9"><c:forEach var="id" items="${usermp_point }">${point.point }</c:forEach>pt</div>
+							<div class="sub9">${id.point }pt</div>
 						</div>
 						<div class="id1">
 							<div class="title9">키워드</div>
-							<div class="sub9"><c:forEach var="keyword" items="${usermp_ukeyword }">${keyword.ukeyword }</c:forEach> </div>
+							<div class="sub9">맵찔이</div>
 						</div>
+					</c:forEach>
 				</div>
 
 				<!-- 개인이 찜한 목록 -->
@@ -403,7 +404,6 @@ String cp = request.getContextPath();
 	<div class="footer">
 		<c:import url="footer.jsp"></c:import>
 	</div>
-
 
 
 </body>
