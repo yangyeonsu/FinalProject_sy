@@ -313,7 +313,7 @@ String cp = request.getContextPath();
 				<!-- 개인이 비교했던 가게목록 -->
 				<div class="jjimlist">
 					<div class="ta">
-						<div class="title">찜한가게 목록</div>
+						<div class="title">비교했던 가게목록</div>
 						<div class="ado" id="ado">
 							<a href="" class="adoi">더보기+</a>
 						</div>
