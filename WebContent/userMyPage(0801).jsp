@@ -266,23 +266,23 @@ String cp = request.getContextPath();
 				
 				<!-- 개인 정보 영역 -->
 				<div class="id">
-
-					<div class="id1">
-						<div class="title9">닉네임(아이디)</div>
-						<div class="sub9">홍길동(dong)</div>
-					</div>
-					<div class="id1">
-						<div class="title9">등급</div>
-						<div class="sub9">크랩</div>
-					</div>
-					<div class="id1">
-						<div class="title9">포인트</div>
-						<div class="sub9">150pt</div>
-					</div>
-					<div class="id1">
-						<div class="title9">키워드</div>
-						<div class="sub9">맵찔이</div>
-					</div>
+					
+						<div class="id1">
+							<div class="title9">닉네임(아이디)</div>
+							<div class="sub9"><c:forEach var="id" items="${usermp_ni }">${id.nickname }(${id.userid })</c:forEach></div>
+						</div>
+						<div class="id1">
+							<div class="title9">등급</div>
+							<div class="sub9"><c:forEach var="grade" items="${usermp_grade }">${grade.grade }</c:forEach></div>
+						</div>
+						<div class="id1">
+							<div class="title9">포인트</div>
+							<div class="sub9"><c:forEach var="id" items="${usermp_point }">${point.point }</c:forEach>pt</div>
+						</div>
+						<div class="id1">
+							<div class="title9">키워드</div>
+							<div class="sub9"><c:forEach var="keyword" items="${usermp_ukeyword }">${keyword.ukeyword }</c:forEach> </div>
+						</div>
 				</div>
 
 				<!-- 개인이 찜한 목록 -->
@@ -295,94 +295,45 @@ String cp = request.getContextPath();
 					</div>
 
 					<div class="jimlist">
+						<c:forEach var="jjim" items="${usermp_likelist }">
 						<div class="jimstore">
 							<div class="jimstoreImg">
-								<img src="images/store_img01.png" class="jimstImg" alt="...">
+								<img src="${jjimphoto }" class="jimstImg" alt="...">
 							</div>
 							<div class="jimstoreName">
-								가게 1
+								${jjim.jjimstname }
 							</div>
 						</div>
-						<div class="jimstore">
-							<div class="jimstoreImg">
-								<img src="images/store_img01.png" class="jimstImg" alt="...">
-							</div>
-							<div class="jimstoreName">
-								가게 1
-							</div>
-						</div>
-						<div class="jimstore">
-							<div class="jimstoreImg">
-								<img src="images/store_img01.png" class="jimstImg" alt="...">
-							</div>
-							<div class="jimstoreName">
-								가게 1
-							</div>
-						</div>
-						<div class="jimstore">
-							<div class="jimstoreImg">
-								<img src="images/store_img01.png" class="jimstImg" alt="...">
-							</div>
-							<div class="jimstoreName">
-								가게 1
-							</div>
-						</div>
-						<div class="jimstore">
-							<div class="jimstoreImg">
-								<img src="images/store_img01.png" class="jimstImg" alt="...">
-							</div>
-							<div class="jimstoreName">
-								가게 1
-							</div>
-						</div>
-						<div class="jimstore">
-							<div class="jimstoreImg">
-								<img src="images/store_img01.png" class="jimstImg" alt="...">
-							</div>
-							<div class="jimstoreName">
-								가게 1
-							</div>
-						</div>
+						</c:forEach>
+						
 					</div><!-- .jimlist end -->
 				</div><!-- .jjimlist end -->
 
 
 				<!-- 개인이 비교했던 가게목록 -->
-				<div class="stalist">
+				<div class="jjimlist">
 					<div class="ta">
-						<div class="title">비교했던 가게목록</div>
-						<div class="ado">
+						<div class="title">찜한가게 목록</div>
+						<div class="ado" id="ado">
 							<a href="" class="adoi">더보기+</a>
 						</div>
 					</div>
 
-					<div class="list0" id="list0">
-						<div class="list1">Num</div>
-						<div class="list1">가게명</div>
-						<div class="list1">비교한 날짜</div>
-					</div>
-					<div class="list0">
-						<div class="list1">4</div>
-						<div class="list1">가게명4</div>
-						<div class="list1">2019-12-06</div>
-					</div>
-					<div class="list0">
-						<div class="list1">3</div>
-						<div class="list1">가게명3</div>
-						<div class="list1">2019-12-06</div>
-					</div>
-					<div class="list0">
-						<div class="list1">2</div>
-						<div class="list1">가게명2</div>
-						<div class="list1">2019-12-06</div>
-					</div>
-					<div class="list0">
-						<div class="list1">1</div>
-						<div class="list1">가게명1</div>
-						<div class="list1">2019-12-06</div>
-					</div>
-
-				</div><!-- .stalist end -->
+					<div class="jimlist">
+						<c:forEach var="rgstli" items="${usermp_risonstlist }">
+							<div class="jimstore">
+								<div class="jimstoreImg">
+									<img src="${rgstli.cbphoto }" class="jimstImg" alt="...">
+								</div>
+								<div class="jimstoreName">
+									${rgstli.cblstname }
+								</div>
+								
+							</div>
+						</c:forEach>
+					</div><!-- .jimlist end -->
+				</div>
+				<!-- .stalist end -->
 				
 				
 				<!-- 개인이 작성한 리뷰목록 -->
@@ -400,34 +351,14 @@ String cp = request.getContextPath();
 						<div class="list1">내용</div>
 						<div class="list1">리뷰 작성 날짜</div>
 					</div>
-					<div class="list0">
-						<div class="list1">4</div>
-						<div class="list1">가게명4</div>
-						<div class="list1">안녕하세요 맛있었습니다안녕하세요 맛있었습니다안녕하세요 맛있었습니다안녕하세요
-							맛있었습니다안녕하세요 맛있었습니다</div>
-						<div class="list1">2019-12-06</div>
-					</div>
-					<div class="list0">
-						<div class="list1">3</div>
-						<div class="list1">가게명3</div>
-						<div class="list1">안녕하세요 맛있었습니다안녕하세요 맛있었습니다안녕하세요 맛있었습니다안녕하세요
-							맛있었습니다안녕하세요 맛있었습니다</div>
-						<div class="list1">2019-12-06</div>
-					</div>
-					<div class="list0">
-						<div class="list1">2</div>
-						<div class="list1">가게명2</div>
-						<div class="list1">안녕하세요 맛있었습니다안녕하세요 맛있었습니다안녕하세요 맛있었습니다안녕하세요
-							맛있었습니다안녕하세요 맛있었습니다</div>
-						<div class="list1">2019-12-06</div>
-					</div>
-					<div class="list0">
-						<div class="list1">1</div>
-						<div class="list1">가게명1</div>
-						<div class="list1">안녕하세요 맛있었습니다안녕하세요 맛있었습니다안녕하세요 맛있었습니다안녕하세요
-							맛있었습니다안녕하세요 맛있었습니다</div>
-						<div class="list1">2019-12-06</div>
-					</div>
+					<c:forEach var="rvlist" items="${usermp_rvlist }">
+						<div class="list0">
+							<div class="list1">${rvlist.rvnum }</div>
+							<div class="list1">${rvlist.rvstname }</div>
+							<div class="list1">${rvlist.rvcontent }</div>
+							<div class="list1">${rvlist.rbregdate }</div>
+						</div>
+					</c:forEach>
 				</div><!-- .stalist end -->
 			</div><!-- .col-md-8 end -->
 			
@@ -443,116 +374,19 @@ String cp = request.getContextPath();
 				<div class="comStoreListDiv">
 
 					<!-- 한 가게 영역 -->
+					<c:forEach var="rgst" items="${usermp_compare_box }">
 					<div class="comStoreDiv">
 						<!-- 한 가게 대표사진 영역 -->
 						<div class="comStoreImgDiv">
 							<label for="st1" class="stLabel"> <input type="checkbox"
 								class="comStImgCB" id="st1"> <!-- <span class="circle"></span> -->
-								<img class="comStImg" src="<%=cp%>/images/store_img01.png">
+								<img class="comStImg" src="<%=cp%>/${rgst.cbphoto }">
 							</label>
 						</div>
 						<!-- 한 가게 가게이름 영역 -->
-						<div class="comStoreNameDiv">가게1</div>
+						<div class="comStoreNameDiv">${rgst.cbstname }</div>
 					</div>
-
-					<!-- 한 가게 영역 -->
-					<div class="comStoreDiv">
-						<!-- 한 가게 대표사진 영역 -->
-						<div class="comStoreImgDiv">
-							<input type="checkbox" class="comStImgCB" id="st2"> <label
-								for="st2" class="stLabel"> <img class="comStImg"
-								src="<%=cp%>/images/store_img01.png">
-							</label>
-						</div>
-						<!-- 한 가게 가게이름 영역 -->
-						<div class="comStoreNameDiv">가게2</div>
-					</div>
-
-					<!-- 한 가게 영역 -->
-					<div class="comStoreDiv">
-						<!-- 한 가게 대표사진 영역 -->
-						<div class="comStoreImgDiv">
-							<input type="checkbox" class="comStImgCB" id="st3"> <label
-								for="st3" class="stLabel"> <img class="comStImg"
-								src="<%=cp%>/images/store_img01.png">
-							</label>
-						</div>
-						<!-- 한 가게 가게이름 영역 -->
-						<div class="comStoreNameDiv">가게3</div>
-					</div>
-
-					<!-- 한 가게 영역 -->
-					<div class="comStoreDiv">
-						<!-- 한 가게 대표사진 영역 -->
-						<div class="comStoreImgDiv">
-							<input type="checkbox" class="comStImgCB" id="st4"> <label
-								for="st4" class="stLabel"> <img class="comStImg"
-								src="<%=cp%>/images/store_img01.png">
-							</label>
-						</div>
-						<!-- 한 가게 가게이름 영역 -->
-						<div class="comStoreNameDiv">가게4</div>
-					</div>
-
-					<!-- 한 가게 영역 -->
-					<div class="comStoreDiv">
-						<!-- 한 가게 대표사진 영역 -->
-						<div class="comStoreImgDiv">
-							<img class="comStImg" src="<%=cp%>/images/comp_img01.png">
-						</div>
-						<!-- 한 가게 가게이름 영역 -->
-						<div class="comStoreNameDiv"></div>
-					</div>
-
-					<!-- 한 가게 영역 -->
-					<div class="comStoreDiv">
-						<!-- 한 가게 대표사진 영역 -->
-						<div class="comStoreImgDiv">
-							<img class="comStImg" src="<%=cp%>/images/comp_img01.png">
-						</div>
-						<!-- 한 가게 가게이름 영역 -->
-						<div class="comStoreNameDiv"></div>
-					</div>
-
-					<!-- 한 가게 영역 -->
-					<div class="comStoreDiv">
-						<!-- 한 가게 대표사진 영역 -->
-						<div class="comStoreImgDiv">
-							<img class="comStImg" src="<%=cp%>/images/comp_img01.png">
-						</div>
-						<!-- 한 가게 가게이름 영역 -->
-						<div class="comStoreNameDiv"></div>
-					</div>
-
-					<!-- 한 가게 영역 -->
-					<div class="comStoreDiv">
-						<!-- 한 가게 대표사진 영역 -->
-						<div class="comStoreImgDiv">
-							<img class="comStImg" src="<%=cp%>/images/comp_img01.png">
-						</div>
-						<!-- 한 가게 가게이름 영역 -->
-						<div class="comStoreNameDiv"></div>
-					</div>
-
-					<!-- 한 가게 영역 -->
-					<div class="comStoreDiv">
-						<!-- 한 가게 대표사진 영역 -->
-						<div class="comStoreImgDiv">
-							<img class="comStImg" src="<%=cp%>/images/comp_img01.png">
-						</div>
-						<!-- 한 가게 가게이름 영역 -->
-						<div class="comStoreNameDiv"></div>
-					</div>
-
-					<!-- 한 가게 영역 -->
-					<div class="comStoreDiv">
-						<!-- 한 가게 대표사진 영역 -->
-						<div class="comStoreImgDiv">
-							<img class="comStImg" src="<%=cp%>/images/comp_img01.png">
-						</div>
-						<!-- 한 가게 가게이름 영역 -->
-						<div class="comStoreNameDiv"></div>
-					</div>
+					</c:forEach>
 
 				</div><!-- .comStoreListDiv end -->
 
@@ -569,6 +403,7 @@ String cp = request.getContextPath();
 	<div class="footer">
 		<c:import url="footer.jsp"></c:import>
 	</div>
+
 
 
 </body>
