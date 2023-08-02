@@ -14,37 +14,27 @@ String cp = request.getContextPath();
 <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
 <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
 
+<link rel="stylesheet" type="text/css" href="<%=cp%>/css/compareBox(0801).css">
+<link rel="stylesheet" type="text/css" href="<%=cp%>/css/userMyPage(0801).css">
 
-<link rel="stylesheet" href="<%=cp%>/css/userMyPage(0801).css">
-<link rel="stylesheet" href="<%=cp%>/css/compareBox(0801).css">
 
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery.min.js"></script>
 
-<!-- 합쳐지고 최소화된 최신 CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-
 <!-- 부가적인 테마 -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 
-<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-
 <style type="text/css">
 #body 
-{
+{	
+	width: 100%;
 	display: flex;
-}
-
-.ll 
-{
-	background-color: #E09A8D;
 }
 
 .mainBody
 {	
 	background-color: #F7F4EA;
-	margin-left : 18vw;
+	margin-left : 20vw;
 	width: 60vw;
 }
 
@@ -55,14 +45,13 @@ String cp = request.getContextPath();
 
 .container1 
 {
-	width: 100%;
 	float: left;
 }
 
 .main-left
 {
 	width: 50%;
-	height: 45vh;
+	height: 40vh;
 	float: left;
 	text-align: center;
 }
@@ -70,7 +59,7 @@ String cp = request.getContextPath();
 .main-right 
 {
 	width: 50%;
-	height: 45vh;
+	height: 40vh;
 	float: right;
 	text-align: center;
 	padding-right: 2vw;
@@ -112,7 +101,6 @@ String cp = request.getContextPath();
 
 .container2 
 {
-	width: 100%;
 	margin-left: 4vw;
 }
 
@@ -136,8 +124,7 @@ String cp = request.getContextPath();
 {
 	width: 100%;
 	float: left;
-	align-content: space-around;
-	margin-top: 5vh;
+	margin-top: 3vh;
 }
 
 .container3
@@ -395,11 +382,10 @@ String cp = request.getContextPath();
 </head>
 
 
-
 <body>
-
-	<c:import url="header_user_sh(0801).jsp"></c:import>
-
+	<div class="header">
+		<c:import url="header_user_sh(0801).jsp"></c:import>
+	</div>
 
 	<div id="body">
 	
@@ -449,10 +435,13 @@ String cp = request.getContextPath();
 				</ul>
 			</div>
 		</div>
-	</div>
+		
 		<div class="overlay">
 			<input type="hidden" id="checkOverlay" value="false">
 		</div>
+		
+	</div>
+		
 
 		<div class="mainBody">
 
@@ -468,23 +457,6 @@ String cp = request.getContextPath();
 							<div id="weekList" class="openclose background">
 
 								<ul>
-									<!-- 
-									<li><input class="" type="text"
-										placeholder="월   10:00 ~ 20:00" readonly="readonly" /></li>
-									<li><input class="" type="text"
-										placeholder="화   10:00 ~ 20:00" readonly="readonly" /></li>
-									<li><input class="" type="text"
-										placeholder="수   10:00 ~ 20:00" readonly="readonly" /></li>
-									<li><input class="" type="text"
-										placeholder="목   10:00 ~ 20:00" readonly="readonly" /></li>
-									<li><input class="" type="text"
-										placeholder="금   10:00 ~ 20:00" readonly="readonly" /></li>
-									<li><input class="" type="text"
-										placeholder="토   11:00 ~ 23:00" readonly="readonly" /></li>
-									<li><input class="" type="text"
-										placeholder="일   11:00 ~ 23:00" readonly="readonly" /></li> 
-									-->
-										
 									<c:forEach var="op" items="${openClose}">
 									  <li><input class="opli" type="text" style="text-align: center;"
 									    placeholder="${op.day_name} ${op.start_time}:00 ~ ${op.end_time}:00" readonly="readonly" /></li>
@@ -496,16 +468,6 @@ String cp = request.getContextPath();
 							<div class="time background">
 								<div>
 									<ul>
-										<!-- 
-										<li><input class="" type="text"
-											placeholder="월 ~ 금 / 브레이크 타임" readonly="readonly" /></li>
-										<li><input class="" type="text"
-											placeholder="15:30 ~ 17:30" readonly="readonly"/></li>
-										<li><input class="" type="text"
-											placeholder="토 ~ 일 / 브레이크 타임" readonly="readonly" /></li>
-										<li><input class="" type="text"
-											placeholder="15:00 ~ 17:30" readonly="readonly" /></li>
-										 -->
 										 <c:forEach var="bt" items="${breakTime}">
 										 	<li><input class="btli" type="text"
 											placeholder="${bt.week_weekend} / 브레이크 타임" readonly="readonly" /></li>
@@ -645,62 +607,62 @@ String cp = request.getContextPath();
 					</c:forEach>
 				</div>
 				<!-- class="container2 " id="storePay" -->
-				<div id="menuboard" class="container3  ">
+				<div id="menuboard" class="container3">
 					<div id="rv-Keyword">
 						<br /> <br />
 						<!-- 메뉴 -->
 						<h1 style="padding-left: 1vw;">메뉴</h1>
-						<div class="menuList">
+						<div class="menuList"  style="padding-bottom: 1vh;">
 							
 							<div class="menuPhoto">
-								<a href="#" class="thumbnail"> <img src="images/food1.jpg"
+								<a href="#" class="thumbnail"> <img src="images/store_img01.png"
 									alt="..." class="img-rounded">메뉴1 : 15,000원
 								</a>
 							</div>
 							<div class="menuPhoto">
-								<a href="#" class="thumbnail"> <img src="images/food1.jpg"
+								<a href="#" class="thumbnail"> <img src="images/store_img01.png"
 									alt="..." class="img-rounded">메뉴2 : 14,000원
 								</a>
 							</div>
 							<div class="menuPhoto">
-								<a href="#" class="thumbnail"> <img src="images/food1.jpg"
+								<a href="#" class="thumbnail"> <img src="images/store_img01.png"
 									alt="..." class="img-rounded">메뉴3 : 13,000원
 								</a>
 							</div>
 							<div class="menuPhoto">
-								<a href="#" class="thumbnail"> <img src="images/food1.jpg"
+								<a href="#" class="thumbnail"> <img src="images/store_img01.png"
 									alt="..." class="img-rounded">메뉴4 : 13,500원
 								</a>
 							</div>
 							<div class="menuPhoto">
-								<a href="#" class="thumbnail"> <img src="images/food1.jpg"
+								<a href="#" class="thumbnail"> <img src="images/store_img01.png"
 									alt="..." class="img-rounded">메뉴5 : 15,500원
 								</a>
 							</div>
 						</div>
 						<div class="col-xs-16 col-md-16 menuList">
 							<div class="menuPhoto">
-								<a href="#" class="thumbnail"> <img src="images/food1.jpg"
+								<a href="#" class="thumbnail"> <img src="images/store_img01.png"
 									alt="..." class="img-rounded">메뉴6 : 14,000원
 								</a>
 							</div>
 							<div class="menuPhoto">
-								<a href="#" class="thumbnail"> <img src="images/food1.jpg"
+								<a href="#" class="thumbnail"> <img src="images/store_img01.png"
 									alt="..." class="img-rounded">메뉴7 : 12,000원
 								</a>
 							</div>
 							<div class="menuPhoto">
-								<a href="#" class="thumbnail"> <img src="images/food1.jpg"
+								<a href="#" class="thumbnail"> <img src="images/store_img01.png"
 									alt="..." class="img-rounded">메뉴8 : 11,000원
 								</a>
 							</div>
 							<div class="menuPhoto">
-								<a href="#" class="thumbnail"> <img src="images/food1.jpg"
+								<a href="#" class="thumbnail"> <img src="images/store_img01.png"
 									alt="..." class="img-rounded">메뉴9 : 9,000원
 								</a>
 							</div>
 							<div class="menuPhoto">
-								<a href="#" class="thumbnail"> <img src="images/food1.jpg"
+								<a href="#" class="thumbnail"> <img src="images/store_img01.png"
 									alt="..." class="img-rounded">메뉴10 : 8,000원
 								</a>
 							</div>
@@ -863,7 +825,7 @@ String cp = request.getContextPath();
 						<!-- 한 가게 대표사진 영역 -->
 						<div class="comStoreImgDiv">
 							<input type="checkbox" class="comStImgCB" id="st1"> <img
-								class="comStImg" src="<%=cp%>/images/food1.jpg">
+								class="comStImg" src="<%=cp%>/images/store_img01.png">
 						</div>
 						<!-- 한 가게 가게이름 영역 -->
 						<div class="comStoreNameDiv">가게1</div>
@@ -874,7 +836,7 @@ String cp = request.getContextPath();
 						<!-- 한 가게 대표사진 영역 -->
 						<div class="comStoreImgDiv">
 							<input type="checkbox" class="comStImgCB" id="st2"> <img
-								class="comStImg" src="<%=cp%>/images/food1.jpg">
+								class="comStImg" src="<%=cp%>/images/store_img01.png">
 						</div>
 						<!-- 한 가게 가게이름 영역 -->
 						<div class="comStoreNameDiv">가게2</div>
@@ -885,7 +847,7 @@ String cp = request.getContextPath();
 						<!-- 한 가게 대표사진 영역 -->
 						<div class="comStoreImgDiv">
 							<input type="checkbox" class="comStImgCB" id="st3"> <img
-								class="comStImg" src="<%=cp%>/images/food1.jpg">
+								class="comStImg" src="<%=cp%>/images/store_img01.png">
 						</div>
 						<!-- 한 가게 가게이름 영역 -->
 						<div class="comStoreNameDiv">가게3</div>
@@ -896,7 +858,7 @@ String cp = request.getContextPath();
 						<!-- 한 가게 대표사진 영역 -->
 						<div class="comStoreImgDiv">
 							<input type="checkbox" class="comStImgCB" id="st4"> <img
-								class="comStImg" src="<%=cp%>/images/food2.jpeg">
+								class="comStImg" src="<%=cp%>/images/store_img01.png">
 						</div>
 						<!-- 한 가게 가게이름 영역 -->
 						<div class="comStoreNameDiv">가게4</div>
@@ -907,7 +869,7 @@ String cp = request.getContextPath();
 						<!-- 한 가게 대표사진 영역 -->
 						<div class="comStoreImgDiv">
 							<input type="checkbox" class="comStImgCB" id="st5"> <img
-								class="comStImg" src="<%=cp%>/images/food2.jpeg">
+								class="comStImg" src="<%=cp%>/images/store_img01.png">
 						</div>
 						<!-- 한 가게 가게이름 영역 -->
 						<div class="comStoreNameDiv">가게5</div>
@@ -918,7 +880,7 @@ String cp = request.getContextPath();
 						<!-- 한 가게 대표사진 영역 -->
 						<div class="comStoreImgDiv">
 							<input type="checkbox" class="comStImgCB" id="st6"> <img
-								class="comStImg" src="<%=cp%>/images/food2.jpeg">
+								class="comStImg" src="<%=cp%>/images/store_img01.png">
 						</div>
 						<!-- 한 가게 가게이름 영역 -->
 						<div class="comStoreNameDiv">가게6</div>
@@ -933,15 +895,12 @@ String cp = request.getContextPath();
 			</div>
 		</div>
 
-		</div>
-
-
-	<div>
+	</div>
+		
+	<div class="footer">
 		<c:import url="footer.jsp"></c:import>
 	</div>
-
-
-
+	
 
 </body>
 </html>
