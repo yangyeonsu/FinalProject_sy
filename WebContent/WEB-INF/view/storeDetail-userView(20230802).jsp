@@ -34,7 +34,6 @@ String cp = request.getContextPath();
 #body 
 {
 	display: flex;
-	width: 95%;
 	margin-top: 4vh;
 }
 
@@ -43,12 +42,19 @@ String cp = request.getContextPath();
 	background-color: #E09A8D;
 }
 
-.main 
+.mainbody
 {
-	width: 75%;
+	width: 65%;
 	height: 40%;
 	background-color: #F7F4EA;
-	margin-left: 8vw;
+	margin-left: 12vw;
+}
+
+.main 
+{
+	width: 100%;
+	height: 40%;
+	margin-left: 2vw;
 }
 
 .container1 
@@ -116,7 +122,7 @@ String cp = request.getContextPath();
 {
 	width: 100%;
 	height: 100%;
-	margin-left: 8vw;
+	margin-left: 6vw;
 	margin-top: 5vh;
 }
 
@@ -146,7 +152,7 @@ String cp = request.getContextPath();
 
 .container3
 {
-	padding-left: 4vw;
+	padding-left: 2vw;
 }
 
 
@@ -203,7 +209,7 @@ String cp = request.getContextPath();
 
 .revBack 
 {
-	width: 85%;
+	width: 90%;
 	height: 14vh;
 	background-color: #CDCDCD;
 }
@@ -352,7 +358,6 @@ String cp = request.getContextPath();
 }
 </style>
 
-
 <script type="text/javascript">
 	$(function()
 	{
@@ -400,14 +405,13 @@ String cp = request.getContextPath();
 	});
 </script>
 
+
 </head>
 
-
-
 <body>
-
-	<c:import url="header_user_sh(0801).jsp"></c:import>
-
+	
+	<c:import url="/WEB-INF/view/header_user_sh(0801).jsp"></c:import>
+	
 	<div id="column">
 
 		<!-- 왼쪽 메뉴 배너 -->
@@ -458,10 +462,11 @@ String cp = request.getContextPath();
 	<div class="overlay">
 		<input type="hidden" id="checkOverlay" value="false">
 	</div>
-
+	
+	
 	<div id="body">
 
-		<div class="main">
+		<div class="mainbody">
 
 
 			<div id="container1" class="">
@@ -655,7 +660,7 @@ String cp = request.getContextPath();
 								</div>
 								<div>
 									<button type="submit" onclick="reqapplyform.action" value="${o.st_num }" 
-									style="width: 10vw; height: 3vh; float: right; margin-right: 22vw;">가게정보오류수정</button>
+									style="width: 10vw; height: 3vh; float: right; margin-right: 16vw;">가게정보오류수정</button>
 								</div>
 								
 							</form>
@@ -737,15 +742,15 @@ String cp = request.getContextPath();
 				<!-- id="menuboard" class="col-md-offset-1 col-md-1 container3  " -->
 				<br /> <br /> <br /> <br />
 				<div class=" container4">
-					<div id="reviewList" style="margin-top: 1vh; margin-left: 3vw;">
-						<h1 style="padding-left: 2vw; display: inline;">리뷰</h1>
-						<button type="submit" style="float: right; margin-right: 10vw;">리뷰 작성하기</button>
+					<div id="reviewList" style="margin-top: 1vh; margin-left: 2vw;">
+						<h1 style="padding-left: 3vw; display: inline;">리뷰</h1>
+						<button type="submit" style="float: right; margin-right: 6vw;">리뷰 작성하기</button>
 						<br />
 						<div class="revKeyList">
 							<br />
-							<ul style="display: flex; margin-left: 1vw;">
+							<ul style="display: flex; margin-left: 2vw; list-style: none;">
 							
-								<li><input class="" type="text"
+								<li><input class="" style="" type="text"
 									placeholder="리뷰 키워드1" readonly="readonly" /></li>
 								<li><input class="" type="text"
 									placeholder="리뷰 키워드2" readonly="readonly" /></li>
@@ -757,12 +762,14 @@ String cp = request.getContextPath();
 									placeholder="리뷰 키워드5" readonly="readonly" /></li>
 									
 								<c:forEach var="sK" items="${stKeys }">
-									<li><input class="" type="text"
-									placeholder="${sK.st_keyword }" readonly="readonly" /></li>
+									<ul style="display: flex; margin-left: 2vw; list-style: none;">
+										<li><input class="" type="text"
+										placeholder="${sK.st_keyword }" readonly="readonly" /></li>
+									</ul>
 								</c:forEach>
 							</ul>
 							
-							<ul style="display: flex; margin-left: 1vw;">
+							<ul style="display: flex; margin-left: 2vw;  list-style: none;"">
 								<li><input class="" type="text"
 									placeholder="리뷰 키워드6" readonly="readonly" /></li>
 								<li><input class="" type="text"
@@ -776,7 +783,7 @@ String cp = request.getContextPath();
 							</ul>
 							
 							<br />
-							<div id="revList" style="padding-left: 40px;">
+							<div id="revList" style="margin-left: 4vw;">
 								
 								<div class="reViews">
 									<div class="reView revBack">
