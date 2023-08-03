@@ -52,9 +52,10 @@
 	    display: flex;
 	    width: 10vw;
 	    margin-top: 3vh;
-	    padding-left: 57.5vw;
+	    /* padding-left: 57.5vw; 			제거*/ 
 	    justify-content: space-between;
 	    align-items: center;
+	    float: right;                   /* 추가 */
 	}
 	
 	.menuBtn

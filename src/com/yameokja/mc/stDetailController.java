@@ -35,7 +35,7 @@ public class stDetailController
 		model.addAttribute("stKeys", dao.stKeys());
 		model.addAttribute("reViews", dao.reViews());
 		
-		result = "/WEB-INF/view/storeDetail-userView(20230801).jsp";
+		result = "/WEB-INF/view/storeDetail-userView2(20230802).jsp";
 		
 		return result;
 	}
