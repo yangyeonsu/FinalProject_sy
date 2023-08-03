@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.yameokja.mc.IstDetailDAO_userView">
+<mapper namespace="com.yameokja.mc.IAdminMainDAO">
 	<!-- 리뷰신고리스트 -->
 	<select id="rvList" resultType="com.yameokja.mc.rvListDTO">
 		SELECT REG_DATE, USER_ID, ACCU_NUM, ST_NAME, STATE, FINAL_DATE, ADMIN_ID
@@ -31,7 +31,7 @@
 	
 	
 	<!-- 가게등폐업요청리스트 -->
-	<select id="applyList" resultType="">
+	<select id="inoutList" resultType="com.yameokja.mc.applyListDTO">
 		SELECT CAT, REG_DATE, USER_ID, FINAL_DATE, ADMIN_ID, STATE
 		FROM INOUT_APPLY_VIEW;
 	</select>

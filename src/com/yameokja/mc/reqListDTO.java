@@ -1,9 +1,9 @@
 package com.yameokja.mc;
 
-public class rvListDTO
+public class reqListDTO
 {
-	// 리뷰신고리스트
-	private String reg_date, user_id, accu_num, st_name, state, final_date, admin_id;
+	// 가게정보수정요청리스트
+	private String reg_date, user_id, st_name, state, final_date, admin_id;
 	
 	// getter / setter 
 	public String getReg_date()
@@ -24,16 +24,6 @@ public class rvListDTO
 	public void setUser_id(String user_id)
 	{
 		this.user_id = user_id;
-	}
-
-	public String getAccu_num()
-	{
-		return accu_num;
-	}
-
-	public void setAccu_num(String accu_num)
-	{
-		this.accu_num = accu_num;
 	}
 
 	public String getSt_name()
@@ -74,8 +64,7 @@ public class rvListDTO
 	public void setAdmin_id(String admin_id)
 	{
 		this.admin_id = admin_id;
-	}		
-
+	}
 	
 	
 }
