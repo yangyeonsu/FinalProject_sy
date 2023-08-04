@@ -198,7 +198,7 @@
 <body>
 
 <!-- header -->
-<c:import url="header_user_sh(0801).jsp"></c:import>
+<c:import url="header_admin.jsp"></c:import>
 
 <!-- container -->
 <div id="container">
@@ -258,7 +258,9 @@
 			<h1>이의제기 접수내역 관리</h1>
 			
 			<!-- 이의제기 box -->
-			<div id="objectionBox" >
+
+			<div id="objectionBox" style="height: auto;">
+        
 				<div class="more" id="more">
 					<h3><a href="#">이의제기</a></h3>
 					<a href="admin_objectionView.jsp" class="moreBtn">더보기+</a>
@@ -273,21 +275,26 @@
 							<th>처리일자</th>
 							<th>처리한 관리자</th>
 						</tr>
-						<c:forEach var="objApply" items="${objList }"></c:forEach>
-						<tr>
-							<td>${objApply.obj_apply_num }</td>
-							<td>${objApply.st_name }</td>
-							<td>${objApply.state }</td>
-							<td>${objApply.final_date }</td>
-							<td>${objApply.admin_id }</td>
-						</tr>
+
 					</thead>
+					<tbody>
+						<c:forEach var="obj" items="${objList }">
+						<tr>
+							<td>${obj.reg_date }</td>
+							<td>${obj.st_name }</td>
+							<td>${obj.state }</td>
+							<td>${obj.final_date }</td>
+							<td>${obj.admin_id }</td>
+						</tr>
+						</c:forEach>
+					</tbody>
+
 				</table>
 			</div>
 			
 			<div class="back" id="more">
 				<h3></h3>
-				<a href="main_admin.jsp" class="backBtn" style="font-size: 10pt;">뒤로가기</a>
+				<a href="mainAdminView.action" class="backBtn" style="font-size: 10pt;">뒤로가기</a>
 			</div>
 		</div>
 	</div>

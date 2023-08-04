@@ -263,7 +263,7 @@
 
 				<div class="more" id="more">
 					<h3><a href="#">리뷰신고</a></h3>
-					<a href="" class="moreBtn">더보기+</a>
+					<a href="reviewListView.action" class="moreBtn">더보기+</a>
 				</div>
 			
 				<table id="review_list">
@@ -299,7 +299,7 @@
 			<div id="storeErrBox" >
 				<div class="more" id="more">
 					<h3><a href="#">가게정보수정요청</a></h3>
-					<a href="" class="moreBtn">더보기+</a>
+					<a href="storeErrView.action" class="moreBtn">더보기+</a>
 				</div>
 			
 				<table id="storeErr_list">
@@ -333,7 +333,7 @@
 			<div id="objectionBox" >
 				<div class="more" id="more">
 					<h3><a href="#">이의제기</a></h3>
-					<a href="" class="moreBtn">더보기+</a>
+					<a href="objectionView.action" class="moreBtn">더보기+</a>
 				</div>
 			
 				<table id="objection_list">
@@ -366,7 +366,7 @@
 			<div id="penaltyBox" >
 				<div class="more" id="more">
 					<h3><a href="#">패널티회수</a></h3>
-					<a href="" class="moreBtn">더보기+</a>
+					<a href="penaltyView.action" class="moreBtn">더보기+</a>
 				</div>
 			
 				<table id="penalty_list">
@@ -405,7 +405,7 @@
 			<div id="inout_Box" >
 				<div class="more" id="more">
 					<h3><a href="#">가게 등록/폐업 요청</a></h3>
-					<a href="" class="moreBtn">더보기+</a>
+					<a href="inoutView.action" class="moreBtn">더보기+</a>
 				</div>
 			
 				<table id="inout_list">
