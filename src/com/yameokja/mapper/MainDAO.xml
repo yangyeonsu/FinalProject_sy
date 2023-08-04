@@ -2,51 +2,52 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.test.mvc.IMainDAO">
+<mapper namespace="com.yameokja.mc.IMainDAO">
 
-	<select id="getStoreList" resultType="com.test.mvc.StoreDTO">
-		SELECT ST_NAME, PHOTO_LINK, STAR_AVG, RV_COUNT
+	<select id="getStoreList" resultType="com.yameokja.mc.StoreDTO">
+		SELECT ST_NAME, PHOTO_LINK, STAR_AVG, RV_COUNT, ST_NUM
 		FROM STORE_VIEW
-		WHERE ST_NUM IN (
-							<foreach collection="list" item="st_num" separator=","> 
-								#{st_num} 
-							</foreach>
-						)
+		WHERE
+		ST_NUM IN (
+		<foreach collection="list" item="st_num" separator=",">
+			#{st_num}
+		</foreach>
+		)
 	</select>
-	
+
 	<select id="getIbmatStNumber" resultType="java.lang.Integer">
 		SELECT F.ST_NUM
 		FROM
 		(
-		    SELECT ROWNUM, T.ST_NUM
-		    FROM
-		    (
-		        SELECT ST_NUM, COUNT(USER_NUM) AS COUNT
-		        FROM COMPARED_BOX
-		        WHERE USER_NUM IN (
-		                              SELECT U.USER_NUM
-		                              FROM
-		                              (
-		                                  SELECT ROWNUM, I.*
-		                                  FROM
-		                                  (
-		                                      SELECT USER_NUM, COUNT(TASTE_NUM) AS COUNT
-		                                      FROM USER_TASTE
-		                                      WHERE TASTE_NUM IN (    
-		                                                           SELECT TASTE_NUM
-		                                                           FROM USER_TASTE
-		                                                           WHERE USER_NUM = '1' 
-		                                                         )
-		                                      GROUP BY USER_NUM
-		                                      ORDER BY COUNT DESC
-		                                  ) I
-		                              ) U
-		                              <![CDATA[WHERE ROWNUM<=10]]> 
-		                           ) 
+		SELECT ROWNUM, T.ST_NUM
+		FROM
+		(
+		SELECT ST_NUM, COUNT(USER_NUM) AS COUNT
+		FROM COMPARED_BOX
+		WHERE USER_NUM IN (
+		SELECT U.USER_NUM
+		FROM
+		(
+		SELECT ROWNUM, I.*
+		FROM
+		(
+		SELECT USER_NUM, COUNT(TASTE_NUM) AS COUNT
+		FROM USER_TASTE
+		WHERE TASTE_NUM IN (
+		SELECT TASTE_NUM
+		FROM USER_TASTE
+		WHERE USER_NUM = #{user_num}
+		)
+		GROUP BY USER_NUM
+		ORDER BY COUNT DESC
+		) I
+		) U
+		                              <![CDATA[WHERE ROWNUM<=10]]>
+		) 
 		        <![CDATA[AND ADD_MONTHS(SYSDATE, -6) < REG_DATE]]>
-		        GROUP BY ST_NUM 
-		        ORDER BY COUNT DESC 
-		    ) T
+		GROUP BY ST_NUM
+		ORDER BY COUNT DESC
+		) T
 		) F
 		<![CDATA[WHERE ROWNUM <= 5]]>
 	</select>
@@ -55,89 +56,155 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT F.ST_NUM
 		FROM
 		(
-		    SELECT ROWNUM, ST_NUM
-		    FROM ST_KEY
-		    WHERE ST_KEY_NUM
-		    IN
-		    (
-		        SELECT T.ST_KEY_NUM
-		        FROM
-		        (
-		            SELECT ROWNUM, K.*
-		            FROM 
-		            (
-		                SELECT SK.ST_KEY_NUM, COUNT(ST.ST_NUM) AS COUNT 
-		                FROM ST_KEY SK LEFT JOIN (
-		                                            SELECT ST_NUM
-		                                            FROM LIKE_BOX
-		                                            WHERE USER_NUM='1' 
-		                                         ) ST
-		                ON SK.ST_NUM = ST.ST_NUM
-		                GROUP BY SK.ST_KEY_NUM  
-		                ORDER BY COUNT DESC
-		            ) K 
-		        )T
+		SELECT ROWNUM, ST_NUM
+		FROM ST_KEY
+		WHERE ST_KEY_NUM
+		IN
+		(
+		SELECT T.ST_KEY_NUM
+		FROM
+		(
+		SELECT ROWNUM, K.*
+		FROM
+		(
+		SELECT SK.ST_KEY_NUM, COUNT(ST.ST_NUM) AS COUNT
+		FROM ST_KEY SK LEFT JOIN (
+		SELECT ST_NUM
+		FROM LIKE_BOX
+		WHERE USER_NUM= #{user_num}
+		) ST
+		ON SK.ST_NUM = ST.ST_NUM
+		GROUP BY SK.ST_KEY_NUM
+		ORDER BY COUNT DESC
+		) K
+		)T
 		        <![CDATA[WHERE ROWNUM<=5]]>
-		    )
-		    ORDER BY DBMS_RANDOM.RANDOM 
+		)
+		ORDER BY DBMS_RANDOM.RANDOM
 		)F
 		<![CDATA[WHERE ROWNUM<=5]]>
 	</select>
-	
+
 	<select id="getHotStNumber" resultType="java.lang.Integer">
 		SELECT L.ST_NUM
 		FROM
 		(SELECT T.ST_NUM
-		    FROM
-		    (SELECT ST_NUM, COUNT(LIKE_NUM) AS COUNT
-		          , ROW_NUMBER() OVER(ORDER BY COUNT(LIKE_NUM) DESC)
-		            FROM LIKE_BOX
+		FROM
+		(SELECT ST_NUM, COUNT(LIKE_NUM) AS COUNT
+		, ROW_NUMBER() OVER(ORDER BY COUNT(LIKE_NUM) DESC)
+		FROM LIKE_BOX
 		            <![CDATA[WHERE EXTRACT(MONTH FROM SYSDATE) - 3 <= EXTRACT(MONTH FROM REG_DATE)]]>
-		            GROUP BY ST_NUM
-		            ORDER BY COUNT DESC) T
+		GROUP BY ST_NUM
+		ORDER BY COUNT DESC) T
 		    <![CDATA[WHERE ROWNUM <= 100]]>
-		    ORDER BY DBMS_RANDOM.VALUE) L
-		<![CDATA[WHERE ROWNUM <= 5]]>;
+		ORDER BY DBMS_RANDOM.VALUE) L
+		<![CDATA[WHERE ROWNUM <= 5]]>
 	</select>
-	
+
 	<select id="getStoreSearchList" resultType="java.lang.Integer">
 		SELECT ST_NUM
+		FROM
+		SEARCH_KEY
+		WHERE SEARCH_NAME LIKE #{keyword}
+		ORDER BY COUNT
+		UNION
+		SELECT
+		ST_NUM
 		FROM STORE_VIEW
 		WHERE ST_NAME LIKE #{keyword}
-		   OR ST_LOCATION LIKE #{keyword}
-		   OR FOOD_NAME LIKE #{keyword}
+		OR ST_LOCATION LIKE #{keyword}
+		OR FOOD_NAME LIKE #{keyword}
 		UNION
 		SELECT ST_NUM
 		FROM MENU
-		WHERE MENU_NAME LIKE #{keyword} 
+		WHERE MENU_NAME
+		LIKE #{keyword}
 		UNION
 		SELECT T1.ST_NUM
 		FROM
 		(
-		    SELECT ST_NUM, SKL.ST_KEYWORD AS ST_KEYWORD
-		    FROM ST_KEY SK LEFT JOIN ST_KEY_LABEL SKL
-		    ON SK.ST_KEY_NUM = SKL.ST_KEY_NUM 
-		    WHERE ST_KEYWORD LIKE #{keyword}         
+		SELECT ST_NUM, SKL.ST_KEYWORD AS ST_KEYWORD
+		FROM ST_KEY SK LEFT JOIN ST_KEY_LABEL SKL
+		ON SK.ST_KEY_NUM = SKL.ST_KEY_NUM
+		WHERE ST_KEYWORD LIKE #{keyword}
 		) T1
 		UNION
 		SELECT T2.ST_NUM
 		FROM
 		(
-		    SELECT RB.ST_NUM, RKL.RV_KEY_NAME AS RV_KEY_NAME
-		    FROM RV_KEY RK LEFT JOIN RV_KEY_LABEL RKL
-		    ON RK.RV_KEY_NUM = RKL.RV_KEY_NUM
-		    LEFT JOIN RV_BOX RB
-		    ON RK.RV_NUM = RB.RV_NUM
-		    WHERE RKL.RV_KEY_NAME LIKE #{keyword}    
+		SELECT RB.ST_NUM, RKL.RV_KEY_NAME AS RV_KEY_NAME
+		FROM RV_KEY RK LEFT JOIN RV_KEY_LABEL RKL
+		ON RK.RV_KEY_NUM = RKL.RV_KEY_NUM
+		LEFT JOIN RV_BOX RB
+		ON RK.RV_NUM = RB.RV_NUM
+		WHERE RKL.RV_KEY_NAME LIKE #{keyword}
 		) T2
 	</select>
-	
+
 	<select id="getStoreComList" resultType="java.lang.Integer">
-		SELECT ST_NAME, PHOTO_LINK
+		SELECT ST_NUM
 		FROM STORE_VIEW
 		WHERE ST_NUM IN (SELECT ST_NUM
-		                FROM COMPARING_BOX
-		                WHERE USER_NUM = #{user_num})
+		FROM COMPARING_BOX
+		WHERE USER_NUM = #{user_num})
 	</select>
 
+	<select id="regionList" resultType="com.yameokja.mc.RegionDTO">
+		SELECT REGION_NUM,
+		REGION_NAME
+		FROM REGION
+	</select>
+
+	<select id="foodLabelList" resultType="com.yameokja.mc.FoodLabelDTO">
+		SELECT FOOD_NUM, FOOD_NAME
+		FROM FOOD_LABEL
+	</select>
+
+	<select id="stKeyList" resultType="com.yameokja.mc.StKeyDTO">
+		SELECT ST_KEY_NUM, ST_KEYWORD
+		FROM ST_KEY_LABEL
+	</select>
+
+	<select id="comparingSearch" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS COUNT
+		FROM COMPARING_BOX
+		WHERE
+		USER_NUM = #{user_num}
+		AND ST_NUM = #{st_num}
+	</select>
+
+	<insert id="comparingInsert">
+		INSERT INTO COMPARING_BOX(COMPARING_NUM, USER_NUM,
+		ST_NUM, REG_DATE)
+		VALUES(COMPARINGSEQ.NEXTVAL, #{user_num}, #{st_num}, DEFAULT)
+	</insert>
+
+	<delete id="comparingDelete">
+		DELETE *
+		FROM COMPARING_BOX
+		WHERE USER_NUM =
+		#{user_num}
+		AND ST_NUM = #{st_num}
+	</delete>
+
+	<select id="jjimSearch" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS COUNT
+		FROM LIKE_BOX
+		WHERE USER_NUM =
+		#{user_num}
+		AND ST_NUM = #{st_num}
+	</select>
+
+	<insert id="jjimInsert" >
+		INSERT INTO LIKE_BOX(LIKE_NUM, USER_NUM, ST_NUM,
+		REG_DATE)
+		VALUES (LIKESEQ.NEXTVAL, #{user_num}, #{st_num}, DEFAULT)
+	</insert>
+
+	<delete id="jjimDelete">
+		DELETE *
+		FROM LIKE_BOX
+		WHERE USER_NUM = #{user_num}
+		AND ST_NUM = #{st_num}
+	</delete>
 </mapper>

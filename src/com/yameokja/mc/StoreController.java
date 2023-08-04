@@ -4,6 +4,9 @@ package com.yameokja.mc;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,17 +21,21 @@ public class StoreController
 	private SqlSession sqlSession;
 	
 	@RequestMapping(value="/storemain.action", method=RequestMethod.GET)
-	public String storeMainLoad(Model model)
+	public String storeMainLoad(HttpServletRequest request, Model model)
 	{
+		HttpSession session = request.getSession();
 		String result = "";
 		
 		/* int st_num = Integer.parseInt(str_st_num); */ 
 		
 		IStoreMainDAO smDao = sqlSession.getMapper(IStoreMainDAO.class);
+		IUserDAO uDao = sqlSession.getMapper(IUserDAO.class);
 		
+		String user_num = (String)session.getAttribute("user_num");
 		
-		
-		ArrayList<HashMap<String, String>> hashmaplist = smDao.rv_key_sum(1);
+		String st_num = uDao.searchStoreInfo(user_num);
+				
+		ArrayList<HashMap<String, String>> hashmaplist = smDao.rv_key_sum(st_num);
 		
 		ArrayList<String> rv_labels = new ArrayList<String>();
 		ArrayList<String> rv_data = new ArrayList<String>();
@@ -40,7 +47,7 @@ public class StoreController
 		}
 		
 		
-		ArrayList<HashMap<String, String>> star_transition = smDao.star_transition(1);
+		ArrayList<HashMap<String, String>> star_transition = smDao.star_transition(st_num);
 		
 		ArrayList<String> star_labels = new ArrayList<String>();
 		ArrayList<String> star_data = new ArrayList<String>();
@@ -58,10 +65,10 @@ public class StoreController
 		model.addAttribute("star_labels", star_labels);
 		model.addAttribute("star_data", star_data);
 		
-		model.addAttribute("rv_key_list", smDao.rv_key_sum(1));
-		model.addAttribute("rv_list", smDao.rv_list(1));
+		model.addAttribute("rv_key_list", smDao.rv_key_sum(st_num));
+		model.addAttribute("rv_list", smDao.rv_list(st_num));
 		
-		result = "/WEB-INF/view/StoreMainPage_error.jsp";
+		result = "/WEB-INF/view/StoreMainPage.jsp";
 		
 		return result;
 	}

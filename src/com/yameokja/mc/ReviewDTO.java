@@ -4,7 +4,7 @@ public class ReviewDTO
 {
 	private int rv_num, st_num, star_score;
 	private String user_nickname, rv_content, reg_date;
-	
+	private String st_name;
 	
 	
 	
@@ -60,6 +60,15 @@ public class ReviewDTO
 	public void setReg_date(String reg_date)
 	{
 		this.reg_date = reg_date;
+	}
+	
+	public String getSt_name()
+	{
+		return st_name;
+	}
+	public void setSt_name(String st_name)
+	{
+		this.st_name = st_name;
 	}
 	
 	

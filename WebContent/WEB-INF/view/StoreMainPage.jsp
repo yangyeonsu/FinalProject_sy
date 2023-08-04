@@ -409,7 +409,7 @@ $(function () {
 <body>
 
 
-<header><c:import url="header_user_sh(0801).jsp"></c:import></header>
+<header><c:import url="header_user.jsp"></c:import></header>
 
 <div class="container">
 	
@@ -460,23 +460,25 @@ $(function () {
 	<div class="overlay"><input type="hidden" id="checkOverlay" value="false"></div>
 
 	<div class="storemain_body">
-		
+		<c:if test="">
 		<div class="error">
 			<div class="errorMsg">
 				토리네 도토리묵(으)로 가게정보수정요청이 들어왔습니다.<br>
-				신고 접수된 정보에 대해 수정이 없을 시 3일 내로 패널티가 부여됩니다.
+				신고 접수된 정보에 대해 수정이 없을 시 3일뒤 패널티가 부여됩니다.
 			</div>
 			<div class="button">
-				<button class="btn btn-outline-primary btn-layer-2_1">
+				<button class="btn btn-outline-primary btn-layer-2_1" value="요청처리번호">
 					이의 제기 요청
 					<i class="fa fa-check"></i>
 				</button>
-				<button class="btn btn-outline-primary btn-layer-2_1">
+				<button class="btn btn-outline-primary btn-layer-2_1" vlaue="요청번호">
 					패널티 회수 요청
 					<i class="fa fa-check"></i>
 				</button>
 			</div>
 		</div>
+		</c:if>
+		
 		<div class="storemain_bodyTop">
 			<p class="storeName">토리네 도토리묵</p>
 			<button type="button" class="modifyBtn">

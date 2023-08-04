@@ -9,7 +9,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>user_header</title>
+<title>Main Page</title>
 
 <!-- jquery -->
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
@@ -23,70 +23,35 @@
 	
 	#store_header
 	{
-		/* display: flex;
-		width: 88vw;
-		align-items: center;
-		padding-top: 5vh; */
-		
-		/* 0730수정 */
 		position: relative;
-		display: flex;
 	    width: 88vw;
 	    align-items: flex-start;
 	    padding-top: 1vh;
-	    margin-left: 6vw;
-	    height: 10vh;
-		max-height: 10vh;
+	    height: 30vh;
+	    max-height: 10vh;
+	}
 
-	}
-	
-	#headerLogo
-	{
-		display: flex;
-		justify-content: flex-end;	
-		max-width: 8vw;
-	}
-	
-	/* 0730 수정
-	.headerImg
-	{
-		padding-left: 10vw;
-	} 
-	*/
-	
 	#headerAlarm
 	{
-		width: 80vw;
-		/*0730 수정*/
-		padding-left: 12vw;
+	    width: 70vw;
+	    padding-left: 26vw;
 	}
 	
 
 	.headerBtn
 	{
-		/* display: flex;
-	    width: 10vw;	--수정
-	    margin-top: 3vh;
-	    padding-left: 55vw; --수정*/
-	    
-	    /* 0730 수정 */
 	    display: flex;
 	    width: 10vw;
 	    margin-top: 3vh;
 	    padding-left: 55vw;
 	    justify-content: space-between;
-	    align-items: center;
+	    position: static;
 	}
 	
 	.menuBtn
 	{
 		display: flex;
 		width: 7vw;
-	}
-	
-	#alarm
-	{
-		padding-top: 0.2vh;
 	}
 	
 	a
@@ -96,27 +61,26 @@
 	
 	#mypage a
 	{
-		font-size: 1.2vw;
-		font-weight: bold;
-		color: black;
+		font-size: 0.9vw;
+    	font-weight: bold;
+    	color: black;
 	}
 	
 	.sub_list
 	{
 		position: relative;
-		display: flex;
-		flex-direction: row-reverse;
-		width: 65vw;
+	    display: flex;
+	    flex-direction: row-reverse;
+	    width: 65vw;
 	}
 	
 	.mypage_menu
 	{
 		position: relative;
-		transition-duration: 0.5s;
-		font-size: 0.8vw;
-		padding-right: 1.8vw;
-		background-color: #f5f3e7;
-		margin-right: 4vw;
+	    transition-duration: 0.5s;
+	    font-size: 0.8vw;
+	    background-color: #f5f3e7;
+	    margin-right: 4vw;
 	}
 	
 	.person_listA
@@ -147,14 +111,26 @@
 	.alarm_menu
 	{
 		transition-duration: 0.5s;
-		font-size: 0.8vw;
-		background-color: #f5f3e7;
+	    font-size: 0.8vw;
+	    background-color: #f5f3e7;
 	}
 	
 	.person_listA, .person_listB
 	{
 		list-style-type: none;
 		padding: 0;
+	}
+	
+	.alarm_cl
+	{
+		font-size: 0.9vw;
+    	font-weight: bold;
+    	color: black;
+	}
+	
+	.subListBtn
+	{
+		border: 0;
 	}
 </style>
 
@@ -182,6 +158,20 @@ $(function() {
         	$(".mypage_menu").hide();
         }
     });
+    
+    $("#myPage").click(function()
+	{
+		$("#mainForm").attr("action","usermypage.action");
+		$("#mainForm").submit();
+	});
+    
+    $("#storeMyPage").click(function()
+	{
+		$("#mainForm").attr("action","storemain.action");
+		$("#mainForm").submit();
+	});
+    
+   
 });
 
 </script>
@@ -191,15 +181,11 @@ $(function() {
 <body>
 
 	<header id="store_header">
-		<div class="headerImg">
-			<img id="headerLogo" src="<%=cp %>/images/logo_text.png">
-		</div>
-	
 		<div id="headerAlarm">
 			<div class="headerBtn">
 				<div class="menuBtn">
 					<div id="mypage">
-						<a href="#" class="mypage_cl" id="mypagetxt">홍길동(먹짱)</a>			
+						<a href="#" class="mypage_cl" id="mypagetxt">${admin_name }</a>			
 					</div>
 				</div>
 				
@@ -210,9 +196,9 @@ $(function() {
 			<div class="sub_list">
 				<div class="mypage_menu">
 					<ul class="person_listA">
-						<li><a href="#">마이 페이지</a>
-						<li><a href="#">사업자 메인 페이지</a>
-						<li><a href="#">로그아웃</a>
+						<li><button type="button" id="myPage" class="subListBtn">관리자 등록</button>
+						<!-- <li><button type="button" id="storeMyPage" class="subListBtn">사업자 메인 페이지</button> -->
+						<li><button type="button" id="logout" class="subListBtn" >로그아웃</button>
 					</ul>
 				</div>
 				<div class="alarm_menu">
@@ -227,4 +213,3 @@ $(function() {
 		</div>
 	</header>
 </body>
-

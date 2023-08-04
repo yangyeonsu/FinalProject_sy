@@ -1,9 +1,10 @@
 package com.yameokja.mc;
 
+
 public class StoreDTO
 {
 	// 주요 속성 구성
-	private String st_name, photo_link;
+	private String st_name, photo_link, reg_date;
 	private double star_avg;
 	private int st_num, rv_count;
 	
@@ -17,6 +18,7 @@ public class StoreDTO
 	{
 		this.st_num = st_num;
 	}
+	
 	public String getSt_name()
 	{
 		return st_name;
@@ -25,6 +27,7 @@ public class StoreDTO
 	{
 		this.st_name = st_name;
 	}
+	
 	public String getPhoto_link()
 	{
 		return photo_link;
@@ -33,6 +36,7 @@ public class StoreDTO
 	{
 		this.photo_link = photo_link;
 	}
+	
 	public double getStar_avg()
 	{
 		return star_avg;
@@ -41,6 +45,7 @@ public class StoreDTO
 	{
 		this.star_avg = star_avg;
 	}
+	
 	public int getRv_count()
 	{
 		return rv_count;
@@ -48,6 +53,15 @@ public class StoreDTO
 	public void setRv_count(int rv_count)
 	{
 		this.rv_count = rv_count;
+	}
+	
+	public String getReg_date()
+	{
+		return reg_date;
+	}
+	public void setReg_date(String reg_date)
+	{
+		this.reg_date = reg_date;
 	}
 	
 	

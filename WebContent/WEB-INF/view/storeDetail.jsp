@@ -14,8 +14,8 @@ String cp = request.getContextPath();
 <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
 <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
 
-<link rel="stylesheet" type="text/css" href="<%=cp%>/css/compareBox(0801).css">
-<link rel="stylesheet" type="text/css" href="<%=cp%>/css/userMyPage(0801).css">
+<link rel="stylesheet" type="text/css" href="<%=cp%>/css/compareBox.css">
+<link rel="stylesheet" type="text/css" href="<%=cp%>/css/userMyPage.css">
 
 
 <script type="text/javascript"
@@ -384,7 +384,7 @@ String cp = request.getContextPath();
 
 <body>
 	<div class="header">
-		<c:import url="header_user_sh(0801).jsp"></c:import>
+		<c:import url="header_user.jsp"></c:import>
 	</div>
 
 	<div id="body">

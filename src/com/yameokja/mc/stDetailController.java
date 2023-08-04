@@ -1,5 +1,7 @@
 package com.yameokja.mc;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,28 +16,30 @@ public class stDetailController
 	private SqlSession sqlSession;
 	
 	@RequestMapping(value="/stDetail-userView.action", method = RequestMethod.GET)
-	public String stDetail(Model model)
+	public String stDetail(HttpServletRequest request, Model model)
 	{
 		String result = "";
 		
 		IstDetailDAO_userView dao = sqlSession.getMapper(IstDetailDAO_userView.class);
 		
-		model.addAttribute("openClose", dao.openClose());
-		model.addAttribute("breakTime", dao.breakTime());
-		model.addAttribute("holiday", dao.holiday());
-		model.addAttribute("store", dao.store());
-		model.addAttribute("stName", dao.stName());
-		model.addAttribute("clikeNum", dao.clikeNum());
-		model.addAttribute("creviewScore", dao.creviewScore());
-		model.addAttribute("creviewNum", dao.creviewNum());
-		model.addAttribute("tel", dao.tel());
-		model.addAttribute("lo", dao.lo());
-		model.addAttribute("others", dao.others());
-		model.addAttribute("menuLists", dao.menuLists());
-		model.addAttribute("stKeys", dao.stKeys());
-		model.addAttribute("reViews", dao.reViews());
+		int st_num = Integer.parseInt(request.getParameter("st_num"));
 		
-		result = "/WEB-INF/view/storeDetail-userView2(20230802).jsp";
+		model.addAttribute("openClose", dao.openClose(st_num));
+		model.addAttribute("breakTime", dao.breakTime(st_num));
+		model.addAttribute("holiday", dao.holiday(st_num));
+		model.addAttribute("store", dao.store(st_num));
+		model.addAttribute("stName", dao.stName(st_num));
+		model.addAttribute("clikeNum", dao.clikeNum(st_num));
+		model.addAttribute("creviewScore", dao.creviewScore(st_num));
+		model.addAttribute("creviewNum", dao.creviewNum(st_num));
+		model.addAttribute("tel", dao.tel(st_num));
+		model.addAttribute("lo", dao.lo(st_num));
+		model.addAttribute("others", dao.others(st_num));
+		model.addAttribute("menuLists", dao.menuLists(st_num));
+		model.addAttribute("stKeys", dao.stKeys(st_num));
+		model.addAttribute("reViews", dao.reViews(st_num));
+		
+		result = "/WEB-INF/view/storeDetail.jsp";
 		
 		return result;
 	}

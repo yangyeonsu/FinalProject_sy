@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	request.setCharacterEncoding("UTF-8");
-	String cp = request.getContextPath();
+String cp = request.getContextPath();
 %>
 <!DOCTYPE html>
 <html>
@@ -15,8 +15,9 @@
 <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
 
 
-<link rel="stylesheet" type="text/css" href="<%=cp%>/css/compareBox.css">
-<link rel="stylesheet" type="text/css" href="<%=cp%>/css/userMyPage(0730).css">
+<link rel="stylesheet" type="text/css"
+	href="<%=cp%>/css/compareBox(0801).css">
+<link rel="stylesheet" type="text/css" href="<%=cp%>/css/userMyPage.css">
 
 <style type="text/css">
 	.continer{
@@ -203,7 +204,7 @@
 <body>
 
 	<div class="header">
-		<c:import url="header_user_sh(0730_3).jsp"></c:import>
+		<c:import url="header_user.jsp"></c:import>
 	</div>
 
 	<div class="container">
@@ -265,23 +266,23 @@
 				
 				<!-- 개인 정보 영역 -->
 				<div class="id">
-
-					<div class="id1">
-						<div class="title9">닉네임(아이디)</div>
-						<div class="sub9">홍길동(dong)</div>
-					</div>
-					<div class="id1">
-						<div class="title9">등급</div>
-						<div class="sub9">크랩</div>
-					</div>
-					<div class="id1">
-						<div class="title9">포인트</div>
-						<div class="sub9">150pt</div>
-					</div>
-					<div class="id1">
-						<div class="title9">키워드</div>
-						<div class="sub9">맵찔이</div>
-					</div>
+					
+						<div class="id1">
+							<div class="title9">닉네임(아이디)</div>
+							<div class="sub9">${user.user_nickname }(${user.user_id })</div>
+						</div>
+						<div class="id1">
+							<div class="title9">등급</div>
+							<div class="sub9">${user.user_grade }</div>
+						</div>
+						<div class="id1">
+							<div class="title9">포인트</div>
+							<div class="sub9">${user.point_sum}pt</div>
+						</div>
+						<div class="id1">
+							<div class="title9">키워드</div>
+							<div class="sub9"><c:forEach var="keyword" items="${usermp_ukeyword }">${keyword.ukeyword } </c:forEach> </div>
+						</div>
 				</div>
 
 				<!-- 개인이 찜한 목록 -->
@@ -294,100 +295,52 @@
 					</div>
 
 					<div class="jimlist">
+						<c:forEach var="store" items="${likelist }">
 						<div class="jimstore">
 							<div class="jimstoreImg">
-								<img src="images/store_img01.png" class="jimstImg" alt="...">
+								<img src="<%=cp %>/${store.photo_link }" class="jimstImg" alt="...">
 							</div>
 							<div class="jimstoreName">
-								가게 1
+								${store.st_name }
 							</div>
 						</div>
-						<div class="jimstore">
-							<div class="jimstoreImg">
-								<img src="images/store_img01.png" class="jimstImg" alt="...">
-							</div>
-							<div class="jimstoreName">
-								가게 1
-							</div>
-						</div>
-						<div class="jimstore">
-							<div class="jimstoreImg">
-								<img src="images/store_img01.png" class="jimstImg" alt="...">
-							</div>
-							<div class="jimstoreName">
-								가게 1
-							</div>
-						</div>
-						<div class="jimstore">
-							<div class="jimstoreImg">
-								<img src="images/store_img01.png" class="jimstImg" alt="...">
-							</div>
-							<div class="jimstoreName">
-								가게 1
-							</div>
-						</div>
-						<div class="jimstore">
-							<div class="jimstoreImg">
-								<img src="images/store_img01.png" class="jimstImg" alt="...">
-							</div>
-							<div class="jimstoreName">
-								가게 1
-							</div>
-						</div>
-						<div class="jimstore">
-							<div class="jimstoreImg">
-								<img src="images/store_img01.png" class="jimstImg" alt="...">
-							</div>
-							<div class="jimstoreName">
-								가게 1
-							</div>
-						</div>
+						</c:forEach>
+						
 					</div><!-- .jimlist end -->
 				</div><!-- .jjimlist end -->
 
 
 				<!-- 개인이 비교했던 가게목록 -->
-				<div class="stalist">
+				<div class="jjimlist">
 					<div class="ta">
-						<div class="title2">비교했던 가게목록</div>
-						<div class="ado">
+						<div class="title">찜한가게 목록</div>
+						<div class="ado" id="ado">
 							<a href="" class="adoi">더보기+</a>
 						</div>
 					</div>
 
-					<div class="list0" id="list0">
-						<div class="list1">Num</div>
-						<div class="list1">가게명</div>
-						<div class="list1">비교한 날짜</div>
-					</div>
-					<div class="list0">
-						<div class="list1">4</div>
-						<div class="list1">가게명4</div>
-						<div class="list1">2019-12-06</div>
-					</div>
-					<div class="list0">
-						<div class="list1">3</div>
-						<div class="list1">가게명3</div>
-						<div class="list1">2019-12-06</div>
-					</div>
-					<div class="list0">
-						<div class="list1">2</div>
-						<div class="list1">가게명2</div>
-						<div class="list1">2019-12-06</div>
-					</div>
-					<div class="list0">
-						<div class="list1">1</div>
-						<div class="list1">가게명1</div>
-						<div class="list1">2019-12-06</div>
-					</div>
-
-				</div><!-- .stalist end -->
+					<div class="jimlist">
+						<c:forEach var="store" items="${comparedlist }">
+							<div class="jimstore">
+								<div class="jimstoreImg">
+									<img src="<%=cp %>/${store.photo_link }" class="jimstImg" alt="...">
+								</div>
+								<div class="jimstoreName">
+									${store.st_name }
+								</div>
+								
+							</div>
+						</c:forEach>
+						
+					</div><!-- .jimlist end -->
+				</div><!-- .jjimlist end -->
+				
 				
 				
 				<!-- 개인이 작성한 리뷰목록 -->
 				<div class="stalist">
 					<div class="ta">
-						<div class="title2">작성한 리뷰목록</div>
+						<div class="title">작성한 리뷰목록</div>
 						<div class="ado">
 							<a href="" class="adoi">더보기+</a>
 						</div>
@@ -399,34 +352,14 @@
 						<div class="list1">내용</div>
 						<div class="list1">리뷰 작성 날짜</div>
 					</div>
-					<div class="list0">
-						<div class="list1">4</div>
-						<div class="list1">가게명4</div>
-						<div class="list1">안녕하세요 맛있었습니다안녕하세요 맛있었습니다안녕하세요 맛있었습니다안녕하세요
-							맛있었습니다안녕하세요 맛있었습니다</div>
-						<div class="list1">2019-12-06</div>
-					</div>
-					<div class="list0">
-						<div class="list1">3</div>
-						<div class="list1">가게명3</div>
-						<div class="list1">안녕하세요 맛있었습니다안녕하세요 맛있었습니다안녕하세요 맛있었습니다안녕하세요
-							맛있었습니다안녕하세요 맛있었습니다</div>
-						<div class="list1">2019-12-06</div>
-					</div>
-					<div class="list0">
-						<div class="list1">2</div>
-						<div class="list1">가게명2</div>
-						<div class="list1">안녕하세요 맛있었습니다안녕하세요 맛있었습니다안녕하세요 맛있었습니다안녕하세요
-							맛있었습니다안녕하세요 맛있었습니다</div>
-						<div class="list1">2019-12-06</div>
-					</div>
-					<div class="list0">
-						<div class="list1">1</div>
-						<div class="list1">가게명1</div>
-						<div class="list1">안녕하세요 맛있었습니다안녕하세요 맛있었습니다안녕하세요 맛있었습니다안녕하세요
-							맛있었습니다안녕하세요 맛있었습니다</div>
-						<div class="list1">2019-12-06</div>
-					</div>
+					<c:forEach var="review" items="${rvlist }">
+						<div class="list0">
+							<div class="list1">${review.rv_num }</div>
+							<div class="list1">${review.st_num }</div>
+							<div class="list1">${review.rv_content }</div>
+							<div class="list1">${review.reg_date }</div>
+						</div>
+					</c:forEach>
 				</div><!-- .stalist end -->
 			</div><!-- .col-md-8 end -->
 			
@@ -442,116 +375,19 @@
 				<div class="comStoreListDiv">
 
 					<!-- 한 가게 영역 -->
+					<c:forEach var="store" items="${comparingbox }">
 					<div class="comStoreDiv">
 						<!-- 한 가게 대표사진 영역 -->
 						<div class="comStoreImgDiv">
 							<label for="st1" class="stLabel"> <input type="checkbox"
 								class="comStImgCB" id="st1"> <!-- <span class="circle"></span> -->
-								<img class="comStImg" src="<%=cp%>/images/store_img01.png">
+								<img class="comStImg" src="<%=cp%>/${store.photo_link }">
 							</label>
 						</div>
 						<!-- 한 가게 가게이름 영역 -->
-						<div class="comStoreNameDiv">가게1</div>
+						<div class="comStoreNameDiv">${store.st_name }</div>
 					</div>
-
-					<!-- 한 가게 영역 -->
-					<div class="comStoreDiv">
-						<!-- 한 가게 대표사진 영역 -->
-						<div class="comStoreImgDiv">
-							<input type="checkbox" class="comStImgCB" id="st2"> <label
-								for="st2" class="stLabel"> <img class="comStImg"
-								src="<%=cp%>/images/store_img01.png">
-							</label>
-						</div>
-						<!-- 한 가게 가게이름 영역 -->
-						<div class="comStoreNameDiv">가게2</div>
-					</div>
-
-					<!-- 한 가게 영역 -->
-					<div class="comStoreDiv">
-						<!-- 한 가게 대표사진 영역 -->
-						<div class="comStoreImgDiv">
-							<input type="checkbox" class="comStImgCB" id="st3"> <label
-								for="st3" class="stLabel"> <img class="comStImg"
-								src="<%=cp%>/images/store_img01.png">
-							</label>
-						</div>
-						<!-- 한 가게 가게이름 영역 -->
-						<div class="comStoreNameDiv">가게3</div>
-					</div>
-
-					<!-- 한 가게 영역 -->
-					<div class="comStoreDiv">
-						<!-- 한 가게 대표사진 영역 -->
-						<div class="comStoreImgDiv">
-							<input type="checkbox" class="comStImgCB" id="st4"> <label
-								for="st4" class="stLabel"> <img class="comStImg"
-								src="<%=cp%>/images/store_img01.png">
-							</label>
-						</div>
-						<!-- 한 가게 가게이름 영역 -->
-						<div class="comStoreNameDiv">가게4</div>
-					</div>
-
-					<!-- 한 가게 영역 -->
-					<div class="comStoreDiv">
-						<!-- 한 가게 대표사진 영역 -->
-						<div class="comStoreImgDiv">
-							<img class="comStImg" src="<%=cp%>/images/comp_img01.png">
-						</div>
-						<!-- 한 가게 가게이름 영역 -->
-						<div class="comStoreNameDiv"></div>
-					</div>
-
-					<!-- 한 가게 영역 -->
-					<div class="comStoreDiv">
-						<!-- 한 가게 대표사진 영역 -->
-						<div class="comStoreImgDiv">
-							<img class="comStImg" src="<%=cp%>/images/comp_img01.png">
-						</div>
-						<!-- 한 가게 가게이름 영역 -->
-						<div class="comStoreNameDiv"></div>
-					</div>
-
-					<!-- 한 가게 영역 -->
-					<div class="comStoreDiv">
-						<!-- 한 가게 대표사진 영역 -->
-						<div class="comStoreImgDiv">
-							<img class="comStImg" src="<%=cp%>/images/comp_img01.png">
-						</div>
-						<!-- 한 가게 가게이름 영역 -->
-						<div class="comStoreNameDiv"></div>
-					</div>
-
-					<!-- 한 가게 영역 -->
-					<div class="comStoreDiv">
-						<!-- 한 가게 대표사진 영역 -->
-						<div class="comStoreImgDiv">
-							<img class="comStImg" src="<%=cp%>/images/comp_img01.png">
-						</div>
-						<!-- 한 가게 가게이름 영역 -->
-						<div class="comStoreNameDiv"></div>
-					</div>
-
-					<!-- 한 가게 영역 -->
-					<div class="comStoreDiv">
-						<!-- 한 가게 대표사진 영역 -->
-						<div class="comStoreImgDiv">
-							<img class="comStImg" src="<%=cp%>/images/comp_img01.png">
-						</div>
-						<!-- 한 가게 가게이름 영역 -->
-						<div class="comStoreNameDiv"></div>
-					</div>
-
-					<!-- 한 가게 영역 -->
-					<div class="comStoreDiv">
-						<!-- 한 가게 대표사진 영역 -->
-						<div class="comStoreImgDiv">
-							<img class="comStImg" src="<%=cp%>/images/comp_img01.png">
-						</div>
-						<!-- 한 가게 가게이름 영역 -->
-						<div class="comStoreNameDiv"></div>
-					</div>
+					</c:forEach>
 
 				</div><!-- .comStoreListDiv end -->
 
@@ -568,6 +404,7 @@
 	<div class="footer">
 		<c:import url="footer.jsp"></c:import>
 	</div>
+
 
 
 </body>

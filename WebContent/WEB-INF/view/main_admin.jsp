@@ -199,7 +199,7 @@
 <body>
 
 <!-- header -->
-<c:import url="header_user_sh(0801).jsp"></c:import>
+<c:import url="header_admin.jsp"></c:import>
 
 <!-- container -->
 <div id="container">
@@ -277,52 +277,20 @@
 							<th>처리일자</th>
 							<th>처리한 관리자</th>
 						</tr>
-						<tr>
-							<td>2023.05.01</td>
-							<td>hong</td>
-							<td>마시다</td>
-							<td>gildong</td>
-							<td>미확인</td>
-							<td>-</td>
-							<td>-</td>
-						</tr>
-						<tr>
-							<td>2023.04.31</td>
-							<td>gil</td>
-							<td>맛스타</td>
-							<td>ssang</td>
-							<td>미확인</td>
-							<td>-</td>
-							<td>-</td>
-						</tr>
-						<tr>
-							<td>2023.04.29</td>
-							<td>dong</td>
-							<td>맛다시</td>
-							<td>gulee</td>
-							<td>미확인</td>
-							<td>-</td>
-							<td>-</td>
-						</tr>
-						<tr>
-							<td>2023.04.29</td>
-							<td>lee</td>
-							<td>김치찌개</td>
-							<td>sanghyuk</td>
-							<td>처리중</td>
-							<td>-</td>
-							<td>-</td>
-						</tr>
-						<tr>
-							<td>2023.04.29</td>
-							<td>soon</td>
-							<td>순두부맛집</td>
-							<td>simmi</td>
-							<td>최종처리완료</td>
-							<td>2023.05.02</td>
-							<td>MG1</td>
-						</tr>
 					</thead>
+					<tbody>
+						<c:forEach var="review" items="${rvList }" begin="0" end="4">
+						<tr>
+							<td>${review.reg_date }</td>
+							<td>${review.user_id }</td>
+							<td>${review.st_name }</td>
+							<td>${review.accu_num }</td>
+							<td>${review.state }</td>
+							<td>${review.final_date }</td>
+							<td>${review.admin_id }</td>
+						</tr>
+						</c:forEach>
+					</tbody>
 				</table>
 			</div>
 			
@@ -344,47 +312,19 @@
 							<th>처리일자</th>
 							<th>처리한 관리자</th>
 						</tr>
-						<tr>
-							<td>2023.05.02</td>
-							<td>hong</td>
-							<td>다시다</td>
-							<td>미확인</td>
-							<td>-</td>
-							<td>-</td>
-						</tr>
-						<tr>
-							<td>2023.05.01</td>
-							<td>gil</td>
-							<td>맛스타</td>
-							<td>미확인</td>
-							<td>-</td>
-							<td>-</td>
-						</tr>
-						<tr>
-							<td>2023.04.30</td>
-							<td>dong</td>
-							<td>맛다시</td>
-							<td>처리중</td>
-							<td>-</td>
-							<td>-</td>
-						</tr>
-						<tr>
-							<td>2023.04.29</td>
-							<td>gill</td>
-							<td>김치찌개</td>
-							<td>최종처리완료</td>
-							<td>2023.05.06</td>
-							<td>MG2</td>
-						</tr>
-						<tr>
-							<td>2023.04.29</td>
-							<td>gagildong</td>
-							<td>순두부맛집</td>
-							<td>최종처리완료</td>
-							<td>2023.05.02</td>
-							<td>MG1</td>
-						</tr>
 					</thead>
+					<tbody>
+						<c:forEach var="req" items="${reqList }" begin="0" end="4">
+						<tr>
+							<td>${req.reg_date }</td>
+							<td>${req.user_id }</td>
+							<td>${req.st_name }</td>
+							<td>${req.state }</td>
+							<td>${req.final_date }</td>
+							<td>${req.admin_id }</td>
+						</tr>
+						</c:forEach>
+					</tbody>
 				</table>
 			</div>
 			
@@ -405,42 +345,18 @@
 							<th>처리일자</th>
 							<th>처리한 관리자</th>
 						</tr>
-						<tr>
-							<td>2023.04.30</td>
-							<td>맛시따</td>
-							<td>미확인</td>
-							<td>-</td>
-							<td>-</td>
-						</tr>
-						<tr>
-							<td>2023.04.30</td>
-							<td>맛스타</td>
-							<td>미확인</td>
-							<td>-</td>
-							<td>-</td>
-						</tr>
-						<tr>
-							<td>2023.04.30</td>
-							<td>김치찌개</td>
-							<td>미확인</td>
-							<td>-</td>
-							<td>-</td>
-						</tr>
-						<tr>
-							<td>2023.04.30</td>
-							<td>순두부맛집</td>
-							<td>최종처리완료</td>
-							<td>2023.05.04</td>
-							<td>MG2</td>
-						</tr>
-						<tr>
-							<td>2023.04.30</td>
-							<td>다시다</td>
-							<td>최종처리완료</td>
-							<td>2023.05.04</td>
-							<td>MG1</td>
-						</tr>
 					</thead>
+					<tbody>
+						<c:forEach var="obj" items="${objList }" begin="0" end="4">
+						<tr>
+							<td>${obj.reg_date }</td>
+							<td>${obj.st_name }</td>
+							<td>${obj.state }</td>
+							<td>${obj.final_date }</td>
+							<td>${obj.admin_id }</td>
+						</tr>
+						</c:forEach>
+					</tbody>
 				</table>
 			</div>
 			
@@ -462,6 +378,8 @@
 							<th>처리일자</th>
 							<th>처리한 관리자</th>
 						</tr>
+					</thead>
+					<tbody>
 						<tr>
 							<td>2023.04.30</td>
 							<td>맛시따</td>
@@ -469,35 +387,16 @@
 							<td>-</td>
 							<td>-</td>
 						</tr>
+						<c:forEach var="revo" items="${revoList }" begin="0" end="4">
 						<tr>
-							<td>2023.04.30</td>
-							<td>맛스타</td>
-							<td>미확인</td>
-							<td>-</td>
-							<td>-</td>
+							<td>${revo.reg_date }</td>
+							<td>${revo.st_name }</td>
+							<td>${revo.state }</td>
+							<td>${revo.final_date }</td>
+							<td>${revo.admin_id }</td>
 						</tr>
-						<tr>
-							<td>2023.04.30</td>
-							<td>김치찌개</td>
-							<td>미확인</td>
-							<td>-</td>
-							<td>-</td>
-						</tr>
-						<tr>
-							<td>2023.04.30</td>
-							<td>순두부맛집</td>
-							<td>최종처리완료</td>
-							<td>2023.05.04</td>
-							<td>MG2</td>
-						</tr>
-						<tr>
-							<td>2023.04.30</td>
-							<td>다시다</td>
-							<td>최종처리완료</td>
-							<td>2023.05.04</td>
-							<td>MG1</td>
-						</tr>
-					</thead>
+						</c:forEach>
+					</tbody>
 				</table>
 			</div>
 			
@@ -519,47 +418,24 @@
 							<th>처리일자</th>
 							<th>처리한 관리자</th>
 						</tr>
-						<tr>
-							<td style="background-color: green;">등록</td>
-							<td>2023.05.02</td>
-							<td>hong</td>
-							<td>미확인</td>
-							<td>-</td>
-							<td>-</td>
-						</tr>
-						<tr>
-							<td style="background-color: pink;">폐업</td>
-							<td>2023.05.02</td>
-							<td>gil</td>
-							<td>미확인</td>
-							<td>-</td>
-							<td>-</td>
-						</tr>
-						<tr>
-							<td style="background-color: green;">등록</td>
-							<td>2023.05.02</td>
-							<td>dong</td>
-							<td>미확인</td>
-							<td>-</td>
-							<td>-</td>
-						</tr>
-						<tr>
-							<td style="background-color: green;">등록</td>
-							<td>2023.05.02</td>
-							<td>sam</td>
-							<td>최종처리완료</td>
-							<td>2023.05.04</td>
-							<td>MG2</td>
-						</tr>
-						<tr>
-							<td style="background-color: pink;">폐업</td>
-							<td>2023.05.02</td>
-							<td>smith</td>
-							<td>최종처리완료</td>
-							<td>2023.05.04</td>
-							<td>MG1</td>
-						</tr>
 					</thead>
+					<tbody>
+						<c:forEach var="inout" items="${inoutList }" begin="0" end="4">
+						<tr>
+							<c:if test="${inout.cat eq '등록' }">
+							<td style="background-color: green;">${inout.cat }</td>
+							</c:if>
+							<c:if test="${inout.cat eq '폐업' }">
+							<td style="background-color: pink;">${inout.cat }</td>
+							</c:if>
+							<td>${inout.reg_date }</td>
+							<td>${inout.user_id }</td>
+							<td>${inout.state }</td>
+							<td>${inout.final_date }</td>
+							<td>${inout.admin_id }</td>
+						</tr>
+						</c:forEach>
+					</tbody>
 				</table>
 			</div>
 		</div>

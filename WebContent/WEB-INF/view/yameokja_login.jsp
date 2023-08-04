@@ -9,7 +9,7 @@
 <head>
 <title>Login Page</title>
 
-<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="<%=cp %>/css/bootstrap.css">
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.js"></script>
 	
@@ -83,6 +83,7 @@
 	{
 	    width: 300px;
 	    height: 100px;
+	    padding-top: 3vh;
 	}
 	
 	#joinBtn, #searchBtn
@@ -98,15 +99,15 @@
 	#idPwDiv
 	{
 	    width: 300px;
-	    height: 100px;
+	    height: 200px;
 	}
 	
-	#userId, #userPw
+	#user_id, #user_pw
 	{
 	    width: 300px;
 	    height: 35px;
-	    margin-bottom: 2vh;
 	    border-radius: 5px;
+	    margin-top: 1vh;
 	}
 	
 	input[type=text], input[type=password]
@@ -124,12 +125,18 @@
 		box-shadow: 0 0 5px #ef6351;
 	}
 	
+	.errorMsg
+	{
+		color: #ef6351;
+		font-size: small;
+		display: none;
+	}
+	
 	/* loginBtn */
 	#loginBtnDiv
 	{
 		width: 300px;
 	    height: 50px;
-	    margin-top: 2vh;
 	}
 	
 	#loginBtn
@@ -181,8 +188,48 @@
 	  	box-shadow: 0 0 10px #ef6351;
 	}
 
-
 </style>
+
+<script type="text/javascript">
+
+	$(function()
+	{
+		if ('<%=(String)session.getAttribute("loginCheck")%>' != "null")
+			alert("로그인 실패");
+		
+		$("#loginBtn").click(function()
+		{
+			$("#IdErr").css("display", "none");	
+			$("#PwErr").css("display", "none");
+			
+			if ($("#user_id").val() == "")
+			{
+				$("#IdErr").css("display", "inline");
+				$("#user_id").focus();
+				return;
+			}
+			
+			if ($("#user_pw").val() == "")
+			{
+				$("#PwErr").css("display", "inline");
+				$("#user_pw").focus();
+				return;
+			}
+			
+			$("#loginForm").attr("action", "login.action");
+			$("#loginForm").submit();
+			
+		});
+		
+		$("#joinBtn").click(function()
+		{
+			$("#loginForm").attr("action", "join.action");
+			$("#loginForm").submit();
+		});
+	});
+
+</script>
+
 </head>
 <body>
 
@@ -193,11 +240,13 @@
 	</div>
 
 	<div id="loginArea">
-		<form action="" id="loginForm">
+		<form action="" id="loginForm" method="post">
 			<div id="loginDiv">
 				<div id="idPwDiv">
-					<input type="text" id="userId" name="userId" placeholder=" 사용자 ID"><br>
-					<input type="password" id="userPw" name="userPw" placeholder=" 사용자 PW">
+					<input type="text" id="user_id" name="user_id" placeholder=" 사용자 ID">
+					<span class="errorMsg" id="IdErr">아이디를 입력해야 합니다.</span>
+					<input type="password" id="user_pw" name="user_pw" placeholder=" 사용자 PW">
+					<span class="errorMsg" id="PwErr">비밀번호를 입력해야 합니다.</span>
 				</div>
 				<div id="loginBtnDiv">
 					<input type="button" id="loginBtn" name="loginBtn" class="Btn" value="LOGIN">
@@ -208,10 +257,11 @@
 				<input type="button" id="joinBtn" name="joinBtn" class="Btn" value="회원가입">
 				<input type="button" id="searchBtn" name="searchBtn" class="Btn" value="정보찾기">
 			</div>
-			
+			<input type="hidden" value="${check }" id="check">
 		</form>
 	</div>
 </div>
+
 
 </body>
 </html>
