@@ -258,12 +258,14 @@
 			<h1>가게정보수정요청 접수내역 관리</h1>
 			
 			<!-- 가게정보수정요청 box -->
+
 			<div id="storeErrBox" style="height: auto;">
-				
+
 				<div class="more" id="more">
 					<h3><a href="#">가게정보수정요청</a></h3>
 				</div>
 			
+
 				<table id="storeErr_list" style="margin-bottom: 20px;">
 					<thead>
 						<tr>	
@@ -287,6 +289,7 @@
 						</tr>
 						</c:forEach>
 					</tbody>
+
 				</table>
 			</div>
 			

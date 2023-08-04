@@ -27,7 +27,7 @@ body
 /* main 영역 DIV */
 #mainDiv
 {
-	max-width: 70vw;
+    max-width: 70vw;
     padding-left: 14vw;
 } 
 
@@ -297,6 +297,15 @@ span
     position: static;
 }
 
+/* 가게 대표이미지 버튼 */
+.storeBtn
+{
+	width: 10vw;
+    height: 20vh;
+    border: none;
+    padding: 0;
+}
+
 /* 가게명 + 평점(리뷰수) 구역 DIV */
 .name_reviewDiv
 {
@@ -321,16 +330,18 @@ span
 /* 비교함 영역 DIV */
 #compareDiv
 {
-    max-width: 5vw;
-    padding-top: 85px;
+	max-width: 8vw;
+    padding-top: 5px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    margin-left: 12vw;
+    margin-left: 7vw;
     padding-left: 1vw;
     padding-right: 1vw;
-    background-color: #f7f4ea;
+    background-color: #fff;
+    /* border-left: 3px solid #f7f4ea; */
+    /* border-radius: 5px;
 }
 
 /* '비교함' 이름 영역 */
@@ -412,8 +423,8 @@ span
 {
 	display: inline;
     position: relative;
-    top: 1.6vw;
-    left: 0vw;
+    top: 4.8vw;
+    right: 1.5vw;
     height: 1vw;
     width: 1vw;
     accent-color: #ef6351;
@@ -434,14 +445,14 @@ span
 {
 	display: inline;
     position: relative;
-    top: 1.3vw;
-    left: 3.2vw;
-    height: 1.15vw;
-    width: 1.15vw;
+    top: 1.25vw;
+    left: 3.3vw;
+    height: 1.1vw;
+    width: 1.1vw;
     border: #fff;
-    background-color: #fff;
-    font-size: 0.08vw;
-    color: #ef6351;
+    background-color: #f7f4ea;
+    font-size: 0.005vw;
+    color: #3a001e;
     border-radius: 5px;
     text-align: center;
     font-weight: bold;

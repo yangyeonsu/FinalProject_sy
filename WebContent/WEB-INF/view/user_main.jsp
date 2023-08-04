@@ -1,10 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <%
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
 %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -154,93 +155,6 @@
 		<!-- 추천가게 구역 -->
 		<div id="recommendStDiv">
 			
-			<!-- 입맛키워드기반 추천 -->
-			<div id="personalIbmatDiv">
-				<div class="recommendName fa-solid">
-					▼ <span>입맛</span>에 기반을 둔 추천
-				</div>
-				
-				<!-- 가게 구역 -->
-				<div class="storeList">
-					
-					<c:forEach var="ibmat" items="${ibmat_list }">
-
-							<div class="store">
-								<!-- 가게 사진 + 찜, 비교함추가 -->
-
-								<div class="stImgBtnDiv">
-									<div class="stImgDiv">
-										<img class="stImg" src="<%=cp%>/${ibmat.photo_link}">
-									</div>
-
-									<div class="likeComAddBtn">
-										<button type="button" class="comAddBtn"
-											value="${ibmat.st_num }">+</button>
-										<button type="button" class="likeAddBtn"
-											value="${ibmat.st_num }">❤️</button>
-									</div>
-
-								</div>
-
-								<div class="name_reviewDiv">
-									<!-- 가게 명 -->
-									<div class="stName">${ibmat.st_name }</div>
-
-									<!-- 별점 평점(리뷰 수) -->
-									<div class="startReviewDivs">
-										<span>${ibmat.star_avg }</span>(${ibmat.rv_count })
-									</div>
-								</div>
-							</div>
-
-						</c:forEach>
-				</div><!-- storeList end -->
-			</div><!-- personalIbmatDiv end -->
-			
-			<!-- 찜기반 추천 -->
-			<div id="personalLike">
-		
-				<div class="recommendName">
-					▼ <span>찜</span>에 기반을 둔 추천
-				</div>
-				
-				<!-- 가게 구역 -->
-				<div class="storeList">
-				
-					<c:forEach var="jjim" items="${jjim_list }">
-
-							<div class="store">
-								<!-- 가게 사진 + 찜, 비교함추가 -->
-								<div class="stImgBtnDiv">
-									<div class="stImgDiv">
-										<button type="button" value="${jjim.st_num }" class="storeBtn"
-										onclick="location.href='stDetail-userView.action?st_num=${jjim.st_num}'">
-											<img class="stImg" src="<%=cp%>/${jjim.photo_link}">
-										</button>
-									</div>
-
-									<div class="likeComAddBtn">
-										<button type="button" class="comAddBtn">+</button>
-										<button type="button" class="likeAddBtn">❤️</button>
-									</div>
-
-								</div>
-
-								<div class="name_reviewDiv">
-									<!-- 가게 명 -->
-									<div class="stName">${jjim.st_name }</div>
-
-									<!-- 별점 평점(리뷰 수) -->
-									<div class="startReviewDivs">
-										<span>${jjim.star_avg }</span>(${jjim.rv_count })
-									</div>
-								</div>
-							</div>
-						</c:forEach>
-
-				</div><!-- storeList end -->
-			</div>
-			
 			<!-- 요즘 뜨는 가게들 -->
 			<div id="famousSt">
 				<div class="recommendName">
@@ -249,13 +163,15 @@
 				
 				<!-- 가게 구역 -->
 				<div class="storeList">
-				
 					<c:forEach var="hot" items="${hot_list }">
 							<div class="store">
 								<!-- 가게 사진 + 찜, 비교함추가 -->
 								<div class="stImgBtnDiv">
 									<div class="stImgDiv">
-										<img class="stImg" src="<%=cp%>/${hot.photo_link}">
+										<button type="button" value="${hot.st_num }" class="storeBtn"
+										onclick="location.href='stDetail-userView.action?st_num=${hot.st_num}'">
+											<img class="stImg" src="<%=cp%>/${hot.photo_link}">
+										</button>
 									</div>
 
 									<div class="likeComAddBtn">
@@ -278,6 +194,110 @@
 						</c:forEach>
 				</div><!-- storeList end -->
 			</div>
+			
+			<!-- 찜기반 추천 -->
+			<div id="personalLike">
+		
+				<div class="recommendName">
+					▼ <span>찜</span>에 기반을 둔 추천
+				</div>
+				
+				<!-- 가게 구역 -->
+				<div class="storeList">
+					<c:choose>
+						<c:when test="${fn:length(jjim_list) == null or fn:length(jjim_list) == 0 }">
+							<p>찜한 가게가 존재하지 않습니다.<br>
+							   마음에 드는 가게들을 찜해보세요.</p>
+						</c:when>
+						<c:otherwise>
+							<c:forEach var="jjim" items="${jjim_list }">
+		
+									<div class="store">
+										<!-- 가게 사진 + 찜, 비교함추가 -->
+										<div class="stImgBtnDiv">
+											<div class="stImgDiv">
+												<button type="button" value="${jjim.st_num }" class="storeBtn"
+												onclick="location.href='stDetail-userView.action?st_num=${jjim.st_num}'">
+													<img class="stImg" src="<%=cp%>/${jjim.photo_link}">
+												</button>
+											</div>
+		
+											<div class="likeComAddBtn">
+												<button type="button" class="comAddBtn">+</button>
+												<button type="button" class="likeAddBtn">❤️</button>
+											</div>
+		
+										</div>
+		
+										<div class="name_reviewDiv">
+											<!-- 가게 명 -->
+											<div class="stName">${jjim.st_name }</div>
+		
+											<!-- 별점 평점(리뷰 수) -->
+											<div class="startReviewDivs">
+												<span>${jjim.star_avg }</span>(${jjim.rv_count })
+											</div>
+										</div>
+									</div>
+								</c:forEach>
+							</c:otherwise>
+						</c:choose>
+				</div><!-- storeList end -->
+			</div>
+			
+			
+			<!-- 입맛키워드기반 추천 -->
+			<div id="personalIbmatDiv">
+				<div class="recommendName fa-solid">
+					▼ <span>입맛</span>에 기반을 둔 추천
+				</div>
+				
+				<!-- 가게 구역 -->
+				<div class="storeList">
+					<c:choose>
+						<c:when test="${fn:length(ibamt_list) == null or fn:length(ibamt_list) == 0 }">
+							<p>선택된 추천 받고 싶은 입맛이 존재하지 않습니다.<br>
+							   정보 수정 페이지에서 추천 받고 싶은 입맛을 선택해 주세요.</p>
+						</c:when>
+						<c:otherwise>
+								<c:forEach var="ibmat" items="${ibmat_list }">
+	
+								<div class="store">
+									<!-- 가게 사진 + 찜, 비교함추가 -->
+	
+									<div class="stImgBtnDiv">
+										<div class="stImgDiv">
+											<button type="button" value="${ibmat.st_num }" class="storeBtn"
+											onclick="location.href='stDetail-userView.action?st_num=${ibmat.st_num}'">
+												<img class="stImg" src="<%=cp%>/${ibmat.photo_link}">
+											</button>
+										</div>
+	
+										<div class="likeComAddBtn">
+											<button type="button" class="comAddBtn"
+												value="${ibmat.st_num }">+</button>
+											<button type="button" class="likeAddBtn"
+												value="${ibmat.st_num }">❤️</button>
+										</div>
+	
+									</div>
+	
+									<div class="name_reviewDiv">
+										<!-- 가게 명 -->
+										<div class="stName">${ibmat.st_name }</div>
+	
+										<!-- 별점 평점(리뷰 수) -->
+										<div class="startReviewDivs">
+											<span>${ibmat.star_avg }</span>(${ibmat.rv_count })
+										</div>
+									</div>
+								</div>
+	
+							</c:forEach>
+						</c:otherwise>
+					</c:choose>
+				</div><!-- storeList end -->
+			</div><!-- personalIbmatDiv end -->
 		
 		</div>
 	</div><!-- mainDiv end -->
@@ -294,27 +314,9 @@
 			
 			<!-- 비교함 담은 가게 리스트 영역 -->
 			<div class="comStoreListDiv">
-			
-				<!-- 한 가게 영역 -->
-					<c:forEach var="com" items="${comList }" varStatus="status">
-						<%-- <c:out value="${status.count }" /> --%>
-						
-						<c:choose>
-							<c:when test="${fn:length(comList) < 10 and status.count < fn:length(comList)}">
-								<div class="comStoreDiv">
-									<!-- 한 가게 대표사진 영역 -->
-									<div class="comStoreImgDiv">
-										<button type="button" value="${com.st_num }" class="comDelete">X</button>
-										<label for="st1" class="stLabel"> <input type="checkbox"
-											class="comStImgCB" id="st1"> <!-- <span class="circle"></span> -->
-											<img class="comStImg" src="<%=cp%>/${com.photo_link }">
-										</label>
-									</div>
-									<!-- 한 가게 가게이름 영역 -->
-									<div class="comStoreNameDiv">${com.st_name }</div>
-								</div>
-							</c:when>
-							<c:otherwise>
+				<c:choose>
+						<c:when test="${fn:length(comList) == null or fn:length(comList) == 0 }">
+							<c:forEach begin="0" end="9">
 								<div class="comStoreDiv">
 									<!-- 한 가게 대표사진 영역 -->
 									<div class="comStoreImgDiv">
@@ -323,10 +325,36 @@
 									<!-- 한 가게 가게이름 영역 -->
 									<div class="comStoreNameDiv"></div>
 								</div>
-							</c:otherwise>
-						</c:choose>
-					</c:forEach>
-				
+							</c:forEach>
+						</c:when>
+						<c:otherwise>
+							<!-- 한 가게 영역 -->
+							<c:forEach var="com" items="${comList }" varStatus="status">
+									<div class="comStoreDiv">
+										<!-- 한 가게 대표사진 영역 -->
+										<div class="comStoreImgDiv">
+											<button type="button" value="${com.st_num }" class="comDelete">X</button>
+											<label for="st1" class="stLabel"> <input type="checkbox"
+												class="comStImgCB" id="st1"> <!-- <span class="circle"></span> -->
+												<img class="comStImg" src="<%=cp%>/${com.photo_link }">
+											</label>
+										</div>
+										<!-- 한 가게 가게이름 영역 -->
+										<div class="comStoreNameDiv">${com.st_name }</div>
+									</div>
+							</c:forEach>
+							<c:forEach begin="0" end="${10 - fn:length(comList) }">
+									<div class="comStoreDiv">
+										<!-- 한 가게 대표사진 영역 -->
+										<div class="comStoreImgDiv">
+											<img class="comStImg" src="<%=cp%>/images/comp_img01.png">
+										</div>
+										<!-- 한 가게 가게이름 영역 -->
+										<div class="comStoreNameDiv"></div>
+									</div>
+							</c:forEach>
+						</c:otherwise>
+					</c:choose>	
 			</div>
 		</div>	
 		

@@ -29,13 +29,6 @@ public class AdminMainController
 		String admin_num = (String)session.getAttribute("admin_num");
 		
 		IAdminMainDAO dao = sqlSesion.getMapper(IAdminMainDAO.class);
-		/*
-		 * ArrayList<rvListDTO> rvList = dao.rvList(); 
-		 * ArrayList<reqListDTO> reqList = dao.reqList();
-		 * ArrayList<objListDTO> objList = dao.objList();
-		 * ArrayList<revoListDTO> revoList = dao.revoList(); 
-		 * ArrayList<inoutListDTO> inoutList = dao.inoutList();
-		 */
 		
 		model.addAttribute("admin_name", dao.searchNum(admin_num, "num").getAdmin_name());
 		model.addAttribute("rvList", dao.rvList());

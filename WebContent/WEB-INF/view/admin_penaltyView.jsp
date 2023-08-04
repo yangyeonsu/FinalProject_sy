@@ -259,6 +259,7 @@
 			
 			<!-- 패널티회수 box -->
 			<div id="penaltyBox" style="height: auto;">
+
 				<div class="more" id="more">
 					<h3><a href="#">패널티회수</a></h3>
 				</div>
@@ -281,7 +282,7 @@
 							<td>-</td>
 							<td>-</td>
 						</tr>
-						<c:forEach var="revo" items="${revoList }" begin="0" end="4">
+						<c:forEach var="revo" items="${revoList }">
 						<tr>
 							<td>${revo.reg_date }</td>
 							<td>${revo.st_name }</td>
@@ -291,6 +292,7 @@
 						</tr>
 						</c:forEach>
 					</tbody>
+
 				</table>
 			</div>
 			

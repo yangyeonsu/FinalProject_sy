@@ -52,10 +52,21 @@ public class MainController
 	
 		
 		model.addAttribute("user", user);
-		model.addAttribute("ibmat_list", dao.getStoreList(ibmatList));
-		model.addAttribute("jjim_list", dao.getStoreList(jjimList));
+		if (ibmatList.size() > 0)
+			model.addAttribute("ibmat_list", dao.getStoreList(ibmatList));
+		else
+			model.addAttribute("ibmat_list", "none");
+		if (jjimList.size() > 0)
+			model.addAttribute("jjim_list", dao.getStoreList(jjimList));
+		else
+			model.addAttribute("jjim_list", "none");
+		
 		model.addAttribute("hot_list", dao.getStoreList(hotList));
-		model.addAttribute("comList", dao.getStoreList(comList));
+		
+		if (comList.size() > 0)
+			model.addAttribute("comList", dao.getStoreList(comList));
+		else
+			model.addAttribute("comList", "none");
 		 
 		
 		result = "/WEB-INF/view/user_main.jsp";

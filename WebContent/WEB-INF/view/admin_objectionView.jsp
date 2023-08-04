@@ -258,7 +258,9 @@
 			<h1>이의제기 접수내역 관리</h1>
 			
 			<!-- 이의제기 box -->
+
 			<div id="objectionBox" style="height: auto;">
+        
 				<div class="more" id="more">
 					<h3><a href="#">이의제기</a></h3>
 					<a href="admin_objectionView.jsp" class="moreBtn">더보기+</a>
@@ -273,9 +275,10 @@
 							<th>처리일자</th>
 							<th>처리한 관리자</th>
 						</tr>
+
 					</thead>
 					<tbody>
-						<c:forEach var="obj" items="${objList }" begin="0" end="4">
+						<c:forEach var="obj" items="${objList }">
 						<tr>
 							<td>${obj.reg_date }</td>
 							<td>${obj.st_name }</td>
@@ -285,6 +288,7 @@
 						</tr>
 						</c:forEach>
 					</tbody>
+
 				</table>
 			</div>
 			
