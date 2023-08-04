@@ -428,6 +428,7 @@ span
     height: 1vw;
     width: 1vw;
     accent-color: #ef6351;
+    cursor: pointer;
 }
 
 
@@ -439,6 +440,12 @@ span
 	cursor: pointer;
 }
 
+.comStNoImg
+{
+	max-width: 5vw;
+	max-height: 5vw;
+	position: static;
+}
 
 /*-----비교함 추가 취소 버튼 ------*/
 .comDelete
@@ -456,6 +463,7 @@ span
     border-radius: 5px;
     text-align: center;
     font-weight: bold;
+    cursor: pointer;
 }
 
 
@@ -504,4 +512,29 @@ span
 	font-size: 10pt;
 	font-family: 'IBM Plex Sans KR', sans-serif;
 	cursor: pointer;
+}
+
+#comBtn:hover
+{
+	background-color: #EF6351;
+	border: 1px #EF6351;
+	border-radius: 8px;
+	color: white;
+	font-size: 10pt;
+	font-family: 'IBM Plex Sans KR', sans-serif;
+	cursor: pointer;
+	box-shadow: 0 0 10px #ef6351;
+}
+
+
+#comBtn:active
+{
+	background-color: #e73d34;
+	border: 1px #EF6351;
+	border-radius: 8px;
+	color: white;
+	font-size: 10pt;
+	font-family: 'IBM Plex Sans KR', sans-serif;
+	cursor: pointer;
+	box-shadow: 0 0 10px #ef6351;
 }
