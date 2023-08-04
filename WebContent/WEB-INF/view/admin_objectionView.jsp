@@ -266,7 +266,7 @@
 					<a href="admin_objectionView.jsp" class="moreBtn">더보기+</a>
 				</div>
 			
-				<table id="objection_list">
+				<table id="objection_list" style="margin-bottom: 20px;">
 					<thead>
 						<tr>	
 							<th>신청일자</th>
