@@ -79,6 +79,7 @@ String cp = request.getContextPath();
 	padding-left: 0.5vw;
 	padding-top: 0.5vw;
 	list-style: none;
+	border-radius: 11px; 
 }
 
 .revKeyList li
