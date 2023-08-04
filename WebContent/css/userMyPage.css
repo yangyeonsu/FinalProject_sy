@@ -35,13 +35,49 @@ body {
 	justify-content: center;
 }
 
-.card {
+.jimstore
+{
+	width: 10vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 11.5vw;
+    margin-right: 0.5vw;
+    margin-left: 0.5vw;
+    border: 1.5px solid #f7f4ea;
+    justify-content: space-around;
+}
+
+.jimstoreImg
+{
+	width: 9vw;
+    height: 8vw;
+}
+
+.jimstImg
+{
+	max-width: 9vw;
+    max-height: 9vw;
+    width: 9vw;
+    height: 9vw;
+    object-fit: cover;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.jimstoreName
+{
+	padding-top: 0.5vw;
+}
+
+
+/* .card {
 	width: 8vw;
 	background-color: #f7f4ea;
 	border: 1px solid #E09A8D;
 	margin: 1vw;
 	padding: 1vh;
-	/* background-color: #EF6851; */
+	background-color: #EF6851;
 }
 
 .card1 {
@@ -50,18 +86,20 @@ body {
 	border: 1px solid #E09A8D;
 	margin: 0.3vw;
 	padding: 0.5vh;
-	/* background-color: #EF6851; */
+	background-color: #EF6851;
 	justify-content: center;
-}
+} 
 
 .card-img-top {
 	border: 1px solid #E09A8D;
 	width: 100%;
-}
+}*/
 
 .col-md-8 {
 	/* width: 69vw; */
-	width: 71vw;
+	width: 64vw;
+    padding: 5vh 0 0 0;
+    margin-left: 6vw;
 }
 
 .col-md-2 {
@@ -69,7 +107,7 @@ body {
 	/* height: 100vh; */
 	display: flex;
 	flex-direction: column;
-	padding-top: 1.5vh;
+	/* padding-top: 1.5vh; */
 	font-size: 20px;
 	/* align-items: center; */
 	
@@ -89,9 +127,10 @@ body {
 
 .stalist {
 	/* background-color: #f7f4ea; */
-	padding: 1vw;
+	/* padding: 1vw; */
 	display: flex;
 	flex-direction: column;
+	margin-bottom: 8vh;
 }
 
 .dao {
@@ -131,7 +170,7 @@ body {
 	/* flex-direction: column; */
 	background-color: #f7f4ea;
 	
-	margin-bottom: 3vh;
+	margin-bottom: 15vh;
 	
 }
 
@@ -146,19 +185,17 @@ body {
 }
 .title9
 {
-	font-size: large;
-	background-color: #f7f4ea;
+	font-size: 15pt;
+    font-weight: bold;
+    background-color: #f7f4ea;
+    text-align: center;
 }
 .sub9
 {
-	font-size: 2vw;
-	text-align: center;
+	font-size: 15pt;
+    text-align: center;
 }
 
-.gogo 
-{
-	
-}
 
 .side {
 	color: black;
@@ -172,10 +209,10 @@ body {
 	color: white;
 }
 
-.card-text {
+/* .card-text {
 	text-align: center;
 }
-
+ */
 .ado {
 	display: flex;
 	align-items: center;
@@ -186,10 +223,10 @@ body {
 	padding-right: 1vw;
 	
 }
-.adoi
+/* .adoi
 {
 	align-items: center;
-}
+} */
 
 .ta {
 	/* margin-top:1vh; */
@@ -200,14 +237,14 @@ body {
 }
 
 .title {
-	margin: 1vw;
-	/* font-weight: bold; */
-	font-size: 30px;
+	font-weight: bold;
+    font-size: 13pt;
+    width: 15vw;
 }
 
-.title2 {
+/* .title2 {
 	font-size: 30px;
-}
+} */
 
 .left-btn {
 	display: flex;
@@ -216,17 +253,17 @@ body {
 }
 .mypage
 {
-	padding: 1vw;
-	font-size: 3vw;
-	margin-top: 8vh;
-	color: #f7f4ea;
+	font-size: 25pt;
+    font-weight: bold;
+    margin-top: 3vh;
+    margin-bottom: 7vh;
 }
 
 /* (0730)추가 */
 footer {
     display: flex;
     width: 94.9vw;
-    height: 25vh;
+    height: 15vh;
     font-size: 0.8vw;
     color: #9b9b9b;
     background-color: #f9f9f9;
