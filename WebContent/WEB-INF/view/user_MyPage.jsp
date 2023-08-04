@@ -16,7 +16,7 @@ String cp = request.getContextPath();
 
 
 <link rel="stylesheet" type="text/css"
-	href="<%=cp%>/css/compareBox(0801).css">
+	href="<%=cp%>/css/compareBox.css">
 <link rel="stylesheet" type="text/css" href="<%=cp%>/css/userMyPage.css">
 
 <style type="text/css">
