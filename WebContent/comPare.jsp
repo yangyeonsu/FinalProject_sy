@@ -227,6 +227,11 @@
 	border-left: 1px solid black;
 }
 
+.cList0 div, .cOption0 div, .cImages0 div, .cImages0 div
+{
+	background-color: #F7CCC3;
+}
+
 .cList1, .cOption1, .cImages1 div, .cImages1
 {
 	background-color: #F7CCC3;
