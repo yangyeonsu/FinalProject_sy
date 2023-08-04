@@ -202,9 +202,7 @@
 <body>
 
 <!-- header -->
-
 <c:import url="header_admin.jsp"></c:import>
-
 
 <!-- container -->
 <div id="container">
@@ -264,13 +262,12 @@
 			<h1>패널티회수 접수내역 관리</h1>
 			
 			<!-- 가게 등록/폐업 요청 box -->
-
 			<div id="inout_Box" style="height: auto;">
 				<div class="more" id="more">
 					<h3><a href="#">가게 등록/폐업 요청</a></h3>
 				</div>
 			
-				<table id="inout_list">
+				<table id="inout_list" style="margin-bottom: 20px;">
 					<thead>
 						<tr>
 							<th>구분</th>	
@@ -280,7 +277,6 @@
 							<th>처리일자</th>
 							<th>처리한 관리자</th>
 						</tr>
-
 					</thead>
 					<tbody>
 						<c:forEach var="inout" items="${inoutList }">
@@ -299,7 +295,6 @@
 						</tr>
 						</c:forEach>
 					</tbody>
-
 				</table>
 			</div>
 			

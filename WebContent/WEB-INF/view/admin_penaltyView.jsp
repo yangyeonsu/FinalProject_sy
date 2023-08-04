@@ -264,7 +264,7 @@
 					<h3><a href="#">패널티회수</a></h3>
 				</div>
 			
-				<table id="penalty_list">
+				<table id="penalty_list" style="margin-bottom: 20px;">
 					<thead>
 						<tr>	
 							<th>신청일자</th>
@@ -275,13 +275,6 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>2023.04.30</td>
-							<td>맛시따</td>
-							<td>미확인</td>
-							<td>-</td>
-							<td>-</td>
-						</tr>
 						<c:forEach var="revo" items="${revoList }">
 						<tr>
 							<td>${revo.reg_date }</td>

@@ -259,14 +259,14 @@
 			<h1>접수내역 관리</h1>
 			
 			<!-- 리뷰신고 box -->
-			<div id="reviewBox">
+			<div id="reviewBox" style="height: auto;">
 
 				<div class="more" id="more">
 					<h3><a href="#">리뷰신고</a></h3>
 					<a href="reviewListView.action" class="moreBtn">더보기+</a>
 				</div>
 			
-				<table id="review_list">
+				<table id="review_list" style="margin-bottom: 20px;">
 					<thead>
 						<tr>	
 							<th>신고일자</th>
@@ -296,13 +296,13 @@
 			
 			<br>
 			<!-- 가게정보수정요청 box -->
-			<div id="storeErrBox" >
+			<div id="storeErrBox" style="height: auto;">
 				<div class="more" id="more">
 					<h3><a href="#">가게정보수정요청</a></h3>
 					<a href="storeErrView.action" class="moreBtn">더보기+</a>
 				</div>
 			
-				<table id="storeErr_list">
+				<table id="storeErr_list" style="margin-bottom: 20px;">
 					<thead>
 						<tr>	
 							<th>요청일자</th>
@@ -330,13 +330,13 @@
 			
 			<br>
 			<!-- 이의제기 box -->
-			<div id="objectionBox" >
+			<div id="objectionBox" style="height: auto;">
 				<div class="more" id="more">
 					<h3><a href="#">이의제기</a></h3>
 					<a href="objectionView.action" class="moreBtn">더보기+</a>
 				</div>
 			
-				<table id="objection_list">
+				<table id="objection_list" style="margin-bottom: 20px;">
 					<thead>
 						<tr>	
 							<th>신청일자</th>
@@ -363,13 +363,13 @@
 			
 			<br>
 			<!-- 패널티회수 box -->
-			<div id="penaltyBox" >
+			<div id="penaltyBox" style="height: auto;">
 				<div class="more" id="more">
 					<h3><a href="#">패널티회수</a></h3>
 					<a href="penaltyView.action" class="moreBtn">더보기+</a>
 				</div>
 			
-				<table id="penalty_list">
+				<table id="penalty_list" style="margin-bottom: 20px;">
 					<thead>
 						<tr>	
 							<th>신청일자</th>
@@ -402,13 +402,13 @@
 			
 			<br>
 			<!-- 가게 등록/폐업 요청 box -->
-			<div id="inout_Box" >
+			<div id="inout_Box" style="height: auto;">
 				<div class="more" id="more">
 					<h3><a href="#">가게 등록/폐업 요청</a></h3>
 					<a href="inoutView.action" class="moreBtn">더보기+</a>
 				</div>
 			
-				<table id="inout_list">
+				<table id="inout_list" style="margin-bottom: 20px;">
 					<thead>
 						<tr>
 							<th>구분</th>	
