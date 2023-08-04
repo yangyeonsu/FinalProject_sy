@@ -34,6 +34,7 @@
 		$("#joinBtn").click(function()
 		{
 			$(".accept").css("display", "none");
+			var blank_pattern = /[\s]/g;
 			
 			if ($("#userName").val() == "")
 			{
@@ -85,6 +86,13 @@
 			
 			if ($("#userId").val() == "")
 			{
+				$("#idError").css("display", "inline");
+				$("#userId").focus();
+				return;
+			}
+			else if (blank_pattern.test($("#userId").val()) == true)
+			{
+				$("#idError").html("아이디에는 공백을 사용할 수 없습니다.");
 				$("#idError").css("display", "inline");
 				$("#userId").focus();
 				return;
@@ -148,6 +156,7 @@
 		
 		$("#idAccept").click(function()
 		{
+			var blank_pattern = /[\s]/g;
 			$("#idError").css("display", "none");
 
 			$.ajax(
@@ -158,7 +167,8 @@
 				, dataType: "json"
 				, beforeSend: function()
 				{
-					if ($("#userId").val() == "")
+					var str = $("#userId").val();
+					if (str == "")
 					{
 						$("#idError").css("display", "inline");
 						$("#userId").focus();
@@ -171,6 +181,11 @@
 					{
 						$("#idAcceptText").css("display", "inline");
 						$("#idAccept").val("true");
+					}
+					else if (data.count == "-1")
+					{
+						$("#idAcceptText").html("아이디에는 공백을 사용할 수 없습니다.");
+						$("#idAcceptText").css("display", "inline");
 					}
 					else
 					{
@@ -223,7 +238,12 @@
 				}
 			});
 		});
+		
+		
 	});
+	
+	
+	
 </script>
 
 

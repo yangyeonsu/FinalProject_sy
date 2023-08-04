@@ -26,10 +26,21 @@ public class UserController
 	private SqlSession sqlSession;
 	
 	@RequestMapping(value="/yameokja.action", method=RequestMethod.GET)
-	public String firstPageLoad(HttpServletRequest requset)
+	public String firstPageLoad(HttpServletRequest request)
 	{
-		HttpSession session = requset.getSession();
+		HttpSession session = request.getSession();
+
+		session.removeAttribute("user_num");
+		String check = "";
 		
+		if (session.getAttribute("check") != null)
+		{
+			check = (String)session.getAttribute("check");
+			if (check.equals("Loginfail"))
+				session.setAttribute("check", "fail");
+			else
+				session.removeAttribute("check");
+		}
 		String result = "";
 		
 		
@@ -55,10 +66,14 @@ public class UserController
 		if (check == 1)
 		{
 			UserDTO userInfo = uDao.searchUserInfo(user.user_id, "id");
-			
 			session.setAttribute("user_num", userInfo.user_num);
 			
-			result = "redirect:main.action";
+			int storeCheck = uDao.storeCheck(userInfo.user_num);
+			
+			if (storeCheck > 0)
+				result = "redirect:storemain.action";
+			else
+				result = "redirect:main.action";
 		}
 		else if (check == 0)
 		{
@@ -73,7 +88,7 @@ public class UserController
 			}
 			else
 			{
-				session.setAttribute("loginCheck", "fail");
+				session.setAttribute("check", "Loginfail");
 				result = "redirect:yameokja.action";
 			}
 		}
@@ -98,18 +113,38 @@ public class UserController
 		String result = "";
 		int count = 0;
 		
-		IUserDAO udao = sqlSession.getMapper(IUserDAO.class);
-		count = udao.idCheck(userid);
+		/*
+		if (userid.contains(" "))
+			result += "{\"count\":\"-1\"}";
+		else
+		{
+			IUserDAO udao = sqlSession.getMapper(IUserDAO.class);
+			count = udao.idCheck(userid);
+			
+			result += "{\"count\":\""+count+"\"}";
+		}
+		*/
 		
-		result += "{\"count\":\""+count+"\"}";
+		String[] arr = userid.split(" ");
 		
+		if(arr.length>1)
+		{
+			result += "{\"count\":\"-1\"}";
+		}
+		else
+		{
+			IUserDAO udao = sqlSession.getMapper(IUserDAO.class);
+			count = udao.idCheck(userid);
+			result += "{\"count\":\""+count+"\"}";
+		}
+
 		return result;
 	}
 	
 	
 	@RequestMapping(value="/nickduplicheck.action", method=RequestMethod.GET)
 		@ResponseBody
-	public String nickCheck(HttpServletRequest req, HttpServletResponse res, HttpSession session, String usernick)
+	public String nickCheck(HttpServletRequest request, HttpServletResponse response, HttpSession session, String usernick)
 	{
 		String result = "";
 		int count = 0;
