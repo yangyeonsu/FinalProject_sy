@@ -170,22 +170,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="comparingSearch" resultType="java.lang.Integer">
 		SELECT COUNT(*) AS COUNT
 		FROM COMPARING_BOX
-		WHERE
-		USER_NUM = #{user_num}
-		AND ST_NUM = #{st_num}
+		WHERE USER_NUM = #{user_num}
+		AND ST_NUM = 3
 	</select>
 
 	<insert id="comparingInsert">
 		INSERT INTO COMPARING_BOX(COMPARING_NUM, USER_NUM,
 		ST_NUM, REG_DATE)
-		VALUES(COMPARINGSEQ.NEXTVAL, #{user_num}, #{st_num}, DEFAULT)
+		VALUES(75, #{user_num}, 3, DEFAULT)
 	</insert>
 
 	<delete id="comparingDelete">
 		DELETE *
 		FROM COMPARING_BOX
-		WHERE USER_NUM =
-		#{user_num}
+		WHERE USER_NUM = #{user_num}
 		AND ST_NUM = #{st_num}
 	</delete>
 
@@ -197,7 +195,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		AND ST_NUM = #{st_num}
 	</select>
 
-	<insert id="jjimInsert" >
+	<insert id="jjimInsert">
 		INSERT INTO LIKE_BOX(LIKE_NUM, USER_NUM, ST_NUM,
 		REG_DATE)
 		VALUES (LIKESEQ.NEXTVAL, #{user_num}, #{st_num}, DEFAULT)
