@@ -171,17 +171,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT COUNT(*) AS COUNT
 		FROM COMPARING_BOX
 		WHERE USER_NUM = #{user_num}
-		AND ST_NUM = 3
+		AND ST_NUM = #{st_num}
 	</select>
 
 	<insert id="comparingInsert">
 		INSERT INTO COMPARING_BOX(COMPARING_NUM, USER_NUM,
 		ST_NUM, REG_DATE)
-		VALUES(75, #{user_num}, 3, DEFAULT)
+		VALUES(COMPARINGSEQ.NEXTVAL, #{user_num}, #{st_num}, DEFAULT)
 	</insert>
 
 	<delete id="comparingDelete">
-		DELETE *
+		DELETE
 		FROM COMPARING_BOX
 		WHERE USER_NUM = #{user_num}
 		AND ST_NUM = #{st_num}
