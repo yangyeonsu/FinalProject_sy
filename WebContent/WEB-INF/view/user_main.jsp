@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
 	request.setCharacterEncoding("UTF-8");
 String cp = request.getContextPath();
@@ -14,8 +15,7 @@ String cp = request.getContextPath();
 <title>Main Page</title>
 
 <!-- jquery -->
-<script type="text/javascript"
-	src="http://code.jquery.com/jquery.min.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 
 <link rel="stylesheet" type="text/css" href="<%=cp%>/css/user_main.css">
 
@@ -172,22 +172,21 @@ String cp = request.getContextPath();
 
 						<!-- 가게 구역 -->
 						<div class="storeList">
-							<c:forEach var="hot" items="${hot_list }">
+							<c:forEach var="hot" items="${hot_list}">
 								<div class="store">
 									<!-- 가게 사진 + 찜, 비교함추가 -->
 									<div class="stImgBtnDiv">
 										<div class="stImgDiv">
-											<button type="button" value="${hot.st_num }" class="storeBtn"
-												onclick="location.href='stDetail-userView.action?st_num=${hot.st_num}'">
-												<img class="stImg" src="<%=cp%>/${hot.photo_link}">
+											<button type="button" value="${hot.st_num}" class="storeBtn" onclick="location.href='stDetail-userView.action?st_num=${hot.st_num}'">
+												<img class="stImg" src="<%=cp%>/${hot.photo_link}"/>
 											</button>
 										</div>
 
 										<div class="likeComAddBtn">
 											<button type="button" class="comAddBtn"
-												value="${hot.st_num }">+</button>
+												value="${hot.st_num}">+</button>
 											<button type="button" class="likeAddBtn"
-												value="${hot.st_num }">❤️</button>
+												value="${hot.st_num}">❤️</button>
 										</div>
 
 									</div>
@@ -218,7 +217,7 @@ String cp = request.getContextPath();
 						<div class="storeList">
 							<c:choose>
 								<c:when
-									test="${fn:length(jjim_list) == null or fn:length(jjim_list) == 0 }">
+									test="${fn:length(jjim_list) == 0 or fn:length(jjim_list) == null}">
 									<p>
 										찜한 가게가 존재하지 않습니다.<br> 마음에 드는 가게들을 찜해보세요.
 									</p>
@@ -230,10 +229,8 @@ String cp = request.getContextPath();
 											<!-- 가게 사진 + 찜, 비교함추가 -->
 											<div class="stImgBtnDiv">
 												<div class="stImgDiv">
-													<button type="button" value="${jjim.st_num }"
-														class="storeBtn"
-														onclick="location.href='stDetail-userView.action?st_num=${jjim.st_num}'">
-														<img class="stImg" src="<%=cp %>/${jjim.photo_link}">
+													<button type="button" value="${jjim.st_num }" class="storeBtn" onclick="location.href='stDetail-userView.action?st_num=${jjim.st_num}'">
+														<img class="stImg" src="<%=cp %>/${jjim.photo_link}"/>
 													</button>
 												</div>
 
@@ -274,7 +271,7 @@ String cp = request.getContextPath();
 						<div class="storeList">
 							<c:choose>
 								<c:when
-									test="${fn:length(ibamt_list) == null or fn:length(ibamt_list) == 0 }">
+									test="${fn:length(ibamt_list) == 0 or fn:length(ibamt_list) == null}">
 									<p>
 										선택된 추천 받고 싶은 입맛이 존재하지 않습니다.<br> 정보 수정 페이지에서 추천 받고 싶은 입맛을
 										선택해 주세요.
@@ -341,8 +338,8 @@ String cp = request.getContextPath();
 					<div class="comStoreListDiv">
 						<c:choose>
 							<c:when
-								test="${fn:length(comList) == null or fn:length(comList) == 0 }">
-								<c:forEach begin="0" end="9">
+								test="${fn:length(comList) == 0 or fn:length(comList) == null}">
+								<c:forEach var= "i" begin="0" end="9">
 									<div class="comStoreDiv">
 										<!-- 한 가게 대표사진 영역 -->
 										<div class="comStoreImgDiv">
@@ -355,22 +352,20 @@ String cp = request.getContextPath();
 							</c:when>
 							<c:otherwise>
 								<!-- 한 가게 영역 -->
-								<c:forEach var="com" items="${comList }" varStatus="status">
+								<c:forEach var="com" items="${comList}" varStatus="status">
 									<div class="comStoreDiv">
 										<!-- 한 가게 대표사진 영역 -->
 										<div class="comStoreImgDiv">
-											<button type="button" value="${com.st_num }"
-												class="comDelete">X</button>
-											<label for="st1" class="stLabel"> <input
-												type="checkbox" class="comStImgCB" id="st1"> <!-- <span class="circle"></span> -->
-												<img class="comStImg" src="<%=cp%>/${com.photo_link }">
+											<button type="button" value="${com.st_num}" class="comDelete">X</button>
+											<label for="${com.st_num}" class="stLabel"> <input type="checkbox" class="comStImgCB" id="${com.st_num}">
+												<img class="comStImg" src="<%=cp%>/${com.photo_link}">
 											</label>
 										</div>
 										<!-- 한 가게 가게이름 영역 -->
-										<div class="comStoreNameDiv">${com.st_name }</div>
+										<div class="comStoreNameDiv">${com.st_name}</div>
 									</div>
 								</c:forEach>
-								<c:forEach begin="0" end="${10 - fn:length(comList) }">
+								<c:forEach begin="0" end="${10 - fn:length(comList)}">
 									<div class="comStoreDiv">
 										<!-- 한 가게 대표사진 영역 -->
 										<div class="comStoreImgDiv">

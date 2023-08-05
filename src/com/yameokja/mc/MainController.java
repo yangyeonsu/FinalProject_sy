@@ -53,21 +53,23 @@ public class MainController
 			user.setUser_grade(umDao.secondHalf(user_num).user_grade);
 
 		model.addAttribute("user", user);
+		
 		if (ibmatList.size() > 0)
 			model.addAttribute("ibmat_list", dao.getStoreList(ibmatList));
 		else
-			model.addAttribute("ibmat_list", "none");
+			model.addAttribute("ibmat_list", null);
+		
 		if (jjimList.size() > 0)
 			model.addAttribute("jjim_list", dao.getStoreList(jjimList));
 		else
-			model.addAttribute("jjim_list", "none");
+			model.addAttribute("jjim_list", null);
 
 		model.addAttribute("hot_list", dao.getStoreList(hotList));
 
 		if (comList.size() > 0)
 			model.addAttribute("comList", dao.getStoreList(comList));
 		else
-			model.addAttribute("comList", "none");
+			model.addAttribute("comList", null);
 
 		result = "/WEB-INF/view/user_main.jsp";
 
@@ -158,7 +160,7 @@ public class MainController
 
 		String html = "";
 		
-		int res = dao.comparingSearch(user_num, st_num);
+		int res = dao.comparingSearch(user_num, Integer.parseInt(st_num));
 		
 		System.out.println(res);
 
@@ -178,15 +180,14 @@ public class MainController
 
 				html += "<div class='comStoreDiv'>";
 				html += "	<div class='comStoreImgDiv'>";
-				html += "	<button type=\"button\" value=\""+ store.getSt_num() +"\"";
-				html += "			class=\"comDelete\">X</button>";
-				html += "		<label for='" + store.getSt_num() + "', class='stLabel'>";
+				html += "		<button type=\"button\" value=\""+ String.valueOf(store.getSt_num()) + "\" class=\"comDelete\">X</button>";
+				html += "		<label for='" + String.valueOf(store.getSt_num()) + "' class='stLabel'>";
 				html += "			<input type='checkbox' class='comStImgCB' id='" + store.getSt_num() + "'>";
-				html += " 			<img class='comStImg' src='/" + store.getPhoto_link() + "'>";
+				html += " 			<img class='comStImg' src='" + store.getPhoto_link() + "'>";
 				html += "		</label>";
 				html += "	</div>";
 				html += "	<div class='comStoreNameDiv'>";
-				html += store.getSt_name();
+				html += 		String.valueOf(store.getSt_name());
 				html += "	</div>";
 				html += "</div>";
 			}
