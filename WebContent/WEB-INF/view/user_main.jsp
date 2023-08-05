@@ -54,10 +54,10 @@ String cp = request.getContextPath();
 
 		});
 		
-		$(".comDelete").click(function()
+		$(document).on("click", ".comDelete", function ()
 		{
-			$st_num = $(this).attr("value")
-			$user_num = "<%=(String) session.getAttribute("user_num")%>"
+			$st_num = $(this).val();
+			$user_num = "<%=(String) session.getAttribute("user_num")%>";
 			
 			$.ajax(
 			{
@@ -76,7 +76,7 @@ String cp = request.getContextPath();
 					}
 					else
 					{
-						alert(data);
+						/* alert(data); */
 						alert("비교함에서 삭제되었습니다.");
 						$(".comStoreListDiv").html(data);
 					}
@@ -124,12 +124,6 @@ String cp = request.getContextPath();
 		});
 		 */
 	});
-	
-	
-	function call()
-	{
-		alert("불가능");
-	}
 </script>
 
 

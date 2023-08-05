@@ -221,28 +221,45 @@ public class MainController
 			// 다시 새로 비교함 불러와서 innerHTML로 넣기
 			List<Integer> newComparingList = (ArrayList<Integer>) dao.getStoreComList(user_num);
 			
-			System.out.println(newComparingList);
-			List<StoreDTO> storeList = dao.getStoreList(newComparingList);
+			List<StoreDTO> storeList = null;
 			
-			model.addAttribute("comList", storeList);
-			
-			for (StoreDTO store : storeList)
+			if (newComparingList.size() > 0)
 			{
-				System.out.println(store.getSt_name());
-				html += "<div class='comStoreDiv'>";
-				html += "	<div class='comStoreImgDiv'>";
-				html += "		<button type=\"button\" value=\""+ store.getSt_num() + "\" class=\"comDelete\">X</button>";
-				html += "		<label for='" + store.getSt_num() + "' class='stLabel'>";
-				html += "			<input type='checkbox' class='comStImgCB' id='" + store.getSt_num() + "'>";
-				html += " 			<img class='comStImg' src='" + store.getPhoto_link() + "'>";
-				html += "		</label>";
-				html += "	</div>";
-				html += "	<div class=\"comStoreNameDiv\">"+store.getSt_name()+"</div>";
-				html += "</div>";
+				/* System.out.println(newComparingList); */
+				storeList = dao.getStoreList(newComparingList);
+				
+				
+				
+				for (StoreDTO store : storeList)
+				{
+					/* System.out.println(store.getSt_name()); */
+					html += "<div class='comStoreDiv'>";
+					html += "	<div class='comStoreImgDiv'>";
+					html += "		<button type=\"button\" value=\""+ store.getSt_num() + "\" class=\"comDelete\">X</button>";
+					html += "		<label for='" + store.getSt_num() + "' class='stLabel'>";
+					html += "			<input type='checkbox' class='comStImgCB' id='" + store.getSt_num() + "'>";
+					html += " 			<img class='comStImg' src='" + store.getPhoto_link() + "'>";
+					html += "		</label>";
+					html += "	</div>";
+					html += "	<div class=\"comStoreNameDiv\">"+store.getSt_name()+"</div>";
+					html += "</div>";
+				}
+				if (storeList.size() < 10)
+				{
+					for (int i=0; i<(10-storeList.size()); i++)
+					{
+						html += "<div class=\"comStoreDiv\">";
+						html += "<div class=\"comStoreImgDiv\">";
+						html += "	<img class=\"comStNoImg\" src=\"images/comp_img01.png\">";
+						html += "</div>";
+						html += "<div class=\"comStoreNameDiv\"></div>";
+						html += "</div>";
+					}
+				}
 			}
-			if (storeList.size() < 10)
+			else
 			{
-				for (int i=0; i<(10-storeList.size()); i++)
+				for (int i=0; i<10; i++)
 				{
 					html += "<div class=\"comStoreDiv\">";
 					html += "<div class=\"comStoreImgDiv\">";
@@ -252,6 +269,8 @@ public class MainController
 					html += "</div>";
 				}
 			}
+			
+			model.addAttribute("comList", storeList);
 		}
 
 		return html;
