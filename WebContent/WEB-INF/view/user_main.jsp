@@ -54,6 +54,39 @@ String cp = request.getContextPath();
 			});
 
 		});
+		
+		$(".comDelete").click(function()
+		{
+			$st_num = $(this).attr("value")
+			$user_num = "<%=(String) session.getAttribute("user_num")%>"
+			
+			$.ajax(
+			{
+				url : "comdelete.action",
+				type : 'post',
+				data :
+				{
+					"user_num" : $user_num,
+					"st_num" : $st_num
+				},
+				success : function(data)
+				{
+					if(data=="")
+					{
+						alert("비교함에서 이미 삭제된 가게입니다.");
+					}
+					else
+					{
+						alert("비교함에서 삭제되었습니다.");
+						$(".comStoreListDiv").html(data);
+					}
+				},
+				error : function()
+				{
+					alert(e.responseText);
+				}
+			});
+		});
 
 		$(".likeAddBtn").click(function()
 		{
@@ -79,31 +112,6 @@ String cp = request.getContextPath();
 				}
 			});
 
-		});
-
-		$(".comDelete").click(function()
-		{
-			$st_num = $(this).attr("value");
-			$user_num =
-<%=(String) session.getAttribute("user_num")%>
-	$.ajax(
-			{
-				url : "comdelete.action",
-				type : 'post',
-				data :
-				{
-					st_num : $st_num,
-					user_num : $user_num
-				},
-				success : function(result)
-				{
-					alert(result);
-				},
-				error : function()
-				{
-					alert("error");
-				}
-			});
 		});
 
 		/* $(".storeBtn").click(function()
