@@ -181,7 +181,7 @@
 {
 	width: 22vw;
 	list-style: none;
-	border-top: 1px solid black;
+	border-top: 1px solid #EF6351;
 }
 
 .cOption
@@ -189,7 +189,7 @@
 	width: 22vw;
 	height: 20vh;
 	list-style: none;
-	border-top: 1px solid black;
+	border-top: 1px solid #EF6351;
 }
 
 .cName
@@ -202,12 +202,17 @@
 {	
 	width: 22vw;
 	list-style: none;
-	border-top: 1px solid black;
+	border-top: 1px solid #EF6351;
 }
 
 .cImages0, .cImages1
 {
 	height: 40vh;
+}
+
+.cName0 div, .cList0 div, .cOption0 div, .cImages0 div, .cImages0 div
+{
+	font-size: 25pt; font-weight: bold; margin-top: 1vh; margin-left: 1vw;
 }
 
 .img-rounded
@@ -224,17 +229,12 @@
 
 .cName1, .cList1, .cOption1
 {
-	border-left: 1px solid black;
-}
-
-.cList0 div, .cOption0 div, .cImages0 div, .cImages0 div
-{
-	background-color: #F7CCC3;
+	border-left: 1px solid #EF6351;
 }
 
 .cList1, .cOption1, .cImages1 div, .cImages1
 {
-	background-color: #F7CCC3;
+	background-color: #F7F4EA;
 }
 
 .compare0
