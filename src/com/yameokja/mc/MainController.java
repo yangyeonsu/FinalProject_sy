@@ -154,15 +154,10 @@ public class MainController
 	public Object comparingInsert(@RequestParam("user_num") String user_num, @RequestParam("st_num") String st_num,  Model model)
 	{
 		IMainDAO dao = sqlSession.getMapper(IMainDAO.class);
-
-		System.out.println(user_num);
-		System.out.println(st_num);
-
+		
 		String html = "";
 		
 		int res = dao.comparingSearch(user_num, Integer.parseInt(st_num));
-		
-		System.out.println(res);
 
 		if (res == 0) // -- 비교함에 없으면..
 		{
@@ -171,13 +166,11 @@ public class MainController
 			// 다시 새로 비교함 불러와서 innerHTML로 넣기
 			List<Integer> newComparingList = (ArrayList<Integer>) dao.getStoreComList(user_num);
 			
-			System.out.println(newComparingList);
 			List<StoreDTO> storeList = dao.getStoreList(newComparingList);
 			
 			model.addAttribute("comList", storeList);
 			for (StoreDTO store : storeList)
 			{
-				System.out.println(store.getSt_name());
 				html += "<div class='comStoreDiv'>";
 				html += "	<div class='comStoreImgDiv'>";
 				html += "		<button type=\"button\" value=\""+ String.valueOf(store.getSt_num()) + "\" class=\"comDelete\">X</button>";
@@ -203,8 +196,64 @@ public class MainController
 			}
 				
 		}
+		return html;
+	}
+	
+	@RequestMapping(value = "/comdelete.action")
+		@ResponseBody
+	public Object comDelete(@RequestParam("user_num") String user_num, @RequestParam("st_num") String st_num, Model model)
+	{
+		IMainDAO dao = sqlSession.getMapper(IMainDAO.class);
 		
+		String html = "";
+
+		int res = dao.comparingSearch(user_num, Integer.parseInt(st_num));
 		
+		if(res==0)
+		{
+			html = "";
+		}
+		else
+		{
+			// 비교함 삭제 메소드 실행
+			dao.comparingDelete(user_num, Integer.parseInt(st_num));
+			
+			// 다시 새로 비교함 불러와서 innerHTML로 넣기
+			List<Integer> newComparingList = (ArrayList<Integer>) dao.getStoreComList(user_num);
+			
+			System.out.println(newComparingList);
+			List<StoreDTO> storeList = dao.getStoreList(newComparingList);
+			
+			model.addAttribute("comList", storeList);
+			
+			for (StoreDTO store : storeList)
+			{
+				System.out.println(store.getSt_name());
+				html += "<div class='comStoreDiv'>";
+				html += "	<div class='comStoreImgDiv'>";
+				html += "		<button type=\"button\" value=\""+ store.getSt_num() + "\" class=\"comDelete\">X</button>";
+				html += "		<label for='" + store.getSt_num() + "' class='stLabel'>";
+				html += "			<input type='checkbox' class='comStImgCB' id='" + store.getSt_num() + "'>";
+				html += " 			<img class='comStImg' src='" + store.getPhoto_link() + "'>";
+				html += "		</label>";
+				html += "	</div>";
+				html += "	<div class=\"comStoreNameDiv\">"+store.getSt_name()+"</div>";
+				html += "</div>";
+			}
+			if (storeList.size() < 10)
+			{
+				for (int i=0; i<(10-storeList.size()); i++)
+				{
+					html += "<div class=\"comStoreDiv\">";
+					html += "<div class=\"comStoreImgDiv\">";
+					html += "	<img class=\"comStNoImg\" src=\"images/comp_img01.png\">";
+					html += "</div>";
+					html += "<div class=\"comStoreNameDiv\"></div>";
+					html += "</div>";
+				}
+			}
+		}
+
 		return html;
 	}
 
@@ -225,20 +274,6 @@ public class MainController
 			dao.jjimDelete(user_num, Integer.parseInt(st_num));
 			result = "찜 목록에서 삭제되었습니다!";
 		}
-
-		return result;
-	}
-
-	@RequestMapping(value = "/comdelete.action")
-	public String comDelete(@RequestParam("user_num") String user_num, @RequestParam("st_num") String st_num,
-			Model model)
-	{
-		IMainDAO dao = sqlSession.getMapper(IMainDAO.class);
-
-		// 비교함 삭제 메소드 실행
-		dao.comparingDelete(user_num, Integer.parseInt(st_num));
-
-		String result = "비교함에서 삭제되었습니다.";
 
 		return result;
 	}

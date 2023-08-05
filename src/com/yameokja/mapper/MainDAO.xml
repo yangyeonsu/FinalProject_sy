@@ -181,7 +181,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 
 	<delete id="comparingDelete">
-		DELETE *
+		DELETE
 		FROM COMPARING_BOX
 		WHERE USER_NUM = #{user_num}
 		AND ST_NUM = #{st_num}
