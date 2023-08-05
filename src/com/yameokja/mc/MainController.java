@@ -70,6 +70,8 @@ public class MainController
 			model.addAttribute("comList", dao.getStoreList(comList));
 		else
 			model.addAttribute("comList", null);
+		
+		model.addAttribute("userJjimList", dao.userJjimSearch(user_num));
 
 		result = "/WEB-INF/view/user_main.jsp";
 

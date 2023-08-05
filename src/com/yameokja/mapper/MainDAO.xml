@@ -187,12 +187,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		AND ST_NUM = #{st_num}
 	</delete>
 
+	<select id="userJjimSearch" resultType="java.lang.Integer">
+		SELECT ST_NUM
+		FROM LIKE_BOX
+		WHERE USER_NUM = #{user_num}
+	</select>
+	
 	<select id="jjimSearch" resultType="java.lang.Integer">
 		SELECT COUNT(*) AS COUNT
 		FROM LIKE_BOX
-		WHERE USER_NUM =
-		#{user_num}
-		AND ST_NUM = #{st_num}
+		WHERE USER_NUM = #{user_num}
+		  AND ST_NUM = #{st_num};
 	</select>
 
 	<insert id="jjimInsert">

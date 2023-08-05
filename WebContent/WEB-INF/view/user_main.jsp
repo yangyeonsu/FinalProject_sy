@@ -201,8 +201,31 @@ String cp = request.getContextPath();
 										<div class="likeComAddBtn">
 											<button type="button" class="comAddBtn"
 												value="${hot.st_num}">+</button>
-											<button type="button" class="likeAddBtn"
-												value="${hot.st_num}">❤️</button>
+												
+										<c:forEach var="num" items="${userJjimList }">
+											<c:choose>
+												<c:when test="${hot.contains(num) }">
+													<button type="button" class="likeAddBtn"
+														value="${hot.st_num}">❤️</button>													
+												</c:when>
+												<c:otherwise>
+													<button type="button" class="likeAddBtn"
+														value="${hot.st_num}">🤍</button>
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
+										
+										<c:set var="list" value="${list}" />
+										<c:set var="num" value="${num}" />
+										
+										<c:choose>
+										  <c:when test="${list.contains(num)}">
+										    <p>${num}은(는) 리스트 안에 있습니다.</p>
+										  </c:when>
+										  <c:otherwise>
+										    <p>${num}은(는) 리스트 안에 없습니다.</p>
+										  </c:otherwise>
+										</c:choose>
 										</div>
 
 									</div>

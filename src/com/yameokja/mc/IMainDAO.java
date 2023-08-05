@@ -52,6 +52,9 @@ public interface IMainDAO
 	// 비교함 delete 메소드
 	public int comparingDelete(@Param("user_num") String user_num, @Param("st_num") int st_num);
 	
+	// 해당 사용자가 찜한 가게 리스트 출력 메소드
+	public List<Integer> userJjimSearch(String user_num);
+	
 	// 찜 목록에 해당 가게가 존재하는지 찾는 메소드 => 1 또는 0 반환
 	public int jjimSearch(String user_num, int st_num);
 	
