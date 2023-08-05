@@ -44,10 +44,10 @@ public interface IMainDAO
 	public List<StKeyDTO> stKeyList();
 	
 	// 비교함에 해당 가게가 존재하는지 찾는 메소드 => 1 또는 0반환
-	public int comparingSearch(@Param("user_num")String user_num, @Param("st_num")String st_num);
+	public int comparingSearch(@Param("user_num")String user_num, @Param("st_num") int st_num);
 	
 	// 비교함 insert 메소드
-	public int comparingInsert(@Param("user_num")String user_num, @Param("st_num")int st_num);
+	public int comparingInsert(@Param("user_num")String user_num, @Param("st_num") int st_num);
 	
 	// 비교함 delete 메소드
 	public int comparingDelete(@Param("user_num") String user_num, @Param("st_num") int st_num);
