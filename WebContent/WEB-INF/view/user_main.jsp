@@ -65,8 +65,7 @@ String cp = request.getContextPath();
 		{
 			alert("비교함에서 삭제");
 			$st_num = $(this).val();
-			$user_num = "<%=(String) session.getAttribute("user_num")%>
-	"
+			$user_num = "<%=(String) session.getAttribute("user_num")%>"
 
 			$.ajax(
 			{
@@ -96,27 +95,29 @@ String cp = request.getContextPath();
 			});
 		});
 
-		$(".likeAddBtn").click(function()
+		$(document).on("click",".likeAddBtn", function()
 		{
-			$st_num = $(this).attr("value");
-			$user_num =
-<%=(String) session.getAttribute("user_num")%>
-	$.ajax(
+			$st_num = $(this).val();
+			alert($st_num);
+			$user_num = "<%=(String) session.getAttribute("user_num")%>"
+			
+			$.ajax(
 			{
-				url : "jjimInsert.action",
+				url : "jjimInsertDelete.action",
 				type : 'post',
 				data :
 				{
-					st_num : $st_num,
-					user_num : $user_num
+					"st_num" : $st_num,
+					"user_num" : $user_num
 				},
 				success : function(result)
 				{
 					alert(result);
+					$(this).html(result);
 				},
 				error : function()
 				{
-					alert("error");
+					alert(e.responseText);
 				}
 			});
 
@@ -203,20 +204,21 @@ String cp = request.getContextPath();
 										<div class="likeComAddBtn">
 											<button type="button" class="comAddBtn" value="${hot.st_num}">+</button>
 
-
-											<c:set var="list" value="${userJjimList}" />
-											<c:set var="num" value="${hot.st_num}" />
-
-											<c:choose>
-												<c:when test="${list.contains(num)}">
-													<button type="button" class="likeAddBtn"
-														value="${hot.st_num}">❤️</button>
-												</c:when>
-												<c:otherwise>
-													<button type="button" class="likeAddBtn"
-														value="${hot.st_num}">🤍</button>
-												</c:otherwise>
-											</c:choose>
+											<div class="likeBtnDiv">
+												<c:set var="list" value="${userJjimList}" />
+												<c:set var="num" value="${hot.st_num}" />
+	
+												<c:choose>
+													<c:when test="${list.contains(num)}">
+														<button type="button" class="likeAddBtn"
+															value="${hot.st_num}">❤️</button>
+													</c:when>
+													<c:otherwise>
+														<button type="button" class="likeAddBtn"
+															value="${hot.st_num}">🤍</button>
+													</c:otherwise>
+												</c:choose>
+											</div>
 										</div>
 
 									</div>
@@ -270,19 +272,21 @@ String cp = request.getContextPath();
 													<button type="button" class="comAddBtn"
 														value="${jjim.st_num }">+</button>
 
-													<c:set var="list" value="${userJjimList}" />
-													<c:set var="num" value="${hot.st_num}" />
-
-													<c:choose>
-														<c:when test="${list.contains(num)}">
-															<button type="button" class="likeAddBtn"
-																value="${hot.st_num}">❤️</button>
-														</c:when>
-														<c:otherwise>
-															<button type="button" class="likeAddBtn"
-																value="${hot.st_num}">🤍</button>
-														</c:otherwise>
-													</c:choose>
+													<div class="likeBtnDiv">
+														<c:set var="list" value="${userJjimList}" />
+														<c:set var="num" value="${hot.st_num}" />
+			
+														<c:choose>
+															<c:when test="${list.contains(num)}">
+																<button type="button" class="likeAddBtn"
+																	value="${hot.st_num}">❤️</button>
+															</c:when>
+															<c:otherwise>
+																<button type="button" class="likeAddBtn"
+																	value="${hot.st_num}">🤍</button>
+															</c:otherwise>
+														</c:choose>
+													</div>
 												</div>
 
 											</div>
@@ -340,19 +344,21 @@ String cp = request.getContextPath();
 													<button type="button" class="comAddBtn"
 														value="${ibmat.st_num }">+</button>
 
-													<c:set var="list" value="${userJjimList}" />
-													<c:set var="num" value="${hot.st_num}" />
-
-													<c:choose>
-														<c:when test="${list.contains(num)}">
-															<button type="button" class="likeAddBtn"
-																value="${hot.st_num}">❤️</button>
-														</c:when>
-														<c:otherwise>
-															<button type="button" class="likeAddBtn"
-																value="${hot.st_num}">🤍</button>
-														</c:otherwise>
-													</c:choose>
+													<div class="likeBtnDiv">
+														<c:set var="list" value="${userJjimList}" />
+														<c:set var="num" value="${hot.st_num}" />
+			
+														<c:choose>
+															<c:when test="${list.contains(num)}">
+																<button type="button" class="likeAddBtn"
+																	value="${hot.st_num}">❤️</button>
+															</c:when>
+															<c:otherwise>
+																<button type="button" class="likeAddBtn"
+																	value="${hot.st_num}">🤍</button>
+															</c:otherwise>
+														</c:choose>
+													</div>
 												</div>
 
 											</div>

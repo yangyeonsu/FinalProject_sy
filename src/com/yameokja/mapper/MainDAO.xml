@@ -197,17 +197,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT COUNT(*) AS COUNT
 		FROM LIKE_BOX
 		WHERE USER_NUM = #{user_num}
-		  AND ST_NUM = #{st_num};
+		AND ST_NUM = #{st_num}
 	</select>
 
 	<insert id="jjimInsert">
 		INSERT INTO LIKE_BOX(LIKE_NUM, USER_NUM, ST_NUM,
 		REG_DATE)
-		VALUES (LIKESEQ.NEXTVAL, #{user_num}, #{st_num}, DEFAULT)
+		VALUES (36, #{user_num}, #{st_num}, DEFAULT)
 	</insert>
 
 	<delete id="jjimDelete">
-		DELETE *
+		DELETE
 		FROM LIKE_BOX
 		WHERE USER_NUM = #{user_num}
 		AND ST_NUM = #{st_num}
