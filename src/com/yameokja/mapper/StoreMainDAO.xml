@@ -2,6 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.yameokja.mc.IStoreMainDAO">
+	<select id="searchStoreInfo" resultType="java.lang.Integer">
+		SELECT ST_NUM
+		FROM STORE_VIEW
+		WHERE USER_NUM = #{user_num}
+	</select>
+	
 	<select id="star_transition" resultType="java.util.HashMap">
 		SELECT TO_CHAR(TRUNC(REG_DATE, 'Q')) AS QUARTER_START_DATE, AVG(STAR_SCORE) AS AVERAGE_STAR_SCORE
 		FROM RV_BOX

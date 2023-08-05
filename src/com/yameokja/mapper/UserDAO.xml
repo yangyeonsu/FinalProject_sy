@@ -46,6 +46,12 @@
 		WHERE USER_NUM = #{user_num}
 	</select>
 	
+	<select id="storeCheck" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS COUNT
+		FROM STORE_VIEW
+		WHERE USER_NUM = #{user_num}
+	</select>
+	
 	<!-- 사용자 기본정보 찾기 -->
 	<select id="searchUserInfo" resultType="com.yameokja.mc.UserDTO">
 		SELECT USER_NICKNAME, USER_NUM, USER_ID

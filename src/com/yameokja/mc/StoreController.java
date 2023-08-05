@@ -31,9 +31,12 @@ public class StoreController
 		IStoreMainDAO smDao = sqlSession.getMapper(IStoreMainDAO.class);
 		IUserDAO uDao = sqlSession.getMapper(IUserDAO.class);
 		
+		
 		String user_num = (String)session.getAttribute("user_num");
 		
-		String st_num = uDao.searchStoreInfo(user_num);
+		UserDTO user = uDao.searchUserInfo(user_num, "num");
+		
+		int st_num = smDao.searchStoreInfo(user_num);
 				
 		ArrayList<HashMap<String, String>> hashmaplist = smDao.rv_key_sum(st_num);
 		
@@ -58,6 +61,7 @@ public class StoreController
 			star_data.add(String.valueOf(star.get("AVERAGE_STAR_SCORE")));
 		}
 		
+		model.addAttribute("user", user);
 		
 		model.addAttribute("rv_labels", rv_labels.subList(0, 5));
 		model.addAttribute("rv_data", rv_data.subList(0, 5));

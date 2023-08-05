@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
+f<%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	request.setCharacterEncoding("UTF-8");
@@ -9,9 +9,7 @@
 <head>
 <title>Login Page</title>
 
-<link rel="stylesheet" type="text/css" href="<%=cp %>/css/bootstrap.css">
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
-<script type="text/javascript" src="js/bootstrap.js"></script>
 	
 <style type="text/css">
 	@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500&display=swap');
@@ -25,7 +23,7 @@
 	/* 전체 */
 	#fullscreen 
 	{
-		width: 100vw;
+		width: 100%;
 	    height: 100vh;
 	    display: flex;
 	    flex-direction: column;
@@ -39,7 +37,7 @@
 		width: 300px;
 	    height: 200px;
 	    float: left;
-	    margin-top: 10vh;
+	    margin-top: 5vh;
 	    margin-bottom: 3vh;
 	}
 	
@@ -72,8 +70,8 @@
 	#loginDiv
 	{
 		width: 300px;
-	    height: 23vh;
-	    padding-top: 50px;
+	    height: 200px;
+	    padding-top: 100px;
 	    display: flex;
 	    flex-direction: column;
 	}
@@ -110,6 +108,11 @@
 	    margin-top: 1vh;
 	}
 	
+	#user_pw
+	{
+		margin-top: 30px;
+	}
+	
 	input[type=text], input[type=password]
 	{
 		height: 25px;
@@ -130,6 +133,12 @@
 		color: #ef6351;
 		font-size: small;
 		display: none;
+	}
+	
+	.failLogin
+	{
+		color: #ef6351;
+		font-size: small;
 	}
 	
 	/* loginBtn */
@@ -260,6 +269,10 @@
 			<input type="hidden" value="${check }" id="check">
 		</form>
 	</div>
+	<c:if test="${sessionScope.check eq 'fail' }">
+		 <p class="failLogin">아이디 또는 비밀번호를 잘못 입력했습니다.<br>
+		 입력하신 내용을 다시 확인해주세요.</p>
+	</c:if>
 </div>
 
 
