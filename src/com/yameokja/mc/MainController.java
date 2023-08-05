@@ -231,8 +231,8 @@ public class MainController
 				System.out.println(store.getSt_name());
 				html += "<div class='comStoreDiv'>";
 				html += "	<div class='comStoreImgDiv'>";
-				html += "		<button type=\"button\" value=\""+ String.valueOf(store.getSt_num()) + "\" class=\"comDelete\">X</button>";
-				html += "		<label for='" + String.valueOf(store.getSt_num()) + "' class='stLabel'>";
+				html += "		<button type=\"button\" value=\""+ store.getSt_num() + "\" class=\"comDelete\">X</button>";
+				html += "		<label for='" + store.getSt_num() + "' class='stLabel'>";
 				html += "			<input type='checkbox' class='comStImgCB' id='" + store.getSt_num() + "'>";
 				html += " 			<img class='comStImg' src='" + store.getPhoto_link() + "'>";
 				html += "		</label>";

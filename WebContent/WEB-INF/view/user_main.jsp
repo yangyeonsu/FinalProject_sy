@@ -43,7 +43,6 @@ String cp = request.getContextPath();
 						alert("이미 비교함에 담긴 가게입니다.");
 					} else
 					{
-						alert(data);
 						$(".comStoreListDiv").html(data);
 					}
 				},
@@ -77,6 +76,7 @@ String cp = request.getContextPath();
 					}
 					else
 					{
+						alert(data);
 						alert("비교함에서 삭제되었습니다.");
 						$(".comStoreListDiv").html(data);
 					}
