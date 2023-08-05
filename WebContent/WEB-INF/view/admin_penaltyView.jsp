@@ -198,7 +198,7 @@
 <body>
 
 <!-- header -->
-<c:import url="header_user_sh(0801).jsp"></c:import>
+<c:import url="header_admin.jsp"></c:import>
 
 <!-- container -->
 <div id="container">
@@ -258,12 +258,13 @@
 			<h1>패널티회수 접수내역 관리</h1>
 			
 			<!-- 패널티회수 box -->
-			<div id="penaltyBox" >
+			<div id="penaltyBox" style="height: auto;">
+
 				<div class="more" id="more">
 					<h3><a href="#">패널티회수</a></h3>
 				</div>
 			
-				<table id="penalty_list">
+				<table id="penalty_list" style="margin-bottom: 20px;">
 					<thead>
 						<tr>	
 							<th>신청일자</th>
@@ -272,21 +273,25 @@
 							<th>처리일자</th>
 							<th>처리한 관리자</th>
 						</tr>
-						<c:forEach var="revoApply" items="${revoList }"></c:forEach>
-						<tr>
-							<td>${revoApply.reg_date }</td>
-							<td>${revoApply.st_name }</td>
-							<td>${revoApply.state }</td>
-							<td>${revoApply.final_date }</td>
-							<td>${revoApply.admin_id }</td>
-						</tr>
 					</thead>
+					<tbody>
+						<c:forEach var="revo" items="${revoList }">
+						<tr>
+							<td>${revo.reg_date }</td>
+							<td>${revo.st_name }</td>
+							<td>${revo.state }</td>
+							<td>${revo.final_date }</td>
+							<td>${revo.admin_id }</td>
+						</tr>
+						</c:forEach>
+					</tbody>
+
 				</table>
 			</div>
 			
 			<div class="back" id="more">
 				<h3></h3>
-				<a href="main_admin.jsp" class="backBtn" style="font-size: 10pt;">뒤로가기</a>
+				<a href="mainAdminView.action" class="backBtn" style="font-size: 10pt;">뒤로가기</a>
 			</div>
 		</div>
 	</div>

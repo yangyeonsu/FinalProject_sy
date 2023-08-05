@@ -198,7 +198,7 @@
 <body>
 
 <!-- header -->
-<c:import url="header_user_sh(0801).jsp"></c:import>
+<c:import url="header_admin.jsp"></c:import>
 
 <!-- container -->
 <div id="container">
@@ -258,14 +258,16 @@
 			<h1>가게정보수정요청 접수내역 관리</h1>
 			
 			<!-- 가게정보수정요청 box -->
-			<div id="storeErrBox" >
+
+			<div id="storeErrBox" style="height: auto;">
+
 				<div class="more" id="more">
 					<h3><a href="#">가게정보수정요청</a></h3>
 				</div>
 			
-				<table id="storeErr_list">
+
+				<table id="storeErr_list" style="margin-bottom: 20px;">
 					<thead>
-						
 						<tr>	
 							<th>요청일자</th>
 							<th>요청자 ID</th>
@@ -274,22 +276,26 @@
 							<th>처리일자</th>
 							<th>처리한 관리자</th>
 						</tr>
-						<c:forEach var="reqApply" items="${reqList }"></c:forEach>
-						<tr>
-							<td>${reqApply.reg_date }</td>
-							<td>${reqApply.user_id }</td>
-							<td>${reqApply.st_name }</td>
-							<td>${reqApply.state }</td>
-							<td>${reqApply.final_date }</td>
-							<td>${reqApply.admin_id }</td>
-						</tr>
 					</thead>
+					<tbody>
+						<c:forEach var="req" items="${reqList }">
+						<tr>
+							<td>${req.reg_date }</td>
+							<td>${req.user_id }</td>
+							<td>${req.st_name }</td>
+							<td>${req.state }</td>
+							<td>${req.final_date }</td>
+							<td>${req.admin_id }</td>
+						</tr>
+						</c:forEach>
+					</tbody>
+
 				</table>
 			</div>
 			
 			<div class="back" id="more">
 				<h3></h3>
-				<a href="main_admin.jsp" class="backBtn" style="font-size: 10pt;">뒤로가기</a>
+				<a href="mainAdminView.action" class="backBtn" style="font-size: 10pt;">뒤로가기</a>
 			</div>
 		</div>
 	</div>

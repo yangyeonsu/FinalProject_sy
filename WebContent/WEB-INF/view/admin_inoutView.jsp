@@ -202,7 +202,7 @@
 <body>
 
 <!-- header -->
-<c:import url="header_user_sh(0801).jsp"></c:import>
+<c:import url="header_admin.jsp"></c:import>
 
 <!-- container -->
 <div id="container">
@@ -262,12 +262,12 @@
 			<h1>패널티회수 접수내역 관리</h1>
 			
 			<!-- 가게 등록/폐업 요청 box -->
-			<div id="inout_Box" >
+			<div id="inout_Box" style="height: auto;">
 				<div class="more" id="more">
 					<h3><a href="#">가게 등록/폐업 요청</a></h3>
 				</div>
 			
-				<table id="inout_list">
+				<table id="inout_list" style="margin-bottom: 20px;">
 					<thead>
 						<tr>
 							<th>구분</th>	
@@ -277,23 +277,30 @@
 							<th>처리일자</th>
 							<th>처리한 관리자</th>
 						</tr>
-						
-						<c:forEach var="inoutApply" items="${inoutList }"></c:forEach>
-						<tr>
-							<td>${inoutApply.cat }</td>
-							<td>${inoutApply.reg_date }</td>
-							<td>${inoutApply.user_id }</td>
-							<td>${inoutApply.final_date }</td>
-							<td>${inoutApply.admin_id }</td>
-							<td>${inoutApply.state }</td>
-						</tr>
 					</thead>
+					<tbody>
+						<c:forEach var="inout" items="${inoutList }">
+						<tr>
+							<c:if test="${inout.cat eq '등록' }">
+							<td style="background-color: green;">${inout.cat }</td>
+							</c:if>
+							<c:if test="${inout.cat eq '폐업' }">
+							<td style="background-color: pink;">${inout.cat }</td>
+							</c:if>
+							<td>${inout.reg_date }</td>
+							<td>${inout.user_id }</td>
+							<td>${inout.state }</td>
+							<td>${inout.final_date }</td>
+							<td>${inout.admin_id }</td>
+						</tr>
+						</c:forEach>
+					</tbody>
 				</table>
 			</div>
 			
 			<div class="back" id="more">
 				<h3></h3>
-				<a href="main_admin.jsp" class="backBtn" style="font-size: 10pt;">뒤로가기</a>
+				<a href="mainAdminView.action" class="backBtn" style="font-size: 10pt;">뒤로가기</a>
 			</div>
 		</div>
 	</div>
