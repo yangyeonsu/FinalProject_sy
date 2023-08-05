@@ -1,8 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
 	request.setCharacterEncoding("UTF-8");
 String cp = request.getContextPath();
@@ -16,7 +17,8 @@ String cp = request.getContextPath();
 <title>Main Page</title>
 
 <!-- jquery -->
-<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+<script type="text/javascript"
+	src="http://code.jquery.com/jquery.min.js"></script>
 
 <link rel="stylesheet" type="text/css" href="<%=cp%>/css/user_main.css">
 
@@ -44,7 +46,6 @@ String cp = request.getContextPath();
 					} else
 					{
 						$(".comStoreListDiv").html(data);
-						createDynamicButton();
 					}
 				},
 				error : function(e)
@@ -61,10 +62,9 @@ String cp = request.getContextPath();
 		  }); */
 		$(document).on("click",".comDelete", function()
 		{
-			alert("비교함에서 삭제");
 			$st_num = $(this).val();
 			$user_num = "<%=(String) session.getAttribute("user_num")%>"
-			
+
 			$.ajax(
 			{
 				url : "comdelete.action",
@@ -76,45 +76,47 @@ String cp = request.getContextPath();
 				},
 				success : function(data)
 				{
-					if(data=="")
+					if (data == "")
 					{
 						alert("비교함에서 이미 삭제된 가게입니다.");
-					}
-					else
+					} else
 					{
 						alert(data);
 						alert("비교함에서 삭제되었습니다.");
 						$(".comStoreListDiv").html(data);
 					}
 				},
-				error : function()
+				error : function(e)
 				{
 					alert(e.responseText);
 				}
 			});
 		});
 
-		$(".likeAddBtn").click(function()
+		$(document).on("click",".likeAddBtn", function()
 		{
-			$st_num = $(this).attr("value");
-			$user_num =
-<%=(String) session.getAttribute("user_num")%>
-	$.ajax(
+			$st_num = $(this).val();
+			alert($st_num);
+			$user_num = "<%=(String) session.getAttribute("user_num")%>"
+			
+			$.ajax(
 			{
-				url : "jjimInsert.action",
+				url : "jjimInsertDelete.action",
 				type : 'post',
 				data :
 				{
-					st_num : $st_num,
-					user_num : $user_num
+					"st_num" : $st_num,
+					"user_num" : $user_num
 				},
+				context: this,
 				success : function(result)
 				{
 					alert(result);
+					$(this).html(result);
 				},
-				error : function()
+				error : function(e)
 				{
-					alert("error");
+					alert(e.responseText);
 				}
 			});
 
@@ -129,14 +131,13 @@ String cp = request.getContextPath();
 			
 		});
 		 */
+		 
+		$("#searchBtn").click(function()
+		{
+			$("#mainForm").submit();
+		});
 	});
 	
-	
-	 function createDynamicButton()
-	 {
-	     /*  var newButton = $("<button>").text("동적 버튼").addClass("comDelete"); */
-	      $(".comDelete").append(newButton);
-	}
 </script>
 
 
@@ -144,37 +145,39 @@ String cp = request.getContextPath();
 
 <body>
 	<div id="buttonContainer"></div>
-	<form action="" method="post" id="mainForm">
+	<form action="search.action" id="mainForm">
 
 		<c:import url="header_user.jsp"></c:import>
 
 		<div class=container>
-
+	
 			<!-- 비교함 외의 영역 -->
 			<div id="mainDiv">
-
+			
 				<!-- 메인로고 + 검색창 + 검색버튼 구역 -->
 				<div id="searchArea">
 
 					<!-- 메인로고 -->
 					<div id="logoImgDiv">
+					<button type="button" id="logoImgBtn" onclick="location.href='main.action'">
 						<img id="logoImg" name="logoImg" class="Img"
 							src="<%=cp%>/images/logo_text.png">
+					</button>
 					</div>
-
+	
 					<!-- 검색창 + 검색버튼 -->
 					<div id="inputDiv">
 						<!-- 검색창 -->
 						<input type="text" id="typingArea" name="typingArea"
 							class="insert" placeholder="검색어를 입력해주세요.">
 						<!-- 검색버튼 -->
-						<button type="button" id="searchBtn" name="searchBtn"
-							onclick="search()">
+						<button type="button" id="searchBtn" name="searchBtn">
 							<img id="searchIcon" src="<%=cp%>/images/search_icon.png">
 						</button>
 					</div>
-				</div>
 
+				</div>
+			
 
 
 				<!-- 추천가게 구역 -->
@@ -193,16 +196,30 @@ String cp = request.getContextPath();
 									<!-- 가게 사진 + 찜, 비교함추가 -->
 									<div class="stImgBtnDiv">
 										<div class="stImgDiv">
-											<button type="button" value="${hot.st_num}" class="storeBtn" onclick="location.href='stDetail-userView.action?st_num=${hot.st_num}'">
-												<img class="stImg" src="<%=cp%>/${hot.photo_link}"/>
+											<button type="button" value="${hot.st_num}" class="storeBtn"
+												onclick="location.href='stDetail-userView.action?st_num=${hot.st_num}'">
+												<img class="stImg" src="<%=cp%>/${hot.photo_link}" />
 											</button>
 										</div>
 
 										<div class="likeComAddBtn">
-											<button type="button" class="comAddBtn"
-												value="${hot.st_num}">+</button>
-											<button type="button" class="likeAddBtn"
-												value="${hot.st_num}">❤️</button>
+											<button type="button" class="comAddBtn" value="${hot.st_num}">+</button>
+
+											<div class="likeBtnDiv">
+												<c:set var="list" value="${userJjimList}" />
+												<c:set var="num" value="${hot.st_num}" />
+	
+												<c:choose>
+													<c:when test="${list.contains(num)}">
+														<button type="button" class="likeAddBtn"
+															value="${hot.st_num}">❤️</button>
+													</c:when>
+													<c:otherwise>
+														<button type="button" class="likeAddBtn"
+															value="${hot.st_num}">🤍</button>
+													</c:otherwise>
+												</c:choose>
+											</div>
 										</div>
 
 									</div>
@@ -213,7 +230,7 @@ String cp = request.getContextPath();
 
 										<!-- 별점 평점(리뷰 수) -->
 										<div class="startReviewDivs">
-											<span>${hot.star_avg }</span>(${hot.rv_count })
+											<span>⭐${hot.star_avg }</span>(${hot.rv_count })
 										</div>
 									</div>
 								</div>
@@ -245,16 +262,32 @@ String cp = request.getContextPath();
 											<!-- 가게 사진 + 찜, 비교함추가 -->
 											<div class="stImgBtnDiv">
 												<div class="stImgDiv">
-													<button type="button" value="${jjim.st_num }" class="storeBtn" onclick="location.href='stDetail-userView.action?st_num=${jjim.st_num}'">
-														<img class="stImg" src="<%=cp %>/${jjim.photo_link}"/>
+													<button type="button" value="${jjim.st_num }"
+														class="storeBtn"
+														onclick="location.href='stDetail-userView.action?st_num=${jjim.st_num}'">
+														<img class="stImg" src="<%=cp %>/${jjim.photo_link}" />
 													</button>
 												</div>
 
 												<div class="likeComAddBtn">
 													<button type="button" class="comAddBtn"
 														value="${jjim.st_num }">+</button>
-													<button type="button" class="likeAddBtn"
-														value="${jjim.st_num }">❤️</button>
+
+													<div class="likeBtnDiv">
+														<c:set var="list" value="${userJjimList}" />
+														<c:set var="num" value="${hot.st_num}" />
+			
+														<c:choose>
+															<c:when test="${list.contains(num)}">
+																<button type="button" class="likeAddBtn"
+																	value="${hot.st_num}">❤️</button>
+															</c:when>
+															<c:otherwise>
+																<button type="button" class="likeAddBtn"
+																	value="${hot.st_num}">🤍</button>
+															</c:otherwise>
+														</c:choose>
+													</div>
 												</div>
 
 											</div>
@@ -265,7 +298,7 @@ String cp = request.getContextPath();
 
 												<!-- 별점 평점(리뷰 수) -->
 												<div class="startReviewDivs">
-													<span>${jjim.star_avg }</span>(${jjim.rv_count })
+													<span>⭐${jjim.star_avg }</span>(${jjim.rv_count })
 												</div>
 											</div>
 										</div>
@@ -311,8 +344,22 @@ String cp = request.getContextPath();
 												<div class="likeComAddBtn">
 													<button type="button" class="comAddBtn"
 														value="${ibmat.st_num }">+</button>
-													<button type="button" class="likeAddBtn"
-														value="${ibmat.st_num }">❤️</button>
+
+													<div class="likeBtnDiv">
+														<c:set var="list" value="${userJjimList}" />
+														<c:set var="num" value="${hot.st_num}" />
+			
+														<c:choose>
+															<c:when test="${list.contains(num)}">
+																<button type="button" class="likeAddBtn"
+																	value="${hot.st_num}">❤️</button>
+															</c:when>
+															<c:otherwise>
+																<button type="button" class="likeAddBtn"
+																	value="${hot.st_num}">🤍</button>
+															</c:otherwise>
+														</c:choose>
+													</div>
 												</div>
 
 											</div>
@@ -323,7 +370,7 @@ String cp = request.getContextPath();
 
 												<!-- 별점 평점(리뷰 수) -->
 												<div class="startReviewDivs">
-													<span>${ibmat.star_avg }</span>(${ibmat.rv_count })
+													<span>⭐${ibmat.star_avg }</span>(${ibmat.rv_count })
 												</div>
 											</div>
 										</div>
@@ -355,7 +402,7 @@ String cp = request.getContextPath();
 						<c:choose>
 							<c:when
 								test="${fn:length(comList) == 0 or fn:length(comList) == null}">
-								<c:forEach var= "i" begin="0" end="9">
+								<c:forEach var="i" begin="0" end="9">
 									<div class="comStoreDiv">
 										<!-- 한 가게 대표사진 영역 -->
 										<div class="comStoreImgDiv">
@@ -373,7 +420,8 @@ String cp = request.getContextPath();
 										<!-- 한 가게 대표사진 영역 -->
 										<div class="comStoreImgDiv">
 											<button type="button" value="${com.st_num}" class="comDelete">X</button>
-											<label for="${com.st_num}" class="stLabel"> <input type="checkbox" class="comStImgCB" id="${com.st_num}">
+											<label for="${com.st_num}" class="stLabel"> <input
+												type="checkbox" class="comStImgCB" id="${com.st_num}">
 												<img class="comStImg" src="<%=cp%>/${com.photo_link}">
 											</label>
 										</div>

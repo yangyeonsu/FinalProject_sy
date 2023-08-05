@@ -108,7 +108,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM
 		SEARCH_KEY
 		WHERE SEARCH_NAME LIKE #{keyword}
-		ORDER BY COUNT
 		UNION
 		SELECT
 		ST_NUM
@@ -187,22 +186,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		AND ST_NUM = #{st_num}
 	</delete>
 
+	<select id="userJjimSearch" resultType="java.lang.Integer">
+		SELECT ST_NUM
+		FROM LIKE_BOX
+		WHERE USER_NUM = #{user_num}
+	</select>
+	
 	<select id="jjimSearch" resultType="java.lang.Integer">
 		SELECT COUNT(*) AS COUNT
 		FROM LIKE_BOX
-		WHERE USER_NUM =
-		#{user_num}
+		WHERE USER_NUM = #{user_num}
 		AND ST_NUM = #{st_num}
 	</select>
 
 	<insert id="jjimInsert">
 		INSERT INTO LIKE_BOX(LIKE_NUM, USER_NUM, ST_NUM,
 		REG_DATE)
-		VALUES (LIKESEQ.NEXTVAL, #{user_num}, #{st_num}, DEFAULT)
+		VALUES (LIKEBOXSEQ.NEXTVAL, #{user_num}, #{st_num}, DEFAULT)
 	</insert>
 
 	<delete id="jjimDelete">
-		DELETE *
+		DELETE
 		FROM LIKE_BOX
 		WHERE USER_NUM = #{user_num}
 		AND ST_NUM = #{st_num}

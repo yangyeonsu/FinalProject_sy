@@ -43,6 +43,14 @@ body
 	background-color: #f7f4ea;
 }
 
+/* logoImgBtn DIV */
+#logoImgBtn
+{
+	border: none;
+	background-color: #f7f4ea;
+	cursor: pointer;
+}
+
 /* mainlogo img DIV */
 #logoImgDiv
 {
