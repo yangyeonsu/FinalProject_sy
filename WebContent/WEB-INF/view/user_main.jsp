@@ -44,6 +44,7 @@ String cp = request.getContextPath();
 					} else
 					{
 						$(".comStoreListDiv").html(data);
+						createDynamicButton();
 					}
 				},
 				error : function(e)
@@ -54,9 +55,14 @@ String cp = request.getContextPath();
 
 		});
 		
-		$(".comDelete").click(function()
+		/* 
+		$(document).on("click", "button[name='add']", function () {
+		    $("body").append("<button name='add'>+</button>");
+		  }); */
+		$(document).on("click",".comDelete", function()
 		{
-			$st_num = $(this).attr("value")
+			alert("비교함에서 삭제");
+			$st_num = $(this).val();
 			$user_num = "<%=(String) session.getAttribute("user_num")%>"
 			
 			$.ajax(
@@ -126,9 +132,10 @@ String cp = request.getContextPath();
 	});
 	
 	
-	function call()
-	{
-		alert("불가능");
+	 function createDynamicButton()
+	 {
+	     /*  var newButton = $("<button>").text("동적 버튼").addClass("comDelete"); */
+	      $(".comDelete").append(newButton);
 	}
 </script>
 
@@ -136,7 +143,7 @@ String cp = request.getContextPath();
 </head>
 
 <body>
-
+	<div id="buttonContainer"></div>
 	<form action="" method="post" id="mainForm">
 
 		<c:import url="header_user.jsp"></c:import>
