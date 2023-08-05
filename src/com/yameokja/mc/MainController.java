@@ -76,14 +76,15 @@ public class MainController
 		return result;
 	}
 
-	@RequestMapping(value = "/search.action", method = RequestMethod.GET)
-	public String searchStore(String keyword, Model model)
+	@RequestMapping(value = "/search.action")
+	public String searchStore(Model model)
 	{
 		String result = "";
 
 		IMainDAO dao = sqlSession.getMapper(IMainDAO.class);
 
 		// keyword = "서울 김밥";
+		String keyword = "서울 김밥";
 
 		List<String> keywordList = new ArrayList<String>();
 
@@ -130,7 +131,7 @@ public class MainController
 		model.addAttribute("foodLabelList", dao.foodLabelList());
 		model.addAttribute("stKeyList", dao.stKeyList());
 
-		result = "/WEB-INF/view/MY_personal_main_2.jsp";
+		result = "/WEB-INF/view/user_main_2.jsp";
 
 		return result;
 	}
@@ -221,7 +222,7 @@ public class MainController
 			// 다시 새로 비교함 불러와서 innerHTML로 넣기
 			List<Integer> newComparingList = (ArrayList<Integer>) dao.getStoreComList(user_num);
 			
-			System.out.println(newComparingList);
+			//System.out.println(newComparingList);
 			
 			List<StoreDTO> storeList= null;
 			
@@ -231,7 +232,7 @@ public class MainController
 				
 				for (StoreDTO store : storeList)
 				{
-					System.out.println(store.getSt_name());
+					// System.out.println(store.getSt_name());
 					html += "<div class='comStoreDiv'>";
 					html += "	<div class='comStoreImgDiv'>";
 					html += "		<button type=\"button\" value=\""+ store.getSt_num() + "\" class=\"comDelete\">X</button>";

@@ -46,7 +46,6 @@ String cp = request.getContextPath();
 					} else
 					{
 						$(".comStoreListDiv").html(data);
-						createDynamicButton();
 					}
 				},
 				error : function(e)
@@ -63,7 +62,6 @@ String cp = request.getContextPath();
 		  }); */
 		$(document).on("click",".comDelete", function()
 		{
-			alert("비교함에서 삭제");
 			$st_num = $(this).val();
 			$user_num = "<%=(String) session.getAttribute("user_num")%>"
 
@@ -88,7 +86,7 @@ String cp = request.getContextPath();
 						$(".comStoreListDiv").html(data);
 					}
 				},
-				error : function()
+				error : function(e)
 				{
 					alert(e.responseText);
 				}
@@ -110,12 +108,13 @@ String cp = request.getContextPath();
 					"st_num" : $st_num,
 					"user_num" : $user_num
 				},
+				context: this,
 				success : function(result)
 				{
 					alert(result);
 					$(this).html(result);
 				},
-				error : function()
+				error : function(e)
 				{
 					alert(e.responseText);
 				}
@@ -132,13 +131,13 @@ String cp = request.getContextPath();
 			
 		});
 		 */
+		 
+		$("#searchBtn").click(function()
+		{
+			$("#mainForm").submit();
+		});
 	});
-
-	function createDynamicButton()
-	{
-		/*  var newButton = $("<button>").text("동적 버튼").addClass("comDelete"); */
-		$(".comDelete").append(newButton);
-	}
+	
 </script>
 
 
@@ -146,37 +145,39 @@ String cp = request.getContextPath();
 
 <body>
 	<div id="buttonContainer"></div>
-	<form action="" method="post" id="mainForm">
+	<form action="search.action" id="mainForm">
 
 		<c:import url="header_user.jsp"></c:import>
 
 		<div class=container>
-
+	
 			<!-- 비교함 외의 영역 -->
 			<div id="mainDiv">
-
+			
 				<!-- 메인로고 + 검색창 + 검색버튼 구역 -->
 				<div id="searchArea">
 
 					<!-- 메인로고 -->
 					<div id="logoImgDiv">
+					<button type="button" id="logoImgBtn" onclick="location.href='main.action'">
 						<img id="logoImg" name="logoImg" class="Img"
 							src="<%=cp%>/images/logo_text.png">
+					</button>
 					</div>
-
+	
 					<!-- 검색창 + 검색버튼 -->
 					<div id="inputDiv">
 						<!-- 검색창 -->
 						<input type="text" id="typingArea" name="typingArea"
 							class="insert" placeholder="검색어를 입력해주세요.">
 						<!-- 검색버튼 -->
-						<button type="button" id="searchBtn" name="searchBtn"
-							onclick="search()">
+						<button type="button" id="searchBtn" name="searchBtn">
 							<img id="searchIcon" src="<%=cp%>/images/search_icon.png">
 						</button>
 					</div>
-				</div>
 
+				</div>
+			
 
 
 				<!-- 추천가게 구역 -->
@@ -229,7 +230,7 @@ String cp = request.getContextPath();
 
 										<!-- 별점 평점(리뷰 수) -->
 										<div class="startReviewDivs">
-											<span>${hot.star_avg }</span>(${hot.rv_count })
+											<span>⭐${hot.star_avg }</span>(${hot.rv_count })
 										</div>
 									</div>
 								</div>
@@ -297,7 +298,7 @@ String cp = request.getContextPath();
 
 												<!-- 별점 평점(리뷰 수) -->
 												<div class="startReviewDivs">
-													<span>${jjim.star_avg }</span>(${jjim.rv_count })
+													<span>⭐${jjim.star_avg }</span>(${jjim.rv_count })
 												</div>
 											</div>
 										</div>
@@ -369,7 +370,7 @@ String cp = request.getContextPath();
 
 												<!-- 별점 평점(리뷰 수) -->
 												<div class="startReviewDivs">
-													<span>${ibmat.star_avg }</span>(${ibmat.rv_count })
+													<span>⭐${ibmat.star_avg }</span>(${ibmat.rv_count })
 												</div>
 											</div>
 										</div>

@@ -17,7 +17,7 @@ String cp = request.getContextPath();
 	src="http://code.jquery.com/jquery.min.js"></script>
 
 <link rel="stylesheet" type="text/css"
-	href="<%=cp%>/css/MY_personal_main_2.css">
+	href="<%=cp%>/css/user_main_2.css">
 
 <script type="text/javascript">
 	$(document).ready(function()
@@ -59,7 +59,7 @@ String cp = request.getContextPath();
 </head>
 <body>
 
-	<c:import url="header_user_sh(main).jsp"></c:import>
+	<c:import url="header_user.jsp"></c:import>
 
 	<div class=container>
 
