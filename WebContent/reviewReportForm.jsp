@@ -49,7 +49,7 @@ textarea {
 <body>
 
 <!-- header -->
-<c:import url="/WEB-INF/view/header_user.jsp"></c:import>
+<c:import url="/WEB-INF/view/header_admin.jsp"></c:import>
 <!-- 사이드바 -->
 <div id="leftSideBar">
 </div>
@@ -57,7 +57,7 @@ textarea {
 
 <!-- body -->
 <div id="title" style="padding: 10px;">
-<h2>리뷰신고서</h2><br>
+<h1>리뷰신고서</h1><br>
 </div>
 
 <div id="body">
@@ -102,7 +102,7 @@ textarea {
 		</div>
 		
 		<div style="width: 100%;">
-			<textarea id="reviewReject" rows="6px;" readonly="readonly" style="width: 100%; border-radius: 20px;">문제되는 내용 없음.</textarea>
+			<textarea id="reviewReject" rows="6px;" style="width: 100%; border-radius: 20px;">문제되는 내용 없음.</textarea>
 		</div>
 		
 		<div style="width: 100%; text-align: right;">

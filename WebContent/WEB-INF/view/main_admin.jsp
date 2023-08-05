@@ -281,14 +281,14 @@
 					<tbody>
 						<c:forEach var="review" items="${rvList }" begin="0" end="4">
 						<tr>
-							<td>${review.reg_date }</td>
-							<td>${review.user_id }</td>
-							<td>${review.st_name }</td>
-							<td>${review.accu_num }</td>
-							<td>${review.state }</td>
-							<td>${review.final_date }</td>
-							<td>${review.admin_id }</td>
-						</tr>
+							<td><a href="reviewReportForm.jsp">${review.reg_date }</a></td>
+							<td><a href="reviewReportForm.jsp">${review.user_id }</a></td>
+							<td><a href="reviewReportForm.jsp">${review.st_name }</a></td>
+							<td><a href="reviewReportForm.jsp">${review.accu_num }</a></td>
+							<td><a href="reviewReportForm.jsp">${review.state }</a></td>
+							<td><a href="reviewReportForm.jsp">${review.final_date }</a></td>
+							<td><a href="reviewReportForm.jsp">${review.admin_id }</a></td>
+						</tr>                               
 						</c:forEach>
 					</tbody>
 				</table>
