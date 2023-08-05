@@ -212,7 +212,7 @@
 
 .cName0 div, .cList0 div, .cOption0 div, .cImages0 div, .cImages0 div
 {
-	font-size: 25pt; font-weight: bold; margin-top: 1vh; margin-left: 1vw;
+	font-size: 2rem; font-weight: bold; margin-top: 1vh; margin-left: 1vw;
 }
 
 .img-rounded
@@ -374,7 +374,7 @@
 		<div class="compareMain">
 			
 			<div class="compTitle" style="width: 15vw; height: 15vh; margin-left: 44vw;">
-				<span style="font-size: 45pt; font-weight: bold; text-align: center;">비교하기</span>
+				<span style="font-size: 3rem; font-weight: bold; text-align: center;">비교하기</span>
 			</div>			
 			
 			
