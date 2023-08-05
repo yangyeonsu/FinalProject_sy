@@ -177,7 +177,7 @@ public class MainController
 			model.addAttribute("comList", storeList);
 			for (StoreDTO store : storeList)
 			{
-
+				System.out.println(store.getSt_name());
 				html += "<div class='comStoreDiv'>";
 				html += "	<div class='comStoreImgDiv'>";
 				html += "		<button type=\"button\" value=\""+ String.valueOf(store.getSt_num()) + "\" class=\"comDelete\">X</button>";
@@ -186,9 +186,7 @@ public class MainController
 				html += " 			<img class='comStImg' src='" + store.getPhoto_link() + "'>";
 				html += "		</label>";
 				html += "	</div>";
-				html += "	<div class='comStoreNameDiv'>";
-				html += 		String.valueOf(store.getSt_name());
-				html += "	</div>";
+				html += "	<div class=\"comStoreNameDiv\">"+store.getSt_name()+"</div>";
 				html += "</div>";
 			}
 			if (storeList.size() < 10)
@@ -197,7 +195,7 @@ public class MainController
 				{
 					html += "<div class=\"comStoreDiv\">";
 					html += "<div class=\"comStoreImgDiv\">";
-					html += "	<img class=\"comStNoImg\" src=\"<%=cp%>/images/comp_img01.png\">";
+					html += "	<img class=\"comStNoImg\" src=\"images/comp_img01.png\">";
 					html += "</div>";
 					html += "<div class=\"comStoreNameDiv\"></div>";
 					html += "</div>";

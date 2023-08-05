@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
@@ -23,7 +23,7 @@
 	<div class="comStoreDiv">
 		<!-- 한 가게 대표사진 영역 -->
 		<div class="comStoreImgDiv">
-			<img class="comStNoImg" src="<%=cp %>/images/comp_img01.png">
+			<img class="comStNoImg" src="FinalProject_sy/images/comp_img01.png">
 		</div>
 		<!-- 한 가게 가게이름 영역 -->
 		<div class="comStoreNameDiv"></div>
