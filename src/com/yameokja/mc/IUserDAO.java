@@ -15,6 +15,7 @@ public interface IUserDAO
 	public int nickCheck(String user_nick);
 	public int joinSend(UserDTO user);
 	public int userNumCheck(String user_num);
+	public int storeCheck(String user_num);
 	public UserDTO searchUserInfo(@Param("user_info")String user_info, @Param("check")String check);
 	public UserDTO firstHalf(String user_num);
 	public UserDTO secondHalf(String user_num);
