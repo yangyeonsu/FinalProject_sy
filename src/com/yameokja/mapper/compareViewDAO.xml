@@ -3,56 +3,200 @@
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yameokja.mc.IcompareViewDAO">
-
+	
+	<!-- 가게1 -->
+	
 	<!-- 가게 이름, 주소, 카테고리 -->
-	<select id="nameLoCat" resultType="com.yameokja.mc.compareViewDTO">
-		SELECT IA.ST_NAME ST_NAME, FL.FOOD_NAME AS FOOD_NAME, IA.ST_LOCATION AS ST_LOCATION
+	<select id="nameLoCat1" resultType="com.yameokja.mc.compareViewDTO">
+		SELECT IA.ST_NAME AS ST_NAME1, FL.FOOD_NAME AS FOOD_NAME1, IA.ST_LOCATION AS ST_LOCATION1
 		FROM ST_FOOD SF
 		JOIN ST_LIST SL ON SF.ST_NUM = SL.ST_NUM
 		JOIN FOOD_LABEL FL ON SF.FOOD_NUM = FL.FOOD_NUM
 		JOIN IN_PROCESS IP ON SL.IN_PROCESS_NUM = IP.IN_PROCESS_NUM
 		JOIN IN_APPLY IA ON IP.IN_APPLY_NUM = IA.IN_APPLY_NUM
-		WHERE SL.ST_NUM = #{st_num}
+		WHERE SL.ST_NUM = #{st_num1}
 	</select>
 	
 	
 	<!-- 평점, 리뷰수 -->
- 	<select id="scoRe" resultType="com.yameokja.mc.compareViewDTO"> 
- 		SELECT NVL(ROUND(AVG(STAR_SCORE), 2), 0) AS STAR_SCORE
-	    , NVL(COUNT(RV_BOX.RV_NUM), 0) AS REVIEW_COUNT
+ 	<select id="scoRe1" resultType="com.yameokja.mc.compareViewDTO"> 
+ 		SELECT NVL(ROUND(AVG(STAR_SCORE), 2), 0) AS STAR_SCORE1
+	    , NVL(COUNT(RV_BOX.RV_NUM), 0) AS REVIEW_COUNT1
 		FROM ST_LIST SL
 		LEFT JOIN LIKE_BOX ON SL.ST_NUM = LIKE_BOX.ST_NUM
 		LEFT JOIN RV_BOX ON SL.ST_NUM = RV_BOX.ST_NUM
-		WHERE SL.ST_NUM = #{st_num}
+		WHERE SL.ST_NUM = #{st_num1}
  	</select>
 	
 	
 	<!-- 영업시간  -->
- 	<select id="openClose" resultType="com.yameokja.mc.compareViewDTO">
-	 	SELECT SL.ST_NUM AS ST_NUM, OC.DAY_NUM AS DAY_NUM, WDL.DAY_NAME AS DAY_NAME
-			, OC.START_TIME AS START_TIME, OC.END_TIME AS END_TIME
+ 	<select id="openClose1" resultType="com.yameokja.mc.compareViewDTO">
+	 	SELECT SL.ST_NUM AS ST_NUM1, OC.DAY_NUM AS DAY_NUM1, WDL.DAY_NAME AS DAY_NAME1
+			, OC.START_TIME AS START_TIME1, OC.END_TIME AS END_TIME1
 		FROM ST_OPENCLOSE OC
 		JOIN ST_LIST SL ON OC.ST_NUM = SL.ST_NUM
 		JOIN WEEKDAY_LABEL WDL ON OC.DAY_NUM = WDL.DAY_NUM
-		WHERE SL.ST_NUM = #{st_num}
-		ORDER BY DAY_NUM
+		WHERE SL.ST_NUM = #{st_num1}
+		ORDER BY DAY_NUM1
  	</select>
  	
  	
- 	<!-- 메뉴 및 가격 가져오기-->
- 	<select id="menuLists" resultType="com.yameokja.mc.compareViewDTO">
- 		SELECT MENU_NAME, PRICE, IMAGE_LINK
-		FROM MENU
-		LEFT JOIN ST_LIST SL ON SL.ST_NUM = MENU.ST_NUM
-		WHERE SL.ST_NUM = #{st_num}
+ 	<!-- 메뉴 및 평균 가격 가져오기-->
+   <select id="menuLists1" resultType="com.yameokja.mc.compareViewDTO">
+   SELECT  (SELECT NVL(ROUND(AVG(MENU.PRICE), 0), 0) 
+		    FROM MENU 
+		    INNER JOIN ST_LIST SL ON SL.ST_NUM = MENU.ST_NUM 
+		    WHERE SL.ST_NUM = #{st_num1}) AS PRICE_AVG1,
+		    sub.MENU_NAME AS MENU_NAME1,
+		    sub.PRICE AS PRICE1,
+		    sub.IMAGE_LINK AS IMAGE_LINK1
+	FROM 
+		    (SELECT MENU_NUM, MENU_NAME, PRICE, IMAGE_LINK
+		    FROM MENU
+		    INNER JOIN ST_LIST SL ON SL.ST_NUM = MENU.ST_NUM 
+		    WHERE SL.ST_NUM = #{st_num}
+		    ORDER BY MENU_NUM ASC) sub
+	WHERE  <![CDATA[ ROWNUM <= 1 ]]>
  	</select> 	
  	
  	
- 	<!-- 기타사항 / 결제수단, 설명, 이메일, 가게 최대 인원수 -->
- 	<select id="others" resultType="com.yameokja.mc.compareViewDTO">
-		SELECT ST_EXPLAIN
+ 	<!-- 기타사항 / 최대 인원 수 등 -->
+ 	<select id="others1" resultType="com.yameokja.mc.compareViewDTO">
+		SELECT MAX_CUSTOMERS AS MAX_CUSTOMERS1
 		FROM STORE_OTHERS
-		WHERE ST_NUM = #{st_num}
+		WHERE ST_NUM = #{st_num1}
+ 	</select>
+ 	
+
+
+
+	<!-- 가게2 -->
+	
+	<!-- 가게 이름, 주소, 카테고리 -->
+	<select id="nameLoCat2" resultType="com.yameokja.mc.compareViewDTO">
+		SELECT IA.ST_NAME AS ST_NAME2, FL.FOOD_NAME AS FOOD_NAME2, IA.ST_LOCATION AS ST_LOCATION2
+		FROM ST_FOOD SF
+		JOIN ST_LIST SL ON SF.ST_NUM = SL.ST_NUM
+		JOIN FOOD_LABEL FL ON SF.FOOD_NUM = FL.FOOD_NUM
+		JOIN IN_PROCESS IP ON SL.IN_PROCESS_NUM = IP.IN_PROCESS_NUM
+		JOIN IN_APPLY IA ON IP.IN_APPLY_NUM = IA.IN_APPLY_NUM
+		WHERE SL.ST_NUM = #{st_num2}
+	</select>
+	
+	
+	<!-- 평점, 리뷰수 -->
+ 	<select id="scoRe2" resultType="com.yameokja.mc.compareViewDTO"> 
+ 		SELECT NVL(ROUND(AVG(STAR_SCORE), 2), 0) AS STAR_SCORE2
+	    , NVL(COUNT(RV_BOX.RV_NUM), 0) AS REVIEW_COUNT2
+		FROM ST_LIST SL
+		LEFT JOIN LIKE_BOX ON SL.ST_NUM = LIKE_BOX.ST_NUM
+		LEFT JOIN RV_BOX ON SL.ST_NUM = RV_BOX.ST_NUM
+		WHERE SL.ST_NUM = #{st_num2}
+ 	</select>
+	
+	
+	<!-- 영업시간  -->
+ 	<select id="openClose2" resultType="com.yameokja.mc.compareViewDTO">
+	 	SELECT SL.ST_NUM AS ST_NUM2, OC.DAY_NUM AS DAY_NUM2, WDL.DAY_NAME AS DAY_NAME2
+			, OC.START_TIME AS START_TIME2, OC.END_TIME AS END_TIME2
+		FROM ST_OPENCLOSE OC
+		JOIN ST_LIST SL ON OC.ST_NUM = SL.ST_NUM
+		JOIN WEEKDAY_LABEL WDL ON OC.DAY_NUM = WDL.DAY_NUM
+		WHERE SL.ST_NUM = #{st_num2}
+		ORDER BY DAY_NUM2
+ 	</select>
+ 	
+ 	
+ 	<!-- 메뉴 및 평균 가격 가져오기-->
+ 	<select id="menuLists2" resultType="com.yameokja.mc.compareViewDTO">
+ 	SELECT  (SELECT NVL(ROUND(AVG(MENU.PRICE), 0), 0) 
+		    FROM MENU 
+		    INNER JOIN ST_LIST SL ON SL.ST_NUM = MENU.ST_NUM 
+		    WHERE SL.ST_NUM = #{st_num2}) AS PRICE_AVG2,
+		    sub.MENU_NAME AS MENU_NAME2,
+		    sub.PRICE AS PRICE2,
+		    sub.IMAGE_LINK AS IMAGE_LINK2
+	FROM 
+		    (SELECT MENU_NUM, MENU_NAME, PRICE, IMAGE_LINK
+		    FROM MENU
+		    INNER JOIN ST_LIST SL ON SL.ST_NUM = MENU.ST_NUM 
+		    WHERE SL.ST_NUM = #{st_num}
+		    ORDER BY MENU_NUM ASC) sub
+	WHERE  <![CDATA[ ROWNUM <= 1 ]]>
+ 	</select> 	
+ 	
+ 	
+ 	<!-- 기타사항 / 최대 인원 수 등 -->
+ 	<select id="others2" resultType="com.yameokja.mc.compareViewDTO">
+		SELECT MAX_CUSTOMERS AS MAX_CUSTOMERS2
+		FROM STORE_OTHERS
+		WHERE ST_NUM = #{st_num2}
+ 	</select>
+ 	
+
+
+
+	<!-- 가게3 -->
+	
+	<!-- 가게 이름, 주소, 카테고리 -->
+	<select id="nameLoCat3" resultType="com.yameokja.mc.compareViewDTO">
+		SELECT IA.ST_NAME AS ST_NAME3, FL.FOOD_NAME AS FOOD_NAME3, IA.ST_LOCATION AS ST_LOCATION3
+		FROM ST_FOOD SF
+		JOIN ST_LIST SL ON SF.ST_NUM = SL.ST_NUM
+		JOIN FOOD_LABEL FL ON SF.FOOD_NUM = FL.FOOD_NUM
+		JOIN IN_PROCESS IP ON SL.IN_PROCESS_NUM = IP.IN_PROCESS_NUM
+		JOIN IN_APPLY IA ON IP.IN_APPLY_NUM = IA.IN_APPLY_NUM
+		WHERE SL.ST_NUM = #{st_num3}
+	</select>
+	
+	
+	<!-- 평점, 리뷰수 -->
+ 	<select id="scoRe3" resultType="com.yameokja.mc.compareViewDTO"> 
+ 		SELECT NVL(ROUND(AVG(STAR_SCORE), 2), 0) AS STAR_SCORE3
+	    , NVL(COUNT(RV_BOX.RV_NUM), 0) AS REVIEW_COUNT3
+		FROM ST_LIST SL
+		LEFT JOIN LIKE_BOX ON SL.ST_NUM = LIKE_BOX.ST_NUM
+		LEFT JOIN RV_BOX ON SL.ST_NUM = RV_BOX.ST_NUM
+		WHERE SL.ST_NUM = #{st_num3}
+ 	</select>
+	
+	
+	<!-- 영업시간  -->
+ 	<select id="openClose3" resultType="com.yameokja.mc.compareViewDTO">
+	 	SELECT SL.ST_NUM AS ST_NUM3, OC.DAY_NUM AS DAY_NUM3, WDL.DAY_NAME AS DAY_NAME3
+			, OC.START_TIME AS START_TIME3, OC.END_TIME AS END_TIME3
+		FROM ST_OPENCLOSE OC
+		JOIN ST_LIST SL ON OC.ST_NUM = SL.ST_NUM
+		JOIN WEEKDAY_LABEL WDL ON OC.DAY_NUM = WDL.DAY_NUM
+		WHERE SL.ST_NUM = #{st_num3}
+		ORDER BY DAY_NUM3
+ 	</select>
+ 	
+ 	
+ 	<!-- 메뉴 및 평균 가격 가져오기-->
+ 	<select id="menuLists3" resultType="com.yameokja.mc.compareViewDTO">
+ 	SELECT  (SELECT NVL(ROUND(AVG(MENU.PRICE), 0), 0) 
+		    FROM MENU 
+		    INNER JOIN ST_LIST SL ON SL.ST_NUM = MENU.ST_NUM 
+		    WHERE SL.ST_NUM = #{st_num3}) AS PRICE_AVG3,
+		    sub.MENU_NAME AS MENU_NAME3,
+		    sub.PRICE AS PRICE3,
+		    sub.IMAGE_LINK AS IMAGE_LINK3
+	FROM 
+		    (SELECT MENU_NUM, MENU_NAME, PRICE, IMAGE_LINK
+		    FROM MENU
+		    INNER JOIN ST_LIST SL ON SL.ST_NUM = MENU.ST_NUM 
+		    WHERE SL.ST_NUM = #{st_num}
+		    ORDER BY MENU_NUM ASC) sub
+	WHERE  <![CDATA[ ROWNUM <= 1 ]]>
+ 	</select> 	
+ 	
+ 	
+ 	<!-- 기타사항 / 최대 인원 수 등 -->
+ 	<select id="others3" resultType="com.yameokja.mc.compareViewDTO">
+		SELECT MAX_CUSTOMERS AS MAX_CUSTOMERS3
+		FROM STORE_OTHERS
+		WHERE ST_NUM = #{st_num3}
  	</select>
 	
 	
