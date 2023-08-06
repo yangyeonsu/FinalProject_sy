@@ -37,6 +37,12 @@
 	    padding-left: 26vw;
 	}
 	
+	#headerLogo
+	{
+		display: flex;
+		justify-content: flex-end;	
+		max-width: 8vw;
+	}
 
 	.headerBtn
 	{
@@ -159,23 +165,11 @@ $(function() {
         }
     });
     
-    $("#myPage").click(function()
-	{
-		$("#mainForm").attr("action","usermypage.action");
-		$("#mainForm").submit();
-	});
-    
-    $("#storeMyPage").click(function()
-	{
-		$("#mainForm").attr("action","storemain.action");
-		$("#mainForm").submit();
-	});
-    
     
     $("#logout").click(function()
 	{
-    	$("#mainForm").attr("action","logout.action");
-		$("#mainForm").submit();
+    	$("#adminForm").attr("action","logout.action");
+		$("#adminForm").submit();
 	});
    
 });
@@ -187,6 +181,10 @@ $(function() {
 <body>
 
 	<header id="store_header">
+		<div class="headerImg">
+			<img id="headerLogo" src="<%=cp %>/images/logo_text.png">
+		</div>
+	
 		<div id="headerAlarm">
 			<div class="headerBtn">
 				<div class="menuBtn">
@@ -202,7 +200,7 @@ $(function() {
 			<div class="sub_list">
 				<div class="mypage_menu">
 					<ul class="person_listA">
-						<li><button type="button" id="myPage" class="subListBtn">관리자 등록</button>
+						<li><button type="button" id="adminReg" class="subListBtn">관리자 등록</button>
 						<!-- <li><button type="button" id="storeMyPage" class="subListBtn">사업자 메인 페이지</button> -->
 						<li><button type="button" id="logout" class="subListBtn" >로그아웃</button>
 					</ul>

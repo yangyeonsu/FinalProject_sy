@@ -6,7 +6,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
 	request.setCharacterEncoding("UTF-8");
-String cp = request.getContextPath();
+	String cp = request.getContextPath();
 %>
 
 <!DOCTYPE html>
@@ -25,8 +25,8 @@ String cp = request.getContextPath();
 <script type="text/javascript">
 	$(document).ready(function()
 	{
-		// 페이지 로드 시 뒤로가기 방지 함수 호출
-		preventBack();
+		/* // 페이지 로드 시 뒤로가기 방지 함수 호출
+		preventBack(); */
 		
 		$(".comAddBtn").click(function()
 		{
@@ -84,7 +84,7 @@ String cp = request.getContextPath();
 						alert("비교함에서 이미 삭제된 가게입니다.");
 					} else
 					{
-						alert(data);
+						/* alert(data); */
 						alert("비교함에서 삭제되었습니다.");
 						$(".comStoreListDiv").html(data);
 					}
@@ -114,7 +114,7 @@ String cp = request.getContextPath();
 				context: this,
 				success : function(result)
 				{
-					alert(result);
+					/* alert(result); */
 					$(this).html(result);
 				},
 				error : function(e)
@@ -139,6 +139,39 @@ String cp = request.getContextPath();
 		{
 			$("#mainForm").submit();
 		});
+		
+		/* $('input:checkbox[name=checkList]').length; */
+		$("#comBtn").click(function()
+		{
+			if ($('input:checkbox[name=checkList]').length > 3)
+			{
+				alert("3개 이상 비교 불가");
+				return;
+			}
+			
+			param = "";
+			
+			$('input:checkbox[class=comStImgCB]').each(function(index)
+			{
+				if($(this).is(":checked")==true)
+				{
+					alert($(this).attr("id"));
+			    	param += $(this).attr("id")+",";
+			    }
+			});
+			
+			param = param.slice(0, -1);
+			
+			alert(param);
+			alert("compareView.action?stnum="+param);
+			
+			$("#userForm").attr("method","get");
+			$("#userForm").attr("action","compareView.action?stnum="+param);
+			$("#userForm").submit();
+			
+			
+		});
+				    
 	});
 	
 	/* function preventBack()
@@ -157,7 +190,7 @@ String cp = request.getContextPath();
 
 <body>
 	<div id="buttonContainer"></div>
-	<form action="search.action" id="mainForm" method="post">
+	<form action="search.action" id="userForm" method="post">
 
 		<c:import url="header_user.jsp"></c:import>
 

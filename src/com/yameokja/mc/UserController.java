@@ -31,8 +31,16 @@ public class UserController
 	public String firstPageLoad(HttpServletRequest request)
 	{
 		HttpSession session = request.getSession();
-
-		session.removeAttribute("user_num");
+		String result = "";
+		
+		if (!session.getAttribute("user_num").equals(null))
+		{
+			result = "redirect:main.action";
+			
+			return result;
+		}
+		 
+		
 		String check = "";
 		
 		if (session.getAttribute("check") != null)
@@ -43,7 +51,6 @@ public class UserController
 			else
 				session.removeAttribute("check");
 		}
-		String result = "";
 		
 		
 		result = "/WEB-INF/view/yameokja_login.jsp";
@@ -110,7 +117,7 @@ public class UserController
 	
 	@RequestMapping(value="/idduplicheck.action", method=RequestMethod.GET)
 		@ResponseBody
-	public String idCheck(HttpServletRequest request, HttpServletResponse response, HttpSession session, String userid)
+	public String idCheck(HttpServletRequest request, HttpServletResponse response, String userid)
 	{
 		String result = "";
 		int count = 0;
@@ -146,7 +153,7 @@ public class UserController
 	
 	@RequestMapping(value="/nickduplicheck.action", method=RequestMethod.GET)
 		@ResponseBody
-	public String nickCheck(HttpServletRequest request, HttpServletResponse response, HttpSession session, String usernick)
+	public String nickCheck(HttpServletRequest request, HttpServletResponse response, String usernick)
 	{
 		String result = "";
 		int count = 0;
