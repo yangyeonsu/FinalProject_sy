@@ -4,17 +4,15 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -70,20 +68,23 @@ public class MainController
 			model.addAttribute("comList", dao.getStoreList(comList));
 		else
 			model.addAttribute("comList", null);
+		
+		model.addAttribute("userJjimList", dao.userJjimSearch(user_num));
 
 		result = "/WEB-INF/view/user_main.jsp";
 
 		return result;
 	}
 
-	@RequestMapping(value = "/search.action", method = RequestMethod.GET)
-	public String searchStore(String keyword, Model model)
+	@RequestMapping(value = "/search.action")
+	public String searchStore(Model model)
 	{
 		String result = "";
 
 		IMainDAO dao = sqlSession.getMapper(IMainDAO.class);
 
 		// keyword = "서울 김밥";
+		String keyword = "서울 김밥";
 
 		List<String> keywordList = new ArrayList<String>();
 
@@ -130,7 +131,7 @@ public class MainController
 		model.addAttribute("foodLabelList", dao.foodLabelList());
 		model.addAttribute("stKeyList", dao.stKeyList());
 
-		result = "/WEB-INF/view/MY_personal_main_2.jsp";
+		result = "/WEB-INF/view/user_main_2.jsp";
 
 		return result;
 	}
@@ -221,7 +222,7 @@ public class MainController
 			// 다시 새로 비교함 불러와서 innerHTML로 넣기
 			List<Integer> newComparingList = (ArrayList<Integer>) dao.getStoreComList(user_num);
 			
-			System.out.println(newComparingList);
+			//System.out.println(newComparingList);
 			
 			List<StoreDTO> storeList= null;
 			
@@ -231,7 +232,7 @@ public class MainController
 				
 				for (StoreDTO store : storeList)
 				{
-					System.out.println(store.getSt_name());
+					// System.out.println(store.getSt_name());
 					html += "<div class='comStoreDiv'>";
 					html += "	<div class='comStoreImgDiv'>";
 					html += "		<button type=\"button\" value=\""+ store.getSt_num() + "\" class=\"comDelete\">X</button>";
@@ -278,9 +279,9 @@ public class MainController
 		return html;
 	}
 
-	@RequestMapping(value = "/jjimInsert.action")
-	public String jjimSearch(@RequestParam("user_num") String user_num, @RequestParam("st_num") String st_num,
-			Model model)
+	@RequestMapping(value = "/jjimInsertDelete.action")
+		@ResponseBody
+	public String jjimSearch(@RequestParam("user_num") String user_num, @RequestParam("st_num") String st_num, Model model)
 	{
 		String result = "";
 
@@ -289,11 +290,11 @@ public class MainController
 		if (dao.jjimSearch(user_num, Integer.parseInt(st_num)) == 0)
 		{
 			dao.jjimInsert(user_num, Integer.parseInt(st_num));
-			result = "찜 목록에 추가되었습니다!";
+			result = "❤️";
 		} else
 		{
 			dao.jjimDelete(user_num, Integer.parseInt(st_num));
-			result = "찜 목록에서 삭제되었습니다!";
+			result = "🤍";
 		}
 
 		return result;
