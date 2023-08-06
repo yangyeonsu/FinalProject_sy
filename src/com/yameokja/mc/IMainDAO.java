@@ -20,11 +20,6 @@ public interface IMainDAO
 	// 추천 5개의 가게번호 리스트 출력 메소드
 	public List<Integer> getHotStNumber();
 	
-	/*
-	 * // 검색 키워드 스플릿해오는 메소드
-	 * public List<String> getSearchKeyword(String keyword);
-	 */
-	
 	// 검색 후 가게번호 리스트 출력 메소드
 	public List<Integer> getStoreSearchList(String keyword);
 	
@@ -63,4 +58,8 @@ public interface IMainDAO
 	
 	// 찜 목록에 가게 삭제하는 메소드
 	public int jjimDelete(@Param("user_num") String user_num, @Param("st_num") int st_num);
+	
+	// 2차 필터 검색 메소드
+	public ArrayList<Integer> filterSearchList(@Param("regionCbList") List<String> regionCbList, @Param("catCbList") List<String> catCbList
+			, @Param("stKeyCbList") List<String> stKeyCbList, @Param("resultStoreList") List<Integer> resultStoreList);
 }

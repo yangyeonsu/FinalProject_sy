@@ -175,7 +175,7 @@ body
 }
 
 /* 입맛 기반 추천 구역 DIV */
-#personalIbmatDiv, #personalLike, #famousSt
+#personalIbmatDiv, #personalLikeDiv, #famousStDiv
 {
 	max-width: 65vw;
 	height: 38vh;

@@ -19,151 +19,173 @@ String cp = request.getContextPath();
 <link rel="stylesheet" type="text/css" href="<%=cp%>/css/user_main_2.css">
 
 <script type="text/javascript">
-		$(document).ready(function()
+	$(document).ready(function()
+	{
+		$(".comAddBtn").click(function()
 		{
-			$(".comAddBtn").click(function()
-			{
-				var st_num = $(this).val()
-				
-				var user_num = "<%=(String) session.getAttribute("user_num")%>"
-				
-				$.ajax(
-				{
-					url : "comparingInsert.action",
-					type : "POST",
-					data : { "user_num" : user_num
-							, "st_num" : st_num },
-					dataType : "text",
-					success : function(data)
-					{
-						if (data == "")
-						{
-							alert("이미 비교함에 담긴 가게입니다.");
-						} else
-						{
-							$(".comStoreListDiv").html(data);
-						}
-					},
-					error : function(e)
-					{
-						alert(e.responseText);
-					}
-				});
-
-			});
+			var st_num = $(this).val()
 			
-			$(document).on("click",".comDelete", function()
+			var user_num = "<%=(String) session.getAttribute("user_num")%>"
+			
+			$.ajax(
 			{
-				$st_num = $(this).val();
-				$user_num = "<%=(String) session.getAttribute("user_num")%>"
-
-				$.ajax(
+				url : "comparingInsert.action",
+				type : "POST",
+				data : { "user_num" : user_num
+						, "st_num" : st_num },
+				dataType : "text",
+				success : function(data)
 				{
-					url : "comdelete.action",
-					type : 'post',
-					data :
+					if (data == "")
 					{
-						"user_num" : $user_num,
-						"st_num" : $st_num
-					},
-					success : function(data)
+						alert("이미 비교함에 담긴 가게입니다.");
+					} else
 					{
-						if (data == "")
-						{
-							alert("비교함에서 이미 삭제된 가게입니다.");
-						} else
-						{
-							alert(data);
-							alert("비교함에서 삭제되었습니다.");
-							$(".comStoreListDiv").html(data);
-						}
-					},
-					error : function(e)
-					{
-						alert(e.responseText);
+						$(".comStoreListDiv").html(data);
 					}
-				});
+				},
+				error : function(e)
+				{
+					alert(e.responseText);
+				}
 			});
 
-			$(document).on("click",".likeAddBtn", function()
-			{
-				$st_num = $(this).val();
-				alert($st_num);
-				$user_num = "<%=(String) session.getAttribute("user_num")%>"
-	
-				$.ajax(
-				{
-					url : "jjimInsertDelete.action",
-					type : 'post',
-					data :
-					{
-						"st_num" : $st_num,
-						"user_num" : $user_num
-					},
-					context : this,
-					success : function(result)
-					{
-						alert(result);
-						$(this).html(result);
-					},
-					error : function(e)
-					{
-						alert(e.responseText);
-					}
-				});
-	
-			});
-
-			$("#searchBtn").click(function()
-			{
-				$("#mainForm").submit();
-			});
-	
-			$(document).ready(function()
-			{
-				$("#secondSearchBtn").click(function()
-				{
-					$st_num = $(this).attr("value")
-					$user_num = "<%=(String) session.getAttribute("user_num")%>"
-					$keyword = $("#typingArea").attr("value")
-					$firstSearchResult = ${firstSearchResult}
-					
-					$.ajax(
-					{
-						url : "filterSearch.action",
-						type : 'post',
-						data :
-						{
-							"st_num" : $st_num,
-							"user_num" : $user_num,
-							"keyword" : $keyword,
-							"firstSearchResult" : $firstSearchResult
-						},
-						success : function(html)
-						{
+		});
 		
-							if (html == "")
-							{
-								alert("이미 비교함에 존재하는 가게입니다.");
-							} else
-							{
-								
-							}
-						},
-						error : function()
-						{
-							alert("error");
-						}
-					});
-				});
+		$(document).on("click",".comDelete", function()
+		{
+			$st_num = $(this).val();
+			$user_num = "<%=(String) session.getAttribute("user_num")%>"
+
+			$.ajax(
+			{
+				url : "comdelete.action",
+				type : 'post',
+				data :
+				{
+					"user_num" : $user_num,
+					"st_num" : $st_num
+				},
+				success : function(data)
+				{
+					if (data == "")
+					{
+						alert("비교함에서 이미 삭제된 가게입니다.");
+					} else
+					{
+						alert(data);
+						alert("비교함에서 삭제되었습니다.");
+						$(".comStoreListDiv").html(data);
+					}
+				},
+				error : function(e)
+				{
+					alert(e.responseText);
+				}
 			});
 		});
+
+		$(document).on("click",".likeAddBtn", function()
+		{
+			$st_num = $(this).val();
+			alert($st_num);
+			$user_num = "<%=(String) session.getAttribute("user_num")%>"
+
+			$.ajax(
+			{
+				url : "jjimInsertDelete.action",
+				type : 'post',
+				data :
+				{
+					"st_num" : $st_num,
+					"user_num" : $user_num
+				},
+				context : this,
+				success : function(result)
+				{
+					alert(result);
+					$(this).html(result);
+				},
+				error : function(e)
+				{
+					alert(e.responseText);
+				}
+			});
+
+		});
+
+		$("#searchBtn").click(function()
+		{
+			$("#userForm").submit();
+		});
+
+		$(document).on("click","#secondSearchBtn", function()
+		{
+			<%-- $st_num = $(this).attr("value")
+			$user_num = "<%=(String) session.getAttribute("user_num")%>"
+			$keyword = $("#typingArea").attr("value") --%>
+			
+			var resultStoreList = [];
+			var firstSearchResult = ${firstSearchResult};
+			
+			for (var i = 0; i < firstSearchResult.length; i++)
+			{
+				resultStoreList.push(firstSearchResult[i]);
+			}
+			
+			alert(resultStoreList);
+			
+			var regionCbList = [];
+			$("input[name=region]:checked").each(function()
+			{
+				var rChk = $(this).val();
+				regionCbList.push(rChk);
+			});
+			
+			var catCbList = [];
+			$("input[name=foodLabel]:checked").each(function()
+			{
+				var cChk = $(this).val();
+				catCbList.push(cChk);
+			});
+			
+			var stKeyCbList = [];
+			$("input[name=stKey]:checked").each(function()
+			{
+				var sChk = $(this).val();
+				stKeyCbList.push(sChk);
+			});
+			
+			$.ajax(
+			{
+				url : "filterSearch.action",
+				type : 'post',
+				data :
+				{
+					"regionCbList" : regionCbList,
+					"catCbList": catCbList,
+					"stKeyCbList" : stKeyCbList,
+					"resultStoreList" : resultStoreList
+				},
+				success : function(data)
+				{
+					alert("확인");
+					$(".storeList").html(data);
+					
+				},
+				error : function(e)
+				{
+					alert(e.responseText);
+				}
+			});
+		});
+	});
 </script>
 
 </head>
 <body>
 
-	<form action="search.action" id="mainForm">
+	<form action="search.action" id="userForm">
 		<c:import url="header_user.jsp"></c:import>
 	
 		<div class=container>

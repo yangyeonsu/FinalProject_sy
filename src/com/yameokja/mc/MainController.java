@@ -2,17 +2,16 @@ package com.yameokja.mc;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -313,18 +312,73 @@ public class MainController
 	
 	
 
-	@RequestMapping(value = "filterSearch.action")
+	@RequestMapping(value = "/filterSearch.action")
 		@ResponseBody
-	public String filterSearchStore(Model model)
+	public String filterSearchStore(@RequestParam(value="regionCbList[]") ArrayList<String> regionCbList, @RequestParam(value="catCbList[]") ArrayList<String> catCbList
+			, @RequestParam(value="stKeyCbList[]") ArrayList<String> stKeyCbList, @RequestParam("resultStoreList") ArrayList<Integer> resultStoreList, Model model)
 	{
-		String result = "";
-
 		// 가져온 것 : keyword + 1차 검색 결과 st_num - firstSearchResult
 		// 보내야 할 것 : keyword + 필터검색 한 st_num - filterSearchResult
+		
+		IMainDAO dao = sqlSession.getMapper(IMainDAO.class);
+		
+		System.out.println(resultStoreList);
+		System.out.println(regionCbList);
+		System.out.println(catCbList);
+		System.out.println(stKeyCbList);
+		
+		ArrayList<Integer> resultArr = (ArrayList<Integer>) dao.filterSearchList(regionCbList, regionCbList, stKeyCbList, resultStoreList);
+		
+		ArrayList<StoreDTO> storeList = null;
+		String html = "";
 
-		result = "/search.action";
+		storeList = dao.getStoreList(resultArr);
+			
+		for (StoreDTO store : storeList)
+		{
+			System.out.println(store.getSt_name());
 
-		return result;
+			html += "<div class='store'>";
+			html += "	<div class='stImgBtnDiv'>";
+			html += "		<div class='stImgDiv'>";
+			html += "			<c:set var = 'photo' value='" + store.getPhoto_link() + "'/>";
+			html += "				<c:choose>";
+			html += "					<c:when test='${empty photo}'>";
+			html += "						<img class='stImg' src='<%=cp%>/images/logo_text.png'>";
+			html += "					</c:when>";
+			html += "					<c:otherwise>";
+			html += "						<img class='stImg' src='<%=cp%>/${photo}'>";
+			html += "					</c:otherwise>";
+			html += "				</c:choose>";
+			html += "		</div>";
+			html += "		<div class='likeComAddBtn'>";
+			html += "			<button type='button' class='comAddBtn' value='" + store.getSt_num() + "'></button>";
+			html += "				<div class='likeBtnDiv'>";
+			html += "					<c:set var='list' value='${userJjimList}' />";
+			html += "					<c:set var='num' value='" + store.getSt_num() + "' />";
+			html += "					<c:choose>";
+			html += "						<c:when test='${list.contains(num)}'>";
+			html += "							<button type='button' class='likeAddBtn'";
+			html += "								value='" + store.getSt_num() + "'>❤️</button>";
+			html += "						</c:when>";
+			html += "						<c:otherwise>";
+			html += "							<button type='button' class='likeAddBtn'";
+			html += "								value='" + store.getSt_num() + "'>🤍</button>";
+			html += "						</c:otherwise>";
+			html += "					</c:choose>";
+			html += "				</div>";
+			html += "		</div>";
+			html += "</div>";
+			html += "<div class='name_reviewDiv'>";
+			html += "		<div class='stName'>" + store.getSt_name() + "</div>";
+			html += "			<div class='startReviewDivs'>";
+			html += "				<span>⭐" + store.getStar_avg() + "</span>(" + store.getRv_count() + ")";
+			html += "			</div>";
+			html += "		</div>";
+			html += "</div>";
+
+		}
+		return html;
 	}
 
 
