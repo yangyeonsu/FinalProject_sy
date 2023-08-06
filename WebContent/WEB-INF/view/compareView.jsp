@@ -407,6 +407,7 @@
 							
 							<div class="compContent">
 								<div class="cLists1">
+									<!-- 
 									<ul>
 										<li class="cName cName1"><div>가게1</div></li>
 										<li class="cList cList1"><div>카테고리</div></li>
@@ -421,6 +422,27 @@
 											alt="..." class="img-rounded"></a>
 										</div></li>
 									</ul>
+									 -->
+									
+										<ul>
+											<c:forEach var="ncl" items="${nameLoCat }">
+												<li class="cName cName1"><div>${ncl.st_name }</div></li>
+												<li class="cList cList1"><div>${ncl.food_name }</div></li>
+												<li class="cList cList1"><div>${ncl.st_location }</div></li>
+											</c:forEach>
+											<c:forEach var="sr" items="${scoRe }">
+												<li class="cList cList1"><div>${sr.star_score }</div></li>
+												<li class="cList cList1"><div>${sr.review_count }</div></li>
+											</c:forEach>
+											<li class="cList cList1"><div>영업시간</div></li>
+											<li class="cList cList1"><div>메뉴 <br /> 평균가격</div></li>
+											<li class="cOption cOption1"><div>옵션's 유무</div></li>
+											<li class="cImages cImages1">대표메뉴<div>
+												<a class="cImage"> <img src="images/store_img01.png"
+												alt="..." class="img-rounded"></a>
+											</div></li>
+										</ul>
+									
 								</div>
 							</div>
 							

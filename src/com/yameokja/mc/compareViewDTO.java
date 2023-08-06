@@ -19,7 +19,8 @@ public class compareViewDTO
 	private String menu_name, image_link; // 가게 메뉴, 이미지 링크
 	
 	private int price;					// 가게 메뉴 가격
-
+	
+	// getter / setter 구성
 	public String getSt_name() 
 	{
 		return st_name;
