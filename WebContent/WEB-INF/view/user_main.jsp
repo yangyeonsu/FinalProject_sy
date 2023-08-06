@@ -198,7 +198,16 @@ String cp = request.getContextPath();
 										<div class="stImgDiv">
 											<button type="button" value="${hot.st_num}" class="storeBtn"
 												onclick="location.href='stDetail-userView.action?st_num=${hot.st_num}'">
-												<img class="stImg" src="<%=cp%>/${hot.photo_link}" />
+												<c:set var = "photo" value="${hot.photo_link }"/>
+									
+												<c:choose>
+													<c:when test="${empty photo}">
+														<img class="stImg" src="<%=cp%>/images/logo_text.png">
+													</c:when>
+													<c:otherwise>
+														<img class="stImg" src="<%=cp%>/${photo}">
+													</c:otherwise>
+												</c:choose>
 											</button>
 										</div>
 
@@ -265,7 +274,16 @@ String cp = request.getContextPath();
 													<button type="button" value="${jjim.st_num }"
 														class="storeBtn"
 														onclick="location.href='stDetail-userView.action?st_num=${jjim.st_num}'">
-														<img class="stImg" src="<%=cp %>/${jjim.photo_link}" />
+														<c:set var = "photo" value="${jjim.photo_link }"/>
+														
+														<c:choose>
+															<c:when test="${empty photo}">
+																<img class="stImg" src="<%=cp%>/images/logo_text.png">
+															</c:when>
+															<c:otherwise>
+																<img class="stImg" src="<%=cp%>/${photo}">
+															</c:otherwise>
+														</c:choose>
 													</button>
 												</div>
 
@@ -337,7 +355,16 @@ String cp = request.getContextPath();
 													<button type="button" value="${ibmat.st_num }"
 														class="storeBtn"
 														onclick="location.href='stDetail-userView.action?st_num=${ibmat.st_num}'">
-														<img class="stImg" src="<%=cp%>/${ibmat.photo_link}">
+														<c:set var = "photo" value="${ibmat.photo_link }"/>
+														
+														<c:choose>
+															<c:when test="${empty photo}">
+																<img class="stImg" src="<%=cp%>/images/logo_text.png">
+															</c:when>
+															<c:otherwise>
+																<img class="stImg" src="<%=cp%>/${photo}">
+															</c:otherwise>
+														</c:choose>
 													</button>
 												</div>
 
@@ -422,7 +449,16 @@ String cp = request.getContextPath();
 											<button type="button" value="${com.st_num}" class="comDelete">X</button>
 											<label for="${com.st_num}" class="stLabel"> <input
 												type="checkbox" class="comStImgCB" id="${com.st_num}">
-												<img class="comStImg" src="<%=cp%>/${com.photo_link}">
+												<c:set var = "photo" value="${com.photo_link }"/>
+												
+												<c:choose>
+													<c:when test="${empty photo}">
+														<img class="stImg" src="<%=cp%>/images/logo_text.png">
+													</c:when>
+													<c:otherwise>
+														<img class="stImg" src="<%=cp%>/${photo}">
+													</c:otherwise>
+												</c:choose>
 											</label>
 										</div>
 										<!-- 한 가게 가게이름 영역 -->

@@ -47,6 +47,14 @@ body
 	background-color: #f7f4ea;
 }
 
+/* logoImgBtn DIV */
+#logoImgBtn
+{
+	border: none;
+	background-color: #f7f4ea;
+	cursor: pointer;
+}
+
 /* mainlogo img DIV */
 #logoImgDiv
 {
@@ -344,14 +352,15 @@ span
 /* 가게 구역 DIV */
 .storeList
 {
-	max-width: 65vw;
+    max-width: 65vw;
     height: 45vh;
     display: flex;
     flex-direction: row;
+    padding-left: 1vw;
+    /* overflow-y: auto; */
     justify-content: flex-start;
     align-items: center;
-    padding-left: 1vw;
-    /* overflow-y: auto;*/
+    flex-wrap: wrap;
 }
 
 /* 한 가게 구역 DIV */
@@ -511,16 +520,18 @@ span
 /* 비교함 영역 DIV */
 #compareDiv
 {
-	max-width: 5vw;
-	padding-top: 85px;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: flex-start; 
-	margin-left: 12vw;
-	padding-left: 1vw;
-	padding-right: 1vw;
-	background-color: #f7f4ea;
+	max-width: 8vw;
+    padding-top: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    margin-left: 7vw;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    background-color: #fff;
+    /* border-left: 3px solid #f7f4ea; */
+    /* border-radius: 5px;
 }
 
 /* '비교함' 이름 영역 */
@@ -585,12 +596,13 @@ span
 .comStImgCB
 {
 	display: inline;
-	position: relative;
-	top: 1.6vw;
-	left: 3.1vw;
-	height: 1vw;
-	width: 1vw;
-	accent-color: #ef6351;
+    position: relative;
+    top: 4.8vw;
+    right: 1.5vw;
+    height: 1vw;
+    width: 1vw;
+    accent-color: #ef6351;
+    cursor: pointer;
 }
 
 .comStImg
@@ -618,6 +630,26 @@ span
 	font-size: 10pt;
 	font-family: 'IBM Plex Sans KR', sans-serif;
 	cursor: pointer;
+}
+
+
+/*-----비교함 추가 취소 버튼 ------*/
+.comDelete
+{
+	display: inline;
+    position: relative;
+    top: 1.25vw;
+    left: 3.3vw;
+    height: 1.1vw;
+    width: 1.1vw;
+    border: #fff;
+    background-color: #f7f4ea;
+    font-size: 0.005vw;
+    color: #3a001e;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
 }
 
 
