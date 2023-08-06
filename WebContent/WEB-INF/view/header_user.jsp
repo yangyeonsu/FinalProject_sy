@@ -37,6 +37,13 @@
 	    padding-left: 26vw;
 	}
 	
+	
+	#headerLogo
+	{
+		display: flex;
+		justify-content: flex-end;	
+		max-width: 8vw;
+	}
 
 	.headerBtn
 	{
@@ -137,7 +144,8 @@
 <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
 <script type="text/javascript">
 
-$(function() {
+$(function()
+{
     $(".mypage_menu").hide();
     $(".alarm_menu").hide();
     
@@ -159,22 +167,23 @@ $(function() {
         }
     });
     
+    
     $("#myPage").click(function()
 	{
-		$("#mainForm").attr("action","usermypage.action");
-		$("#mainForm").submit();
+		$("#userForm").attr("action","usermypage.action");
+		$("#userForm").submit();
 	});
-    
-    $("#storeMyPage").click(function()
+	   
+	   $("#storeMyPage").click(function()
 	{
-		$("#mainForm").attr("action","storemain.action");
-		$("#mainForm").submit();
+		$("#userForm").attr("action","storemain.action");
+		$("#userForm").submit();
 	});
-    
-    $("#logout").click(function()
+	   
+	   $("#logout").click(function()
 	{
-    	$("#mainForm").attr("action","logout.action");
-		$("#mainForm").submit();
+	   	$("#userForm").attr("action","logout.action");
+		$("#userForm").submit();
 	});
     
    
@@ -187,6 +196,9 @@ $(function() {
 <body>
 
 	<header id="store_header">
+		<%-- <div class="headerImg">
+			<img id="headerLogo" src="<%=cp %>/images/logo_text.png">
+		</div> --%>
 		<div id="headerAlarm">
 			<div class="headerBtn">
 				<div class="menuBtn">

@@ -196,112 +196,115 @@
 
 
 <body>
+<form id="adminForm" method="post">
 
-<!-- header -->
-<c:import url="header_admin.jsp"></c:import>
-
-<!-- container -->
-<div id="container">
-	<!-- 왼쪽 사이드 바 -->
-	<div class="left side-menu">
-		<div class="sidebar-inner">
-			<div id="sidebar-menu">
-				<ul class="has_sub_menu">
-					<li class="has_sub"><a href="javascript:void(0);"
-						class="waves-effect"> <i class="fas fa-bars"
-							style="color: #fff"></i>
-					</a></li>
-				</ul>
-			</div>
-		</div>
-	</div>
-
-	<div class="col-md-2" id="mleft">
-		<div class="left_sub_menu">
-			<div class="sub_menu">
-				<h2>MENU</h2>
-				<ul class="big_menu">
-					<li>가게 리스트<i class="arrow fas fa-angle-right"></i></li>
-
-					<ul class="small_menu">
-						<li><a href="#" class="small_menuA">가게1</a></li>
-						<li><a href="#" class="small_menuA">가게2</a></li>
-						<li><a href="#" class="small_menuA">가게3</a></li>
-						<li><a href="#" class="small_menuA">가게4</a></li>
-					</ul>
-				</ul>
-				<ul class="big_menu">
-					<li>접수 내역<i class="arrow fas fa-angle-right"></i></li>
-					<ul class="small_menu">
-						<li><a href="#" class="small_menuA">소메뉴2-1</a></li>
-						<li><a href="#" class="small_menuA">소메뉴2-2</a></li>
-					</ul>
-				</ul>
-				<ul class="big_menu">
-					<li>경고 내역</li>
-				</ul>
-				<ul class="big_menu">
-					<li>새로운 가게 등록 신청</li>
-				</ul>
-			</div>
-		</div>
-		<div class="overlay">
-			<input type="hidden" id="checkOverlay" value="false">
-		</div>
-	</div>
+	<!-- header -->
+	<c:import url="header_admin.jsp"></c:import>
 	
-	
-	<div id="mainDiv">
-		
-		<!-- 접수내역관리 -->
-		<div id="receive">
-			<h1>이의제기 접수내역 관리</h1>
-			
-			<!-- 이의제기 box -->
-
-			<div id="objectionBox" style="height: auto;">
-        
-				<div class="more" id="more">
-					<h3><a href="#">이의제기</a></h3>
-					<a href="admin_objectionView.jsp" class="moreBtn">더보기+</a>
+	<!-- container -->
+	<div id="container">
+		<!-- 왼쪽 사이드 바 -->
+		<div class="left side-menu">
+			<div class="sidebar-inner">
+				<div id="sidebar-menu">
+					<ul class="has_sub_menu">
+						<li class="has_sub"><a href="javascript:void(0);"
+							class="waves-effect"> <i class="fas fa-bars"
+								style="color: #fff"></i>
+						</a></li>
+					</ul>
 				</div>
-			
-				<table id="objection_list" style="margin-bottom: 20px;">
-					<thead>
-						<tr>	
-							<th>신청일자</th>
-							<th>가게 이름</th>
-							<th>처리상태</th>
-							<th>처리일자</th>
-							<th>처리한 관리자</th>
-						</tr>
-
-					</thead>
-					<tbody>
-						<c:forEach var="obj" items="${objList }">
-						<tr>
-							<td>${obj.reg_date }</td>
-							<td>${obj.st_name }</td>
-							<td>${obj.state }</td>
-							<td>${obj.final_date }</td>
-							<td>${obj.admin_id }</td>
-						</tr>
-						</c:forEach>
-					</tbody>
-
-				</table>
 			</div>
+		</div>
+	
+		<div class="col-md-2" id="mleft">
+			<div class="left_sub_menu">
+				<div class="sub_menu">
+					<h2>MENU</h2>
+					<ul class="big_menu">
+						<li>가게 리스트<i class="arrow fas fa-angle-right"></i></li>
+	
+						<ul class="small_menu">
+							<li><a href="#" class="small_menuA">가게1</a></li>
+							<li><a href="#" class="small_menuA">가게2</a></li>
+							<li><a href="#" class="small_menuA">가게3</a></li>
+							<li><a href="#" class="small_menuA">가게4</a></li>
+						</ul>
+					</ul>
+					<ul class="big_menu">
+						<li>접수 내역<i class="arrow fas fa-angle-right"></i></li>
+						<ul class="small_menu">
+							<li><a href="#" class="small_menuA">소메뉴2-1</a></li>
+							<li><a href="#" class="small_menuA">소메뉴2-2</a></li>
+						</ul>
+					</ul>
+					<ul class="big_menu">
+						<li>경고 내역</li>
+					</ul>
+					<ul class="big_menu">
+						<li>새로운 가게 등록 신청</li>
+					</ul>
+				</div>
+			</div>
+			<div class="overlay">
+				<input type="hidden" id="checkOverlay" value="false">
+			</div>
+		</div>
+		
+		
+		<div id="mainDiv">
 			
-			<div class="back" id="more">
-				<h3></h3>
-				<a href="mainAdminView.action" class="backBtn" style="font-size: 10pt;">뒤로가기</a>
+			<!-- 접수내역관리 -->
+			<div id="receive">
+				<h1>이의제기 접수내역 관리</h1>
+				
+				<!-- 이의제기 box -->
+	
+				<div id="objectionBox" style="height: auto;">
+	        
+					<div class="more" id="more">
+						<h3><a href="#">이의제기</a></h3>
+						<a href="admin_objectionView.jsp" class="moreBtn">더보기+</a>
+					</div>
+				
+					<table id="objection_list" style="margin-bottom: 20px;">
+						<thead>
+							<tr>	
+								<th>신청일자</th>
+								<th>가게 이름</th>
+								<th>처리상태</th>
+								<th>처리일자</th>
+								<th>처리한 관리자</th>
+							</tr>
+	
+						</thead>
+						<tbody>
+							<c:forEach var="obj" items="${objList }">
+							<tr>
+								<td>${obj.reg_date }</td>
+								<td>${obj.st_name }</td>
+								<td>${obj.state }</td>
+								<td>${obj.final_date }</td>
+								<td>${obj.admin_id }</td>
+							</tr>
+							</c:forEach>
+						</tbody>
+	
+					</table>
+				</div>
+				
+				<div class="back" id="more">
+					<h3></h3>
+					<a href="mainAdminView.action" class="backBtn" style="font-size: 10pt;">뒤로가기</a>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
-
-<!-- footer -->
-<c:import url="footer.jsp"></c:import>
+	
+	<!-- footer -->
+	<c:import url="footer.jsp"></c:import>
+	
+</form>
 </body>
 
 

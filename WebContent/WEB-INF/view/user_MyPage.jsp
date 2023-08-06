@@ -16,7 +16,7 @@ String cp = request.getContextPath();
 
 
 <link rel="stylesheet" type="text/css"
-	href="<%=cp%>/css/compareBox.css">
+	href="<%=cp%>/css/user_main.css">
 <link rel="stylesheet" type="text/css" href="<%=cp%>/css/userMyPage.css">
 
 <style type="text/css">
@@ -202,7 +202,7 @@ String cp = request.getContextPath();
 
 </head>
 <body>
-
+<form action="search.action" id="userForm" method="post">
 	<div class="header">
 		<c:import url="header_user.jsp"></c:import>
 	</div>
@@ -406,6 +406,6 @@ String cp = request.getContextPath();
 	</div>
 
 
-
+</form>
 </body>
 </html>
