@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.catalina.Session;
 
 /*import java.util.ArrayList;
 import java.util.HashMap;*/
@@ -27,13 +26,14 @@ public class UserController
 	@Autowired
 	private SqlSession sqlSession;
 	
+	@SuppressWarnings("null")
 	@RequestMapping(value="/yameokja.action", method=RequestMethod.GET)
 	public String firstPageLoad(HttpServletRequest request)
 	{
 		HttpSession session = request.getSession();
 		String result = "";
 		
-		if (!session.getAttribute("user_num").equals(null))
+		if (session != null && session.getAttribute("user_num") != null && !session.getAttribute("user_num").equals(""))
 		{
 			result = "redirect:main.action";
 			
