@@ -171,6 +171,12 @@ $(function() {
 		$("#mainForm").submit();
 	});
     
+    
+    $("#logout").click(function()
+	{
+    	$("#mainForm").attr("action","logout.action");
+		$("#mainForm").submit();
+	});
    
 });
 

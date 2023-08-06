@@ -1,6 +1,9 @@
 package com.yameokja.mc;
 
+import java.time.LocalDate;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +21,28 @@ public class stDetailController
 	@RequestMapping(value="/stDetail-userView.action", method = RequestMethod.GET)
 	public String stDetail(HttpServletRequest request, Model model)
 	{
+		HttpSession session = request.getSession();
+		String user_num = (String)session.getAttribute("user_num");
+		
 		String result = "";
 		
 		IstDetailDAO_userView dao = sqlSession.getMapper(IstDetailDAO_userView.class);
+		IUserDAO uDao = sqlSession.getMapper(IUserDAO.class);
 		
 		int st_num = Integer.parseInt(request.getParameter("st_num"));
 		
+		// 사용자 정보
+		UserDTO user = uDao.searchUserInfo(user_num, "num");
+		
+		LocalDate currentDate = LocalDate.now();
+		int month = currentDate.getMonthValue();
+
+		if (month < 7)
+			user.setUser_grade(uDao.firstHalf(user_num).user_grade);
+		else
+			user.setUser_grade(uDao.secondHalf(user_num).user_grade);
+		
+		model.addAttribute("user", user);
 		model.addAttribute("openClose", dao.openClose(st_num));
 		model.addAttribute("breakTime", dao.breakTime(st_num));
 		model.addAttribute("holiday", dao.holiday(st_num));

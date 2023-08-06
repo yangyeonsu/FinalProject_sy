@@ -25,6 +25,9 @@ String cp = request.getContextPath();
 <script type="text/javascript">
 	$(document).ready(function()
 	{
+		// 페이지 로드 시 뒤로가기 방지 함수 호출
+		preventBack();
+		
 		$(".comAddBtn").click(function()
 		{
 			var st_num = $(this).val()
@@ -138,6 +141,15 @@ String cp = request.getContextPath();
 		});
 	});
 	
+	/* function preventBack()
+	{
+	      history.pushState(null, null, location.href);
+		      window.onpopstate = function(event)
+		      {
+		        history.go(1);
+		      };
+	} */
+
 </script>
 
 
@@ -145,7 +157,7 @@ String cp = request.getContextPath();
 
 <body>
 	<div id="buttonContainer"></div>
-	<form action="search.action" id="mainForm">
+	<form action="search.action" id="mainForm" method="post">
 
 		<c:import url="header_user.jsp"></c:import>
 
