@@ -137,7 +137,7 @@
 		 
 		$("#searchBtn").click(function()
 		{
-			$("#mainForm").submit();
+			$("#userForm").submit();
 		});
 		
 		/* $('input:checkbox[name=checkList]').length; */
@@ -189,7 +189,6 @@
 </head>
 
 <body>
-	<div id="buttonContainer"></div>
 	<form action="search.action" id="userForm" method="post">
 
 		<c:import url="header_user.jsp"></c:import>
@@ -229,7 +228,7 @@
 				<div id="recommendStDiv">
 
 					<!-- 요즘 뜨는 가게들 -->
-					<div id="famousSt">
+					<div id="famousStDiv">
 						<div class="recommendName">
 							▼ <span>요즘 뜨는</span> 가게 추천
 						</div>
@@ -294,7 +293,7 @@
 					</div>
 
 					<!-- 찜기반 추천 -->
-					<div id="personalLike">
+					<div id="personalLikeDiv">
 
 						<div class="recommendName">
 							▼ <span>찜</span>에 기반을 둔 추천
@@ -338,16 +337,16 @@
 
 													<div class="likeBtnDiv">
 														<c:set var="list" value="${userJjimList}" />
-														<c:set var="num" value="${hot.st_num}" />
+														<c:set var="num" value="${jjim.st_num}" />
 			
 														<c:choose>
 															<c:when test="${list.contains(num)}">
 																<button type="button" class="likeAddBtn"
-																	value="${hot.st_num}">❤️</button>
+																	value="${jjim.st_num}">❤️</button>
 															</c:when>
 															<c:otherwise>
 																<button type="button" class="likeAddBtn"
-																	value="${hot.st_num}">🤍</button>
+																	value="${jjim.st_num}">🤍</button>
 															</c:otherwise>
 														</c:choose>
 													</div>
@@ -419,16 +418,16 @@
 
 													<div class="likeBtnDiv">
 														<c:set var="list" value="${userJjimList}" />
-														<c:set var="num" value="${hot.st_num}" />
+														<c:set var="num" value="${ibmat.st_num}" />
 			
 														<c:choose>
 															<c:when test="${list.contains(num)}">
 																<button type="button" class="likeAddBtn"
-																	value="${hot.st_num}">❤️</button>
+																	value="${ibmat.st_num}">❤️</button>
 															</c:when>
 															<c:otherwise>
 																<button type="button" class="likeAddBtn"
-																	value="${hot.st_num}">🤍</button>
+																	value="${ibmat.st_num}">🤍</button>
 															</c:otherwise>
 														</c:choose>
 													</div>

@@ -211,4 +211,42 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE USER_NUM = #{user_num}
 		AND ST_NUM = #{st_num}
 	</delete>
+	
+	<select id="filterSearchList" resultType="java.lang.Integer">
+		SELECT T.ST_NUM
+		FROM
+		(
+		SELECT SL.ST_NUM
+		FROM ST_LIST SL JOIN REGION R
+		ON SL.REGION_NUM = R.REGION_NUM
+		WHERE R.REGION_NAME IN (
+		<foreach collection="regionCbList" item="name" separator=",">
+			#{name}
+		</foreach>)
+		UNION
+		SELECT SL.ST_NUM
+		FROM ST_LIST SL LEFT JOIN ST_FOOD SF
+		  ON SL.ST_NUM = SF.ST_NUM
+		LEFT JOIN FOOD_LABEL FL
+		  ON SF.FOOD_NUM = FL.FOOD_NUM
+		WHERE FL.FOOD_NAME IN (
+		<foreach collection="catCbList" item="name" separator=",">
+			#{name}
+		</foreach>)
+		UNION
+		SELECT DISTINCT(SL.ST_NUM)
+		FROM ST_KEY SK LEFT JOIN ST_KEY_LABEL SKL
+		  ON SK.ST_KEY_NUM = SKL.ST_KEY_NUM
+		RIGHT JOIN ST_LIST SL
+		  ON SK.ST_NUM = SL.ST_NUM
+		WHERE SKL.ST_KEYWORD IN (
+		<foreach collection="stKeyCbList" item="name" separator=",">
+			#{name}
+		</foreach>)
+		) T
+		WHERE T.ST_NUM IN (
+		<foreach collection="resultStoreList" item="st_num" separator=",">
+			#{st_num}
+		</foreach>)
+	</select>
 </mapper>
