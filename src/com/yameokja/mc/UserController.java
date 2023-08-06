@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.catalina.Session;
+
 /*import java.util.ArrayList;
 import java.util.HashMap;*/
 
@@ -248,6 +250,22 @@ public class UserController
 		model.addAttribute("user", user);
 		
 		result = "WEB-INF/view/user_MyPage.jsp";
+		
+		return result;
+	}
+	
+	
+	@RequestMapping(value="/logout.action", method = RequestMethod.POST)	
+	public String logout(HttpServletRequest requset)
+	{
+		HttpSession session = requset.getSession();
+		
+		String result = "";
+		
+		session.removeAttribute("user_num");
+		session.removeAttribute("admin_num");
+		
+		result = "WEB-INF/view/yameokja_login.jsp";
 		
 		return result;
 	}

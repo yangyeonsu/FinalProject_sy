@@ -197,7 +197,7 @@
 
 
 <body>
-
+<form id="myForm" method="post">
 <!-- header -->
 <c:import url="header_admin.jsp"></c:import>
 
@@ -444,6 +444,9 @@
 
 <!-- footer -->
 <c:import url="footer.jsp"></c:import>
+
+
+</form>
 </body>
 
 
