@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.catalina.Session;
+
 /*import java.util.ArrayList;
 import java.util.HashMap;*/
 
@@ -29,8 +31,16 @@ public class UserController
 	public String firstPageLoad(HttpServletRequest request)
 	{
 		HttpSession session = request.getSession();
-
-		session.removeAttribute("user_num");
+		String result = "";
+		
+		if (!session.getAttribute("user_num").equals(null))
+		{
+			result = "redirect:main.action";
+			
+			return result;
+		}
+		 
+		
 		String check = "";
 		
 		if (session.getAttribute("check") != null)
@@ -41,7 +51,6 @@ public class UserController
 			else
 				session.removeAttribute("check");
 		}
-		String result = "";
 		
 		
 		result = "/WEB-INF/view/yameokja_login.jsp";
@@ -108,7 +117,7 @@ public class UserController
 	
 	@RequestMapping(value="/idduplicheck.action", method=RequestMethod.GET)
 		@ResponseBody
-	public String idCheck(HttpServletRequest request, HttpServletResponse response, HttpSession session, String userid)
+	public String idCheck(HttpServletRequest request, HttpServletResponse response, String userid)
 	{
 		String result = "";
 		int count = 0;
@@ -144,7 +153,7 @@ public class UserController
 	
 	@RequestMapping(value="/nickduplicheck.action", method=RequestMethod.GET)
 		@ResponseBody
-	public String nickCheck(HttpServletRequest request, HttpServletResponse response, HttpSession session, String usernick)
+	public String nickCheck(HttpServletRequest request, HttpServletResponse response, String usernick)
 	{
 		String result = "";
 		int count = 0;
@@ -248,6 +257,22 @@ public class UserController
 		model.addAttribute("user", user);
 		
 		result = "WEB-INF/view/user_MyPage.jsp";
+		
+		return result;
+	}
+	
+	
+	@RequestMapping(value="/logout.action", method = RequestMethod.POST)	
+	public String logout(HttpServletRequest requset)
+	{
+		HttpSession session = requset.getSession();
+		
+		String result = "";
+		
+		session.removeAttribute("user_num");
+		session.removeAttribute("admin_num");
+		
+		result = "WEB-INF/view/yameokja_login.jsp";
 		
 		return result;
 	}

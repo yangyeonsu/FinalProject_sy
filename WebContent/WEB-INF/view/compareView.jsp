@@ -327,7 +327,7 @@
 
 </head>
 <body>
-
+<form action="search.action" id="userForm" method="post">
 <div class="header">
 		<c:import url="/WEB-INF/view/header_user.jsp"></c:import>
 </div>
@@ -668,5 +668,6 @@
 <div class="footer">
 		<c:import url="/WEB-INF/view/footer.jsp"></c:import>
 </div>
+</form>
 </body>
 </html>

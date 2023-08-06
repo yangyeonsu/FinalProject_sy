@@ -76,7 +76,7 @@ public class MainController
 		return result;
 	}
 
-	@RequestMapping(value = "/search.action", method=RequestMethod.GET)
+	@RequestMapping(value = "/search.action", method=RequestMethod.POST)
 	public String searchStore(HttpServletRequest request, Model model)
 	{
 		String result = "";

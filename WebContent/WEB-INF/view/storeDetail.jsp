@@ -418,6 +418,7 @@ String cp = request.getContextPath();
 
 
 <body>
+<form action="search.action" id="userForm" method="post">
 	<div class="header">
 		<c:import url="header_user.jsp"></c:import>
 	</div>
@@ -944,6 +945,6 @@ String cp = request.getContextPath();
 		<c:import url="footer.jsp"></c:import>
 	</div>
 	
-
+</form>
 </body>
 </html>

@@ -196,113 +196,116 @@
 
 
 <body>
+<form id="adminForm" method="post">
 
-<!-- header -->
-<c:import url="header_admin.jsp"></c:import>
-
-<!-- container -->
-<div id="container">
-	<!-- 왼쪽 사이드 바 -->
-	<div class="left side-menu">
-		<div class="sidebar-inner">
-			<div id="sidebar-menu">
-				<ul class="has_sub_menu">
-					<li class="has_sub"><a href="javascript:void(0);"
-						class="waves-effect"> <i class="fas fa-bars"
-							style="color: #fff"></i>
-					</a></li>
-				</ul>
-			</div>
-		</div>
-	</div>
-
-	<div class="col-md-2" id="mleft">
-		<div class="left_sub_menu">
-			<div class="sub_menu">
-				<h2>MENU</h2>
-				<ul class="big_menu">
-					<li>가게 리스트<i class="arrow fas fa-angle-right"></i></li>
-
-					<ul class="small_menu">
-						<li><a href="#" class="small_menuA">가게1</a></li>
-						<li><a href="#" class="small_menuA">가게2</a></li>
-						<li><a href="#" class="small_menuA">가게3</a></li>
-						<li><a href="#" class="small_menuA">가게4</a></li>
-					</ul>
-				</ul>
-				<ul class="big_menu">
-					<li>접수 내역<i class="arrow fas fa-angle-right"></i></li>
-					<ul class="small_menu">
-						<li><a href="#" class="small_menuA">소메뉴2-1</a></li>
-						<li><a href="#" class="small_menuA">소메뉴2-2</a></li>
-					</ul>
-				</ul>
-				<ul class="big_menu">
-					<li>경고 내역</li>
-				</ul>
-				<ul class="big_menu">
-					<li>새로운 가게 등록 신청</li>
-				</ul>
-			</div>
-		</div>
-		<div class="overlay">
-			<input type="hidden" id="checkOverlay" value="false">
-		</div>
-	</div>
+	<!-- header -->
+	<c:import url="header_admin.jsp"></c:import>
 	
-	
-	<div id="mainDiv">
-		
-		<!-- 접수내역관리 -->
-		<div id="receive">
-			<h1>가게정보수정요청 접수내역 관리</h1>
-			
-			<!-- 가게정보수정요청 box -->
-
-			<div id="storeErrBox" style="height: auto;">
-
-				<div class="more" id="more">
-					<h3><a href="#">가게정보수정요청</a></h3>
+	<!-- container -->
+	<div id="container">
+		<!-- 왼쪽 사이드 바 -->
+		<div class="left side-menu">
+			<div class="sidebar-inner">
+				<div id="sidebar-menu">
+					<ul class="has_sub_menu">
+						<li class="has_sub"><a href="javascript:void(0);"
+							class="waves-effect"> <i class="fas fa-bars"
+								style="color: #fff"></i>
+						</a></li>
+					</ul>
 				</div>
-			
-
-				<table id="storeErr_list" style="margin-bottom: 20px;">
-					<thead>
-						<tr>	
-							<th>요청일자</th>
-							<th>요청자 ID</th>
-							<th>가게 이름</th>
-							<th>처리상태</th>
-							<th>처리일자</th>
-							<th>처리한 관리자</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach var="req" items="${reqList }">
-						<tr>
-							<td>${req.reg_date }</td>
-							<td>${req.user_id }</td>
-							<td>${req.st_name }</td>
-							<td>${req.state }</td>
-							<td>${req.final_date }</td>
-							<td>${req.admin_id }</td>
-						</tr>
-						</c:forEach>
-					</tbody>
-
-				</table>
 			</div>
+		</div>
+	
+		<div class="col-md-2" id="mleft">
+			<div class="left_sub_menu">
+				<div class="sub_menu">
+					<h2>MENU</h2>
+					<ul class="big_menu">
+						<li>가게 리스트<i class="arrow fas fa-angle-right"></i></li>
+	
+						<ul class="small_menu">
+							<li><a href="#" class="small_menuA">가게1</a></li>
+							<li><a href="#" class="small_menuA">가게2</a></li>
+							<li><a href="#" class="small_menuA">가게3</a></li>
+							<li><a href="#" class="small_menuA">가게4</a></li>
+						</ul>
+					</ul>
+					<ul class="big_menu">
+						<li>접수 내역<i class="arrow fas fa-angle-right"></i></li>
+						<ul class="small_menu">
+							<li><a href="#" class="small_menuA">소메뉴2-1</a></li>
+							<li><a href="#" class="small_menuA">소메뉴2-2</a></li>
+						</ul>
+					</ul>
+					<ul class="big_menu">
+						<li>경고 내역</li>
+					</ul>
+					<ul class="big_menu">
+						<li>새로운 가게 등록 신청</li>
+					</ul>
+				</div>
+			</div>
+			<div class="overlay">
+				<input type="hidden" id="checkOverlay" value="false">
+			</div>
+		</div>
+		
+		
+		<div id="mainDiv">
 			
-			<div class="back" id="more">
-				<h3></h3>
-				<a href="mainAdminView.action" class="backBtn" style="font-size: 10pt;">뒤로가기</a>
+			<!-- 접수내역관리 -->
+			<div id="receive">
+				<h1>가게정보수정요청 접수내역 관리</h1>
+				
+				<!-- 가게정보수정요청 box -->
+	
+				<div id="storeErrBox" style="height: auto;">
+	
+					<div class="more" id="more">
+						<h3><a href="#">가게정보수정요청</a></h3>
+					</div>
+				
+	
+					<table id="storeErr_list" style="margin-bottom: 20px;">
+						<thead>
+							<tr>	
+								<th>요청일자</th>
+								<th>요청자 ID</th>
+								<th>가게 이름</th>
+								<th>처리상태</th>
+								<th>처리일자</th>
+								<th>처리한 관리자</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach var="req" items="${reqList }">
+							<tr>
+								<td>${req.reg_date }</td>
+								<td>${req.user_id }</td>
+								<td>${req.st_name }</td>
+								<td>${req.state }</td>
+								<td>${req.final_date }</td>
+								<td>${req.admin_id }</td>
+							</tr>
+							</c:forEach>
+						</tbody>
+	
+					</table>
+				</div>
+				
+				<div class="back" id="more">
+					<h3></h3>
+					<a href="mainAdminView.action" class="backBtn" style="font-size: 10pt;">뒤로가기</a>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
-
-<!-- footer -->
-<c:import url="footer.jsp"></c:import>
+	
+	<!-- footer -->
+	<c:import url="footer.jsp"></c:import>
+	
+</form>
 </body>
 
 

@@ -265,16 +265,20 @@ String cp = request.getContextPath();
 								<!-- 가게 사진 + 찜, 비교함추가 -->
 								<div class="stImgBtnDiv">
 									<div class="stImgDiv">
-										<c:set var = "photo" value="${store.photo_link }"/>
-										
-										<c:choose>
-											<c:when test="${empty photo}">
-												<img class="stImg" src="<%=cp%>/images/logo_text.png">
-											</c:when>
-											<c:otherwise>
-												<img class="stImg" src="<%=cp%>/${photo}">
-											</c:otherwise>
-										</c:choose>
+										<button type="button" value="${store.st_num }"
+												class="storeBtn"
+												onclick="location.href='stDetail-userView.action?st_num=${store.st_num}'">
+											<c:set var = "photo" value="${store.photo_link }"/>
+											
+											<c:choose>
+												<c:when test="${empty photo}">
+													<img class="stImg" src="<%=cp%>/images/logo_text.png">
+												</c:when>
+												<c:otherwise>
+													<img class="stImg" src="<%=cp%>/${photo}">
+												</c:otherwise>
+											</c:choose>
+										</button>
 									</div>
 	
 									<div class="likeComAddBtn">
