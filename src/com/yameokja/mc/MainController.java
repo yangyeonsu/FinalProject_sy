@@ -76,19 +76,25 @@ public class MainController
 		return result;
 	}
 
-	@RequestMapping(value = "/search.action")
-	public String searchStore(Model model)
+	@RequestMapping(value = "/search.action", method=RequestMethod.GET)
+	public String searchStore(HttpServletRequest request, Model model)
 	{
 		String result = "";
-
+		
+		// dao
 		IMainDAO dao = sqlSession.getMapper(IMainDAO.class);
+		IUserDAO umDao = sqlSession.getMapper(IUserDAO.class);
+		
+		// session에 저장된 user_num
+		HttpSession session = request.getSession();
+		String user_num = (String) session.getAttribute("user_num");
 
-		// keyword = "서울 김밥";
-		String keyword = "서울 김밥";
+		// 검색어 처리
+		String keyword = request.getParameter("typingArea");
 
 		List<String> keywordList = new ArrayList<String>();
 
-		String[] keywordsplit = keyword.split("\\s");
+		String[] keywordsplit = keyword.trim().replaceAll("\\s+", " ").split("\\s");	// -> "[홍대, 김밥]"
 
 		for (int i = 0; i < keywordsplit.length; i++)
 		{
@@ -96,7 +102,6 @@ public class MainController
 		}
 
 		// 검색을 한 단어들을 띄어쓰기로 구분하여 sql문에 넣을 준비 완.
-
 		// ArrayList 안에 있는 단어들을 하나씩 꺼내서 getStoreSeachList 메소드 호출하여 가져온 integer 리스트를 다시
 		// 하나씩 꺼내서
 		// 최종 integer리스트에 넣어서 getStoreList 에 넘겨주기
@@ -113,42 +118,50 @@ public class MainController
 				finalKeyword.add(temp.get(j));
 			}
 		}
-
+		
+		// 검색 단어들로 찾은 storeDTO 리스트
 		model.addAttribute("searchList", dao.getStoreList(finalKeyword));
-
-		// 비교함
-
-		/*
-		 * List<Integer> comList = dao.getStoreComList(user_num);
-		 * model.addAttribute("com_list", dao.getStoreList(comList));
-		 */
-
+		
+		// 검색어
 		model.addAttribute("keyword", keyword);
+		
+		// 검색 단어들로 찾은 st_num 리스트
 		model.addAttribute("firstSearchResult", finalKeyword);
 
 		// 필터 검색을 위한 범례리스트
 		model.addAttribute("regionList", dao.regionList());
 		model.addAttribute("foodLabelList", dao.foodLabelList());
 		model.addAttribute("stKeyList", dao.stKeyList());
+		
+		// 비교함
+		List<Integer> comList = dao.getStoreComList(user_num);
+		
+		if (comList.size() > 0)
+			model.addAttribute("comList", dao.getStoreList(comList));
+		else
+			model.addAttribute("comList", null);
+		
+		
+		// 사용자가 찜한 가게 리스트
+		model.addAttribute("userJjimList", dao.userJjimSearch(user_num));
+		
+		// 사용자 정보
+		UserDTO user = umDao.searchUserInfo(user_num, "num");
+
+		LocalDate currentDate = LocalDate.now();
+		int month = currentDate.getMonthValue();
+
+		if (month < 7)
+			user.setUser_grade(umDao.firstHalf(user_num).user_grade);
+		else
+			user.setUser_grade(umDao.secondHalf(user_num).user_grade);
+
+		model.addAttribute("user", user);
 
 		result = "/WEB-INF/view/user_main_2.jsp";
 
 		return result;
 	}
-
-	@RequestMapping(value = "", method = RequestMethod.POST)
-	public String filterSearchStore(Model model)
-	{
-		String result = "";
-
-		// 가져온 것 : keyword + 1차 검색 결과 st_num - firstSearchResult
-		// 보내야 할 것 : keyword + 필터검색 한 st_num - filterSearchResult
-
-		result = "MY_personal_main_2.jsp";
-
-		return result;
-	}
-
 	
 	@RequestMapping(value = "/comparingInsert.action")
 		@ResponseBody
@@ -272,8 +285,6 @@ public class MainController
 			}
 			
 			model.addAttribute("comList", storeList);
-			
-			
 		}
 
 		return html;
@@ -299,5 +310,22 @@ public class MainController
 
 		return result;
 	}
+	
+	
+
+	@RequestMapping(value = "filterSearch.action")
+		@ResponseBody
+	public String filterSearchStore(Model model)
+	{
+		String result = "";
+
+		// 가져온 것 : keyword + 1차 검색 결과 st_num - firstSearchResult
+		// 보내야 할 것 : keyword + 필터검색 한 st_num - filterSearchResult
+
+		result = "/search.action";
+
+		return result;
+	}
+
 
 }
