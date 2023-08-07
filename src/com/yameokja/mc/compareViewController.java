@@ -1,5 +1,8 @@
 package com.yameokja.mc;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -10,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class compareViewController 
@@ -17,7 +21,7 @@ public class compareViewController
 	@Autowired
 	private SqlSession sqlSession;
 	
-	@RequestMapping(value="/compareView.action", method=RequestMethod.GET)
+	@RequestMapping(value="/compareView.action", method=RequestMethod.POST)
 	public String compareView(HttpServletRequest request, HttpServletResponse response, Model model)
 	{
 		HttpSession session = request.getSession();
@@ -32,11 +36,26 @@ public class compareViewController
 		 * = Integer.parseInt(request.getParameter("st_num2")); int st_num3 =
 		 * Integer.parseInt(request.getParameter("st_num3"));
 		 */
-		System.out.println(request.getParameter("stnum"));
+		/* System.out.println(request.getParameter("stnum")); */
 		
-		String[] str = request.getParameter("stnum").split(",");
+		String[] str = request.getParameterValues("checkedCompare");
+		String[] stArr = null;
 		
-		for (String string : str)
+		System.out.println(str);
+		
+		for(int i = 0; i < str.length ; i++)
+		{
+
+			System.out.println(str[i]);
+			stArr = str[i].split(",");
+
+		}
+		
+		System.out.println(stArr);
+		
+		/* System.out.println(str); */
+		
+		for (String string : stArr)
 		{
 			int st_num = Integer.parseInt(string);
 			
