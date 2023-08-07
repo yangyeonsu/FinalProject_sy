@@ -9,12 +9,10 @@ import java.util.Random;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,13 +24,13 @@ public class MainController
 	@Autowired
 	private SqlSession sqlSession;
 
-	@RequestMapping(value = "/main.action", method = RequestMethod.GET)
+	@RequestMapping(value = "/main.action", method= {RequestMethod.POST, RequestMethod.GET})
 	public String storeList(HttpServletRequest request, Model model)
 	{
 		HttpSession session = request.getSession();
 		String user_num = (String) session.getAttribute("user_num");
 		
-		Random random = new Random();
+		/* Random random = new Random(); */
 
 		String result = "";
 
@@ -93,7 +91,7 @@ public class MainController
 		return result;
 	}
 
-	@RequestMapping(value = "/search.action", method=RequestMethod.POST)
+	@RequestMapping(value = "/search.action")
 	public String searchStore(HttpServletRequest request, Model model)
 	{
 		String result = "";
@@ -407,7 +405,7 @@ public class MainController
 	}
 	*/
 
-	@RequestMapping(value = "/filterSearch.action", method=RequestMethod.POST)
+	@RequestMapping(value = "/filterSearch.action")
 	public String filterSearchStore(HttpServletRequest request, Model model)
 	{
 		String result = "";
