@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,14 +20,18 @@ public class compareViewController
 	@Autowired
 	private SqlSession sqlSession;
 	
+
+
+	@RequestMapping(value="/compareView.action", method=RequestMethod.GET)
+	public String compareView(HttpServletRequest request, Model model)
+    
 	@RequestMapping(value="/compareView.action", method=RequestMethod.POST)
 	public String compareView(HttpServletRequest request, HttpServletResponse response, Model model)
 	{
-		HttpSession session = request.getSession();
-		String user_num = (String)session.getAttribute("user_num");
-		String result = "";
-		
 		IcompareViewDAO dao = sqlSession.getMapper(IcompareViewDAO.class);
+
+		int[] st_nums = new int[3];
+		try
 		IUserDAO udao = sqlSession.getMapper(IUserDAO.class);
 		
 		/*
@@ -57,39 +60,56 @@ public class compareViewController
 		
 		for (String string : stArr)
 		{
-			int st_num = Integer.parseInt(string);
-			
-			model.addAttribute("nameLoCat1", dao.nameLoCat1(st_num));
-			model.addAttribute("scoRe1", dao.scoRe1(st_num));
-			model.addAttribute("openClose1", dao.openClose1(st_num));
-			model.addAttribute("others1", dao.others1(st_num));
-			model.addAttribute("menuLists1", dao.menuLists1(st_num));
+
+			System.out.println(str[i]);
+			stArr = str[i].split(",");
+
 		}
 		
-		/*
-		 * model.addAttribute("nameLoCat1", dao.nameLoCat1(st_num1));
-		 * model.addAttribute("scoRe1", dao.scoRe1(st_num1));
-		 * model.addAttribute("openClose1", dao.openClose1(st_num1));
-		 * model.addAttribute("others1", dao.others1(st_num1));
-		 * model.addAttribute("menuLists1", dao.menuLists1(st_num1));
-		 * 
-		 * 
-		 * model.addAttribute("nameLoCat2", dao.nameLoCat2(st_num2));
-		 * model.addAttribute("scoRe2", dao.scoRe2(st_num2));
-		 * model.addAttribute("openClose2", dao.openClose2(st_num2));
-		 * model.addAttribute("others2", dao.others2(st_num2));
-		 * model.addAttribute("menuLists2", dao.menuLists2(st_num2));
-		 * 
-		 * 
-		 * model.addAttribute("nameLoCat3", dao.nameLoCat3(st_num3));
-		 * model.addAttribute("scoRe3", dao.scoRe3(st_num3));
-		 * model.addAttribute("openClose3", dao.openClose3(st_num3));
-		 * model.addAttribute("others3", dao.others3(st_num3));
-		 * model.addAttribute("menuLists3", dao.menuLists3(st_num3));
-		 */
+		System.out.println(stArr);
 		
-		result = "/WEB-INF/view/compareView.jsp";
+		/* System.out.println(str); */
+		
+		for (String string : stArr)
+		{
+			st_nums[0] = Integer.parseInt(request.getParameter("st_num1")); 
+			st_nums[1] = Integer.parseInt(request.getParameter("st_num2")); 
+			System.out.println("Before: " + st_nums[2]);
+			st_nums[2] = request.getParameter("st_num3") != null ? Integer.parseInt(request.getParameter("st_num3")) : 0;
+			System.out.println("After: " + st_nums[2]);
+		}
+		catch (NumberFormatException e)
+		{
+			System.out.println(e.toString());
+			return "/WEB-INF/view/errorPage.jsp";
+		}
+		
+		for (int i = 0; i < st_nums.length; i++)
+		{
+		    if (i == 2 && st_nums[i] == 0)
+		    {
+		        continue; 
+		    }
+		    System.out.println("Value of st_nums[" + i + "] is: " + st_nums[i]);
+		    addModelAttributes(dao, st_nums[i], i+1, model);
+		}
 
-		return result;
+		
+		System.out.println("Value of st_num3 is: " + st_nums[2]);
+		
+		return "/WEB-INF/view/compareView.jsp";
+	}
+
+	private void addModelAttributes(IcompareViewDAO dao, int st_num, int index, Model model)
+	{
+		if (st_num != 0)
+		{
+			model.addAttribute("nameLoCat" + index, dao.nameLoCat(st_num));
+			model.addAttribute("scoRe" + index, dao.scoRe(st_num));
+			model.addAttribute("openClose" + index, dao.openClose(st_num));
+			model.addAttribute("others" + index, dao.others(st_num));
+			model.addAttribute("menuLists" + index, dao.menuLists(st_num));
+		}
 	}
 }
+

@@ -140,6 +140,7 @@
 
 			$("#userForm").attr("action", "search.action");
 
+
 			$("#userForm").submit();
 		});
 		
