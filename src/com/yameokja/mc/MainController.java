@@ -74,6 +74,8 @@ public class MainController
 				hotList.add(i+1);
 			}
 			
+			System.out.println(hotList);
+			
 			model.addAttribute("hot_list", dao.getStoreList(hotList));
 		}
 
