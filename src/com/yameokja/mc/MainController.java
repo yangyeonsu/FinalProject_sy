@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,13 +24,13 @@ public class MainController
 	@Autowired
 	private SqlSession sqlSession;
 
-	@RequestMapping(value = "/main.action", method = RequestMethod.GET)
+	@RequestMapping(value = "/main.action", method= {RequestMethod.POST, RequestMethod.GET})
 	public String storeList(HttpServletRequest request, Model model)
 	{
 		HttpSession session = request.getSession();
 		String user_num = (String) session.getAttribute("user_num");
 		
-		Random random = new Random();
+		/* Random random = new Random(); */
 
 		String result = "";
 
@@ -91,7 +91,7 @@ public class MainController
 		return result;
 	}
 
-	@RequestMapping(value = "/search.action", method=RequestMethod.POST)
+	@RequestMapping(value = "/search.action")
 	public String searchStore(HttpServletRequest request, Model model)
 	{
 		String result = "";
@@ -327,15 +327,22 @@ public class MainController
 	}
 	
 	
-
-	@RequestMapping(value = "/filterSearch.action")
+	/*
+	@RequestMapping(value = "/filterSearch.action", headers="application/json;")
 		@ResponseBody
-	public String filterSearchStore(@RequestParam(value="regionCbList[]") ArrayList<String> regionCbList, @RequestParam(value="catCbList[]") ArrayList<String> catCbList
-			, @RequestParam(value="stKeyCbList[]") ArrayList<String> stKeyCbList, @RequestParam("resultStoreList") ArrayList<Integer> resultStoreList, Model model)
-	{
+	public String filterSearchStore(@RequestBody Map<String, Object> requestData, Model model) {
+	    @SuppressWarnings("unchecked")
+		ArrayList<String> regionCbList = (ArrayList<String>) requestData.get("regionCbList");
+	    @SuppressWarnings("unchecked")
+		ArrayList<String> catCbList = (ArrayList<String>) requestData.get("catCbList");
+	    @SuppressWarnings("unchecked")
+		ArrayList<String> stKeyCbList = (ArrayList<String>) requestData.get("stKeyCbList");
+	    @SuppressWarnings("unchecked")
+		ArrayList<Integer> resultStoreList = (ArrayList<Integer>) requestData.get("resultStoreList");
+	
 		// 가져온 것 : keyword + 1차 검색 결과 st_num - firstSearchResult
 		// 보내야 할 것 : keyword + 필터검색 한 st_num - filterSearchResult
-		
+
 		IMainDAO dao = sqlSession.getMapper(IMainDAO.class);
 		
 		System.out.println(resultStoreList);
@@ -358,14 +365,14 @@ public class MainController
 			html += "	<div class='stImgBtnDiv'>";
 			html += "		<div class='stImgDiv'>";
 			html += "			<c:set var = 'photo' value='" + store.getPhoto_link() + "'/>";
-			html += "				<c:choose>";
-			html += "					<c:when test='${empty photo}'>";
-			html += "						<img class='stImg' src='<%=cp%>/images/logo_text.png'>";
-			html += "					</c:when>";
-			html += "					<c:otherwise>";
-			html += "						<img class='stImg' src='<%=cp%>/${photo}'>";
-			html += "					</c:otherwise>";
-			html += "				</c:choose>";
+			html += "			<c:choose>";
+			html += "				<c:when test='${empty photo}'>";
+			html += "					<img class='stImg' src='<%=cp%>/images/logo_text.png'>";
+			html += "				</c:when>";
+			html += "				<c:otherwise>";
+			html += "					<img class='stImg' src='<%=cp%>/${photo}'>";
+			html += "				</c:otherwise>";
+			html += "			</c:choose>";
 			html += "		</div>";
 			html += "		<div class='likeComAddBtn'>";
 			html += "			<button type='button' class='comAddBtn' value='" + store.getSt_num() + "'></button>";
@@ -396,6 +403,133 @@ public class MainController
 		}
 		return html;
 	}
+	*/
 
+	@RequestMapping(value = "/filterSearch.action")
+	public String filterSearchStore(HttpServletRequest request, Model model)
+	{
+		String result = "";
+		
+		// dao
+		IMainDAO dao = sqlSession.getMapper(IMainDAO.class);
+		IUserDAO umDao = sqlSession.getMapper(IUserDAO.class);
+		
+		// session에 저장된 user_num
+		HttpSession session = request.getSession();
+		String user_num = (String) session.getAttribute("user_num");
 
+		// 검색어 처리
+		String keyword = request.getParameter("typingArea");
+
+		List<String> keywordList = new ArrayList<String>();
+
+		String[] keywordsplit = keyword.trim().replaceAll("\\s+", " ").split("\\s");	// -> "[홍대, 김밥]"
+
+		for (int i = 0; i < keywordsplit.length; i++)
+		{
+			keywordList.add("%" + keywordsplit[i] + "%");
+		}
+
+		// 검색을 한 단어들을 띄어쓰기로 구분하여 sql문에 넣을 준비 완.
+		// ArrayList 안에 있는 단어들을 하나씩 꺼내서 getStoreSeachList 메소드 호출하여 가져온 integer 리스트를 다시
+		// 하나씩 꺼내서
+		// 최종 integer리스트에 넣어서 getStoreList 에 넘겨주기
+
+		List<Integer> finalKeyword = new ArrayList<Integer>();		//-- 검색어로 검색한 가게 넘버
+
+		for (int i = 0; i < keywordList.size(); i++)
+		{
+			List<Integer> temp = null;
+			temp = dao.getStoreSearchList(keywordList.get(i));
+
+			for (int j = 0; j < temp.size(); j++)
+			{
+				finalKeyword.add(temp.get(j));
+			}
+		}
+		
+		// 검색어
+		model.addAttribute("keyword", keyword);
+		
+		// 검색 단어들로 찾은 st_num 리스트
+		//model.addAttribute("firstSearchResult", finalKeyword);
+
+		// 필터 검색을 위한 범례리스트
+		model.addAttribute("regionList", dao.regionList());
+		model.addAttribute("foodLabelList", dao.foodLabelList());
+		model.addAttribute("stKeyList", dao.stKeyList());
+		
+		// 비교함
+		List<Integer> comList = dao.getStoreComList(user_num);
+		
+		if (comList.size() > 0)
+			model.addAttribute("comList", dao.getStoreList(comList));
+		else
+			model.addAttribute("comList", null);
+		
+		
+		// 사용자가 찜한 가게 리스트
+		model.addAttribute("userJjimList", dao.userJjimSearch(user_num));
+		
+		// 사용자 정보
+		UserDTO user = umDao.searchUserInfo(user_num, "num");
+
+		LocalDate currentDate = LocalDate.now();
+		int month = currentDate.getMonthValue();
+
+		if (month < 7)
+			user.setUser_grade(umDao.firstHalf(user_num).user_grade);
+		else
+			user.setUser_grade(umDao.secondHalf(user_num).user_grade);
+
+		model.addAttribute("user", user);
+		
+		String[] regionCbList = null;
+		String[] catCbList = null;
+		String[] stKeyCbList = null;
+		
+		String[] regionChk = request.getParameterValues("regionChk");
+		String[] foodlabelChk = request.getParameterValues("foodlabelChk");
+		String[] stKeyChk = request.getParameterValues("stKeyChk");
+		
+		regionCbList = regionChk[0].split(",");
+		catCbList = foodlabelChk[0].split(",");
+		stKeyCbList = stKeyChk[0].split(",");
+		
+		if (regionCbList.length > 0)
+			model.addAttribute("regionChecked", regionCbList);
+		else
+		{
+			model.addAttribute("regionChecked", null);
+			regionCbList = null;
+		}
+		
+		if (catCbList.length > 0)
+			model.addAttribute("catChecked", catCbList);
+		else
+		{
+			model.addAttribute("catChecked", null);
+			catCbList = null;
+		}
+		
+		if (stKeyCbList.length > 0)
+			model.addAttribute("stKeyChecked", stKeyCbList);
+		else
+		{
+			model.addAttribute("stKeyChecked", null);
+			stKeyCbList = null;
+		}
+		
+		ArrayList<Integer> filterResult = dao.filterSearchList(regionCbList, catCbList, stKeyCbList, finalKeyword);
+		
+		System.out.println(filterResult);
+		
+		ArrayList<StoreDTO> searchList = dao.getStoreList(filterResult);
+		
+		model.addAttribute("searchList", searchList);
+
+		result = "/WEB-INF/view/user_main_2.jsp";
+		
+		return result;
+	}
 }
