@@ -28,7 +28,7 @@
 	<select id="rvList" resultType="com.yameokja.mc.ReportListDTO">
 		SELECT REG_DATE, USER_ID, ACCU_NUM, ST_NAME, STATE, FINAL_DATE, ADMIN_ID
 		FROM RV_REPORT_VIEW
-  </select>
+  	</select>
 	
 	
 	<!-- 가게정보수정요청리스트 -->
