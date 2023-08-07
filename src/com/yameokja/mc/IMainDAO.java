@@ -3,6 +3,9 @@ package com.yameokja.mc;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.RequestParam;
+
 public interface IMainDAO
 {
 	// 해당하는 ST_NUM 의 가게정보 리스트 출력 메소드
@@ -16,11 +19,6 @@ public interface IMainDAO
 	
 	// 추천 5개의 가게번호 리스트 출력 메소드
 	public List<Integer> getHotStNumber();
-	
-	/*
-	 * // 검색 키워드 스플릿해오는 메소드
-	 * public List<String> getSearchKeyword(String keyword);
-	 */
 	
 	// 검색 후 가게번호 리스트 출력 메소드
 	public List<Integer> getStoreSearchList(String keyword);
@@ -41,20 +39,27 @@ public interface IMainDAO
 	public List<StKeyDTO> stKeyList();
 	
 	// 비교함에 해당 가게가 존재하는지 찾는 메소드 => 1 또는 0반환
-	public int comparingSearch(String user_num, int st_num);
+	public int comparingSearch(@Param("user_num")String user_num, @Param("st_num") int st_num);
 	
 	// 비교함 insert 메소드
-	public int comparingInsert(String user_num, int st_num);
+	public int comparingInsert(@Param("user_num")String user_num, @Param("st_num") int st_num);
 	
 	// 비교함 delete 메소드
-	public int comparingDelete(String user_num, int st_num);
+	public int comparingDelete(@Param("user_num") String user_num, @Param("st_num") int st_num);
+	
+	// 해당 사용자가 찜한 가게 리스트 출력 메소드
+	public List<Integer> userJjimSearch(@Param("user_num") String user_num);
 	
 	// 찜 목록에 해당 가게가 존재하는지 찾는 메소드 => 1 또는 0 반환
-	public int jjimSearch(String user_num, int st_num);
+	public int jjimSearch(@Param("user_num") String user_num, @Param("st_num") int st_num);
 	
 	// 찜 목록에 가게 추가하는 메소드
-	public int jjimInsert(String user_num, int st_num);
+	public int jjimInsert(@Param("user_num") String user_num, @Param("st_num") int st_num);
 	
 	// 찜 목록에 가게 삭제하는 메소드
-	public int jjimDelete(String user_num, int st_num);
+	public int jjimDelete(@Param("user_num") String user_num, @Param("st_num") int st_num);
+	
+	// 2차 필터 검색 메소드
+	public ArrayList<Integer> filterSearchList(@Param("regionCbList") List<String> regionCbList, @Param("catCbList") List<String> catCbList
+			, @Param("stKeyCbList") List<String> stKeyCbList, @Param("resultStoreList") List<Integer> resultStoreList);
 }

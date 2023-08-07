@@ -8,8 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>admin_inoutView.jsp</title>
-
+<title>admin_reviewListView.jsp</title>
 <link rel="stylesheet" type="text/css" href="<%=cp %>/css/main_admin.css">
 
 <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
@@ -146,9 +145,6 @@
 	.has_sub {
 		width: 100%;
 	}
-	#backBtn {
-		text-align: right;
-	}
 </style>
 
 <script type="text/javascript">
@@ -260,45 +256,42 @@
 			
 			<!-- 접수내역관리 -->
 			<div id="receive">
-				<h1>패널티회수 접수내역 관리</h1>
+				<h1>리뷰신고 접수내역 관리</h1>
 				
-				<!-- 가게 등록/폐업 요청 box -->
-				<div id="inout_Box" style="height: auto;">
+				<!-- 리뷰신고 box -->
+				<div id="reviewBox" style="height: auto;">
+	
 					<div class="more" id="more">
-						<h3><a href="#">가게 등록/폐업 요청</a></h3>
+						<h3><a href="#">리뷰신고</a></h3>
 					</div>
 				
-					<table id="inout_list" style="margin-bottom: 20px;">
+					<table id="review_list" style="margin-bottom: 20px;">
 						<thead>
-							<tr>
-								<th>구분</th>	
-								<th>신청일자</th>
-								<th>신청 ID</th>
+							<tr>	
+								<th>신고일자</th>
+								<th>신고자 ID</th>
+								<th>가게 이름</th>
+								<th>피신고자 ID</th>
 								<th>처리상태</th>
 								<th>처리일자</th>
 								<th>처리한 관리자</th>
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="inout" items="${inoutList }">
+							<c:forEach var="review" items="${rvList }">
 							<tr>
-								<c:if test="${inout.cat eq '등록' }">
-								<td style="background-color: green;">${inout.cat }</td>
-								</c:if>
-								<c:if test="${inout.cat eq '폐업' }">
-								<td style="background-color: pink;">${inout.cat }</td>
-								</c:if>
-								<td>${inout.reg_date }</td>
-								<td>${inout.user_id }</td>
-								<td>${inout.state }</td>
-								<td>${inout.final_date }</td>
-								<td>${inout.admin_id }</td>
+								<td>${review.reg_date }</td>
+								<td>${review.user_id }</td>
+								<td>${review.st_name }</td>
+								<td>${review.accu_num }</td>
+								<td>${review.state }</td>
+								<td>${review.final_date }</td>
+								<td>${review.admin_id }</td>
 							</tr>
 							</c:forEach>
 						</tbody>
 					</table>
 				</div>
-				
 				<div class="back" id="more">
 					<h3></h3>
 					<a href="mainAdminView.action" class="backBtn" style="font-size: 10pt;">뒤로가기</a>
@@ -318,7 +311,3 @@
 </body>
 
 </html>
-
-
-
-

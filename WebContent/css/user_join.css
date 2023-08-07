@@ -96,7 +96,7 @@ body
 }
 
 /* input 태그 높이 조정 */
-#userName, #userSsn1, #userSsn2, #userTel, #AcceptNum, #userId, #userPw1, #userPw2, #userNickName, #userEmail, #userEmail2
+#user_name, #user_ssn1, #user_ssn2, #user_tel, #AcceptNum, #user_id, #user_pw, #userPwCheck, #user_nickname, #user_email, #userEmail2
 /* input[type=text], input[type=password] */
 {
 	height: 25px;
@@ -105,8 +105,8 @@ body
   	text-align: center;
 }
 
-#userName:focus, #userSsn1:focus, #userSsn2:focus, #userTel:focus, #AcceptNum:focus
-, #userId:focus, #userPw1:focus, #userPw2:focus, #userNickName:focus, #userEmail:focus, #userEmail2:focus
+#user_name:focus, #user_ssn1:focus, #user_ssn2:focus, #user_tel:focus, #AcceptNum:focus
+, #user_id:focus, #user_pw:focus, #userPwCheck:focus, #user_nickname:focus, #user_email:focus, #userEmail2:focus
 {
 	height: 25px;
 	outline: none; 
@@ -200,6 +200,21 @@ body
   	margin-left: 1vw;
   	box-shadow: 0 0 10px #ef6351;
 }
+
+#joinBtn
+{
+	transition: 0.25s;
+}
+
+#joinBtn:hover
+{
+	letter-spacing: 2px;
+    transform: scale(1.2);
+    cursor: pointer;
+    background-color: #ef6351;
+  	color: white;
+}
+
 
 /* 회원정보수정 입력란 */
 .joinInsertDiv
