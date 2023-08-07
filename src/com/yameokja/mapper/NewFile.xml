@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yameokja.mc.IAdminFindDAO">
+	
+	<!-- 리뷰신고 요청자로 요청내용 찾기 
+	리뷰신고 요청자로 요청내용 찾기
+	신고자, 신고일, 피신고자, 작성일, 리뷰신고카테고리명, 가게이름
+	-->
+	<select id="rvContent" resultType="com.yameokja.mc.RvApplyViewDTO">
+		SELECT RRV.USER_ID AS USER_ID
+		     , RRV.REG_DATE AS REG_DATE
+		     , RRV.ACCU_NUM AS ACCU_NUM
+		     , RB.REG_DATE AS WRITE_DATE
+		     , RRV.REP_RS_NAME AS REP_RS_NAME
+		     , RRV.ST_NAME AS ST_NAME
+		FROM RV_REPORT_VIEW RRV
+		LEFT JOIN RV_BOX RB
+		ON RRV.USER_NUM = RB.USER_NUM
+		WHERE RRV.USER_ID=#{user_id};
+	</select>
+		
+	<!-- 정보수정 요청한 내용 가져오기
+	가게명 체크박스항목명 여부명 정보오류요청사유 요청자
+	-->
+	<select id="reqContent" resultType="com.yameokja.mc.ReqApplyViewDTO">
+		SELECT ST_NAME, CHBOX_NAME, YN_NAME, REQ_RS, USER_ID
+		FROM REQ_APPLY_VIEW
+		WHERE USER_ID = #{user_id};
+	</select>
+	
+	<!-- 이의제기 요청 내용 가져오기
+	정보오류요청사유 이의제기사유 이의제기사진
+	-->
+	<select id="objContent" resultType="com.yameokja.mc.ObjApplyViewDTO">
+		SELECT OAV.REQ_RS AS REQ_RS
+			 , OAV.OBJ_RS AS OBJ_RS
+			 , OP.PHOTO_LINK AS PHOTO_LINK
+			 , OAV.REQ_PROCESS_NUM AS REQ_PROCESS_NUM
+			 <!-- user_id 필요 -->
+		FROM OBJ_APPLY_VIEW OAV
+		LEFT JOIN OBJ_PHOTO OP
+		ON OP.OBJ_APPLY_NUM = OAV.OBJ_APPLY_NUM;
+		
+	</select>
+	
+	
+	<!-- 패널티회수 요청한 가게 찾기 
+	아이디 신청날짜 가게명 패널티받은사유 패널티회수요청사유 첨부파일
+	-->
+	<select id="">
+		SELECT USER_NUM, REG_DATE, ST_NAME, PEN_TYPE_NAME, REVO_RS, PHOTO_LINK
+		FROM REVO_APPLY_VIEW
+		WHERE USER_ID = #{user_id};
+	</select>
+	
+	<!-- 가게 등폐업 요청한 요청자 찾기 -->
+	
+	
+</mapper>
