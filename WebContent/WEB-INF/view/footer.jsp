@@ -12,7 +12,7 @@
 <title>Main Page</title>
 
 <!-- jquery -->
-<!-- <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"> --></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 
 <style type="text/css">
 	footer
@@ -53,6 +53,19 @@
 		cursor: pointer;
 	}
 </style>
+
+<script type="text/javascript">
+
+	$(function()
+	{
+		$("#fsa").click(function()
+		{
+			$("#userForm").attr("action","storegiinsertform.action");
+			$("#userForm").submit();
+		});
+	});
+
+</script>
 
 </head>
 
