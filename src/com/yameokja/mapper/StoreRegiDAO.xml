@@ -2,19 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.yameokja.mc.IStoreregiDAO">
-	<select id="in_apply" resultType="java.util.HashMap">
+	<select id="add" resultType="java.util.HashMap">
 		INSERT INTO IN_APPLY(IN_APPLY_NUM, USER_NUM, ST_IN_NUM, ST_IN_FILE, ST_PLACE_NUM, ST_PLACE_FILE, ST_NAME , ST_LOCATION, ST_LOCATION_DT, ST_TEL, ADMIN_READ_DATE, REG_DATE)
-		VALUES(SEQ.NEXTVAL, #{user_num}, #{st_in_num}, #{st_in_file}, #{st_place_num}, #{st_place_file}, #{st_name}, #{st_location}, , #{st_location_dt}, #{st_tel}, NULL, NULL)
+		VALUES(SEQ.NEXTVAL, #{user_num}, #{st_in_num}, #{st_in_file}, #{st_place_num}, #{st_place_file}, #{st_name}, #{st_location}, , #{st_location_dt}, #{st_tel}, NULL, SYSDATE)
 	</select>
 	
 	
 
 </mapper>
-
-
-
-
-
-                           
-
-
