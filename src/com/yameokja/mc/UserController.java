@@ -238,6 +238,7 @@ public class UserController
 		List<Integer> jjimList = idao.getJjimStNumber(user_num);
 		List<Integer> comList = idao.getStoreComList(user_num);
 		
+		System.out.println(comList);
 		
 		UserDTO user = udao.searchUserInfo(user_num, "num");
 		
