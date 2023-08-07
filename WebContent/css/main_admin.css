@@ -1,0 +1,91 @@
+@charset "UTF-8";
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500&display=swap');
+
+#container
+{
+	width: 65vw;
+}
+
+#more
+{
+	display: flex;
+    width: 65vw;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.moreBtn
+{
+	font-size: 10pt;
+	margin-right: 1vw;
+}
+
+td
+{
+	/* padding: 1px; */
+    /* border: 1px solid #333333; */
+    border-bottom: 1px solid;
+}
+table
+{
+	border: 1px solid;
+	border-collapse: collapse;
+}
+
+#receive a
+{
+	text-decoration: none;
+	color: #3a001e;
+}
+
+#mainDiv
+{
+    width: 65vw;
+    padding-left: 15vw;
+    margin: auto;
+    margin-left: 6%;
+} 
+#receive
+{
+	margin: auto;
+}
+
+#reviewBox, #storeErrBox, #objectionBox, #penaltyBox, #inout_Box
+{
+	display: flex;
+	flex-direction: column;
+	/* align-items: center; */
+	/* justify-content: center; */
+	max-width: 88vw;
+	/* height: 350vh; */
+	background-color: #f7f4ea;
+	margin: auto;
+	height: 260px;
+	margin-left: 0%;
+	
+}
+
+#receive h3
+{
+	padding-left: 20px;
+}
+
+#review_list, #storeErr_list, #objection_list, #penalty_list, #inout_list
+{
+	margin: 0px 20px 10px 20px;
+	border: 1px solid; 
+	
+}
+
+#receive th
+{
+	background-color: white;
+	
+}
+
+#receive td
+{
+	text-align: center;
+}
+

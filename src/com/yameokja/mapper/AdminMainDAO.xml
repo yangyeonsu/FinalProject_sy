@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yameokja.mc.IAdminMainDAO">
+
+	<!-- 관리자 로그인 확인 -->
+	<select id="adminLoginCheck" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM ADMIN
+		<!-- WHERE CRYPTPACK.DECRYPT(USER_PW, #{user_pw}) = #{user_pw} -->
+		WHERE ADMIN_PW = #{admin_pw}
+		     AND ADMIN_ID = #{admin_id}
+	</select>
+	
+	<!-- 관리자 정보 찾기 -->
+	<select id="searchNum" resultType="com.yameokja.mc.AdminDTO">
+		SELECT ADMIN_NUM, ADMIN_NAME
+		FROM ADMIN
+		<if test='check eq "id"'>
+		WHERE ADMIN_ID = #{admin_info}
+		</if>
+		<if test='check eq "num"'>
+		WHERE ADMIN_NUM = #{admin_info}
+		</if>
+	</select>
+
+	<!-- 리뷰신고리스트 -->
+	<select id="rvList" resultType="com.yameokja.mc.ReportListDTO">
+		SELECT REG_DATE, USER_ID, ACCU_NUM, ST_NAME, STATE, FINAL_DATE, ADMIN_ID
+		FROM RV_REPORT_VIEW
+  </select>
+	
+	
+	<!-- 가게정보수정요청리스트 -->
+	<select id="reqList" resultType="com.yameokja.mc.ReportListDTO">
+		SELECT REG_DATE, USER_ID, ST_NAME, STATE, FINAL_DATE, ADMIN_ID
+		FROM REQ_APPLY_VIEW
+	</select>
+	
+	
+	<!-- 이의제기리스트 -->
+	<select id="objList" resultType="com.yameokja.mc.ReportListDTO">
+		SELECT OBJ_APPLY_NUM, REG_DATE, ST_NAME, STATE, FINAL_DATE, ADMIN_ID
+		FROM OBJ_APPLY_VIEW
+
+	</select>
+	
+	
+	<!-- 패널티회수요청리스트 -->
+	<select id="revoList" resultType="com.yameokja.mc.ReportListDTO">
+		SELECT REG_DATE, ST_NAME, REG_STATE, FINAL_DATE, ADMIN_ID
+		FROM REVO_APPLY_VIEW
+	</select>
+	
+	
+	<!-- 가게등폐업요청리스트 -->
+	<select id="inoutList" resultType="com.yameokja.mc.ReportListDTO">
+		SELECT CAT, REG_DATE, USER_ID, FINAL_DATE, ADMIN_ID, STATE
+		FROM INOUT_APPLY_VIEW
+	</select>
+</mapper>

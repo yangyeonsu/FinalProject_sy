@@ -1,0 +1,305 @@
+@charset "UTF-8";
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500&display=swap');
+
+body
+{
+	font-family: 'IBM Plex Sans KR', sans-serif;
+	margin: 0;
+}
+
+/* 전체 컨테이너 */
+.joinContainer
+{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 98vw;
+}
+
+/* 회원가입타이틀영역 */
+.joinTitleDiv
+{
+	display: flex;
+	font-weight: bold;
+	font-size: 30pt;
+	width: 45vw;
+	margin-bottom: 3vh;
+	margin-top: 10vh;
+}
+
+.joinTitle
+{
+	margin-left: 2vw;
+	padding-top: 1vh;
+}
+
+.gotoMainImg
+{
+	max-width: 9vw;
+}
+
+.insertTitleDiv
+{
+	background-color: #f7f4ea;
+	width: 45vw;
+	padding-left: 1vw;
+}
+
+#insertTitle
+{
+	font-size: 20pt;
+	font-weight: bold;
+}
+
+/* 회원정보수정 영역 */
+.userInfoDiv
+{
+	display: flex;
+	justify-content: space-evenly;
+	width: 50vw;
+	height: 60vh;
+	margin-top: 3vh;
+    align-items: center;
+    font-size: 11pt;
+}
+
+/* 회원정보수정란 div 영역 조정 */
+.userName, .name, .userSsn, .ssn, .userId, .id, .userNickName, .nickname, .email, .userEmail
+{
+	height: 5vh;
+	justify-content : center;
+}
+
+.name, .ssn, .tel, .password, .nickname, .email
+{
+	padding-top: 5px;
+}
+
+.id
+{
+	padding-top: 10px;
+}
+
+.tel, .password, .userTel, .userPw
+{
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	height: 9vh;
+}
+
+
+.userSsn, .userEmail
+{
+	color: #ef6351;
+}
+
+/* input 태그 높이 조정 */
+#user_name, #user_ssn1, #user_ssn2, #user_tel, #AcceptNum, #user_id, #user_pw, #userPwCheck, #user_nickname, #user_email, #userEmail2
+/* input[type=text], input[type=password] */
+{
+	height: 25px;
+	border: 1px solid #dfdfdf;
+  	border-radius:5px;
+  	text-align: center;
+}
+
+#user_name:focus, #user_ssn1:focus, #user_ssn2:focus, #user_tel:focus, #AcceptNum:focus
+, #user_id:focus, #user_pw:focus, #userPwCheck:focus, #user_nickname:focus, #user_email:focus, #userEmail2:focus
+{
+	height: 25px;
+	outline: none; 
+	border-color: #ef6351; 
+	box-shadow: 0 0 5px #ef6351;
+  	text-align: center;
+}
+
+/* email select 높이 조정 */
+.emailSelect
+{
+	height: 28px;
+	border: 1px solid #dfdfdf;
+  	border-radius:5px;
+  	text-align: center;
+}
+
+.emailSelect:hover
+{
+	outline: none;
+	height: 28px;
+	border: 1px solid #ef6351;
+  	border-radius:8px;
+  	box-shadow: 0 0 5px #ef6351;
+  	text-align: center;
+}
+
+/* .emailSelect:focus
+{
+	outline: none;
+	height: 28px;
+	border: 1px solid #ef6351;
+  	border-radius:8px;
+  	text-align: center;
+} */
+
+/* 회원정보수정 항목(List) 영역*/
+.joinListDiv
+{
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between; 
+	height: 55.5vh;
+}
+
+.require
+{
+	color: red;
+}
+
+.joinBtn
+{
+	width: 5.5vw;
+	height: 28px;
+	border-radius: 5px;
+	font-size: 0.6vw;
+	border: 1px solid #ef6351;
+	background-color: white;
+  	color: #ef6351;
+  	cursor: pointer;
+  	align-content: center;
+  	margin-left: 1vw;
+}
+
+.joinBtn:hover
+{
+	width: 5.5vw;
+	height: 28px;
+	border-radius: 5px;
+	font-size: 0.6vw;
+	border: 1px solid #ef6351;
+	background-color: white;
+  	color: #ef6351;
+  	cursor: pointer;
+  	align-content: center;
+  	margin-left: 1vw;
+  	box-shadow: 0 0 10px #ef6351;
+}
+
+.joinBtn:active
+{
+	width: 5.5vw;
+	height: 28px;
+	border-radius: 5px;
+	font-size: 0.6vw;
+	border: 1px solid #ef6351;
+	background-color: #fff1f0;
+  	color: #ef6351;
+  	cursor: pointer;
+  	align-content: center;
+  	margin-left: 1vw;
+  	box-shadow: 0 0 10px #ef6351;
+}
+
+#joinBtn
+{
+	transition: 0.25s;
+}
+
+#joinBtn:hover
+{
+	letter-spacing: 2px;
+    transform: scale(1.2);
+    cursor: pointer;
+    background-color: #ef6351;
+  	color: white;
+}
+
+
+/* 회원정보수정 입력란 */
+.joinInsertDiv
+{
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: 55vh;
+}
+
+.accept
+{
+	font-size: 10pt;
+	color: #ef6351;
+}
+
+/* 입맛키워드 수정 선택란 */
+.userIbmat
+{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 98vw;
+	padding-top: 10vh;
+}
+
+/* '입맛키워드' */
+.ibmatTitleDiv
+{
+	display: flex;
+	align-items: center;
+	background-color: #f7f4ea;
+	width: 45vw;
+	font-size: 10pt;
+	padding-left: 1vw;
+}
+
+#ibmatTitle
+{
+	font-size: 20pt;
+	font-weight: bold;
+}
+
+/* 입맛키워드 체크박스 영역 */
+.ibmatSelectDiv
+{
+	display: flex;
+    width: 35vw;
+    height: 25vh;
+    margin-top: 3vh;
+    justify-content: space-around;
+    border: 2px solid #ef6351;
+    border-radius: 30px;
+    padding-top: 5vh;
+    font-size: 0.9vw;
+}
+
+.ibmatlabel:active
+{
+	border-bottom: 3px solid #ef6351;
+	padding: 1px;
+	cursor: pointer;
+}
+
+.ibmatlabel:hover
+{
+	border-bottom: 3px solid #ef6351;
+	padding: 1px;
+	cursor: pointer;
+}
+
+
+.ibmatCB
+{
+	accent-color: #ef6351;
+	display: none;
+}
+
+/* 수정하기 버튼 영역 */
+.joinBtnDiv
+{
+	width: 50vw;
+    height: 20vh;
+    display: flex;
+    justify-content: center;
+    padding-top: 10vh;
+}
+

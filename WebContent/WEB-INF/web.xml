@@ -12,16 +12,6 @@
 		<welcome-file>default.htm</welcome-file>
 		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
-	
-	<!--
-		#18. web.xml
-		- DispatcherServlet 객체(Front Controller) 등록
-		- URL 매핑 주소 등록
-	 -->
-
-	<!-- ※ Spring MVC Framework 등록 -->
-	<!-- → Front Controller 등록 -->
-	<!-- → DispatcherServlet 등록 -->
 
 	<servlet>
 		<servlet-name>dispatcher</servlet-name>
@@ -33,13 +23,10 @@
 		<url-pattern>*.action</url-pattern>
 	</servlet-mapping>
 	
-	<!-- check~!!! -->
-	<!-- ※ 필터 등록 → 인코딩 필터 등록 → CharacterEnicodinFilter -->
 	<filter>
 		<filter-name>encodingFilter</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
-		
-		<!-- 필터 설정 → 필터에 파라미터 초기값 지정 -->
+
 		<init-param>
 			<param-name>encoding</param-name>
 			<param-value>UTF-8</param-value>
