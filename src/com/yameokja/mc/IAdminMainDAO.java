@@ -11,13 +11,13 @@ public interface IAdminMainDAO
 	// 관리자 번호 찾기
 	public AdminDTO searchNum(@Param("admin_info")String admin_info, @Param("check")String check);
 	// 리뷰신고요청 리스트
-	public ArrayList<rvListDTO> rvList();
+	public ArrayList<ReportListDTO> rvList();
 	// 정보수정요청 리스트
-	public ArrayList<reqListDTO> reqList();
+	public ArrayList<ReportListDTO> reqList();
 	// 이의제기 리스트
-	public ArrayList<objListDTO> objList();
+	public ArrayList<ReportListDTO> objList();
 	// 패널티회수요청 리스트
-	public ArrayList<revoListDTO> revoList();
+	public ArrayList<ReportListDTO> revoList();
 	// 가게 등폐업요청 리스트
-	public ArrayList<inoutListDTO> inoutList();
+	public ArrayList<ReportListDTO> inoutList();
 }

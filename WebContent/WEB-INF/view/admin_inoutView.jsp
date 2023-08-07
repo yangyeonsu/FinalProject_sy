@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Main Admin Page</title>
+<title>admin_inoutView.jsp</title>
 
 <link rel="stylesheet" type="text/css" href="<%=cp %>/css/main_admin.css">
 
@@ -146,6 +146,9 @@
 	.has_sub {
 		width: 100%;
 	}
+	#backBtn {
+		text-align: right;
+	}
 </style>
 
 <script type="text/javascript">
@@ -192,17 +195,16 @@
 			$('.overlay').css("z-index", "0");
 			$('#checkOverlay').attr("value", "false");
 		});
-		
-		
 	});
 </script>
 
 
 <body>
 <form id="adminForm" method="post">
+
 	<!-- header -->
 	<c:import url="header_admin.jsp"></c:import>
-
+	
 	<!-- container -->
 	<div id="container">
 		<!-- 왼쪽 사이드 바 -->
@@ -258,156 +260,12 @@
 			
 			<!-- 접수내역관리 -->
 			<div id="receive">
-				<h1>접수내역 관리</h1>
+				<h1>패널티회수 접수내역 관리</h1>
 				
-				<!-- 리뷰신고 box -->
-				<div id="reviewBox" style="height: auto;">
-	
-					<div class="more" id="more">
-						<h3><a href="#">리뷰신고</a></h3>
-						<a href="reviewListView.action" class="moreBtn">더보기+</a>
-					</div>
-				
-					<table id="review_list" style="margin-bottom: 20px;">
-						<thead>
-							<tr>	
-								<th>신고일자</th>
-								<th>신고자 ID</th>
-								<th>가게 이름</th>
-								<th>피신고자 ID</th>
-								<th>처리상태</th>
-								<th>처리일자</th>
-								<th>처리한 관리자</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach var="review" items="${rvList }" begin="0" end="4">
-							<tr>
-								<td><a href="reviewReportForm.jsp">${review.reg_date }</a></td>
-								<td><a href="reviewReportForm.jsp">${review.user_id }</a></td>
-								<td><a href="reviewReportForm.jsp">${review.st_name }</a></td>
-								<td><a href="reviewReportForm.jsp">${review.accu_num }</a></td>
-								<td><a href="reviewReportForm.jsp">${review.state }</a></td>
-								<td><a href="reviewReportForm.jsp">${review.final_date }</a></td>
-								<td><a href="reviewReportForm.jsp">${review.admin_id }</a></td>
-							</tr>                               
-							</c:forEach>
-						</tbody>
-					</table>
-				</div>
-				
-				<br>
-				<!-- 가게정보수정요청 box -->
-				<div id="storeErrBox" style="height: auto;">
-					<div class="more" id="more">
-						<h3><a href="#">가게정보수정요청</a></h3>
-						<a href="storeErrView.action" class="moreBtn">더보기+</a>
-					</div>
-				
-					<table id="storeErr_list" style="margin-bottom: 20px;">
-						<thead>
-							<tr>	
-								<th>요청일자</th>
-								<th>요청자 ID</th>
-								<th>가게 이름</th>
-								<th>처리상태</th>
-								<th>처리일자</th>
-								<th>처리한 관리자</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach var="req" items="${reqList }" begin="0" end="4">
-							<tr>
-								<td>${req.reg_date }</td>
-								<td>${req.user_id }</td>
-								<td>${req.st_name }</td>
-								<td>${req.state }</td>
-								<td>${req.final_date }</td>
-								<td>${req.admin_id }</td>
-							</tr>
-							</c:forEach>
-						</tbody>
-					</table>
-				</div>
-				
-				<br>
-				<!-- 이의제기 box -->
-				<div id="objectionBox" style="height: auto;">
-					<div class="more" id="more">
-						<h3><a href="#">이의제기</a></h3>
-						<a href="objectionView.action" class="moreBtn">더보기+</a>
-					</div>
-				
-					<table id="objection_list" style="margin-bottom: 20px;">
-						<thead>
-							<tr>	
-								<th>신청일자</th>
-								<th>가게 이름</th>
-								<th>처리상태</th>
-								<th>처리일자</th>
-								<th>처리한 관리자</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach var="obj" items="${objList }" begin="0" end="4">
-							<tr>
-								<td>${obj.reg_date }</td>
-								<td>${obj.st_name }</td>
-								<td>${obj.state }</td>
-								<td>${obj.final_date }</td>
-								<td>${obj.admin_id }</td>
-							</tr>
-							</c:forEach>
-						</tbody>
-					</table>
-				</div>
-				
-				
-				<br>
-				<!-- 패널티회수 box -->
-				<div id="penaltyBox" style="height: auto;">
-					<div class="more" id="more">
-						<h3><a href="#">패널티회수</a></h3>
-						<a href="penaltyView.action" class="moreBtn">더보기+</a>
-					</div>
-				
-					<table id="penalty_list" style="margin-bottom: 20px;">
-						<thead>
-							<tr>	
-								<th>신청일자</th>
-								<th>가게 이름</th>
-								<th>처리상태</th>
-								<th>처리일자</th>
-								<th>처리한 관리자</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>2023.04.30</td>
-								<td>맛시따</td>
-								<td>미확인</td>
-								<td>-</td>
-								<td>-</td>
-							</tr>
-							<c:forEach var="revo" items="${revoList }" begin="0" end="4">
-							<tr>
-								<td>${revo.reg_date }</td>
-								<td>${revo.st_name }</td>
-								<td>${revo.state }</td>
-								<td>${revo.final_date }</td>
-								<td>${revo.admin_id }</td>
-							</tr>
-							</c:forEach>
-						</tbody>
-					</table>
-				</div>
-				
-				<br>
 				<!-- 가게 등록/폐업 요청 box -->
 				<div id="inout_Box" style="height: auto;">
 					<div class="more" id="more">
 						<h3><a href="#">가게 등록/폐업 요청</a></h3>
-						<a href="inoutView.action" class="moreBtn">더보기+</a>
 					</div>
 				
 					<table id="inout_list" style="margin-bottom: 20px;">
@@ -422,7 +280,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="inout" items="${inoutList }" begin="0" end="4">
+							<c:forEach var="inout" items="${inoutList }">
 							<tr>
 								<c:if test="${inout.cat eq '등록' }">
 								<td style="background-color: green;">${inout.cat }</td>
@@ -440,14 +298,18 @@
 						</tbody>
 					</table>
 				</div>
+				
+				<div class="back" id="more">
+					<h3></h3>
+					<a href="mainAdminView.action" class="backBtn" style="font-size: 10pt;">뒤로가기</a>
+				</div>
 			</div>
 		</div>
 	</div>
 	
 	<!-- footer -->
 	<c:import url="footer.jsp"></c:import>
-
-
+	
 </form>
 </body>
 
@@ -456,3 +318,7 @@
 </body>
 
 </html>
+
+
+
+

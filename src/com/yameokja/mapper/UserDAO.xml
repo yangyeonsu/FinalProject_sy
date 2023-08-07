@@ -46,6 +46,12 @@
 		WHERE USER_NUM = #{user_num}
 	</select>
 	
+	<select id="storeCheck" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS COUNT
+		FROM STORE_VIEW
+		WHERE USER_NUM = #{user_num}
+	</select>
+	
 	<!-- 사용자 기본정보 찾기 -->
 	<select id="searchUserInfo" resultType="com.yameokja.mc.UserDTO">
 		SELECT USER_NICKNAME, USER_NUM, USER_ID
@@ -121,7 +127,7 @@
 		WHERE LB.USER_NUM = #{user_num}
 	</select>
 	
-	<!-- 비교함 -->
+	<!-- 비교함
 	<select id="searchComparingBox" resultType="com.yameokja.mc.StoreDTO">
 		SELECT SP.PHOTO_LINK AS PHOTO_LINK, IA.ST_NAME AS ST_NAME
 		FROM COMPARING_BOX CB LEFT JOIN ST_LIST SL
@@ -133,8 +139,7 @@
 		LEFT JOIN ST_PHOTO SP
 		ON SP.ST_NUM = SL.ST_NUM
 		WHERE CB.USER_NUM = #{user_num}
-	</select>
-
+	</select> -->
 </mapper>
 
 
