@@ -19,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -27,7 +28,6 @@ public class UserController
 	@Autowired
 	private SqlSession sqlSession;
 	
-	@SuppressWarnings("null")
 	@RequestMapping(value="/yameokja.action", method=RequestMethod.GET)
 	public String firstPageLoad(HttpServletRequest request)
 	{
@@ -116,9 +116,9 @@ public class UserController
 		return result;
 	}
 	
-	@RequestMapping(value="/idduplicheck.action", method=RequestMethod.GET)
+	@RequestMapping(value="/idduplicheck.action", method=RequestMethod.POST)
 		@ResponseBody
-	public String idCheck(HttpServletRequest request, HttpServletResponse response, String userid)
+	public String idCheck(@RequestParam("user_id") String user_id, String userid)
 	{
 		String result = "";
 		int count = 0;
@@ -135,7 +135,7 @@ public class UserController
 		}
 		*/
 		
-		String[] arr = userid.split(" ");
+		String[] arr = user_id.split(" ");
 		
 		if(arr.length>1)
 		{
@@ -144,7 +144,7 @@ public class UserController
 		else
 		{
 			IUserDAO udao = sqlSession.getMapper(IUserDAO.class);
-			count = udao.idCheck(userid);
+			count = udao.idCheck(user_id);
 			result += "{\"count\":\""+count+"\"}";
 		}
 
@@ -152,15 +152,15 @@ public class UserController
 	}
 	
 	
-	@RequestMapping(value="/nickduplicheck.action", method=RequestMethod.GET)
+	@RequestMapping(value="/nickduplicheck.action", method=RequestMethod.POST)
 		@ResponseBody
-	public String nickCheck(HttpServletRequest request, HttpServletResponse response, String usernick)
+	public String nickCheck(@RequestParam("user_nick") String user_nick, String usernick)
 	{
 		String result = "";
 		int count = 0;
 		
 		IUserDAO udao = sqlSession.getMapper(IUserDAO.class);
-		count = udao.nickCheck(usernick);
+		count = udao.nickCheck(user_nick);
 		
 		result += "{\"count\":\""+count+"\"}";
 		

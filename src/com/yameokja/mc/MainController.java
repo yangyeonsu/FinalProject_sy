@@ -24,7 +24,7 @@ public class MainController
 	@Autowired
 	private SqlSession sqlSession;
 
-	@RequestMapping(value = "/main.action", method = RequestMethod.GET)
+	@RequestMapping(value = "/main.action", method = {RequestMethod.POST, RequestMethod.GET})
 	public String storeList(HttpServletRequest request, Model model)
 	{
 		HttpSession session = request.getSession();
@@ -91,7 +91,7 @@ public class MainController
 		return result;
 	}
 
-	@RequestMapping(value = "/search.action", method=RequestMethod.POST)
+	@RequestMapping(value = "/search.action", method= RequestMethod.POST)
 	public String searchStore(HttpServletRequest request, Model model)
 	{
 		String result = "";
@@ -178,7 +178,7 @@ public class MainController
 		return result;
 	}
 	
-	@RequestMapping(value = "/comparingInsert.action")
+	@RequestMapping(value = "/comparingInsert.action", method = RequestMethod.POST)
 		@ResponseBody
 	public Object comparingInsert(@RequestParam("user_num") String user_num, @RequestParam("st_num") String st_num,  Model model)
 	{
@@ -228,7 +228,7 @@ public class MainController
 		return html;
 	}
 	
-	@RequestMapping(value = "/comdelete.action")
+	@RequestMapping(value = "/comdelete.action", method = RequestMethod.POST)
 		@ResponseBody
 	public Object comDelete(@RequestParam("user_num") String user_num, @RequestParam("st_num") String st_num, Model model)
 	{
@@ -305,7 +305,7 @@ public class MainController
 		return html;
 	}
 
-	@RequestMapping(value = "/jjimInsertDelete.action")
+	@RequestMapping(value = "/jjimInsertDelete.action", method = RequestMethod.POST)
 		@ResponseBody
 	public String jjimSearch(@RequestParam("user_num") String user_num, @RequestParam("st_num") String st_num, Model model)
 	{
@@ -328,7 +328,7 @@ public class MainController
 	
 	
 
-	@RequestMapping(value = "/filterSearch.action")
+	@RequestMapping(value = "/filterSearch.action", method = RequestMethod.POST)
 		@ResponseBody
 	public String filterSearchStore(@RequestParam(value="regionCbList[]") ArrayList<String> regionCbList, @RequestParam(value="catCbList[]") ArrayList<String> catCbList
 			, @RequestParam(value="stKeyCbList[]") ArrayList<String> stKeyCbList, @RequestParam("resultStoreList") ArrayList<Integer> resultStoreList, Model model)
