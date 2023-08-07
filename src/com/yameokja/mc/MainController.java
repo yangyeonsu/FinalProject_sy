@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -29,6 +30,8 @@ public class MainController
 	{
 		HttpSession session = request.getSession();
 		String user_num = (String) session.getAttribute("user_num");
+		
+		Random random = new Random();
 
 		String result = "";
 
@@ -62,7 +65,18 @@ public class MainController
 		else
 			model.addAttribute("jjim_list", null);
 
-		model.addAttribute("hot_list", dao.getStoreList(hotList));
+		if (hotList.size() > 0)
+			model.addAttribute("hot_list", dao.getStoreList(hotList));
+		else
+		{
+			for (int i=0; i<5; i++)
+			{
+				/* hotList.add(random.nextInt()); */
+				hotList.add(i+1);
+			}
+			
+			model.addAttribute("hot_list", dao.getStoreList(hotList));
+		}
 
 		if (comList.size() > 0)
 			model.addAttribute("comList", dao.getStoreList(comList));
