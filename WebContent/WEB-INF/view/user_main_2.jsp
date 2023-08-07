@@ -212,6 +212,32 @@ String cp = request.getContextPath();
 		}); 
 		--%>
 		
+		
+		$("#comBtn").click(function()
+		{
+			if ($('input:checkbox[name=checkList]').length > 3)
+			{
+				alert("3개 이상 비교 불가");
+				return;
+			}
+			
+			/* $("#userForm").attr("method","get"); */
+			
+			var checkArray = new Array();
+			
+			$('input:checkbox[name=comStImgCB]:checked').each(function()
+			{
+				checkArray.push($(this).attr("id"));
+			});
+			
+			$("#checkedCompare").val(checkArray);
+			
+			$("#userForm").attr("action","compareView.action");
+			$("#userForm").submit();
+			
+			
+		});
+		
 	});
 </script>
 
@@ -505,6 +531,7 @@ String cp = request.getContextPath();
 						</c:choose>
 					</div>
 				</div>
+				<input type="hidden" id="checkedCompare" name="checkedCompare">
 				<input type="hidden" name="regionChk" id="regionChk">
 				<input type="hidden" name="foodlabelChk" id="foodlabelChk">
 				<input type="hidden" name="stKeyChk" id="stKeyChk">

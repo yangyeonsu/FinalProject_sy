@@ -209,7 +209,18 @@ public class MainController
 				html += "		<button type=\"button\" value=\""+ String.valueOf(store.getSt_num()) + "\" class=\"comDelete\">X</button>";
 				html += "		<label for='" + String.valueOf(store.getSt_num()) + "' class='stLabel'>";
 				html += "			<input type='checkbox' class='comStImgCB' id='" + store.getSt_num() + "'>";
-				html += " 			<img class='comStImg' src='" + store.getPhoto_link() + "'>";
+				
+				if (store.getPhoto_link() == null || store.getPhoto_link().isEmpty())
+				    html += " <img class=\"stImg\" src=\"/FinalProject_sy/images/logo_text.png\">";
+				else
+				    html += " <img class=\"stImg\" src=\"" + store.getPhoto_link() + "\">";
+				/*
+				 * if (store.getPhoto_link().equals("") || store.getPhoto_link() == (null)) html
+				 * +=
+				 * " 			<img class=\"stImg\" src=\"/FinalProject_sy/images/logo_text.png\">"
+				 * ; else html +=
+				 * " 			<img class'=\"stImg\" src=\""+store.getPhoto_link()+"\">";
+				 */
 				html += "		</label>";
 				html += "	</div>";
 				html += "	<div class=\"comStoreNameDiv\">"+store.getSt_name()+"</div>";
@@ -231,6 +242,9 @@ public class MainController
 		}
 		return html;
 	}
+	
+	
+	
 	
 	@RequestMapping(value = "/comdelete.action", method = RequestMethod.POST)
 		@ResponseBody
@@ -270,7 +284,12 @@ public class MainController
 					html += "		<button type=\"button\" value=\""+ store.getSt_num() + "\" class=\"comDelete\">X</button>";
 					html += "		<label for='" + store.getSt_num() + "' class='stLabel'>";
 					html += "			<input type='checkbox' class='comStImgCB' id='" + store.getSt_num() + "'>";
-					html += " 			<img class='comStImg' src='" + store.getPhoto_link() + "'>";
+
+					if (store.getPhoto_link() == null || store.getPhoto_link().isEmpty())
+					    html += " <img class=\"stImg\" src=\"/FinalProject_sy/images/logo_text.png\">";
+					else
+					    html += " <img class=\"stImg\" src=\"" + store.getPhoto_link() + "\">";
+
 					html += "		</label>";
 					html += "	</div>";
 					html += "	<div class=\"comStoreNameDiv\">"+store.getSt_name()+"</div>";
