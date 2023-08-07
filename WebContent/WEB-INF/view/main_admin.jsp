@@ -195,6 +195,15 @@
 		
 		
 	});
+
+	$(function()
+	{
+		$(".reviewList").click(function()
+		{
+			$(location).attr("href", "reviewreportform.action?user_id="+$(this).val());
+		});
+	});
+	
 </script>
 
 
@@ -282,8 +291,8 @@
 						</thead>
 						<tbody>
 							<c:forEach var="review" items="${rvList }" begin="0" end="4">
-							<tr>
-								<td><a href="reviewReportForm.jsp">${review.reg_date }</a></td>
+							<tr class="reviewList">
+								<td><a href="/WEB-INF/view/reviewReportForm.jsp">${review.reg_date }</a></td>
 								<td><a href="reviewReportForm.jsp">${review.user_id }</a></td>
 								<td><a href="reviewReportForm.jsp">${review.st_name }</a></td>
 								<td><a href="reviewReportForm.jsp">${review.accu_num }</a></td>

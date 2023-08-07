@@ -24,7 +24,9 @@ public class MainController
 	@Autowired
 	private SqlSession sqlSession;
 
-	@RequestMapping(value = "/main.action", method= {RequestMethod.POST, RequestMethod.GET})
+
+	@RequestMapping(value = "/main.action", method = {RequestMethod.POST, RequestMethod.GET})
+
 	public String storeList(HttpServletRequest request, Model model)
 	{
 		HttpSession session = request.getSession();
@@ -91,7 +93,9 @@ public class MainController
 		return result;
 	}
 
-	@RequestMapping(value = "/search.action")
+
+	@RequestMapping(value = "/search.action", method= RequestMethod.POST)
+
 	public String searchStore(HttpServletRequest request, Model model)
 	{
 		String result = "";
@@ -178,7 +182,7 @@ public class MainController
 		return result;
 	}
 	
-	@RequestMapping(value = "/comparingInsert.action")
+	@RequestMapping(value = "/comparingInsert.action", method = RequestMethod.POST)
 		@ResponseBody
 	public Object comparingInsert(@RequestParam("user_num") String user_num, @RequestParam("st_num") String st_num,  Model model)
 	{
@@ -228,7 +232,7 @@ public class MainController
 		return html;
 	}
 	
-	@RequestMapping(value = "/comdelete.action")
+	@RequestMapping(value = "/comdelete.action", method = RequestMethod.POST)
 		@ResponseBody
 	public Object comDelete(@RequestParam("user_num") String user_num, @RequestParam("st_num") String st_num, Model model)
 	{
@@ -305,7 +309,7 @@ public class MainController
 		return html;
 	}
 
-	@RequestMapping(value = "/jjimInsertDelete.action")
+	@RequestMapping(value = "/jjimInsertDelete.action", method = RequestMethod.POST)
 		@ResponseBody
 	public String jjimSearch(@RequestParam("user_num") String user_num, @RequestParam("st_num") String st_num, Model model)
 	{
@@ -327,8 +331,9 @@ public class MainController
 	}
 	
 	
+
 	/*
-	@RequestMapping(value = "/filterSearch.action", headers="application/json;")
+	@RequestMapping(value = "/filterSearch.action", headers="application/json;"
 		@ResponseBody
 	public String filterSearchStore(@RequestBody Map<String, Object> requestData, Model model) {
 	    @SuppressWarnings("unchecked")
