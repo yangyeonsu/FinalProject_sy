@@ -2,14 +2,21 @@ package com.yameokja.mc;
 
 public class ReportListDTO
 {
-	// 가게정보수정요청리스트
 	private String reg_date, st_name, state, final_date, admin_id;
-	private String accu_num, cat, user_id;
+	private String accu_num, cat, user_id, rep_rs_name;
 	private int obj_apply_num;
 	
 	
-
 	// getter / setter 
+	public String getRep_rs_name()
+	{
+		return rep_rs_name;
+	}
+	public void setRep_rs_name(String rep_rs_name)
+	{
+		this.rep_rs_name = rep_rs_name;
+	}
+	
 	public String getReg_date()
 	{
 		return reg_date;

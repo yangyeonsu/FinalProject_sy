@@ -20,4 +20,7 @@ public interface IAdminMainDAO
 	public ArrayList<ReportListDTO> revoList();
 	// 가게 등폐업요청 리스트
 	public ArrayList<ReportListDTO> inoutList();
+	
+	
+	
 }
