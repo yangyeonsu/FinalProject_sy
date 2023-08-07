@@ -161,9 +161,11 @@
 
 			$.ajax(
 			{
-				type: "GET"
+				type: "POST"
 				, url:"idduplicheck.action" 
-	            , data: "userid=" + $.trim($("#userId").val())
+	            , data: {
+	            	"user_id": $.trim($("#userId").val())
+	            	}
 				, dataType: "json"
 				, beforeSend: function()
 				{
@@ -206,9 +208,11 @@
 			
 			$.ajax(
 			{
-				type: "GET"
+				type: "POST"
 				, url:"nickduplicheck.action" 
-	            , data: "usernick=" + $.trim($("#userNickName").val())
+	            , data: {
+	            	"user_nick" : $.trim($("#userNickName").val())	
+	            }
 				, dataType: "json"
 				, beforeSend: function()
 				{

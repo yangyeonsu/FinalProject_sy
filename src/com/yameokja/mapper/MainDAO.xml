@@ -2,6 +2,7 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="com.yameokja.mc.IMainDAO">
 
 	<select id="getStoreList" resultType="com.yameokja.mc.StoreDTO">
@@ -221,7 +222,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ON SL.REGION_NUM = R.REGION_NUM
 		WHERE R.REGION_NAME IN (
 		<foreach collection="regionCbList" item="name" separator=",">
-			#{name}
+			#{name, jdbcType=VARCHAR}
 		</foreach>)
 		UNION
 		SELECT SL.ST_NUM
@@ -231,7 +232,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		  ON SF.FOOD_NUM = FL.FOOD_NUM
 		WHERE FL.FOOD_NAME IN (
 		<foreach collection="catCbList" item="name" separator=",">
-			#{name}
+			#{name, jdbcType=VARCHAR}
 		</foreach>)
 		UNION
 		SELECT DISTINCT(SL.ST_NUM)
@@ -241,12 +242,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		  ON SK.ST_NUM = SL.ST_NUM
 		WHERE SKL.ST_KEYWORD IN (
 		<foreach collection="stKeyCbList" item="name" separator=",">
-			#{name}
+			#{name, jdbcType=VARCHAR}
 		</foreach>)
 		) T
 		WHERE T.ST_NUM IN (
-		<foreach collection="resultStoreList" item="st_num" separator=",">
-			#{st_num}
+		<foreach collection="finalKeyword" item="st_num" separator=",">
+			#{st_num, jdbcType=INTEGER}
 		</foreach>)
 	</select>
 </mapper>

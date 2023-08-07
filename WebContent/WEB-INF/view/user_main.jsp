@@ -137,7 +137,9 @@
 		 
 		$("#searchBtn").click(function()
 		{
-			$("#searchBtn").attr("action", "search.action");
+
+			$("#userForm").attr("action", "search.action");
+
 			$("#userForm").submit();
 		});
 		

@@ -12,7 +12,7 @@
 <title>Main Page</title>
 
 <!-- jquery -->
-<!-- <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"> --></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 
 <style type="text/css">
 	footer
@@ -54,6 +54,19 @@
 	}
 </style>
 
+<script type="text/javascript">
+
+	$(function()
+	{
+		$("#fsa").click(function()
+		{
+			$("#userForm").attr("action","storegiinsertform.action");
+			$("#userForm").submit();
+		});
+	});
+
+</script>
+
 </head>
 
 <body>
@@ -74,9 +87,9 @@
 	<div class="ftCs">
 	
 	</div>
-	
+	<!-- onclick="location.href='storegiinsertform.action'" -->
 	<div class="ftStAdd">
-		<button type="button" id="fsa" class="fsaBtn" onclick="location.href='storegiinsertform.action'">사업자 등록하기</button>
+		<button type="button" id="fsa" class="fsaBtn" >사업자 등록하기</button>
 	</div>
 
 </footer>	
