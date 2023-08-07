@@ -60,6 +60,6 @@ public interface IMainDAO
 	public int jjimDelete(@Param("user_num") String user_num, @Param("st_num") int st_num);
 	
 	// 2차 필터 검색 메소드
-	public ArrayList<Integer> filterSearchList(@Param("regionCbList") List<String> regionCbList, @Param("catCbList") List<String> catCbList
-			, @Param("stKeyCbList") List<String> stKeyCbList, @Param("resultStoreList") List<Integer> resultStoreList);
+	public ArrayList<Integer> filterSearchList(@Param("regionCbList") String[] regionCbList, @Param("catCbList") String[] catCbList
+			, @Param("stKeyCbList") String[] stKeyCbList, @Param("finalKeyword") List<Integer> finalKeyword);
 }
