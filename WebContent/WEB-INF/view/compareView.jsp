@@ -234,7 +234,6 @@
 
 .img-rounded
 {	
-	margin-left : 2vw;
 	width: 15vw;
 	height: 15vh;
 }
@@ -244,7 +243,7 @@
 	background-color: #FABF9D;
 }
 
-.cName1, .cList1, .cOption1, .cTime1
+.cName1, .cList1, .cOption1, .cTime1, .cImages1
 {
 	border-left: 1px solid #EF6351;
 }
@@ -402,14 +401,15 @@
 							<div class="cLists0">
 								<ul>
 									<li class="cName cName0"><div>가게명</div></li>
+									<li class="cImages cImages0" style="height: 25vh;"><div>가게 사진</div></li>
 									<li class="cList cList0"><div>카테고리</div></li>
 									<li class="cList cList0"><div>주소</div></li>
 									<li class="cList cList0"><div>평점</div></li>
 									<li class="cList cList0"><div>리뷰수</div></li>
-									<li class="cTime cTime0" style="height: 33vh;"><div>영업시간</div></li>
-									<li class="cList cList0"><div>평균가격</div></li>
-									<li class="cOption cOption0"><div>옵션's 유무</div></li>
-									<li class="cImages cImages0" style="height: 25vh;"><div>대표메뉴</div></li>
+									<li class="cTime cTime0" style="height: 33vh;"><div>영업 시간</div></li>
+									<li class="cList cList0"><div>평균 가격</div></li>
+									<li class="cOption cOption0"><div>옵션 유무</div></li>
+									<li class="cImages cImages0" style="height: 25vh;"><div>대표 메뉴</div></li>
 								</ul>
 							</div>
 						</div>
@@ -443,6 +443,10 @@
 										<ul>
 											<c:forEach var="ncl" items="${nameLoCat1}">
 												<li class="cName cName1"><div>${ncl.st_name1}</div></li>
+												<li class="cImages cImages1"  style="height: 25vh;"><div>
+													<a class="cImage"><img src="${ncl.photo_link1 }"
+													alt="..." class="img-rounded"></a><br />
+												</div></li>
 												<li class="cList cList1"><div>${ncl.food_name1}</div></li>
 												<li class="cList cList1"><div>${ncl.st_location1}</div>
 												</li>
@@ -490,6 +494,10 @@
 									<ul>
 										<c:forEach var="ncl" items="${nameLoCat2}">
 												<li class="cName cName1"><div>${ncl.st_name2}</div></li>
+												<li class="cImages cImages1"  style="height: 25vh;"><div>
+													<a class="cImage"><img src="${ncl.photo_link2 }"
+													alt="..." class="img-rounded"></a><br />
+												</div></li>
 												<li class="cList cList1"><div>${ncl.food_name2}</div></li>
 												<li class="cList cList1"><div>${ncl.st_location2}</div>
 												</li>
@@ -526,7 +534,8 @@
 								
 					</div>
 					
-					
+					<c:choose>
+						<c:when test="${st_num3 ne 0}">
 					<div class="compare3 compare">
 					
 						<div class="compStore3">
@@ -536,6 +545,10 @@
 									<ul>
 									    <c:forEach var="ncl" items="${nameLoCat3}">
 											<li class="cName cName1"><div>${ncl.st_name3}</div></li>
+											<li class="cImages cImages1"  style="height: 25vh;"><div>
+												<a class="cImage"><img src="${ncl.photo_link3 }"
+												alt="..." class="img-rounded"></a><br />
+											</div></li>
 											<li class="cList cList1"><div>${ncl.food_name3}</div></li>
 											<li class="cList cList1"><div>${ncl.st_location3}</div>
 											</li>
@@ -571,6 +584,9 @@
 						</div>		
 						
 					</div>
+					</c:when>
+					</c:choose>
+					
 			
 			</div> <!-- compBody -->
 			

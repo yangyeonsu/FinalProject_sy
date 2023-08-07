@@ -27,12 +27,27 @@ public class compareViewController
 		IcompareViewDAO dao = sqlSession.getMapper(IcompareViewDAO.class);
 		IUserDAO udao = sqlSession.getMapper(IUserDAO.class);
 		
+<<<<<<< Updated upstream
 		/*
 		 * int st_num1 = Integer.parseInt(request.getParameter("st_num1")); int st_num2
 		 * = Integer.parseInt(request.getParameter("st_num2")); int st_num3 =
 		 * Integer.parseInt(request.getParameter("st_num3"));
 		 */
 		System.out.println(request.getParameter("stnum"));
+=======
+		int st_num1 = Integer.parseInt(request.getParameter("st_num1"));
+		int st_num2 = Integer.parseInt(request.getParameter("st_num2"));
+		int st_num3;
+		if (request.getParameter("st_num3") !=null) 
+		{
+			st_num3 = Integer.parseInt(request.getParameter("st_num3"));
+		}
+		else
+		{
+			st_num3 = 0;
+		}
+		
+>>>>>>> Stashed changes
 		
 		String[] str = request.getParameter("stnum").split(",");
 		
@@ -47,6 +62,7 @@ public class compareViewController
 			model.addAttribute("menuLists1", dao.menuLists1(st_num));
 		}
 		
+<<<<<<< Updated upstream
 		/*
 		 * model.addAttribute("nameLoCat1", dao.nameLoCat1(st_num1));
 		 * model.addAttribute("scoRe1", dao.scoRe1(st_num1));
@@ -68,6 +84,29 @@ public class compareViewController
 		 * model.addAttribute("others3", dao.others3(st_num3));
 		 * model.addAttribute("menuLists3", dao.menuLists3(st_num3));
 		 */
+=======
+		
+		model.addAttribute("nameLoCat2", dao.nameLoCat2(st_num2));
+		model.addAttribute("scoRe2", dao.scoRe2(st_num2));
+		model.addAttribute("openClose2", dao.openClose2(st_num2));
+		model.addAttribute("others2", dao.others2(st_num2));
+		model.addAttribute("menuLists2", dao.menuLists2(st_num2));
+		
+		
+		try 
+		{
+			model.addAttribute("nameLoCat3", dao.nameLoCat3(st_num3));
+			model.addAttribute("scoRe3", dao.scoRe3(st_num3));
+			model.addAttribute("openClose3", dao.openClose3(st_num3));
+			model.addAttribute("others3", dao.others3(st_num3));
+			model.addAttribute("menuLists3", dao.menuLists3(st_num3));
+		} 
+		catch (Exception e) 
+		{
+			System.out.println(e.toString());
+		}
+		
+>>>>>>> Stashed changes
 		
 		result = "/WEB-INF/view/compareView.jsp";
 

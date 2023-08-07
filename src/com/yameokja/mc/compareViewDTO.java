@@ -7,7 +7,7 @@ public class compareViewDTO
 					
 	private String food_name1;	// 가게 카테고리
 	
-	private String st_location1;  // 주소
+	private String st_location1, photo_link1;  // 주소, 가게 사진
 	
 	private double star_score1, price_avg1;   // 별점 평균
 	
@@ -27,7 +27,7 @@ public class compareViewDTO
 					
 	private String food_name2;	// 가게 카테고리
 	
-	private String st_location2;  // 주소
+	private String st_location2, photo_link2;  // 주소, 가게 사진
 	
 	private double star_score2, price_avg2;   // 별점 평균
 	
@@ -47,7 +47,7 @@ public class compareViewDTO
 					
 	private String food_name3;	// 가게 카테고리
 	
-	private String st_location3;  // 주소
+	private String st_location3, photo_link3;  // 주소, 가게 사진
 	
 	private double star_score3, price_avg3;   // 별점 평균
 	
@@ -513,6 +513,30 @@ public class compareViewDTO
 	public void setPrice3(int price3)
 	{
 		this.price3 = price3;
+	}
+
+	public String getPhoto_link1() {
+		return photo_link1;
+	}
+
+	public void setPhoto_link1(String photo_link1) {
+		this.photo_link1 = photo_link1;
+	}
+
+	public String getPhoto_link2() {
+		return photo_link2;
+	}
+
+	public void setPhoto_link2(String photo_link2) {
+		this.photo_link2 = photo_link2;
+	}
+
+	public String getPhoto_link3() {
+		return photo_link3;
+	}
+
+	public void setPhoto_link3(String photo_link3) {
+		this.photo_link3 = photo_link3;
 	}
 	
 	
