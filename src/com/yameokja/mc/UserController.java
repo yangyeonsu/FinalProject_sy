@@ -2,6 +2,7 @@ package com.yameokja.mc;
 
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
@@ -230,31 +231,49 @@ public class UserController
 		LocalDate currentDate = LocalDate.now();
         int monthValue = currentDate.getMonthValue();
 		
+        IMainDAO idao = sqlSession.getMapper(IMainDAO.class);
         IUserDAO udao = sqlSession.getMapper(IUserDAO.class);
         
+        List<Integer> ibmatList = idao.getIbmatStNumber(user_num);
+		List<Integer> jjimList = idao.getJjimStNumber(user_num);
+		List<Integer> comList = idao.getStoreComList(user_num);
 		
-		model.addAttribute("likelist", udao.searchLikeList(user_num)); 
-		model.addAttribute("rvlist", udao.searchRvList(user_num));
-		model.addAttribute("comparedlist", udao.searchComparedList(user_num)); 
-		model.addAttribute("comparingbox", udao.searchComparingBox(user_num));
-		model.addAttribute("tastekeyword", udao.searchTasteKeyword(user_num));
 		
 		UserDTO user = udao.searchUserInfo(user_num, "num");
 		
 		if (1 <= monthValue && monthValue <= 6)
 		{
 			user.setPoint_sum(udao.secondHalf(user_num).point_sum);
-			
 			user.setUser_grade(udao.firstHalf(user_num).user_grade);
 		}
 		else if(7 <= monthValue && monthValue <= 12)
 		{
 			user.setPoint_sum(udao.firstHalf(user_num).point_sum);
-			
 			user.setUser_grade(udao.secondHalf(user_num).user_grade);
 		}
 		
+		if (ibmatList.size() > 0)
+			model.addAttribute("ibmat_list", idao.getStoreList(ibmatList));
+		else
+			model.addAttribute("ibmat_list", null);
+		
+		if (jjimList.size() > 0)
+			model.addAttribute("likelist", idao.getStoreList(jjimList));
+		else
+			model.addAttribute("likelist", null);
+
+		if (comList.size() > 0)
+			model.addAttribute("comparingbox", idao.getStoreList(comList));
+		else
+			model.addAttribute("comparingbox", null);
+		
+		model.addAttribute("userJjimList", idao.userJjimSearch(user_num));
+		
+		
 		model.addAttribute("user", user);
+		model.addAttribute("rvlist", udao.searchRvList(user_num));
+		model.addAttribute("comparedlist", udao.searchComparedList(user_num));
+		model.addAttribute("tastekeyword", udao.searchTasteKeyword(user_num));
 		
 		result = "WEB-INF/view/user_MyPage.jsp";
 		
