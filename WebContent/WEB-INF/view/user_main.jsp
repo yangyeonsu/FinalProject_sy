@@ -137,6 +137,7 @@
 		 
 		$("#searchBtn").click(function()
 		{
+			$("#searchBtn").attr("action", "search.action");
 			$("#userForm").submit();
 		});
 		
@@ -149,24 +150,18 @@
 				return;
 			}
 			
-			param = "";
+			/* $("#userForm").attr("method","get"); */
 			
-			$('input:checkbox[class=comStImgCB]').each(function(index)
+			var checkArray = new Array();
+			
+			$('input:checkbox[name=comStImgCB]:checked').each(function()
 			{
-				if($(this).is(":checked")==true)
-				{
-					alert($(this).attr("id"));
-			    	param += $(this).attr("id")+",";
-			    }
+				checkArray.push($(this).attr("id"));
 			});
 			
-			param = param.slice(0, -1);
+			$("#checkedCompare").val(checkArray);
 			
-			alert(param);
-			alert("compareView.action?stnum="+param);
-			
-			$("#userForm").attr("method","get");
-			$("#userForm").attr("action","compareView.action?stnum="+param);
+			$("#userForm").attr("action","compareView.action");
 			$("#userForm").submit();
 			
 			
@@ -189,7 +184,7 @@
 </head>
 
 <body>
-	<form action="search.action" id="userForm" method="post">
+	<form action="" id="userForm" method="post">
 
 		<c:import url="header_user.jsp"></c:import>
 
@@ -492,7 +487,7 @@
 										<div class="comStoreImgDiv">
 											<button type="button" value="${com.st_num}" class="comDelete">X</button>
 											<label for="${com.st_num}" class="stLabel"> <input
-												type="checkbox" class="comStImgCB" id="${com.st_num}">
+												type="checkbox" class="comStImgCB" name="comStImgCB" id="${com.st_num}">
 												<c:set var = "photo" value="${com.photo_link }"/>
 												
 												<c:choose>
@@ -522,6 +517,7 @@
 							</c:otherwise>
 						</c:choose>
 					</div>
+					<input type="hidden" id="checkedCompare" name="checkedCompare">
 				</div>
 
 				<div class="comStoreBtnDiv">
