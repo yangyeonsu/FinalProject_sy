@@ -63,6 +63,7 @@
 	justify-content: center;
 	align-items: center;
 	border-radius: 10px 0 0 10px;
+	margin-right: 1vw;
 }
 .cfb
 {
@@ -125,7 +126,72 @@ button
 }
 
 .file_label {
-    margin-right: 10px; /* Adjust the spacing between the label and the button */
+    margin-right: 10px;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    border: 1px solid gray;
+    border-radius: 5px;
+}
+#st_in_num
+{
+	width: 25.5vw;
+}
+
+.file
+{
+	position: absolute;
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+}
+
+.file_label
+{
+	background-color: #F7F4EA;
+}
+.upload-name
+{
+	width: 14.3vw;
+	border-radius: 0 10px 10px 0;
+	border: 1px solid #ccc;
+	padding: 8px 12px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+#upload-name01
+{
+	border-radius: 0;
+}
+#upload-name02
+{
+	border-radius: 0;
+}
+
+#st_in_num1
+{
+	width: 6vw;
+	border-radius: 10px;
+	margin-right: 0.5vw;
+}
+#st_in_num2
+{
+	width: 6vw;
+	border-radius: 10px;
+	margin-right: 0.5vw;
+	margin-left: 0.5vw;
+}
+#st_in_num3
+{
+	width: 6vw;
+	border-radius: 10px;
+	margin-left: 0.5vw;
+	margin-right: 1vw;
+}
+#insert
+{
+	margin-left: 2vw;
 }
 
 </style>
@@ -138,48 +204,55 @@ button
 	    var valueMap = value.replace(/-/gi, '').split('').map(function (item) {
 	        return parseInt(item, 10);
 	    });
-
+	
 	    if (valueMap.length === 10) {
-	        var multiply = new Array(1, 3, 7, 1, 3, 7, 1, 3, 5);
+	        var multiply = [1, 3, 7, 1, 3, 7, 1, 3, 5];
 	        var checkSum = 0;
-
+	
 	        for (var i = 0; i < multiply.length; ++i) {
 	            checkSum += multiply[i] * valueMap[i];
 	        }
-
+	
 	        checkSum += parseInt((multiply[8] * valueMap[8]) / 10, 10);
 	        return Math.floor(valueMap[9]) === ((10 - (checkSum % 10)) % 10);
 	    }
-
+	
 	    return false;
 	}
-
-	// 사업자 등록번호 유효성을 체크하는 함수
+	
 	function st_in_numcheck() {
-	    var st_in_numInput = $("#st_in_num").val();
-
-	    if (!fn_ValidationCheck(st_in_numInput)) {
-	        $("#err").text("사업자 등록 번호가 올바르지 않습니다.").css("display", "inline");
-	        $("#st_in_num").focus();
-	        return false;
-	    } else {
-	        $("#err").css("display", "none");
-	        return true;
-	    }
+	    var st_in_numInput = $("#st_in_num1").val() + $("#st_in_num2").val() + $("#st_in_num3").val();
+	    var isValid = fn_ValidationCheck(st_in_numInput);
+	
+	    $("#err1").toggle(!isValid);
+	    $("#st_in_num1").focus();
+	
+	    return isValid;
 	}
 
 	$(function() {
 	    $("#insert").click(function() {
-	        $("#file").css("border", "1px solid black");
-	        if ($("#file").val() == "") {
-	            $("#err").text("서류를 등록해주세요.").css("display", "inline");
-	            $("#file").css("border", "3px solid red");
+	        $("#err2").css("display", "none");
+	        $("#fileregi1").css("border", "none");
+	        $("#fileregi2").css("border", "none");
+	        $("#err2").css("display", "none");
+	        $("#err3").css("display", "none");
+	        $("#err4").css("display", "none");
+	        $("#err5").css("display", "none");
+	        $("#err6").css("display", "none");
+	        $("#err7").css("display", "none");
+	        $("#err8").css("display", "none");
+	        
+	        
+			
+	        if ($("#st_in_num1").val() == "" || $("#st_in_num2").val() == "" || $("#st_in_num3").val() == "") {
+	            $("#err1").text("사업자 등록 번호를 입력해주세요.").css("display", "inline");
+	            $("#st_in_num1").focus();
 	            return;
 	        }
-			
-	        if ($("#st_in_num").val() == "") {
-	            $("#err").text("사업자 등록 번호를 입력해주세요.").css("display", "inline");
-	            $("#st_in_num").focus();
+	        if ($("#file1").val() == "") {
+	            $("#err2").text("사업자 서류를 등록해주세요.").css("display", "inline");
+	            $("#fileregi1").css("border", "3px solid red");
 	            return;
 	        }
 
@@ -187,33 +260,39 @@ button
 	            return;
 	        }
 
-	        if ($("#stmgnum").val() == "") {
-	            $("#err").text("사업장 관리 번호를 입력해주세요.").css("display", "inline");
-	            $("#stmgnum").focus();
-	            return;
-	        }
-
-	        if ($("#stname").val() == "") {
-	            $("#err").text("가게 명을 입력해주세요.").css("display", "inline");
-	            $("#stname").focus();
-	            return;
-	        }
-
-	        if ($("#staddr").val() == "") {
-	            $("#err").text("가게 주소를 입력해주세요.").css("display", "inline");
-	            $("#staddr").focus();
+	        if ($("#st_place_num").val() == "") {
+	            $("#err3").text("사업장 관리 번호를 입력해주세요.").css("display", "inline");
+	            $("#st_place_num").focus();
 	            return;
 	        }
 	        
-	        if ($("#staddr").val() == "") {
-	            $("#err").text("가게 상세 주소를 입력해주세요.").css("display", "inline");
-	            $("#staddr").focus();
+	        if ($("#file2").val() == "") {
+	            $("#err4").text("사업자 서류를 등록해주세요.").css("display", "inline");
+	            $("#fileregi2").css("border", "3px solid red");
 	            return;
 	        }
 
-	        if ($("#sthp").val() == "") {
-	            $("#err").text("가게 번호를 입력해주세요.").css("display", "inline");
-	            $("#sthp").focus();
+	        if ($("#st_name").val() == "") {
+	            $("#err5").text("가게 명을 입력해주세요.").css("display", "inline");
+	            $("#st_name").focus();
+	            return;
+	        }
+
+	        if ($("#st_location").val() == "") {
+	            $("#err6").text("가게 주소를 입력해주세요.").css("display", "inline");
+	            $("#st_location").focus();
+	            return;
+	        }
+	        
+	        if ($("#st_location_dt").val() == "") {
+	            $("#err7").text("가게 상세 주소를 입력해주세요.").css("display", "inline");
+	            $("#st_location_dt").focus();
+	            return;
+	        }
+
+	        if ($("#st_tel").val() == "") {
+	            $("#err8").text("가게 번호를 입력해주세요.").css("display", "inline");
+	            $("#st_tel").focus();
 	            return;
 	        }
 
@@ -221,6 +300,35 @@ button
 	        $("#stinfoinsert").submit();
 	    });
 	});
+	
+	
+	function displayAndSetFileName1() {
+	    var fileInput = document.getElementById("file1");
+	    var uploadNameInput = document.getElementById("upload-name1");
+
+	    if (fileInput.files.length > 0) {
+	        var uploadedFileName = fileInput.files[0].name;
+	        uploadNameInput.value = uploadedFileName;
+	    }
+	    else {
+	    	uploadNameInput.value = null;
+	    }
+	}
+	function displayAndSetFileName2() {
+	    var fileInput = document.getElementById("file2");
+	    var uploadNameInput = document.getElementById("upload-name2");
+
+	    if (fileInput.files.length > 0) {
+	        var uploadedFileName = fileInput.files[0].name;
+	        uploadNameInput.value = uploadedFileName;
+	    }
+	    else {
+	    	uploadNameInput.value = null;
+	    }
+	}
+	
+	
+
 	
 
 
@@ -251,9 +359,13 @@ button
 					사업자 등록 번호
 				</div>
 				<div class="input_group">
-					<input type="text" class="inputform" name="st_in_num" id="st_in_num">
+					<input type="text" class="inputform" name="st_in_num" id="st_in_num1" maxlength='3'> - 
+					<input type="text" class="inputform" name="st_in_num" id="st_in_num2" maxlength='2'> - 
+					<input type="text" class="inputform" name="st_in_num" id="st_in_num3" maxlength='5'>
 					<button type="button" class="cfb" onclick="st_in_numcheck()">인증하기</button>
+					
 				</div>
+				<span id="err1" style="color: red; font-weight: bold; display: none;">잘못된 사업자 등록 번호 입니다.</span>
 			</div>
 			
 			<!-- 서류등록 -->
@@ -261,10 +373,12 @@ button
 				<div class="title">
 					사업자 서류등록
 				</div>
-				<div class="input_group">
-				    <label for="file" class="file_label"></label>
-				    <input type="file" id="file1" class="file">
+				<div class="input_group" id="fileregi1">
+				    <label for="file1" class="upload-name" id="upload-name01">파일 업로드 click here~!!!</label>
+				    <input type="file" id="file1" class="file" onchange="displayAndSetFileName1()">
+				    <input class="upload-name" id="upload-name1" value="" placeholder="첨부파일" readonly>
 				</div>
+				<span id="err2" style="color: red; font-weight: bold; display: none;"></span>
 			</div>
 			
 			<!-- 사업장 관리 번호 -->
@@ -273,8 +387,9 @@ button
 					사업장 관리 번호
 				</div>
 				<div class="input_group">
-					<input type="text" class="inputform" id="st_place_num", name="st_place_num">
+					<input type="text" class="inputform" id="st_place_num" name="st_place_num">
 				</div>
+				<span id="err3" style="color: red; font-weight: bold; display: none;"></span>
 			</div>
 			
 			<!-- 서류등록 -->
@@ -282,10 +397,12 @@ button
 				<div class="title">
 					사업장 서류등록
 				</div>
-				<div class="input_group">
-				    <label for="file" class="file_label"></label>
-				    <input type="file" id="file2" class="file">
+				<div class="input_group" id="fileregi2">
+				    <label for="file2" class="upload-name" id="upload-name02">파일 업로드 click here~!!!</label>
+				    <input type="file" id="file2" class="file" onchange="displayAndSetFileName2()">
+				    <input class="upload-name" id="upload-name2" value="" placeholder="첨부파일" readonly>
 				</div>
+				<span id="err4" style="color: red; font-weight: bold; display: none;"></span>
 			</div>
 			
 			<!-- 가게명 -->
@@ -296,6 +413,7 @@ button
 				<div class="input_group">
 					<input type="text" class="inputform" id="st_name" name="st_name">
 				</div>
+				<span id="err5" style="color: red; font-weight: bold; display: none;"></span>
 			</div>
 			
 			<!-- 가게 주소 -->
@@ -306,6 +424,7 @@ button
 				<div class="input_group">
 					<input type="text" class="inputform" name="st_location" id="st_location">
 				</div>
+				<span id="err6" style="color: red; font-weight: bold; display: none;"></span>
 			</div>
 			
 			<!-- 가게 상세 주소 -->
@@ -316,6 +435,7 @@ button
 				<div class="input_group">
 					<input type="text" class="inputform" name="st_location_dt" id="st_location_dt">
 				</div>
+				<span id="err7" style="color: red; font-weight: bold; display: none;"></span>
 			</div>
 			
 			<!-- 가게 번호 -->
@@ -326,13 +446,14 @@ button
 				<div class="input_group">
 					<input type="text" class="inputform" name="st_tel" id="st_tel">
 				</div>
+				<span id="err8" style="color: red; font-weight: bold; display: none;"></span>
 			</div>
 			
 			
 			<div class="button">
 				<button type="reset">취소</button>
 				<button type="button" id="insert" onclick="checkpoint()">완료</button><br>
-				<span id="err" style="color: red; font-weight: bold; display: none;">필수 입력 항목이 누락되었습니다.</span>
+				<span id="err9" style="color: red; font-weight: bold; display: none;"></span>
 			</div>
 			
 			<!-- user_num -->
