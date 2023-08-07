@@ -29,7 +29,7 @@ public class StoreregiController
 		
 		dao.add(dto);
 		
-		return "redirect:Storemain.action";
+		return "redirect:usermain.action";
 
 	}
 }

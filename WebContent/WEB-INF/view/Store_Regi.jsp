@@ -45,11 +45,15 @@
 .inputform
 {
 	
-	width: 40vw;
+	width: 30vw;
 	border-radius: 0 10px 10px 0;
 	border: 1px solid #ccc;
 	padding: 8px 12px;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+#st_in_num
+{
+	width: 27.5v
 }
 .title
 {
@@ -151,12 +155,12 @@ button
 	}
 
 	// 사업자 등록번호 유효성을 체크하는 함수
-	function stnumcheck() {
-	    var stnumInput = $("#stnum").val();
+	function st_in_numcheck() {
+	    var st_in_numInput = $("#st_in_num").val();
 
-	    if (!fn_ValidationCheck(stnumInput)) {
+	    if (!fn_ValidationCheck(st_in_numInput)) {
 	        $("#err").text("사업자 등록 번호가 올바르지 않습니다.").css("display", "inline");
-	        $("#stnum").focus();
+	        $("#st_in_num").focus();
 	        return false;
 	    } else {
 	        $("#err").css("display", "none");
@@ -167,20 +171,19 @@ button
 	$(function() {
 	    $("#insert").click(function() {
 	        $("#file").css("border", "1px solid black");
-
 	        if ($("#file").val() == "") {
 	            $("#err").text("서류를 등록해주세요.").css("display", "inline");
 	            $("#file").css("border", "3px solid red");
 	            return;
 	        }
-
-	        if ($("#stnum").val() == "") {
+			
+	        if ($("#st_in_num").val() == "") {
 	            $("#err").text("사업자 등록 번호를 입력해주세요.").css("display", "inline");
-	            $("#stnum").focus();
+	            $("#st_in_num").focus();
 	            return;
 	        }
 
-	        if (!stnumcheck()) {
+	        if (!st_in_numcheck()) {
 	            return;
 	        }
 
@@ -198,6 +201,12 @@ button
 
 	        if ($("#staddr").val() == "") {
 	            $("#err").text("가게 주소를 입력해주세요.").css("display", "inline");
+	            $("#staddr").focus();
+	            return;
+	        }
+	        
+	        if ($("#staddr").val() == "") {
+	            $("#err").text("가게 상세 주소를 입력해주세요.").css("display", "inline");
 	            $("#staddr").focus();
 	            return;
 	        }
@@ -222,7 +231,7 @@ button
 
 <div class="bframe">
 	<!-- header -->
-	<div><c:import url="header_user_sh(0801).jsp"></c:import></div>
+	<div><c:import url="header_user.jsp"></c:import></div>
 	
 	<div class="middle">
 		<div class="top">
@@ -232,19 +241,9 @@ button
 		
 		<!-- 입력 부분 -->
 		<div class="st_info_insert">
-			<form action="" method="post" id="stinfoinsert">
+			<form action="storeregiinsert.action" method="post" id="stinfoinsert">
 		
-			<!-- 서류등록 -->
 			
-			<div class="igroup">
-				<div class="title">
-					서류등록
-				</div>
-				<div class="input_group">
-				    <label for="file" class="file_label"></label>
-				    <input type="file" id="file" multiple>
-				</div>
-			</div>
 			
 			<!-- 사업자 등록 번호 -->
 			<div class="igroup">
@@ -252,8 +251,19 @@ button
 					사업자 등록 번호
 				</div>
 				<div class="input_group">
-					<input type="text" class="inputform" id="stnum">
-					<button type="button" class="cfb" onclick="stnumcheck()">인증하기</button>
+					<input type="text" class="inputform" name="st_in_num" id="st_in_num">
+					<button type="button" class="cfb" onclick="st_in_numcheck()">인증하기</button>
+				</div>
+			</div>
+			
+			<!-- 서류등록 -->
+			<div class="igroup">
+				<div class="title">
+					사업자 서류등록
+				</div>
+				<div class="input_group">
+				    <label for="file" class="file_label"></label>
+				    <input type="file" id="file1" class="file">
 				</div>
 			</div>
 			
@@ -263,7 +273,18 @@ button
 					사업장 관리 번호
 				</div>
 				<div class="input_group">
-					<input type="text" class="inputform" id="stmgnum">
+					<input type="text" class="inputform" id="st_place_num", name="st_place_num">
+				</div>
+			</div>
+			
+			<!-- 서류등록 -->
+			<div class="igroup">
+				<div class="title">
+					사업장 서류등록
+				</div>
+				<div class="input_group">
+				    <label for="file" class="file_label"></label>
+				    <input type="file" id="file2" class="file">
 				</div>
 			</div>
 			
@@ -273,7 +294,7 @@ button
 					가게 명
 				</div>
 				<div class="input_group">
-					<input type="text" class="inputform" id="stname">
+					<input type="text" class="inputform" id="st_name" name="st_name">
 				</div>
 			</div>
 			
@@ -283,7 +304,17 @@ button
 					가게 주소
 				</div>
 				<div class="input_group">
-					<input type="text" class="inputform" id="staddr">
+					<input type="text" class="inputform" name="st_location" id="st_location">
+				</div>
+			</div>
+			
+			<!-- 가게 상세 주소 -->
+			<div class="igroup">
+				<div class="title">
+					가게 상세 주소
+				</div>
+				<div class="input_group">
+					<input type="text" class="inputform" name="st_location_dt" id="st_location_dt">
 				</div>
 			</div>
 			
@@ -293,7 +324,7 @@ button
 					가게 번호
 				</div>
 				<div class="input_group">
-					<input type="text" class="inputform" id="sthp">
+					<input type="text" class="inputform" name="st_tel" id="st_tel">
 				</div>
 			</div>
 			
@@ -304,6 +335,9 @@ button
 				<span id="err" style="color: red; font-weight: bold; display: none;">필수 입력 항목이 누락되었습니다.</span>
 			</div>
 			
+			<!-- user_num -->
+			<input type="hidden" class="inputform" name="user_num" id="user_num"
+			value="<%=(String) session.getAttribute("user_num")%>">
 			</form>
 		</div> <!-- st_info_insert -->
 	</div>
