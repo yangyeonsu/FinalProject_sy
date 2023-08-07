@@ -408,8 +408,8 @@
 									<li class="cList cList0"><div>리뷰수</div></li>
 									<li class="cTime cTime0" style="height: 33vh;"><div>영업 시간</div></li>
 									<li class="cList cList0"><div>평균 가격</div></li>
-									<li class="cOption cOption0"><div>옵션 유무</div></li>
 									<li class="cImages cImages0" style="height: 25vh;"><div>대표 메뉴</div></li>
+									<li class="cOption cOption0"><div>옵션 유무</div></li>
 								</ul>
 							</div>
 						</div>
@@ -423,57 +423,78 @@
 							
 							<div class="compContent">
 								<div class="cLists1">
-									<!-- 
-									<ul>
-										<li class="cName cName1"><div>가게1</div></li>
-										<li class="cList cList1"><div>카테고리</div></li>
-										<li class="cList cList1"><div>주소</div></li>
-										<li class="cList cList1"><div>평점</div></li>
-										<li class="cList cList1"><div>리뷰수</div></li>
-										<li class="cList cList1"><div>영업시간</div></li>
-										<li class="cList cList1"><div>메뉴 <br /> 평균가격</div></li>
-										<li class="cOption cOption1"><div>옵션's 유무</div></li>
-										<li class="cImages cImages1">대표메뉴<div>
-											<a class="cImage"> <img src="images/store_img01.png"
-											alt="..." class="img-rounded"></a>
-										</div></li>
-									</ul>
-									 -->
-									
+										<!--
+										
 										<ul>
-											<c:forEach var="ncl" items="${nameLoCat1}">
-												<li class="cName cName1"><div>${ncl.st_name1}</div></li>
+											<c:forEach var="ncl" items="${nameLoCat}">
+												<li class="cName cName1"><div>${ncl.st_name}</div></li>
 												<li class="cImages cImages1"  style="height: 25vh;"><div>
-													<a class="cImage"><img src="${ncl.photo_link1 }"
+													<a class="cImage"><img src="${ncl.photo_link}"
 													alt="..." class="img-rounded"></a><br />
 												</div></li>
-												<li class="cList cList1"><div>${ncl.food_name1}</div></li>
-												<li class="cList cList1"><div>${ncl.st_location1}</div>
+												<li class="cList cList1"><div>${ncl.food_name}</div></li>
+												<li class="cList cList1"><div>${ncl.st_location}</div>
 												</li>
 											</c:forEach>
 											<c:forEach var="sr" items="${scoRe1 }">
-												<li class="cList cList1"><div>${sr.star_score1 }</div></li>
-												<li class="cList cList1"><div>${sr.review_count1 }</div></li>
+												<li class="cList cList1"><div>${sr.star_score }</div></li>
+												<li class="cList cList1"><div>${sr.review_count }</div></li>
+											</c:forEach>
+											<li class="cTime cTime1" style="height: 33vh;">
+												<div><c:forEach var="op" items="${openClose }">
+													${op.day_name} ${op.start_time}:00 ~ ${op.end_time}:00 <br />
+													</c:forEach>
+												</div>
+											</li>
+											
+											<c:forEach var="menu" items="${menuLists }">
+												<li class="cList cList1"><div>${menu.price_avg } 원</div></li>
+											</c:forEach>
+											<c:forEach var="o" items="${others1 }">
+												<li class="cOption cOption1"><div>최대 ${o.max_customers} 명</div></li>
+											</c:forEach>
+											<c:forEach var="menu" items="${menuLists }">
+												<li class="cImages cImages1"  style="height: 25vh;"><div>
+													<a class="cImage"> <img src="images/${menu.image_link }"
+													alt="..." class="img-rounded"></a><br />
+													${menu.menu_name}
+												</div></li>
+											</c:forEach>
+										</ul>
+										
+										-->
+										<ul>
+											<c:forEach var="ncl" items="${nameLoCat1}">
+												<li class="cName cName1"><div>${ncl.st_name}</div></li>
+												<li class="cImages cImages1"  style="height: 25vh;"><div>
+													<a class="cImage"><img src="${ncl.photo_link}"
+													alt="..." class="img-rounded"></a><br />
+												</div></li>
+												<li class="cList cList1"><div>${ncl.food_name}</div></li>
+												<li class="cList cList1"><div>${ncl.st_location}</div>
+												</li>
+											</c:forEach>
+											<c:forEach var="sr" items="${scoRe1 }">
+												<li class="cList cList1"><div>${sr.star_score }</div></li>
+												<li class="cList cList1"><div>${sr.review_count }</div></li>
 											</c:forEach>
 											<li class="cTime cTime1" style="height: 33vh;">
 												<div><c:forEach var="op" items="${openClose1 }">
-													${op.day_name1} ${op.start_time1}:00 ~ ${op.end_time1}:00 <br />
+													${op.day_name} ${op.start_time}:00 ~ ${op.end_time}:00 <br />
 													</c:forEach>
 												</div>
 											</li>
 											
 											<c:forEach var="menu" items="${menuLists1 }">
-												<li class="cList cList1"><div>${menu.price_avg1 } 원</div></li>
+												<li class="cList cList1"><div>${menu.price_avg } 원</div></li>
+												<li class="cImages cImages1"  style="height: 25vh;"><div>
+													<a class="cImage"> <img src="images/${menu.image_link }"
+													alt="..." class="img-rounded"></a><br />
+													${menu.menu_name}
+												</div></li>
 											</c:forEach>
 											<c:forEach var="o" items="${others1 }">
-												<li class="cOption cOption1"><div>최대 ${o.max_customers1} 명</div></li>
-											</c:forEach>
-											<c:forEach var="menu" items="${menuLists1 }">
-												<li class="cImages cImages1"  style="height: 25vh;"><div>
-													<a class="cImage"> <img src="images/${menu.image_link1 }"
-													alt="..." class="img-rounded"></a><br />
-													${menu.menu_name1}
-												</div></li>
+												<li class="cOption cOption1"><div>최대 ${o.max_customers} 명</div></li>
 											</c:forEach>
 										</ul>
 									
@@ -493,39 +514,37 @@
 								<div class="cLists1">
 									<ul>
 										<c:forEach var="ncl" items="${nameLoCat2}">
-												<li class="cName cName1"><div>${ncl.st_name2}</div></li>
+												<li class="cName cName1"><div>${ncl.st_name}</div></li>
 												<li class="cImages cImages1"  style="height: 25vh;"><div>
-													<a class="cImage"><img src="${ncl.photo_link2 }"
+													<a class="cImage"><img src="${ncl.photo_link}"
 													alt="..." class="img-rounded"></a><br />
 												</div></li>
-												<li class="cList cList1"><div>${ncl.food_name2}</div></li>
-												<li class="cList cList1"><div>${ncl.st_location2}</div>
+												<li class="cList cList1"><div>${ncl.food_name}</div></li>
+												<li class="cList cList1"><div>${ncl.st_location}</div>
 												</li>
 											</c:forEach>
 											<c:forEach var="sr" items="${scoRe2 }">
-												<li class="cList cList1"><div>${sr.star_score2 }</div></li>
-												<li class="cList cList1"><div>${sr.review_count2 }</div></li>
+												<li class="cList cList1"><div>${sr.star_score }</div></li>
+												<li class="cList cList1"><div>${sr.review_count }</div></li>
 											</c:forEach>
 											<li class="cTime cTime1" style="height: 33vh;">
 												<div><c:forEach var="op" items="${openClose2 }">
-													${op.day_name2} ${op.start_time2}:00 ~ ${op.end_time2}:00 <br />
+													${op.day_name} ${op.start_time}:00 ~ ${op.end_time}:00 <br />
 													</c:forEach>
 												</div>
 											</li>
 											
 											<c:forEach var="menu" items="${menuLists2 }">
-												<li class="cList cList1"><div>${menu.price_avg2 } 원</div></li>
+												<li class="cList cList1"><div>${menu.price_avg } 원</div></li>
+												<li class="cImages cImages1"  style="height: 25vh;"><div>
+													<a class="cImage"> <img src="images/${menu.image_link }"
+													alt="..." class="img-rounded"></a><br />
+													${menu.menu_name}
+												</div></li>
 											</c:forEach>
 											<c:forEach var="o" items="${others2 }">
-												<li class="cOption cOption1"><div>최대 ${o.max_customers2} 명</div></li>
+												<li class="cOption cOption1"><div>최대 ${o.max_customers} 명</div></li>
 											</c:forEach>
-											<c:forEach var="menu" items="${menuLists2 }">
-												<li class="cImages cImages1"  style="height: 25vh;"><div>
-													<a class="cImage"> <img src="images/${menu.image_link2 }"
-													alt="..." class="img-rounded"></a><br />
-													${menu.menu_name2}
-												</div></li>
-										</c:forEach>
 									</ul>
 								</div>
 							</div>
@@ -534,60 +553,64 @@
 								
 					</div>
 					
-					<c:choose>
-						<c:when test="${st_num3 ne 0}">
+					
+					
 					<div class="compare3 compare">
 					
 						<div class="compStore3">
 						
 							<div class="compContent">
 								<div class="cLists1">
-									<ul>
-									    <c:forEach var="ncl" items="${nameLoCat3}">
-											<li class="cName cName1"><div>${ncl.st_name3}</div></li>
-											<li class="cImages cImages1"  style="height: 25vh;"><div>
-												<a class="cImage"><img src="${ncl.photo_link3 }"
-												alt="..." class="img-rounded"></a><br />
-											</div></li>
-											<li class="cList cList1"><div>${ncl.food_name3}</div></li>
-											<li class="cList cList1"><div>${ncl.st_location3}</div>
-											</li>
-										</c:forEach>
-										<c:forEach var="sr" items="${scoRe3 }">
-											<li class="cList cList1"><div>${sr.star_score3 }</div></li>
-											<li class="cList cList1"><div>${sr.review_count3 }</div></li>
-										</c:forEach>
-										<li class="cTime cTime1" style="height: 33vh;">
-											<div><c:forEach var="op" items="${openClose3 }">
-												${op.day_name3} ${op.start_time3}:00 ~ ${op.end_time3}:00 <br />
+									
+									<c:choose>
+  										<c:when test="${st_num3 ne 0 }">
+  											<ul>
+										    	<c:forEach var="ncl" items="${nameLoCat3}">
+												<li class="cName cName1"><div>${ncl.st_name}</div></li>
+													<li class="cImages cImages1"  style="height: 25vh;"><div>
+														<a class="cImage"><img src="${ncl.photo_link}"
+														alt="..." class="img-rounded"></a><br />
+													</div></li>
+													<li class="cList cList1"><div>${ncl.food_name}</div></li>
+													<li class="cList cList1"><div>${ncl.st_location}</div>
+													</li>
 												</c:forEach>
-											</div>
-										</li>
-										
-										<c:forEach var="menu" items="${menuLists3 }">
-											<li class="cList cList1"><div>${menu.price_avg3 } 원</div></li>
-										</c:forEach>
-										<c:forEach var="o" items="${others3 }">
-											<li class="cOption cOption1"><div>최대 ${o.max_customers3} 명</div></li>
-										</c:forEach>
-										<c:forEach var="menu" items="${menuLists3 }">
-											<li class="cImages cImages1"  style="height: 25vh;"><div>
-												<a class="cImage"> <img src="images/${menu.image_link3 }"
-												alt="..." class="img-rounded"></a><br />
-												${menu.menu_name3}
-											</div></li>
-										</c:forEach>
-									</ul>
+												<c:forEach var="sr" items="${scoRe3 }">
+													<li class="cList cList1"><div>${sr.star_score }</div></li>
+													<li class="cList cList1"><div>${sr.review_count }</div></li>
+												</c:forEach>
+												<li class="cTime cTime1" style="height: 33vh;">
+													<div><c:forEach var="op" items="${openClose3 }">
+														${op.day_name} ${op.start_time}:00 ~ ${op.end_time}:00 <br />
+														</c:forEach>
+													</div>
+												</li>
+											    <c:forEach var="menu" items="${menuLists3 }">
+											      <li class="cList cList1"><div>${menu.price_avg } 원</div></li>
+											      <li class="cImages cImages1"  style="height: 25vh;"><div>
+											        <a class="cImage"> <img src="images/${menu.image_link }"
+											        alt="..." class="img-rounded"></a><br />
+											        ${menu.menu_name}
+											      </div></li>
+											    </c:forEach>
+											
+											    <c:forEach var="o" items="${others3 }">
+											      <li class="cOption cOption1"><div>최대 ${o.max_customers} 명</div></li>
+											    </c:forEach>
+											  </ul>
+										   </c:when>
+									   <c:otherwise>
+									   </c:otherwise>
+									   
+									  </c:choose>
+
 								</div>
-							</div>	
+							</div>
+							
 											
 						</div>		
 						
 					</div>
-					</c:when>
-					</c:choose>
-					
-			
 			</div> <!-- compBody -->
 			
 		</div>
