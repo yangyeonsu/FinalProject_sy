@@ -451,7 +451,7 @@
 					</div>
 					
 					
-					<div class="compare1 compare"> 
+					<%-- <div class="compare1 compare"> 
 					
 						<div class="compStore1">
 							
@@ -598,7 +598,7 @@
 				   </c:when>
 			   <c:otherwise>
 			   </c:otherwise>
-			  </c:choose>	
+			  </c:choose> --%>	
 					
 			</div> <!-- compBody -->
 			

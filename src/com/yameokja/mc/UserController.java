@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
@@ -292,7 +291,7 @@ public class UserController
 		session.removeAttribute("user_num");
 		session.removeAttribute("admin_num");
 		
-		result = "WEB-INF/view/yameokja_login.jsp";
+		result = "redirect:yameokja.action";
 		
 		return result;
 	}
