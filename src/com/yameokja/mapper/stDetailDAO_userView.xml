@@ -4,31 +4,101 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yameokja.mc.IstDetailDAO_userView">
  	
- 	<!-- 영업시간 가지고 오는 쿼리문 -->
- 	<select id="openClose" resultType="com.yameokja.mc.stDetailDTO_userView">
-	 	SELECT SL.ST_NUM AS ST_NUM, OC.DAY_NUM AS DAY_NUM, WDL.DAY_NAME AS DAY_NAME
-			, OC.START_TIME AS START_TIME, OC.END_TIME AS END_TIME
-		FROM ST_OPENCLOSE OC
-		JOIN ST_LIST SL ON OC.ST_NUM = SL.ST_NUM
-		JOIN WEEKDAY_LABEL WDL ON OC.DAY_NUM = WDL.DAY_NUM
-		WHERE SL.ST_NUM = #{st_num}
-		ORDER BY DAY_NUM
+ 	<!-- 영업시간 가지고 오는 쿼리문 : 요일, 시작시간, 끝시간, 휴무여부 -->
+ 	<select id="openClose" resultType="com.yameokja.mc.StoreOpencloseDTO">
+	 	SELECT W.DAY_NUM AS DAY_NUM, W.DAY_NAME AS DAY_NAME, S.ST_NUM AS ST_NUM, O.START_TIME||' ~ '||O.END_TIME AS OPERATE_TIME
+		     , NVL2(H.HOLIDAY_NUM,'휴무', '-') AS HOLIDAY
+		FROM WEEKDAY_LABEL W
+		CROSS JOIN (
+		    SELECT DISTINCT ST_NUM FROM ST_OPENCLOSE
+		) S
+		LEFT JOIN ST_OPENCLOSE O ON W.DAY_NUM = O.DAY_NUM AND S.ST_NUM = O.ST_NUM
+		LEFT JOIN ST_HOLIDAY H ON W.DAY_NUM = H.DAY_NUM AND S.ST_NUM = H.ST_NUM
+		WHERE S.ST_NUM = #{st_num}
+		ORDER BY S.ST_NUM, W.DAY_NUM
  	</select>
  	
- 	
  	<!-- 브레이크 타임 따로 -->
- 	<select id="breakTime" resultType="com.yameokja.mc.stDetailDTO_userView">
+ 	<select id="breakTime" resultType="com.yameokja.mc.StoreBreaktimeDTO">
  		SELECT WWL.WEEK_WEEKEND AS WEEK_WEEKEND
 			, BT.START_BREAKTIME AS START_BREAKTIME
 			, BT.END_BREAKTIME AS END_BREAKTIME
+			, SL.ST_NUM AS ST_NUM
 		FROM ST_LIST SL
 		JOIN BREAKTIME BT ON SL.ST_NUM = BT.ST_NUM
 		JOIN WEEK_WEEKEND_LABEL WWL ON BT.WEEK_WEEKEND_NUM = WWL.WEEK_WEEKEND_NUM
 		WHERE SL.ST_NUM = #{st_num}
  	</select>
+
  	
+ 	<!-- 가게이름, 좋아요수, 평점, 리뷰수, 주소, 전화번호, 가게 이메일, 가게 설명
+ 	     , 최대인원수, 가게음식카테고리 -->
+ 	<select id="store" resultType="com.yameokja.mc.StoreDetailDTO">
+ 		SELECT ST_NUM ST_NAME, ST_LOCATION, ST_TEL, ST_EXPLAIN, MAX_CUSTOMERS
+		, ST_EMAIL, FOOD_NAME, PHOTO_LINK, STAR_AVG, RV_COUNT, USER_NUM
+		FROM STORE_VIEW
+		WHERE ST_NUM = #{st_num}	
+ 	</select>
+
+ 	<!-- 좋아요 수 -->
+ 	<select id="clikeNum" resultType="java.lang.Integer"> 
+ 		SELECT COUNT(*) AS LIKE_COUNT
+		FROM LIKE_BOX
+		WHERE ST_NUM = #{st_num}
+ 	</select>
  	
- 	<!-- 휴일 가지고 오는 쿼리문 -->
+ 	<!-- 메뉴 및 가격 가져오기-->
+ 	<select id="menuLists" resultType="com.yameokja.mc.StoreMenuDTO">
+ 		SELECT MENU_NUM, MENU_NAME, PRICE, IMAGE_LINK
+		FROM MENU
+		WHERE ST_NUM = #{st_num}
+ 	</select>
+
+ 	<!-- 리뷰 + 추천 비추천 가져오기 -->
+ 	<select id="reviews" resultType="com.yameokja.mc.StoreReviewDTO">
+ 		SELECT UU.USER_NICKNAME AS USER_NICKNAME, RV.RV_CONTENT AS RV_CONTENT
+		, RV.STAR_SCORE AS STAR_SCORE, RV.REG_DATE AS REG_DATE
+		, (SELECT NVL(COUNT(REC_NONREC_NUMBER), 0) FROM REC_NONREC
+        WHERE REC_NONREC_NUMBER=1) AS REC_NONREC_NAME1 
+        , (SELECT NVL(COUNT(REC_NONREC_NUMBER), 0) FROM REC_NONREC
+        WHERE REC_NONREC_NUMBER=2) AS REC_NONREC_NAME2 
+ 		FROM RV_BOX RV
+ 		LEFT JOIN RV_REC_NONREC RRN ON RV.RV_NUM = RRN.RV_NUM
+ 		RIGHT JOIN USING_USER UU ON UU.USER_NUM = RV.USER_NUM
+		WHERE RRN.REC_NONREC_NUMBER IS NOT NULL AND RV.ST_NUM = #{st_num}
+ 	</select>
+ 	
+ 	 	
+ 	<!-- 가게 키워드 -->
+ 	<select id="stKeys" resultType="com.yameokja.mc.StoreKeyDTO">
+ 		SELECT SK.ST_KEY_NUM AS ST_KEY_NUM
+		     , SKL.ST_KEYWORD AS ST_KEYWORD
+		FROM ST_KEY SK LEFT JOIN ST_KEY_LABEL SKL
+		  ON SK.ST_KEY_NUM = SKL.ST_KEY_NUM
+		WHERE SK.ST_NUM = #{st_num}
+ 	</select>
+ 	
+ 	<!-- 리뷰 키워드 -->
+ 	<select id="reviewKeys" resultType = "com.yameokja.mc.StoreReviewKeyDTO">
+ 		SELECT RKL.RV_KEY_NAME AS RV_KEY_NAME
+		     , COUNT(RKL.RV_KEY_NUM) AS RV_KEY_COUNT
+		FROM RV_KEY_LABEL RKL RIGHT JOIN (SELECT RK.RV_NUM AS RV_NUM, RK.RV_KEY_NUM AS RV_KEY_NUM
+		                                 FROM RV_BOX RB LEFT JOIN RV_KEY RK
+		                                   ON RB.RV_NUM = RK.RV_NUM
+		                                 WHERE RB.ST_NUM = #{st_num}) T
+		  ON RKL.RV_KEY_NUM = T.RV_KEY_NUM
+		WHERE RKL.RV_KEY_NAME IS NOT NULL
+		GROUP BY (RKL.RV_KEY_NAME, RKL.RV_KEY_NUM)
+		ORDER BY RV_KEY_COUNT
+ 	</select>
+ 	
+ 	<!-- 리뷰 등록 -->
+ 	<insert id="reviewInsert">
+ 		INSERT INTO RV_BOX(RVBOXSEQ.NEXTVAL, USER_NUM, ST_NUM, RV_CONTENT, STAR_SCORE, REG_DATE)
+		VALUES(#{user_num}, #{st_num}, #{rv_content}, #{star_score}, DEFAULT)
+ 	</insert>
+ 	 	
+ 	<!-- 휴일 가지고 오는 쿼리문 
  	<select id="holiday" resultType="com.yameokja.mc.stDetailDTO_userView">
  		SELECT WDL.DAY_NAME AS DAY_NAME
 		FROM ST_HOLIDAY SH
@@ -37,81 +107,12 @@
 		WHERE SL.ST_NUM = #{st_num}
         ORDER BY WDL.DAY_NUM
  	</select>
- 	
- 	
- 	<!-- 가게이름, 좋아요 수, 별점 평균, 리뷰 수, 전화번호, 주소 합침 -->
- 	<select id="store" resultType="com.yameokja.mc.stDetailDTO_userView">
-	SELECT IA.ST_NAME AS ST_NAME
-    , NVL(COUNT(LIKE_BOX.LIKE_NUM), 0) AS LIKE_COUNT
-    , NVL(ROUND(AVG(STAR_SCORE), 2), 0) AS STAR_SCORE
-    , NVL(COUNT(RV_BOX.RV_NUM), 0) AS REVIEW_COUNT
-    , IA.ST_TEL, IA.ST_LOCATION
-	FROM ST_LIST SL
-	LEFT JOIN IN_PROCESS IP ON SL.IN_PROCESS_NUM = IP.IN_PROCESS_NUM
-	LEFT JOIN IN_APPLY IA ON IP.IN_APPLY_NUM = IA.IN_APPLY_NUM 
-	LEFT JOIN LIKE_BOX ON SL.ST_NUM = LIKE_BOX.ST_NUM
-	LEFT JOIN RV_BOX ON SL.ST_NUM = RV_BOX.ST_NUM
-	WHERE SL.ST_NUM = #{st_num}
-	GROUP BY IA.ST_NAME, IA.ST_TEL, IA.ST_LOCATION
-	</select>
- 	
- 	<select id="stName"  resultType="com.yameokja.mc.stDetailDTO_userView">
- 		SELECT IA.ST_NAME AS ST_NAME
-		FROM IN_APPLY IA
-		JOIN IN_PROCESS IP ON IA.IN_APPLY_NUM = IP.IN_APPLY_NUM
-		JOIN ST_LIST SL ON IP.IN_PROCESS_NUM = SL.IN_PROCESS_NUM
-		WHERE SL.ST_NUM = #{st_num}
- 	</select>
- 	
- 	
- 	<select id="clikeNum" resultType="java.lang.Integer"> <!-- 좋아요 수 -->
- 		SELECT NVL(COUNT(LIKE_BOX.LIKE_NUM), 0) AS LIKE_COUNT
-		FROM ST_LIST
-		LEFT JOIN LIKE_BOX 
-		ON ST_LIST.ST_NUM = LIKE_BOX.ST_NUM
-		WHERE ST_LIST.ST_NUM = #{st_num}
- 	</select>
- 	
- 	
- 	<select id="creviewScore" resultType="java.lang.Double"> <!-- 별점 평균 -->
- 		SELECT NVL(ROUND(AVG(STAR_SCORE), 2), 0) AS STAR_SCORE
-		FROM ST_LIST
-		LEFT JOIN RV_BOX 
-		ON ST_LIST.ST_NUM = RV_BOX.ST_NUM
-		WHERE ST_LIST.ST_NUM = #{st_num}
- 	</select>
- 	
- 	<select id="creviewNum" resultType="java.lang.Integer"> <!-- 리뷰 수 -->
- 		SELECT NVL(COUNT(RV_BOX.RV_NUM), 0) AS REVIEW_COUNT
-		FROM ST_LIST
-		LEFT JOIN  RV_BOX
-		ON ST_LIST.ST_NUM = RV_BOX.ST_NUM
-		WHERE ST_LIST.ST_NUM = #{st_num}
- 	</select>
- 	
- 	<select id="tel" resultType="com.yameokja.mc.stDetailDTO_userView"> <!-- 전화번호 -->
- 		SELECT ST_TEL
- 		FROM IN_APPLY
-		LEFT JOIN IN_PROCESS
-		ON IN_APPLY.IN_APPLY_NUM = IN_PROCESS.IN_APPLY_NUM
-		LEFT JOIN ST_LIST
-		ON IN_PROCESS.IN_PROCESS_NUM = ST_LIST.IN_PROCESS_NUM
-		WHERE ST_LIST.ST_NUM = #{st_num}
- 	</select>
- 	
- 	<select id="lo" resultType="com.yameokja.mc.stDetailDTO_userView"> <!-- 주소 -->
- 		SELECT ST_LOCATION
- 		FROM IN_APPLY
-		LEFT JOIN IN_PROCESS
-		ON IN_APPLY.IN_APPLY_NUM = IN_PROCESS.IN_APPLY_NUM
-		LEFT JOIN ST_LIST
-		ON IN_PROCESS.IN_PROCESS_NUM = ST_LIST.IN_PROCESS_NUM
-		WHERE ST_LIST.ST_NUM = #{st_num}
- 	</select>
+ 	-->
  	
  	<!-- 기타사항 / 결제수단, 설명, 이메일, 가게 최대 인원수 -->
+ 	<!-- 
  	<select id="others" resultType="com.yameokja.mc.stDetailDTO_userView">
-		<!-- 
+		
 		SELECT  SL.ST_EXPLAIN AS ST_EXPLAIN
         , SL.MAX_CUSTOMERS AS MAX_CUSTOMERS
         , NVL(SL.ST_EMAIL, ' ') AS ST_EMAIL
@@ -129,42 +130,66 @@
 		WHERE SL.STATEMENT_NUM = 1 AND SL.ST_NUM = #{st_num}
 		GROUP BY SL.ST_EXPLAIN, SL.MAX_CUSTOMERS, SL.ST_EMAIL, SL.ST_NUM
 		 -->
-		SELECT ST_EXPLAIN, MAX_CUSTOMERS, ST_EMAIL, PAY_NAME FROM STORE_OTHERS
-		WHERE ST_NUM = #{st_num}
+		<!-- SELECT ST_EXPLAIN, MAX_CUSTOMERS, ST_EMAIL, PAY_NAME 
+		FROM STORE_OTHERS
+		WHERE ST_NUM = #{st_num} 
  	</select>
+ 	-->
  	
+ 	<!-- 가게이름, 좋아요 수, 별점 평균, 리뷰 수, 전화번호, 주소 합침 -->
+ 	<!-- 
+ 	<select id="store" resultType="com.yameokja.mc.stDetailDTO_userView">
+		SELECT IA.ST_NAME AS ST_NAME
+	    , NVL(COUNT(LIKE_BOX.LIKE_NUM), 0) AS LIKE_COUNT
+	    , NVL(ROUND(AVG(STAR_SCORE), 2), 0) AS STAR_SCORE
+	    , NVL(COUNT(RV_BOX.RV_NUM), 0) AS REVIEW_COUNT
+	    , IA.ST_TEL, IA.ST_LOCATION
+		FROM ST_LIST SL
+		LEFT JOIN IN_PROCESS IP ON SL.IN_PROCESS_NUM = IP.IN_PROCESS_NUM
+		LEFT JOIN IN_APPLY IA ON IP.IN_APPLY_NUM = IA.IN_APPLY_NUM 
+		LEFT JOIN LIKE_BOX ON SL.ST_NUM = LIKE_BOX.ST_NUM
+		LEFT JOIN RV_BOX ON SL.ST_NUM = RV_BOX.ST_NUM
+		WHERE SL.ST_NUM = #{st_num}
+		GROUP BY IA.ST_NAME, IA.ST_TEL, IA.ST_LOCATION
+	</select>
  	
- 	<!-- 메뉴 및 가격 가져오기-->
- 	<select id="menuLists" resultType="com.yameokja.mc.stDetailDTO_userView">
- 		SELECT MENU_NAME, PRICE, IMAGE_LINK
-		FROM MENU
-		LEFT JOIN ST_LIST SL ON SL.ST_NUM = MENU.ST_NUM
+ 	<select id="stName"  resultType="com.yameokja.mc.stDetailDTO_userView">
+ 		SELECT IA.ST_NAME AS ST_NAME
+		FROM IN_APPLY IA
+		JOIN IN_PROCESS IP ON IA.IN_APPLY_NUM = IP.IN_APPLY_NUM
+		JOIN ST_LIST SL ON IP.IN_PROCESS_NUM = SL.IN_PROCESS_NUM
 		WHERE SL.ST_NUM = #{st_num}
  	</select>
  	
  	
- 	<!-- 가게 키워드 -->
- 	<select id="stKeys" resultType="com.yameokja.mc.stDetailDTO_userView">
- 		SELECT SKL.ST_KEYWORD AS ST_KEYWORD
- 		FROM ST_KEY_LABEL SKL
- 		LEFT JOIN ST_KEY SK ON SK.ST_KEY_NUM = SKL.ST_KEY_NUM
- 		LEFT JOIN ST_LIST SL ON SL.ST_NUM = SK.ST_KEY_NUM
- 		WHERE SL.ST_NUM = #{st_num}
+ 	
+ 	<select id="creviewScore" resultType="java.lang.Double"> 별점 평균
+ 		SELECT NVL(ROUND(AVG(STAR_SCORE), 2), 0) AS STAR_SCORE
+		FROM ST_LIST
+		LEFT JOIN RV_BOX 
+		ON ST_LIST.ST_NUM = RV_BOX.ST_NUM
+		WHERE ST_LIST.ST_NUM = #{st_num}
  	</select>
  	
- 	<!-- 리뷰 가져오기 -->
- 	<select id="reViews" resultType="com.yameokja.mc.stDetailDTO_userView">
- 		SELECT UU.USER_NICKNAME AS USER_NICKNAME, RV.RV_CONTENT AS RV_CONTENT
-		, RV.STAR_SCORE AS STAR_SCORE, RV.REG_DATE AS REG_DATE
-		, (SELECT NVL(COUNT(REC_NONREC_NUMBER), 0) FROM REC_NONREC
-        WHERE REC_NONREC_NUMBER=1) AS REC_NONREC_NAME1 
-        , (SELECT NVL(COUNT(REC_NONREC_NUMBER), 0) FROM REC_NONREC
-        WHERE REC_NONREC_NUMBER=2) AS REC_NONREC_NAME2 
- 		FROM RV_BOX RV
- 		LEFT JOIN RV_REC_NONREC RRN ON RV.RV_NUM = RRN.RV_NUM
- 		RIGHT JOIN USING_USER UU ON UU.USER_NUM = RV.USER_NUM
-		WHERE RRN.REC_NONREC_NUMBER IS NOT NULL AND RV.ST_NUM = #{st_num}
+ 	<select id="tel" resultType="com.yameokja.mc.stDetailDTO_userView"> 전화번호
+ 		SELECT ST_TEL
+ 		FROM IN_APPLY
+		LEFT JOIN IN_PROCESS
+		ON IN_APPLY.IN_APPLY_NUM = IN_PROCESS.IN_APPLY_NUM
+		LEFT JOIN ST_LIST
+		ON IN_PROCESS.IN_PROCESS_NUM = ST_LIST.IN_PROCESS_NUM
+		WHERE ST_LIST.ST_NUM = #{st_num}
  	</select>
+ 	
+ 	<select id="lo" resultType="com.yameokja.mc.stDetailDTO_userView"> 주소
+ 		SELECT ST_LOCATION
+ 		FROM IN_APPLY
+		LEFT JOIN IN_PROCESS
+		ON IN_APPLY.IN_APPLY_NUM = IN_PROCESS.IN_APPLY_NUM
+		LEFT JOIN ST_LIST
+		ON IN_PROCESS.IN_PROCESS_NUM = ST_LIST.IN_PROCESS_NUM
+		WHERE ST_LIST.ST_NUM = #{st_num}
+ 	</select> -->
  	
  
 </mapper>

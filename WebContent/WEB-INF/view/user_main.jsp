@@ -137,9 +137,10 @@
 		 
 		$("#searchBtn").click(function()
 		{
+
 			$("#userForm").attr("action", "search.action");
 
-			
+
 			$("#userForm").submit();
 		});
 		
