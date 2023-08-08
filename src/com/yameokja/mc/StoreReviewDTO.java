@@ -3,7 +3,7 @@ package com.yameokja.mc;
 public class StoreReviewDTO
 {
 	private String user_nickname, rv_content, reg_date;
-	private int star_score, rec_nonrec_name1, rec_nonrec_name2;
+	private int star_score, rec, nonrec;
 	
 	// getter / setter 구성
 	public String getUser_nickname()
@@ -38,22 +38,23 @@ public class StoreReviewDTO
 	{
 		this.star_score = star_score;
 	}
-	public int getRec_nonrec_name1()
+	public int getRec()
 	{
-		return rec_nonrec_name1;
+		return rec;
 	}
-	public void setRec_nonrec_name1(int rec_nonrec_name1)
+	public void setRec(int rec)
 	{
-		this.rec_nonrec_name1 = rec_nonrec_name1;
+		this.rec = rec;
 	}
-	public int getRec_nonrec_name2()
+	public int getNonrec()
 	{
-		return rec_nonrec_name2;
+		return nonrec;
 	}
-	public void setRec_nonrec_name2(int rec_nonrec_name2)
+	public void setNonrec(int nonrec)
 	{
-		this.rec_nonrec_name2 = rec_nonrec_name2;
+		this.nonrec = nonrec;
 	}
+
 	
 	
 	
