@@ -47,20 +47,38 @@ public class stDetailController
 			user.setUser_grade(uDao.secondHalf(user_num).user_grade);
 		
 		model.addAttribute("user", user);
-		model.addAttribute("openClose", dao.openClose(st_num));
-		model.addAttribute("breakTime", dao.breakTime(st_num));
-		model.addAttribute("holiday", dao.holiday(st_num));
+		
+		// 가게 기본 사항
 		model.addAttribute("store", dao.store(st_num));
-		model.addAttribute("stName", dao.stName(st_num));
+		
+		// 가게 영업시간 + 휴무일
+		model.addAttribute("openClose", dao.openClose(st_num));
+		
+		// 가게 브레이크 타임
+		model.addAttribute("breakTime", dao.breakTime(st_num));
+		
+		// 가게 찜 수
 		model.addAttribute("clikeNum", dao.clikeNum(st_num));
+		
+		// 가게 메뉴
+		model.addAttribute("menuLists", dao.menuLists(st_num));
+		
+		// 가게 키워드
+		model.addAttribute("stKeys", dao.stKeys(st_num));
+
+		// 가게 리뷰목록
+		model.addAttribute("reviews", dao.reviews(st_num));
+		
+		/*
+		model.addAttribute("holiday", dao.holiday(st_num));
+		model.addAttribute("others", dao.others(st_num));
+		model.addAttribute("stName", dao.stName(st_num));
 		model.addAttribute("creviewScore", dao.creviewScore(st_num));
 		model.addAttribute("creviewNum", dao.creviewNum(st_num));
 		model.addAttribute("tel", dao.tel(st_num));
 		model.addAttribute("lo", dao.lo(st_num));
-		model.addAttribute("others", dao.others(st_num));
-		model.addAttribute("menuLists", dao.menuLists(st_num));
-		model.addAttribute("stKeys", dao.stKeys(st_num));
-		model.addAttribute("reViews", dao.reViews(st_num));
+		*/
+
 		
 		if (comList.size() > 0)
 			model.addAttribute("comList", mdao.getStoreList(comList));
