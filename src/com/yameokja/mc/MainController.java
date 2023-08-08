@@ -26,7 +26,6 @@ public class MainController
 
 
 	@RequestMapping(value = "/main.action", method = {RequestMethod.POST, RequestMethod.GET})
-
 	public String storeList(HttpServletRequest request, Model model)
 	{
 		HttpSession session = request.getSession();
@@ -95,7 +94,6 @@ public class MainController
 
 
 	@RequestMapping(value = "/search.action", method= RequestMethod.POST)
-
 	public String searchStore(HttpServletRequest request, Model model)
 	{
 		String result = "";
