@@ -14,6 +14,7 @@ String cp = request.getContextPath();
 
 <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
 <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <link rel="stylesheet" type="text/css" href="<%=cp%>/css/compareBox.css">
 <link rel="stylesheet" type="text/css" href="<%=cp%>/css/userMyPage.css">
@@ -564,7 +565,29 @@ table
 			}
 		});
 		
+
+	    $('#why').keyup(function (e) {
+	    	let content = $(this).val();
+	        
+	        // 글자수 세기
+	        if (content.length == 0 || content == '') {
+	        	$('.textCount').text('0자');
+	        } else {
+	        	$('.textCount').text(content.length + '자');
+	        }
+	        
+	        // 글자수 제한
+	        if (content.length > 5) {
+	        	// 200자 부터는 타이핑 되지 않도록
+	            $(this).val($(this).val().substring(0, 5));
+	            // 200자 넘으면 알림창 뜨도록
+	            /* errorMessage.style.display = 'inline'; */
+				$("#errMessage").show();
+	        };
+	    });
 	});
+	
+    
 	
 </script>
 
@@ -579,7 +602,7 @@ table
 
 	<div id="body">
 	
-		<div id="column">
+		<div id="column"></div>
 
 		<!-- 왼쪽 메뉴 배너 -->
 		<!-- 왼쪽 메뉴 -->
@@ -663,7 +686,7 @@ table
 						<td>10:00</td>
 						<td> ~ </td>
 						<td>10:00</td>
-						<td><input type="checkbox" id="rest"2></td>
+						<td><input type="checkbox" id="rest2"></td>
 						<td><label for="rest2">휴무</label></td>
 					</tr>
 					<tr>
@@ -927,6 +950,7 @@ table
 		</div>
 	
 		<div class="ibmatSelectDiv">
+			
 			<div class="selectLeft">
 				<label class="ibmatlabel" for="ibmat1">
 					<input type="checkbox" class="ibmatCB" id="ibmat1">
@@ -947,7 +971,6 @@ table
 				</label>
 				<br><br>
 					
-			
 				<label class="ibmatlabel" for="ibmat4">
 					<input type="checkbox" class="ibmatCB" id="ibmat4">
 					매장이 넓어요
@@ -967,11 +990,41 @@ table
 					포장이 가능해요
 				</label>
 				<br><br>
-				
 			</div>
+			
 		</div>
-	</div>
+	
 		<!-- 가게 검색 키워드 -->
+		<label id="label">
+			<p class="label-txt label-active">가게 검색 키워드1 (5글자 이내)</p>
+			<input type="text" class="input" id="why">
+			<div class="line-box">
+			    <div class="line"></div>
+			</div>
+			
+			<span id="errMessage" style="color: red; display: none;">5글자 이내로 입력해주세요</span>
+		</label>
+		
+		<label id="label">
+			<p class="label-txt label-active">가게 검색 키워드2 (5글자 이내)</p>
+			<input type="text" class="input" id="why">
+			<div class="line-box">
+			    <div class="line"></div>
+			</div>
+			
+			<span id="errMessage" style="color: red; display: none;">5글자 이내로 입력해주세요</span>
+		</label>
+		
+		<label id="label">
+			<p class="label-txt label-active">가게 검색 키워드3 (5글자 이내)</p>
+			<input type="text" class="input" id="why">
+			<div class="line-box">
+			    <div class="line"></div>
+			</div>
+			
+			<span id="errMessage" style="color: red; display: none;">5글자 이내로 입력해주세요</span>
+		</label>
+		
 		
 		
 		<!-- 등록버튼 -->
@@ -979,506 +1032,17 @@ table
 		
 			
 			
-		
-		
-		<%-- 
-		<div id="container1" class="">
-
-			<div class="placeholders main">
-
-				<div class="placeholder main-left">
-					<div class="background" style="font-weight: bold; margin-top: 1vh;">
-						
-
-						<div id="weekList" class="openclose background">
-
-							
-						</div>
-
-						<div class="time background">
-							<div>
-								<ul>
-									 <c:forEach var="bt" items="${breakTime}">
-									 	<li><input class="btli" type="text"
-										placeholder="${bt.week_weekend} / 브레이크 타임" readonly="readonly" /></li>
-									 	<li><input class="btli" type="text"
-										placeholder="${bt.start_breaktime} ~ ${bt.end_breaktime} " readonly="readonly" /></li>
-									 </c:forEach>
-									 <c:forEach var="h" items="${holiday}">
-									 	<li><input class="btli" type="text"
-										placeholder="휴일 : ${h.day_name}" readonly="readonly" /></li>
-									 </c:forEach>
-								</ul>
-
-							</div>
-
-						</div>
-
-					</div>
-
-				</div>
+	</div><!-- mainbody -->
+	
 
 
-				<div class="placeholder main-right">
-					<c:forEach var="s" items="${store }">
-					<div class="background" 
-						style="font-weight: bold; margin-top: 1vh; margin-left: 1vw;">
-						<span style="font-size:30pt; font-weight: bold;">${s.st_name }</span>
-						<br /> <br /> <br />
-
-						<div class="revBoard">
-
-								<div class="info">
-									<div class="likeRevC likeNum">
-										<label for="likeNum" class=""
-											style="font-weight: bold; display: inline;"> 좋아요 수
-											: &nbsp;&nbsp; <span class="glyphicon glyphicon-heart"
-											aria-hidden="true"> </span> <span id="likeNum"
-											style="display: inline;">${s.like_count }</span>
-										</label>
-									</div>
-									<div class="likeRevC score">
-										<label for="score" class=""
-											style="font-weight: bold; display: inline;">
-											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 평점 :
-											&nbsp;&nbsp;&nbsp;&nbsp; <span id="score"
-											style="display: inline;">${s.star_score}</span>
-										</label>
-									</div>
-
-									<div class="likeRevC reviewNum">
-										<label for="reviewNum" class=""
-											style="font-weight: bold; display: inline;">
-											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-											리뷰 수 : &nbsp;&nbsp; <span id="reviewNum"
-											style="display: inline;">${s.review_count}</span>
-										</label>
-									</div>
-								</div>
-								<!-- .likeRevC    info background -->
-
-								<br />
-
-								<div class="info background">
-									<label for="addr" class=""
-										style="font-weight: bold; display: inline;">
-										주소&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										<span id="addr" style="display: inline;"> : ${s.st_location }</span>
-									</label>
-								</div>
-
-								<br /> 
-
-								<div class="info background">
-									<label for="tel" class=""
-										style="font-weight: bold; display: inline;">
-										전화번호&nbsp;&nbsp;&nbsp;&nbsp; <span id="tel"
-										style="display: inline;"> : ${s.st_tel }</span>
-									</label>
-								</div>
-								<br />
-
-						</div>
-					</div>
-					</c:forEach>
-				</div>
-				
-			</div>
-
-				<!-- <br /> -->
-
-			
-
-			<!-- 기타 관련 -->
-
-			<div class="container2 " id="storePay">
-				
-				
-				<c:forEach var="o" items="${others }" varStatus="status">
-						<br /> <br /> <br /><br /> <br /> <br />
-						<br /> <br /> <br /><br /> <br /> <br />							
-						<div class="info background">
-							<label for="payTool" class="oTool"
-								style="font-weight: bold">결제 수단&nbsp;&nbsp;&nbsp;&nbsp;</label>
-							<!-- 결제 수단 -->
-							<div class=" form">
-								<input class="" type="text" id="payTool" class="oInfo"
-									placeholder="${o.pay_name }" readonly>
-							</div>
-						</div>
-						
-						<div class="info background">
-							<label for="storePage" class="oTool"
-								style="font-weight: bold">가게 이메일</label>
-							<!-- 페이지 -->
-							<div class="form">
-								<input class="" type="text" id="storePage" class="oInfo"
-									placeholder="${o.st_email }" readonly>
-							</div>
-						</div>
-						<div class="info background">
-							<label for="etcInfo" class="oTool"
-								style="font-weight: bold">기타 정보&nbsp;&nbsp;&nbsp;&nbsp;</label>
-							<!-- 수용 인원 등 -->
-							<div class=" form">
-								<input class="" type="text" id="etcInfo" class="oInfo"
-									placeholder="최대 수용 인원 : ${o.max_customers }, 와이파이 있음, 주차 가능 등..." readonly>
-							</div>
-						</div>
-						<div class="info background">
-							<label for="storeExplain" class="oTool"
-								style="font-weight: bold">가게 설명&nbsp;&nbsp;&nbsp;&nbsp;</label>
-							<!-- 가게 설명 -->
-							<div class="form">
-								<textarea class="" rows="3" id="storeExplain" class="oInfo"
-									placeholder="${o.st_explain }" readonly></textarea>
-							</div>
-						</div>
-						<div>
-							<button type="submit" class="btn" onclick="reqapplyform.action" value="${o.st_num }" 
-							style="width: 10vw; height: 3vh; margin-left: 33vw;">가게정보오류수정</button>
-						</div>
-					
-				</c:forEach>
-			</div>
-			<!-- class="container2 " id="storePay" -->
-			<div id="menuboard" class="container3">
-				<div id="rv-Keyword">
-					<br /> <br />
-					<!-- 메뉴 -->
-					<h1 style="padding-left: 4vw;">메뉴</h1>
-					<div class="menuList"  style="padding-bottom: 1vh;">
-						<!-- 
-						<div class="menuPhoto">
-							<a href="#" class="thumbnail"> <img src="images/store_img01.png"
-								alt="..." class="img-rounded">메뉴1 : 15,000원
-							</a>
-						</div>
-						<div class="menuPhoto">
-							<a href="#" class="thumbnail"> <img src="images/store_img01.png"
-								alt="..." class="img-rounded">메뉴2 : 14,000원
-							</a>
-						</div>
-						<div class="menuPhoto">
-							<a href="#" class="thumbnail"> <img src="images/store_img01.png"
-								alt="..." class="img-rounded">메뉴3 : 13,000원
-							</a>
-						</div>
-						<div class="menuPhoto">
-							<a href="#" class="thumbnail"> <img src="images/store_img01.png"
-								alt="..." class="img-rounded">메뉴4 : 13,500원
-							</a>
-						</div>
-						<div class="menuPhoto">
-							<a href="#" class="thumbnail"> <img src="images/store_img01.png"
-								alt="..." class="img-rounded">메뉴5 : 15,500원
-							</a>
-						</div>
-						 -->
-					</div>
-					<div class="col-xs-16 col-md-16 menuList">
-						<!-- 
-						<div class="menuPhoto">
-							<a href="#" class="thumbnail"> <img src="images/store_img01.png"
-								alt="..." class="img-rounded">메뉴6 : 14,000원
-							</a>
-						</div>
-						<div class="menuPhoto">
-							<a href="#" class="thumbnail"> <img src="images/store_img01.png"
-								alt="..." class="img-rounded">메뉴7 : 12,000원
-							</a>
-						</div>
-						<div class="menuPhoto">
-							<a href="#" class="thumbnail"> <img src="images/store_img01.png"
-								alt="..." class="img-rounded">메뉴8 : 11,000원
-							</a>
-						</div>
-						<div class="menuPhoto">
-							<a href="#" class="thumbnail"> <img src="images/store_img01.png"
-								alt="..." class="img-rounded">메뉴9 : 9,000원
-							</a>
-						</div>
-						<div class="menuPhoto">
-							<a href="#" class="thumbnail"> <img src="images/store_img01.png"
-								alt="..." class="img-rounded">메뉴10 : 8,000원
-							</a>
-						</div>
-						 -->
-						<c:forEach var="ml" items="${menuLists }">
-							<div class="menuPhoto">
-								<a class="thumbnail" style="font-weight: bold;"> <img src="images/${ml.image_link }"
-									alt="..." class="img-rounded" style="border-radius: 15px;">${ml.menu_name } <br /> : ${ml.price }원
-								</a>
-							</div>
-						</c:forEach>
-						
-					</div>
-				</div>
-			</div>
-			<!-- id="menuboard" class="col-md-offset-1 col-md-1 container3  " -->
-			<br /> <br /> <br /> <br />
-			<div class=" container4">
-				<div id="reviewList" style="margin-top: 5vh; margin-left: 2vw;">
-					<h1 style="padding-left: 2vw; display: inline;">리뷰</h1>
-					<button type="submit" class="btn" style="margin-left: 42vw;">리뷰 작성하기</button>
-					<br />
-					<div class="revKeyList">
-						<br />
-						<ul style="display: flex; text-align: center;">
-							<!-- 
-							<li><input class="" type="text"
-								placeholder="리뷰 키워드1" readonly="readonly" /></li>
-							<li><input class="" type="text"
-								placeholder="리뷰 키워드2" readonly="readonly" /></li>
-							<li><input class="" type="text"
-								placeholder="리뷰 키워드3" readonly="readonly" /></li>
-							<li><input class="" type="text"
-								placeholder="리뷰 키워드4" readonly="readonly" /></li>
-							<li><input class="" type="text"
-								placeholder="리뷰 키워드5" readonly="readonly" /></li>
-							 -->	
-							<c:forEach var="sK" items="${stKeys }">
-								<li style="display: inline-block;"><input class="" type="text" style="text-align: center; font-weight: bold;"
-								placeholder="${sK.st_keyword }" readonly="readonly" /></li>
-							</c:forEach>
-						</ul>
-						<!-- 
-						<ul style="display: flex;">
-							<li><input class="" type="text"
-								placeholder="리뷰 키워드6" readonly="readonly" /></li>
-							<li><input class="" type="text"
-								placeholder="리뷰 키워드7" readonly="readonly" /></li>
-							<li><input class="" type="text"
-								placeholder="리뷰 키워드8" readonly="readonly" /></li>
-							<li><input class="" type="text"
-								placeholder="리뷰 키워드9" readonly="readonly" /></li>
-							<li><input class="" type="text"
-								placeholder="리뷰 키워드10" readonly="readonly" /></li>
-						</ul>
-						 -->
-						<br />
-						<div id="revList" style="margin-left: 1vw;">
-							<!-- 
-							<div class="reViews">
-								<div class="reView revBack">
-									<span id="userId" style="font-size: 15pt; font-weight: bold; margin-left: 1vw;">디토</span><br />
-									<textarea class=" reV" style="height: 7vh; margin-left: 1vw;" placeholder="훌쩍 훌쩍 커버렸어"
-										readonly="readonly"></textarea>
-									<div id="repCon">
-										<span style="padding-left: 16px; display: inline;">작성
-											일자 : 2023.08.02</span><br />
-										<div class="revRec" style="padding-left: 5px;">
-											<button type="button" class="recBtn" onclick="">비추천</button>
-											<span class="glyphicon glyphicon-star-empty"aria-hidden="true" style="float: right;"></span>
-											<button type="button" class="recBtn" onclick="">추천</button>
-											<span class="glyphicon glyphicon-star" style="float: right;" aria-hidden="true"></span>
-										</div>
-										<button type="submit" class="reportBtn" style="float: right;">신고하기</button><br /><br />
-									</div>
-								</div>
-							</div>
-							<div class="reViews">
-								<div class="reView revBack">
-									<span id="userId" style="font-size: 15pt; font-weight: bold; margin-left: 1vw;">ETA</span><br />
-									<textarea class=" reV" style="height: 7vh;  margin-left: 1vw;" 
-										placeholder="뭐니 너의 ETA 뭐니 너의 ETA" readonly="readonly"></textarea>
-									<div id="repCon">
-										<span style="padding-left: 16px; display: inline;">작성
-											일자 : 2023.08.02</span><br />
-										<div class="revRec" style="padding-left: 5px;">
-											<button type="button" class="recBtn" onclick="">비추천</button>
-											<span class="glyphicon glyphicon-star-empty"aria-hidden="true" style="float: right;"></span>
-											<button type="button" class="recBtn" onclick="">추천</button>
-											<span class="glyphicon glyphicon-star" style="float: right;" aria-hidden="true"></span>
-										</div>
-										<button type="submit" class="reportBtn" style="float: right;">신고하기</button><br /><br />
-									</div>
-								</div>
-							</div>
-							<div class="reViews">
-								<div class="reView revBack">
-									<span id="userId" style="font-size: 15pt; font-weight: bold; margin-left: 1vw;">주목</span><br />
-									<textarea class=" reV" style="height: 7vh; margin-left: 1vw;"
-										placeholder="너에게 필요한 건 주목이야--" readonly="readonly"></textarea>
-									<div id="repCon">
-										<span style="padding-left: 16px; display: inline;">작성
-											일자 : 2023.08.02</span><br />
-										<div class="revRec" style="padding-left: 5px;">
-											<button type="button" class="recBtn" onclick="">비추천</button>
-											<span class="glyphicon glyphicon-star-empty"aria-hidden="true" style="float: right;"></span>
-											<button type="button" class="recBtn" onclick="">추천</button>
-											<span class="glyphicon glyphicon-star" style="float: right;" aria-hidden="true"></span>
-										</div>
-										<button type="submit" class="reportBtn" style="float: right;">신고하기</button><br /><br />
-									</div>
-								</div>
-							</div>
-							 -->
-						<c:forEach var="rv" items="${reViews }">
-							<div class="reViews">
-								<div class="reView revBack">
-									<span id="userId" style="font-size: 15pt; font-weight: bold; margin-left: 1vw;">${rv.user_nickname }</span><br />
-									<textarea class=" reV" style="height: 7vh; margin-left: 1vw; font-size: 12pt; font-weight: bold;"
-										placeholder="${rv.rv_content}" readonly="readonly"></textarea>
-									<div id="repCon">
-										<span style="padding-left: 16px; display: inline;">작성
-											일자 : ${rv.reg_date }</span><br />
-										<button type="submit" class="reportBtn btn" style="float: right;">신고하기</button><br />
-										<div class="revRec" style="padding-left: 5px;">
-											<button type="button" class="recBtn btn" onclick="">비추천</button>
-											<span class="glyphicon glyphicon-star-empty" style="float: right;" aria-hidden="true"> ${rv.rec_nonrec_name2 } </span>
-											<button type="button" class="recBtn btn" onclick="">추천</button>
-											<span class="glyphicon glyphicon-star" style="float: right;" aria-hidden="true"> ${rv.rec_nonrec_name1 } </span>
-										</div>
-										
-									</div>
-								</div>
-							</div>
-						 </c:forEach>	
-						 
-						</div>
-						<!-- id="revList" -->
-					</div>
-					<!-- class="revKeyList"  -->
-				</div>
-			</div>
-			<!-- class="col-md-8  container4" -->
-		</div>
-		<!-- id="container1" class="col-md-8" -->
-		 --%>
-	</div>
-	<!-- main -->
-
-
-
-
-		<!-- 
-		<div class="main" style="margin: 0 auto;">
-		
-			<div id="st_detail_header">
-				<h1>매장 정보 기입(선택)</h1><br>
-				<hr>
-			</div>
-			
-			
-			<div class="time" style="display: table;">
-				
-				<div>영업시간</div>
-				<div class="time"> 
-					<table border="0">
-						<tr>
-							<th>월요일</th>
-							<td>10:00</td>
-							<td> ~ </td>
-							<td>10:00</td>
-						</tr>
-					</table>
-				</div>
-			</div>
-		
-		</div>
-		
-		 -->
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		<!-- 비교함 영역 -->
-		<div id="compareDiv">
-			<div class="rectDiv">
-				<!-- 비교함 이름 영역 -->
-				<div class="comNameDiv">
-					<span style="font-color: #ef6351">비교함</span>
-				</div>
-				<!-- 비교함 담은 가게 리스트 영역 -->
-				<div class="comStoreListDiv">
-					<!-- 한 가게 영역 -->
-					<div class="comStoreDiv">
-						<!-- 한 가게 대표사진 영역 -->
-						<div class="comStoreImgDiv">
-							<input type="checkbox" class="comStImgCB" id="st1"> <img
-								class="comStImg" src="<%=cp%>/images/store_img01.png">
-						</div>
-						<!-- 한 가게 가게이름 영역 -->
-						<div class="comStoreNameDiv">가게1</div>
-					</div>
-
-					<!-- 한 가게 영역 -->
-					<div class="comStoreDiv">
-						<!-- 한 가게 대표사진 영역 -->
-						<div class="comStoreImgDiv">
-							<input type="checkbox" class="comStImgCB" id="st2"> <img
-								class="comStImg" src="<%=cp%>/images/store_img01.png">
-						</div>
-						<!-- 한 가게 가게이름 영역 -->
-						<div class="comStoreNameDiv">가게2</div>
-					</div>
-
-					<!-- 한 가게 영역 -->
-					<div class="comStoreDiv">
-						<!-- 한 가게 대표사진 영역 -->
-						<div class="comStoreImgDiv">
-							<input type="checkbox" class="comStImgCB" id="st3"> <img
-								class="comStImg" src="<%=cp%>/images/store_img01.png">
-						</div>
-						<!-- 한 가게 가게이름 영역 -->
-						<div class="comStoreNameDiv">가게3</div>
-					</div>
-
-					<!-- 한 가게 영역 -->
-					<div class="comStoreDiv">
-						<!-- 한 가게 대표사진 영역 -->
-						<div class="comStoreImgDiv">
-							<input type="checkbox" class="comStImgCB" id="st4"> <img
-								class="comStImg" src="<%=cp%>/images/store_img01.png">
-						</div>
-						<!-- 한 가게 가게이름 영역 -->
-						<div class="comStoreNameDiv">가게4</div>
-					</div>
-
-					<!-- 한 가게 영역 -->
-					<div class="comStoreDiv">
-						<!-- 한 가게 대표사진 영역 -->
-						<div class="comStoreImgDiv">
-							<input type="checkbox" class="comStImgCB" id="st5"> <img
-								class="comStImg" src="<%=cp%>/images/store_img01.png">
-						</div>
-						<!-- 한 가게 가게이름 영역 -->
-						<div class="comStoreNameDiv">가게5</div>
-					</div>
-
-					<!-- 한 가게 영역 -->
-					<div class="comStoreDiv">
-						<!-- 한 가게 대표사진 영역 -->
-						<div class="comStoreImgDiv">
-							<input type="checkbox" class="comStImgCB" id="st6"> <img
-								class="comStImg" src="<%=cp%>/images/store_img01.png">
-						</div>
-						<!-- 한 가게 가게이름 영역 -->
-						<div class="comStoreNameDiv">가게6</div>
-					</div>
-
-
-				</div>
-			</div>
-
-			<div class="comStoreBtnDiv">
-				<button type="button" class="btn" id="comBtn" name="comBtn">비교하기</button>
-			</div>
-		</div>
-
-	</div>
-		
+	
 	<div class="footer">
 		<c:import url="/WEB-INF/view/footer.jsp"></c:import>
 	</div>
+
+</div>
+<!-- main -->
 	
 </form>
 </body>
