@@ -140,6 +140,16 @@
 		ON SP.ST_NUM = SL.ST_NUM
 		WHERE CB.USER_NUM = #{user_num}
 	</select> -->
+	
+	
+	<select id="userAlarm" resultType="com.yameokja.mc.AlarmDTO">
+		SELECT USER_NUM, CHECK_DATE, COMMENTARY
+		FROM USER_ALARM
+		WHERE USER_NUM = #{user_num}
+		ORDER BY CHECK_DATE	
+	</select>
+	
+	
 </mapper>
 
 

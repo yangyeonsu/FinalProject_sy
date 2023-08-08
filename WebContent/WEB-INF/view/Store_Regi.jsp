@@ -194,11 +194,66 @@ button
 	margin-left: 2vw;
 }
 
+#st_location
+{
+	width: 24vw;
+	margin-right: 1vw;
+}
+
 </style>
 
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript" src="<%=cp %>/js/jquery-ui.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript">
+	
+	function sample6_execDaumPostcode() {
+	    new daum.Postcode({
+	        oncomplete: function(data) {
+	            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+	
+	            // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+	            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+	            var addr = ''; // 주소 변수
+	            var extraAddr = ''; // 참고항목 변수
+	
+	            //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+	            if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+	                addr = data.roadAddress;
+	            } else { // 사용자가 지번 주소를 선택했을 경우(J)
+	                addr = data.jibunAddress;
+	            }
+	
+	            // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+	            if(data.userSelectedType === 'R'){
+	                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+	                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+	                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+	                    extraAddr += data.bname;
+	                }
+	                // 건물명이 있고, 공동주택일 경우 추가한다.
+	                if(data.buildingName !== '' && data.apartment === 'Y'){
+	                    extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+	                }
+	                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+	                if(extraAddr !== ''){
+	                    extraAddr = ' (' + extraAddr + ')';
+	                }
+	                // 조합된 참고항목을 해당 필드에 넣는다.
+	                /* document.getElementById("sample6_extraAddress").value = extraAddr; */
+	            
+	            } /* else {
+	                document.getElementById("sample6_extraAddress").value = '';
+	            } */
+	
+	            // 우편번호와 주소 정보를 해당 필드에 넣는다.
+	            document.getElementById('st_location').value = addr + extraAddr;
+	            /* document.getElementById("sample6_address").value = addr; */
+	            // 커서를 상세주소 필드로 이동한다.
+	            document.getElementById("st_location_dt").focus();
+	        }
+	    }).open();
+	}
 	
 	function fn_ValidationCheck(value) {
 	    var valueMap = value.replace(/-/gi, '').split('').map(function (item) {
@@ -226,6 +281,10 @@ button
 	
 	    $("#err1").toggle(!isValid);
 	    $("#st_in_num1").focus();
+	    
+	    if (isValid)
+	    	$("#st_in_num").val(st_in_numInput);
+	    
 	
 	    return isValid;
 	}
@@ -297,7 +356,7 @@ button
 	        }
 
 	        // 폼 submit 액션 처리 수행
-	        $("#stinfoinsert").submit();
+	        $("#userForm").submit();
 	    });
 	});
 	
@@ -338,6 +397,7 @@ button
 <body>
 
 <div class="bframe">
+	<form action="storeregiinsert.action" method="post" id="userForm" enctype="multipart/form-data">
 	<!-- header -->
 	<div><c:import url="header_user.jsp"></c:import></div>
 	
@@ -349,117 +409,117 @@ button
 		
 		<!-- 입력 부분 -->
 		<div class="st_info_insert">
-			<form action="storeregiinsert.action" method="post" id="stinfoinsert">
 		
+				<!-- 사업자 등록 번호 -->
+				<div class="igroup">
+					<div class="title">
+						사업자 등록 번호
+					</div>
+					<div class="input_group">
+						<input type="text" class="inputform" id="st_in_num1" maxlength='3'> - 
+						<input type="text" class="inputform" id="st_in_num2" maxlength='2'> - 
+						<input type="text" class="inputform" id="st_in_num3" maxlength='5'>
+						<input type="hidden" id="st_in_num" name="st_in_num">
+						<button type="button" class="cfb" onclick="st_in_numcheck()">인증하기</button>
+						
+					</div>
+					<span id="err1" style="color: red; font-weight: bold; display: none;">잘못된 사업자 등록 번호 입니다.</span>
+				</div>
+				
+				<!-- 서류등록 -->
+				<div class="igroup">
+					<div class="title">
+						사업자 서류등록
+					</div>
+					<div class="input_group" id="fileregi1">
+					    <label for="file1" class="upload-name" id="upload-name01">파일 업로드 click here~!!!</label>
+					    <input type="file" id="file1" class="file" onchange="displayAndSetFileName1()" name="st_in_file">
+					    <input class="upload-name" id="upload-name1" value="" placeholder="첨부파일" readonly>
+					</div>
+					<span id="err2" style="color: red; font-weight: bold; display: none;"></span>
+				</div>
+				
+				<!-- 사업장 관리 번호 -->
+				<div class="igroup">
+					<div class="title">
+						사업장 관리 번호
+					</div>
+					<div class="input_group">
+						<input type="text" class="inputform" id="st_place_num" name="st_place_num">
+					</div>
+					<span id="err3" style="color: red; font-weight: bold; display: none;"></span>
+				</div>
+				
+				<!-- 서류등록 -->
+				<div class="igroup">
+					<div class="title">
+						사업장 서류등록
+					</div>
+					<div class="input_group" id="fileregi2">
+					    <label for="file2" class="upload-name" id="upload-name02">파일 업로드 click here~!!!</label>
+					    <input type="file" id="file2" class="file" onchange="displayAndSetFileName2()" name="st_place_file">
+					    <input class="upload-name" id="upload-name2" value="" placeholder="첨부파일" readonly>
+					</div>
+					<span id="err4" style="color: red; font-weight: bold; display: none;"></span>
+				</div>
+				
+				<!-- 가게명 -->
+				<div class="igroup">
+					<div class="title">
+						가게 명
+					</div>
+					<div class="input_group">
+						<input type="text" class="inputform" id="st_name" name="st_name">
+					</div>
+					<span id="err5" style="color: red; font-weight: bold; display: none;"></span>
+				</div>
+				
+				<!-- 가게 주소 -->
+				<div class="igroup">
+					<div class="title">
+						가게 주소
+					</div>
+					<div class="input_group">
+						<input type="text" class="inputform" name="st_location" id="st_location" placeholder="주소" readonly>
+						<button type="button" id="addrsc" onclick="sample6_execDaumPostcode()">주소 찾기</button>
+					</div>
+					<span id="err6" style="color: red; font-weight: bold; display: none;"></span>
+				</div>
+				
+				<!-- 가게 상세 주소 -->
+				<div class="igroup">
+					<div class="title">
+						가게 상세 주소
+					</div>
+					<div class="input_group">
+						<input type="text" class="inputform" name="st_location_dt" id="st_location_dt" placeholder="상세주소">
+						
+					</div>
+					<span id="err7" style="color: red; font-weight: bold; display: none;"></span>
+				</div>
+				
+				<!-- 가게 번호 -->
+				<div class="igroup">
+					<div class="title">
+						가게 번호
+					</div>
+					<div class="input_group">
+						<input type="text" class="inputform" name="st_tel" id="st_tel">
+					</div>
+					<span id="err8" style="color: red; font-weight: bold; display: none;"></span>
+				</div>
+				
+				
+				<div class="button">
+					<button type="reset">취소</button>
+					<button type="button" id="insert" onclick="checkpoint()">완료</button><br>
+					<span id="err9" style="color: red; font-weight: bold; display: none;"></span>
+				</div>
+				
+				<!-- user_num -->
+				<input type="hidden" class="inputform" name="user_num" id="user_num"
+				value="<%=(String) session.getAttribute("user_num")%>">
 			
-			
-			<!-- 사업자 등록 번호 -->
-			<div class="igroup">
-				<div class="title">
-					사업자 등록 번호
-				</div>
-				<div class="input_group">
-					<input type="text" class="inputform" name="st_in_num" id="st_in_num1" maxlength='3'> - 
-					<input type="text" class="inputform" name="st_in_num" id="st_in_num2" maxlength='2'> - 
-					<input type="text" class="inputform" name="st_in_num" id="st_in_num3" maxlength='5'>
-					<button type="button" class="cfb" onclick="st_in_numcheck()">인증하기</button>
-					
-				</div>
-				<span id="err1" style="color: red; font-weight: bold; display: none;">잘못된 사업자 등록 번호 입니다.</span>
-			</div>
-			
-			<!-- 서류등록 -->
-			<div class="igroup">
-				<div class="title">
-					사업자 서류등록
-				</div>
-				<div class="input_group" id="fileregi1">
-				    <label for="file1" class="upload-name" id="upload-name01">파일 업로드 click here~!!!</label>
-				    <input type="file" id="file1" class="file" onchange="displayAndSetFileName1()">
-				    <input class="upload-name" id="upload-name1" value="" placeholder="첨부파일" readonly>
-				</div>
-				<span id="err2" style="color: red; font-weight: bold; display: none;"></span>
-			</div>
-			
-			<!-- 사업장 관리 번호 -->
-			<div class="igroup">
-				<div class="title">
-					사업장 관리 번호
-				</div>
-				<div class="input_group">
-					<input type="text" class="inputform" id="st_place_num" name="st_place_num">
-				</div>
-				<span id="err3" style="color: red; font-weight: bold; display: none;"></span>
-			</div>
-			
-			<!-- 서류등록 -->
-			<div class="igroup">
-				<div class="title">
-					사업장 서류등록
-				</div>
-				<div class="input_group" id="fileregi2">
-				    <label for="file2" class="upload-name" id="upload-name02">파일 업로드 click here~!!!</label>
-				    <input type="file" id="file2" class="file" onchange="displayAndSetFileName2()">
-				    <input class="upload-name" id="upload-name2" value="" placeholder="첨부파일" readonly>
-				</div>
-				<span id="err4" style="color: red; font-weight: bold; display: none;"></span>
-			</div>
-			
-			<!-- 가게명 -->
-			<div class="igroup">
-				<div class="title">
-					가게 명
-				</div>
-				<div class="input_group">
-					<input type="text" class="inputform" id="st_name" name="st_name">
-				</div>
-				<span id="err5" style="color: red; font-weight: bold; display: none;"></span>
-			</div>
-			
-			<!-- 가게 주소 -->
-			<div class="igroup">
-				<div class="title">
-					가게 주소
-				</div>
-				<div class="input_group">
-					<input type="text" class="inputform" name="st_location" id="st_location">
-				</div>
-				<span id="err6" style="color: red; font-weight: bold; display: none;"></span>
-			</div>
-			
-			<!-- 가게 상세 주소 -->
-			<div class="igroup">
-				<div class="title">
-					가게 상세 주소
-				</div>
-				<div class="input_group">
-					<input type="text" class="inputform" name="st_location_dt" id="st_location_dt">
-				</div>
-				<span id="err7" style="color: red; font-weight: bold; display: none;"></span>
-			</div>
-			
-			<!-- 가게 번호 -->
-			<div class="igroup">
-				<div class="title">
-					가게 번호
-				</div>
-				<div class="input_group">
-					<input type="text" class="inputform" name="st_tel" id="st_tel">
-				</div>
-				<span id="err8" style="color: red; font-weight: bold; display: none;"></span>
-			</div>
-			
-			
-			<div class="button">
-				<button type="reset">취소</button>
-				<button type="button" id="insert" onclick="checkpoint()">완료</button><br>
-				<span id="err9" style="color: red; font-weight: bold; display: none;"></span>
-			</div>
-			
-			<!-- user_num -->
-			<input type="hidden" class="inputform" name="user_num" id="user_num"
-			value="<%=(String) session.getAttribute("user_num")%>">
-			</form>
 		</div> <!-- st_info_insert -->
 	</div>
 	
@@ -467,9 +527,8 @@ button
 	<!-- footer -->
 	<div><c:import url="footer.jsp"></c:import></div>
 
-
+	</form>
 </div>
-
 
 </body>
 </html>

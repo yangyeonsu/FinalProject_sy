@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%
 	request.setCharacterEncoding("UTF-8");
 String cp = request.getContextPath();
@@ -16,14 +17,204 @@ String cp = request.getContextPath();
 <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
 
 <link rel="stylesheet" type="text/css" href="<%=cp%>/css/compareBox.css">
-<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 
-<!-- 부가적인 테마 -->
-<!-- <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"> -->
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 
 <link rel="stylesheet" type="text/css"
 	href="<%=cp%>/css/storeDetail.css">
+
+<link rel="stylesheet" type="text/css" href="<%=cp%>/css/userMyPage.css">
+<link rel="stylesheet" type="text/css" href="<%=cp%>/css/side_bar.css">
+
+
+<script type="text/javascript"
+	src="http://code.jquery.com/jquery.min.js"></script>
+
+<!-- 부가적인 테마 -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+<style type="text/css">
+#body {
+	width: 100%;
+	display: flex;
+}
+
+.mainBody {
+	background-color: #F7F4EA;
+	margin-left: 20vw;
+	width: 60vw;
+}
+
+.main {
+	padding-top: 2vh;
+}
+
+.container1 {
+	float: left;
+}
+
+.main-left {
+	width: 50%;
+	height: 40vh;
+	float: left;
+	text-align: center;
+}
+
+.main-right {
+	width: 50%;
+	height: 40vh;
+	float: right;
+	text-align: center;
+}
+
+.opli, .btli {
+	border: 2vw;
+	width: 10vw;
+	height: 3vh;
+}
+
+#weekList li, .time li {
+	padding-bottom: 0.5vw;
+	padding-right: 0.5vw;
+	padding-left: 0.5vw;
+	padding-top: 0.5vw;
+	list-style: none;
+	border-radius: 11px;
+}
+
+.revKeyList li {
+	padding-bottom: 0.3vw;
+	padding-top: 0.3vw;
+	background-color: #F8E6E0;
+	border: 1px solid #F781BE;
+	margin: 0.5vw;
+	border-radius: 11px;
+	list-style: none;
+}
+
+.revKeyList input {
+	background: none;
+	border: 0;
+	list-style: none;
+}
+
+.openclose {
+	width: 50%;
+	float: left;
+}
+
+.time {
+	width: 50%;
+	float: left;
+	text-align: center;
+}
+
+.btli {
+	text-align: center;
+}
+
+.container2 {
+	margin-top: 20vh;
+	margin-left: 4vw;
+}
+
+.info {
+	width: 100%;
+	height: 50%;
+	display: flex;
+	padding-right: 2vw;
+	text-align: left;
+	margin: 1vw;
+}
+
+.info input, textarea {
+	width: 35vw;
+	height: 4vh;
+	background-color: #F8E6E0;
+	border: 0;
+}
+
+.container3, .container4 {
+	width: 100%;
+	float: left;
+	margin-top: 3vh;
+}
+
+.container3 {
+	padding-left: 0.2vw;
+}
+
+.thumbnail {
+	width: 10vw;
+	height: 17vh;
+	float: left;
+}
+
+.img-rounded {
+	width: 100%;
+	height: 100%;
+}
+
+.main ul {
+	list-style-type: none;
+}
+
+.menu {
+	display: flex;
+	justify-content: space-evenly;
+	padding-right: 5vw;
+	padding-left: 5vw;
+}
+
+.form {
+	padding-left: 3vw;
+}
+
+.revBoard {
+	padding-left: 2vw;
+}
+
+.menuList {
+	display: flex;
+	margin-left: 3vw;
+}
+
+.menuPhoto {
+	padding: 1vw;
+}
+
+.revBack {
+	width: 90%;
+	height: 14vh;
+	background-color: #EED2CE;
+	border-radius: 11px;
+}
+
+.btn {
+	background-color: #F7AF97;
+	border: 1px #EF6351;
+	border-radius: 8px;
+	color: white;
+	font-size: 10pt;
+	font-family: 'IBM Plex Sans KR', sans-serif;
+	cursor: pointer;
+}
+
+#repCon {
+	float: right;
+}
+
+.reViews {
+	padding-bottom: 2vh;
+}
+
+.recBtn {
+	float: right;
+}
+
+
+</style>
 
 
 <script type="text/javascript">
@@ -325,11 +516,90 @@ String cp = request.getContextPath();
 					</c:forEach>
 
 					<div id="menuboard" class="container3">
+
 						<!-- 메뉴 -->
 						<h2>메뉴</h2>
 						<div class="menuList">
 							<c:forEach var="ml" items="${menuLists }">
 								<div class="menu">
+
+						<div id="rv-Keyword">
+							<br /> <br />
+							<!-- 메뉴 -->
+							<h1 style="padding-left: 4vw;">메뉴</h1>
+							<div class="menuList" style="padding-bottom: 1vh;">
+								<!-- 
+							<div class="menuPhoto">
+								<a href="#" class="thumbnail"> <img src="images/store_img01.png"
+									alt="..." class="img-rounded">메뉴1 : 15,000원
+								</a>
+							</div>
+							-->
+						</div>
+						<div class="col-xs-16 col-md-16 menuList">
+							<!-- 
+							<div class="menuPhoto">
+								<a href="#" class="thumbnail"> <img src="images/store_img01.png"
+									alt="..." class="img-rounded">메뉴2 : 14,000원
+								</a>
+							</div>
+							<div class="menuPhoto">
+								<a href="#" class="thumbnail"> <img src="images/store_img01.png"
+									alt="..." class="img-rounded">메뉴3 : 13,000원
+								</a>
+							</div>
+							<div class="menuPhoto">
+								<a href="#" class="thumbnail"> <img src="images/store_img01.png"
+									alt="..." class="img-rounded">메뉴4 : 13,500원
+								</a>
+							</div>
+							<div class="menuPhoto">
+								<a href="#" class="thumbnail"> <img src="images/store_img01.png"
+									alt="..." class="img-rounded">메뉴5 : 15,500원
+								</a>
+							</div>
+							 -->
+							</div>
+							<div class="col-xs-16 col-md-16 menuList">
+								<!-- 
+							<div class="menuPhoto">
+								<a href="#" class="thumbnail"> <img src="images/store_img01.png"
+									alt="..." class="img-rounded">메뉴6 : 14,000원
+								</a>
+							</div>
+							-->
+                
+							<c:forEach var="ml" items="${menuLists }">
+								<div class="menuPhoto">
+									<a class="thumbnail" style="font-weight: bold;"> <img src="images/${ml.image_link }"
+										alt="..." class="img-rounded" style="border-radius: 15px;">${ml.menu_name } <br /> : ${ml.price }원
+									</a>
+								</div>
+							</c:forEach>
+						<--
+							<div class="menuPhoto">
+								<a href="#" class="thumbnail"> <img src="images/store_img01.png"
+									alt="..." class="img-rounded">메뉴7 : 12,000원
+								</a>
+							</div>
+							<div class="menuPhoto">
+								<a href="#" class="thumbnail"> <img src="images/store_img01.png"
+									alt="..." class="img-rounded">메뉴8 : 11,000원
+								</a>
+							</div>
+							<div class="menuPhoto">
+								<a href="#" class="thumbnail"> <img src="images/store_img01.png"
+									alt="..." class="img-rounded">메뉴9 : 9,000원
+								</a>
+							</div>
+							<div class="menuPhoto">
+								<a href="#" class="thumbnail"> <img src="images/store_img01.png"
+									alt="..." class="img-rounded">메뉴10 : 8,000원
+								</a>
+							</div>
+							 -->
+								<c:forEach var="ml" items="${menuLists }">
+
 									<div class="menuPhoto">
 										<img class="thumbnail" src="<%=cp %>/images/${ml.image_link }" />
 									</div>
@@ -341,6 +611,7 @@ String cp = request.getContextPath();
 					</div>
 
 					<div class=" container4">
+
 						<div id="reviewList">
 							<h2>리뷰</h2>
 							
@@ -349,6 +620,92 @@ String cp = request.getContextPath();
 								<c:forEach var="rvKey" items="${reviewKeys }">
 									<div class="rvKey">
 										${rvKey.rv_key_name }
+
+						<div id="reviewList" style="margin-top: 5vh; margin-left: 2vw;">
+							<h1 style="padding-left: 2vw; display: inline;">리뷰</h1>
+							<button type="submit" class="btn" style="margin-left: 42vw;">리뷰
+								작성하기</button>
+							<br />
+
+							<ul style="display: flex; text-align: center;">	
+								<c:forEach var="sK" items="${stKeys }">
+									<li style="display: inline-block;"><input class="" type="text" style="text-align: center; font-weight: bold;"
+									placeholder="${sK.st_keyword }" readonly="readonly" /></li>
+								</c:forEach>
+							</ul>
+							<br />
+							<div id="revList" style="margin-left: 1vw;">
+							<c:forEach var="rv" items="${reViews }">
+								<div class="reViews">
+									<div class="reView revBack">
+										<span id="userId" style="font-size: 15pt; font-weight: bold; margin-left: 1vw;">${rv.user_nickname }</span><br />
+										<textarea class=" reV" style="height: 7vh; margin-left: 1vw; font-size: 12pt; font-weight: bold;"
+											placeholder="${rv.rv_content}" readonly="readonly"></textarea>
+										<div id="repCon">
+											<span style="padding-left: 16px; display: inline;">작성
+												일자 : ${rv.reg_date }</span><br />
+											<button type="submit" class="reportBtn btn" style="float: right;">신고하기</button><br />
+											<div class="revRec" style="padding-left: 5px;">
+												<button type="button" class="recBtn btn" onclick="">비추천</button>
+												<span class="glyphicon glyphicon-star-empty" style="float: right;" aria-hidden="true"> ${rv.rec_nonrec_name2 } </span>
+												<button type="button" class="recBtn btn" onclick="">추천</button>
+												<span class="glyphicon glyphicon-star" style="float: right;" aria-hidden="true"> ${rv.rec_nonrec_name1 } </span>
+
+							<div class="revKeyList">
+								<br />
+								<ul style="display: flex; text-align: center;">
+									<!-- 
+								<li><input class="" type="text"
+									placeholder="리뷰 키워드1" readonly="readonly" /></li>
+								<li><input class="" type="text"
+									placeholder="리뷰 키워드2" readonly="readonly" /></li>
+								<li><input class="" type="text"
+									placeholder="리뷰 키워드3" readonly="readonly" /></li>
+								<li><input class="" type="text"
+									placeholder="리뷰 키워드4" readonly="readonly" /></li>
+								<li><input class="" type="text"
+									placeholder="리뷰 키워드5" readonly="readonly" /></li>
+								 -->
+									<c:forEach var="sK" items="${stKeys }">
+										<li style="display: inline-block;"><input class=""
+											type="text" style="text-align: center; font-weight: bold;"
+											placeholder="${sK.st_keyword }" readonly="readonly" /></li>
+									</c:forEach>
+								</ul>
+								<!-- 
+							<ul style="display: flex;">
+								<li><input class="" type="text"
+									placeholder="리뷰 키워드6" readonly="readonly" /></li>
+								<li><input class="" type="text"
+									placeholder="리뷰 키워드7" readonly="readonly" /></li>
+								<li><input class="" type="text"
+									placeholder="리뷰 키워드8" readonly="readonly" /></li>
+								<li><input class="" type="text"
+									placeholder="리뷰 키워드9" readonly="readonly" /></li>
+								<li><input class="" type="text"
+									placeholder="리뷰 키워드10" readonly="readonly" /></li>
+							</ul>
+							 -->
+								<br />
+								<div id="revList" style="margin-left: 1vw;">
+									<!-- 
+								<div class="reViews">
+									<div class="reView revBack">
+										<span id="userId" style="font-size: 15pt; font-weight: bold; margin-left: 1vw;">디토</span><br />
+										<textarea class=" reV" style="height: 7vh; margin-left: 1vw;" placeholder="훌쩍 훌쩍 커버렸어"
+											readonly="readonly"></textarea>
+										<div id="repCon">
+											<span style="padding-left: 16px; display: inline;">작성
+												일자 : 2023.08.02</span><br />
+											<div class="revRec" style="padding-left: 5px;">
+												<button type="button" class="recBtn" onclick="">비추천</button>
+												<span class="glyphicon glyphicon-star-empty"aria-hidden="true" style="float: right;"></span>
+												<button type="button" class="recBtn" onclick="">추천</button>
+												<span class="glyphicon glyphicon-star" style="float: right;" aria-hidden="true"></span>
+											</div>
+											<button type="submit" class="reportBtn" style="float: right;">신고하기</button><br /><br />
+										</div>
+
 									</div>
 									<div class="rvKeyCount">
 										[${rvKey.rv_key_count }]
@@ -369,6 +726,7 @@ String cp = request.getContextPath();
 												<button type="button" id="repBtn" class="rvBtn" onclick="popupOpen()">신고하기</button>
 											</div>
 										</div>
+
 
 										<div class="rvMiddle">
 											<div class="starScore">
@@ -392,6 +750,10 @@ String cp = request.getContextPath();
 													-
 												</c:when>
 											</c:choose>
+
+												</div>
+
+
 											</div>
 											<div class="rvContent">${rv.rv_content }</div>
 											<div class="regDate">${rv.reg_date }</div>
@@ -441,6 +803,26 @@ String cp = request.getContextPath();
 				</div>
 				<!-- id="container1" class="col-md-8" -->
 			</div>
+
+			<!-- id="container1" class="col-md-8" -->
+		</div>
+		<!-- main -->
+		
+		
+		<!-- 비교함 영역 -->
+		<div id="compareDiv">
+			<div class="rectDiv">
+				<!-- 비교함 이름 영역 -->
+				<div class="comNameDiv">
+					<span style="font-color: #ef6351">비교함</span>
+				</div>
+				<!-- 비교함 담은 가게 리스트 영역 -->
+				<div class="comStoreListDiv">
+					<c:choose>
+							<c:when
+								test="${fn:length(comList) == 0 or fn:length(comList) == null}">
+								<c:forEach var="i" begin="0" end="9">
+
 			<!-- main -->
 
 
@@ -458,6 +840,7 @@ String cp = request.getContextPath();
 							<c:when
 								test="${fn:length(comList) == null or fn:length(comList) == 0 }">
 								<c:forEach begin="0" end="9">
+
 									<div class="comStoreDiv">
 										<!-- 한 가게 대표사진 영역 -->
 										<div class="comStoreImgDiv">
@@ -470,6 +853,18 @@ String cp = request.getContextPath();
 							</c:when>
 							<c:otherwise>
 								<!-- 한 가게 영역 -->
+
+								<c:forEach var="com" items="${comList}" varStatus="status">
+									<div class="comStoreDiv">
+										<!-- 한 가게 대표사진 영역 -->
+										<div class="comStoreImgDiv">
+											<button type="button" value="${com.st_num}" class="comDelete">X</button>
+											<label for="${com.st_num}" class="stLabel"> <input
+												type="checkbox" class="comStImgCB" name="comStImgCB" id="${com.st_num}">
+												<c:set var = "photo" value="${com.photo_link }"/>
+												
+												<c:choose>
+
 								<c:forEach var="com" items="${comList }" varStatus="status">
 									<div class="comStoreDiv">
 										<!-- 한 가게 대표사진 영역 -->
@@ -479,6 +874,7 @@ String cp = request.getContextPath();
 											<label for="${com.st_num}" class="stLabel"> <input
 												type="checkbox" class="comStImgCB" id="${com.st_num}">
 												<c:set var="photo" value="${com.photo_link }" /> <c:choose>
+
 													<c:when test="${empty photo}">
 														<img class="stImg" src="<%=cp%>/images/logo_text.png">
 													</c:when>
@@ -489,10 +885,17 @@ String cp = request.getContextPath();
 											</label>
 										</div>
 										<!-- 한 가게 가게이름 영역 -->
+
+										<div class="comStoreNameDiv">${com.st_name}</div>
+									</div>
+								</c:forEach>
+								<c:forEach begin="0" end="${10 - fn:length(comList)}">
+
 										<div class="comStoreNameDiv">${com.st_name }</div>
 									</div>
 								</c:forEach>
 								<c:forEach begin="0" end="${10 - fn:length(comList) }">
+
 									<div class="comStoreDiv">
 										<!-- 한 가게 대표사진 영역 -->
 										<div class="comStoreImgDiv">
@@ -505,6 +908,9 @@ String cp = request.getContextPath();
 							</c:otherwise>
 						</c:choose>
 					</div>
+
+					<input type="hidden" id="checkedCompare" name="checkedCompare">
+
 				</div>
 				<input type="hidden" name="regionChk" id="regionChk"> <input
 					type="hidden" name="foodlabelChk" id="foodlabelChk"> <input
@@ -512,8 +918,8 @@ String cp = request.getContextPath();
 
 				<div class="comStoreBtnDiv">
 					<button type="button" class="btn" id="comBtn" name="comBtn">비교하기</button>
+
 				</div>
-			</div>
 
 		</div>
 

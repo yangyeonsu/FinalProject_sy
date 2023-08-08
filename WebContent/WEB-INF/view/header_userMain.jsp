@@ -1,4 +1,4 @@
- <%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <% 
 	request.setCharacterEncoding("UTF-8");
@@ -24,19 +24,17 @@
 	#store_header
 	{
 		position: relative;
-		display: flex;
 	    width: 88vw;
 	    align-items: flex-start;
 	    padding-top: 1vh;
-	    margin-left: 6vw;
-	    height: 10vh;
+	    height: 30vh;
 	    max-height: 10vh;
 	}
 
 	#headerAlarm
 	{
 	    width: 70vw;
-	    padding-left: 10vw;
+	    padding-left: 26vw;
 	}
 	
 	
@@ -52,7 +50,7 @@
 	    display: flex;
 	    width: 10vw;
 	    margin-top: 3vh;
-	    padding-left: 55vw;
+	    padding-left: 53vw;
 	    justify-content: space-between;
 	    position: static;
 	}
@@ -82,7 +80,6 @@
 	    display: flex;
 	    flex-direction: row-reverse;
 	    width: 65vw;
-	    margin-left: 4.3vw;
 	}
 	
 	.mypage_menu
@@ -90,7 +87,6 @@
 		position: relative;
 	    transition-duration: 0.5s;
 	    font-size: 0.8vw;
-	    padding-right: 1.8vw;
 	    background-color: #f5f3e7;
 	    margin-right: 4vw;
 	}
@@ -201,9 +197,9 @@ $(function()
 <body>
 
 	<header id="store_header">
-		<div class="headerImg">
+		<%-- <div class="headerImg">
 			<img id="headerLogo" src="<%=cp %>/images/logo_text.png">
-		</div>
+		</div> --%>
 		<div id="headerAlarm">
 			<div class="headerBtn">
 				<div class="menuBtn">
@@ -226,10 +222,61 @@ $(function()
 				</div>
 				<div class="alarm_menu">
 					<ul class="person_listB">
-						<li><a href="#">OOO경고 들어옴</a>
-						<li><a href="#">리뷰신고한거 처리됨</a>
-						<li><a href="#">리뷰신고한거 처리됨</a>
-						<li><a href="#">리뷰신고한거 처리됨</a>
+						<c:forEach var="al" items="${alarm }">
+							<c:choose>
+								<c:when test="${al.commentary eq 'REQ_REJECT' }">
+									<c:choose>
+										<c:when test="${al.check_date eq '-' }">
+											<li><a href="#" class="alarm NonCheck">가게 신고 요청 결과가 변경되었습니다.</a>
+										</c:when>
+										<c:otherwise>
+											<li><a href="#" class="alarm checked">가게 신고 요청 결과가 변경되었습니다.</a>
+										</c:otherwise>
+									</c:choose>
+								</c:when>
+								<c:when test="${al.commentary eq 'ACCU_APPLY' }">
+									<c:choose>
+										<c:when test="${al.check_date eq '-' }">
+											<li><a href="#" class="alarm NonCheck">회원님이 작성하신 리뷰가 신고 되었습니다.</a>
+										</c:when>
+										<c:otherwise>
+											<li><a href="#" class="alarm checked">회원님이 작성하신 리뷰가 신고 되었습니다.</a>
+										</c:otherwise>
+									</c:choose>
+								</c:when>
+								<c:when test="${al.commentary eq 'ACCU_PROCESS' }">
+									<c:choose>
+										<c:when test="${al.check_date eq '-' }">
+											<li><a href="#" class="alarm NonCheck">회원님이 작성하신 리뷰에 대한 신고가 처리 완료 되었습니다.</a>
+										</c:when>
+										<c:otherwise>
+											<li><a href="#" class="alarm checked">회원님이 작성하신 리뷰에 대한 신고가 처리 완료 되었습니다.</a>
+										</c:otherwise>
+									</c:choose>
+								</c:when>
+								<c:when test="${al.commentary eq 'REQ' }">
+									<c:choose>
+										<c:when test="${al.check_date eq '-' }">
+											<li><a href="#" class="alarm NonCheck">회원님이 요청하신 가게 정보 오류 요청이 처리 완료 되었습니다.</a>
+										</c:when>
+										<c:otherwise>
+											<li><a href="#" class="alarm checked">회원님이 요청하신 가게 정보 오류 요청이 처리 완료 되었습니다.</a>
+										</c:otherwise>
+									</c:choose>
+								</c:when>
+								<c:when test="${al.commentary eq 'REP' }">
+									<c:choose>
+										<c:when test="${al.check_date eq '-' }">
+											<li><a href="#" class="alarm NonCheck">회원님이 요청하신 리뷰신고가 처리 완료 되었습니다.</a>
+										</c:when>
+										<c:otherwise>
+											<li><a href="#" class="alarm checked">회원님이 요청하신 리뷰신고가 처리 완료 되었습니다.</a>
+										</c:otherwise>
+									</c:choose>
+								</c:when>
+							
+							</c:choose>						
+						</c:forEach>
 					</ul>
 				</div>
 			</div>
