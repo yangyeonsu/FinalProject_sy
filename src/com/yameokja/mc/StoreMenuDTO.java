@@ -2,7 +2,7 @@ package com.yameokja.mc;
 
 public class StoreMenuDTO
 {
-	private String menu_name, img_link;
+	private String menu_name, image_link;
 	private int price, menu_num;
 	
 	// getter / setter 구성
@@ -14,13 +14,13 @@ public class StoreMenuDTO
 	{
 		this.menu_name = menu_name;
 	}
-	public String getImg_link()
+	public String getImage_link()
 	{
-		return img_link;
+		return image_link;
 	}
-	public void setImg_link(String img_link)
+	public void setImage_link(String image_link)
 	{
-		this.img_link = img_link;
+		this.image_link = image_link;
 	}
 	public int getPrice()
 	{

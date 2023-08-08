@@ -4,6 +4,8 @@ public class StoreOpencloseDTO
 {
 	private int day_num, st_num;
 	private String day_name, operate_time, holiday;
+	
+	
 	public int getDay_num()
 	{
 		return day_num;

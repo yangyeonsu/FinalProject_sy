@@ -16,305 +16,14 @@ String cp = request.getContextPath();
 <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
 
 <link rel="stylesheet" type="text/css" href="<%=cp%>/css/compareBox.css">
-<link rel="stylesheet" type="text/css" href="<%=cp%>/css/userMyPage.css">
-
-
-<script type="text/javascript"
-	src="http://code.jquery.com/jquery.min.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 
 <!-- 부가적인 테마 -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<!-- <link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"> -->
 
-<style type="text/css">
-#body {
-	width: 100%;
-	display: flex;
-}
-
-.mainBody {
-	background-color: #F7F4EA;
-	margin-left: 20vw;
-	width: 60vw;
-}
-
-.main {
-	padding-top: 2vh;
-}
-
-.container1 {
-	float: left;
-}
-
-.main-left {
-	width: 50%;
-	height: 40vh;
-	float: left;
-	text-align: center;
-}
-
-.main-right {
-	width: 50%;
-	height: 40vh;
-	float: right;
-	text-align: center;
-}
-
-.opli, .btli {
-	border: 2vw;
-	width: 10vw;
-	height: 3vh;
-}
-
-#weekList li, .time li {
-	padding-bottom: 0.5vw;
-	padding-right: 0.5vw;
-	padding-left: 0.5vw;
-	padding-top: 0.5vw;
-	list-style: none;
-	border-radius: 11px;
-}
-
-.revKeyList li {
-	padding-bottom: 0.3vw;
-	padding-top: 0.3vw;
-	background-color: #F8E6E0;
-	border: 1px solid #F781BE;
-	margin: 0.5vw;
-	border-radius: 11px;
-	list-style: none;
-}
-
-.revKeyList input {
-	background: none;
-	border: 0;
-	list-style: none;
-}
-
-.openclose {
-	width: 50%;
-	float: left;
-}
-
-.time {
-	width: 50%;
-	float: left;
-	text-align: center;
-}
-
-.btli {
-	text-align: center;
-}
-
-.container2 {
-	margin-top: 20vh;
-	margin-left: 4vw;
-}
-
-.info {
-	width: 100%;
-	height: 50%;
-	display: flex;
-	padding-right: 2vw;
-	text-align: left;
-	margin: 1vw;
-}
-
-.info input, textarea {
-	width: 35vw;
-	height: 4vh;
-	background-color: #F8E6E0;
-	border: 0;
-}
-
-.container3, .container4 {
-	width: 100%;
-	float: left;
-	margin-top: 3vh;
-}
-
-.container3 {
-	padding-left: 0.2vw;
-}
-
-.thumbnail {
-	width: 10vw;
-	height: 17vh;
-	float: left;
-}
-
-.img-rounded {
-	width: 100%;
-	height: 100%;
-}
-
-.main ul {
-	list-style-type: none;
-}
-
-.menu {
-	display: flex;
-	justify-content: space-evenly;
-	padding-right: 5vw;
-	padding-left: 5vw;
-}
-
-.form {
-	padding-left: 3vw;
-}
-
-.revBoard {
-	padding-left: 2vw;
-}
-
-.menuList {
-	display: flex;
-	margin-left: 3vw;
-}
-
-.menuPhoto {
-	padding: 1vw;
-}
-
-.revBack {
-	width: 90%;
-	height: 14vh;
-	background-color: #EED2CE;
-	border-radius: 11px;
-}
-
-.btn {
-	background-color: #F7AF97;
-	border: 1px #EF6351;
-	border-radius: 8px;
-	color: white;
-	font-size: 10pt;
-	font-family: 'IBM Plex Sans KR', sans-serif;
-	cursor: pointer;
-}
-
-#repCon {
-	float: right;
-}
-
-.reViews {
-	padding-bottom: 2vh;
-}
-
-.recBtn {
-	float: right;
-}
-
-.has_sub_menu {
-	list-style-type: none;
-}
-
-.side-menu {
-	top: 50px;
-	width: 5vw;
-	z-index: 10;
-	background: #ef6351;
-	border-right: 1px solid rgba(0, 0, 0, 0.07);
-	height: 90%;
-	margin-top: 5.7vh;
-	position: fixed;
-	align-items: center;
-}
-
-#sidebar-menu li {
-	font-size: 1.5rem;
-}
-
-#sidebar-menu .fas {
-	padding-top: 3vh;
-	padding-left: 1.2vw
-}
-
-.left_sub_menu {
-	position: fixed;
-	top: 50px;
-	width: 18vw;
-	z-index: 10;
-	left: 4.6vw;
-	background: white;
-	height: 90%;
-	margin-top: 5.7vh;
-}
-
-.sub_menu {
-	margin-top: 50px;
-}
-
-.left_sub_menu>.sub_menu li:hover {
-	color: ff5858;
-	background-color: #e1e1e1;
-}
-
-.left_sub_menu>.sub_menu li {
-	color: black;
-	font-size: 17px;
-	font-weight: 600;
-	padding: 20px 0px 8px 14px;
-	border-bottom: 1px solid #e1e1e1;
-}
-
-.sub_menu>h2 {
-	padding-bottom: 4px;
-	border-bottom: 3px solid #797979;
-	margin-top: 30px;
-	font-size: 21px;
-	font-weight: 600;
-	color: #333;
-	margin-left: 10px;
-	margin-right: 10px;
-	font-family: 'NotoKrB';
-}
-
-.fas {
-	color: #ff5858;
-	font-size: 20px;
-	line-height: 20px;
-	float: right;
-	margin-top: 0.6vh;
-	margin-right: 2vw;
-}
-
-.sub_menu>.big_menu>.small_menu li {
-	color: black;
-	font-size: 14px;
-	font-weight: 600;
-	border-bottom: 0px solid #e1e1e1;
-}
-
-.big_menu {
-	list-style-type: none;
-	cursor: pointer;
-}
-
-.samll_menu {
-	position: fixed;
-	list-style-type: none;
-	padding-inline-start: 0px;
-	list-style: none;
-	transition-duration: 0.5s;
-}
-
-.small_menuA {
-	color: black;
-	text-decoration-line: none;
-	background-color: transparent;
-	margin-bottom: 1vh
-}
-
-.big_menu ul {
-	margin-top: 0;
-	margin-bottom: 0;
-}
-
-.has_sub {
-	width: 100%;
-}
-</style>
+<link rel="stylesheet" type="text/css"
+	href="<%=cp%>/css/storeDetail.css">
 
 
 <script type="text/javascript">
@@ -360,6 +69,79 @@ String cp = request.getContextPath();
 			$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
 			$('.overlay').css("z-index", "0");
 			$('#checkOverlay').attr("value", "false");
+		});
+		
+	});
+	
+	// 모달--------------------------------------------------------------------------
+	function popupOpen()
+	{
+
+		if (document.all.popup.style.visibility == "hidden")
+		{
+			document.all.popup.style.visibility = "visible";
+			bgLayerOpen();
+			
+			var $layerPopupObj = $('#popup');
+			var left = ( $(window).scrollLeft() + ($(window).width() - $layerPopupObj.width()) / 2 );
+			var top = ( $(window).scrollTop() + ($(window).height() - $layerPopupObj.height()) / 2 );
+			
+			$layerPopupObj.css(
+			{
+				'left' : left,
+				'top' : top,
+				'position' : 'absolute'
+			});
+			$('body').css('position', 'relative').append($layerPopupObj);
+			
+			return false;
+		} else
+		{
+			document.all.popup.style.visibility = "hidden";
+			bgLayerClear();
+			return false;
+		}
+
+	}
+
+	function bgLayerOpen()
+	{
+		if (!$('.bgLayer').length)
+		{
+			$('<div class="bgLayer"></div>').appendTo($('body'));
+		}
+		var object = $(".bgLayer");
+		var w = $(document).width() + 12;
+		var h = $(document).height();
+
+		object.css(
+		{
+			'width' : w,
+			'height' : h
+		});
+		object.fadeIn(500); //생성되는 시간 설정
+	}
+
+	function bgLayerClear()
+	{
+		var object = $('.bgLayer');
+
+		if (object.length)
+		{
+			object.fadeOut(500, function()
+			{
+				object.remove();
+
+			});
+		}
+	}
+
+	$(function()
+	{
+		$(window).resize(function()
+		{ //화면 크기 변할 시
+			$('.bgLayer').css('width', $(window).width() - 0);
+			$('.bgLayer').css('height', $(window).height() - 0);
 		});
 	});
 </script>
@@ -432,399 +214,227 @@ String cp = request.getContextPath();
 			<div class="mainBody">
 
 				<div id="container1" class="">
+					<c:forEach var="s" items="${store }">
+						<div class="placeholders main">
 
-					<div class="placeholders main">
+							<div class="placeholder main-left">
 
-						<div class="placeholder main-left">
-							<div class="background"
-								style="font-weight: bold; margin-top: 1vh;">
-								<span style="font-size: 30pt;">영업 시간</span><br /> <br /> <br />
-
-								<div id="weekList" class="openclose background">
-
-									<ul>
-										<c:forEach var="op" items="${openClose}">
-											<li><input class="opli" type="text"
-												style="text-align: center;"
-												placeholder="${op.day_name} ${op.start_time}:00 ~ ${op.end_time}:00"
-												readonly="readonly" /></li>
-										</c:forEach>
-									</ul>
-									<br /> <br />
-								</div>
-
-								<div class="time background">
-									<div>
-										<ul>
-											<c:forEach var="bt" items="${breakTime}">
-												<li><input class="btli" type="text"
-													placeholder="${bt.week_weekend} / 브레이크 타임"
-													readonly="readonly" /></li>
-												<li><input class="btli" type="text"
-													placeholder="${bt.start_breaktime} ~ ${bt.end_breaktime} "
-													readonly="readonly" /></li>
-											</c:forEach>
-											<c:forEach var="h" items="${holiday}">
-												<li><input class="btli" type="text"
-													placeholder="휴일 : ${h.day_name}" readonly="readonly" /></li>
-											</c:forEach>
-										</ul>
-
+								<div class="background" style="font-weight: bold;">
+									<div class="storeName">
+										<span style="font-size: 30pt; font-weight: bold;">${s.st_name }</span>
 									</div>
-
-								</div>
-
-							</div>
-
-						</div>
-
-
-						<div class="placeholder main-right">
-							<c:forEach var="s" items="${store }">
-								<div class="background"
-									style="font-weight: bold; margin-top: 1vh; margin-left: 1vw;">
-									<span style="font-size: 30pt; font-weight: bold;">${s.st_name }</span>
-									<br /> <br /> <br />
-
 									<div class="revBoard">
+										<div class="storeImgDiv">
+											<img class="storeImg" src="<%=cp%>/images/store_img01.png">
+										</div>
 
 										<div class="info">
 											<div class="likeRevC likeNum">
-												<label for="likeNum" class=""
-													style="font-weight: bold; display: inline;"> 좋아요 수
-													: &nbsp;&nbsp; <span class="glyphicon glyphicon-heart"
-													aria-hidden="true"> </span> <span id="likeNum"
-													style="display: inline;">${s.like_count }</span>
-												</label>
+												찜 ❤ &nbsp; <span>${clikeNum }</span>
 											</div>
 											<div class="likeRevC score">
-												<label for="score" class=""
-													style="font-weight: bold; display: inline;">
-													&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 평점 :
-													&nbsp;&nbsp;&nbsp;&nbsp; <span id="score"
-													style="display: inline;">${s.star_score}</span>
-												</label>
+												별점 ⭐<span>${s.star_avg}</span>
 											</div>
 
 											<div class="likeRevC reviewNum">
-												<label for="reviewNum" class=""
-													style="font-weight: bold; display: inline;">
-													&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-													리뷰 수 : &nbsp;&nbsp; <span id="reviewNum"
-													style="display: inline;">${s.review_count}</span>
-												</label>
+												리뷰 수 &nbsp; <span>${s.rv_count}</span>
 											</div>
 										</div>
-										<!-- .likeRevC    info background -->
-
-										<br />
-
-										<div class="info background">
-											<label for="addr" class=""
-												style="font-weight: bold; display: inline;">
-												주소&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-												<span id="addr" style="display: inline;"> :
-													${s.st_location }</span>
-											</label>
-										</div>
-
-										<br />
-
-										<div class="info background">
-											<label for="tel" class=""
-												style="font-weight: bold; display: inline;">
-												전화번호&nbsp;&nbsp;&nbsp;&nbsp; <span id="tel"
-												style="display: inline;"> : ${s.st_tel }</span>
-											</label>
-										</div>
-										<br />
-
 									</div>
 								</div>
+							</div>
+
+							<div class="placeholder main-right">
+								<div class="background"
+									style="font-weight: bold; margin-top: 1vh;">
+									<div class="ocName">
+										<span style="font-size: 18pt;">[영업 시간]</span>
+									</div>
+									<div id="weekList" class="openclose background">
+										<div id="opencloseholiday">
+											<div id='opencloseholidayName'>
+												<div class="dayname">요일</div>
+												<div class="time">운영시간</div>
+												<div class="holiday">휴무</div>
+											</div>
+											<div id="opencloseholidayList">
+												<c:forEach var="op" items="${openClose}">
+													<%-- <li><input class="opli" type="text"
+												style="text-align: center;"
+												placeholder="${op.day_name} ${op.start_time}:00 ~ ${op.end_time}:00"
+												readonly="readonly" /></li> --%>
+													<div class="ochList">
+														<div class="dayname">${op.day_name }</div>
+														<div class="time">${op.operate_time }</div>
+														<div class="holiday">${op.holiday }</div>
+													</div>
+												</c:forEach>
+											</div>
+										</div>
+										<div id="breakTime">
+											<c:forEach var="breakTime" items="${breakTime }">
+												<div class="breakName">브레이크타임</div>
+												<div class="breakList">
+													<div>[${breakTime.week_weekend }]
+														&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+													<div>${breakTime.start_breaktime }~
+														${breakTime.end_breaktime }</div>
+												</div>
+											</c:forEach>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="storeKeywordsDiv">
+							<c:forEach var="keyword" items="${stKeys }">
+								"${keyword.st_keyword }" &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							</c:forEach>
 						</div>
 
-					</div>
+						<div class="storeinfo">
+							<div class="storeInfoList">
+								<div id="catName" class="siList1">카테고리</div>
+								<div id="addrName" class="siList1">주소</div>
+								<div id="telName" class="siList1">전화번호</div>
+								<div id="emailName" class="siList1">e-mail</div>
+								<div id="maxName" class="siList1">최대수용인원수</div>
+								<div id="payName" class="siList1">결제수단</div>
+								<div id="explainName" class="siList1">가게 설명</div>
 
-					<!-- <br /> -->
-
-
-
-					<!-- 기타 관련 -->
-
-					<div class="container2 " id="storePay">
-
-
-						<c:forEach var="o" items="${others }" varStatus="status">
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<div class="info background">
-								<label for="payTool" class="oTool" style="font-weight: bold">결제
-									수단&nbsp;&nbsp;&nbsp;&nbsp;</label>
-								<!-- 결제 수단 -->
-								<div class=" form">
-									<input class="" type="text" id="payTool" class="oInfo"
-										placeholder="${o.pay_name }" readonly>
-								</div>
 							</div>
 
-							<div class="info background">
-								<label for="storePage" class="oTool" style="font-weight: bold">가게
-									이메일</label>
-								<!-- 페이지 -->
-								<div class="form">
-									<input class="" type="text" id="storePage" class="oInfo"
-										placeholder="${o.st_email }" readonly>
-								</div>
-							</div>
-							<div class="info background">
-								<label for="etcInfo" class="oTool" style="font-weight: bold">기타
-									정보&nbsp;&nbsp;&nbsp;&nbsp;</label>
-								<!-- 수용 인원 등 -->
-								<div class=" form">
-									<input class="" type="text" id="etcInfo" class="oInfo"
-										placeholder="최대 수용 인원 : ${o.max_customers }, 와이파이 있음, 주차 가능 등..."
-										readonly>
-								</div>
-							</div>
-							<div class="info background">
-								<label for="storeExplain" class="oTool"
-									style="font-weight: bold">가게 설명&nbsp;&nbsp;&nbsp;&nbsp;</label>
-								<!-- 가게 설명 -->
-								<div class="form">
-									<textarea class="" rows="3" id="storeExplain" class="oInfo"
-										placeholder="${o.st_explain }" readonly></textarea>
-								</div>
-							</div>
-							<div>
-								<button type="submit" class="btn" onclick="reqapplyform.action"
-									value="${o.st_num }"
-									style="width: 10vw; height: 3vh; margin-left: 33vw;">가게정보오류수정</button>
+							<div class="storeInfoValue">
+								<div id="cat" class="siList2">${s.food_name }</div>
+								<div id="addr" class="siList2">${s.st_location }</div>
+								<div id="tel" class="siList2">${s.st_tel }</div>
+								<div id="email" class="siList2">${s.st_email }</div>
+								<div id="max" class="siList2">${s.max_customers }</div>
+								<div id="pay" class="siList2"></div>
+								<div id="explain" class="siList2">${s.st_explain }</div>
 							</div>
 
-						</c:forEach>
-					</div>
-					<!-- class="container2 " id="storePay" -->
+
+							<!-- <div>
+						
+							체크박스 들어올 영역!!
+						
+							</div> -->
+						</div>
+					</c:forEach>
+
 					<div id="menuboard" class="container3">
-						<div id="rv-Keyword">
-							<br /> <br />
-							<!-- 메뉴 -->
-							<h1 style="padding-left: 4vw;">메뉴</h1>
-							<div class="menuList" style="padding-bottom: 1vh;">
-								<!-- 
-							<div class="menuPhoto">
-								<a href="#" class="thumbnail"> <img src="images/store_img01.png"
-									alt="..." class="img-rounded">메뉴1 : 15,000원
-								</a>
-							</div>
-							<div class="menuPhoto">
-								<a href="#" class="thumbnail"> <img src="images/store_img01.png"
-									alt="..." class="img-rounded">메뉴2 : 14,000원
-								</a>
-							</div>
-							<div class="menuPhoto">
-								<a href="#" class="thumbnail"> <img src="images/store_img01.png"
-									alt="..." class="img-rounded">메뉴3 : 13,000원
-								</a>
-							</div>
-							<div class="menuPhoto">
-								<a href="#" class="thumbnail"> <img src="images/store_img01.png"
-									alt="..." class="img-rounded">메뉴4 : 13,500원
-								</a>
-							</div>
-							<div class="menuPhoto">
-								<a href="#" class="thumbnail"> <img src="images/store_img01.png"
-									alt="..." class="img-rounded">메뉴5 : 15,500원
-								</a>
-							</div>
-							 -->
-							</div>
-							<div class="col-xs-16 col-md-16 menuList">
-								<!-- 
-							<div class="menuPhoto">
-								<a href="#" class="thumbnail"> <img src="images/store_img01.png"
-									alt="..." class="img-rounded">메뉴6 : 14,000원
-								</a>
-							</div>
-							<div class="menuPhoto">
-								<a href="#" class="thumbnail"> <img src="images/store_img01.png"
-									alt="..." class="img-rounded">메뉴7 : 12,000원
-								</a>
-							</div>
-							<div class="menuPhoto">
-								<a href="#" class="thumbnail"> <img src="images/store_img01.png"
-									alt="..." class="img-rounded">메뉴8 : 11,000원
-								</a>
-							</div>
-							<div class="menuPhoto">
-								<a href="#" class="thumbnail"> <img src="images/store_img01.png"
-									alt="..." class="img-rounded">메뉴9 : 9,000원
-								</a>
-							</div>
-							<div class="menuPhoto">
-								<a href="#" class="thumbnail"> <img src="images/store_img01.png"
-									alt="..." class="img-rounded">메뉴10 : 8,000원
-								</a>
-							</div>
-							 -->
-								<c:forEach var="ml" items="${menuLists }">
+						<!-- 메뉴 -->
+						<h2>메뉴</h2>
+						<div class="menuList">
+							<c:forEach var="ml" items="${menuLists }">
+								<div class="menu">
 									<div class="menuPhoto">
-										<a class="thumbnail" style="font-weight: bold;"> <img
-											src="images/${ml.image_link }" alt="..." class="img-rounded"
-											style="border-radius: 15px;">${ml.menu_name } <br /> :
-											${ml.price }원
-										</a>
+										<img class="thumbnail" src="<%=cp %>/images/${ml.image_link }" />
 									</div>
-								</c:forEach>
-
-							</div>
+									<div class="menuName">${ml.menu_name }</div>
+									<div class="menuPrice">${ml.price }원</div>
+								</div>
+							</c:forEach>
 						</div>
 					</div>
-					<!-- id="menuboard" class="col-md-offset-1 col-md-1 container3  " -->
-					<br /> <br /> <br /> <br />
+
 					<div class=" container4">
-						<div id="reviewList" style="margin-top: 5vh; margin-left: 2vw;">
-							<h1 style="padding-left: 2vw; display: inline;">리뷰</h1>
-							<button type="submit" class="btn" style="margin-left: 42vw;">리뷰
-								작성하기</button>
-							<br />
-							<div class="revKeyList">
-								<br />
-								<ul style="display: flex; text-align: center;">
-									<!-- 
-								<li><input class="" type="text"
-									placeholder="리뷰 키워드1" readonly="readonly" /></li>
-								<li><input class="" type="text"
-									placeholder="리뷰 키워드2" readonly="readonly" /></li>
-								<li><input class="" type="text"
-									placeholder="리뷰 키워드3" readonly="readonly" /></li>
-								<li><input class="" type="text"
-									placeholder="리뷰 키워드4" readonly="readonly" /></li>
-								<li><input class="" type="text"
-									placeholder="리뷰 키워드5" readonly="readonly" /></li>
-								 -->
-									<c:forEach var="sK" items="${stKeys }">
-										<li style="display: inline-block;"><input class=""
-											type="text" style="text-align: center; font-weight: bold;"
-											placeholder="${sK.st_keyword }" readonly="readonly" /></li>
-									</c:forEach>
-								</ul>
-								<!-- 
-							<ul style="display: flex;">
-								<li><input class="" type="text"
-									placeholder="리뷰 키워드6" readonly="readonly" /></li>
-								<li><input class="" type="text"
-									placeholder="리뷰 키워드7" readonly="readonly" /></li>
-								<li><input class="" type="text"
-									placeholder="리뷰 키워드8" readonly="readonly" /></li>
-								<li><input class="" type="text"
-									placeholder="리뷰 키워드9" readonly="readonly" /></li>
-								<li><input class="" type="text"
-									placeholder="리뷰 키워드10" readonly="readonly" /></li>
-							</ul>
-							 -->
-								<br />
-								<div id="revList" style="margin-left: 1vw;">
-									<!-- 
-								<div class="reViews">
-									<div class="reView revBack">
-										<span id="userId" style="font-size: 15pt; font-weight: bold; margin-left: 1vw;">디토</span><br />
-										<textarea class=" reV" style="height: 7vh; margin-left: 1vw;" placeholder="훌쩍 훌쩍 커버렸어"
-											readonly="readonly"></textarea>
-										<div id="repCon">
-											<span style="padding-left: 16px; display: inline;">작성
-												일자 : 2023.08.02</span><br />
-											<div class="revRec" style="padding-left: 5px;">
-												<button type="button" class="recBtn" onclick="">비추천</button>
-												<span class="glyphicon glyphicon-star-empty"aria-hidden="true" style="float: right;"></span>
-												<button type="button" class="recBtn" onclick="">추천</button>
-												<span class="glyphicon glyphicon-star" style="float: right;" aria-hidden="true"></span>
-											</div>
-											<button type="submit" class="reportBtn" style="float: right;">신고하기</button><br /><br />
-										</div>
-									</div>
-								</div>
-								<div class="reViews">
-									<div class="reView revBack">
-										<span id="userId" style="font-size: 15pt; font-weight: bold; margin-left: 1vw;">ETA</span><br />
-										<textarea class=" reV" style="height: 7vh;  margin-left: 1vw;" 
-											placeholder="뭐니 너의 ETA 뭐니 너의 ETA" readonly="readonly"></textarea>
-										<div id="repCon">
-											<span style="padding-left: 16px; display: inline;">작성
-												일자 : 2023.08.02</span><br />
-											<div class="revRec" style="padding-left: 5px;">
-												<button type="button" class="recBtn" onclick="">비추천</button>
-												<span class="glyphicon glyphicon-star-empty"aria-hidden="true" style="float: right;"></span>
-												<button type="button" class="recBtn" onclick="">추천</button>
-												<span class="glyphicon glyphicon-star" style="float: right;" aria-hidden="true"></span>
-											</div>
-											<button type="submit" class="reportBtn" style="float: right;">신고하기</button><br /><br />
-										</div>
-									</div>
-								</div>
-								<div class="reViews">
-									<div class="reView revBack">
-										<span id="userId" style="font-size: 15pt; font-weight: bold; margin-left: 1vw;">주목</span><br />
-										<textarea class=" reV" style="height: 7vh; margin-left: 1vw;"
-											placeholder="너에게 필요한 건 주목이야--" readonly="readonly"></textarea>
-										<div id="repCon">
-											<span style="padding-left: 16px; display: inline;">작성
-												일자 : 2023.08.02</span><br />
-											<div class="revRec" style="padding-left: 5px;">
-												<button type="button" class="recBtn" onclick="">비추천</button>
-												<span class="glyphicon glyphicon-star-empty"aria-hidden="true" style="float: right;"></span>
-												<button type="button" class="recBtn" onclick="">추천</button>
-												<span class="glyphicon glyphicon-star" style="float: right;" aria-hidden="true"></span>
-											</div>
-											<button type="submit" class="reportBtn" style="float: right;">신고하기</button><br /><br />
-										</div>
-									</div>
-								</div>
-								 -->
-									<c:forEach var="rv" items="${reViews }">
-										<div class="reViews">
-											<div class="reView revBack">
-												<span id="userId"
-													style="font-size: 15pt; font-weight: bold; margin-left: 1vw;">${rv.user_nickname }</span><br />
-												<textarea class=" reV"
-													style="height: 7vh; margin-left: 1vw; font-size: 12pt; font-weight: bold;"
-													placeholder="${rv.rv_content}" readonly="readonly"></textarea>
-												<div id="repCon">
-													<span style="padding-left: 16px; display: inline;">작성
-														일자 : ${rv.reg_date }</span><br />
-													<button type="submit" class="reportBtn btn"
-														style="float: right;">신고하기</button>
-													<br />
-													<div class="revRec" style="padding-left: 5px;">
-														<button type="button" class="recBtn btn" onclick="">비추천</button>
-														<span class="glyphicon glyphicon-star-empty"
-															style="float: right;" aria-hidden="true">
-															${rv.rec_nonrec_name2 } </span>
-														<button type="button" class="recBtn btn" onclick="">추천</button>
-														<span class="glyphicon glyphicon-star"
-															style="float: right;" aria-hidden="true">
-															${rv.rec_nonrec_name1 } </span>
-													</div>
+						<div id="reviewList">
+							<h2>리뷰</h2>
+							
 
-												</div>
-											</div>
-										</div>
-									</c:forEach>
-
-								</div>
-								<!-- id="revList" -->
+							<div class="rvKeyList">
+								<c:forEach var="rvKey" items="${reviewKeys }">
+									<div class="rvKey">
+										${rvKey.rv_key_name }
+									</div>
+									<div class="rvKeyCount">
+										[${rvKey.rv_key_count }]
+									</div>
+								</c:forEach>
 							</div>
 							<!-- class="revKeyList"  -->
+
+							<div id="revList">
+								<div class="reviewInsertBtnDiv">
+									<button type="submit" class="btn" id="insertReview">리뷰 작성하기</button>
+								</div>
+								<c:forEach var="rv" items="${reviews }">
+									<div class="reviews">
+										<div class="rvTop">
+											<div class="userNickname">"${rv.user_nickname }"</div>
+											<div>
+												<button type="button" id="repBtn" class="rvBtn" onclick="popupOpen()">신고하기</button>
+											</div>
+										</div>
+
+										<div class="rvMiddle">
+											<div class="starScore">
+											<c:choose>
+												<c:when test="${rv.star_score eq 5}">
+													⭐⭐⭐⭐⭐⭐
+												</c:when>
+												<c:when test="${rv.star_score eq 4}">
+													⭐⭐⭐⭐
+												</c:when>
+												<c:when test="${rv.star_score eq 3}">
+													⭐⭐⭐
+												</c:when>
+												<c:when test="${rv.star_score eq 2}">
+													⭐⭐
+												</c:when>
+												<c:when test="${rv.star_score eq 1}">
+													⭐
+												</c:when>
+												<c:when test="${rv.star_score eq 0}">
+													-
+												</c:when>
+											</c:choose>
+											</div>
+											<div class="rvContent">${rv.rv_content }</div>
+											<div class="regDate">${rv.reg_date }</div>
+										</div>
+
+										<div class="rvBottom">
+											<div>
+												<button type="button" id="nonrec" class="recBtn rvBtn" value="비추천">비추천 👎 (${rv.nonrec })</button>
+												<button type="button" id="rec" class="recBtn rvBtn" value="추천">추천 👍 (${rv.rec } )</button>
+											</div>
+										</div>
+									</div>
+								</c:forEach>
+							</div>
+							<!-- id="revList" -->
+							
+							<div id="popup" style="position: absolute; visibility: hidden;">
+								<h4>
+									<a href="#" class="close" onClick="javascript:popupOpen()">X</a>
+								</h4>
+								<h3>리뷰신고</h3>
+								<div class="popCont">
+									<div class="list">
+										<label for="commercial"> <input type="checkbox"
+											id="commercial">원치 않는 상업적인 리뷰
+										</label><br>
+										<br> <label for="intended"> <input
+											type="checkbox" id="intended">악의적인 리뷰
+										</label><br>
+										<br> <label for="wrong"> <input type="checkbox"
+											id="wrong">잘못된 정보
+										</label><br>
+										<br> <label for="violent"> <input type="checkbox"
+											id="violent">욕설, 성적, 폭력적인 리뷰
+										</label><br>
+										<br>
+									</div>
+								</div>
+								<div class="dec">
+									<button id="decBtn" onclick = "popupOpen()">신고하기</button>
+								</div>
+							</div>
+							
 						</div>
 					</div>
 					<!-- class="col-md-8  container4" -->
@@ -896,9 +506,9 @@ String cp = request.getContextPath();
 						</c:choose>
 					</div>
 				</div>
-				<input type="hidden" name="regionChk" id="regionChk"> 
-				<input type="hidden" name="foodlabelChk" id="foodlabelChk"> 
-				<input type="hidden" name="stKeyChk" id="stKeyChk">
+				<input type="hidden" name="regionChk" id="regionChk"> <input
+					type="hidden" name="foodlabelChk" id="foodlabelChk"> <input
+					type="hidden" name="stKeyChk" id="stKeyChk">
 
 				<div class="comStoreBtnDiv">
 					<button type="button" class="btn" id="comBtn" name="comBtn">비교하기</button>

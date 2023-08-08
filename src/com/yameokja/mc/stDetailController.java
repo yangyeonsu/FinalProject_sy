@@ -1,6 +1,7 @@
 package com.yameokja.mc;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -47,23 +48,61 @@ public class stDetailController
 		// 가게 기본 사항
 		model.addAttribute("store", dao.store(st_num));
 		
+		// 가게 찜 수
+		model.addAttribute("clikeNum", dao.clikeNum(st_num));
+		
+		// 가게 키워드
+		ArrayList<StoreKeyDTO> stKeyList =  dao.stKeys(st_num);
+		
+		if(stKeyList.size()>0)
+		{
+			model.addAttribute("stKeys", stKeyList);
+		}
+		else
+			model.addAttribute("stKeys", null);
+		
 		// 가게 영업시간 + 휴무일
 		model.addAttribute("openClose", dao.openClose(st_num));
 		
 		// 가게 브레이크 타임
-		model.addAttribute("breakTime", dao.breakTime(st_num));
-		
-		// 가게 찜 수
-		model.addAttribute("clikeNum", dao.clikeNum(st_num));
+		ArrayList<StoreBreaktimeDTO> breakTime = dao.breakTime(st_num);
+		if(breakTime.size() > 0)
+		{
+			model.addAttribute("breakTime", breakTime);
+		}
 		
 		// 가게 메뉴
-		model.addAttribute("menuLists", dao.menuLists(st_num));
+		ArrayList<StoreMenuDTO> menuLists = dao.menuLists(st_num);
 		
-		// 가게 키워드
-		model.addAttribute("stKeys", dao.stKeys(st_num));
-
+		if(menuLists.size()>0)
+		{
+			model.addAttribute("menuLists", menuLists);
+		}
+		else
+			model.addAttribute("menuLists", null);
+		
+		
 		// 가게 리뷰목록
-		model.addAttribute("reviews", dao.reviews(st_num));
+		ArrayList<StoreReviewDTO> reviews = dao.reviews(st_num);
+		
+		if(reviews.size() > 0)
+		{
+			model.addAttribute("reviews", reviews);
+		}
+		else
+			model.addAttribute("reviews", null);
+		
+		
+		// 리뷰 키워드
+		ArrayList<StoreReviewKeyDTO> reviewKeys = dao.reviewKeys(st_num);
+		
+		if(reviewKeys.size() > 0)
+		{
+			model.addAttribute("reviewKeys", reviewKeys);
+		}
+		else
+			model.addAttribute("reviewKeys", null);
+		
 		
 		/*
 		model.addAttribute("holiday", dao.holiday(st_num));
@@ -75,7 +114,6 @@ public class stDetailController
 		model.addAttribute("lo", dao.lo(st_num));
 		*/
 
-		
 		result = "/WEB-INF/view/storeDetail.jsp";
 		
 		return result;
