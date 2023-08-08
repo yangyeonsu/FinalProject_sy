@@ -17,7 +17,7 @@ public interface IstDetailDAO_userView
 	public ArrayList<StoreMenuDTO> menuLists(int st_num);  			// 가게 메뉴, 가격, 이미지링크
 	public ArrayList<StoreReviewDTO> reviews(int st_num);  	    	// 리뷰 + 추천/비추천
 	public ArrayList<StoreKeyDTO> stKeys(int st_num);  				// 가게 키워드
-	public ArrayList<StoreReviewKeyDTO> reviewKyes(int st_num);		// 리뷰 키워드
+	public ArrayList<StoreReviewKeyDTO> reviewKeys(int st_num);		// 리뷰 키워드
 	
 	public int reviewInsert(int st_num, String user_num, String rv_content		// 리뷰 등록
 							, int star_score);
