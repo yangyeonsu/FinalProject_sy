@@ -6,6 +6,9 @@
 	width: 100%;
 	display: flex;
 	font-family: 'IBM Plex Sans KR', sans-serif;
+	flex-wrap: nowrap;
+    margin:0px;
+    padding: 0px;        
 }
 
 .mainBody {
