@@ -26,8 +26,8 @@ body {
 	display: flex;
 }
 
-/* .jjimlist {
-	background-color: #f7f4ea;
+.jjimlist {
+	/* background-color: #f7f4ea; */
 }
 
 .jimlist {
@@ -68,7 +68,7 @@ body {
 .jimstoreName
 {
 	padding-top: 0.5vw;
-} */
+}
 
 
 /* .card {
@@ -218,11 +218,11 @@ body {
 	align-items: center;
 }
 
-#ado
+/* #ado
 {
 	padding-right: 1vw;
 	
-}
+} */
 /* .adoi
 {
 	align-items: center;

@@ -149,14 +149,4 @@ public class AdminMainController
 		
 	}
 	
-	@RequestMapping(value="/reviewreportform.action", method = RequestMethod.GET)
-	public String reviewReportCheck(Model model, String user_id)
-	{
-		String result = "";
-		
-		
-		
-		return result;
-	}
-	
 }
