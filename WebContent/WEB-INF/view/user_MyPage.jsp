@@ -16,8 +16,9 @@ String cp = request.getContextPath();
 <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
 
 
-<link rel="stylesheet" type="text/css"
-	href="<%=cp%>/css/user_main.css">
+
+<link rel="stylesheet" type="text/css" href="<%=cp%>/css/user_main.css">
+
 <link rel="stylesheet" type="text/css" href="<%=cp%>/css/userMyPage.css">
 
 <style type="text/css">

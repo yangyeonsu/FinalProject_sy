@@ -2,7 +2,7 @@
 
 SELECT USER
 FROM DUAL;
---==>> TEAM4
+--==>> SYS
 
 
 --■■■ 암호화 복호화 ■■■
