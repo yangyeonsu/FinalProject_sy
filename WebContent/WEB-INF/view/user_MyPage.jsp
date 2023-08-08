@@ -17,7 +17,7 @@ String cp = request.getContextPath();
 
 
 <link rel="stylesheet" type="text/css" href="<%=cp%>/css/user_main.css">
-<%-- <link rel="stylesheet" type="text/css" href="<%=cp%>/css/userMyPage.css"> --%>
+<link rel="stylesheet" type="text/css" href="<%=cp%>/css/userMyPage.css">
 
 <style type="text/css">
 .continer {
