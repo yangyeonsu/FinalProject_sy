@@ -16,305 +16,15 @@ String cp = request.getContextPath();
 <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
 
 <link rel="stylesheet" type="text/css" href="<%=cp%>/css/compareBox.css">
-<link rel="stylesheet" type="text/css" href="<%=cp%>/css/userMyPage.css">
-
-
-<script type="text/javascript"
-	src="http://code.jquery.com/jquery.min.js"></script>
+<%-- <link rel="stylesheet" type="text/css" href="<%=cp%>/css/userMyPage.css">
+ --%>
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 
 <!-- 부가적인 테마 -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 
-<style type="text/css">
-#body {
-	width: 100%;
-	display: flex;
-}
-
-.mainBody {
-	background-color: #F7F4EA;
-	margin-left: 20vw;
-	width: 60vw;
-}
-
-.main {
-	padding-top: 2vh;
-}
-
-.container1 {
-	float: left;
-}
-
-.main-left {
-	width: 50%;
-	height: 40vh;
-	float: left;
-	text-align: center;
-}
-
-.main-right {
-	width: 50%;
-	height: 40vh;
-	float: right;
-	text-align: center;
-}
-
-.opli, .btli {
-	border: 2vw;
-	width: 10vw;
-	height: 3vh;
-}
-
-#weekList li, .time li {
-	padding-bottom: 0.5vw;
-	padding-right: 0.5vw;
-	padding-left: 0.5vw;
-	padding-top: 0.5vw;
-	list-style: none;
-	border-radius: 11px;
-}
-
-.revKeyList li {
-	padding-bottom: 0.3vw;
-	padding-top: 0.3vw;
-	background-color: #F8E6E0;
-	border: 1px solid #F781BE;
-	margin: 0.5vw;
-	border-radius: 11px;
-	list-style: none;
-}
-
-.revKeyList input {
-	background: none;
-	border: 0;
-	list-style: none;
-}
-
-.openclose {
-	width: 50%;
-	float: left;
-}
-
-.time {
-	width: 50%;
-	float: left;
-	text-align: center;
-}
-
-.btli {
-	text-align: center;
-}
-
-.container2 {
-	margin-top: 20vh;
-	margin-left: 4vw;
-}
-
-.info {
-	width: 100%;
-	height: 50%;
-	display: flex;
-	padding-right: 2vw;
-	text-align: left;
-	margin: 1vw;
-}
-
-.info input, textarea {
-	width: 35vw;
-	height: 4vh;
-	background-color: #F8E6E0;
-	border: 0;
-}
-
-.container3, .container4 {
-	width: 100%;
-	float: left;
-	margin-top: 3vh;
-}
-
-.container3 {
-	padding-left: 0.2vw;
-}
-
-.thumbnail {
-	width: 10vw;
-	height: 17vh;
-	float: left;
-}
-
-.img-rounded {
-	width: 100%;
-	height: 100%;
-}
-
-.main ul {
-	list-style-type: none;
-}
-
-.menu {
-	display: flex;
-	justify-content: space-evenly;
-	padding-right: 5vw;
-	padding-left: 5vw;
-}
-
-.form {
-	padding-left: 3vw;
-}
-
-.revBoard {
-	padding-left: 2vw;
-}
-
-.menuList {
-	display: flex;
-	margin-left: 3vw;
-}
-
-.menuPhoto {
-	padding: 1vw;
-}
-
-.revBack {
-	width: 90%;
-	height: 14vh;
-	background-color: #EED2CE;
-	border-radius: 11px;
-}
-
-.btn {
-	background-color: #F7AF97;
-	border: 1px #EF6351;
-	border-radius: 8px;
-	color: white;
-	font-size: 10pt;
-	font-family: 'IBM Plex Sans KR', sans-serif;
-	cursor: pointer;
-}
-
-#repCon {
-	float: right;
-}
-
-.reViews {
-	padding-bottom: 2vh;
-}
-
-.recBtn {
-	float: right;
-}
-
-.has_sub_menu {
-	list-style-type: none;
-}
-
-.side-menu {
-	top: 50px;
-	width: 5vw;
-	z-index: 10;
-	background: #ef6351;
-	border-right: 1px solid rgba(0, 0, 0, 0.07);
-	height: 90%;
-	margin-top: 5.7vh;
-	position: fixed;
-	align-items: center;
-}
-
-#sidebar-menu li {
-	font-size: 1.5rem;
-}
-
-#sidebar-menu .fas {
-	padding-top: 3vh;
-	padding-left: 1.2vw
-}
-
-.left_sub_menu {
-	position: fixed;
-	top: 50px;
-	width: 18vw;
-	z-index: 10;
-	left: 4.6vw;
-	background: white;
-	height: 90%;
-	margin-top: 5.7vh;
-}
-
-.sub_menu {
-	margin-top: 50px;
-}
-
-.left_sub_menu>.sub_menu li:hover {
-	color: ff5858;
-	background-color: #e1e1e1;
-}
-
-.left_sub_menu>.sub_menu li {
-	color: black;
-	font-size: 17px;
-	font-weight: 600;
-	padding: 20px 0px 8px 14px;
-	border-bottom: 1px solid #e1e1e1;
-}
-
-.sub_menu>h2 {
-	padding-bottom: 4px;
-	border-bottom: 3px solid #797979;
-	margin-top: 30px;
-	font-size: 21px;
-	font-weight: 600;
-	color: #333;
-	margin-left: 10px;
-	margin-right: 10px;
-	font-family: 'NotoKrB';
-}
-
-.fas {
-	color: #ff5858;
-	font-size: 20px;
-	line-height: 20px;
-	float: right;
-	margin-top: 0.6vh;
-	margin-right: 2vw;
-}
-
-.sub_menu>.big_menu>.small_menu li {
-	color: black;
-	font-size: 14px;
-	font-weight: 600;
-	border-bottom: 0px solid #e1e1e1;
-}
-
-.big_menu {
-	list-style-type: none;
-	cursor: pointer;
-}
-
-.samll_menu {
-	position: fixed;
-	list-style-type: none;
-	padding-inline-start: 0px;
-	list-style: none;
-	transition-duration: 0.5s;
-}
-
-.small_menuA {
-	color: black;
-	text-decoration-line: none;
-	background-color: transparent;
-	margin-bottom: 1vh
-}
-
-.big_menu ul {
-	margin-top: 0;
-	margin-bottom: 0;
-}
-
-.has_sub {
-	width: 100%;
-}
-</style>
+<link rel="stylesheet" type="text/css" href="<%=cp %>/css/storeDetail.css">
 
 
 <script type="text/javascript">
@@ -362,6 +72,8 @@ String cp = request.getContextPath();
 			$('#checkOverlay').attr("value", "false");
 		});
 	});
+	
+	
 </script>
 
 </head>
@@ -438,21 +150,42 @@ String cp = request.getContextPath();
 						<div class="placeholder main-left">
 							<div class="background"
 								style="font-weight: bold; margin-top: 1vh;">
-								<span style="font-size: 30pt;">영업 시간</span><br /> <br /> <br />
-
+								<div class="ocName">
+									<span style="font-size: 30pt;">영업 시간</span>
+								</div>
 								<div id="weekList" class="openclose background">
-
-									<ul>
+									<div id="opencloseholiday">
+										<div id='opencloseholidayName'>
+											<div class="dayname">요일</div>
+											<div class="time">운영시간</div>
+											<div class="holiday">휴무</div>
+										</div>
+										<div id="opencloseholidayList">
 										<c:forEach var="op" items="${openClose}">
-											<li><input class="opli" type="text"
+											<%-- <li><input class="opli" type="text"
 												style="text-align: center;"
 												placeholder="${op.day_name} ${op.start_time}:00 ~ ${op.end_time}:00"
-												readonly="readonly" /></li>
+												readonly="readonly" /></li> --%>
+												<div class="ochList">
+													<div class="dayname">${op.day_name }</div>
+													<div class="time">${op.operate_time }</div>
+													<div class="holiday">${op.holiday }</div>
+												</div>
 										</c:forEach>
-									</ul>
-									<br /> <br />
+										</div>
+									</div>
+									<div id="breakTime">
+										<c:forEach var="breakTime" items="${breakTime }">
+											<div class="breakName">브레이크타임</div>
+											<div class="breakList">
+												<div>${breakTime.week_weekend }</div>
+												<div>${breakTime.start_breaktime } ~ ${breakTime.end_breaktime }</div>
+											</div>
+										</c:forEach>
+									</div>
+								
 								</div>
-
+<%-- 
 								<div class="time background">
 									<div>
 										<ul>
@@ -473,7 +206,7 @@ String cp = request.getContextPath();
 									</div>
 
 								</div>
-
+ --%>
 							</div>
 
 						</div>
@@ -484,7 +217,6 @@ String cp = request.getContextPath();
 								<div class="background"
 									style="font-weight: bold; margin-top: 1vh; margin-left: 1vw;">
 									<span style="font-size: 30pt; font-weight: bold;">${s.st_name }</span>
-									<br /> <br /> <br />
 
 									<div class="revBoard">
 
@@ -494,7 +226,7 @@ String cp = request.getContextPath();
 													style="font-weight: bold; display: inline;"> 좋아요 수
 													: &nbsp;&nbsp; <span class="glyphicon glyphicon-heart"
 													aria-hidden="true"> </span> <span id="likeNum"
-													style="display: inline;">${s.like_count }</span>
+													style="display: inline;">${clikeNum }</span>
 												</label>
 											</div>
 											<div class="likeRevC score">
@@ -502,7 +234,7 @@ String cp = request.getContextPath();
 													style="font-weight: bold; display: inline;">
 													&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 평점 :
 													&nbsp;&nbsp;&nbsp;&nbsp; <span id="score"
-													style="display: inline;">${s.star_score}</span>
+													style="display: inline;">${s.star_avg}</span>
 												</label>
 											</div>
 
@@ -511,7 +243,7 @@ String cp = request.getContextPath();
 													style="font-weight: bold; display: inline;">
 													&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 													리뷰 수 : &nbsp;&nbsp; <span id="reviewNum"
-													style="display: inline;">${s.review_count}</span>
+													style="display: inline;">${s.rv_count}</span>
 												</label>
 											</div>
 										</div>
@@ -555,7 +287,7 @@ String cp = request.getContextPath();
 					<div class="container2 " id="storePay">
 
 
-						<c:forEach var="o" items="${others }" varStatus="status">
+						<c:forEach var="s" items="${store }" varStatus="status">
 							<br />
 							<br />
 							<br />
@@ -569,13 +301,13 @@ String cp = request.getContextPath();
 							<br />
 							<br />
 							<div class="info background">
-								<label for="payTool" class="oTool" style="font-weight: bold">결제
+								<%-- <label for="payTool" class="oTool" style="font-weight: bold">결제
 									수단&nbsp;&nbsp;&nbsp;&nbsp;</label>
 								<!-- 결제 수단 -->
 								<div class=" form">
 									<input class="" type="text" id="payTool" class="oInfo"
 										placeholder="${o.pay_name }" readonly>
-								</div>
+								</div> --%>
 							</div>
 
 							<div class="info background">
@@ -584,7 +316,7 @@ String cp = request.getContextPath();
 								<!-- 페이지 -->
 								<div class="form">
 									<input class="" type="text" id="storePage" class="oInfo"
-										placeholder="${o.st_email }" readonly>
+										placeholder="${s.st_email }" readonly>
 								</div>
 							</div>
 							<div class="info background">
@@ -593,7 +325,7 @@ String cp = request.getContextPath();
 								<!-- 수용 인원 등 -->
 								<div class=" form">
 									<input class="" type="text" id="etcInfo" class="oInfo"
-										placeholder="최대 수용 인원 : ${o.max_customers }, 와이파이 있음, 주차 가능 등..."
+										placeholder="최대 수용 인원 : ${s.max_customers }"
 										readonly>
 								</div>
 							</div>
@@ -603,12 +335,12 @@ String cp = request.getContextPath();
 								<!-- 가게 설명 -->
 								<div class="form">
 									<textarea class="" rows="3" id="storeExplain" class="oInfo"
-										placeholder="${o.st_explain }" readonly></textarea>
+										placeholder="${s.st_explain }" readonly></textarea>
 								</div>
 							</div>
 							<div>
 								<button type="submit" class="btn" onclick="reqapplyform.action"
-									value="${o.st_num }"
+									value="${s.st_num }"
 									style="width: 10vw; height: 3vh; margin-left: 33vw;">가게정보오류수정</button>
 							</div>
 
@@ -680,7 +412,7 @@ String cp = request.getContextPath();
 								<c:forEach var="ml" items="${menuLists }">
 									<div class="menuPhoto">
 										<a class="thumbnail" style="font-weight: bold;"> <img
-											src="images/${ml.image_link }" alt="..." class="img-rounded"
+											src="<%=cp %>images/${ml.img_link }" alt="..." class="img-rounded"
 											style="border-radius: 15px;">${ml.menu_name } <br /> :
 											${ml.price }원
 										</a>
@@ -713,10 +445,11 @@ String cp = request.getContextPath();
 								<li><input class="" type="text"
 									placeholder="리뷰 키워드5" readonly="readonly" /></li>
 								 -->
-									<c:forEach var="sK" items="${stKeys }">
+									<c:forEach var="rvKey" items="${reviewKeys }">
 										<li style="display: inline-block;"><input class=""
 											type="text" style="text-align: center; font-weight: bold;"
-											placeholder="${sK.st_keyword }" readonly="readonly" /></li>
+											placeholder="${rvKey.rv_key_name }" readonly="readonly" /></li>
+										<li>${rvKey.rv_key_count }</li>
 									</c:forEach>
 								</ul>
 								<!-- 
