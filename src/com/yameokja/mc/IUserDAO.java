@@ -25,4 +25,5 @@ public interface IUserDAO
 	public List<ReviewDTO> searchRvList(String user_num);
 	public List<StoreDTO> searchLikeList(String user_num);
 	public List<StoreDTO> searchComparingBox(String user_num);
+	public List<AlarmDTO> userAlarm(String user_num);
 }

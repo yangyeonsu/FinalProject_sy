@@ -86,6 +86,8 @@ public class MainController
 			model.addAttribute("comList", null);
 		
 		model.addAttribute("userJjimList", dao.userJjimSearch(user_num));
+		
+		model.addAttribute("alarm", umDao.userAlarm(user_num));
 
 		result = "/WEB-INF/view/user_main.jsp";
 
