@@ -1,6 +1,7 @@
 package com.yameokja.mc;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -27,12 +28,15 @@ public class stDetailController
 		String result = "";
 		
 		IstDetailDAO_userView dao = sqlSession.getMapper(IstDetailDAO_userView.class);
+		IMainDAO mdao = sqlSession.getMapper(IMainDAO.class);
 		IUserDAO uDao = sqlSession.getMapper(IUserDAO.class);
 		
 		int st_num = Integer.parseInt(request.getParameter("st_num"));
 		
 		// 사용자 정보
 		UserDTO user = uDao.searchUserInfo(user_num, "num");
+		
+		List<Integer> comList = mdao.getStoreComList(user_num);
 		
 		LocalDate currentDate = LocalDate.now();
 		int month = currentDate.getMonthValue();
@@ -75,6 +79,11 @@ public class stDetailController
 		model.addAttribute("lo", dao.lo(st_num));
 		*/
 
+		
+		if (comList.size() > 0)
+			model.addAttribute("comList", mdao.getStoreList(comList));
+		else
+			model.addAttribute("comList", null);
 		
 		result = "/WEB-INF/view/storeDetail.jsp";
 		

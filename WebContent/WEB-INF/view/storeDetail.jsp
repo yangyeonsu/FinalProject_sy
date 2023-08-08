@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%
 	request.setCharacterEncoding("UTF-8");
 String cp = request.getContextPath();
@@ -17,6 +18,7 @@ String cp = request.getContextPath();
 
 <link rel="stylesheet" type="text/css" href="<%=cp%>/css/compareBox.css">
 <link rel="stylesheet" type="text/css" href="<%=cp%>/css/userMyPage.css">
+<link rel="stylesheet" type="text/css" href="<%=cp%>/css/side_bar.css">
 
 
 <script type="text/javascript"
@@ -205,115 +207,7 @@ String cp = request.getContextPath();
 	float: right;
 }
 
-.has_sub_menu {
-	list-style-type: none;
-}
 
-.side-menu {
-	top: 50px;
-	width: 5vw;
-	z-index: 10;
-	background: #ef6351;
-	border-right: 1px solid rgba(0, 0, 0, 0.07);
-	height: 90%;
-	margin-top: 5.7vh;
-	position: fixed;
-	align-items: center;
-}
-
-#sidebar-menu li {
-	font-size: 1.5rem;
-}
-
-#sidebar-menu .fas {
-	padding-top: 3vh;
-	padding-left: 1.2vw
-}
-
-.left_sub_menu {
-	position: fixed;
-	top: 50px;
-	width: 18vw;
-	z-index: 10;
-	left: 4.6vw;
-	background: white;
-	height: 90%;
-	margin-top: 5.7vh;
-}
-
-.sub_menu {
-	margin-top: 50px;
-}
-
-.left_sub_menu>.sub_menu li:hover {
-	color: ff5858;
-	background-color: #e1e1e1;
-}
-
-.left_sub_menu>.sub_menu li {
-	color: black;
-	font-size: 17px;
-	font-weight: 600;
-	padding: 20px 0px 8px 14px;
-	border-bottom: 1px solid #e1e1e1;
-}
-
-.sub_menu>h2 {
-	padding-bottom: 4px;
-	border-bottom: 3px solid #797979;
-	margin-top: 30px;
-	font-size: 21px;
-	font-weight: 600;
-	color: #333;
-	margin-left: 10px;
-	margin-right: 10px;
-	font-family: 'NotoKrB';
-}
-
-.fas {
-	color: #ff5858;
-	font-size: 20px;
-	line-height: 20px;
-	float: right;
-	margin-top: 0.6vh;
-	margin-right: 2vw;
-}
-
-.sub_menu>.big_menu>.small_menu li {
-	color: black;
-	font-size: 14px;
-	font-weight: 600;
-	border-bottom: 0px solid #e1e1e1;
-}
-
-.big_menu {
-	list-style-type: none;
-	cursor: pointer;
-}
-
-.samll_menu {
-	position: fixed;
-	list-style-type: none;
-	padding-inline-start: 0px;
-	list-style: none;
-	transition-duration: 0.5s;
-}
-
-.small_menuA {
-	color: black;
-	text-decoration-line: none;
-	background-color: transparent;
-	margin-bottom: 1vh
-}
-
-.big_menu ul {
-	margin-top: 0;
-	margin-bottom: 0;
-}
-
-.has_sub {
-	width: 100%;
-}
 </style>
 
 
@@ -627,6 +521,10 @@ String cp = request.getContextPath();
 									alt="..." class="img-rounded">메뉴1 : 15,000원
 								</a>
 							</div>
+							-->
+						</div>
+						<div class="col-xs-16 col-md-16 menuList">
+							<!-- 
 							<div class="menuPhoto">
 								<a href="#" class="thumbnail"> <img src="images/store_img01.png"
 									alt="..." class="img-rounded">메뉴2 : 14,000원
@@ -656,6 +554,16 @@ String cp = request.getContextPath();
 									alt="..." class="img-rounded">메뉴6 : 14,000원
 								</a>
 							</div>
+							-->
+                
+							<c:forEach var="ml" items="${menuLists }">
+								<div class="menuPhoto">
+									<a class="thumbnail" style="font-weight: bold;"> <img src="images/${ml.image_link }"
+										alt="..." class="img-rounded" style="border-radius: 15px;">${ml.menu_name } <br /> : ${ml.price }원
+									</a>
+								</div>
+							</c:forEach>
+						<--
 							<div class="menuPhoto">
 								<a href="#" class="thumbnail"> <img src="images/store_img01.png"
 									alt="..." class="img-rounded">메뉴7 : 12,000원
@@ -698,6 +606,31 @@ String cp = request.getContextPath();
 							<button type="submit" class="btn" style="margin-left: 42vw;">리뷰
 								작성하기</button>
 							<br />
+
+							<ul style="display: flex; text-align: center;">	
+								<c:forEach var="sK" items="${stKeys }">
+									<li style="display: inline-block;"><input class="" type="text" style="text-align: center; font-weight: bold;"
+									placeholder="${sK.st_keyword }" readonly="readonly" /></li>
+								</c:forEach>
+							</ul>
+							<br />
+							<div id="revList" style="margin-left: 1vw;">
+							<c:forEach var="rv" items="${reViews }">
+								<div class="reViews">
+									<div class="reView revBack">
+										<span id="userId" style="font-size: 15pt; font-weight: bold; margin-left: 1vw;">${rv.user_nickname }</span><br />
+										<textarea class=" reV" style="height: 7vh; margin-left: 1vw; font-size: 12pt; font-weight: bold;"
+											placeholder="${rv.rv_content}" readonly="readonly"></textarea>
+										<div id="repCon">
+											<span style="padding-left: 16px; display: inline;">작성
+												일자 : ${rv.reg_date }</span><br />
+											<button type="submit" class="reportBtn btn" style="float: right;">신고하기</button><br />
+											<div class="revRec" style="padding-left: 5px;">
+												<button type="button" class="recBtn btn" onclick="">비추천</button>
+												<span class="glyphicon glyphicon-star-empty" style="float: right;" aria-hidden="true"> ${rv.rec_nonrec_name2 } </span>
+												<button type="button" class="recBtn btn" onclick="">추천</button>
+												<span class="glyphicon glyphicon-star" style="float: right;" aria-hidden="true"> ${rv.rec_nonrec_name1 } </span>
+
 							<div class="revKeyList">
 								<br />
 								<ul style="display: flex; text-align: center;">
@@ -817,6 +750,7 @@ String cp = request.getContextPath();
 													</div>
 
 												</div>
+
 											</div>
 										</div>
 									</c:forEach>
@@ -831,6 +765,26 @@ String cp = request.getContextPath();
 				</div>
 				<!-- id="container1" class="col-md-8" -->
 			</div>
+
+			<!-- id="container1" class="col-md-8" -->
+		</div>
+		<!-- main -->
+		
+		
+		<!-- 비교함 영역 -->
+		<div id="compareDiv">
+			<div class="rectDiv">
+				<!-- 비교함 이름 영역 -->
+				<div class="comNameDiv">
+					<span style="font-color: #ef6351">비교함</span>
+				</div>
+				<!-- 비교함 담은 가게 리스트 영역 -->
+				<div class="comStoreListDiv">
+					<c:choose>
+							<c:when
+								test="${fn:length(comList) == 0 or fn:length(comList) == null}">
+								<c:forEach var="i" begin="0" end="9">
+
 			<!-- main -->
 
 
@@ -848,6 +802,7 @@ String cp = request.getContextPath();
 							<c:when
 								test="${fn:length(comList) == null or fn:length(comList) == 0 }">
 								<c:forEach begin="0" end="9">
+
 									<div class="comStoreDiv">
 										<!-- 한 가게 대표사진 영역 -->
 										<div class="comStoreImgDiv">
@@ -860,6 +815,18 @@ String cp = request.getContextPath();
 							</c:when>
 							<c:otherwise>
 								<!-- 한 가게 영역 -->
+
+								<c:forEach var="com" items="${comList}" varStatus="status">
+									<div class="comStoreDiv">
+										<!-- 한 가게 대표사진 영역 -->
+										<div class="comStoreImgDiv">
+											<button type="button" value="${com.st_num}" class="comDelete">X</button>
+											<label for="${com.st_num}" class="stLabel"> <input
+												type="checkbox" class="comStImgCB" name="comStImgCB" id="${com.st_num}">
+												<c:set var = "photo" value="${com.photo_link }"/>
+												
+												<c:choose>
+
 								<c:forEach var="com" items="${comList }" varStatus="status">
 									<div class="comStoreDiv">
 										<!-- 한 가게 대표사진 영역 -->
@@ -869,6 +836,7 @@ String cp = request.getContextPath();
 											<label for="${com.st_num}" class="stLabel"> <input
 												type="checkbox" class="comStImgCB" id="${com.st_num}">
 												<c:set var="photo" value="${com.photo_link }" /> <c:choose>
+
 													<c:when test="${empty photo}">
 														<img class="stImg" src="<%=cp%>/images/logo_text.png">
 													</c:when>
@@ -879,10 +847,17 @@ String cp = request.getContextPath();
 											</label>
 										</div>
 										<!-- 한 가게 가게이름 영역 -->
+
+										<div class="comStoreNameDiv">${com.st_name}</div>
+									</div>
+								</c:forEach>
+								<c:forEach begin="0" end="${10 - fn:length(comList)}">
+
 										<div class="comStoreNameDiv">${com.st_name }</div>
 									</div>
 								</c:forEach>
 								<c:forEach begin="0" end="${10 - fn:length(comList) }">
+
 									<div class="comStoreDiv">
 										<!-- 한 가게 대표사진 영역 -->
 										<div class="comStoreImgDiv">
@@ -895,6 +870,9 @@ String cp = request.getContextPath();
 							</c:otherwise>
 						</c:choose>
 					</div>
+
+					<input type="hidden" id="checkedCompare" name="checkedCompare">
+
 				</div>
 				<input type="hidden" name="regionChk" id="regionChk"> 
 				<input type="hidden" name="foodlabelChk" id="foodlabelChk"> 
@@ -902,8 +880,8 @@ String cp = request.getContextPath();
 
 				<div class="comStoreBtnDiv">
 					<button type="button" class="btn" id="comBtn" name="comBtn">비교하기</button>
+
 				</div>
-			</div>
 
 		</div>
 

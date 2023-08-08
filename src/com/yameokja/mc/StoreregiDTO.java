@@ -1,9 +1,12 @@
 package com.yameokja.mc;
 
+
 public class StoreregiDTO
 {
-	private String user_num, st_in_file, st_place_file, st_name, st_location, st_location_dt, st_tel, admin_read_date, reg_date;
+	private String user_num, st_name, st_location, st_location_dt, st_tel, admin_read_date, reg_date;
 	private long st_in_num, st_place_num;
+	
+	private String st_in_file, st_place_file;
 	
 	// getter / setter
 	public String getUser_num()
@@ -94,7 +97,8 @@ public class StoreregiDTO
 	{
 		this.st_place_num = st_place_num;
 	}
-
+	
+	
 	
 	
 }

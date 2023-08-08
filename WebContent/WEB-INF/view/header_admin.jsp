@@ -23,18 +23,28 @@
 	
 	#store_header
 	{
-		position: relative;
+		/* position: relative;
 	    width: 88vw;
 	    align-items: flex-start;
 	    padding-top: 1vh;
 	    height: 30vh;
-	    max-height: 10vh;
+	    max-height: 10vh; */
+	    
+	    position: relative;
+      	display: flex;
+       	width: 88vw;
+       	align-items: flex-start;
+       	padding-top: 1vh;
+      	margin-left: 6vw;
+      	height: 10vh;
+     	max-height: 10vh;
+	    
 	}
 
 	#headerAlarm
 	{
 	    width: 70vw;
-	    padding-left: 26vw;
+	    padding-left: 10vw;
 	}
 	
 	#headerLogo
@@ -58,6 +68,7 @@
 	{
 		display: flex;
 		width: 7vw;
+		flex-direction: row-reverse;
 	}
 	
 	a
@@ -78,6 +89,7 @@
 	    display: flex;
 	    flex-direction: row-reverse;
 	    width: 65vw;
+	    margin-left: 4.3vw;
 	}
 	
 	.mypage_menu
@@ -85,6 +97,7 @@
 		position: relative;
 	    transition-duration: 0.5s;
 	    font-size: 0.8vw;
+	    padding-right: 1.8vw;
 	    background-color: #f5f3e7;
 	    margin-right: 4vw;
 	}
@@ -184,7 +197,7 @@ $(function() {
 		<div class="headerImg">
 			<img id="headerLogo" src="<%=cp %>/images/logo_text.png">
 		</div>
-	
+		
 		<div id="headerAlarm">
 			<div class="headerBtn">
 				<div class="menuBtn">
