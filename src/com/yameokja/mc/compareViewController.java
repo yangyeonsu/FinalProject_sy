@@ -22,8 +22,10 @@ public class compareViewController
 	
 
 
-	@RequestMapping(value="/compareView.action", method=RequestMethod.GET)
-	public String compareView(HttpServletRequest request, Model model)
+	/*
+	 @RequestMapping(value="/compareView.action", method=RequestMethod.GET) public
+	 String compareView(HttpServletRequest request, Model model)
+	 
     
 	@RequestMapping(value="/compareView.action", method=RequestMethod.POST)
 	public String compareView(HttpServletRequest request, HttpServletResponse response, Model model)
@@ -31,7 +33,7 @@ public class compareViewController
 		IcompareViewDAO dao = sqlSession.getMapper(IcompareViewDAO.class);
 
 		int[] st_nums = new int[3];
-		try
+		
 		IUserDAO udao = sqlSession.getMapper(IUserDAO.class);
 		
 		/*
@@ -39,36 +41,22 @@ public class compareViewController
 		 * = Integer.parseInt(request.getParameter("st_num2")); int st_num3 =
 		 * Integer.parseInt(request.getParameter("st_num3"));
 		 */
-		/* System.out.println(request.getParameter("stnum")); */
+		/* System.out.println(request.getParameter("stnum"));
 		
 		String[] str = request.getParameterValues("checkedCompare");
 		String[] stArr = null;
 		
 		System.out.println(str);
 		
-		for(int i = 0; i < str.length ; i++)
-		{
-
-			System.out.println(str[i]);
-			stArr = str[i].split(",");
-
-		}
+		stArr = str[0].split(",");
 		
 		System.out.println(stArr);
 		
-		/* System.out.println(str); */
-		
-		for (String string : stArr)
-		{
-
-			System.out.println(str[i]);
-			stArr = str[i].split(",");
-
-		}
+		System.out.println(str);
 		
 		System.out.println(stArr);
 		
-		/* System.out.println(str); */
+		System.out.println(str); 
 		
 		for (String string : stArr)
 		{
@@ -100,6 +88,7 @@ public class compareViewController
 		return "/WEB-INF/view/compareView.jsp";
 	}
 
+	
 	private void addModelAttributes(IcompareViewDAO dao, int st_num, int index, Model model)
 	{
 		if (st_num != 0)
@@ -110,6 +99,6 @@ public class compareViewController
 			model.addAttribute("others" + index, dao.others(st_num));
 			model.addAttribute("menuLists" + index, dao.menuLists(st_num));
 		}
-	}
+	}*/
 }
 

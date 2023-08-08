@@ -11,6 +11,7 @@
 <title>Main Admin Page</title>
 
 <link rel="stylesheet" type="text/css" href="<%=cp %>/css/main_admin.css">
+<link rel="stylesheet" type="text/css" href="<%=cp %>/css/side_bar.css">
 
 <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
 <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
@@ -19,133 +20,7 @@
 	.continer{
 		position: static;
 	}
-	.side-menu {
-		/* top: 50px;
-		width: 5vw;
-		z-index: 10;
-		background: #ef6351;
-		border-right: 1px solid rgba(0, 0, 0, 0.07);
-		height: 90%;
-		margin-top: 8.2vh;
-		position: fixed;
-		align-items: center; */
-		top: 50px;
-	    width: 5vw;
-	    z-index: 10;
-	    background: #ef6351;
-	    border-right: 1px solid rgba(0, 0, 0, 0.07);
-	    height: 90%;
-	    margin-top: 3.9vh;
-	    position: fixed;
-	}
 	
-	.has_sub_menu {
-		list-style-type: none;
-	}
-	
-	#sidebar-menu li {
-		font-size: 1.5rem;
-	}
-	
-	#sidebar-menu .fas {
-		padding-top: 3vh;
-		padding-left: 1.2vw
-	}
-	
-	.left_sub_menu {
-		/* position: fixed;
-		top: 50px;
-		width: 18vw;
-		z-index: 10;
-		left: 5.07vw;
-		background: white;
-		height: 90%;
-		margin-top: 5.7vh; */
-		position: fixed;
-	    top: 50px;
-	    width: 18vw;
-	    z-index: 10;
-	    left: 5.07vw;
-	    background: white;
-	    height: 90%;
-	    margin-top: 3.9vh;
-	}
-	
-	.sub_menu {
-		margin-top: 2.2vh;
-	}
-	
-	.left_sub_menu>.sub_menu li:hover {
-		color: ff5858;
-		background-color: #e1e1e1;
-	}
-	
-	.left_sub_menu>.sub_menu li {
-		color: black;
-		font-size: 17px;
-		font-weight: 600;
-		padding: 20px 0px 8px 14px;
-		border-bottom: 1px solid #e1e1e1;
-	}
-	
-	.sub_menu>h2 {
-		padding-bottom: 4px;
-		border-bottom: 3px solid #797979;
-		margin-top: 30px;
-		font-size: 21px;
-		font-weight: 600;
-		color: #333;
-		margin-left: 10px;
-		margin-right: 10px;
-		font-family: 'NotoKrB';
-	}
-	
-	.fas {
-		color: #ff5858;
-		font-size: 20px;
-		line-height: 20px;
-		float: right;
-		margin-top: 0.6vh;
-		margin-right: 2vw;
-	}
-	
-	.sub_menu>.big_menu>.small_menu li {
-		color: black;
-		font-size: 14px;
-		font-weight: 600;
-		border-bottom: 0px solid #e1e1e1;
-	}
-	
-	.big_menu {
-		list-style-type: none;
-		cursor: pointer;
-		/* 수정 */
-		padding-left: 1vw;
-	}
-	
-	.samll_menu {
-		position: fixed;
-		list-style-type: none;
-		padding-inline-start: 0px;
-		list-style: none;
-		transition-duration: 0.5s;
-	}
-	
-	.small_menuA {
-		color: black;
-		text-decoration-line: none;
-		background-color: transparent;
-		margin-bottom: 1vh
-	}
-	
-	.big_menu ul {
-		margin-top: 0;
-		margin-bottom: 0;
-	}
-	
-	.has_sub {
-		width: 100%;
-	}
 </style>
 
 <script type="text/javascript">
