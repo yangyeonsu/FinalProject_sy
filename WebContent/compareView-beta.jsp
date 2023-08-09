@@ -191,13 +191,13 @@
 }
 
 
-.cName, .cList, .week, .phMenu, .phStore
+.cName, .cList, .week, .phMenu, .phStore, .cOptions, .lOptions
 {
 	padding-right : 2vw;
 	padding-left: 2vw;
 }
 
-.cList, .week, .lCat, .lWeek
+.cList, .week, .lWeek, .cOptions, .lOptions
 {
 	border-top: 1px solid #EB8F83;
 	padding-top: 1vh;
@@ -221,18 +221,22 @@
 	font-size: 1rem; font-weight: bold;
 }
 
-.lCat, .lDay
+.lDay
 {
 	height: 3vh;
 	font-size: 1rem; font-weight: bold;
-	padding-top: 3vh;
+	padding-top: 0.5vh;
 	padding-bottom: 1.5vh;
 }
 
 .lWeek
 {
-	height: 36vh;
-	padding-bottom: 6vh;
+	height: 35vh;
+}
+
+.lOptions, .cOptions
+{
+	height: 30vh;
 }
 
 .lavgP
@@ -260,17 +264,16 @@
 
 .week
 {	
-	height: 36vh;
+	height: 35vh;
 	padding-top : 1vh;
-	padding-bottom: 6vh;
 }
 
-.cDay
+.cDay, .cOpt
 {
-	padding-top: 2vh;
+	padding-top: 1.5vh;
 	height: 2vh;
 	font-size: 1rem; font-weight: bold;
-	padding-bottom: 2vh;
+	padding-bottom: 1.5vh;
 }
 
 .phMenu
@@ -364,49 +367,44 @@ $(document).ready(function()
         /* var numOfDays = $(this).find(".cDay").length; */
         if(maxNumOfDays == 6)
         {
-            $(this).css("height", "34vh");
-            $(this).css("padding-bottom", "1.5vh");
+            $(this).css("height", "29.5vh");
             $(this).css("padding-top", "0vh");
             $(".lWeek").css("height", "28.5vh");
         }
         else if(maxNumOfDays == 5)
         {
-            $(this).css("height", "29vh");
-            $(this).css("padding-bottom", "1.5vh");
+            $(this).css("height", "24.5vh");
             $(this).css("padding-top", "0vh");
             $(".lWeek").css("height", "23.5vh");
         }
         else if(maxNumOfDays == 4)
         {
-            $(this).css("height", "24vh");
-            $(this).css("padding-bottom", "1.5vh");
+            $(this).css("height", "19.5vh");
             $(this).css("padding-top", "0vh");
             $(".cList.lavgP").css("height", "18.73vh");
             $(".lWeek").css("height", "18.5vh");
         }
         else if(maxNumOfDays == 3)
         {
-            $(this).css("height", "15vh");
-            $(this).css("padding-bottom", "1.5vh");
+            $(this).css("height", "14.5vh");
             $(this).css("padding-top", "0vh");
             $(".cList.lavgP").css("height", "18.77vh");
-            $(".lWeek").css("height", "9.5vh");
+            $(".lWeek").css("height", "13.5vh");
             $(".cList.lavgP").css("height", "18.75vh");
         }
         else if(maxNumOfDays == 2)
         {
-            $(this).css("height", "12vh");
-            $(this).css("padding-bottom", "0vh");
-            $(this).css("padding-top", "1.5vh");
-            $(".lWeek").css("height", "6.5vh");
-            $(".cList.lavgP").css("height", "18.7vh");
+            $(this).css("height", "10vh");
+            $(this).css("padding-top", "0vh");
+            $(".lWeek").css("height", "9vh");
+            $(".cList.lavgP").css("height", "18.8vh");
+            $(".cList.cMenu").css("height", "2.95vh");
         }
         else if(maxNumOfDays == 1)
         {
             $(this).css("height", "5vh");
-            $(this).css("padding-bottom", "0vh");
             $(this).css("padding-top", "0vh");
-            $(".lWeek").css("height" , "3.9vh");
+            $(".lWeek").css("height" , "4.9vh");
             $(".lWeek").css("padding-top", "0vh");
             $(".lDay").css("padding-top", "1.5vh");
             $(".lWeek").css("padding-bottom", "1.1vh");
@@ -416,6 +414,7 @@ $(document).ready(function()
         {
             $(this).css("display", "none");
             $(".lWeek").css("display", "none");
+            $(".cList.lavgP").css("height", "18.7vh");
         }
     });
 });
@@ -528,10 +527,13 @@ $(document).ready(function()
 			         <div id="가게 평균 가격" class="cList lavgP">
 			         	 가게 평균 가격
 			         </div>
-			         <div id="가게 대표 메뉴 이름" class="cList">
+			         <div id="가게 대표 메뉴 이름" class="cList cMenu">
 			         	 가게 대표 메뉴 이름
 			         </div>
 			         <div id="가게 최대 수용 인원" class="cList">
+			         	 가게 최대 수용 인원
+			         </div>
+			         <div id="가게 최대 수용 인원" class="cList lOptions">
 			         	 가게 최대 수용 인원
 			         </div>
 		         </div> <!-- cCat -->
@@ -566,22 +568,22 @@ $(document).ready(function()
 				         </div>
 				         <div id="월요일" class="cDay">
 				         	${store.index} 월요일  10:00 ~ 24:00 
-				         </div>
+				         </div> 
 				         <div id="화요일" class="cDay">
 				         	${store.index} 화요일  10:00 ~ 24:00
-				         </div>
+				         </div> 
 				         <div id="수요일" class="cDay">
 				         	${store.index} 수요일  10:00 ~ 24:00
-				         </div> 
+				         </div>
 				         <div id="목요일" class="cDay">
 				         	${store.index} 목요일  10:00 ~ 24:00
-				         </div>
+				         </div> 
 				         <div id="금요일" class="cDay">
 				         	${store.index} 금요일  10:00 ~ 24:00
-				         </div>  
+				         </div>
 				         <div id="토요일" class="cDay">
 				         	${store.index} 토요일  10:00 ~ 24:00
-				         </div>
+				         </div>  
 				     </div>
 			         <div id="가게 평균 가격" class="cList">
 			         	${store.index} 가게 평균 가격
@@ -594,6 +596,26 @@ $(document).ready(function()
 			         </div>
 			         <div id="가게 최대 수용 인원" class="cList">
 			         	${store.index} 가게 최대 수용 인원
+			         </div>
+			         <div id="가게 옵션" class="cOptions">
+			         	<div id="화장실 존재 여부" class="cOpt">
+			         		${store.index} 화장실 존재 여부 : 있음
+			         	</div>
+			         	<div id="애견 동반 여부" class="cOpt">
+			         		${store.index} 애견 동반 여부 : 없음
+			         	</div>
+			         	<div id="연회석 존재 여부" class="cOpt">
+			         		${store.index} 연회석 존재 여부 : 없음
+			         	</div>
+			         	<div id="예약 가능 여부" class="cOpt">
+			         		${store.index} 예약 가능 여부 : 있음
+			         	</div>
+			         	<div id="주차 가능 여부" class="cOpt">
+			         		${store.index} 주차 가능 여부 : 있음
+			         	</div>
+			         	<div id="무선 인터넷 사용 가능 여부" class="cOpt">
+			         		${store.index} 무선 인터넷 사용 가능 여부 : 있음 
+			         	</div>
 			         </div>
 		         </div> <!-- cBox -->
 		         
