@@ -158,7 +158,7 @@
 
 .compTitle
 {
-	width: 15vw; height: 15vh; margin-left: 50vw;
+	width: 15vw; height: 15vh; margin-left: 48vw;
 }
 
 .compTitle span
@@ -173,8 +173,8 @@
 
 .compareBody
 {	
-	width: 70vw;
-	margin-left: 11vw;
+	width: 65vw;
+	margin-left: 16vw;
 	display: flex;
 	text-align: center;
 }
@@ -182,13 +182,14 @@
 .cCategory
 {	
 	margin-top: 28.84vh;
-	width: 20vw;
+	width: 11vw;
 }
 
 .Category div
 {
 	width: 15vw;
 }
+
 
 .cName, .cList, .week, .phMenu, .phStore
 {
@@ -337,8 +338,8 @@ $(document).ready(function()
     var numOfStores = $(".compareBody .compareSpace").length;
     if(numOfStores == 2) 
     {
-       $(".compareBody").css({"margin-left" : "18vw", "width" : "60vw"});
-       $(".compTitle").css("margin-left", "42vw");
+       $(".compareBody").css({"margin-left" : "23vw", "width" : "55vw"});
+       $(".compTitle").css("margin-left", "48vw");
     }
 });
 
@@ -525,7 +526,7 @@ $(document).ready(function()
 			</div>
 			
 		   <%-- <c:forEach var="store" items = "${불러온 비교할 가게 리스트 }"> --%>
-		   <c:forEach begin="1"  end="2"  varStatus="store">
+		   <c:forEach begin="1"  end="3"  varStatus="store">
 		      <div id="비교하는 가게 공간" class="compareSpace">
 		         <div id="비교하는 가게 이름" class="cName">
 		            ${store.index} 비교하는 가게 이름
