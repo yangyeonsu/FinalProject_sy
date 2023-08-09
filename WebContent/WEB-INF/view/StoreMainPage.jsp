@@ -209,12 +209,50 @@
 	
 	.modifyBtn
 	{
-		font-size: small;
+		/* font-size: small; */
 		width: 6vw;
 		height: 5vh;
 		margin-top: 3.2vw;
 		margin-left: 2vh;
+
+
+		border-radius: 10px;
+		font-size: 0.6vw;
+		border: 1px solid #ef6351;
+	  	background-color: white;
+	  	color: #ef6351;
+	  	cursor: pointer;
+	  	align-content: center;
 	}
+	
+	.modifyBtn:hover
+	{
+		width: 6vw;
+		height: 5vh;
+		border-radius: 10px;
+		font-size: 0.6vw;
+		border: 1px solid #ef6351;
+	  	background-color: #fef1ef;
+	  	color: #ef6351;
+	  	cursor: pointer;
+	  	align-content: center;
+	  	box-shadow: 0 0 10px #ef6351;
+	}
+	
+	.modifyBtn:action
+	{
+		width: 6vw;
+		height: 5vh;
+		border-radius: 10px;
+		font-size: 0.6vw;
+		border: 1px solid #ef6351;
+	  	background-color: #f9ab9f;
+	  	color: #ef6351;
+	  	cursor: pointer;
+	  	align-content: center;
+	  	box-shadow: 0 0 10px #ef6351;
+	  }
+	
 	
 	i
 	{
@@ -274,6 +312,12 @@ $(function () {
 		$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
 		$('#checkOverlay').attr("value", "false");
     });
+    
+    $(".modifyBtn").click(function()
+	{
+		$("#userForm").attr("action", "stdetailmodify.action");
+		$("#userForm").submit();
+	});
 });
 
 </script>
@@ -329,7 +373,7 @@ $(function () {
 				<li>경고 내역</li>
 			</ul>
 			<ul class="big_menu">
-				<li>새로운 가게 등록 신청</i></li>
+				<li><a href="storegiinsertform.action">새로운 가게 등록 신청</a></li>
 			</ul>
 		</div>
 	</div>
