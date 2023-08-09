@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%
 	request.setCharacterEncoding("UTF-8");
-String cp = request.getContextPath();
+	String cp = request.getContextPath();
 %>
 <!DOCTYPE html>
 <html>
@@ -20,7 +20,7 @@ String cp = request.getContextPath();
 <link rel="stylesheet" type="text/css" href="<%=cp%>/css/user_main.css">
 
 <link rel="stylesheet" type="text/css" href="<%=cp%>/css/userMyPage.css">
-<link rel="stylesheet" type="text/css" href="<%=cp%>/css/compareBox.css">
+
 <style type="text/css">
 	.continer{
 		position: static;
@@ -244,7 +244,7 @@ String cp = request.getContextPath();
 						<ul class="big_menu">
 							<li>접수 내역<i class="arrow fas fa-angle-right"></i></li>
 							<ul class="small_menu">
-								<li><a href="#" class="small_menuA">소메뉴2-1</a></li>
+								<li><a href="user_rv_report.action" class="small_menuA">소메뉴2-1</a></li>
 								<li><a href="#" class="small_menuA">소메뉴2-2</a></li>
 							</ul>
 						</ul>
@@ -399,7 +399,75 @@ String cp = request.getContextPath();
 			</div><!-- .col-md-8 end -->
 			
 			
-			<c:import url="compare_box.jsp"></c:import>
+			<!-- 오른쪽 비교함 영역 -->
+			<div id="compareDiv">
+				<div class="rectDiv">
+					<!-- 비교함 이름 영역 -->
+					<div class="comNameDiv">
+						<span style="font-color: #ef6351">비교함</span>
+					</div>
+
+					<!-- 비교함 담은 가게 리스트 영역 -->
+					<div class="comStoreListDiv">
+						<c:choose>
+							<c:when
+								test="${fn:length(comList) == 0 or fn:length(comList) == null}">
+								<c:forEach var="i" begin="0" end="9">
+									<div class="comStoreDiv">
+										<!-- 한 가게 대표사진 영역 -->
+										<div class="comStoreImgDiv">
+											<img class="comStNoImg" src="<%=cp%>/images/comp_img01.png">
+										</div>
+										<!-- 한 가게 가게이름 영역 -->
+										<div class="comStoreNameDiv"></div>
+									</div>
+								</c:forEach>
+							</c:when>
+							<c:otherwise>
+								<!-- 한 가게 영역 -->
+								<c:forEach var="store" items="${comparingbox }" varStatus="status">
+									<div class="comStoreDiv">
+										<!-- 한 가게 대표사진 영역 -->
+										<div class="comStoreImgDiv">
+											<button type="button" value="${store.st_num}" class="comDelete">X</button>
+											<label for="${store.st_num }" class="stLabel"> <input type="checkbox"
+												class="comStImgCB" id="${com.st_num }">
+												<c:set var = "photo" value="${com.photo_link }"/>
+												<c:choose>
+													<c:when test="${empty photo}">
+														<img class="stImg" src="<%=cp%>/images/logo_text.png">
+													</c:when>
+													<c:otherwise>
+														<img class="stImg" src="<%=cp%>/${photo}">
+													</c:otherwise>
+												</c:choose>
+											</label>
+										</div>
+										<!-- 한 가게 가게이름 영역 -->
+										<div class="comStoreNameDiv">${store.st_name }</div>
+									</div>
+								</c:forEach>
+								<c:forEach begin="0" end="${10 - fn:length(comList)}">
+									<div class="comStoreDiv">
+										<!-- 한 가게 대표사진 영역 -->
+										<div class="comStoreImgDiv">
+											<img class="comStNoImg" src="<%=cp%>/images/comp_img01.png">
+										</div>
+										<!-- 한 가게 가게이름 영역 -->
+										<div class="comStoreNameDiv"></div>
+									</div>
+									</c:forEach>
+								</c:otherwise>
+							</c:choose>
+						</div><!-- .comStoreListDiv end -->
+					</div>
+				
+					<!-- 비교하기 버튼 영역 -->
+					<div class="comStoreBtnDiv">
+						<button type="button" class="btn" id="comBtn" name="comBtn">비교하기</button>
+					</div>
+				
+			</div><!-- .compareDiv end -->
 		
 		
 		
