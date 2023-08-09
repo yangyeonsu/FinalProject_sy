@@ -191,6 +191,18 @@
 			$('.overlay').css("z-index", "0");
 			$('#checkOverlay').attr("value", "false");
 		});
+		
+
+		$(".errTd").click(function()
+		{
+			var reportNum = $(this).siblings("[id]").attr("id");
+			//alert(reportNum);
+			$(location).attr("href","storeErrReportForm.action?rep_apply_num="+reportNum);
+			
+		});
+		
+		
+		
 	});
 </script>
 
@@ -279,14 +291,14 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="req" items="${reqList }">
+							<c:forEach var="err" items="${reqList }">
 							<tr>
-								<td>${req.reg_date }</td>
-								<td>${req.user_id }</td>
-								<td>${req.st_name }</td>
-								<td>${req.state }</td>
-								<td>${req.final_date }</td>
-								<td>${req.admin_id }</td>
+								<td class="errTd" id="${err.report_num }">${err.reg_date }</td>
+								<td class="errTd" id="${err.report_num }">${err.user_id }</td>
+								<td class="errTd" id="${err.report_num }">${err.st_name }</td>
+								<td class="errTd" id="${err.report_num }">${err.state }</td>
+								<td class="errTd" id="${err.report_num }">${err.final_date }</td>
+								<td class="errTd" id="${err.report_num }">${err.admin_id }</td>
 							</tr>
 							</c:forEach>
 						</tbody>

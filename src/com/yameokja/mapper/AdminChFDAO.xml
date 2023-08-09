@@ -7,7 +7,23 @@
 	리뷰신고 요청자로 요청내용 찾기
 	신고자, 신고일, 피신고자, 작성일, 리뷰신고카테고리명, 가게이름
 	-->
-	<select id="rvContent" resultType="com.yameokja.mc.RvApplyViewDTO">
+	<select id="rvSearch" resultType="com.yameokja.mc.RvApplyViewDTO">
+		
+		SELECT RRV.REP_APPLY_NUM AS REP_APPLY_NUM
+		     , RRV.USER_ID AS USER_ID
+		     , TO_CHAR(RRV.REG_DATE, 'YYYY-MM-DD') AS REG_DATE
+		     , RRV.ACCU_NUM AS ACCU_NUM
+		     , TO_CHAR(RB.REG_DATE,'YYYY-MM-DD') AS WRITE_DATE
+		     , RRV.REP_RS_NAME AS REP_RS_NAME
+		     , RRV.ST_NAME AS ST_NAME
+		FROM RV_REPORT_VIEW RRV
+		LEFT JOIN RV_BOX RB
+		ON RRV.USER_NUM = RB.USER_NUM
+		WHERE RRV.REP_APPLY_NUM=#{rep_apply_num}
+		
+		
+		
+		<!-- 
 		SELECT RRV.REP_APPLY_NUM AS REP_APPLY_NUM
 		     , RRV.USER_ID AS USER_ID
 		     , RRV.REG_DATE AS REG_DATE
@@ -15,10 +31,14 @@
 		     , RB.REG_DATE AS WRITE_DATE
 		     , RRV.REP_RS_NAME AS REP_RS_NAME
 		     , RRV.ST_NAME AS ST_NAME
+		     , RRV.STATE AS STATE
+		     , RRV.FINAL_DATE AS FINAL_DATE
+		     , RRV.ADMIN_ID AS ADMIN_ID
 		FROM RV_REPORT_VIEW RRV
 		LEFT JOIN RV_BOX RB
 		ON RRV.USER_NUM = RB.USER_NUM
 		WHERE REP_APPLY_NUM=#{rep_apply_num};
+		 -->
 	</select>
 		
 	<!-- 정보수정 요청한 내용 가져오기
@@ -27,7 +47,7 @@
 	<select id="reqContent" resultType="com.yameokja.mc.ReqApplyViewDTO">
 		SELECT REQ_APPLY_NUM, ST_NAME, CHBOX_NAME, YN_NAME, REQ_RS, USER_ID
 		FROM REQ_APPLY_VIEW;
-		WHERE REQ_APPLY_NUM = #{req_apply_num};
+		WHERE REQ_APPLY_NUM = #{req_apply_num}
 	</select>
 	
 	<!-- 이의제기 요청 내용 가져오기
@@ -41,7 +61,7 @@
 		FROM OBJ_APPLY_VIEW OAV
 		LEFT JOIN OBJ_PHOTO OP
 		ON OP.OBJ_APPLY_NUM = OAV.OBJ_APPLY_NUM
-		WHERE OBJ_APPLY_NUM = #{obj_apply_num};
+		WHERE OBJ_APPLY_NUM = #{obj_apply_num}
 	</select>
 	
 	
@@ -51,7 +71,7 @@
 	<select id="revoContent" resultType="com.yameokja.mc.RevoApplyViewDTO">
 		SELECT REVO_APPLY_NUM, USER_ID, REG_DATE, ST_NAME, PEN_TYPE_NAME, REVO_RS, PHOTO_LINK
 		FROM REVO_APPLY_VIEW
-		WHERE REVO_APPLY_NUM = #{revo_apply_num};
+		WHERE REVO_APPLY_NUM = #{revo_apply_num}
 	</select>
 	
 	
