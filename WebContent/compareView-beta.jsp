@@ -346,25 +346,37 @@ $(document).ready(function()
  
 /* 영업 요일이 7주일 미만일 경우  */
 $(document).ready(function() 
-{
+{	
+	
+	var maxNumOfDays = 0;
     $(".week").each(function()
     {
         var numOfDays = $(this).find(".cDay").length;
-        if(numOfDays == 6)
+        if(numOfDays > maxNumOfDays)
+        {
+            maxNumOfDays = numOfDays;
+        }
+    });
+	
+    
+    $(".week").each(function()
+    {
+        /* var numOfDays = $(this).find(".cDay").length; */
+        if(maxNumOfDays == 6)
         {
             $(this).css("height", "34vh");
             $(this).css("padding-bottom", "1.5vh");
             $(this).css("padding-top", "0vh");
             $(".lWeek").css("height", "28.5vh");
         }
-        else if(numOfDays == 5)
+        else if(maxNumOfDays == 5)
         {
             $(this).css("height", "29vh");
             $(this).css("padding-bottom", "1.5vh");
             $(this).css("padding-top", "0vh");
             $(".lWeek").css("height", "23.5vh");
         }
-        else if(numOfDays == 4)
+        else if(maxNumOfDays == 4)
         {
             $(this).css("height", "24vh");
             $(this).css("padding-bottom", "1.5vh");
@@ -372,7 +384,7 @@ $(document).ready(function()
             $(".cList.lavgP").css("height", "18.73vh");
             $(".lWeek").css("height", "18.5vh");
         }
-        else if(numOfDays == 3)
+        else if(maxNumOfDays == 3)
         {
             $(this).css("height", "15vh");
             $(this).css("padding-bottom", "1.5vh");
@@ -381,7 +393,7 @@ $(document).ready(function()
             $(".lWeek").css("height", "9.5vh");
             $(".cList.lavgP").css("height", "18.75vh");
         }
-        else if(numOfDays == 2)
+        else if(maxNumOfDays == 2)
         {
             $(this).css("height", "12vh");
             $(this).css("padding-bottom", "0vh");
@@ -389,7 +401,7 @@ $(document).ready(function()
             $(".lWeek").css("height", "6.5vh");
             $(".cList.lavgP").css("height", "18.7vh");
         }
-        else if(numOfDays == 1)
+        else if(maxNumOfDays == 1)
         {
             $(this).css("height", "5vh");
             $(this).css("padding-bottom", "0vh");
@@ -400,7 +412,7 @@ $(document).ready(function()
             $(".lWeek").css("padding-bottom", "1.1vh");
             $(".cList.lavgP").css("height", "18.75vh");
         }
-        else if(numOfDays == 0)
+        else if(maxNumOfDays == 0)
         {
             $(this).css("display", "none");
             $(".lWeek").css("display", "none");
