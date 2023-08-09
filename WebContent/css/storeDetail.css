@@ -11,9 +11,13 @@
     padding: 0px;        
 }
 
+.form {
+	padding-left: 3vw;
+}
+
+/* 메인 가게 상세정보 */
 .mainBody {
-	/* background-color: #F7F4EA;
- */	margin-left: 20vw;
+ 	margin-left: 20vw;
 	width: 60vw;
 }
 
@@ -27,6 +31,7 @@
 	float: left;
 }
 
+/* 가게 이름 + 사진 + 찜수 + 별점 + 리뷰수 구역*/
 .main-left {
 	width: 30vw;
     height: 38vh;
@@ -34,88 +39,6 @@
     text-align: center;
     display: flex;
     justify-content: center;
-}
-
-#weekList
-{
-	display: flex;
-	flex-direction: column;
-	width: 24vw;
-}
-
-#opencloseholiday
-{
-    display: flex;
-    flex-direction: column;
-}
-
-#opencloseholidayName
-{
-	display: flex;
-    width: 24vw;
-    justify-content: space-around;
-    font-size: 13pt;
-}
-
-#opencloseholidayList
-{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    width: 24vw;
-    font-size: 11pt;
-    border: 2px solid #f7f4ea;
-    border-radius: 5px;
-}
-
-#breakTime
-{
-    display: flex;
-    justify-content: flex-end;
-    font-size: 10pt;
-}
-
-.breakList
-{
-	display: flex;
-    justify-content: center;
-    /* font-size: 11pt; */
-    color: #4d4b4b;
-    margin-left: 5px;
-}
-
-.ocName
-{
-    width: 24vw;
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
-.ochList
-{
-	display: flex;
-    margin-bottom: 3px;
-    color: #4d4b4b;
-}
-
-.dayname, .time, .holiday
-{
-	width: 10vw;
-}
-
-
-.main-right {
-	width: 30vw;
-    height: 36vh;
-    /* float: right; */
-    text-align: center;
-    margin-left: 5vw;
-    margin-top: 1vw;
-}
-
-.background
-{
-	font-weight: bold;
 }
 
 .storeName
@@ -145,77 +68,58 @@
 	object-fit: cover;
 }
 
-.opli, .btli {
-	border: 2vw;
-	width: 10vw;
-	height: 3vh;
+.info {
+	width: 24vw;
+    display: flex;
+    margin-top: 10px;
+    text-align: center;
+    justify-content: space-around;
+    margin-bottom: 25px;
+    font-size: 15pt;
 }
 
-#weekList li, .time li {
-	padding-bottom: 0.5vw;
-	padding-right: 0.5vw;
-	padding-left: 0.5vw;
-	padding-top: 0.5vw;
-	list-style: none;
-	border-radius: 11px;
+/* 영업시간 안내 구역 */
+.main-right {
+	width: 30vw;
+    height: 36vh;
+    /* float: right; */
+    text-align: center;
+    margin-left: 5vw;
+    margin-top: 1vw;
 }
 
-/* .revKeyList li {
-	padding-bottom: 0.3vw;
-	padding-top: 0.3vw;
-	background-color: #F8E6E0;
-	border: 1px solid #F781BE;
-	margin: 0.5vw;
-	border-radius: 11px;
-	list-style: none;
-}
- */
- 
-/* .revKeyList input {
-	background: none;
-	border: 0;
-	list-style: none;
-} */
-
-.menuName
+#weekList
 {
-	font-weight: bold;
+	display: flex;
+	flex-direction: column;
+	width: 24vw;
 }
 
-.rvKeyList
+#opencloseholiday
 {
     display: flex;
-    border: 2px solid #f7f4ea;
-    padding: 5px;
-    border-radius: 8px;
-    justify-content: center;
+    flex-direction: column;
+    height: 22vh;
 }
 
-.rvKey
+#opencloseholidayName
 {
-    background-color: #f7f4ea;
+	display: flex;
+    width: 20vw;
+    justify-content: space-around;
     font-size: 13pt;
-    font-weight: bold;
-    margin-right: 2px;
 }
 
-.rvKeyCount
+#opencloseholidayList
 {
-	font-size: 13pt;
-    font-weight: bold;
-    margin-right: 10px;
-}
-
-.storeKeywordsDiv
-{
-    text-align: center;
-    font-weight: bold;
-    width: 60vw;
-    font-size: 13pt;
-    height: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 20vw;
+    height: 100%;
+    font-size: 11pt;
     border: 2px solid #f7f4ea;
-    border-radius: 8px;
-    padding-top: 15px;
+    border-radius: 5px;
 }
 
 .openclose {
@@ -229,22 +133,74 @@
 	text-align: center;
 }
 
-.btli {
-	text-align: center;
+.breakName
+{
+	margin-right: 10px;
 }
 
-.info {
-	width: 24vw;
-    /* height: 50%; */
+#breakTime
+{
+	display: flex;
+    font-size: 10pt;
+    justify-content: flex-end;
+    width: 20vw;
+    margin-left: 5px;
+}
+
+.breakList
+{
     display: flex;
-    margin-top: 10px;
-    text-align: center;
-    /* margin: 1vw; */
-    justify-content: space-around;
-    margin-bottom: 25px;
-    font-size: 15pt;
+    justify-content: center;
+    color: #4d4b4b;
+    margin-right: 5px;
 }
 
+.ocName
+{
+    width: 20vw;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.ochList
+{
+	display: flex;
+    margin-bottom: 3px;
+    color: #4d4b4b;
+    justify-content: space-around;
+}
+
+.dayname, .time, .holiday
+{
+	width: 10vw;
+}
+
+.background
+{
+	font-weight: bold;
+}
+
+
+/* 가게 키워드 영역 */
+.storeKeywordsDiv
+{
+    text-align: center;
+    font-weight: bold;
+    width: 60vw;
+    font-size: 13pt;
+    height: 40px;
+    border: 2px solid #f7f4ea;
+    border-radius: 5px;
+    padding-top: 15px;
+}
+
+/* 가게 정보 + 가게 옵션(체크박스) 영역 */
+.storeMiddle
+{
+	display: flex;
+}
+
+/* 가게 정보 영역 */
 .storeinfo
 {
     display: flex;
@@ -287,22 +243,68 @@
 	height: 50px;
 }
 
-
-.info input, textarea {
-	width: 35vw;
-	height: 4vh;
-	background-color: #F8E6E0;
-	border: 0;
+/* 가게 옵션(체크박스) 영역 */
+.storeChecks
+{
+    display: flex;
+    flex-direction: column;
+    width: 25vw;
+    margin-top: 1vw;
+    padding: 0 0 0 1vw;
+    align-items: flex-end;
+    border-left: 3px solid #ede9d0;
+    margin-left: 0.5vw;
 }
 
-.container3, .container4 {
+.storeCheck
+{
+    display: flex;
+    justify-content: space-between;
+}
+
+.stCheckListName, .stCheckListYesorno
+{
+	padding: 8px;
+    height: 20px;
+    margin: 0.5vw 0.5vw 0 0;
+    width: 10.5vw;
+    font-weight: bold;
+    text-align: center;
+}
+
+
+.stCheckName, .stCheckYesorno
+{
+    border: 2px solid #f7f4ea;
+    padding: 8px;
+    border-radius: 8px;
+    height: 20px;
+    margin: 0.5vw 0.5vw 0 0;
+    width: 10.5vw;
+    font-weight: bold;
+}
+
+.stCheckYesorno
+{
+	text-align: center;
+}
+
+
+/* 메뉴 영역 */
+
+.container2 {
+	padding-left: 0.2vw;
+}
+
+.container2, .container3 {
 	width: 100%;
 	float: left;
 	margin-top: 5vh;
 }
 
-.container3 {
-	padding-left: 0.2vw;
+.menuName
+{
+	font-weight: bold;
 }
 
 .thumbnail {
@@ -312,9 +314,10 @@
     border-radius: 5px;
 }
 
-.img-rounded {
-	width: 100%;
-	height: 100%;
+.menuList {
+	display: flex;
+    margin-top: 50px;
+    justify-content: center;
 }
 
 .menu {
@@ -326,23 +329,33 @@
     align-items: center;
 }
 
-.form {
-	padding-left: 3vw;
-}
-
-
-.menuList {
+/* 리뷰 키워드 영역 */
+.rvKeyList
+{
 	display: flex;
-	margin-top: 50px;
+    border: 2px solid #f7f4ea;
+    padding: 5px;
+    border-radius: 8px;
+    justify-content: center;
+    height: 80px;
+    align-items: center;
 }
 
-.revBack {
-	width: 90%;
-	height: 14vh;
-	background-color: #EED2CE;
-	border-radius: 11px;
+.rvKey
+{
+    font-size: 13pt;
+    font-weight: bold;
+    margin-right: 3px;
 }
 
+.rvKeyCount
+{
+	font-size: 13pt;
+    font-weight: bold;
+    margin-right: 15px;
+}
+
+/* 리뷰 영역 */
 .btn {
     background-color: #F7AF97;
     border: 1px #EF6351;
@@ -363,8 +376,10 @@
     margin-bottom: 20px;
 }
 
-#repCon {
-	float: right;
+.none, .noneMenu
+{
+	text-align: center;
+	color: #4d4b4b;
 }
 
 .reviews {
@@ -401,20 +416,40 @@
 
 .starScore
 {
-	height: 20px;
+    height: 20px;
     width: 10vw;
-    margin-left: 53.5vw;
     margin-bottom: 10px;
     margin-top: 10px;
     font-size: 11pt;
 }
 
-.rvContent
+.contentPhotoDiv
 {
-    height: 50px;
     border: 2px solid #f7f4ea;
     border-radius: 5px;
     padding: 5px;
+	display: flex;
+	flex-direction: column;
+}
+
+.rvContentDiv
+{
+	height: 100px;
+}
+
+.rvPhotoDiv
+{
+    padding-left: 5px;
+}
+
+.rvphoto
+{
+	max-width: 80px;
+	max-height: 80px;
+	width: 80px;
+	height: 80px;
+	object-fit: cover;
+	border-radius: 5px;
 }
 
 .regDate
@@ -428,6 +463,8 @@
 	float: right;
 }
 
+
+/* 화면 좌측 사이드 바 영역 */
 .has_sub_menu {
 	list-style-type: none;
 }
@@ -600,7 +637,7 @@
 	margin-top: 5px;
 }
 
-input[type=checkbox]
+#commercial, #intended, #wrong, #violent
 {
 	transform: scale(1.3);
     accent-color: #ef6351;
@@ -656,4 +693,4 @@ input[type=checkbox]
 	opacity: .5;
 	filter: alpha(opacity = 50);
 	z-index: 15;
-} /* z-index가 10이다. 이보다 위에 보이기 위해선 팝을 이보다 크게 설정해야한다. */
+} 

@@ -3,6 +3,18 @@ package com.yameokja.mc;
 public class ReqApplyViewDTO
 {
 	private String st_name, chbox_name, yn_name, req_rs, user_id;
+	private int req_apply_num;
+	
+	// getter / setter
+	public int getReq_apply_num()
+	{
+		return req_apply_num;
+	}
+
+	public void setReq_apply_num(int req_apply_num)
+	{
+		this.req_apply_num = req_apply_num;
+	}
 
 	public String getSt_name()
 	{
