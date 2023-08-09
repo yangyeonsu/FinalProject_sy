@@ -417,7 +417,8 @@ $(document).ready(function()
 $(document).ready(function() 
 {
 	var maxOptNum = 0;
-
+	
+	// 값 = O/X 개수 - 'none' 개수 
     $(".cOptions").each(function() 
     {
         var optNum = $(this).find(".cOpt").length;
@@ -434,6 +435,7 @@ $(document).ready(function()
         }
     });
     
+	// 값에 따른 길이 변화
     $(".cOptions").each(function() 
     {
 		if (maxOptNum == 5) 
@@ -471,7 +473,8 @@ $(document).ready(function()
 
 /* 받은 값에 따른 체크박스 변화 */
 $(document).ready(function() 
-{
+{	
+	// value가 'none' 일 경우 표시 안 함
     $(".chBox").each(function() 
     {
         var yesNo = $(this).val();
