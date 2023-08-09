@@ -27,7 +27,7 @@ public class StoreregiController
 	@Autowired
     private ServletContext servletContext;
 	
-	@RequestMapping(value = "/storegiinsertform.action", method=RequestMethod.POST)
+	@RequestMapping(value = "/storegiinsertform.action", method= {RequestMethod.GET, RequestMethod.POST})
 	public String SoreregiInsertForm()
 	{
 		String result = null;

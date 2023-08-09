@@ -214,7 +214,41 @@
 		height: 5vh;
 		margin-top: 3.2vw;
 		margin-left: 2vh;
+  		outline: none;
 	}
+	
+	.modifyBtn
+	{
+		background: #000;
+		color: #fff;
+		z-index: 1;
+	}
+	.modifyBtn:after
+	{
+		position: absolute;
+		content: "";
+		width: 100%;
+		height: 0;
+		bottom: 0;
+		left: 0;
+		z-index: -1;
+		background: #e0e5ec;
+		transition: all 0.3s ease;
+	}
+	.modifyBtn:hover
+	{
+		color: #000;
+	}
+	/* .modifyBtn:hover:after 
+	{
+		top: 0;
+		height: 5vh;
+	} */
+	.modifyBtn:active
+	{
+		top: 2px;
+	}
+	
 	
 	i
 	{
@@ -274,6 +308,12 @@ $(function () {
 		$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
 		$('#checkOverlay').attr("value", "false");
     });
+    
+    $(".modifyBtn").click(function()
+	{
+		$("#userForm").attr("action", "st_detail_form.jsp");
+		$("#userForm").submit();
+	});
 });
 
 </script>
@@ -329,7 +369,7 @@ $(function () {
 				<li>경고 내역</li>
 			</ul>
 			<ul class="big_menu">
-				<li>새로운 가게 등록 신청</i></li>
+				<li><a href="storegiinsertform.action">새로운 가게 등록 신청</a></li>
 			</ul>
 		</div>
 	</div>
