@@ -158,12 +158,17 @@
 
 .compTitle
 {
-	width: 15vw; height: 15vh; margin-left: 45.5vw;
+	width: 15vw; height: 15vh; margin-left: 50vw;
 }
 
 .compTitle span
 {
 	font-size: 3rem; font-weight: bold; text-align: center;
+}
+
+.compareMain
+{
+	width: 100vw;
 }
 
 .compareBody
@@ -172,11 +177,6 @@
 	margin-left: 11vw;
 	display: flex;
 	text-align: center;
-}
-
-.compareSpace
-{
-	
 }
 
 .cCategory
@@ -241,7 +241,7 @@
 
 .cat
 {
-	margin-top: 2vh;
+	margin-top: 1vh;
 }
 
 .photo1
@@ -330,14 +330,15 @@
 
 <!-- 해당 페이지 조정 스크립트 -->
 <script type="text/javascript">
+
  /* 2개 비교할 경우  */
 $(document).ready(function() 
 {
     var numOfStores = $(".compareBody .compareSpace").length;
     if(numOfStores == 2) 
     {
-       $(".compareBody").css("margin-left", "33vw");
-       $(".compTitle").css("margin-left", "46.5vw");
+       $(".compareBody").css({"margin-left" : "18vw", "width" : "60vw"});
+       $(".compTitle").css("margin-left", "42vw");
     }
 });
 
@@ -394,7 +395,7 @@ $(document).ready(function()
             $(this).css("padding-top", "0vh");
             $(".lWeek").css("height" , "3.9vh");
             $(".lWeek").css("padding-top", "0vh");
-            $(".lDay").css("padding-top", "1vh");
+            $(".lDay").css("padding-top", "1.5vh");
             $(".lWeek").css("padding-bottom", "1.1vh");
             $(".cList.lavgP").css("height", "18.75vh");
         }
@@ -524,7 +525,7 @@ $(document).ready(function()
 			</div>
 			
 		   <%-- <c:forEach var="store" items = "${불러온 비교할 가게 리스트 }"> --%>
-		   <c:forEach begin="1"  end="3"  varStatus="store">
+		   <c:forEach begin="1"  end="2"  varStatus="store">
 		      <div id="비교하는 가게 공간" class="compareSpace">
 		         <div id="비교하는 가게 이름" class="cName">
 		            ${store.index} 비교하는 가게 이름
