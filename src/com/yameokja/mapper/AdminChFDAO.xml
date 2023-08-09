@@ -18,7 +18,7 @@
 		     , RRV.ST_NAME AS ST_NAME
 		FROM RV_REPORT_VIEW RRV
 		LEFT JOIN RV_BOX RB
-		ON RRV.USER_NUM = RB.USER_NUM
+		ON RRV.RV_NUM = RB.RV_NUM
 		WHERE RRV.REP_APPLY_NUM=#{rep_apply_num}
 		
 		
@@ -44,16 +44,16 @@
 	<!-- 정보수정 요청한 내용 가져오기
 	가게명 체크박스항목명 여부명 정보오류요청사유 요청자
 	-->
-	<select id="reqContent" resultType="com.yameokja.mc.ReqApplyViewDTO">
+	<select id="accuSearch" resultType="com.yameokja.mc.ReqApplyViewDTO">
 		SELECT REQ_APPLY_NUM, ST_NAME, CHBOX_NAME, YN_NAME, REQ_RS, USER_ID
-		FROM REQ_APPLY_VIEW;
+		FROM REQ_APPLY_VIEW
 		WHERE REQ_APPLY_NUM = #{req_apply_num}
 	</select>
 	
 	<!-- 이의제기 요청 내용 가져오기
 	정보오류요청사유 이의제기사유 이의제기사진
 	-->
-	<select id="objContent" resultType="com.yameokja.mc.ObjApplyViewDTO">
+	<select id="objSearch" resultType="com.yameokja.mc.ObjApplyViewDTO">
 		SELECT OAV.OBJ_APPLY_NUM AS OBJ_APPLY_NUM
      		 , OAV.REQ_RS AS REQ_RS
 			 , OAV.OBJ_RS AS OBJ_RS
@@ -68,7 +68,7 @@
 	<!-- 패널티회수 요청 가게 내용 가져오기
 	아이디 신청날짜 가게명 패널티받은사유 패널티회수요청사유 첨부파일
 	-->
-	<select id="revoContent" resultType="com.yameokja.mc.RevoApplyViewDTO">
+	<select id="revoSearch" resultType="com.yameokja.mc.RevoApplyViewDTO">
 		SELECT REVO_APPLY_NUM, USER_ID, REG_DATE, ST_NAME, PEN_TYPE_NAME, REVO_RS, PHOTO_LINK
 		FROM REVO_APPLY_VIEW
 		WHERE REVO_APPLY_NUM = #{revo_apply_num}
