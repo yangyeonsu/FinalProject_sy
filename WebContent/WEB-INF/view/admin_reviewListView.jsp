@@ -191,7 +191,25 @@
 			$('.overlay').css("z-index", "0");
 			$('#checkOverlay').attr("value", "false");
 		});
+		
+		
+		
+		$(".reviewTd").click(function()
+		{
+			var reportNum = $(this).siblings("[id]").attr("id");
+			//alert(reportNum);
+			$(location).attr("href","reviewreportform.action?rep_apply_num="+reportNum);
+			
+		});
+		
+		
+		
+		
 	});
+	
+	
+	
+	
 </script>
 
 
@@ -280,13 +298,13 @@
 						<tbody>
 							<c:forEach var="review" items="${rvList }">
 							<tr>
-								<td>${review.reg_date }</td>
-								<td>${review.user_id }</td>
-								<td>${review.st_name }</td>
-								<td>${review.accu_num }</td>
-								<td>${review.state }</td>
-								<td>${review.final_date }</td>
-								<td>${review.admin_id }</td>
+								<td class="reviewTd" id="${review.report_num }">${review.reg_date }</td>
+								<td class="reviewTd" id="${review.report_num }">${review.user_id }</td>
+								<td class="reviewTd" id="${review.report_num }">${review.st_name }</td>
+								<td class="reviewTd" id="${review.report_num }">${review.accu_num }</td>
+								<td class="reviewTd" id="${review.report_num }">${review.state }</td>
+								<td class="reviewTd" id="${review.report_num }">${review.final_date }</td>
+								<td class="reviewTd" id="${review.report_num }">${review.admin_id }</td>
 							</tr>
 							</c:forEach>
 						</tbody>

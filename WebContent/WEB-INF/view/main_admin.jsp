@@ -69,15 +69,41 @@
 		});
 		
 		
+		
+		$(".reviewTd").click(function()
+		{
+			var reportNum = $(this).attr("id");
+			//alert(reportNum);
+			$(location).attr("href","reviewreportform.action?rep_apply_num="+reportNum);
+			
+		});
+		
+		$(".errTd").click(function()
+		{
+			var reportNum = $(this).siblings("[id]").attr("id");
+			//alert(reportNum);
+			$(location).attr("href","storeErrReportForm.action?rep_apply_num="+reportNum);
+			
+		});
+
+		$(".objTd").click(function()
+		{
+			var reportNum = $(this).siblings("[id]").attr("id");
+			//alert(reportNum);
+			$(location).attr("href","objectionReportForm.action?rep_apply_num="+reportNum);
+			
+		});
+
+		$(".revoTd").click(function()
+		{
+			var reportNum = $(this).siblings("[id]").attr("id");
+			//alert(reportNum);
+			$(location).attr("href","penaltyRevokeForm.action?rep_apply_num="+reportNum);
+			
+		});
+		
 	});
 
-	$(function()
-	{
-		$(".reviewList").click(function()
-		{
-			$(location).attr("href", "reviewreportform.action?user_id="+$(this).val());
-		});
-	});
 	
 </script>
 
@@ -166,14 +192,14 @@
 						</thead>
 						<tbody>
 							<c:forEach var="review" items="${rvList }" begin="0" end="4">
-							<tr class="reviewList">
-								<td><a href="/WEB-INF/view/reviewReportForm.jsp">${review.reg_date }</a></td>
-								<td><a href="reviewReportForm.jsp">${review.user_id }</a></td>
-								<td><a href="reviewReportForm.jsp">${review.st_name }</a></td>
-								<td><a href="reviewReportForm.jsp">${review.accu_num }</a></td>
-								<td><a href="reviewReportForm.jsp">${review.state }</a></td>
-								<td><a href="reviewReportForm.jsp">${review.final_date }</a></td>
-								<td><a href="reviewReportForm.jsp">${review.admin_id }</a></td>
+							<tr>
+								<td class="reviewTd" id="${review.report_num }">${review.reg_date }</td>
+								<td class="reviewTd" id="${review.report_num }">${review.user_id }</td>
+								<td class="reviewTd" id="${review.report_num }">${review.st_name }</td>
+								<td class="reviewTd" id="${review.report_num }">${review.accu_num }</td>
+								<td class="reviewTd" id="${review.report_num }">${review.state }</td>
+								<td class="reviewTd" id="${review.report_num }">${review.final_date }</td>
+								<td class="reviewTd" id="${review.report_num }">${review.admin_id }</td>
 							</tr>                               
 							</c:forEach>
 						</tbody>
@@ -200,14 +226,14 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="req" items="${reqList }" begin="0" end="4">
+							<c:forEach var="err" items="${reqList }" begin="0" end="4">
 							<tr>
-								<td>${req.reg_date }</td>
-								<td>${req.user_id }</td>
-								<td>${req.st_name }</td>
-								<td>${req.state }</td>
-								<td>${req.final_date }</td>
-								<td>${req.admin_id }</td>
+								<td class="errTd" id="${err.report_num }">${err.reg_date }</td>
+								<td class="errTd" id="${err.report_num }">${err.user_id }</td>
+								<td class="errTd" id="${err.report_num }">${err.st_name }</td>
+								<td class="errTd" id="${err.report_num }">${err.state }</td>
+								<td class="errTd" id="${err.report_num }">${err.final_date }</td>
+								<td class="errTd" id="${err.report_num }">${err.admin_id }</td>
 							</tr>
 							</c:forEach>
 						</tbody>
@@ -235,11 +261,11 @@
 						<tbody>
 							<c:forEach var="obj" items="${objList }" begin="0" end="4">
 							<tr>
-								<td>${obj.reg_date }</td>
-								<td>${obj.st_name }</td>
-								<td>${obj.state }</td>
-								<td>${obj.final_date }</td>
-								<td>${obj.admin_id }</td>
+								<td class="objTd" id="${obj.report_num }">${obj.reg_date }</td>
+								<td class="objTd" id="${obj.report_num }">${obj.st_name }</td>
+								<td class="objTd" id="${obj.report_num }">${obj.state }</td>
+								<td class="objTd" id="${obj.report_num }">${obj.final_date }</td>
+								<td class="objTd" id="${obj.report_num }">${obj.admin_id }</td>
 							</tr>
 							</c:forEach>
 						</tbody>
@@ -275,11 +301,11 @@
 							</tr>
 							<c:forEach var="revo" items="${revoList }" begin="0" end="4">
 							<tr>
-								<td>${revo.reg_date }</td>
-								<td>${revo.st_name }</td>
-								<td>${revo.state }</td>
-								<td>${revo.final_date }</td>
-								<td>${revo.admin_id }</td>
+								<td class="revoTd" id="${revo.report_num }">${revo.reg_date }</td>
+								<td class="revoTd" id="${revo.report_num }">${revo.st_name }</td>
+								<td class="revoTd" id="${revo.report_num }">${revo.state }</td>
+								<td class="revoTd" id="${revo.report_num }">${revo.final_date }</td>
+								<td class="revoTd" id="${revo.report_num }">${revo.admin_id }</td>
 							</tr>
 							</c:forEach>
 						</tbody>

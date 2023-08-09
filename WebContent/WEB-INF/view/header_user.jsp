@@ -202,7 +202,7 @@ $(function()
 
 	<header id="store_header">
 		<div class="headerImg">
-			<img id="headerLogo" src="<%=cp %>/images/logo_text.png">
+			<a href="main.action"><img id="headerLogo" src="<%=cp %>/images/logo_text.png"></a>
 		</div>
 		<div id="headerAlarm">
 			<div class="headerBtn">
@@ -219,19 +219,71 @@ $(function()
 			<div class="sub_list">
 				<div class="mypage_menu">
 					<ul class="person_listA">
-						<li><button type="button" id="myPage" class="subListBtn">마이 페이지</button>
-						<li><button type="button" id="storeMyPage" class="subListBtn">사업자 메인 페이지</button>
-						<li><button type="button" id="logout" class="subListBtn" >로그아웃</button>
+						<li><a href="storemain.action">마이 페이지</a>
+						<c:if test="${st_num != null }">
+							<li><a href="storemain.action">사업자 메인 페이지</a>
+						</c:if>
+						<li><a href="logout.action">로그아웃</a>
 					</ul>
 				</div>
 				<div class="alarm_menu">
 					<ul class="person_listB">
-						<li><a href="#">OOO경고 들어옴</a>
-						<li><a href="#">리뷰신고한거 처리됨</a>
-						<li><a href="#">리뷰신고한거 처리됨</a>
-						<li><a href="#">리뷰신고한거 처리됨</a>
+						<c:forEach var="al" items="${alarm }">
+							<c:choose>
+								<c:when test="${al.commentary eq 'REQ_REJECT' }">
+									<c:choose>
+										<c:when test="${al.check_date eq '-' }">
+											<li><a href="#" class="alarm NonCheck">가게 신고 요청 결과가 변경되었습니다.</a>
+										</c:when>
+										<c:otherwise>
+											<li><a href="#" class="alarm checked">가게 신고 요청 결과가 변경되었습니다.</a>
+										</c:otherwise>
+									</c:choose>
+								</c:when>
+								<c:when test="${al.commentary eq 'ACCU_APPLY' }">
+									<c:choose>
+										<c:when test="${al.check_date eq '-' }">
+											<li><a href="#" class="alarm NonCheck">회원님이 작성하신 리뷰가 신고 되었습니다.</a>
+										</c:when>
+										<c:otherwise>
+											<li><a href="#" class="alarm checked">회원님이 작성하신 리뷰가 신고 되었습니다.</a>
+										</c:otherwise>
+									</c:choose>
+								</c:when>
+								<c:when test="${al.commentary eq 'ACCU_PROCESS' }">
+									<c:choose>
+										<c:when test="${al.check_date eq '-' }">
+											<li><a href="#" class="alarm NonCheck">회원님이 작성하신 리뷰에 대한 신고가 처리 완료 되었습니다.</a>
+										</c:when>
+										<c:otherwise>
+											<li><a href="#" class="alarm checked">회원님이 작성하신 리뷰에 대한 신고가 처리 완료 되었습니다.</a>
+										</c:otherwise>
+									</c:choose>
+								</c:when>
+								<c:when test="${al.commentary eq 'REQ' }">
+									<c:choose>
+										<c:when test="${al.check_date eq '-' }">
+											<li><a href="#" class="alarm NonCheck">회원님이 요청하신 가게 정보 오류 요청이 처리 완료 되었습니다.</a>
+										</c:when>
+										<c:otherwise>
+											<li><a href="#" class="alarm checked">회원님이 요청하신 가게 정보 오류 요청이 처리 완료 되었습니다.</a>
+										</c:otherwise>
+									</c:choose>
+								</c:when>
+								<c:when test="${al.commentary eq 'REP' }">
+									<c:choose>
+										<c:when test="${al.check_date eq '-' }">
+											<li><a href="#" class="alarm NonCheck">회원님이 요청하신 리뷰신고가 처리 완료 되었습니다.</a>
+										</c:when>
+										<c:otherwise>
+											<li><a href="#" class="alarm checked">회원님이 요청하신 리뷰신고가 처리 완료 되었습니다.</a>
+										</c:otherwise>
+									</c:choose>
+								</c:when>
+							
+							</c:choose>						
+						</c:forEach>
 					</ul>
-				</div>
 			</div>
 		</div>
 	</header>

@@ -175,8 +175,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<insert id="comparingInsert">
-		INSERT INTO COMPARING_BOX(COMPARING_NUM, USER_NUM,
-		ST_NUM, REG_DATE)
+		INSERT INTO COMPARING_BOX(COMPARING_NUM, USER_NUM, ST_NUM, REG_DATE)
 		VALUES(COMPARINGSEQ.NEXTVAL, #{user_num}, #{st_num}, DEFAULT)
 	</insert>
 
