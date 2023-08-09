@@ -4,7 +4,7 @@ public class ReportListDTO
 {
 	private String reg_date, st_name, state, final_date, admin_id;
 	private String accu_num, cat, user_id, rep_rs_name;
-	private int obj_apply_num;
+	private int report_num;
 	
 	
 	// getter / setter 
@@ -80,15 +80,15 @@ public class ReportListDTO
 		this.accu_num = accu_num;
 	}
 
-	public int getObj_apply_num()
-	{
-		return obj_apply_num;
-	}
-	public void setObj_apply_num(int obj_apply_num)
-	{
-		this.obj_apply_num = obj_apply_num;
-	}
 	
+	public int getReport_num()
+	{
+		return report_num;
+	}
+	public void setReport_num(int report_num)
+	{
+		this.report_num = report_num;
+	}
 	public String getCat()
 	{
 		return cat;
