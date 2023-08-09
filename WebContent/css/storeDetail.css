@@ -600,7 +600,7 @@
 	margin-top: 5px;
 }
 
-input[type=checkbox]
+#commercial, #intended, #wrong, #violent input[type=checkbox]
 {
 	transform: scale(1.3);
     accent-color: #ef6351;

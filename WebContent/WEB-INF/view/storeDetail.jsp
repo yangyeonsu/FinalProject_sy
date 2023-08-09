@@ -564,7 +564,7 @@ String cp = request.getContextPath();
 											<div class="starScore">
 												<c:choose>
 													<c:when test="${rv.star_score eq 5}">
-													⭐⭐⭐⭐⭐⭐
+													⭐⭐⭐⭐⭐
 												</c:when>
 													<c:when test="${rv.star_score eq 4}">
 													⭐⭐⭐⭐
