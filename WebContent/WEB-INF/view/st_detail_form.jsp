@@ -412,9 +412,6 @@ table
 .input:focus + .line-box .line {
   width: 100%;
 }
-.label-active {
-  top: -3em;
-}
 
 .label-txt {
   position: absolute;
@@ -426,6 +423,11 @@ table
   color: rgb(120,120,120);
   transition: ease .3s;
 }
+
+.label-active {
+  top: -3em;
+}
+
 .storeOption input
 {
 	zoom:1.5;
@@ -435,10 +437,19 @@ table
 	border: 0;
 	font-size: 13px;
 	width: 2vh;
-}
-.food_cat input
-{
 	margin-left: 1vh;
+}
+.card input
+{
+	border: 0;
+	font-size: 13px;
+	width: 2vh;
+	margin-left: 1vh;
+}
+.btnSend
+{
+	display: flex;
+	justify-content: space-evenly;
 }
 
 </style>
@@ -566,7 +577,7 @@ table
 		});
 		
 
-	    $('#why').keyup(function (e) {
+	    $('#why1').keyup(function (e) {
 	    	let content = $(this).val();
 	        
 	        // 글자수 세기
@@ -582,7 +593,45 @@ table
 	            $(this).val($(this).val().substring(0, 5));
 	            // 200자 넘으면 알림창 뜨도록
 	            /* errorMessage.style.display = 'inline'; */
-				$("#errMessage").show();
+				$("#errMessage1").show();
+	        };
+	    });
+	    $('#why2').keyup(function (e) {
+	    	let content = $(this).val();
+	        
+	        // 글자수 세기
+	        if (content.length == 0 || content == '') {
+	        	$('.textCount').text('0자');
+	        } else {
+	        	$('.textCount').text(content.length + '자');
+	        }
+	        
+	        // 글자수 제한
+	        if (content.length > 5) {
+	        	// 200자 부터는 타이핑 되지 않도록
+	            $(this).val($(this).val().substring(0, 5));
+	            // 200자 넘으면 알림창 뜨도록
+	            /* errorMessage.style.display = 'inline'; */
+				$("#errMessage2").show();
+	        };
+	    });
+	    $('#why3').keyup(function (e) {
+	    	let content = $(this).val();
+	        
+	        // 글자수 세기
+	        if (content.length == 0 || content == '') {
+	        	$('.textCount').text('0자');
+	        } else {
+	        	$('.textCount').text(content.length + '자');
+	        }
+	        
+	        // 글자수 제한
+	        if (content.length > 5) {
+	        	// 200자 부터는 타이핑 되지 않도록
+	            $(this).val($(this).val().substring(0, 5));
+	            // 200자 넘으면 알림창 뜨도록
+	            /* errorMessage.style.display = 'inline'; */
+				$("#errMessage3").show();
 	        };
 	    });
 	});
@@ -764,21 +813,28 @@ table
 			</div>
 		</div>
 		
+		<br>
 		<!-- 결제수단 -->
-		<label class="input" id="label">
-			<p class="label-txt label-active">결제수단</p>
-			<input type="text" class="input">
-			<div class="line-box">
-				<div class="line"></div>
-			</div>
-		</label>
+		<div class="card">
+			<table border="0">
+				<tr>
+					<th style="border-bottom: 5px solid;">&nbsp;&nbsp;&nbsp;결제수단&nbsp;&nbsp;&nbsp;</th>
+					<td>
+						<input type="checkbox" id="chbox1" name="card"><label for="chbox1">제로페이</label>
+						<input type="checkbox" id="chbox2" name="card"><label for="chbox2">카카오페이</label>
+						<input type="checkbox" id="chbox3" name="card"><label for="chbox3">네이버페이</label>
+						<input type="checkbox" id="chbox4" name="card"><label for="chbox4">지역화폐</label>
+					</td>
+				</tr>
+			</table>
+		</div>
 		
-		
+		<br>
 		<!-- 음식 카테고리 -->
 		<div class="food_cat">
 			<table border="0">
 				<tr>
-					<th style="border-bottom: 5px solid;">음식카테고리</th>
+					<th style="border-bottom: 5px solid;">음식 카테고리</th>
 					<td>
 						<input type="checkbox" id="chbox1" name="food_cat"><label for="chbox1">한식</label>
 						<input type="checkbox" id="chbox2" name="food_cat"><label for="chbox2">일식</label>
@@ -944,91 +1000,102 @@ table
 		
 		
 		<!-- 가게 선택 키워드 -->
-		<div class="userIbmat">
-		<div class="ibmatTitleDiv">
-			<span id="ibmatTitle">가게키워드 선택</span> &nbsp;&nbsp;&nbsp;&nbsp;
-		</div>
-	
-		<div class="ibmatSelectDiv">
-			
-			<div class="selectLeft">
-				<label class="ibmatlabel" for="ibmat1">
-					<input type="checkbox" class="ibmatCB" id="ibmat1">
-					인테리어가 멋져요
-				</label>
-				<br><br>
+		<div>
+			<div class="userIbmat">
+			<div class="ibmatTitleDiv">
+				<span id="ibmatTitle">가게키워드 선택</span> &nbsp;&nbsp;&nbsp;&nbsp;
+			</div>
+		
+			<div class="ibmatSelectDiv">
 				
-				
-				<label class="ibmatlabel" for="ibmat2">
-					<input type="checkbox" class="ibmatCB" id="ibmat2">
-					혼자오기 좋아요
-				</label>
-				<br><br>
-			
-				<label class="ibmatlabel" for="ibmat3">
-					<input type="checkbox" class="ibmatCB" id="ibmat3">
-					단체모임하기 좋아요
-				</label>
-				<br><br>
+				<div class="selectLeft">
+					<label class="ibmatlabel" for="ibmat1">
+						<input type="checkbox" class="ibmatCB" id="ibmat1">
+						인테리어가 멋져요
+					</label>
+					<br><br>
 					
-				<label class="ibmatlabel" for="ibmat4">
-					<input type="checkbox" class="ibmatCB" id="ibmat4">
-					매장이 넓어요
-				</label>
-				<br><br>
+					
+					<label class="ibmatlabel" for="ibmat2">
+						<input type="checkbox" class="ibmatCB" id="ibmat2">
+						혼자오기 좋아요
+					</label>
+					<br><br>
+				
+					<label class="ibmatlabel" for="ibmat3">
+						<input type="checkbox" class="ibmatCB" id="ibmat3">
+						단체모임하기 좋아요
+					</label>
+					<br><br>
+						
+					<label class="ibmatlabel" for="ibmat4">
+						<input type="checkbox" class="ibmatCB" id="ibmat4">
+						매장이 넓어요
+					</label>
+					<br><br>
+				</div>
+				
+				<div class="selectRight">	
+					<label class="ibmatlabel" for="ibmat5">
+						<input type="checkbox" class="ibmatCB" id="ibmat5">
+						애견메뉴가 있어요
+					</label>
+					<br><br>
+				
+					<label class="ibmatlabel" for="ibmat6">
+						<input type="checkbox" class="ibmatCB" id="ibmat6">
+						포장이 가능해요
+					</label>
+					<br><br>
+				</div>
+				
 			</div>
-			
-			<div class="selectRight">	
-				<label class="ibmatlabel" for="ibmat5">
-					<input type="checkbox" class="ibmatCB" id="ibmat5">
-					애견메뉴가 있어요
-				</label>
-				<br><br>
-			
-				<label class="ibmatlabel" for="ibmat6">
-					<input type="checkbox" class="ibmatCB" id="ibmat6">
-					포장이 가능해요
-				</label>
-				<br><br>
-			</div>
-			
 		</div>
-	
+		
 		<!-- 가게 검색 키워드 -->
+		<div>
+			<div class="userIbmat">
+			<div class="ibmatTitleDiv">
+				<span id="ibmatTitle">가게검색 키워드</span> &nbsp;&nbsp;&nbsp;&nbsp;
+			</div>
+		</div>
+		
 		<label id="label">
 			<p class="label-txt label-active">가게 검색 키워드1 (5글자 이내)</p>
-			<input type="text" class="input" id="why">
+			<input type="text" class="input" id="why1">
 			<div class="line-box">
 			    <div class="line"></div>
 			</div>
 			
-			<span id="errMessage" style="color: red; display: none;">5글자 이내로 입력해주세요</span>
+			<span id="errMessage1" style="color: red; display: none;">5글자 이내로 입력해주세요</span>
 		</label>
 		
 		<label id="label">
 			<p class="label-txt label-active">가게 검색 키워드2 (5글자 이내)</p>
-			<input type="text" class="input" id="why">
+			<input type="text" class="input" id="why2">
 			<div class="line-box">
 			    <div class="line"></div>
 			</div>
 			
-			<span id="errMessage" style="color: red; display: none;">5글자 이내로 입력해주세요</span>
+			<span id="errMessage2" style="color: red; display: none;">5글자 이내로 입력해주세요</span>
 		</label>
 		
 		<label id="label">
 			<p class="label-txt label-active">가게 검색 키워드3 (5글자 이내)</p>
-			<input type="text" class="input" id="why">
+			<input type="text" class="input" id="why3">
 			<div class="line-box">
 			    <div class="line"></div>
 			</div>
 			
-			<span id="errMessage" style="color: red; display: none;">5글자 이내로 입력해주세요</span>
+			<span id="errMessage3" style="color: red; display: none;">5글자 이내로 입력해주세요</span>
 		</label>
 		
 		
-		
+		<br><br>
 		<!-- 등록버튼 -->
-		<button>등록</button>
+		<div class="btnSend">
+			<input type="submit" value="등록">
+		</div>
 		
 			
 			

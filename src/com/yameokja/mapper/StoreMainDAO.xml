@@ -34,6 +34,12 @@
 		WHERE RB.ST_NUM = #{st_num}
 		ORDER BY RV_NUM DESC
 	</select>
+	
+	<select id="check_stDetail" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS COUNT
+		FROM STORE_VIEW
+		WHERE ST_NUM = #{st_num}
+	</select>
 
 </mapper>
 

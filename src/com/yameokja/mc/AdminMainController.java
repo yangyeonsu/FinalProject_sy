@@ -149,4 +149,68 @@ public class AdminMainController
 		
 	}
 	
+	@RequestMapping(value="/reviewreportform.action", method=RequestMethod.GET)
+	public String reviewReportForm(Model model,HttpServletRequest request, RvApplyViewDTO dto)
+	{
+		String result;
+		
+		int reviewNum = Integer.parseInt(request.getParameter("rep_apply_num"));
+		
+		IAdminFindDAO dao = sqlSesion.getMapper(IAdminFindDAO.class);
+		
+		model.addAttribute("review", dao.rvSearch(reviewNum));
+		
+		result = "/WEB-INF/view/reviewReportForm.jsp";
+		
+		return result;
+	}
+	
+	@RequestMapping(value="/errreportform.action", method=RequestMethod.GET)
+	public String storeErrReportForm(Model model,HttpServletRequest request, ReqApplyViewDTO dto)
+	{
+		String result;
+		
+		int reqNum = Integer.parseInt(request.getParameter("req_apply_num"));
+		
+		IAdminFindDAO dao = sqlSesion.getMapper(IAdminFindDAO.class);
+		
+		model.addAttribute("err", dao.accuSearch(reqNum));
+		
+		result = "/WEB-INF/view/storeErrReportForm.jsp";
+		
+		return result;
+	}
+	
+	@RequestMapping(value="/objreportform.action", method=RequestMethod.GET)
+	public String objectionReportForm(Model model,HttpServletRequest request, ObjApplyViewDTO dto)
+	{
+		String result;
+		
+		int objNum = Integer.parseInt(request.getParameter("obj_apply_num"));
+		
+		IAdminFindDAO dao = sqlSesion.getMapper(IAdminFindDAO.class);
+		
+		model.addAttribute("obj", dao.objSearch(objNum));
+		
+		result = "/WEB-INF/view/objectionReportForm.jsp";
+		
+		return result;
+	}
+	
+	@RequestMapping(value="/penaltyrevokeform.action", method=RequestMethod.GET)
+	public String penaltyRevokeForm(Model model,HttpServletRequest request, RevoApplyViewDTO dto)
+	{
+		String result;
+		
+		int reviewNum = Integer.parseInt(request.getParameter("revo_apply_num"));
+		
+		IAdminFindDAO dao = sqlSesion.getMapper(IAdminFindDAO.class);
+		
+		model.addAttribute("revo", dao.rvSearch(reviewNum));
+		
+		result = "/WEB-INF/view/penaltyRevokeForm.jsp";
+		
+		return result;
+	}
+	
 }
