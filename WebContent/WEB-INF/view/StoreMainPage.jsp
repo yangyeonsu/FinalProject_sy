@@ -209,45 +209,49 @@
 	
 	.modifyBtn
 	{
-		font-size: small;
+		/* font-size: small; */
 		width: 6vw;
 		height: 5vh;
 		margin-top: 3.2vw;
 		margin-left: 2vh;
-  		outline: none;
+
+
+		border-radius: 10px;
+		font-size: 0.6vw;
+		border: 1px solid #ef6351;
+	  	background-color: white;
+	  	color: #ef6351;
+	  	cursor: pointer;
+	  	align-content: center;
 	}
 	
-	.modifyBtn
-	{
-		background: #000;
-		color: #fff;
-		z-index: 1;
-	}
-	.modifyBtn:after
-	{
-		position: absolute;
-		content: "";
-		width: 100%;
-		height: 0;
-		bottom: 0;
-		left: 0;
-		z-index: -1;
-		background: #e0e5ec;
-		transition: all 0.3s ease;
-	}
 	.modifyBtn:hover
 	{
-		color: #000;
-	}
-	/* .modifyBtn:hover:after 
-	{
-		top: 0;
+		width: 6vw;
 		height: 5vh;
-	} */
-	.modifyBtn:active
-	{
-		top: 2px;
+		border-radius: 10px;
+		font-size: 0.6vw;
+		border: 1px solid #ef6351;
+	  	background-color: #fef1ef;
+	  	color: #ef6351;
+	  	cursor: pointer;
+	  	align-content: center;
+	  	box-shadow: 0 0 10px #ef6351;
 	}
+	
+	.modifyBtn:action
+	{
+		width: 6vw;
+		height: 5vh;
+		border-radius: 10px;
+		font-size: 0.6vw;
+		border: 1px solid #ef6351;
+	  	background-color: #f9ab9f;
+	  	color: #ef6351;
+	  	cursor: pointer;
+	  	align-content: center;
+	  	box-shadow: 0 0 10px #ef6351;
+	  }
 	
 	
 	i
@@ -311,7 +315,7 @@ $(function () {
     
     $(".modifyBtn").click(function()
 	{
-		$("#userForm").attr("action", "st_detail_form.jsp");
+		$("#userForm").attr("action", "stdetailmodify.action");
 		$("#userForm").submit();
 	});
 });

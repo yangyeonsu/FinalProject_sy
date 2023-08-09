@@ -139,7 +139,7 @@ public class StoreregiController
 		
 		dao.St_In_Apply(srdto);
 		
-		return "redirect:usermain.action";
+		return "redirect:main.action";
 	}
 	
 	
