@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
 
 <!-- CSS -->
 <%-- <link rel="stylesheet" href="<%=cp %>/css/StoreMain.css"> --%>
@@ -33,7 +33,7 @@
 		justify-content: flex-start;
 		width: 100%;
 		align-items: stretch;
-		font-family: 'Black Han Sans', sans-serif;
+		/* font-family: 'Black Han Sans', sans-serif; */
 		font-family: 'Orbit', sans-serif;
 		margin: 0;
 	}
@@ -283,7 +283,7 @@ $(function () {
 <title>SideBar sub menus</title>
 </head>
 <body>
-
+<form action="" id="userForm" method="post">
 
 <header><c:import url="header_user.jsp"></c:import></header>
 
@@ -347,7 +347,7 @@ $(function () {
 					이의 제기 요청
 					<i class="fa fa-check"></i>
 				</button>
-				<button class="btn btn-outline-primary btn-layer-2_1" vlaue="요청번호">
+				<button class="btn btn-outline-primary btn-layer-2_1" value="요청번호">
 					패널티 회수 요청
 					<i class="fa fa-check"></i>
 				</button>
@@ -409,7 +409,7 @@ $(function () {
                 						 ,data: {labels: <%=request.getAttribute("star_labels") %> //x 축  
 		                    					,datasets: [{label: '별점평균'	//라벨 제목
 									                        ,fill: false	// line 형태일 때, 선 안쪽을 채우는지 안채우는지
-									                        ,data: <%=request.getAttribute("star_data") %>	//x축 label에 대응되는 데이터 값
+									                        ,data: ${star_data}	//x축 label에 대응되는 데이터 값
 									                        ,backgroundColor: '#e09a8d'	//포인트 안을 채우는 색상
 									                        ,borderColor: '#ef6351'		//선 색상
 									                        ,borderWidth: 1}]}			//경계선 굵기
@@ -428,5 +428,7 @@ $(function () {
       		 		 ,options: {responsive: false, }};
 		new Chart(canvas, {type: "doughnut", data,});	
 	</script>
+	
+</form>
 </body>
 </html>

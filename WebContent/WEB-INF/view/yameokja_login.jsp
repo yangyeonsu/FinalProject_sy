@@ -241,6 +241,32 @@
 			$("#loginForm").submit();
 		});
 	});
+	
+	function enterkey() 
+	{
+		if (window.event.keyCode == 13) 
+		{
+			$("#IdErr").css("display", "none");	
+			$("#PwErr").css("display", "none");
+			
+			if ($("#user_id").val() == "")
+			{
+				$("#IdErr").css("display", "inline");
+				$("#user_id").focus();
+				return;
+			}
+			
+			if ($("#user_pw").val() == "")
+			{
+				$("#PwErr").css("display", "inline");
+				$("#user_pw").focus();
+				return;
+			}
+			
+			$("#loginForm").attr("action", "login.action");
+			$("#loginForm").submit();
+	    }
+	}
 
 </script>
 
@@ -259,7 +285,7 @@
 				<div id="idPwDiv">
 					<input type="text" id="user_id" name="user_id" placeholder=" 사용자 ID">
 					<span class="errorMsg" id="IdErr">아이디를 입력해야 합니다.</span>
-					<input type="password" id="user_pw" name="user_pw" placeholder=" 사용자 PW">
+					<input type="password" id="user_pw" name="user_pw" placeholder=" 사용자 PW" onkeyup="enterkey()">
 					<span class="errorMsg" id="PwErr">비밀번호를 입력해야 합니다.</span>
 				</div>
 				<div id="loginBtnDiv">
