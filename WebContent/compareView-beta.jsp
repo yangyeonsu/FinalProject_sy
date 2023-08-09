@@ -658,6 +658,7 @@ $(document).ready(function()
 			         </div>
 			         <div id="가게 옵션" class="cOptions">
 			         	<div id="화장실 존재 여부" class="cOpt">
+			         		<%-- ${store.index} 화장실 존재 여부 : <input type="checkbox" class="chBox" value=" ${items 값} " id="1"/> --%>
 			         		${store.index} 화장실 존재 여부 : <input type="checkbox" class="chBox" value="○" id="1"/>
 			         	</div>
 			         	<div id="애견 동반 여부" class="cOpt">
