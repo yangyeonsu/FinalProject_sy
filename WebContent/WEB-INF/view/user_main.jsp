@@ -25,8 +25,6 @@
 <script type="text/javascript">
 	$(document).ready(function()
 	{
-		/* // 페이지 로드 시 뒤로가기 방지 함수 호출
-		preventBack(); */
 		
 		$(".comAddBtn").click(function()
 		{

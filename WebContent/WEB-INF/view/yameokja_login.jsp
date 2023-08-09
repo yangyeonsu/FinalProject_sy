@@ -203,6 +203,11 @@
 
 	$(function()
 	{
+		window.history.forward(); function noBack()
+		{
+			window.history.forward();
+		}
+		
 		if ('<%=(String)session.getAttribute("loginCheck")%>' != "null")
 			alert("로그인 실패");
 		

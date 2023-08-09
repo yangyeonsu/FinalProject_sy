@@ -3,7 +3,6 @@ package com.yameokja.mc;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 
 import javax.servlet.http.HttpServletRequest;
@@ -75,7 +74,7 @@ public class MainController
 				hotList.add(i+1);
 			}
 			
-			System.out.println(hotList);
+			/* System.out.println(hotList); */
 			
 			model.addAttribute("hot_list", dao.getStoreList(hotList));
 		}
@@ -546,7 +545,7 @@ public class MainController
 		
 		ArrayList<Integer> filterResult = dao.filterSearchList(regionCbList, catCbList, stKeyCbList, finalKeyword);
 		
-		System.out.println(filterResult);
+		/* System.out.println(filterResult); */
 		
 		ArrayList<StoreDTO> searchList = dao.getStoreList(filterResult);
 		
