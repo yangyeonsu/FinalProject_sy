@@ -413,7 +413,7 @@ $(document).ready(function()
     
 });
 
-/* 체크박스 여부 표시를 안 했을 경우 */
+/* 체크박스 여부 표시에 따른 높이 변화 */
 $(document).ready(function() 
 {
 	var maxOptNum = 0;
