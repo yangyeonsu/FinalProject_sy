@@ -74,8 +74,6 @@ public class MainController
 				hotList.add(i+1);
 			}
 			
-			/* System.out.println(hotList); */
-			
 			model.addAttribute("hot_list", dao.getStoreList(hotList));
 		}
 
@@ -544,8 +542,6 @@ public class MainController
 		}
 		
 		ArrayList<Integer> filterResult = dao.filterSearchList(regionCbList, catCbList, stKeyCbList, finalKeyword);
-		
-		/* System.out.println(filterResult); */
 		
 		ArrayList<StoreDTO> searchList = dao.getStoreList(filterResult);
 		
