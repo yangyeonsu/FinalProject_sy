@@ -65,7 +65,7 @@ public class MainController
 		else
 			model.addAttribute("jjim_list", null);
 
-		if (hotList.size() > 0)
+		if (hotList.size() > 3)
 			model.addAttribute("hot_list", dao.getStoreList(hotList));
 		else
 		{
@@ -75,7 +75,7 @@ public class MainController
 				hotList.add(i+1);
 			}
 			
-			System.out.println(hotList);
+			//System.out.println(hotList);
 			
 			model.addAttribute("hot_list", dao.getStoreList(hotList));
 		}
@@ -546,7 +546,7 @@ public class MainController
 		
 		ArrayList<Integer> filterResult = dao.filterSearchList(regionCbList, catCbList, stKeyCbList, finalKeyword);
 		
-		System.out.println(filterResult);
+		/*System.out.println(filterResult);*/
 		
 		ArrayList<StoreDTO> searchList = dao.getStoreList(filterResult);
 		

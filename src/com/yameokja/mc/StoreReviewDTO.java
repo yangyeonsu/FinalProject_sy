@@ -3,8 +3,9 @@ package com.yameokja.mc;
 public class StoreReviewDTO
 {
 	private String user_nickname, rv_content, reg_date;
-	private int star_score, rec, nonrec;
+	private int rv_num, star_score, rec, nonrec;
 	
+
 	// getter / setter 구성
 	public String getUser_nickname()
 	{
@@ -29,6 +30,14 @@ public class StoreReviewDTO
 	public void setReg_date(String reg_date)
 	{
 		this.reg_date = reg_date;
+	}
+	public int getRv_num()
+	{
+		return rv_num;
+	}
+	public void setRv_num(int rv_num)
+	{
+		this.rv_num = rv_num;
 	}
 	public int getStar_score()
 	{
@@ -55,7 +64,4 @@ public class StoreReviewDTO
 		this.nonrec = nonrec;
 	}
 
-	
-	
-	
 }
