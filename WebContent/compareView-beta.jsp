@@ -410,7 +410,92 @@ $(document).ready(function()
             $(".cList.cMenu").css("height", "18.7vh");
         }
     });
+    
 });
+
+/* 체크박스 여부 표시를 안 했을 경우 */
+$(document).ready(function() 
+{
+	var maxOptNum = 0;
+
+    $(".cOptions").each(function() 
+    {
+        var optNum = $(this).find(".cOpt").length;
+
+        var yesNos = $(this).find(".chBox").filter(function() {
+            return $(this).val() == "none";
+        }).length;
+
+        optNum = optNum - yesNos;
+
+        if(optNum > maxOptNum)
+        {
+            maxOptNum = optNum;
+        }
+    });
+    
+    $(".cOptions").each(function() 
+    {
+		if (maxOptNum == 5) 
+		{
+			$(this).css("height", "25vh");
+			$("lOptions").css("height", "25vh");
+		}
+		else if (maxOptNum == 4) 
+		{
+			$(this).css("height", "20vh");
+			$("lOptions").css("height", "20vh");
+		}
+		else if (maxOptNum == 3) 
+		{
+			$(this).css("height", "15vh");
+			$("lOptions").css("height", "15vh");
+		}
+		else if (maxOptNum == 2) 
+		{
+			$(this).css("height", "10vh");
+			$("lOptions").css("height", "10vh");
+		}
+		else if (maxOptNum == 1) 
+		{
+			$(this).css("height", "5vh");
+			$("lOptions").css("height", "5vh");
+		}
+		else if (maxOptNum <= 0) 
+		{
+			$(this).css("display", "none");
+			$(".cList.lOptions").css("display", "none");
+		}
+	});
+});
+
+/* 받은 값에 따른 체크박스 변화 */
+$(document).ready(function() 
+{
+    $(".chBox").each(function() 
+    {
+        var yesNo = $(this).val();
+
+        if (yesNo == "○") 
+        {
+            $(this).prop("checked", true);
+            $(this).attr("disabled", true); 
+        }
+        else if (yesNo == "Ⅹ") 
+        {
+            $(this).prop("checked", false);
+            $(this).attr("disabled", true); 
+        }
+        else if (yesNo == "none") 
+        {
+            $(this).parent(".cOpt").css("display", "none");
+        }
+        
+    });
+});
+
+
+
 
 </script>
 
@@ -573,22 +658,22 @@ $(document).ready(function()
 			         </div>
 			         <div id="가게 옵션" class="cOptions">
 			         	<div id="화장실 존재 여부" class="cOpt">
-			         		${store.index} 화장실 존재 여부 : 있음
+			         		${store.index} 화장실 존재 여부 : <input type="checkbox" class="chBox" value="○" id="1"/>
 			         	</div>
 			         	<div id="애견 동반 여부" class="cOpt">
-			         		${store.index} 애견 동반 여부 : 없음
-			         	</div>
+			         		${store.index} 애견 동반 여부 : <input type="checkbox" class="chBox" value="none" id="2"/>
+			         	</div> 
 			         	<div id="연회석 존재 여부" class="cOpt">
-			         		${store.index} 연회석 존재 여부 : 없음
+			         		${store.index} 연회석 존재 여부 : <input type="checkbox" class="chBox" value="Ⅹ" id="3"/>
 			         	</div>
 			         	<div id="예약 가능 여부" class="cOpt">
-			         		${store.index} 예약 가능 여부 : 있음
-			         	</div>
+			         		${store.index} 예약 가능 여부 : <input type="checkbox" class="chBox" value="none" id="4"/>
+			         	</div> 
 			         	<div id="주차 가능 여부" class="cOpt">
-			         		${store.index} 주차 가능 여부 : 있음
-			         	</div>
+			         		${store.index} 주차 가능 여부 : <input type="checkbox" class="chBox" value="none" id="5"/>
+			         	</div> 
 			         	<div id="무선 인터넷 사용 가능 여부" class="cOpt">
-			         		${store.index} 무선 인터넷 사용 가능 여부 : 있음 
+			         		${store.index} 무선 인터넷 사용 가능 여부 : <input type="checkbox" class="chBox" value="○" id="6"/> 
 			         	</div>
 			         </div>
 		         </div> <!-- cBox -->
