@@ -118,6 +118,7 @@
 		WHERE T.ST_NUM = #{st_num}
 	</select>
 
+	<!-- 리뷰 사진 -->
 	<select id="rvPhoto" resultType="com.yameokja.mc.StoreRvPhotoDTO">
 		SELECT RB.RV_NUM AS RV_NUM, RP.PHOTO_LINK AS PHOTO_LINK
 		FROM RV_BOX RB JOIN RV_PHOTO RP
@@ -143,11 +144,18 @@
 		) T
 		<![CDATA[WHERE ROWNUM <= 10]]>
  	</select>
- 	
- 	<!-- 리뷰 등록 -->
+  	
+<!--
+	리뷰 등록
  	<insert id="reviewInsert">
  		INSERT INTO RV_BOX(RVBOXSEQ.NEXTVAL, USER_NUM, ST_NUM, RV_CONTENT, STAR_SCORE, REG_DATE)
 		VALUES(#{user_num}, #{st_num}, #{rv_content}, #{star_score}, DEFAULT)
  	</insert>
- 
+-->
+
+ 	<!-- 리뷰 신고 -->
+	<insert id="reviewRepInsert">
+		INSERT INTO REP_APPLY(REP_APPLY_NUM, RV_NUM, USER_NUM, REP_RS_NUM)
+		VALUES (12, #{rv_num}, #{user_num}, #{rep_rs_num})
+	</insert> 
 </mapper>
