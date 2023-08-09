@@ -263,9 +263,9 @@ public class UserController
 			model.addAttribute("likelist", null);
 
 		if (comList.size() > 0)
-			model.addAttribute("comparingbox", idao.getStoreList(comList));
+			model.addAttribute("comList", idao.getStoreList(comList));
 		else
-			model.addAttribute("comparingbox", null);
+			model.addAttribute("comList", null);
 		
 		model.addAttribute("userJjimList", idao.userJjimSearch(user_num));
 		

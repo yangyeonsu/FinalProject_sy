@@ -202,7 +202,7 @@ $(function()
 
 	<header id="store_header">
 		<div class="headerImg">
-			<img id="headerLogo" src="<%=cp %>/images/logo_text.png">
+			<a href="main.action"><img id="headerLogo" src="<%=cp %>/images/logo_text.png"></a>
 		</div>
 		<div id="headerAlarm">
 			<div class="headerBtn">

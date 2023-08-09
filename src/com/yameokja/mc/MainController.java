@@ -65,7 +65,7 @@ public class MainController
 		else
 			model.addAttribute("jjim_list", null);
 
-		if (hotList.size() > 0)
+		if (hotList.size() > 3)
 			model.addAttribute("hot_list", dao.getStoreList(hotList));
 		else
 		{
