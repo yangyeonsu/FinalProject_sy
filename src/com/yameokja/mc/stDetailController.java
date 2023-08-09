@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class stDetailController
@@ -150,14 +151,21 @@ public class stDetailController
 		
 		String result = "";
 		
-		String[] reviewRepArr = request.getParameterValues("reviewRep");
+		int rv_num =  (int) request.getAttribute("rvNumHidden");
 		
-		if(reviewRepArr.length > 0)
-		{
-			System.out.println(reviewRepArr[0]);
-		}
+		System.out.println(rv_num);
 		
+		String reviewRepList = null;
+		
+		String[] reviewRep = request.getParameterValues("reviewRep");
+		
+		reviewRepList = reviewRep[0];
 		
 		return result;
 	}
+	
+	
+		
+		
+	
 }

@@ -74,29 +74,75 @@ String cp = request.getContextPath();
 			$('.overlay').css("z-index", "0");
 			$('#checkOverlay').attr("value", "false");
 		});
-		
-		$("#decBtn").click(function()
+
+		/// 신고하기 버튼 눌렀을 때
+		$(".repBtn").click(function()
+		{
+			alert($(this).val());
+			$("#rvNumHidden").arrt("value", $(this).val());
+		});
+
+		$("#decBtn").on("click", function()
 		{
 			var reviewRep = [];
-			
+
 			$("input:checkbox[name=reviewRep]:checked").each(function()
 			{
 				reviewRep.push($(this).val());
 			});
-			
-			if(reveiwRep.length)
-			
-			if(reviewRep.length == null || reviewRep.length == 0)
+
+			alert(reviewRep);
+
+			if (reviewRep.length == null || reviewRep.length == 0)
 			{
 				alert("신고사유를 선택해주세요.");
 				return;
 			}
-			
+
+			$("input:checkbox[name=reviewRep]:checked").each(function()
+			{
+				$(this).prop("checked", false);
+				totalChecked = 0;
+			});
+
+			alert("※신고되었습니다.");
+
 			$("#userForm").attr("action", "reviewRep.action");
 			$("#userForm").submit();
-		});
-		
-		
+			$(".decBtn").attr("onclick", "popupOpen()");
+
+		})
+
+	});
+
+	var totalChecked = 0;
+
+	function CountChecked(field)
+	{
+		if (field.checked)
+			totalChecked += 1;
+		else
+			totalChecked -= 1;
+
+		if (totalChecked > 1)
+		{
+			alert("한 개만 선택 가능합니다.");
+			field.checked = false;
+			totalChecked -= 1;
+		}
+
+	}
+
+	// 리뷰 작성 페이지로 이동
+	$("#insertReview").click(function()
+	{
+		$("#userForm").attr("action", "reviewRep.action");
+		$("#usesForm").submit();
+	});
+
+	// 리뷰 추천 / 비추천
+	$("#rec").click(function()
+	{
 
 	});
 
@@ -396,10 +442,10 @@ String cp = request.getContextPath();
 								<c:if test="${empty stCheckList }">
 									<div class="none">해당 항목이 존재하지 않습니다.</div>
 								</c:if>
-									<div class="storeCheck">
-										<div class="stCheckListName">가게 옵션</div>
-										<div class="stCheckListYesorno">존재 여부</div>
-									</div>
+								<div class="storeCheck">
+									<div class="stCheckListName">가게 옵션</div>
+									<div class="stCheckListYesorno">존재 여부</div>
+								</div>
 								<c:forEach var="stCheck" items="${stCheckList }">
 									<div class="storeCheck">
 										<div class="stCheckName">${stCheck.chbox_name }</div>
@@ -462,8 +508,10 @@ String cp = request.getContextPath();
 										<div class="rvTop">
 											<div class="userNickname">"${rv.user_nickname }"</div>
 											<div>
-												<button type="button" id="repBtn" class="rvBtn"
-													onclick="popupOpen()">신고하기</button>
+												<button type="button" class="repBtn rvBtn"
+													onclick="popupOpen()" value="${rv.rv_num }">신고하기</button>
+												<input type="hidden" value="" id="rvNumHidden"
+													name="rvNumHidden">
 											</div>
 										</div>
 
@@ -508,12 +556,15 @@ String cp = request.getContextPath();
 										<div class="rvBottom">
 											<div>
 												<button type="button" id="nonrec" class="recBtn rvBtn"
-													value="비추천">비추천 👎 (${rv.nonrec })</button>
+													value="${rv.rv_num }">비추천 👎 (${rv.nonrec })</button>
 												<button type="button" id="rec" class="recBtn rvBtn"
-													value="추천">추천 👍 (${rv.rec } )</button>
+													value="${rv.rv_num }">추천 👍 (${rv.rec } )</button>
 											</div>
 										</div>
 									</div>
+
+
+
 								</c:forEach>
 							</div>
 							<!-- id="revList" -->
@@ -525,22 +576,29 @@ String cp = request.getContextPath();
 								<h3>리뷰신고</h3>
 								<div class="popCont">
 									<div class="list">
-										<label for="commercial"> <input type="checkbox" class="reviewRep"
-											id="commercial" name="reviewRep" value="1">원치 않는 상업적인 리뷰
+										<label for="commercial"> <input type="checkbox"
+											class="reviewRep" id="commercial" name="reviewRep" value="1"
+											onclick="CountChecked(this)">원치 않는
+											상업적인 리뷰
 										</label><br> <br> <label for="intended"> <input
-											type="checkbox" id="intended" name="reviewRep" class="reviewRep" value="2">악의적인 리뷰
+											type="checkbox" id="intended" name="reviewRep"
+											class="reviewRep" value="2" onclick="CountChecked(this)">악의적인
+											리뷰
 										</label><br> <br> <label for="wrong"> <input
-											type="checkbox" id="wrong" name="reviewRep" class="reviewRep" value="3">잘못된 정보
+											type="checkbox" id="wrong" name="reviewRep" class="reviewRep"
+											value="3" onclick="CountChecked(this)">잘못된
+											정보
 										</label><br> <br> <label for="violent"> <input
-											type="checkbox" id="violent" name="reviewRep" class="reviewRep" value="4">욕설, 성적, 폭력적인 리뷰
+											type="checkbox" id="violent" name="reviewRep"
+											class="reviewRep" value="4" onclick="CountChecked(this)">욕설,
+											성적, 폭력적인 리뷰
 										</label><br> <br>
 									</div>
 								</div>
 								<div class="dec">
-									<button id="decBtn" onclick="popupOpen()">신고하기</button>
+									<button id="decBtn" onclick="">신고하기</button>
 								</div>
 							</div>
-
 						</div>
 					</div>
 					<!-- class="col-md-8  container4" -->
@@ -624,10 +682,10 @@ String cp = request.getContextPath();
 				</div>
 			</div>
 		</div>
-
-		<div class="footer">
-			<c:import url="footer.jsp"></c:import>
-		</div>
 	</form>
+	<div class="footer">
+		<c:import url="footer.jsp"></c:import>
+	</div>
+
 </body>
 </html>
