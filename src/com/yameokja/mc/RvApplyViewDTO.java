@@ -3,10 +3,22 @@ package com.yameokja.mc;
 public class RvApplyViewDTO
 {
 	/*
-	USER_ID, REG_DATE, ACCU_NUM, 
-	WRITE_DATE, REP_RS_NAME, ST_NAME 
+	REP_APPLY_NUM, USER_ID, REG_DATE, ACCU_NUM, WRITE_DATE, REP_RS_NAME, ST_NAME
 	*/
+	
 	private String reg_date, user_id, accu_num, st_name, write_date, rep_rs_name;
+	private int rep_apply_num;
+	
+	// getter / setter
+	public int getRep_apply_num()
+	{
+		return rep_apply_num;
+	}
+
+	public void setRep_apply_num(int rep_apply_num)
+	{
+		this.rep_apply_num = rep_apply_num;
+	}
 
 	public String getReg_date()
 	{

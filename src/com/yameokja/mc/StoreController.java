@@ -1,6 +1,7 @@
 package com.yameokja.mc;
 
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -35,8 +36,21 @@ public class StoreController
 		String user_num = (String)session.getAttribute("user_num");
 		
 		UserDTO user = uDao.searchUserInfo(user_num, "num");
+
+		LocalDate currentDate = LocalDate.now();
+		int month = currentDate.getMonthValue();
+
+		if (month < 7)
+			user.setUser_grade(uDao.firstHalf(user_num).user_grade);
+		else
+			user.setUser_grade(uDao.secondHalf(user_num).user_grade);
+
+		model.addAttribute("user", user);
+		
 		
 		int st_num = smDao.searchStoreInfo(user_num);
+		
+		session.setAttribute("st_num", st_num );
 				
 		ArrayList<HashMap<String, String>> hashmaplist = smDao.rv_key_sum(st_num);
 		
@@ -61,8 +75,6 @@ public class StoreController
 			star_data.add(String.valueOf(star.get("AVERAGE_STAR_SCORE")));
 		}
 		
-		model.addAttribute("user", user);
-		
 		model.addAttribute("rv_labels", rv_labels.subList(0, 5));
 		model.addAttribute("rv_data", rv_data.subList(0, 5));
 		
@@ -72,7 +84,36 @@ public class StoreController
 		model.addAttribute("rv_key_list", smDao.rv_key_sum(st_num));
 		model.addAttribute("rv_list", smDao.rv_list(st_num));
 		
+		model.addAttribute("alarm", uDao.userAlarm(user_num));
+		
 		result = "/WEB-INF/view/StoreMainPage.jsp";
+		
+		return result;
+	}
+	
+	
+	@RequestMapping(value="/stdetailmodify.action", method=RequestMethod.POST)
+	public String stDetailForm(HttpServletRequest request, Model model)
+	{
+		HttpSession session = request.getSession();
+		
+		String user_num = (String)session.getAttribute("user_num");
+		int st_num = (Integer)session.getAttribute("st_num");
+		
+		String result = "";
+		
+		IUserDAO udao = sqlSession.getMapper(IUserDAO.class);
+		IStoreMainDAO sdao = sqlSession.getMapper(IStoreMainDAO.class);
+		
+		UserDTO user = udao.searchUserInfo(user_num, "num");
+		
+		if (sdao.check_stDetail(st_num) > 0)
+		{}
+		else
+		{
+			result = "/WEB-INF/view/st_detail_form.jsp";
+		}
+		
 		
 		return result;
 	}

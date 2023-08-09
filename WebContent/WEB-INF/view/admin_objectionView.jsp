@@ -191,6 +191,15 @@
 			$('.overlay').css("z-index", "0");
 			$('#checkOverlay').attr("value", "false");
 		});
+		
+
+		$(".objTd").click(function()
+		{
+			var reportNum = $(this).siblings("[id]").attr("id");
+			//alert(reportNum);
+			$(location).attr("href","objreportform.action?obj_apply_num="+reportNum);
+			
+		});
 	});
 </script>
 
@@ -281,11 +290,11 @@
 						<tbody>
 							<c:forEach var="obj" items="${objList }">
 							<tr>
-								<td>${obj.reg_date }</td>
-								<td>${obj.st_name }</td>
-								<td>${obj.state }</td>
-								<td>${obj.final_date }</td>
-								<td>${obj.admin_id }</td>
+								<td class="objTd" id="${obj.report_num }">${obj.reg_date }</td>
+								<td class="objTd" id="${obj.report_num }">${obj.st_name }</td>
+								<td class="objTd" id="${obj.report_num }">${obj.state }</td>
+								<td class="objTd" id="${obj.report_num }">${obj.final_date }</td>
+								<td class="objTd" id="${obj.report_num }">${obj.admin_id }</td>
 							</tr>
 							</c:forEach>
 						</tbody>
