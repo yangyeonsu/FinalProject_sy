@@ -180,12 +180,6 @@ $(function()
 		$("#userForm").attr("action","storemain.action");
 		$("#userForm").submit();
 	});
-	   
-	   $("#logout").click(function()
-	{
-	   	$("#userForm").attr("action","logout.action");
-		$("#userForm").submit();
-	});
     
    
 });
@@ -215,9 +209,11 @@ $(function()
 			<div class="sub_list">
 				<div class="mypage_menu">
 					<ul class="person_listA">
-						<li><button type="button" id="myPage" class="subListBtn">마이 페이지</button>
-						<li><button type="button" id="storeMyPage" class="subListBtn">사업자 메인 페이지</button>
-						<li><button type="button" id="logout" class="subListBtn" >로그아웃</button>
+						<li><a href="storemain.action">마이 페이지</a>
+						<c:if test="${st_num != null }">
+							<li><a href="storemain.action">사업자 메인 페이지</a>
+						</c:if>
+						<li><a href="logout.action">로그아웃</a>
 					</ul>
 				</div>
 				<div class="alarm_menu">
