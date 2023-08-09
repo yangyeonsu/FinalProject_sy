@@ -82,7 +82,7 @@
 		{
 			var reportNum = $(this).siblings("[id]").attr("id");
 			//alert(reportNum);
-			$(location).attr("href","storeErrReportForm.action?rep_apply_num="+reportNum);
+			$(location).attr("href","errreportform.action?req_apply_num="+reportNum);
 			
 		});
 
@@ -90,7 +90,7 @@
 		{
 			var reportNum = $(this).siblings("[id]").attr("id");
 			//alert(reportNum);
-			$(location).attr("href","objectionReportForm.action?rep_apply_num="+reportNum);
+			$(location).attr("href","objreportform.action?obj_apply_num="+reportNum);
 			
 		});
 
@@ -98,7 +98,7 @@
 		{
 			var reportNum = $(this).siblings("[id]").attr("id");
 			//alert(reportNum);
-			$(location).attr("href","penaltyRevokeForm.action?rep_apply_num="+reportNum);
+			$(location).attr("href","penaltyrevokeform.action?revo_apply_num="+reportNum);
 			
 		});
 		

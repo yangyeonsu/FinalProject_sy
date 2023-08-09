@@ -197,7 +197,7 @@
 		{
 			var reportNum = $(this).siblings("[id]").attr("id");
 			//alert(reportNum);
-			$(location).attr("href","penaltyRevokeForm.action?rep_apply_num="+reportNum);
+			$(location).attr("href","penaltyrevokeform.action?revo_apply_num="+reportNum);
 			
 		});
 	});
