@@ -26,21 +26,21 @@
 
 	<!-- 리뷰신고리스트 -->
 	<select id="rvList" resultType="com.yameokja.mc.ReportListDTO">
-		SELECT REG_DATE, USER_ID, ACCU_NUM, ST_NAME, STATE, FINAL_DATE, ADMIN_ID
+		SELECT REG_DATE, USER_ID, ACCU_NUM, ST_NAME, STATE, FINAL_DATE, ADMIN_ID, REP_APPLY_NUM AS REPORT_NUM
 		FROM RV_REPORT_VIEW
   	</select>
 	
 	
 	<!-- 가게정보수정요청리스트 -->
 	<select id="reqList" resultType="com.yameokja.mc.ReportListDTO">
-		SELECT REG_DATE, USER_ID, ST_NAME, STATE, FINAL_DATE, ADMIN_ID
+		SELECT REG_DATE, USER_ID, ST_NAME, STATE, FINAL_DATE, ADMIN_ID, REQ_APPLY_NUM as report_num
 		FROM REQ_APPLY_VIEW
 	</select>
 	
 	
 	<!-- 이의제기리스트 -->
 	<select id="objList" resultType="com.yameokja.mc.ReportListDTO">
-		SELECT OBJ_APPLY_NUM, REG_DATE, ST_NAME, STATE, FINAL_DATE, ADMIN_ID
+		SELECT OBJ_APPLY_NUM, REG_DATE, ST_NAME, STATE, FINAL_DATE, ADMIN_ID, OBJ_APPLY_NUM as report_num
 		FROM OBJ_APPLY_VIEW
 
 	</select>
@@ -48,7 +48,7 @@
 	
 	<!-- 패널티회수요청리스트 -->
 	<select id="revoList" resultType="com.yameokja.mc.ReportListDTO">
-		SELECT REG_DATE, ST_NAME, REG_STATE, FINAL_DATE, ADMIN_ID
+		SELECT REG_DATE, ST_NAME, REG_STATE, FINAL_DATE, ADMIN_ID, REVO_APPLY_NUM as report_num
 		FROM REVO_APPLY_VIEW
 	</select>
 	
