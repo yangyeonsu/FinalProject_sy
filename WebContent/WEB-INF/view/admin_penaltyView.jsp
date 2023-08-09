@@ -191,6 +191,15 @@
 			$('.overlay').css("z-index", "0");
 			$('#checkOverlay').attr("value", "false");
 		});
+		
+		
+		$(".revoTd").click(function()
+		{
+			var reportNum = $(this).siblings("[id]").attr("id");
+			//alert(reportNum);
+			$(location).attr("href","penaltyRevokeForm.action?rep_apply_num="+reportNum);
+			
+		});
 	});
 </script>
 
@@ -278,11 +287,11 @@
 						<tbody>
 							<c:forEach var="revo" items="${revoList }">
 							<tr>
-								<td>${revo.reg_date }</td>
-								<td>${revo.st_name }</td>
-								<td>${revo.state }</td>
-								<td>${revo.final_date }</td>
-								<td>${revo.admin_id }</td>
+								<td class="revoTd" id="${revo.report_num }">${revo.reg_date }</td>
+								<td class="revoTd" id="${revo.report_num }">${revo.st_name }</td>
+								<td class="revoTd" id="${revo.report_num }">${revo.state }</td>
+								<td class="revoTd" id="${revo.report_num }">${revo.final_date }</td>
+								<td class="revoTd" id="${revo.report_num }">${revo.admin_id }</td>
 							</tr>
 							</c:forEach>
 						</tbody>

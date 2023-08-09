@@ -149,4 +149,20 @@ public class AdminMainController
 		
 	}
 	
+	@RequestMapping(value="/reviewreportform.action", method=RequestMethod.GET)
+	public String reviewReportForm(Model model,HttpServletRequest request, RvApplyViewDTO dto)
+	{
+		String result;
+		
+		int reviewNum = Integer.parseInt(request.getParameter("rep_apply_num"));
+		
+		IAdminFindDAO dao = sqlSesion.getMapper(IAdminFindDAO.class);
+		
+		model.addAttribute("review", dao.rvSearch(reviewNum));
+		
+		result = "/WEB-INF/view/reviewReportForm.jsp";
+		
+		return result;
+	}
+	
 }
