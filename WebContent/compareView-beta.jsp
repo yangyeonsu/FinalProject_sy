@@ -173,28 +173,21 @@
 
 .compareBody
 {	
-	width: 65vw;
-	margin-left: 16vw;
+	width: 63vw;
+	margin-left: 18vw;
 	display: flex;
 	text-align: center;
+}
+
+.compareSpace
+{
+	width: 16.5vw;
 }
 
 .cCategory
 {	
 	margin-top: 28.84vh;
 	width: 11vw;
-}
-
-.Category div
-{
-	width: 15vw;
-}
-
-
-.cName, .cList, .week, .phMenu, .phStore, .cOptions, .lOptions
-{
-	padding-right : 2vw;
-	padding-left: 2vw;
 }
 
 .cList, .week, .lWeek, .cOptions, .lOptions
@@ -206,8 +199,8 @@
 
 .cName
 {	
-	width: 13vw;
-	font-size: 1.5rem; font-weight: bold;
+	font-size: 1.5rem; 
+	font-weight: bold;
 }
 
 .cBox
@@ -239,7 +232,7 @@
 	height: 30vh;
 }
 
-.lavgP
+.cMenu
 {
 	height: 18.75vh;
 }
@@ -341,8 +334,8 @@ $(document).ready(function()
     var numOfStores = $(".compareBody .compareSpace").length;
     if(numOfStores == 2) 
     {
-       $(".compareBody").css({"margin-left" : "23vw", "width" : "55vw"});
-       $(".compTitle").css("margin-left", "48vw");
+       $(".compareBody").css({"margin-left" : "26vw", "width" : "55vw"});
+       $(".compTitle").css("margin-left", "47vw");
     }
 });
 
@@ -381,24 +374,24 @@ $(document).ready(function()
         {
             $(this).css("height", "19.5vh");
             $(this).css("padding-top", "0vh");
-            $(".cList.lavgP").css("height", "18.73vh");
+            $(".cList.cMenu").css("height", "18.73vh");
             $(".lWeek").css("height", "18.5vh");
         }
         else if(maxNumOfDays == 3)
         {
             $(this).css("height", "14.5vh");
             $(this).css("padding-top", "0vh");
-            $(".cList.lavgP").css("height", "18.77vh");
+            $(".cList.cMenu").css("height", "18.77vh");
             $(".lWeek").css("height", "13.5vh");
-            $(".cList.lavgP").css("height", "18.75vh");
+            $(".cList.cMenu").css("height", "18.75vh");
         }
         else if(maxNumOfDays == 2)
         {
             $(this).css("height", "10vh");
             $(this).css("padding-top", "0vh");
             $(".lWeek").css("height", "9vh");
-            $(".cList.lavgP").css("height", "18.8vh");
-            $(".cList.cMenu").css("height", "2.95vh");
+            $(".cList.cMenu").css("height", "18.8vh");
+            $(".cList.avgP").css("height", "2.95vh");
         }
         else if(maxNumOfDays == 1)
         {
@@ -408,13 +401,13 @@ $(document).ready(function()
             $(".lWeek").css("padding-top", "0vh");
             $(".lDay").css("padding-top", "1.5vh");
             $(".lWeek").css("padding-bottom", "1.1vh");
-            $(".cList.lavgP").css("height", "18.75vh");
+            $(".cList.cMenu").css("height", "18.75vh");
         }
         else if(maxNumOfDays == 0)
         {
             $(this).css("display", "none");
             $(".lWeek").css("display", "none");
-            $(".cList.lavgP").css("height", "18.7vh");
+            $(".cList.cMenu").css("height", "18.7vh");
         }
     });
 });
@@ -426,25 +419,6 @@ $(document).ready(function()
 <div class="header">
 		<c:import url="/WEB-INF/view/header_user.jsp"></c:import>
 </div>
-<%-- 
-<div id="여기가 큰 비교 틀 & 포문으로 들어갈 공간">
-
-   <c:forEach var="store" items = "${불러온 비교할 가게 리스트 }">
-      <div id="비교하는 가게 공간">
-         <div id="비교하는 가게 이름">
-            ${store.st_name};
-         </div>
-         <div id="비교하는 가게 대표 사진">
-            <img id="가게 대표사진" src = "<%=cp %>/${store.photo_link}">
-         </div>
-         <div>
-            : 여러 항목들
-         </div>
-      </div>
-   </c:forEach>
-
-</div>
---%>
 
 <div class="mainBody">
 	
@@ -524,17 +498,17 @@ $(document).ready(function()
 				         영업 일/시간
 				       </div>
 				     </div>
-			         <div id="가게 평균 가격" class="cList lavgP">
+			         <div id="가게 대표 메뉴 이름" class="cList avgP">
 			         	 가게 평균 가격
 			         </div>
-			         <div id="가게 대표 메뉴 이름" class="cList cMenu">
+			         <div id="가게 평균 가격" class="cList cMenu">
 			         	 가게 대표 메뉴 이름
 			         </div>
 			         <div id="가게 최대 수용 인원" class="cList">
 			         	 가게 최대 수용 인원
 			         </div>
 			         <div id="가게 최대 수용 인원" class="cList lOptions">
-			         	 가게 최대 수용 인원
+			         	 가게 옵션 유무
 			         </div>
 		         </div> <!-- cCat -->
 			</div>
@@ -588,11 +562,11 @@ $(document).ready(function()
 			         <div id="가게 평균 가격" class="cList">
 			         	${store.index} 가게 평균 가격
 			         </div>
-			         <div id="가게 대표 메뉴 이미지" class="photo2">
-			         	<img id="가게 대표사진" class="phMenu" src = "<%=cp %>/images/store_img01.png">
-			         </div>
 			         <div id="가게 대표 메뉴 이름" class="cList">
 			         	${store.index} 가게 대표 메뉴 이름
+			         </div>
+			         <div id="가게 대표 메뉴 이미지" class="photo2">
+			         	<img id="가게 대표사진" class="phMenu" src = "<%=cp %>/images/store_img01.png">
 			         </div>
 			         <div id="가게 최대 수용 인원" class="cList">
 			         	${store.index} 가게 최대 수용 인원
