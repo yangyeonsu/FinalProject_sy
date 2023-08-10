@@ -224,6 +224,11 @@
 		text-align: center;
 	}
 	
+	.pageIndex
+	{
+		display: flex;
+    	justify-content: center;
+    }
 </style>
 
 <script type="text/javascript">
@@ -372,13 +377,9 @@
 			                    <p></p>
 			                </c:when>
 			                <c:otherwise>
-			                    <ul class="pagination-list">
-			                        <li><a href="${cp}/user_stupdate_relist.action?page=${currentPage - 1}">&laquo; Previous</a></li>
-			                        <c:forEach var="pageNum" begin="1" end="${totalPages}">
-			                            <li><a href="${cp}/user_stupdate_relist.action?page=${pageNum}">${pageNum}</a></li>
-			                        </c:forEach>
-			                        <li><a href="${cp}/user_stupdate_relist.action?page=${currentPage + 1}">Next &raquo;</a></li>
-			                    </ul>
+			                    <div class="pageIndex">
+									${pageIndex }
+								</div>
 			                </c:otherwise>
 			            </c:choose>
 			        </div>
