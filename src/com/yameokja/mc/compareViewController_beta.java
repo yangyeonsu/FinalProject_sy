@@ -72,10 +72,13 @@ public class compareViewController_beta
 		        System.out.println("Fetched size for st_num " + st_num + ": " + storeForCurrentNum.size());
 		        
 		        // Only add to 'stores' if there's data
-		        if (storeForCurrentNum != null && !storeForCurrentNum.isEmpty()) {
+		        if (storeForCurrentNum != null && !storeForCurrentNum.isEmpty()) 
+		        {
 		            stores.add(storeForCurrentNum);
 		            System.out.println("Data added for st_num " + st_num);
-		        } else {
+		        } 
+		        else 
+		        {
 		            System.out.println("No data or null data for st_num " + st_num);
 		        }
 

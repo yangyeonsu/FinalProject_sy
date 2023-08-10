@@ -610,7 +610,7 @@ $(document).ready(function()
 		   <%-- <c:forEach var="store" items = "${불러온 비교할 가게 리스트 }"> --%>
 		   <c:forEach begin="1"  end="${endValue}"  varStatus="st_count">
 		      <div id="비교하는 가게 공간" class="compareSpace">
-				 <c:forEach var="st" items="${store }">		      	
+				 <c:forEach var="st" items="${store}">		      	
 		         <div id="비교하는 가게 이름" class="cName">
 		             ${st.st_name}
 		         </div>
@@ -634,10 +634,10 @@ $(document).ready(function()
 			      </div> <!-- cBox -->
 			         </c:forEach>
 			      <div class="cBox"> 
-			      	 <c:forEach var="op" items="${openClose }">
+			      	 <c:forEach var="op" items="${openClose}">
 			         <div id="가게 주" class="week">
-				         <div id="${op.day_name}" class="cDay">
-				         	${op.day_name} ${op.operate_time } ${op.holiday } 
+				         <div id="days" class="cDay">
+				         	${op.day_name} ${op.operate_time} ${op.holiday} 
 				         </div>
 				         <%-- 
 				         <div id="월요일" class="cDay">
@@ -661,7 +661,7 @@ $(document).ready(function()
 				           --%> 
 				     </div>
 				     </c:forEach>
-				    <c:forEach var="ml" items="${menuLists }">
+				    <c:forEach var="ml" items="${menuLists}">
 			         <div id="가게 평균 가격" class="cList">
 			         	${ml.price_avg}
 			         </div>
@@ -672,33 +672,37 @@ $(document).ready(function()
 			         	<img id="가게 대표사진" class="phMenu" src = "<%=cp %>/images/${ml.image_link}"> 
 			         </div>
 			         </c:forEach>
-			         <c:forEach var="st" items="${store }">	
+			         <c:forEach var="st" items="${store}">	
 			         <div id="가게 최대 수용 인원" class="cList">
 			         	${st.max_customers} 
 			         </div>
 			         </c:forEach>
-			         <c:forEach var="sc" items="${stcheck }">
-			         <div id="가게 옵션" class="cOptions">
-			         	<div id="화장실 존재 여부" class="cOpt">
-			         		<%-- ${st.index} 화장실 존재 여부 : <input type="checkbox" class="chBox" value=" ${items 값} " id="1"/> --%>
-			         		${sc.chbox_name} : <input type="checkbox" class="chBox" value="${sc.yesorno }" id="1"/>
-			         	</div>
-			         	<div id="애견 동반 여부" class="cOpt">
-			         		${sc.chbox_name} : <input type="checkbox" class="chBox" value="${sc.yesorno }" id="2"/>
-			         	</div> 
-			         	<div id="연회석 존재 여부" class="cOpt">
-			         		${sc.chbox_name} : <input type="checkbox" class="chBox" value="${sc.yesorno }" id="3"/>
-			         	</div>
-			         	<div id="예약 가능 여부" class="cOpt">
-			         		${sc.chbox_name} : <input type="checkbox" class="chBox" value="${sc.yesorno }" id="4"/>
-			         	</div> 
-			         	<div id="주차 가능 여부" class="cOpt">
-			         		${sc.chbox_name} : <input type="checkbox" class="chBox" value="${sc.yesorno }" id="5"/>
-			         	</div> 
-			         	<div id="무선 인터넷 사용 가능 여부" class="cOpt">
-			         		${sc.chbox_name} : <input type="checkbox" class="chBox" value="${sc.yesorno }" id="6"/> 
-			         	</div>
-			         </div>
+			         <c:forEach begin="1"  end="6"  varStatus="optNum">
+				         <c:forEach var="sc" items="${stcheck}">
+					         <div id="가게 옵션" class="cOptions">
+					         	<div id="화장실 존재 여부" class="cOpt">
+					         		<%-- ${st.index} 화장실 존재 여부 : <input type="checkbox" class="chBox" value=" ${items 값} " id="1"/> --%>
+					         		${sc.chbox_name} : <input type="checkbox" class="chBox" value="${sc.yesorno}" id="${optNum.index }"/>
+					         	</div>
+					         	<%-- 
+					         	<div id="애견 동반 여부" class="cOpt">
+					         		${sc.chbox_name} : <input type="checkbox" class="chBox" value="${sc.yesorno}" id="2"/>
+					         	</div> 
+					         	<div id="연회석 존재 여부" class="cOpt">
+					         		${sc.chbox_name} : <input type="checkbox" class="chBox" value="${sc.yesorno}" id="3"/>
+					         	</div>
+					         	<div id="예약 가능 여부" class="cOpt">
+					         		${sc.chbox_name} : <input type="checkbox" class="chBox" value="${sc.yesorno}" id="4"/>
+					         	</div> 
+					         	<div id="주차 가능 여부" class="cOpt">
+					         		${sc.chbox_name} : <input type="checkbox" class="chBox" value="${sc.yesorno}" id="5"/>
+					         	</div> 
+					         	<div id="무선 인터넷 사용 가능 여부" class="cOpt">
+					         		${sc.chbox_name} : <input type="checkbox" class="chBox" value="${sc.yesorno}" id="6"/> 
+					         	</div>
+					         	 --%>
+					         </div>
+				         </c:forEach>
 			         </c:forEach>
 		         </div> <!-- cBox -->
 		         
