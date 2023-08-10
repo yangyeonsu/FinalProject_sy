@@ -107,6 +107,14 @@ public class StoreDetailDTO
 	{
 		this.max_customers = max_customers;
 	}
+	public int getLike_count()
+	{
+		return like_count;
+	}
+	public void setLike_count(int like_count)
+	{
+		this.like_count = like_count;
+	}
 	
 
 }

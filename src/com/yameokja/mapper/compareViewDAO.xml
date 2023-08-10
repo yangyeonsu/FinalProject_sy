@@ -5,69 +5,93 @@
 <mapper namespace="com.yameokja.mc.IcompareViewDAO">
 
 
-	
+
 	<!-- 가게 -->
 	<!-- 가게이름, 좋아요수, 평점, 리뷰수, 주소, 전화번호, 가게 이메일, 가게 설명, 최대인원수, 가게음식카테고리 -->
- 	<select id="store" resultType="com.yameokja.mc.StoreDetailDTO">
-	   SELECT ST_NUM, ST_NAME, ST_LOCATION, ST_TEL, ST_EXPLAIN, MAX_CUSTOMERS
-	   , ST_EMAIL, FOOD_NAME, PHOTO_LINK, STAR_AVG, RV_COUNT, USER_NUM
-	   FROM STORE_VIEW
-	   WHERE ST_NUM = #{st_num}
+	<select id="store" resultType="com.yameokja.mc.StoreDetailDTO">
+		SELECT ST_NUM, ST_NAME, ST_LOCATION, ST_TEL, ST_EXPLAIN, MAX_CUSTOMERS
+		, ST_EMAIL, FOOD_NAME, PHOTO_LINK, STAR_AVG, RV_COUNT, USER_NUM
+		FROM STORE_VIEW
+		WHERE ST_NUM IN (
+		<foreach collection="list" item="st_num" separator=",">
+			#{st_num}
+		</foreach>
+		)
 	</select>
-	
-	
+
+
 	<!-- 영업시간 가지고 오는 쿼리문 : 요일, 시작시간, 끝시간, 휴무여부 -->
- 	<select id="openClose" resultType="com.yameokja.mc.StoreOpencloseDTO">
-	 	SELECT W.DAY_NUM AS DAY_NUM, W.DAY_NAME AS DAY_NAME, S.ST_NUM AS ST_NUM, O.START_TIME||' ~ '||O.END_TIME AS OPERATE_TIME
-		     , NVL2(H.HOLIDAY_NUM,'휴무', '-') AS HOLIDAY
+	<select id="openClose" resultType="com.yameokja.mc.StoreOpencloseDTO">
+		SELECT W.DAY_NUM AS DAY_NUM, W.DAY_NAME AS DAY_NAME, S.ST_NUM AS
+		ST_NUM, O.START_TIME||' ~ '||O.END_TIME AS OPERATE_TIME
+		, NVL2(H.HOLIDAY_NUM,'휴무', '-') AS HOLIDAY
 		FROM WEEKDAY_LABEL W
-		CROSS JOIN (
-		    SELECT DISTINCT ST_NUM FROM ST_OPENCLOSE
+		CROSS
+		JOIN (
+		SELECT DISTINCT ST_NUM FROM ST_OPENCLOSE
 		) S
-		LEFT JOIN ST_OPENCLOSE O ON W.DAY_NUM = O.DAY_NUM AND S.ST_NUM = O.ST_NUM
-		LEFT JOIN ST_HOLIDAY H ON W.DAY_NUM = H.DAY_NUM AND S.ST_NUM = H.ST_NUM
-		WHERE S.ST_NUM = #{st_num}
+		LEFT JOIN ST_OPENCLOSE O ON
+		W.DAY_NUM = O.DAY_NUM AND S.ST_NUM = O.ST_NUM
+		LEFT JOIN ST_HOLIDAY H ON
+		W.DAY_NUM = H.DAY_NUM AND S.ST_NUM = H.ST_NUM
+		WHERE S.ST_NUM IN (
+		<foreach collection="list" item="st_num" separator=",">
+			#{st_num}
+		</foreach>
+		)
 		ORDER BY S.ST_NUM, W.DAY_NUM
- 	</select>
-	
-	
+	</select>
+
+
 	<!-- 체크박스 -->
- 	<select id="stcheck" resultType="com.yameokja.mc.StoreCheckDTO">
- 		SELECT CL2.CHBOX_NAME AS CHBOX_NAME
-		     , CASE T.YN_NUM WHEN 1 THEN '○'
-		                     WHEN 2 THEN 'Ⅹ'
-		                     ELSE '-'
-		       END AS YESORNO
+	<select id="stcheck" resultType="com.yameokja.mc.StoreCheckDTO">
+		SELECT CL2.CHBOX_NAME AS CHBOX_NAME
+		, CASE T.YN_NUM WHEN 1 THEN '○'
+		WHEN 2 THEN 'Ⅹ'
+		ELSE '-'
+		END AS YESORNO
+        , T.ST_NUM AS ST_NUM
 		FROM
 		(
-		SELECT CL.CHBOX_NUM AS CHBOX_NUM, CL.CHBOX_NAME AS CHBOX_NAME, SC.YN_NUM AS YN_NUM
-		FROM CHBOX_LABEL CL LEFT JOIN ST_CHBOX SC
-		  ON CL.CHBOX_NUM = SC.CHBOX_NUM
-		WHERE ST_NUM = #{st_num}
+		SELECT CL.CHBOX_NUM AS CHBOX_NUM, CL.CHBOX_NAME AS
+		CHBOX_NAME, SC.YN_NUM AS YN_NUM, SC.ST_NUM AS ST_NUM
+		FROM CHBOX_LABEL CL LEFT JOIN ST_CHBOX
+		SC
+		ON CL.CHBOX_NUM = SC.CHBOX_NUM
+		WHERE ST_NUM IN (
+		<foreach collection="list" item="st_num" separator=",">
+			#{st_num}
+		</foreach>
+		)
 		) T
 		RIGHT JOIN CHBOX_LABEL CL2
 		ON CL2.CHBOX_NUM = T.CHBOX_NUM
-		ORDER BY CL2.CHBOX_NUM
- 	</select>
- 	
-	 	
- 	<!-- 메뉴 및 가격, 평균 가져오기-->
- 	<select id="menuLists" resultType="com.yameokja.mc.compareViewDTO">
- 	SELECT  (SELECT NVL(ROUND(AVG(MENU.PRICE), 0), 0) 
-		    FROM MENU 
-		    INNER JOIN ST_LIST SL ON SL.ST_NUM = MENU.ST_NUM 
-		    WHERE SL.ST_NUM = #{st_num}) AS PRICE_AVG,
-		    sub.MENU_NAME AS MENU_NAME,
-		    sub.PRICE AS PRICE,
-		    sub.IMAGE_LINK AS IMAGE_LINK
-	FROM 
-		    (SELECT MENU_NUM, MENU_NAME, PRICE, IMAGE_LINK
-		    FROM MENU
-		    INNER JOIN ST_LIST SL ON SL.ST_NUM = MENU.ST_NUM 
-		    WHERE SL.ST_NUM = #{st_num}
-		    ORDER BY MENU_NUM ASC) sub
-	WHERE  <![CDATA[ ROWNUM <= 1 ]]>
- 	</select>	
- 	
-	
+		ORDER BY
+		CL2.CHBOX_NUM
+	</select>
+
+
+	<!-- 메뉴 및 가격, 평균 가져오기 -->
+	<select id="menuLists" resultType="com.yameokja.mc.compareViewDTO">
+		SELECT (SELECT NVL(ROUND(AVG(MENU.PRICE), 0), 0)
+		FROM MENU
+		INNER JOIN ST_LIST SL ON SL.ST_NUM = MENU.ST_NUM
+		WHERE SL.ST_NUM = #{st_num}) AS PRICE_AVG,
+		sub.MENU_NAME AS MENU_NAME,
+		sub.PRICE AS PRICE,
+		sub.IMAGE_LINK AS IMAGE_LINK
+		FROM
+		(SELECT MENU_NUM, MENU_NAME, PRICE, IMAGE_LINK
+		FROM MENU
+		INNER JOIN ST_LIST SL ON SL.ST_NUM = MENU.ST_NUM
+		WHERE SL.ST_NUM IN (
+		<foreach collection="list" item="st_num" separator=",">
+			#{st_num}
+		</foreach>
+		)
+		ORDER BY MENU_NUM ASC) sub
+		WHERE  <![CDATA[ ROWNUM <= 1 ]]>
+	</select>
+
+
 </mapper>

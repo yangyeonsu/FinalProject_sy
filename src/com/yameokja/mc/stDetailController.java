@@ -142,11 +142,13 @@ public class stDetailController
 		// 사용자의 해당 가게 추천/비추천 내역
 		ArrayList<userRvRecDTO> userReviewList = dao.userReviewList(st_num, user_num);
 		
+		/*
 		for (userRvRecDTO dto : userReviewList)
 		{
 			System.out.print(dto.getRec_nonrec_number() + "| ");
 			System.out.println(dto.getRv_num());
 		}
+		*/
 		
 		if(userReviewList.size()>0)
 		{
