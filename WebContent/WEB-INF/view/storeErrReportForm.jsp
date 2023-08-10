@@ -1,8 +1,12 @@
+<%@page import="com.yameokja.mc.ReqApplyViewDTO"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <% 
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
+%>
+<%
+	ReqApplyViewDTO dto = (ReqApplyViewDTO)request.getAttribute("err");
 %>
 <!DOCTYPE html>
 <html>
@@ -93,14 +97,14 @@ textarea {
 	<div id="center">
 		<hr>
 		<br>
-		<h2>토리네 도토리묵집</h2>
+		<h2>${err.getSt_name()}</h2>
 		
 		<div id="stInfo">
 			<div id="menu" style="float: left;">
-				애견동반
+				${err.getChbox_name() }
 			</div>
 			<div id="menuChild">
-				가능
+				${err.getYn_name() }
 			</div>
 		</div>
 		
@@ -109,12 +113,13 @@ textarea {
 			<div id="box" style="padding-top: 5px;">
 				<div id="requestReason" style="width: auto;">
 					요청사유
-					<textarea rows="8px" readonly="readonly"></textarea>
+					<textarea rows="8px" readonly="readonly" style="font-size: 11pt; ">${err.getReq_rs() }</textarea>
 					<button id="agree">요청승인</button>
 				</div>
+				
 				<div id=returnReason>
 					반려사유
-					<textarea rows="8px"></textarea>
+					<textarea rows="8px" placeholder="반려사유 기재" style="font-size: 11pt;"></textarea>
 					<button id="return">요청반려</button>
 				</div>
 			

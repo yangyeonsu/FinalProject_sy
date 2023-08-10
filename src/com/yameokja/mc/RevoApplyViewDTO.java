@@ -4,21 +4,22 @@ public class RevoApplyViewDTO
 {
 	// REVO_APPLY_NUM, USER_ID, REG_DATE, ST_NAME
 	// PEN_TYPE_NAME, REVO_RS, PHOTO_LINK
-	String revo_apply_num, user_id, reg_date, st_name;
-	String pen_type_name, revo_rs, photo_link;
+	int revo_apply_num;
+	String user_id, reg_date, st_name;
+	String req_rs, revo_rs, photo_link;
 	
 	// getter / setter
-	public String getRevo_apply_num()
-	{
-		return revo_apply_num;
-	}
-	public void setRevo_apply_num(String revo_apply_num)
-	{
-		this.revo_apply_num = revo_apply_num;
-	}
 	public String getUser_id()
 	{
 		return user_id;
+	}
+	public int getRevo_apply_num()
+	{
+		return revo_apply_num;
+	}
+	public void setRevo_apply_num(int revo_apply_num)
+	{
+		this.revo_apply_num = revo_apply_num;
 	}
 	public void setUser_id(String user_id)
 	{
@@ -40,13 +41,14 @@ public class RevoApplyViewDTO
 	{
 		this.st_name = st_name;
 	}
-	public String getPen_type_name()
+	
+	public String getReq_rs()
 	{
-		return pen_type_name;
+		return req_rs;
 	}
-	public void setPen_type_name(String pen_type_name)
+	public void setReq_rs(String req_rs)
 	{
-		this.pen_type_name = pen_type_name;
+		this.req_rs = req_rs;
 	}
 	public String getRevo_rs()
 	{
