@@ -102,6 +102,13 @@
 			
 		});
 		
+		$(".inTd").click(function()
+		{
+			var inNum = $(this).attr("id");
+			/* alert(inNum); */
+			$(location).attr("href","inapplyform.action?in_apply_num="+inNum);
+		});
+		
 	});
 
 	
@@ -335,16 +342,21 @@
 							<c:forEach var="inout" items="${inoutList }" begin="0" end="4">
 							<tr>
 								<c:if test="${inout.cat eq '등록' }">
-								<td style="background-color: green;">${inout.cat }</td>
+								<td style="background-color: green;" id="${inout.report_num }">${inout.cat }</td>
+								<td class="inTd" id="${inout.report_num }">${inout.reg_date }</td>
+								<td class="inTd" id="${inout.report_num }">${inout.user_id }</td>
+								<td class="inTd" id="${inout.report_num }">${inout.state }</td>
+								<td class="inTd" id="${inout.report_num }">${inout.final_date }</td>
+								<td class="inTd" id="${inout.report_num }">${inout.admin_id }</td>
 								</c:if>
 								<c:if test="${inout.cat eq '폐업' }">
-								<td style="background-color: pink;">${inout.cat }</td>
+								<td class="outTd" style="background-color: pink;" id="${inout.report_num }">${inout.cat }</td>
+								<td class="outTd" id="${inout.report_num }">${inout.reg_date }</td>
+								<td class="outTd" id="${inout.report_num }">${inout.user_id }</td>
+								<td class="outTd" id="${inout.report_num }">${inout.state }</td>
+								<td class="outTd" id="${inout.report_num }">${inout.final_date }</td>
+								<td class="outTd" id="${inout.report_num }">${inout.admin_id }</td>
 								</c:if>
-								<td>${inout.reg_date }</td>
-								<td>${inout.user_id }</td>
-								<td>${inout.state }</td>
-								<td>${inout.final_date }</td>
-								<td>${inout.admin_id }</td>
 							</tr>
 							</c:forEach>
 						</tbody>
