@@ -19,7 +19,7 @@ public class compareViewDTO
 	
 	private String menu_name, image_link; // 가게 메뉴, 이미지 링크
 	
-	private int price;					// 가게 메뉴 가격
+	private int price, menu_num;					// 가게 메뉴 가격, 번호
 	
 	//getter /setter
 
@@ -149,6 +149,14 @@ public class compareViewDTO
 
 	public void setPrice(int price) {
 		this.price = price;
+	}
+
+	public int getMenu_num() {
+		return menu_num;
+	}
+
+	public void setMenu_num(int menu_num) {
+		this.menu_num = menu_num;
 	}
 	
 	

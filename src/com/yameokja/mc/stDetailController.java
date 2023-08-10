@@ -16,6 +16,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class stDetailController
@@ -143,21 +145,83 @@ public class stDetailController
 	}
 	
 	@RequestMapping(value="/reviewRep.action")
-	public String insertReviewRep(HttpServletRequest request, Model model)
+		@ResponseBody
+	public String insertReviewRep(@RequestParam("rv_num") int rv_num, @RequestParam("rep_rs_num") int rep_rs_num, HttpServletRequest request, Model model)
 	{
 		HttpSession session = request.getSession();
 		String user_num = (String)session.getAttribute("user_num");
 		
-		String result = "";
+		IstDetailDAO_userView dao = sqlSession.getMapper(IstDetailDAO_userView.class);
 		
-		String[] reviewRepArr = request.getParameterValues("reviewRep");
+		int resultNum = dao.reviewRepInsert(rv_num, user_num, rep_rs_num);
 		
-		if(reviewRepArr.length > 0)
-		{
-			System.out.println(reviewRepArr[0]);
-		}
+		System.out.println("확인");
 		
+		String result = String.valueOf(resultNum);
 		
 		return result;
 	}
+	
+	@RequestMapping(value="/recInsertDelete.action")
+		@ResponseBody
+	public String recInsertDelete(@RequestParam("rv_num") int rv_num, @RequestParam("rec_nonrec_number") int rec_nonrec_number, HttpServletRequest request)
+	{
+		HttpSession session = request.getSession();
+		String user_num = (String)session.getAttribute("user_num");
+		
+		//System.out.println("rv_num : " + rv_num);
+		//System.out.println("user_num : " + user_num);
+		//System.out.println("rnr : " + rec_nonrec_number);
+		
+		IstDetailDAO_userView dao = sqlSession.getMapper(IstDetailDAO_userView.class);
+		
+		String sr = dao.searchRec(rv_num, user_num);
+		
+		//System.out.println("sr : "+ sr);
+		
+		String html = "";
+		int rec = 0;
+		int nonrec = 0;
+
+		
+		html+= "{\"rv_num\":\""+rv_num+"\",";
+		html+= "\"rec_nonrec_number\":\""+rec_nonrec_number+"\",";
+
+		
+		if(sr == null)	//없을 때
+		{
+			dao.reviewRecInsert(rv_num, user_num, rec_nonrec_number);
+			rec = dao.reviewRecCount(rv_num, 1);
+			nonrec = dao.reviewRecCount(rv_num, 2);
+			html+= "\"rec\":\"" + rec + "\",";
+			html+= "\"nonrec\":\"" + nonrec + "\",";
+			html+= "\"action\":\"0\"}";
+		}
+		else if (Integer.parseInt(sr) != rec_nonrec_number) // 이미 선택된 것과 다른 추천을 눌렀을 떄
+		{
+			dao.reviewRecModify(rv_num, user_num, rec_nonrec_number);
+			rec = dao.reviewRecCount(rv_num, 1);
+			nonrec = dao.reviewRecCount(rv_num, 2);
+			html+= "\"rec\":\"" + rec + "\",";
+			html+= "\"nonrec\":\"" + nonrec + "\",";
+			html+= "\"action\":\"1\"}";
+		}
+		else if (Integer.parseInt(sr) == rec_nonrec_number) // 같은 추천을 눌렀을 때
+		{
+			dao.reviewRecRemove(rv_num, user_num, rec_nonrec_number);
+			rec = dao.reviewRecCount(rv_num, 1);
+			nonrec = dao.reviewRecCount(rv_num, 2);
+			html+= "\"rec\":\"" + rec + "\",";
+			html+= "\"nonrec\":\"" + nonrec + "\",";
+			html+= "\"action\":\"-1\"}";
+		}
+
+		//System.out.println(html);
+		
+		return html;
+		
+	}
+		
+		
+	
 }

@@ -9,14 +9,14 @@
  		SELECT ST_NUM, ST_NAME, ST_LOCATION, ST_TEL, ST_EXPLAIN, MAX_CUSTOMERS
 		, ST_EMAIL, FOOD_NAME, PHOTO_LINK, STAR_AVG, RV_COUNT, USER_NUM
 		FROM STORE_VIEW
-		WHERE ST_NUM = #{st_num}	
+		WHERE ST_NUM = #{st_num, jdbcType=INTEGER}	
  	</select>
 
  	<!-- 가게 찜 수 -->
  	<select id="clikeNum" resultType="java.lang.Integer"> 
  		SELECT COUNT(*) AS LIKE_COUNT
 		FROM LIKE_BOX
-		WHERE ST_NUM = #{st_num}
+		WHERE ST_NUM = #{st_num, jdbcType=INTEGER}
  	</select>
  	 	 	
  	<!-- 가게 키워드 -->
@@ -25,7 +25,7 @@
 		     , SKL.ST_KEYWORD AS ST_KEYWORD
 		FROM ST_KEY SK LEFT JOIN ST_KEY_LABEL SKL
 		  ON SK.ST_KEY_NUM = SKL.ST_KEY_NUM
-		WHERE SK.ST_NUM = #{st_num}
+		WHERE SK.ST_NUM = #{st_num, jdbcType=INTEGER}
  	</select>
  	
  	<!-- 영업시간 가지고 오는 쿼리문 : 요일, 시작시간, 끝시간, 휴무여부 -->
@@ -38,7 +38,7 @@
 		) S
 		LEFT JOIN ST_OPENCLOSE O ON W.DAY_NUM = O.DAY_NUM AND S.ST_NUM = O.ST_NUM
 		LEFT JOIN ST_HOLIDAY H ON W.DAY_NUM = H.DAY_NUM AND S.ST_NUM = H.ST_NUM
-		WHERE S.ST_NUM = #{st_num}
+		WHERE S.ST_NUM = #{st_num, jdbcType=INTEGER}
 		ORDER BY S.ST_NUM, W.DAY_NUM
  	</select>
  	
@@ -51,7 +51,7 @@
 		FROM ST_LIST SL
 		JOIN BREAKTIME BT ON SL.ST_NUM = BT.ST_NUM
 		JOIN WEEK_WEEKEND_LABEL WWL ON BT.WEEK_WEEKEND_NUM = WWL.WEEK_WEEKEND_NUM
-		WHERE SL.ST_NUM = #{st_num}
+		WHERE SL.ST_NUM = #{st_num, jdbcType=INTEGER}
  	</select>
  	
  	<!-- 결제수단 -->
@@ -61,7 +61,7 @@
 		  ON SL.ST_NUM = SP.ST_NUM
 		JOIN PAY_LABEL PL
 		  ON SP.PAY_NUM = PL.PAY_NUM
-		WHERE SL.ST_NUM = #{st_num}
+		WHERE SL.ST_NUM = #{st_num, jdbcType=INTEGER}
  	</select>
  	
  	<!-- 체크박스 -->
@@ -76,7 +76,7 @@
 		SELECT CL.CHBOX_NUM AS CHBOX_NUM, CL.CHBOX_NAME AS CHBOX_NAME, SC.YN_NUM AS YN_NUM
 		FROM CHBOX_LABEL CL LEFT JOIN ST_CHBOX SC
 		  ON CL.CHBOX_NUM = SC.CHBOX_NUM
-		WHERE ST_NUM = #{st_num}
+		WHERE ST_NUM = #{st_num, jdbcType=INTEGER}
 		) T
 		RIGHT JOIN CHBOX_LABEL CL2
 		ON CL2.CHBOX_NUM = T.CHBOX_NUM
@@ -87,7 +87,7 @@
  	<select id="menuLists" resultType="com.yameokja.mc.StoreMenuDTO">
  		SELECT MENU_NUM, MENU_NAME, PRICE, IMAGE_LINK
 		FROM MENU
-		WHERE ST_NUM = #{st_num}
+		WHERE ST_NUM = #{st_num, jdbcType=INTEGER}
  	</select>
 
  	<!-- 리뷰 + 추천 비추천 가져오기 -->
@@ -110,19 +110,24 @@
 		GROUP BY RRN.RV_NUM
 		) RNR
 		ON RB.RV_NUM = RNR.RV_NUM
-		WHERE RB.RV_NUM NOT IN (SELECT RV_NUM
-                                FROM REP_APPLY)
+        WHERE RB.RV_NUM  NOT IN (SELECT RA.RV_NUM
+                                FROM REP_APPLY RA
+                                WHERE REP_APPLY_NUM NOT IN (SELECT REP_APPLY_NUM
+                                                            FROM REP_REJ RR LEFT JOIN REP_PROCESS RP
+                                                            ON RR.REP_PROCESS_NUM = RP.REP_PROCESS_NUM))
 		) T
 		LEFT JOIN USING_USER UU
 		ON T.USER_NUM = UU.USER_NUM
-		WHERE T.ST_NUM = #{st_num}
+		WHERE T.ST_NUM = #{st_num, jdbcType=INTEGER}
+        ORDER BY RV_NUM 
 	</select>
 
+	<!-- 리뷰 사진 -->
 	<select id="rvPhoto" resultType="com.yameokja.mc.StoreRvPhotoDTO">
 		SELECT RB.RV_NUM AS RV_NUM, RP.PHOTO_LINK AS PHOTO_LINK
 		FROM RV_BOX RB JOIN RV_PHOTO RP
 		  ON RB.RV_NUM = RP.RV_NUM
-		WHERE RB.ST_NUM = #{st_num}
+		WHERE RB.ST_NUM = #{st_num, jdbcType=INTEGER}
 	</select>
 	
  	<!-- 리뷰 키워드 -->
@@ -135,7 +140,7 @@
 		FROM RV_KEY_LABEL RKL RIGHT JOIN (SELECT RK.RV_NUM AS RV_NUM, RK.RV_KEY_NUM AS RV_KEY_NUM
 		                                 FROM RV_BOX RB LEFT JOIN RV_KEY RK
 		                                   ON RB.RV_NUM = RK.RV_NUM
-		                                 WHERE RB.ST_NUM = #{st_num}) T
+		                                 WHERE RB.ST_NUM = #{st_num, jdbcType=INTEGER}) T
 		  ON RKL.RV_KEY_NUM = T.RV_KEY_NUM
 		WHERE RKL.RV_KEY_NAME IS NOT NULL
 		GROUP BY (RKL.RV_KEY_NAME, RKL.RV_KEY_NUM)
@@ -143,11 +148,58 @@
 		) T
 		<![CDATA[WHERE ROWNUM <= 10]]>
  	</select>
- 	
- 	<!-- 리뷰 등록 -->
+  	
+<!--
+	리뷰 등록
  	<insert id="reviewInsert">
  		INSERT INTO RV_BOX(RVBOXSEQ.NEXTVAL, USER_NUM, ST_NUM, RV_CONTENT, STAR_SCORE, REG_DATE)
 		VALUES(#{user_num}, #{st_num}, #{rv_content}, #{star_score}, DEFAULT)
  	</insert>
- 
+-->
+
+ 	<!-- 리뷰 신고 -->
+	<insert id="reviewRepInsert">
+		INSERT INTO REP_APPLY(REP_APPLY_NUM, RV_NUM, USER_NUM, REP_RS_NUM)
+		VALUES (17, #{rv_num}, #{user_num}, #{rep_rs_num})
+	</insert> 
+	
+	<!-- 리뷰 추천/비추천 식별 -->
+	<select id="searchRec" resultType="java.lang.String">
+		SELECT REC_NONREC_NUMBER
+		FROM RV_REC_NONREC
+		WHERE RV_NUM= #{rv_num}
+		  AND USER_NUM= #{user_num}
+	</select>
+	
+	<!-- 리뷰 추천/비추천 등록 -->
+	<insert id="reviewRecInsert">
+		INSERT INTO RV_REC_NONREC(RV_NUM, USER_NUM, REC_NONREC_NUMBER)
+		VALUES(#{rv_num}, #{user_num}, #{rec_nonrec_number})
+	</insert>
+	
+	<!-- 리뷰 추천/비추천 등록 취소 -->
+	<delete id="reviewRecRemove">
+		DELETE
+		FROM RV_REC_NONREC
+		WHERE RV_NUM=#{rv_num}
+		  AND USER_NUM= #{user_num}
+		  AND REC_NONREC_NUMBER= #{rec_nonrec_number}
+	</delete>
+	
+	<!-- 리뷰 추천/비추천 수정 -->
+	<update id="reviewRecModify">
+		UPDATE RV_REC_NONREC
+		SET REC_NONREC_NUMBER = #{rec_nonrec_number}, REG_DATE = TO_DATE(SYSDATE)
+		WHERE RV_NUM= #{rv_num}
+		  AND USER_NUM = #{user_num}
+	</update>
+	
+	<!-- 리뷰 추천/비추천 카운트 -->
+	<select id="reviewRecCount" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS REC_COUNT
+		FROM RV_REC_NONREC
+		WHERE RV_NUM = #{rv_num}
+		  AND REC_NONREC_NUMBER = #{rec_nonrec_number}
+	</select>
+	
 </mapper>

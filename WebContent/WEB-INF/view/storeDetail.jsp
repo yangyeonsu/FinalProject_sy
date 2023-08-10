@@ -74,103 +74,251 @@ String cp = request.getContextPath();
 			$('.overlay').css("z-index", "0");
 			$('#checkOverlay').attr("value", "false");
 		});
-		
+
+		/// 신고하기 버튼 눌렀을 때
+		$(".repBtn").click(function()
+		{
+			alert($(this).val());
+			$("input[name=rvNumHidden]").attr("value", $(this).val());
+		});
+
 		$("#decBtn").click(function()
 		{
+			$rv_num = $("input[name=rvNumHidden]").val();
+			alert($rv_num);
+
 			var reviewRep = [];
-			
+
 			$("input:checkbox[name=reviewRep]:checked").each(function()
 			{
 				reviewRep.push($(this).val());
 			});
-			
-			if(reveiwRep.length)
-			
-			if(reviewRep.length == null || reviewRep.length == 0)
+
+			$rep_rs_num = reviewRep[0];
+
+			if (reviewRep.length == null || reviewRep.length == 0)
 			{
 				alert("신고사유를 선택해주세요.");
 				return;
 			}
-			
-			$("#userForm").attr("action", "reviewRep.action");
-			$("#userForm").submit();
+
+			$("input:checkbox[name=reviewRep]:checked").each(function()
+			{
+				$(this).prop("checked", false);
+				totalChecked = 0;
+			});
+
+			$.ajax(
+			{
+				url : "reviewRep.action",
+				type : 'post',
+				data :
+				{
+					"rv_num" : $rv_num,
+					"rep_rs_num" : $rep_rs_num
+				},
+				success : function(result)
+				{
+					if (result == "1")
+					{
+						alert("신고가 완료되었습니다.");
+					} else
+					{
+						alert("신고 과정에서 오류가 발생했습니다. 다시 시도해주세요.")
+					}
+
+				},
+				error : function(e)
+				{
+					alert(e.responseText);
+				}
+			});
 		});
+
 		
-		
+
+		var totalChecked = 0;
+
+		function CountChecked(field)
+		{
+			if (field.checked)
+				totalChecked += 1;
+			else
+				totalChecked -= 1;
+
+			if (totalChecked > 1)
+			{
+				alert("한 개만 선택 가능합니다.");
+				field.checked = false;
+				totalChecked -= 1;
+			}
+
+		}
+
+		// 리뷰 작성 페이지로 이동
+		$("#insertReview").click(function()
+		{
+			$("#userForm").attr("action", "reviewRep.action");
+			$("#usesForm").submit();
+		});
+
+		// 모달--------------------------------------------------------------------------
+		function popupOpen()
+		{
+
+			if (document.all.popup.style.visibility == "hidden")
+			{
+				document.all.popup.style.visibility = "visible";
+				bgLayerOpen();
+
+				var $layerPopupObj = $('#popup');
+				var left = ($(window).scrollLeft() + ($(window).width() - $layerPopupObj
+						.width()) / 2);
+				var top = ($(window).scrollTop() + ($(window).height() - $layerPopupObj
+						.height()) / 2);
+
+				$layerPopupObj.css(
+				{
+					'left' : left,
+					'top' : top,
+					'position' : 'absolute'
+				});
+				$('body').css('position', 'relative').append($layerPopupObj);
+
+				return false;
+			} else
+			{
+				document.all.popup.style.visibility = "hidden";
+				bgLayerClear();
+				return false;
+			}
+
+		}
+
+		function bgLayerOpen()
+		{
+			if (!$('.bgLayer').length)
+			{
+				$('<div class="bgLayer"></div>').appendTo($('body'));
+			}
+			var object = $(".bgLayer");
+			var w = $(document).width() + 12;
+			var h = $(document).height();
+
+			object.css(
+			{
+				'width' : w,
+				'height' : h
+			});
+			object.fadeIn(500); //생성되는 시간 설정
+		}
+
+		function bgLayerClear()
+		{
+			var object = $('.bgLayer');
+
+			if (object.length)
+			{
+				object.fadeOut(500, function()
+				{
+					object.remove();
+
+				});
+			}
+		}
+
+		$(function()
+		{
+			$(window).resize(function()
+			{ //화면 크기 변할 시
+				$('.bgLayer').css('width', $(window).width() - 0);
+				$('.bgLayer').css('height', $(window).height() - 0);
+			});
+		});
 
 	});
-
-	// 모달--------------------------------------------------------------------------
-	function popupOpen()
+	
+	
+	// 추천/비추천
+	$(document).on("click",".recBtn", function()
 	{
+		//alert("확인");
+		$rv_num = $(this).val();
 
-		if (document.all.popup.style.visibility == "hidden")
+		if ($(this).attr("name") == "rec")
 		{
-			document.all.popup.style.visibility = "visible";
-			bgLayerOpen();
-
-			var $layerPopupObj = $('#popup');
-			var left = ($(window).scrollLeft() + ($(window).width() - $layerPopupObj
-					.width()) / 2);
-			var top = ($(window).scrollTop() + ($(window).height() - $layerPopupObj
-					.height()) / 2);
-
-			$layerPopupObj.css(
-			{
-				'left' : left,
-				'top' : top,
-				'position' : 'absolute'
-			});
-			$('body').css('position', 'relative').append($layerPopupObj);
-
-			return false;
+			$rec_nonrec_number = "1";
 		} else
+			$rec_nonrec_number = "2";
+
+		//alert($rec_nonrec_number);
+
+		$.ajax(
 		{
-			document.all.popup.style.visibility = "hidden";
-			bgLayerClear();
-			return false;
-		}
-
-	}
-
-	function bgLayerOpen()
-	{
-		if (!$('.bgLayer').length)
-		{
-			$('<div class="bgLayer"></div>').appendTo($('body'));
-		}
-		var object = $(".bgLayer");
-		var w = $(document).width() + 12;
-		var h = $(document).height();
-
-		object.css(
-		{
-			'width' : w,
-			'height' : h
-		});
-		object.fadeIn(500); //생성되는 시간 설정
-	}
-
-	function bgLayerClear()
-	{
-		var object = $('.bgLayer');
-
-		if (object.length)
-		{
-			object.fadeOut(500, function()
+			url : "recInsertDelete.action",
+			type : 'post',
+			data :
 			{
-				object.remove();
-
-			});
-		}
-	}
-
-	$(function()
-	{
-		$(window).resize(function()
-		{ //화면 크기 변할 시
-			$('.bgLayer').css('width', $(window).width() - 0);
-			$('.bgLayer').css('height', $(window).height() - 0);
+				"rv_num" : $rv_num,
+				"rec_nonrec_number" : $rec_nonrec_number
+			},
+			dataType : "json",
+			success : function(html)
+			{
+				alert(html.rv_num +"|"+ html.rec_nonrec_number + "|" + html.action);
+				alert(html.rec + "|" + html.nonrec);
+				
+				if(html.action=="-1") // 같은 추천을 눌렀을 경우 -> rec_nonrec_number의 스타일을 없애고, count-1
+				{
+					if($rec_nonrec_number=="1")
+					{
+						$("#rec" + html.rv_num).css("border", "none");
+						$("#rec" + html.rv_num).html("추천 👍 ("+ html.rec +")");
+					}
+					else if($rec_nonrec_number=="2")
+					{
+						$("#nonrec" + html.rv_num).css("border", "none");
+						$("#nonrec" + html.rv_num).html("비추천 👎 ("+ html.nonrec +")");
+					}
+				}
+				else if(html.action=="0") // 그냥 추천/비추천 추가 -> 추가한 것에 스타일 추가, count+1
+				{
+					if($rec_nonrec_number=="1")
+					{
+						$("#rec" + html.rv_num).css("border", "2px solid #ef6351");
+						$("#rec" + html.rv_num).html("추천 👍 ("+ html.rec +")");
+					}
+					else if($rec_nonrec_number=="2")
+					{
+						$("#nonrec" + html.rv_num).css("border", "2px solid #ef6351");
+						$("#nonrec" + html.rv_num).html("비추천 👎 ("+ html.nonrec +")");
+					}
+				}
+				else if(html.action=="1") // 이미 눌려있는 상태에서 다른 추천 눌렀을 경우
+										  // -> 누른 추천에 스타일 추가, 이미 있는 것에 스타일 해제
+										  //    누른 추천에 count+1, 이미 있는 것에 count-1
+				{
+					if(html.rec_nonrec_number=="1")
+					{
+						$("#rec" + html.rv_num).css("border", "2px solid #ef6351");
+						$("#rec" + html.rv_num).html("추천 👍 ("+ html.rec +")");
+						$("#nonrec" + html.rv_num).css("border", "none");
+						$("#nonrec" + html.rv_num).html("비추천 👎 ("+ html.nonrec +")");
+						
+					}
+					else if($rec_nonrec_number=="2")
+					{
+						$("#rec" + html.rv_num).css("border", "none");
+						$("#rec" + html.rv_num).html("추천 👍 ("+ html.rec +")");
+						$("#nonrec" + html.rv_num).css("border", "2px solid #ef6351");
+						$("#nonrec" + html.rv_num).html("비추천 👎 ("+ html.nonrec +")");
+					}
+				}
+			},
+			error : function(e)
+			{
+				alert(e.responseText);
+			}
 		});
 	});
 </script>
@@ -396,10 +544,10 @@ String cp = request.getContextPath();
 								<c:if test="${empty stCheckList }">
 									<div class="none">해당 항목이 존재하지 않습니다.</div>
 								</c:if>
-									<div class="storeCheck">
-										<div class="stCheckListName">가게 옵션</div>
-										<div class="stCheckListYesorno">존재 여부</div>
-									</div>
+								<div class="storeCheck">
+									<div class="stCheckListName">가게 옵션</div>
+									<div class="stCheckListYesorno">존재 여부</div>
+								</div>
 								<c:forEach var="stCheck" items="${stCheckList }">
 									<div class="storeCheck">
 										<div class="stCheckName">${stCheck.chbox_name }</div>
@@ -462,8 +610,9 @@ String cp = request.getContextPath();
 										<div class="rvTop">
 											<div class="userNickname">"${rv.user_nickname }"</div>
 											<div>
-												<button type="button" id="repBtn" class="rvBtn"
-													onclick="popupOpen()">신고하기</button>
+												<button type="button" class="repBtn rvBtn"
+													onclick="popupOpen()" value="${rv.rv_num }">신고하기</button>
+
 											</div>
 										</div>
 
@@ -506,15 +655,20 @@ String cp = request.getContextPath();
 										</div>
 
 										<div class="rvBottom">
-											<div>
-												<button type="button" id="nonrec" class="recBtn rvBtn"
-													value="비추천">비추천 👎 (${rv.nonrec })</button>
-												<button type="button" id="rec" class="recBtn rvBtn"
-													value="추천">추천 👍 (${rv.rec } )</button>
+											<div class="recNonrecBtnDiv">
+												<c:set var="rv_num" value="${rv.rv_num }"/>
+												<button type="button" id="nonrec${rv_num }" name="nonrec"
+													class="recBtn rvBtn" value="${rv.rv_num }">비추천 👎
+													(${rv.nonrec })</button>
+												<button type="button" id="rec${rv_num }" name="rec"
+													class="recBtn rvBtn" value="${rv.rv_num }">추천 👍
+													(${rv.rec } )</button>
 											</div>
 										</div>
 									</div>
 								</c:forEach>
+								<input type="hidden" value="" name="rvNumHidden"> <input
+									type="hidden" value="" name="rep_rs_num">
 							</div>
 							<!-- id="revList" -->
 
@@ -525,14 +679,20 @@ String cp = request.getContextPath();
 								<h3>리뷰신고</h3>
 								<div class="popCont">
 									<div class="list">
-										<label for="commercial"> <input type="checkbox" class="reviewRep"
-											id="commercial" name="reviewRep" value="1">원치 않는 상업적인 리뷰
+										<label for="commercial"> <input type="checkbox"
+											class="reviewRep" id="commercial" name="reviewRep" value="1"
+											onclick="CountChecked(this)">원치 않는 상업적인 리뷰
 										</label><br> <br> <label for="intended"> <input
-											type="checkbox" id="intended" name="reviewRep" class="reviewRep" value="2">악의적인 리뷰
+											type="checkbox" id="intended" name="reviewRep"
+											class="reviewRep" value="2" onclick="CountChecked(this)">악의적인
+											리뷰
 										</label><br> <br> <label for="wrong"> <input
-											type="checkbox" id="wrong" name="reviewRep" class="reviewRep" value="3">잘못된 정보
+											type="checkbox" id="wrong" name="reviewRep" class="reviewRep"
+											value="3" onclick="CountChecked(this)">잘못된 정보
 										</label><br> <br> <label for="violent"> <input
-											type="checkbox" id="violent" name="reviewRep" class="reviewRep" value="4">욕설, 성적, 폭력적인 리뷰
+											type="checkbox" id="violent" name="reviewRep"
+											class="reviewRep" value="4" onclick="CountChecked(this)">욕설,
+											성적, 폭력적인 리뷰
 										</label><br> <br>
 									</div>
 								</div>
@@ -540,7 +700,6 @@ String cp = request.getContextPath();
 									<button id="decBtn" onclick="popupOpen()">신고하기</button>
 								</div>
 							</div>
-
 						</div>
 					</div>
 					<!-- class="col-md-8  container4" -->
@@ -624,10 +783,10 @@ String cp = request.getContextPath();
 				</div>
 			</div>
 		</div>
-
-		<div class="footer">
-			<c:import url="footer.jsp"></c:import>
-		</div>
 	</form>
+	<div class="footer">
+		<c:import url="footer.jsp"></c:import>
+	</div>
+
 </body>
 </html>

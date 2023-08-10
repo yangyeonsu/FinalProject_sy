@@ -14,7 +14,7 @@
 
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript">
-
+/* 
 $(function()
 {
 	$("#comBtn").click(function()
@@ -25,7 +25,6 @@ $(function()
 			return;
 		}
 		
-		/* $("#userForm").attr("method","get"); */
 		
 		var checkArray = new Array();
 		
@@ -42,8 +41,32 @@ $(function()
 		
 	});
 });
+ */
+ 
+$(function() {
+    $("#comBtn").click(function() {
+    	if ($('input:checkbox[name=comStImgCB]:checked').length > 3)
+ 		{
+            alert("3개 이상 비교 불가");
+            return;
+        }
 
+        var checkArray = [];
 
+        $('input:checkbox[name=comStImgCB]:checked').each(function() {
+            checkArray.push($(this).attr("id"));
+        });
+
+        // Convert the array into a comma-separated string
+        var paramString = encodeURIComponent(checkArray.join(','));
+
+        // Append this string to the action URL of your form
+        $("#userForm").attr("action", "compareView.action?st_num=" + paramString);
+        $("#userForm").submit();
+    });
+});
+
+ 
 </script>
 </head>
 <body>

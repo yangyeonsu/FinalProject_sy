@@ -7,6 +7,8 @@ package com.yameokja.mc;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.annotations.Param;
+
 public interface IstDetailDAO_userView
 {
 	public ArrayList<StoreOpencloseDTO> openClose(int st_num);  	// 영업시간 + 휴무
@@ -20,6 +22,25 @@ public interface IstDetailDAO_userView
 	public ArrayList<StoreKeyDTO> stKeys(int st_num);  				// 가게 키워드
 	public ArrayList<StoreReviewKeyDTO> reviewKeys(int st_num);		// 리뷰 키워드
 	public ArrayList<StoreRvPhotoDTO> rvPhoto(int st_num);			// 리뷰 사진
+	
+	// 리뷰 신고
+	public int reviewRepInsert(@Param("rv_num") int rv_num, @Param("user_num") String user_num, @Param("rep_rs_num") int rep_rs_num);	
+	
+	// 리뷰 식별
+	public String searchRec(@Param("rv_num") int rv_num, @Param("user_num") String user_num);
+	
+	// 리뷰 추천/비추천 등록
+	public int reviewRecInsert(@Param("rv_num") int rv_num, @Param("user_num") String user_num, @Param("rec_nonrec_number") int rec_nonrec_number);
+	
+	// 리뷰 추천/비추천 삭제
+	public int reviewRecRemove(@Param("rv_num") int rv_num, @Param("user_num") String user_num, @Param("rec_nonrec_number") int rec_nonrec_number);
+	
+	// 리뷰 추천/비추천 수정
+	public int reviewRecModify(@Param("rv_num") int rv_num, @Param("user_num") String user_num, @Param("rec_nonrec_number") int rec_nonrec_number);
+	
+	// 리뷰 추천/비추천 카운트
+	public int reviewRecCount(@Param("rv_num") int rv_num,@Param("rec_nonrec_number") int rec_nonrec_number);
+	
 	
 	//public ArrayList<stDetailDTO_userView> holiday(int st_num);	 	// 휴일
 	//public stDetailDTO_userView stName(int st_num);		        	// 가게 이름

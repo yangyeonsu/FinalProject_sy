@@ -3,12 +3,12 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <% 
-	request.setCharacterEncoding("UTF-8");
-	String cp = request.getContextPath();
+   request.setCharacterEncoding("UTF-8");
+   String cp = request.getContextPath();
 %>
 <%
 	RvApplyViewDTO dto = (RvApplyViewDTO)request.getAttribute("review");
-	//System.out.print(dto.getUser_id());
+   //System.out.print(dto.getUser_id());
 %>
 <!DOCTYPE html>
 <html>
@@ -17,112 +17,206 @@
 <title>reviewReportForm.jsp</title>
 <style type="text/css">
 
-#title
+.st_info_insert
 {
-	text-align: center;
+   width: 70vw;
+   margin-left: 15vw;
+   padding-top: 5vh;
+   padding-bottom: 5vh;
+   border: 5px solid #F7F4EA;
+   border-radius: 40px;
 }
-#more
+.top
 {
-	
-	/* display: flex; */
-    width: 100%;
-    justify-content: space-between;
-    align-items: center;
-}
-#body div
-{
-	float: left;
-}
-#leftSide, #rightSide
-{
-	width: 10%;
-	height: 500px;
-}
-#center
-{
-	width: 80%;
+   width: 70vw;
+   margin-left: 15vw;
+   text-align: center;
 }
 
-textarea {
-	text-align: left;
+.igroup
+{
+   margin-left: 10vw;
+   margin-top: 2vh;
+   width: 55vw;
+   display: flex;
+}
+.igroup2
+{
+   margin-top: 0vh;
+   margin-left: 10vw;
+   width: 55vw;
+   display: flex;
 }
 
+.button
+{
+   margin-top: 3vh;
+   margin-bottom: 3vh;
+   text-align: center;
+}
 
+button, .input
+{
+   
+   display: inline-block;
+   outline: none;
+   cursor: pointer;
+   font-weight: 500;
+   border-radius: 3px;
+   padding: 0 16px;
+   border-radius: 4px;
+   background: #F7F4EA;
+   line-height: 1.15;
+   font-size: 14px;
+   height: 36px;
+   word-spacing: 0px;
+   letter-spacing: .0892857143em;
+   text-decoration: none;
+   text-transform: uppercase;
+   min-width: 64px;
+   border: none;
+   text-align: center;
+   box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
+   transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+   :hover 
+   {
+       background: rgb(98, 0, 238);
+       box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%);
+   }
+                
+}
 
+.errorMsg
+{
+   color: #ef6351;
+   font-size: small;
+   display: none;
+   padding-left: 15vh;
+}
+.title1
+{
+   width: 5vw;
+   padding: 1vh;
+   background-color: #F7F4EA;
+}
+.tcontent1
+{
+   padding: 1vh;
+}
+.more
+{
+   display: flex;
+   flex-direction: column;
+}
+.lbox
+{
+   display: flex;
+   border: 1px solid  #F7F4EA;
+}
+.repot_date_list
+{
+   width: 72.5%;
+   display: flex;
+   justify-content: space-between;
+   margin-left: 10vw;
+}
 </style>
+
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+<script type="text/javascript" src="<%=cp %>/js/jquery-ui.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+<script type="text/javascript">
+   
+   function rejectBtn()
+   {
+      if ($("#reviewReject").val() == "")
+      {
+         $("#err").css("display", "inline");
+         $("#reviewReject").focus();
+         return;
+      }
+   };
+</script>
 
 </head>
 <body>
 
-<!-- header -->
-<c:import url="/WEB-INF/view/header_admin.jsp"></c:import>
-<!-- 사이드바 -->
-<div id="leftSideBar">
+<div class="bframe">
+   
+   <!-- header -->
+   <div><c:import url="/WEB-INF/view/header_admin.jsp"></c:import></div>
+   
+   <div class="middle">
+      <div class="top">
+         <h1>리뷰신고서</h1>
+         <hr>
+      </div>
+      
+      <!-- 입력 부분 -->
+      <div class="st_info_insert">
+      
+          
+         <div class="repot_date_list">
+         <div class="more">
+            <div class="lbox">
+               <div class="title1">신고자</div>
+               <div class="tcontent1"><input type="text" id="reporter" value=<%=dto.getUser_id() %> style="border: 0px; width: 70px;"></div>
+            </div>
+            <div class="lbox">
+               <div class="title1">피신고자</div>
+               <div class="tcontent1"><input type="text" id="reported" value=<%=dto.getAccu_num() %> style="border: 0px; width: 70px;"></div>
+            </div>
+            
+         </div>
+         
+         <div class="more">
+            <div class="lbox">
+               <div class="title1">신고일</div>
+               <div class="tcontent1"><input type="text" id="reportDate" value=<%=dto.getReg_date() %> style="border: 0px; text-align: right; width: 70px;"></div>
+            </div>
+            <div class="lbox">
+               <div class="title1">작성일</div>
+               <div class="tcontent1"><input type="text" id="createDate" value=<%=dto.getWrite_date() %> style="border: 0px; text-align: right; width: 70px;"></div>
+            </div>
+         </div>
+      </div>
+         
+         <div class="igroup2" style="width: 100%;">
+            <textarea id="reviewReport" readonly="readonly" style="width: 72%; height: 10em; resize: none;">리뷰내용이 일치하지 않음.</textarea>
+         </div>
+         
+         <div class="igroup2">
+            <div style="width: 50%;">
+               리뷰신고카테고리명 : ${review.getRep_rs_name()}
+            </div>
+            <div style="width: 42%; text-align: right; margin-top: 1vh;">
+               <button class="stInfoBtn" id="${review.getSt_num() }">${review.getSt_name() } 페이지로 가기</button>
+            </div>
+         </div>
+         
+         <div style="width: 87%; text-align: right; margin-top: 2vh; margin-bottom: 2vh;">
+            <input class="input" type="submit" style="width: 120px; border-radius: 20px;" value="승인">
+         </div>
+         
+         <div class="igroup2" style="width: 100%;">
+            <textarea id="reviewReject"  style="width: 72%; height: 10em; resize: none; border-radius: 10px;" placeholder="반려사유기재"></textarea>
+         </div>
+         
+         <span class="errorMsg" id="err">반려사유를 입력해야 합니다.</span>
+         <div style="width: 87%; text-align: right; margin-top: 1vh;">
+            <button value="중재" onclick="mediateBtn()">중재</button>
+            <button value="반려" onclick="rejectBtn()">반려</button>
+         </div>
+   
+      </div> <!-- st_info_insert -->
+   </div>
+   
+   
+   <!-- footer -->
+   <div><c:import url="/WEB-INF/view/footer.jsp"></c:import></div>
+
 </div>
-
-
-<!-- body -->
-<div id="title" style="padding: 10px;">
-<h1>리뷰신고서</h1><br>
-</div>
-
-<div id="body">
-	<div id="leftSide"></div>
-	
-	<div id="center">
-		<hr>
-		<br>
-		<div id="more">
-			<div style="width: 50%;">
-				신고자 : <input type="text" id="reporter" value=<%=dto.getUser_id() %> style="border: 0px; width: 70px;">
-			</div>
-			<div style="width: 50%; text-align: right;">
-				신고일 : <input type="text" id="reportDate" value=<%=dto.getReg_date() %> style="border: 0px; text-align: right; width: 70px;">
-			</div>
-		</div>
-		
-		<div id="more">
-			<div style="width: 50%;">
-				피신고자 : <input type="text" id="reported" value=<%=dto.getAccu_num() %> style="border: 0px; width: 70px;">
-			</div>
-			<div style="width: 50%; text-align: right;">
-				작성일 : <input type="text" id="createDate" value=<%=dto.getWrite_date() %> style="border: 0px; text-align: right; width: 70px;">
-			</div>
-		</div>
-		
-		<div style="width: 100%;">
-			<textarea id="reviewReport" rows="10px;" readonly="readonly" style="width: 100%;">리뷰내용이 일치하지 않음.</textarea>
-		</div>
-		
-		<div id="more" style="margin-bottom: 2vh;">
-			<div style="width: 50%;">
-				리뷰신고카테고리명 : <input type="text" value=<%=dto.getRep_rs_name() %> style="border: 0px; width: 100px;">
-			</div>
-			<div style="width: 50%; text-align: right;">
-				<button id="stInfoBtn">해당가게정보보기</button>
-			</div>
-		</div>
-		
-		<div style="width: 100%; text-align: right; margin-bottom: 3vh;">
-			<input type="submit" style="width: 120px; border-radius: 20px;" value="승인">
-		</div>
-		
-		<div style="width: 100%;">
-			<textarea id="reviewReject" rows="6px;" style="width: 100%; border-radius: 20px;">문제되는 내용 없음.</textarea>
-		</div>
-		
-		<div style="width: 100%; text-align: right;">
-			<button>중재</button>
-			<button>반려</button>
-		</div>
-		
-	</div>
-	
-	<div id="rightSide"></div>
-</div>
-
-<!-- footer -->
-<c:import url="/WEB-INF/view/footer.jsp"></c:import>
 
 </body>
 </html>
