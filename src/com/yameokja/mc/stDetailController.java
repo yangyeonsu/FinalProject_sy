@@ -162,7 +162,65 @@ public class stDetailController
 		return result;
 	}
 	
-	
+	@RequestMapping(value="/recInsertDelete.action")
+		@ResponseBody
+	public String recInsertDelete(@RequestParam("rv_num") int rv_num, @RequestParam("rec_nonrec_number") int rec_nonrec_number, HttpServletRequest request)
+	{
+		HttpSession session = request.getSession();
+		String user_num = (String)session.getAttribute("user_num");
+		
+		//System.out.println("rv_num : " + rv_num);
+		//System.out.println("user_num : " + user_num);
+		//System.out.println("rnr : " + rec_nonrec_number);
+		
+		IstDetailDAO_userView dao = sqlSession.getMapper(IstDetailDAO_userView.class);
+		
+		String sr = dao.searchRec(rv_num, user_num);
+		
+		//System.out.println("sr : "+ sr);
+		
+		String html = "";
+		int rec = 0;
+		int nonrec = 0;
+
+		
+		html+= "{\"rv_num\":\""+rv_num+"\",";
+		html+= "\"rec_nonrec_number\":\""+rec_nonrec_number+"\",";
+
+		
+		if(sr == null)	//없을 때
+		{
+			dao.reviewRecInsert(rv_num, user_num, rec_nonrec_number);
+			rec = dao.reviewRecCount(rv_num, 1);
+			nonrec = dao.reviewRecCount(rv_num, 2);
+			html+= "\"rec\":\"" + rec + "\",";
+			html+= "\"nonrec\":\"" + nonrec + "\",";
+			html+= "\"action\":\"0\"}";
+		}
+		else if (Integer.parseInt(sr) != rec_nonrec_number) // 이미 선택된 것과 다른 추천을 눌렀을 떄
+		{
+			dao.reviewRecModify(rv_num, user_num, rec_nonrec_number);
+			rec = dao.reviewRecCount(rv_num, 1);
+			nonrec = dao.reviewRecCount(rv_num, 2);
+			html+= "\"rec\":\"" + rec + "\",";
+			html+= "\"nonrec\":\"" + nonrec + "\",";
+			html+= "\"action\":\"1\"}";
+		}
+		else if (Integer.parseInt(sr) == rec_nonrec_number) // 같은 추천을 눌렀을 때
+		{
+			dao.reviewRecRemove(rv_num, user_num, rec_nonrec_number);
+			rec = dao.reviewRecCount(rv_num, 1);
+			nonrec = dao.reviewRecCount(rv_num, 2);
+			html+= "\"rec\":\"" + rec + "\",";
+			html+= "\"nonrec\":\"" + nonrec + "\",";
+			html+= "\"action\":\"-1\"}";
+		}
+
+		//System.out.println(html);
+		
+		return html;
+		
+	}
 		
 		
 	
