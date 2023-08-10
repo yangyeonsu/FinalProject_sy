@@ -366,9 +366,6 @@
 					        </c:forEach>
 					    </c:otherwise>
 					</c:choose>
-					
-					
-					
 				</div>
 			</div>
 		</div><!-- right_content -->
