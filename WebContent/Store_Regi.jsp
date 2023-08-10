@@ -399,7 +399,7 @@ button
 <div class="bframe">
 	<form action="storeregiinsert.action" method="post" id="userForm" enctype="multipart/form-data">
 	<!-- header -->
-	<div><c:import url="header_user.jsp"></c:import></div>
+	<div><c:import url="/WEB-INF/view/header_user.jsp"></c:import></div>
 	
 	<div class="middle">
 		<div class="top">
@@ -525,7 +525,7 @@ button
 	
 	
 	<!-- footer -->
-	<div><c:import url="footer.jsp"></c:import></div>
+	<div><c:import url="/WEB-INF/view/footer.jsp"></c:import></div>
 
 	</form>
 </div>
