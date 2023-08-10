@@ -156,13 +156,23 @@
 		VALUES(#{user_num}, #{st_num}, #{rv_content}, #{star_score}, DEFAULT)
  	</insert>
 -->
+		
+	<!-- 해당 유저가 해당 가게 리뷰에 누른 추천/비추천 내역 -->
+	<select id="userReviewList" resultType="com.yameokja.mc.userRvRecDTO">
+		SELECT RB.RV_NUM AS RV_NUM, RRN.REC_NONREC_NUMBER AS REC_NONREC_NUMBER
+		FROM RV_REC_NONREC RRN LEFT JOIN RV_BOX RB
+		  ON RRN.RV_NUM = RB.RV_NUM
+		WHERE RRN.USER_NUM = #{user_num}
+		  AND RB.ST_NUM = #{st_num}
+	</select>
+	
 
  	<!-- 리뷰 신고 -->
 	<insert id="reviewRepInsert">
 		INSERT INTO REP_APPLY(REP_APPLY_NUM, RV_NUM, USER_NUM, REP_RS_NUM)
 		VALUES (17, #{rv_num}, #{user_num}, #{rep_rs_num})
 	</insert> 
-	
+
 	<!-- 리뷰 추천/비추천 식별 -->
 	<select id="searchRec" resultType="java.lang.String">
 		SELECT REC_NONREC_NUMBER
@@ -201,5 +211,7 @@
 		WHERE RV_NUM = #{rv_num}
 		  AND REC_NONREC_NUMBER = #{rec_nonrec_number}
 	</select>
+	
+
 	
 </mapper>

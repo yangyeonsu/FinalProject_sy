@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import java.util.List;
-
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -138,7 +138,23 @@ public class stDetailController
 			model.addAttribute("comList", mdao.getStoreList(comList));
 		else
 			model.addAttribute("comList", null);
-
+		
+		// 사용자의 해당 가게 추천/비추천 내역
+		ArrayList<userRvRecDTO> userReviewList = dao.userReviewList(st_num, user_num);
+		
+		for (userRvRecDTO dto : userReviewList)
+		{
+			System.out.print(dto.getRec_nonrec_number() + "| ");
+			System.out.println(dto.getRv_num());
+		}
+		
+		if(userReviewList.size()>0)
+		{
+			model.addAttribute("userReviewList", userReviewList);
+		}
+		else
+			model.addAttribute("userReviewList", null);
+		
 		result = "/WEB-INF/view/storeDetail.jsp";
 		
 		return result;
