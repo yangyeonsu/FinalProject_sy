@@ -2,7 +2,6 @@ package com.yameokja.mc;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -44,6 +43,31 @@ public class compareViewController_beta
 		
 		model.addAttribute("user", user);
 		
+		String[] compareStnumList = request.getParameterValues("checkedCompare");
+		
+		ArrayList<Integer> stnumList = null;
+		
+		String[] regionCbList = compareStnumList[0].split(",");
+		
+		for (int i = 0; i < regionCbList.length; i++)
+		{
+			stnumList.add(Integer.parseInt(regionCbList[i]));
+		}
+		
+		System.out.println(stnumList);										//--가게 번호 리스트
+		
+		ArrayList<StoreDetailDTO> stores = dao.store(stnumList);			//-- 비교함에서 선택한 가게 정보 리스트
+		
+		ArrayList<StoreOpencloseDTO> openCloses = dao.openClose(stnumList);	//-- 비교함에서 선택한 가게 영업정보 리스트
+			
+		ArrayList<StoreCheckDTO> stChecks = dao.stcheck(stnumList);			//-- 비교함에서 선택한 가게 체크정보 리스트
+		
+		model.addAttribute("storeLen", stnumList.size());
+		model.addAttribute("store", stores);
+		model.addAttribute("openClose", openCloses);
+		model.addAttribute("stcheck", stChecks);
+		
+		/*
 		//int st_num = Integer.parseInt(request.getParameter("st_num"));
 		String st_numString = request.getParameter("st_num");
 		System.out.println("Received st_num: " + st_numString);
@@ -54,14 +78,16 @@ public class compareViewController_beta
 		}
 		String[] values = st_numString.split(",");
 		
+		int storeLen = values.length;
 		
 		ArrayList<ArrayList<StoreDetailDTO>> stores = new ArrayList<>();
 		ArrayList<ArrayList<StoreOpencloseDTO>> openCloses = new ArrayList<>();
 		ArrayList<ArrayList<StoreCheckDTO>> stChecks = new ArrayList<>();
 		ArrayList<ArrayList<compareViewDTO>> menus = new ArrayList<>();
+		*/
 		
-		
-		for (String value : values) 
+		/*
+		for (Integer value : stnumList) // st_num 들
 		{
 		    try 
 		    {
@@ -99,13 +125,10 @@ public class compareViewController_beta
 		        System.out.println(e.toString());
 		    }
 		}
-
-
+		*/
 		
-		model.addAttribute("store", stores);
-		model.addAttribute("openClose", openCloses);
-		model.addAttribute("stcheck", stChecks);
-		model.addAttribute("menuLists", menus);
+
+		//model.addAttribute("menuLists", menus);
 		
 		
 		
@@ -158,7 +181,7 @@ public class compareViewController_beta
 		}
 		*/
 		
-		result = "/WEB-INF/view/compareView-beta.jsp";
+		result = "/WEB-INF/view/compareView_sy.jsp";
 		
 		return result;
 	}
