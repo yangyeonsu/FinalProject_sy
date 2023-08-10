@@ -244,8 +244,8 @@
 						<ul class="big_menu">
 							<li>접수 내역<i class="arrow fas fa-angle-right"></i></li>
 							<ul class="small_menu">
-								<li><a href="user_rv_report.action" class="small_menuA">소메뉴2-1</a></li>
-								<li><a href="#" class="small_menuA">소메뉴2-2</a></li>
+								<li><a href="user_rv_report.action" class="small_menuA">리뷰신고</a></li>
+								<li><a href="user_stupdate_relist.action" class="small_menuA">가게정보수정요청</a></li>
 							</ul>
 						</ul>
 						<ul class="big_menu">

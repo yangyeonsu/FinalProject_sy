@@ -339,34 +339,49 @@
 		<div class="right_content">
 			<div class="rv_report">
 				<div class="title">
-					리뷰 신고 내역
+					가게정보수정요청 내역
 				</div>
 				<hr>
 				<div class="rv_reportlist">
 					<div class="subtitle">
-						<div class="rpt_subtitle">신고일자</div>
+						<div class="rpt_subtitle">요청일자</div>
 						<div class="st_name">가게명</div>
-						<div class="rpt_subtitle">피신고자ID</div>
 						<div class="rpt_subtitle">처리상태</div>
 						<div class="rpt_subtitle">처리일자</div>
 					</div>
 					<c:choose>
-					    <c:when test="${empty user_rv_Report}">
-					        <div class="no-data-message">리뷰 신고 내역이 존재하지 않습니다.</div>
+					    <c:when test="${empty user_stupdate_relist}">
+					        <div class="no-data-message">가게정보수정요청 내역이 없습니다.</div>
 					    </c:when>
 					    <c:otherwise>
-					        <c:forEach var="rvreport" items="${user_rv_Report}">
+					        <c:forEach var="udre" items="${user_stupdate_relist}">
 					            <div class="report_content">
-					                <div class="rpt_content">${rvreport.reg_date }</div>
-					                <div class="st_name">${rvreport.st_name }</div>
-					                <div class="rpt_content">${rvreport.reporteduserid }</div>
-					                <div class="rpt_content">${rvreport.status }</div>
-					                <div class="rpt_content">${rvreport.final_date }</div>
+					                <div class="rpt_content">${udre.reg_date }</div>
+					                <div class="st_name">${udre.st_name }</div>
+					                <div class="rpt_content">${udre.status }</div>
+					                <div class="rpt_content">${udre.final_date }</div>
 					            </div>
 					        </c:forEach>
 					    </c:otherwise>
 					</c:choose>
 					
+					<!-- 페이징 처리 -->
+					<div class="pagination">
+			            <c:choose>
+			                <c:when test="${empty user_stupdate_relist}">
+			                    <p></p>
+			                </c:when>
+			                <c:otherwise>
+			                    <ul class="pagination-list">
+			                        <li><a href="${cp}/user_stupdate_relist.action?page=${currentPage - 1}">&laquo; Previous</a></li>
+			                        <c:forEach var="pageNum" begin="1" end="${totalPages}">
+			                            <li><a href="${cp}/user_stupdate_relist.action?page=${pageNum}">${pageNum}</a></li>
+			                        </c:forEach>
+			                        <li><a href="${cp}/user_stupdate_relist.action?page=${currentPage + 1}">Next &raquo;</a></li>
+			                    </ul>
+			                </c:otherwise>
+			            </c:choose>
+			        </div>
 					
 					
 				</div>
