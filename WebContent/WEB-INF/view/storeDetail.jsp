@@ -657,12 +657,38 @@ String cp = request.getContextPath();
 										<div class="rvBottom">
 											<div class="recNonrecBtnDiv">
 												<c:set var="rv_num" value="${rv.rv_num }"/>
-												<button type="button" id="nonrec${rv_num }" name="nonrec"
-													class="recBtn rvBtn" value="${rv.rv_num }">비추천 👎
-													(${rv.nonrec })</button>
-												<button type="button" id="rec${rv_num }" name="rec"
-													class="recBtn rvBtn" value="${rv.rv_num }">추천 👍
-													(${rv.rec } )</button>
+												<c:forEach var="userRvRec" items="${userReviewList }">
+													<c:choose>
+														<c:when test="${(userRvRec.rv_num eq rv_num) 
+															&& (userRvRec.rec_nonrec_number eq 1) }">
+															<button type="button" id="nonrec${rv_num }" name="nonrec"
+																class="recBtn rvBtn" value="${rv.rv_num }">비추천 👎
+																(${rv.nonrec })</button>
+															<button type="button" id="rec${rv_num }" name="rec"
+																class="recBtn rvBtn" value="${rv.rv_num }"
+																style="border: 2px solid #ef6351">추천 👍
+																(${rv.rec } )</button>
+														</c:when>
+														<c:when test="${(userRvRec.rv_num eq rv_num) 
+															&& (userRvRec.rec_nonrec_number eq 2) }">
+															<button type="button" id="nonrec${rv_num }" name="nonrec"
+																class="recBtn rvBtn" value="${rv.rv_num }"
+																style="border: 2px solid #ef6351">비추천 👎
+																(${rv.nonrec })</button>
+															<button type="button" id="rec${rv_num }" name="rec"
+																class="recBtn rvBtn" value="${rv.rv_num }">추천 👍
+																(${rv.rec } )</button>
+														</c:when>
+														<c:when test="${(userRvRec.rv_num eq rv_num) && (userRvRec.rec_nonrec_number ne 1) && (userRvRec.rec_nonrec_number ne 2)}">
+															<button type="button" id="nonrec${rv_num }" name="nonrec"
+																class="recBtn rvBtn" value="${rv.rv_num }">비추천 👎
+																(${rv.nonrec })</button>
+															<button type="button" id="rec${rv_num }" name="rec"
+																class="recBtn rvBtn" value="${rv.rv_num }">추천 👍
+																(${rv.rec } )</button>
+														</c:when>
+													</c:choose>
+												</c:forEach>
 											</div>
 										</div>
 									</div>
