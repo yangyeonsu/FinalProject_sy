@@ -21,7 +21,7 @@ public class compareViewController_beta
 	private SqlSession sqlSession;
 
 	@RequestMapping(value="/compareView.action", method = RequestMethod.POST)
-	public String stDetail(HttpServletRequest request, Model model)
+	public String stDetail(HttpServletRequest request, Model model, String checkedCompare)
 	{
 		HttpSession session = request.getSession();
 		String user_num = (String)session.getAttribute("user_num");
@@ -44,6 +44,31 @@ public class compareViewController_beta
 		
 		model.addAttribute("user", user);
 		
+		System.out.println(checkedCompare.substring(0, checkedCompare.length() - 1));
+		String tmpStr = checkedCompare.substring(0, checkedCompare.length() - 1);
+		String[] comparedStore = tmpStr.split(",");
+		
+		List<Integer> stnumList = new ArrayList<Integer>();
+		
+		for (String st_num : comparedStore)
+		{
+			stnumList.add(Integer.parseInt(st_num));
+			/* System.out.println(st_num); */
+		}
+		/* System.out.println(comparedStore); */
+		
+		ArrayList<StoreDetailDTO> stores = dao.store(stnumList);
+		
+		ArrayList<StoreOpencloseDTO> openCloses = dao.openClose(stnumList);	//-- 비교함에서 선택한 가게 영업정보 리스트
+			
+		ArrayList<StoreCheckDTO> stChecks = dao.stcheck(stnumList);			//-- 비교함에서 선택한 가게 체크정보 리스트
+		
+		model.addAttribute("storeLen", stnumList.size());
+		model.addAttribute("store", stores);
+		model.addAttribute("openClose", openCloses);
+		model.addAttribute("stcheck", stChecks);
+		
+		/*
 		//int st_num = Integer.parseInt(request.getParameter("st_num"));
 		String st_numString = request.getParameter("st_num");
 		System.out.println("Received st_num: " + st_numString);
@@ -54,14 +79,16 @@ public class compareViewController_beta
 		}
 		String[] values = st_numString.split(",");
 		
+		int storeLen = values.length;
 		
 		ArrayList<ArrayList<StoreDetailDTO>> stores = new ArrayList<>();
 		ArrayList<ArrayList<StoreOpencloseDTO>> openCloses = new ArrayList<>();
 		ArrayList<ArrayList<StoreCheckDTO>> stChecks = new ArrayList<>();
 		ArrayList<ArrayList<compareViewDTO>> menus = new ArrayList<>();
+		*/
 		
-		
-		for (String value : values) 
+		/*
+		for (Integer value : stnumList) // st_num 들
 		{
 		    try 
 		    {
@@ -99,13 +126,10 @@ public class compareViewController_beta
 		        System.out.println(e.toString());
 		    }
 		}
-
-
+		*/
 		
-		model.addAttribute("store", stores);
-		model.addAttribute("openClose", openCloses);
-		model.addAttribute("stcheck", stChecks);
-		model.addAttribute("menuLists", menus);
+
+		//model.addAttribute("menuLists", menus);
 		
 		
 		

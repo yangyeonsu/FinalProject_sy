@@ -2,6 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.yameokja.mc.IUserstupdaterelistDAO">
+	<select id="count_relist" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS COUNT
+		FROM REQ_APPLY
+		WHERE USER_NUM = #{user_num}
+	</select>
+
 	<select id="user_stupdate_relist" resultType="com.yameokja.mc.UserStupdaterelistDTO">
 	    SELECT REG_DATE, ST_NAME, STATUS, FINAL_DATE
 	    FROM (
@@ -14,7 +20,7 @@
 	                ELSE '처리완료'
 	            END AS STATUS,
 	            RP.FINAL_DATE,
-	            ROW_NUMBER() OVER (ORDER BY RA.REG_DATE DESC) AS rnum
+	            ROW_NUMBER() OVER (ORDER BY RA.REG_DATE DESC) AS RNUM
 	        FROM 
 	            REQ_APPLY RA 
 	            JOIN ST_CHBOX SC ON RA.ST_CHBOX_NUM = SC.ST_CHBOX_NUM
@@ -25,6 +31,6 @@
 	        WHERE 
 	            RA.USER_NUM = #{user_num}
 	    )
-	    WHERE rnum BETWEEN #{startRow} AND #{endRow}
+	    WHERE  RNUM BETWEEN #{startRow} AND #{endRow}
 	</select>
 </mapper>
