@@ -28,7 +28,7 @@ public class compareViewController_beta
 		
 		String result = "";
 		
-		IstDetailDAO_userView dao = sqlSession.getMapper(IstDetailDAO_userView.class);
+		IcompareViewDAO dao = sqlSession.getMapper(IcompareViewDAO .class);
 		IUserDAO uDao = sqlSession.getMapper(IUserDAO.class);
 		
 		int st_num = Integer.parseInt(request.getParameter("st_num"));
@@ -69,7 +69,7 @@ public class compareViewController_beta
 		
 		
 		// 가게 메뉴
-		ArrayList<StoreMenuDTO> menuLists = dao.menuLists(st_num);
+		ArrayList<compareViewDTO> menuLists = dao.menuLists(st_num);
 		
 		if(menuLists.size()>0)
 		{
@@ -79,7 +79,7 @@ public class compareViewController_beta
 			model.addAttribute("menuLists", null);
 		
 		
-		result = "compareView-beta.jsp";
+		result = "/WEB-INF/view/compareView-beta.jsp";
 		
 		return result;
 	}
