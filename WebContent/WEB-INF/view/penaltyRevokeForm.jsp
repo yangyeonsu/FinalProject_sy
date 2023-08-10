@@ -90,7 +90,6 @@ button, .input
 	color: #ef6351;
 	font-size: small;
 	display: none;
-	padding-left: 15vh;
 }
 .input_group {
     display: flex;
@@ -207,10 +206,9 @@ button, .input
 					<textarea id="penaltyRevokeReport" readonly="readonly" style="width: 72%; height: 5em; 3px; resize: none;">${revo.getRevo_rs() }</textarea>
 				</div>
 				
-				<div class="igroup" >
-					<div style="width: 87%; margin-left:62.5vh; margin-bottom: 2vh;">
-						<button style="font-size: 9pt;">승인</button>
-					</div>
+				
+				<div style="width: 87%; text-align: right; margin-top: 1vh;">
+					<button value="승인">승인</button>
 				</div>
 				
 				<div class="igroup" >
@@ -223,8 +221,11 @@ button, .input
 					<textarea id="errReport"  style="width: 72%; height: 10em; resize: none; border-radius: 10px;" placeholder="반려사유기재"></textarea>
 				</div>
 				
-				<span class="errorMsg" id="err">반려사유를 입력해야 합니다.</span>
-				<div style="width: 87%; text-align: right; margin-top: 1vh;">
+				<div class="igroup" >
+					<span class="errorMsg" id="err">반려사유를 입력해야 합니다.</span>
+				</div>
+				
+				<div style="width: 87%; text-align: right;">
 					<button value="반려" onclick="revokeBtn()">요청반려</button>
 				</div>
 				
