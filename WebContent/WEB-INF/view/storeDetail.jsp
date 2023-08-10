@@ -79,20 +79,23 @@ String cp = request.getContextPath();
 		$(".repBtn").click(function()
 		{
 			alert($(this).val());
-			$("#rvNumHidden").arrt("value", $(this).val());
+			$("input[name=rvNumHidden]").attr("value", $(this).val());
 		});
 
-		$("#decBtn").on("click", function()
+		$("#decBtn").click(function()
 		{
+			$rv_num = $("input[name=rvNumHidden]").val();
+			alert($rv_num);
+			
 			var reviewRep = [];
 
 			$("input:checkbox[name=reviewRep]:checked").each(function()
 			{
 				reviewRep.push($(this).val());
 			});
-
-			alert(reviewRep);
-
+			
+			$rep_rs_num = reviewRep[0];
+			
 			if (reviewRep.length == null || reviewRep.length == 0)
 			{
 				alert("신고사유를 선택해주세요.");
@@ -104,15 +107,34 @@ String cp = request.getContextPath();
 				$(this).prop("checked", false);
 				totalChecked = 0;
 			});
-
-			alert("※신고되었습니다.");
-
-			$("#userForm").attr("action", "reviewRep.action");
-			$("#userForm").submit();
-			$(".decBtn").attr("onclick", "popupOpen()");
-
+			
+			$.ajax(
+			{
+				url : "reviewRep.action",
+				type : 'post',
+				data : 
+				{
+					"rv_num" : $rv_num,
+					"rep_rs_num" : $rep_rs_num
+				},
+				success : function(result)
+				{
+					if(result == "1")
+					{
+						alert("신고가 완료되었습니다.");
+					}
+					else
+					{
+						alert("신고 과정에서 오류가 발생했습니다. 다시 시도해주세요.")
+					}
+					
+				},
+				error : function(e)
+				{
+					alert(e.responseText);
+				}
+			});
 		})
-
 	});
 
 	var totalChecked = 0;
@@ -510,8 +532,7 @@ String cp = request.getContextPath();
 											<div>
 												<button type="button" class="repBtn rvBtn"
 													onclick="popupOpen()" value="${rv.rv_num }">신고하기</button>
-												<input type="hidden" value="" id="rvNumHidden"
-													name="rvNumHidden">
+												
 											</div>
 										</div>
 
@@ -562,10 +583,9 @@ String cp = request.getContextPath();
 											</div>
 										</div>
 									</div>
-
-
-
 								</c:forEach>
+								<input type="hidden" value="" name="rvNumHidden">
+								<input type="hidden" value="" name="rep_rs_num">
 							</div>
 							<!-- id="revList" -->
 
@@ -596,7 +616,7 @@ String cp = request.getContextPath();
 									</div>
 								</div>
 								<div class="dec">
-									<button id="decBtn" onclick="">신고하기</button>
+									<button id="decBtn" onclick="popupOpen()">신고하기</button>
 								</div>
 							</div>
 						</div>

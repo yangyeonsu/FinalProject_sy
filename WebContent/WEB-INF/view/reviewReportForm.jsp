@@ -96,7 +96,7 @@ textarea {
 		
 		<div id="more" style="margin-bottom: 2vh;">
 			<div style="width: 50%;">
-				리뷰신고카테고리명 : <input type="text" value=<%=dto.getRep_rs_name() %> style="border: 0px; width: 100px;">
+				리뷰신고카테고리명 : ${review.getRep_rs_name()}
 			</div>
 			<div style="width: 50%; text-align: right;">
 				<button id="stInfoBtn">해당가게정보보기</button>
@@ -108,7 +108,7 @@ textarea {
 		</div>
 		
 		<div style="width: 100%;">
-			<textarea id="reviewReject" rows="6px;" style="width: 100%; border-radius: 20px;">문제되는 내용 없음.</textarea>
+			<textarea id="reviewReject" rows="6px;" style="width: 100%; border-radius: 10px;" placeholder="반려사유기재"></textarea>
 		</div>
 		
 		<div style="width: 100%; text-align: right;">
