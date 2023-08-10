@@ -145,76 +145,76 @@ button, .input
 <div class="bframe">
    
    <!-- header -->
-   <div><c:import url="/WEB-INF/view/header_admin.jsp"></c:import></div>
+	<div><c:import url="/WEB-INF/view/header_admin.jsp"></c:import></div>
    
-   <div class="middle">
-      <div class="top">
-         <h1>리뷰신고서</h1>
-         <hr>
-      </div>
+	<div class="middle">
+		<div class="top">
+		   <h1>리뷰신고서</h1>
+		   <hr>
+		</div>
       
-      <!-- 입력 부분 -->
-      <div class="st_info_insert">
-      
-          
-         <div class="repot_date_list">
-         <div class="more">
-            <div class="lbox">
-               <div class="title1">신고자</div>
-               <div class="tcontent1"><input type="text" id="reporter" value=<%=dto.getUser_id() %> style="border: 0px; width: 70px;"></div>
-            </div>
-            <div class="lbox">
-               <div class="title1">피신고자</div>
-               <div class="tcontent1"><input type="text" id="reported" value=<%=dto.getAccu_num() %> style="border: 0px; width: 70px;"></div>
-            </div>
-            
-         </div>
+	      <!-- 입력 부분 -->
+		<div class="st_info_insert">
+	      
+	          
+		<div class="repot_date_list">
+			<div class="more">
+				<div class="lbox">
+					<div class="title1">신고자</div>
+					<div class="tcontent1"><input type="text" id="reporter" value=<%=dto.getUser_id() %> style="border: 0px; width: 70px;"></div>
+				</div>
+				<div class="lbox">
+					<div class="title1">피신고자</div>
+					<div class="tcontent1"><input type="text" id="reported" value=<%=dto.getAccu_num() %> style="border: 0px; width: 70px;"></div>
+				</div>
+			   
+			</div>
+	         
+			<div class="more">
+				<div class="lbox">
+					<div class="title1">신고일</div>
+					<div class="tcontent1"><input type="text" id="reportDate" value=<%=dto.getReg_date() %> style="border: 0px; text-align: right; width: 70px;"></div>
+				</div>
+				<div class="lbox">
+					<div class="title1">작성일</div>
+					<div class="tcontent1"><input type="text" id="createDate" value=<%=dto.getWrite_date() %> style="border: 0px; text-align: right; width: 70px;"></div>
+				</div>
+			</div>
+		</div>
          
-         <div class="more">
-            <div class="lbox">
-               <div class="title1">신고일</div>
-               <div class="tcontent1"><input type="text" id="reportDate" value=<%=dto.getReg_date() %> style="border: 0px; text-align: right; width: 70px;"></div>
-            </div>
-            <div class="lbox">
-               <div class="title1">작성일</div>
-               <div class="tcontent1"><input type="text" id="createDate" value=<%=dto.getWrite_date() %> style="border: 0px; text-align: right; width: 70px;"></div>
-            </div>
-         </div>
-      </div>
+		<div class="igroup2" style="width: 100%;">
+			<textarea id="reviewReport" readonly="readonly" style="width: 72%; height: 10em; resize: none;">리뷰내용이 일치하지 않음.</textarea>
+		</div>
          
-         <div class="igroup2" style="width: 100%;">
-            <textarea id="reviewReport" readonly="readonly" style="width: 72%; height: 10em; resize: none;">리뷰내용이 일치하지 않음.</textarea>
-         </div>
+		<div class="igroup2">
+			<div style="width: 50%;">
+				리뷰신고카테고리명 : ${review.getRep_rs_name()}
+			</div>
+			<div style="width: 42%; text-align: right; margin-top: 1vh;">
+				<button class="stInfoBtn" id="${review.getSt_num() }">${review.getSt_name() } 페이지로 가기</button>
+			</div>
+		</div>
          
-         <div class="igroup2">
-            <div style="width: 50%;">
-               리뷰신고카테고리명 : ${review.getRep_rs_name()}
-            </div>
-            <div style="width: 42%; text-align: right; margin-top: 1vh;">
-               <button class="stInfoBtn" id="${review.getSt_num() }">${review.getSt_name() } 페이지로 가기</button>
-            </div>
-         </div>
+		<div style="width: 87%; text-align: right; margin-top: 2vh; margin-bottom: 2vh;">
+			<input class="input" type="submit" style="width: 120px; border-radius: 20px;" value="승인">
+		</div>
          
-         <div style="width: 87%; text-align: right; margin-top: 2vh; margin-bottom: 2vh;">
-            <input class="input" type="submit" style="width: 120px; border-radius: 20px;" value="승인">
-         </div>
+		<div class="igroup2" style="width: 100%;">
+			<textarea id="reviewReject"  style="width: 72%; height: 10em; resize: none; border-radius: 10px;" placeholder="반려사유기재"></textarea>
+		</div>
          
-         <div class="igroup2" style="width: 100%;">
-            <textarea id="reviewReject"  style="width: 72%; height: 10em; resize: none; border-radius: 10px;" placeholder="반려사유기재"></textarea>
-         </div>
-         
-         <span class="errorMsg" id="err">반려사유를 입력해야 합니다.</span>
-         <div style="width: 87%; text-align: right; margin-top: 1vh;">
-            <button value="중재" onclick="mediateBtn()">중재</button>
-            <button value="반려" onclick="rejectBtn()">반려</button>
-         </div>
+		<span class="errorMsg" id="err">반려사유를 입력해야 합니다.</span>
+		<div style="width: 87%; text-align: right; margin-top: 1vh;">
+			<button value="중재" onclick="mediateBtn()">중재</button>
+			<button value="반려" onclick="rejectBtn()">반려</button>
+		</div>
    
-      </div> <!-- st_info_insert -->
-   </div>
+		</div> <!-- st_info_insert -->
+	</div>
    
    
-   <!-- footer -->
-   <div><c:import url="/WEB-INF/view/footer.jsp"></c:import></div>
+	<!-- footer -->
+	<div><c:import url="/WEB-INF/view/footer.jsp"></c:import></div>
 
 </div>
 
