@@ -219,7 +219,7 @@ public class UserController
 	}
 	
 	
-	@RequestMapping(value="/usermypage.action", method = RequestMethod.POST)	
+	@RequestMapping(value="/usermypage.action", method = {RequestMethod.POST, RequestMethod.GET})	
 	public String studentList(HttpServletRequest requset, Model model)
 	{
 		HttpSession session = requset.getSession();
