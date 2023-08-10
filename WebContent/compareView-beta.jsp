@@ -424,7 +424,7 @@ $(document).ready(function()
         var optNum = $(this).find(".cOpt").length;
 
         var yesNos = $(this).find(".chBox").filter(function() {
-            return $(this).val() == "none";
+            return $(this).val() == "-";
         }).length;
 
         optNum = optNum - yesNos;
@@ -489,7 +489,7 @@ $(document).ready(function()
             $(this).prop("checked", false);
             $(this).attr("disabled", true); 
         }
-        else if (yesNo == "none") 
+        else if (yesNo == "-") 
         {
             $(this).parent(".cOpt").css("display", "none");
         }
@@ -605,59 +605,59 @@ $(document).ready(function()
 		   <c:forEach begin="1"  end="3"  varStatus="store">
 		      <div id="비교하는 가게 공간" class="compareSpace">
 		         <div id="비교하는 가게 이름" class="cName">
-		            ${store.index} 비교하는 가게 이름
+		            ${store.index} 비교하는 가게 이름 <!-- ${store.index} -->
 		         </div>
 		         <div id="비교하는 가게 대표 사진" class="photo1">
-		            <img id="가게 대표사진" class="phStore" src = "<%=cp %>/images/store_img01.png">
+		            <img id="가게 대표사진" class="phStore" src = "<%=cp %>/images/store_img01.png"> <!-- ${store.index} -->
 		         </div>
 		         <div id="가게 주소" class="cLo">
-			         	${store.index} 가게 주소
+			         	${store.index} 가게 주소 <!-- ${store.index} -->
 			     </div>
 		         
 		         <div class="cBox">
 			         <div id="가게 음식 카테고리" class="cList cat">
-			            ${store.index} 가게 음식 카테고리
+			            ${store.index} 가게 음식 카테고리 <!-- ${store.index} -->
 			         </div>
 			         <div id="가게 평균 별점" class="cList">
-			         	${store.index} 가게 평균 별점
+			         	${store.index} 가게 평균 별점 <!-- ${store.index} -->
 			         </div>
 			         <div id="가게 리뷰 수" class="cList">
-			         	${store.index} 가게 리뷰 수
+			         	${store.index} 가게 리뷰 수 <!-- ${store.index} -->
 			         </div>
 			         <div id="가게 주" class="week">
 				         <div id="일요일" class="cDay">
-				         	${store.index} 일요일  10:00 ~ 24:00
+				         	${store.index} 일요일  10:00 ~ 24:00 <!-- ${store.index} -->
 				         </div>
 				         <div id="월요일" class="cDay">
-				         	${store.index} 월요일  10:00 ~ 24:00 
+				         	${store.index} 월요일  10:00 ~ 24:00 <!-- ${store.index} -->
 				         </div> 
 				         <div id="화요일" class="cDay">
-				         	${store.index} 화요일  10:00 ~ 24:00
+				         	${store.index} 화요일  10:00 ~ 24:00 <!-- ${store.index} -->
 				         </div> 
 				         <div id="수요일" class="cDay">
-				         	${store.index} 수요일  10:00 ~ 24:00
+				         	${store.index} 수요일  10:00 ~ 24:00 <!-- ${store.index} -->
 				         </div>
 				         <div id="목요일" class="cDay">
-				         	${store.index} 목요일  10:00 ~ 24:00
+				         	${store.index} 목요일  10:00 ~ 24:00 <!-- ${store.index} -->
 				         </div> 
 				         <div id="금요일" class="cDay">
-				         	${store.index} 금요일  10:00 ~ 24:00
+				         	${store.index} 금요일  10:00 ~ 24:00 <!-- ${store.index} -->
 				         </div>
 				         <div id="토요일" class="cDay">
-				         	${store.index} 토요일  10:00 ~ 24:00
+				         	${store.index} 토요일  10:00 ~ 24:00 <!-- ${store.index} -->
 				         </div>  
 				     </div>
 			         <div id="가게 평균 가격" class="cList">
-			         	${store.index} 가게 평균 가격
+			         	${store.index} 가게 평균 가격 <!-- ${store.index} -->
 			         </div>
 			         <div id="가게 대표 메뉴 이름" class="cList">
-			         	${store.index} 가게 대표 메뉴 이름
+			         	${store.index} 가게 대표 메뉴 이름 <!-- ${store.index} -->
 			         </div>
 			         <div id="가게 대표 메뉴 이미지" class="photo2">
-			         	<img id="가게 대표사진" class="phMenu" src = "<%=cp %>/images/store_img01.png">
+			         	<img id="가게 대표사진" class="phMenu" src = "<%=cp %>/images/store_img01.png"> <!-- ${store.index} -->
 			         </div>
 			         <div id="가게 최대 수용 인원" class="cList">
-			         	${store.index} 가게 최대 수용 인원
+			         	${store.index} 가게 최대 수용 인원 <!-- ${store.index} -->
 			         </div>
 			         <div id="가게 옵션" class="cOptions">
 			         	<div id="화장실 존재 여부" class="cOpt">
