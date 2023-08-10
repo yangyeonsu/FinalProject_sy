@@ -604,38 +604,30 @@ $(document).ready(function()
 		         </div> <!-- cCat -->
 			</div>
 			
-			<c:set var="st_num" value="${param.st_num}" /> <!-- url 값 받아오기 -->
-			<c:set var="endValue" value="${fn:length(fn:split(st_num, ','))}" />
+			<%-- <c:set var="st_num" value="${param.st_num}" /> <!-- url 값 받아오기 -->
+			<c:set var="endValue" value="${fn:length(fn:split(st_num, ','))}" /> --%>
 			
 			<c:set var="st_len" value="${storeLen }"/>	<!-- 비교할 가게 갯수 -->
+
 			
 		   <%-- <c:forEach var="store" items = "${불러온 비교할 가게 리스트 }"> --%>
-		   <c:forEach begin="1"  end="${storeLen}"  varStatus="st_count">
+		   <c:forEach var="n" begin=0 end="${st_len }">
 		      <div id="비교하는 가게 공간" class="compareSpace">
-				 <c:forEach var="st1" items="${store}">	
-		         <div id="비교하는 가게 이름" class="cName">
-		             ${st.st_name}
-		         </div>
-		         <div id="비교하는 가게 대표 사진" class="photo1">
-		            <img id="가게 대표사진" class="phStore" src = "<%=cp %>/${st.photo_link}">
-		         </div>
-		         <div id="가게 주소" class="cLo">
-			         	${st.st_location}
-			     </div>
-		         
-		         <div class="cBox">
-			         <div id="가게 음식 카테고리" class="cList cat">
-			            ${st.food_name} 
-			         </div>
-			         <div id="가게 평균 별점" class="cList">
-			         	${st.star_avg} 
-			         </div>
-			         <div id="가게 리뷰 수" class="cList">
-			         	${st.rv_count} 
-			         </div>
-			      </div> <!-- cBox -->
-			         </c:forEach>
-			      <div class="cBox"> 
+					<c:forEach var="st" items="${storeLen }">
+						<div id="비교하는 가게 이름" class="cName">${st.st_name}</div>
+						<div id="비교하는 가게 대표 사진" class="photo1">
+							<img id="가게 대표사진" class="phStore" src="<%=cp %>/${st.photo_link}">
+						</div>
+						<div id="가게 주소" class="cLo">${st.st_location}</div>
+
+						<div class="cBox">
+							<div id="가게 음식 카테고리" class="cList cat">${st.food_name}</div>
+							<div id="가게 평균 별점" class="cList">${st.star_avg}</div>
+							<div id="가게 리뷰 수" class="cList">${st.rv_count}</div>
+						</div>
+						<!-- cBox -->
+					</c:forEach>
+					<div class="cBox"> 
 			      	 <c:forEach var="op" items="${openClose}">
 			         <div id="가게 주" class="week">
 				         <div id="days" class="cDay">
@@ -665,13 +657,13 @@ $(document).ready(function()
 				     </c:forEach>
 				    <c:forEach var="ml" items="${menuLists}">
 			         <div id="가게 평균 가격" class="cList">
-			         	${ml.price_avg}
+			         	<%-- ${ml.price_avg} --%>
 			         </div>
 			         <div id="가게 대표 메뉴 이름" class="cList">
-			         	${ml.menu_name} 
+			         	<%-- ${ml.menu_name} --%> 
 			         </div>
 			         <div id="가게 대표 메뉴 이미지" class="photo2">
-			         	<img id="가게 대표사진" class="phMenu" src = "<%=cp %>/images/${ml.image_link}"> 
+			         	<%-- <img id="가게 대표사진" class="phMenu" src = "<%=cp %>/images/${ml.image_link}">  --%>
 			         </div>
 			         </c:forEach>
 			         <c:forEach var="st" items="${store}">	
@@ -711,7 +703,6 @@ $(document).ready(function()
 		      </div>
 		   </c:forEach>
 	   </div> <!-- compareBody -->
-	   
 	</div><!-- class = "compareMain" -->
 	
 	
