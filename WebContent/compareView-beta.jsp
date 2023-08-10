@@ -636,7 +636,7 @@ $(document).ready(function()
 			      <div class="cBox"> 
 			      	 <c:forEach var="op" items="${openClose }">
 			         <div id="가게 주" class="week">
-				         <div id="${op.day_name}" class="cDay">
+				         <div id="days" class="cDay">
 				         	${op.day_name} ${op.operate_time } ${op.holiday } 
 				         </div>
 				         <%-- 

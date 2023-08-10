@@ -2,18 +2,19 @@
 <!DOCTYPE mapper
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yameokja.mc.IcompareViewDAO ">
+<mapper namespace="com.yameokja.mc.IcompareViewDAO">
+
 
 	
 	<!-- 가게 -->
 	<!-- 가게이름, 좋아요수, 평점, 리뷰수, 주소, 전화번호, 가게 이메일, 가게 설명
      , 최대인원수, 가게음식카테고리 -->
  	<select id="store" resultType="com.yameokja.mc.StoreDetailDTO">
- 		SELECT ST_NUM, ST_NAME, ST_LOCATION, ST_TEL, ST_EXPLAIN, MAX_CUSTOMERS
-		, ST_EMAIL, FOOD_NAME, PHOTO_LINK, STAR_AVG, RV_COUNT, USER_NUM
-		FROM STORE_VIEW
-		WHERE ST_NUM = #{st_num}	
- 	</select>
+	   SELECT ST_NUM, ST_NAME, ST_LOCATION, ST_TEL, ST_EXPLAIN, MAX_CUSTOMERS
+	   , ST_EMAIL, FOOD_NAME, PHOTO_LINK, STAR_AVG, RV_COUNT, USER_NUM
+	   FROM STORE_VIEW
+	   WHERE ST_NUM = #{st_num}
+	</select>
 	
 	
 	<!-- 영업시간 가지고 오는 쿼리문 : 요일, 시작시간, 끝시간, 휴무여부 -->

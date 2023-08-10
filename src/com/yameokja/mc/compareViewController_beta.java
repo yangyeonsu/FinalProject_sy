@@ -20,7 +20,7 @@ public class compareViewController_beta
 	@Autowired
 	private SqlSession sqlSession;
 
-	@RequestMapping(value="/compareView.action", method = RequestMethod.GET)
+	@RequestMapping(value="/compareView.action", method = RequestMethod.POST)
 	public String stDetail(HttpServletRequest request, Model model)
 	{
 		HttpSession session = request.getSession();
@@ -30,8 +30,6 @@ public class compareViewController_beta
 		
 		IcompareViewDAO dao = sqlSession.getMapper(IcompareViewDAO .class);
 		IUserDAO uDao = sqlSession.getMapper(IUserDAO.class);
-		
-		int st_num = Integer.parseInt(request.getParameter("st_num"));
 		
 		// 사용자 정보
 		UserDTO user = uDao.searchUserInfo(user_num, "num");
@@ -46,38 +44,116 @@ public class compareViewController_beta
 		
 		model.addAttribute("user", user);
 		
+		//int st_num = Integer.parseInt(request.getParameter("st_num"));
+		String st_numString = request.getParameter("st_num");
+		System.out.println("Received st_num: " + st_numString);
 		
-		// 가게 기본 사항
-		model.addAttribute("store", dao.store(st_num));
-		
-		
-		// 가게 영업시간 + 휴무일
-		model.addAttribute("openClose", dao.openClose(st_num));
-		
-		
-		// 가게 체크박스
-		ArrayList<StoreCheckDTO> stCheckList = dao.stcheck(st_num);
-		
-		if(stCheckList.size()>0)
+		if (st_numString == null || st_numString.isEmpty()) 
 		{
-			model.addAttribute("stCheckList", stCheckList);
+		    // Handle error or return a default value
 		}
-		else
+		String[] values = st_numString.split(",");
+		
+		
+		ArrayList<ArrayList<StoreDetailDTO>> stores = new ArrayList<>();
+		ArrayList<ArrayList<StoreOpencloseDTO>> openCloses = new ArrayList<>();
+		ArrayList<ArrayList<StoreCheckDTO>> stChecks = new ArrayList<>();
+		ArrayList<ArrayList<compareViewDTO>> menus = new ArrayList<>();
+		
+		
+		for (String value : values) 
 		{
-			model.addAttribute("stCheckList", null);
+		    try 
+		    {
+		        int st_num = Integer.parseInt(value.trim());
+
+		        ArrayList<StoreDetailDTO> storeForCurrentNum = dao.store(st_num);
+		        
+		        System.out.println("Fetched size for st_num " + st_num + ": " + storeForCurrentNum.size());
+		        
+		        // Only add to 'stores' if there's data
+		        if (storeForCurrentNum != null && !storeForCurrentNum.isEmpty()) {
+		            stores.add(storeForCurrentNum);
+		            System.out.println("Data added for st_num " + st_num);
+		        } else {
+		            System.out.println("No data or null data for st_num " + st_num);
+		        }
+
+		        openCloses.add(dao.openClose(st_num));
+		        stChecks.add(dao.stcheck(st_num));
+		        menus.add(dao.menuLists(st_num));
+
+		        System.out.println("stores after adding data for st_num " + st_num + ": " + stores);
+
+		    } 
+		    catch(NumberFormatException nfe)
+		    {
+		        System.out.println("Failed to parse st_num value: " + value);
+		        System.out.println(nfe.toString());
+		    } 
+		    catch(Exception e)
+		    {
+		        System.out.println(e.toString());
+		    }
 		}
+
+
+		
+		model.addAttribute("store", stores);
+		model.addAttribute("openClose", openCloses);
+		model.addAttribute("stcheck", stChecks);
+		model.addAttribute("menuLists", menus);
 		
 		
-		// 가게 메뉴
-		ArrayList<compareViewDTO> menuLists = dao.menuLists(st_num);
 		
-		if(menuLists.size()>0)
+		//----------------------------------------
+
+
+		//----------------------------------------
+
+		
+		/*
+		for (String value : values)
 		{
-			model.addAttribute("menuLists", menuLists);
-		}
-		else
-			model.addAttribute("menuLists", null);
+		    try 
+		    {
+		    		int st_num = Integer.parseInt(value.trim());
 		
+					// 가게 기본 사항
+					model.addAttribute("store", dao.store(st_num));
+					
+					
+					// 가게 영업시간 + 휴무일
+					model.addAttribute("openClose", dao.openClose(st_num));
+					
+					
+					// 가게 체크박스
+					ArrayList<StoreCheckDTO> stCheckList = dao.stcheck(st_num);
+					if(stCheckList.size()>0)
+					{
+						model.addAttribute("stCheckList", stCheckList);
+					}
+					else
+					{
+						model.addAttribute("stCheckList", null);
+					}
+					
+					
+					// 가게 메뉴
+					ArrayList<compareViewDTO> menuLists = dao.menuLists(st_num);
+					if(menuLists.size()>0)
+					{
+						model.addAttribute("menuLists", menuLists);
+					}
+					else
+						model.addAttribute("menuLists", null);
+		    }
+		    catch (Exception e) 
+		    {
+		        System.out.println(e.toString());
+		    }
+		}
+		*/
 		
 		result = "/WEB-INF/view/compareView-beta.jsp";
 		
