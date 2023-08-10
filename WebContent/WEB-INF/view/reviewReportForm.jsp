@@ -7,7 +7,7 @@
    String cp = request.getContextPath();
 %>
 <%
-   RvApplyViewDTO dto = (RvApplyViewDTO)request.getAttribute("review");
+	RvApplyViewDTO dto = (RvApplyViewDTO)request.getAttribute("review");
    //System.out.print(dto.getUser_id());
 %>
 <!DOCTYPE html>
