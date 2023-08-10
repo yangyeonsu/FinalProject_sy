@@ -222,8 +222,8 @@ String cp = request.getContextPath();
 			dataType : "json",
 			success : function(html)
 			{
-				alert(html.rv_num +"|"+ html.rec_nonrec_number + "|" + html.action);
-				alert(html.rec + "|" + html.nonrec);
+				//alert(html.rv_num +"|"+ html.rec_nonrec_number + "|" + html.action);
+				//alert(html.rec + "|" + html.nonrec);
 				
 				if(html.action=="-1") // 같은 추천을 눌렀을 경우 -> rec_nonrec_number의 스타일을 없애고, count-1
 				{
@@ -453,8 +453,8 @@ String cp = request.getContextPath();
 									<div class="none">해당 항목이 존재하지 않습니다.</div>
 								</c:if>
 								<div class="storeCheck">
-									<div class="stCheckListName">가게 옵션</div>
-									<div class="stCheckListYesorno">존재 여부</div>
+									<div class="stCheckListName"><가게 옵션></div>
+									<div class="stCheckListYesorno"><여부></div>
 								</div>
 								<c:forEach var="stCheck" items="${stCheckList }">
 									<div class="storeCheck">
@@ -587,7 +587,7 @@ String cp = request.getContextPath();
 																class="recBtn rvBtn" value="${rv.rv_num }">추천 👍
 																(${rv.rec } )</button>
 														</c:when>
-														<c:when test="${(userRvRec.rv_num eq rv_num) && (userRvRec.rec_nonrec_number ne 1) && (userRvRec.rec_nonrec_number ne 2)}">
+														<c:when test="${(userRvRec.rv_num ne rv_num)}">
 															<button type="button" id="nonrec${rv_num }" name="nonrec"
 																class="recBtn rvBtn" value="${rv.rv_num }">비추천 👎
 																(${rv.nonrec })</button>
@@ -595,6 +595,7 @@ String cp = request.getContextPath();
 																class="recBtn rvBtn" value="${rv.rv_num }">추천 👍
 																(${rv.rec } )</button>
 														</c:when>
+														
 													</c:choose>
 												</c:forEach>
 											</div>

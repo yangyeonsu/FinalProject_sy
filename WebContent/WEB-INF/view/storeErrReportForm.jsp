@@ -90,7 +90,6 @@ button, .input
 	color: #ef6351;
 	font-size: small;
 	display: none;
-	padding-left: 15vh;
 }
 .input_group {
     display: flex;
@@ -177,7 +176,9 @@ button, .input
 					<textarea id="errReport"  style="width: 72%; height: 10em; resize: none; border-radius: 10px;" placeholder="반려사유기재"></textarea>
 				</div>
 				
-				<span class="errorMsg" id="err">반려사유를 입력해야 합니다.</span>
+				<div class="igroup" >
+					<span class="errorMsg" id="err">반려사유를 입력해야 합니다.</span>
+				</div>
 				<div style="width: 87%; text-align: right; margin-top: 1vh;">
 					<button value="반려" onclick="reqBtn()">요청반려</button>
 				</div>
