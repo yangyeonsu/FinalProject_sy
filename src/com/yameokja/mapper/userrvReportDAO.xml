@@ -2,26 +2,37 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.yameokja.mc.IuserrvReportDAO">
+	<select id="count_replist" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS COUNT
+		FROM REP_APPLY
+		WHERE USER_NUM = #{user_num}
+	</select>
+
 	<select id="user_rv_Report" resultType="com.yameokja.mc.UserrvreportDTO">
-		SELECT RA.REG_DATE AS REG_DATE, IA.ST_NAME AS ST_NAME, UU.USER_ID AS REPORTEDUSERID, CASE WHEN RA.ADMIN_READ_DATE IS NULL THEN '미확인'
-                                                                       WHEN RA.ADMIN_READ_DATE IS NOT NULL AND RP.FINAL_DATE IS NULL THEN '처리중'
-                                                                       ELSE '처리완료'
-                                                                       END AS STATUS
-                                                                       , RP.FINAL_DATE AS FINAL_DATE
-		FROM REP_APPLY RA JOIN RV_BOX RB
-		ON RA.RV_NUM = RB.RV_NUM
-		JOIN ST_LIST SL
-		ON RB.ST_NUM = SL.ST_NUM
-		JOIN IN_PROCESS IP
-		ON SL.IN_PROCESS_NUM = IP.IN_PROCESS_NUM
-		JOIN IN_APPLY IA
-		ON IP.IN_APPLY_NUM = IA.IN_APPLY_NUM
-		JOIN USER_LIST UL
-		ON RB.USER_NUM = UL.USER_NUM
-		JOIN USING_USER UU
-		ON UL.USER_NUM = UU.USER_NUM
-		JOIN REP_PROCESS RP
-		ON RA.REP_APPLY_NUM = RP.REP_APPLY_NUM
-		WHERE RA.USER_NUM = #{user_num}
+		SELECT REG_DATE, ST_NAME, STATUS, FINAL_DATE
+		FROM (
+			SELECT RA.REG_DATE AS REG_DATE, IA.ST_NAME AS ST_NAME, UU.USER_ID AS REPORTEDUSERID, CASE WHEN RA.ADMIN_READ_DATE IS NULL THEN '미확인'
+	                                                                       WHEN RA.ADMIN_READ_DATE IS NOT NULL AND RP.FINAL_DATE IS NULL THEN '처리중'
+	                                                                       ELSE '처리완료'
+	                                                                       END AS STATUS
+	                                                                       , RP.FINAL_DATE AS FINAL_DATE
+	                                                                       ,ROW_NUMBER() OVER (ORDER BY RA.REG_DATE DESC) AS RNUM
+			FROM REP_APPLY RA JOIN RV_BOX RB
+			ON RA.RV_NUM = RB.RV_NUM
+			JOIN ST_LIST SL
+			ON RB.ST_NUM = SL.ST_NUM
+			JOIN IN_PROCESS IP
+			ON SL.IN_PROCESS_NUM = IP.IN_PROCESS_NUM
+			JOIN IN_APPLY IA
+			ON IP.IN_APPLY_NUM = IA.IN_APPLY_NUM
+			JOIN USER_LIST UL
+			ON RB.USER_NUM = UL.USER_NUM
+			JOIN USING_USER UU
+			ON UL.USER_NUM = UU.USER_NUM
+			JOIN REP_PROCESS RP
+			ON RA.REP_APPLY_NUM = RP.REP_APPLY_NUM
+			WHERE RA.USER_NUM = #{user_num}
+		)
+		WHERE RNUM BETWEEN #{startRow} AND #{endRow}
 	</select>
 </mapper>
