@@ -41,7 +41,7 @@
 		FROM OBJ_APPLY_VIEW OAV
 		LEFT JOIN OBJ_PHOTO OP
 		ON OP.OBJ_APPLY_NUM = OAV.OBJ_APPLY_NUM
-		WHERE OBJ_APPLY_NUM = #{obj_apply_num}
+		WHERE OAV.OBJ_APPLY_NUM = #{obj_apply_num}
 	</select>
 	
 	
@@ -49,7 +49,7 @@
 	아이디 신청날짜 가게명 패널티받은사유 패널티회수요청사유 첨부파일
 	-->
 	<select id="revoSearch" resultType="com.yameokja.mc.RevoApplyViewDTO">
-		SELECT REVO_APPLY_NUM, USER_ID, REG_DATE, ST_NAME, PEN_TYPE_NAME, REVO_RS, PHOTO_LINK
+		SELECT REVO_APPLY_NUM, USER_ID, TO_CHAR(REG_DATE, 'YYYY-MM-DD') AS REG_DATE, ST_NAME, REQ_RS, REVO_RS, PHOTO_LINK
 		FROM REVO_APPLY_VIEW
 		WHERE REVO_APPLY_NUM = #{revo_apply_num}
 	</select>

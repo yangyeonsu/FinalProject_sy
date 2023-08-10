@@ -202,11 +202,11 @@ public class AdminMainController
 	{
 		String result;
 		
-		int reviewNum = Integer.parseInt(request.getParameter("revo_apply_num"));
+		int revoNum = Integer.parseInt(request.getParameter("revo_apply_num"));
 		
 		IAdminFindDAO dao = sqlSesion.getMapper(IAdminFindDAO.class);
 		
-		model.addAttribute("revo", dao.rvSearch(reviewNum));
+		model.addAttribute("revo", dao.revoSearch(revoNum));
 		
 		result = "/WEB-INF/view/penaltyRevokeForm.jsp";
 		

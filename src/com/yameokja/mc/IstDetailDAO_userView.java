@@ -7,6 +7,8 @@ package com.yameokja.mc;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.annotations.Param;
+
 public interface IstDetailDAO_userView
 {
 	public ArrayList<StoreOpencloseDTO> openClose(int st_num);  	// 영업시간 + 휴무
@@ -20,6 +22,8 @@ public interface IstDetailDAO_userView
 	public ArrayList<StoreKeyDTO> stKeys(int st_num);  				// 가게 키워드
 	public ArrayList<StoreReviewKeyDTO> reviewKeys(int st_num);		// 리뷰 키워드
 	public ArrayList<StoreRvPhotoDTO> rvPhoto(int st_num);			// 리뷰 사진
+	
+	public int reviewRepInsert(@Param("rv_num") int rv_num, @Param("user_num") String user_num, @Param("rep_rs_num") int rep_rs_num);	// 리뷰 신고
 	
 	//public ArrayList<stDetailDTO_userView> holiday(int st_num);	 	// 휴일
 	//public stDetailDTO_userView stName(int st_num);		        	// 가게 이름

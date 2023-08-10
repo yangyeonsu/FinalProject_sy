@@ -1,8 +1,12 @@
-cxxxxxxxxxxxxxxxxxx<%@ page contentType="text/html; charset=UTF-8"%>
+<%@page import="com.yameokja.mc.ObjApplyViewDTO"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <% 
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
+%>
+<%
+	ObjApplyViewDTO dto = (ObjApplyViewDTO)request.getAttribute("obj");
 %>
 <!DOCTYPE html>
 <html>
@@ -87,7 +91,7 @@ textarea {
 			</div>
 			
 			<div style="width: 100%;">
-				<textarea id="reviewReport" rows="10px;" readonly="readonly">화장실 없음</textarea>
+				<textarea id="reviewReport" rows="10px;" readonly="readonly" style="font-size: 11pt;">${obj.getReq_rs() }</textarea>
 			</div>
 			
 			<div id="menuTitle">
@@ -95,11 +99,11 @@ textarea {
 			</div>
 			
 			<div style="width: 100%;">
-				<textarea id="reviewReport" rows="10px;" readonly="readonly">화장실 있습니다!!!</textarea>
+				<textarea id="reviewReport" rows="10px;" readonly="readonly" style="font-size: 11pt;">${obj.getObj_rs() }</textarea>
 			</div>
 			
 			<div style="width: 100%;">
-				증거.jpg 사유.jpg
+				${obj.getPhoto_link() }
 			</div>
 			
 			<div style="width: 100%; text-align: right; margin-bottom: 3vh;">
@@ -114,7 +118,7 @@ textarea {
 				반려 사유
 			</div>
 			<div style="width: 100%;">
-				<textarea id="reviewReport" rows="10px;">화장실 없네!!</textarea>
+				<textarea id="reviewReport" rows="10px;" placeholder="반려사유 기재" style="font-size: 11pt;"></textarea>
 			</div>
 			<div style="width: 100%; text-align: right; margin-bottom: 3vh;">
 				<button id="button">반려</button>

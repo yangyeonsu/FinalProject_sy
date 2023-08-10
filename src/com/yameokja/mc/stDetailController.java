@@ -16,6 +16,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class stDetailController
@@ -143,21 +145,25 @@ public class stDetailController
 	}
 	
 	@RequestMapping(value="/reviewRep.action")
-	public String insertReviewRep(HttpServletRequest request, Model model)
+		@ResponseBody
+	public String insertReviewRep(@RequestParam("rv_num") int rv_num, @RequestParam("rep_rs_num") int rep_rs_num, HttpServletRequest request, Model model)
 	{
 		HttpSession session = request.getSession();
 		String user_num = (String)session.getAttribute("user_num");
 		
-		String result = "";
+		IstDetailDAO_userView dao = sqlSession.getMapper(IstDetailDAO_userView.class);
 		
-		String[] reviewRepArr = request.getParameterValues("reviewRep");
+		int resultNum = dao.reviewRepInsert(rv_num, user_num, rep_rs_num);
 		
-		if(reviewRepArr.length > 0)
-		{
-			System.out.println(reviewRepArr[0]);
-		}
+		System.out.println("확인");
 		
+		String result = String.valueOf(resultNum);
 		
 		return result;
 	}
+	
+	
+		
+		
+	
 }
