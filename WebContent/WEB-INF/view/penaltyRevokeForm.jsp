@@ -1,8 +1,12 @@
+<%@page import="com.yameokja.mc.RevoApplyViewDTO"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <% 
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
+%>
+<%
+	RevoApplyViewDTO dto = (RevoApplyViewDTO)request.getAttribute("revo");
 %>
 <!DOCTYPE html>
 <html>
@@ -74,19 +78,21 @@ textarea {
 			<br>
 			<div id="more">
 				<div style="width: 50%;">
-					아이디 : <input type="text" id="id" value="orange" style="border: 0px; width: 70px;">
+					아이디 : <input type="text" id="id" value=<%=dto.getUser_id() %> style="border: 0px; width: 70px;">
 				</div>
 				<div style="width: 50%; text-align: right;"">
-					신청날짜 : <input type="text" id="date" value="2023.08.01" style="border: 0px; width: 70px;">
+					신청날짜 : <input type="text" id="date" value=<%=dto.getReg_date() %> style="border: 0px; width: 70px;">
 				</div>
 			</div>
 			
-			
 			<div style="width: 100%;">
-				<textarea id="reviewReport" rows="10px;" readonly="readonly">가게명 : 토리네 쌀국수</textarea>
+				가게명 : <input type="text" id="id" value=<%=dto.getSt_name() %> style="border: 0px; width: 70px;">
 			</div>
 			<div style="width: 100%;">
-				<textarea id="reviewReport" rows="10px;" readonly="readonly">패널티 받은 사유 : 화장실 없음</textarea>
+				<textarea id="reviewReport" rows="8px;" readonly="readonly" wrap="hard" style="font-size: 11pt;">패널티 받은 사유 : ${revo.getReq_rs() }</textarea>
+			</div>
+			<div style="width: 100%;">
+				<textarea id="reviewReport" rows="8px;" readonly="readonly" style="font-size: 11pt;">패널티회수 요청 사유 : ${revo.getRevo_rs() }</textarea>
 			</div>
 			
 			<div style="width: 100%; text-align: right; margin-bottom: 3vh;">
@@ -94,8 +100,8 @@ textarea {
 			</div>
 			
 			<div style="width: 100%;">
-				<textarea id="reviewReject" rows="6px;" readonly="readonly">패널티회수 요청 사유 : 화장실 있음</textarea>
-				첨부파일 : 파일다운로드하는부분
+				<textarea id="reviewReject" rows="6px;" style="font-size: 11pt;" placeholder="반려사유 기재"></textarea>
+				첨부파일 : ${revo.getPhoto_link() }
 			</div>
 			
 			<div style="width: 100%; text-align: right; margin-bottom: 3vh;">
