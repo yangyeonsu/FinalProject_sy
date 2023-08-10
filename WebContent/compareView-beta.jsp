@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>    
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
@@ -337,6 +338,8 @@ $(document).ready(function()
        $(".compareBody").css({"margin-left" : "26vw", "width" : "55vw"});
        $(".compTitle").css("margin-left", "47vw");
     }
+    
+    
 });
 
  
@@ -601,85 +604,102 @@ $(document).ready(function()
 		         </div> <!-- cCat -->
 			</div>
 			
+			<c:set var="st_num" value="${param.st_num}" /> <!-- url 값 받아오기 -->
+			<c:set var="endValue" value="${fn:length(fn:split(st_num, ','))}" />
+			
 		   <%-- <c:forEach var="store" items = "${불러온 비교할 가게 리스트 }"> --%>
-		   <c:forEach begin="1"  end="3"  varStatus="store">
+		   <c:forEach begin="1"  end="${endValue}"  varStatus="st_count">
 		      <div id="비교하는 가게 공간" class="compareSpace">
+				 <c:forEach var="st" items="${store }">		      	
 		         <div id="비교하는 가게 이름" class="cName">
-		            ${store.index} 비교하는 가게 이름 <!-- ${store.index} -->
+		             ${st.st_name}
 		         </div>
 		         <div id="비교하는 가게 대표 사진" class="photo1">
-		            <img id="가게 대표사진" class="phStore" src = "<%=cp %>/images/store_img01.png"> <!-- ${store.index} -->
+		            <img id="가게 대표사진" class="phStore" src = "<%=cp %>/${st.photo_link}">
 		         </div>
 		         <div id="가게 주소" class="cLo">
-			         	${store.index} 가게 주소 <!-- ${store.index} -->
+			         	${st.st_location}
 			     </div>
 		         
 		         <div class="cBox">
 			         <div id="가게 음식 카테고리" class="cList cat">
-			            ${store.index} 가게 음식 카테고리 <!-- ${store.index} -->
+			            ${st.food_name} 
 			         </div>
 			         <div id="가게 평균 별점" class="cList">
-			         	${store.index} 가게 평균 별점 <!-- ${store.index} -->
+			         	${st.star_avg} 
 			         </div>
 			         <div id="가게 리뷰 수" class="cList">
-			         	${store.index} 가게 리뷰 수 <!-- ${store.index} -->
+			         	${st.rv_count} 
 			         </div>
+			      </div> <!-- cBox -->
+			         </c:forEach>
+			      <div class="cBox"> 
+			      	 <c:forEach var="op" items="${openClose }">
 			         <div id="가게 주" class="week">
-				         <div id="일요일" class="cDay">
-				         	${store.index} 일요일  10:00 ~ 24:00 <!-- ${store.index} -->
+				         <div id="${op.day_name}" class="cDay">
+				         	${op.day_name} ${op.operate_time } ${op.holiday } 
 				         </div>
+				         <%-- 
 				         <div id="월요일" class="cDay">
-				         	${store.index} 월요일  10:00 ~ 24:00 <!-- ${store.index} -->
+				         	${op.day_name} 월요일  10:00 ~ 24:00 
 				         </div> 
 				         <div id="화요일" class="cDay">
-				         	${store.index} 화요일  10:00 ~ 24:00 <!-- ${store.index} -->
+				         	${op.day_name} 화요일  10:00 ~ 24:00 
 				         </div> 
 				         <div id="수요일" class="cDay">
-				         	${store.index} 수요일  10:00 ~ 24:00 <!-- ${store.index} -->
+				         	${op.day_name} 수요일  10:00 ~ 24:00 
 				         </div>
 				         <div id="목요일" class="cDay">
-				         	${store.index} 목요일  10:00 ~ 24:00 <!-- ${store.index} -->
+				         	${op.day_name} 목요일  10:00 ~ 24:00 
 				         </div> 
 				         <div id="금요일" class="cDay">
-				         	${store.index} 금요일  10:00 ~ 24:00 <!-- ${store.index} -->
+				         	${op.day_name} 금요일  10:00 ~ 24:00 
 				         </div>
 				         <div id="토요일" class="cDay">
-				         	${store.index} 토요일  10:00 ~ 24:00 <!-- ${store.index} -->
-				         </div>  
+				         	${op.day_name} 토요일  10:00 ~ 24:00 
+				         </div>
+				           --%> 
 				     </div>
+				     </c:forEach>
+				    <c:forEach var="ml" items="${menuLists }">
 			         <div id="가게 평균 가격" class="cList">
-			         	${store.index} 가게 평균 가격 <!-- ${store.index} -->
+			         	${ml.price_avg}
 			         </div>
 			         <div id="가게 대표 메뉴 이름" class="cList">
-			         	${store.index} 가게 대표 메뉴 이름 <!-- ${store.index} -->
+			         	${ml.menu_name} 
 			         </div>
 			         <div id="가게 대표 메뉴 이미지" class="photo2">
-			         	<img id="가게 대표사진" class="phMenu" src = "<%=cp %>/images/store_img01.png"> <!-- ${store.index} -->
+			         	<img id="가게 대표사진" class="phMenu" src = "<%=cp %>/images/${ml.image_link}"> 
 			         </div>
+			         </c:forEach>
+			         <c:forEach var="st" items="${store }">	
 			         <div id="가게 최대 수용 인원" class="cList">
-			         	${store.index} 가게 최대 수용 인원 <!-- ${store.index} -->
+			         	${st.max_customers} 
 			         </div>
+			         </c:forEach>
+			         <c:forEach var="sc" items="${stcheck }">
 			         <div id="가게 옵션" class="cOptions">
 			         	<div id="화장실 존재 여부" class="cOpt">
-			         		<%-- ${store.index} 화장실 존재 여부 : <input type="checkbox" class="chBox" value=" ${items 값} " id="1"/> --%>
-			         		${store.index} 화장실 존재 여부 : <input type="checkbox" class="chBox" value="○" id="1"/>
+			         		<%-- ${st.index} 화장실 존재 여부 : <input type="checkbox" class="chBox" value=" ${items 값} " id="1"/> --%>
+			         		${sc.chbox_name} : <input type="checkbox" class="chBox" value="${sc.yesorno }" id="1"/>
 			         	</div>
 			         	<div id="애견 동반 여부" class="cOpt">
-			         		${store.index} 애견 동반 여부 : <input type="checkbox" class="chBox" value="none" id="2"/>
+			         		${sc.chbox_name} : <input type="checkbox" class="chBox" value="${sc.yesorno }" id="2"/>
 			         	</div> 
 			         	<div id="연회석 존재 여부" class="cOpt">
-			         		${store.index} 연회석 존재 여부 : <input type="checkbox" class="chBox" value="Ⅹ" id="3"/>
+			         		${sc.chbox_name} : <input type="checkbox" class="chBox" value="${sc.yesorno }" id="3"/>
 			         	</div>
 			         	<div id="예약 가능 여부" class="cOpt">
-			         		${store.index} 예약 가능 여부 : <input type="checkbox" class="chBox" value="none" id="4"/>
+			         		${sc.chbox_name} : <input type="checkbox" class="chBox" value="${sc.yesorno }" id="4"/>
 			         	</div> 
 			         	<div id="주차 가능 여부" class="cOpt">
-			         		${store.index} 주차 가능 여부 : <input type="checkbox" class="chBox" value="none" id="5"/>
+			         		${sc.chbox_name} : <input type="checkbox" class="chBox" value="${sc.yesorno }" id="5"/>
 			         	</div> 
 			         	<div id="무선 인터넷 사용 가능 여부" class="cOpt">
-			         		${store.index} 무선 인터넷 사용 가능 여부 : <input type="checkbox" class="chBox" value="○" id="6"/> 
+			         		${sc.chbox_name} : <input type="checkbox" class="chBox" value="${sc.yesorno }" id="6"/> 
 			         	</div>
 			         </div>
+			         </c:forEach>
 		         </div> <!-- cBox -->
 		         
 		      </div>
