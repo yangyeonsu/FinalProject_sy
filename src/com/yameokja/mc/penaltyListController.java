@@ -36,8 +36,8 @@ public class penaltyListController
 	    List<penaltyListDTO> penList = dao.penList(user_num, startRow, endRow);
 	    
 	    model.addAttribute("penList", penList);
-	    //result = "/WEB-INF/view/penaltyList-beta.jsp";
-	    result = "penaltyList-beta.jsp";
+	    result = "/WEB-INF/view/penaltyList-beta.jsp";
+	    //result = "penaltyList-beta.jsp";
 	    
 	    return result;
 	}
