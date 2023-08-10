@@ -406,6 +406,16 @@
 
 .rvBtn
 {
+    border-radius: 8px;
+    border: none;
+    background-color: #f7f4ea;
+    margin-left: 5px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.rvBtn:hover
+{
 	border-radius: 8px;
 	border: none;
 	background-color: #f7f4ea;
