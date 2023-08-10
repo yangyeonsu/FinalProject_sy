@@ -150,6 +150,28 @@ input[type="radio"]
     margin-top: 1% 
 }
 
+#myTextarea
+{
+	width: 24.6vw;
+	resize: none;
+	border-color: gray;
+}
+
+
+#myTextarea:focus
+{
+      border-color: gray;
+}
+
+.rejText
+{
+	display: none;
+}
+
+#in_file, #place_file
+{
+	display: none;
+} 
 </style>
 
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
@@ -158,13 +180,64 @@ input[type="radio"]
 
 	$(function()
 	{
-		$(".check").change(function() {
-		    if ($(this).is(":checked") && $(this).val() == "true") 
+		$(".check").change(function() 
+		{
+		    if ($(this).is(":checked")) 
 		    {
-		    	
+		    	if ($(this).val() == "true")
+		    		$(".rejText").css("display", "flex");
+		    	else
+		    		$(".rejText").css("display", "none");
 		    }
-	});
-
+		});
+		
+		$(".sendResult").click(function()
+		{
+			if ($(".check:checked").length == 0)
+			{
+				alert("승인 또는 반려를 선택해주세요.");
+				return;
+			}
+			else if($(".check:checked").val() == "true")
+			{
+				if($("#myTextarea").val().trim() == "" || $("#myTextarea").val().trim() == null)
+				{
+					alert("반려사유를 입력해주셔야 합니다.");
+					return;
+				}
+					
+			}
+		});
+		
+		$(".download").click(function()
+		{
+			$path = $(this).val();
+			alert($path);
+			$saveFileName = $(this).attr("id");
+			alert($saveFileName)
+			
+			$.ajax(
+			{
+				url : "filedownload.action",
+				type : "POST",
+				data :
+				{
+					"path" : $path,
+					"saveFileName" : $saveFileName
+				},
+				dataType: "text",
+				success : function(res)
+				{
+					window.location ="filedownload.action";
+		            alert('다운 성공');
+				},
+				error : function(e)
+				{
+					alert(e.responseText);
+				}
+			});
+		});
+	});				
 </script>
 
 
@@ -191,19 +264,20 @@ input[type="radio"]
 						사업자 등록 번호
 					</div>
 					<div class="input_group">
-						<p class="inputform" id="st_in_num1"></p> - 
-						<p class="inputform" id="st_in_num2"></p> - 
-						<p class="inputform" id="st_in_num3" ></p>
+						<p class="inputform" id="st_in_num1" >${in.st_in_num }</p> - 
+						<p class="inputform" id="st_in_num2" >${in.st_in_num }</p> - 
+						<p class="inputform" id="st_in_num3" >${in.st_in_num }</p>
 					</div>
 				</div>
 				
 				<!-- 서류등록 -->
 				<div class="igroup">
 					<div class="title">
-						사업자 서류등록
+						사업자 서류
 					</div>
 					<div class="input_group" id="fileregi1">
-					    <p class="inputform"><a href=""></a></p>
+					    <p class="inputform"><button type="button" class="download" value="${in.st_in_file }" id="${in.in_file_name }"></button>
+					    <label for="${in.in_file_name }">${in.in_file_name }</label></p>
 					</div>
 				</div>
 				
@@ -213,17 +287,18 @@ input[type="radio"]
 						사업장 관리 번호
 					</div>
 					<div class="input_group">
-						<p class="inputform" id="st_place_num"></p>
+						<p class="inputform" id="st_place_num">${in.st_place_num }</p>
 					</div>
 				</div>
 				
 				<!-- 사업장 서류 등록 -->
 				<div class="igroup">
 					<div class="title">
-						사업장 서류등록
+						사업장 서류
 					</div>
 					<div class="input_group">
-						<p class="inputform" id="st_place_num"><a class="fileDown" href=""></a></p>
+						<p class="inputform" id="st_place_num"><button type="button" class="download" value="${in.st_place_file }" id="${in.place_file_name }"></button>
+						<label for="${in.place_file_name }">${in.place_file_name }</label></p>
 					</div>
 				</div>
 				 
@@ -233,7 +308,7 @@ input[type="radio"]
 						가게 명
 					</div>
 					<div class="input_group">
-						<p class="inputform" id="st_place_num"></p>
+						<p class="inputform" id="st_place_num">${in.st_name }</p>
 					</div>
 				</div>
 				
@@ -243,7 +318,7 @@ input[type="radio"]
 						가게 주소
 					</div>
 					<div class="input_group">
-						<p class="inputform" id="st_place_num"></p>
+						<p class="inputform" id="st_place_num">${in.st_location }</p>
 					</div>
 				</div>
 				
@@ -253,7 +328,7 @@ input[type="radio"]
 						가게 상세 주소
 					</div>
 					<div class="input_group">
-						<p class="inputform" id="st_place_num"></p>
+						<p class="inputform" id="st_place_num">${in.st_location_dt }</p>
 					</div>
 				</div>
 				
@@ -263,7 +338,7 @@ input[type="radio"]
 						가게 번호
 					</div>
 					<div class="input_group">
-						<p class="inputform" id="st_place_num"></p>
+						<p class="inputform" id="st_place_num">${in.st_tel }</p>
 					</div>
 				</div>
 				
@@ -272,8 +347,15 @@ input[type="radio"]
 					<label class="label"><input type="radio" class="check" name="res" id="approve"><span>승인</span></label>
 					<label class="label"><input type="radio" class="check" name="res" id="reject" value="true"><span>반려</span></label>
 				</div>
-				<div>
+				
+				<!-- 가게 주소 -->
+				<div class="igroup rejText">
+					<div class="title">
+						반려 사유
+					</div>
+					<div class="rejReason">
 					<textarea id="myTextarea" name="memo" rows="4" cols="50" placeholder="반려사유를 입력해주세요."></textarea>
+					</div>
 				</div>
 				
 				<div class="sendBtn">

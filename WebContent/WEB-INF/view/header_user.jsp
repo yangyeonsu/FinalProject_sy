@@ -219,7 +219,7 @@ $(function()
 			<div class="sub_list">
 				<div class="mypage_menu">
 					<ul class="person_listA">
-						<li><a href="storemain.action">마이 페이지</a>
+						<li><a href="usermypage.action">마이 페이지</a>
 						<c:if test="${st_num != null }">
 							<li><a href="storemain.action">사업자 메인 페이지</a>
 						</c:if>
