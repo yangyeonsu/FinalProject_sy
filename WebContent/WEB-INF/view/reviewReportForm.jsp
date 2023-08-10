@@ -91,7 +91,6 @@ button, .input
    color: #ef6351;
    font-size: small;
    display: none;
-   padding-left: 15vh;
 }
 .title1
 {
@@ -187,10 +186,10 @@ button, .input
 		</div>
          
 		<div class="igroup2">
-			<div style="width: 50%;">
+			<div style="width: 50%; font-size: 11pt;">
 				리뷰신고카테고리명 : ${review.getRep_rs_name()}
 			</div>
-			<div style="width: 42%; text-align: right; margin-top: 1vh;">
+			<div style="width: 42%; text-align: right; margin-top: 1vh; font-size: 11pt;">
 				<button class="stInfoBtn" id="${review.getSt_num() }">${review.getSt_name() } 페이지로 가기</button>
 			</div>
 		</div>
@@ -202,8 +201,11 @@ button, .input
 		<div class="igroup2" style="width: 100%;">
 			<textarea id="reviewReject"  style="width: 72%; height: 10em; resize: none; border-radius: 10px;" placeholder="반려사유기재"></textarea>
 		</div>
-         
-		<span class="errorMsg" id="err">반려사유를 입력해야 합니다.</span>
+        
+        <div class="igroup" >
+			<span class="errorMsg" id="err">반려사유를 입력해야 합니다.</span>
+		</div>
+		
 		<div style="width: 87%; text-align: right; margin-top: 1vh;">
 			<button value="중재" onclick="mediateBtn()">중재</button>
 			<button value="반려" onclick="rejectBtn()">반려</button>
