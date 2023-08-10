@@ -11,4 +11,5 @@ public interface IAdminFindDAO
 	// 패널티회수 요청한 가게로 요청내용 찾기
 	public RevoApplyViewDTO revoSearch(int revo_apply_num);
 	// 가게 등폐업 요청한 가게로 요청내용 찾기
+	public StoreregiDTO inSearch(int in_apply_num);
 }

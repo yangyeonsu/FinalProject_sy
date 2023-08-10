@@ -14,7 +14,7 @@
 <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
 <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
 
-
+penaltyList-beta
 
 <link rel="stylesheet" type="text/css" href="<%=cp%>/css/user_main.css">
 
@@ -160,7 +160,7 @@
 		padding: 0px;
 		align-items: stretch;
 	}
-	.rv_reportlist
+	.penaltylist
 	{
 		display: flex;
 		flex-direction: column;
@@ -176,11 +176,11 @@
 		border-radius: 10px 10px 0 0;
 	}
 	/* 부제 */
-	.rpt_subtitle
+	.pen_subtitle
 	{
 		text-align: center;
 
-		width: 8vw;
+		width: 14vw;
 		padding: 1vh;
 	}
 	
@@ -199,7 +199,7 @@
 	}
 	
 	/* 리뷰신고리스트 전체 틀 */
-	.rv_report
+	.penalty_report
 	{
 		padding: 5vw;
 		justify-content: center;
@@ -224,11 +224,6 @@
 		text-align: center;
 	}
 	
-	.pageIndex
-	{
-		display: flex;
-    	justify-content: center;
-    }
 </style>
 
 <script type="text/javascript">
@@ -282,7 +277,7 @@
 <body>
 
 	<div class="header">
-		<c:import url="header_user.jsp"></c:import>
+		<c:import url="/WEB-INF/view/header_user.jsp"></c:import>
 	</div>
 
 	
@@ -342,29 +337,27 @@
 		
 		
 		<div class="right_content">
-			<div class="rv_report">
+			<div class="penalty_report">
 				<div class="title">
-					가게정보수정요청 내역
+					경고 내역
 				</div>
 				<hr>
-				<div class="rv_reportlist">
+				<div class="penaltylist">
 					<div class="subtitle">
-						<div class="rpt_subtitle">요청일자</div>
+						<div class="pen_subtitle">신고일자</div>
 						<div class="st_name">가게명</div>
-						<div class="rpt_subtitle">처리상태</div>
-						<div class="rpt_subtitle">처리일자</div>
+						<div class="pen_subtitle">처리일자</div>
 					</div>
 					<c:choose>
-					    <c:when test="${empty user_stupdate_relist}">
-					        <div class="no-data-message">가게정보수정요청 내역이 없습니다.</div>
+					    <c:when test="${empty penList}">
+					        <div class="no-data-message">경고 내역이 없습니다.</div>
 					    </c:when>
 					    <c:otherwise>
-					        <c:forEach var="udre" items="${user_stupdate_relist}">
+					        <c:forEach var="pl" items="${penList}">
 					            <div class="report_content">
-					                <div class="rpt_content">${udre.reg_date }</div>
-					                <div class="st_name">${udre.st_name }</div>
-					                <div class="rpt_content">${udre.status }</div>
-					                <div class="rpt_content">${udre.final_date }</div>
+					                <div class="rpt_content">${pl.reg_date }</div>
+					                <div class="st_name">${pl.st_name }</div>
+					                <div class="rpt_content">${pl.final_date }</div>
 					            </div>
 					        </c:forEach>
 					    </c:otherwise>
@@ -373,13 +366,17 @@
 					<!-- 페이징 처리 -->
 					<div class="pagination">
 			            <c:choose>
-			                <c:when test="${empty user_stupdate_relist}">
+			                <c:when test="${empty penList}">
 			                    <p></p>
 			                </c:when>
 			                <c:otherwise>
-			                    <div class="pageIndex">
-									${pageIndex }
-								</div>
+			                    <ul class="pagination-list">
+			                        <li><a href="${cp}/user_stupdate_relist.action?page=${currentPage - 1}">&laquo; Previous</a></li>
+			                        <c:forEach var="pageNum" begin="1" end="${totalPages}">
+			                            <li><a href="${cp}/user_stupdate_relist.action?page=${pageNum}">${pageNum}</a></li>
+			                        </c:forEach>
+			                        <li><a href="${cp}/user_stupdate_relist.action?page=${currentPage + 1}">Next &raquo;</a></li>
+			                    </ul>
 			                </c:otherwise>
 			            </c:choose>
 			        </div>
@@ -394,7 +391,7 @@
 
 
 	<div class="footer">
-		<c:import url="footer.jsp"></c:import>
+		<c:import url="/WEB-INF/view/footer.jsp"></c:import>
 	</div>
 
 </body>

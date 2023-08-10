@@ -2,7 +2,7 @@ package com.yameokja.mc;
 
 public class StoreCheckDTO
 {
-	private int chbox_num;
+	private int chbox_num, st_num;
 	private String chbox_name, yesorno;
 	
 	// getter / setter
@@ -29,6 +29,14 @@ public class StoreCheckDTO
 	public void setYesorno(String yesorno)
 	{
 		this.yesorno = yesorno;
+	}
+	public int getSt_num()
+	{
+		return st_num;
+	}
+	public void setSt_num(int st_num)
+	{
+		this.st_num = st_num;
 	}
 	
 	
