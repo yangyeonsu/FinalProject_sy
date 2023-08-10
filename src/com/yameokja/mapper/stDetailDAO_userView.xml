@@ -156,6 +156,6 @@
  	<!-- 리뷰 신고 -->
 	<insert id="reviewRepInsert">
 		INSERT INTO REP_APPLY(REP_APPLY_NUM, RV_NUM, USER_NUM, REP_RS_NUM)
-		VALUES (12, #{rv_num}, #{user_num}, #{rep_rs_num})
+		VALUES (17, #{rv_num}, #{user_num}, #{rep_rs_num})
 	</insert> 
 </mapper>
