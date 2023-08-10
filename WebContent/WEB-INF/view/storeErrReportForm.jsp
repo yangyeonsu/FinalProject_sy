@@ -73,8 +73,25 @@ textarea {
 	resize: none;
 	width: 81%;
 }
+.errorMsg
+{
+	color: #ef6351;
+	font-size: small;
+	display: none;
+}
 
 </style>
+<script type="text/javascript">
+	function reqBtn()
+	{
+		if ($("#errReport").val() == "")
+		{
+			$("#err").css("display", "inline");
+			$("#errReport").focus();
+			return;
+		}
+	};
+</script>
 
 </head>
 <body>
@@ -119,10 +136,10 @@ textarea {
 				
 				<div id=returnReason>
 					반려사유
-					<textarea rows="8px" placeholder="반려사유 기재" style="font-size: 11pt;"></textarea>
-					<button id="return">요청반려</button>
+					<textarea rows="8px" placeholder="반려사유 기재" id="errReport" style="font-size: 11pt;"></textarea>
+					<button id="return" onclick="reqBtn()">요청반려</button>
 				</div>
-			
+				<span class="errorMsg" id="err" style="padding-left: 15vh; font-size: 11pt;">반려사유를 입력해야 합니다.</span>
 			</div>
 		</div>
 		
