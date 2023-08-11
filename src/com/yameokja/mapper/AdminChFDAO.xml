@@ -21,9 +21,6 @@
 		FROM RV_REPORT_VIEW RRV
 		LEFT JOIN RV_BOX RB
 		ON RRV.RV_NUM = RB.RV_NUM
-<<<<<<< Updated upstream
-		WHERE REP_APPLY_NUM = #{rep_apply_num}
-=======
 		WHERE RRV.REP_APPLY_NUM=#{rep_apply_num}
 		
 		
@@ -44,7 +41,6 @@
 		ON RRV.USER_NUM = RB.USER_NUM
 		WHERE REP_APPLY_NUM=#{rep_apply_num};
 		 -->
->>>>>>> Stashed changes
 	</select>
 		
 	<!-- 정보수정 요청한 내용 가져오기
@@ -95,12 +91,4 @@
         ON IA.USER_NUM = UU.USER_NUM
         WHERE IN_APPLY_NUM = #{in_apply_num}
 	</select>
-<<<<<<< Updated upstream
-	 
-	
-	 
-	
-=======
-	 -->
->>>>>>> Stashed changes
 </mapper>
