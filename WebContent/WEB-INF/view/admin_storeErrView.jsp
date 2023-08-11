@@ -20,6 +20,21 @@
 	}
 </style>
 
+<script type="text/javascript">
+	$(function()
+	{
+
+		$(".errTd").click(function()
+		{
+			var reportNum = $(this).siblings("[id]").attr("id");
+			var state = $(this).parent().attr('id');
+			//alert(state);
+			$(location).attr("href","errreportform.action?req_apply_num="+reportNum+"&state="+state);
+			
+		});
+		
+	});
+</script>
 
 <body>
 <form id="adminForm" method="post">
@@ -57,7 +72,7 @@
 						</thead>
 						<tbody>
 							<c:forEach var="err" items="${reqList }">
-							<tr>
+							<tr id="${err.state }">
 								<td class="errTd" id="${err.report_num }">${err.reg_date }</td>
 								<td class="errTd" id="${err.report_num }">${err.user_id }</td>
 								<td class="errTd" id="${err.report_num }">${err.st_name }</td>
