@@ -5,7 +5,8 @@ import org.apache.ibatis.annotations.Param;
 public interface IstoreOutDAO 
 {
 	// 가게 폐업 추가
-	public int st_Out_apply(storeOutDTO dto);
-	public int placeNum(@Param("user_num") int user_num, @Param("st_num") int st_num);
+	public Integer placeNum(@Param("user_num") Integer user_num, @Param("st_num") Integer st_num);
+	public int st_Out_apply(@Param("user_num") Integer user_num, @Param("st_num") Integer st_num);
+
 	
 }

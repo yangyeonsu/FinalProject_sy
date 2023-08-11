@@ -20,7 +20,7 @@ public class store_OutController
 	
 	@RequestMapping(value = "/storeOutform.action", method={RequestMethod.POST, RequestMethod.GET})
 	public String storeOuttForm(HttpServletRequest request, Model model)
-	{
+	{	
 		String result = null;
 		
 		String usernum = request.getParameter("user_num");
@@ -40,22 +40,54 @@ public class store_OutController
 	@RequestMapping(value = "/storeOutinsert.action", method=RequestMethod.POST)
 	public String StoreOutinsert(HttpServletRequest request, HttpServletResponse response) 
 	{	
-		String result = null;
 		
-		IstoreOutDAO dao = sqlSession.getMapper(IstoreOutDAO.class);
-		storeOutDTO sodto = new storeOutDTO();
-		
-		String usernum = request.getParameter("user_num");
-		String stnum = request.getParameter("st_num");
-		
-		int user_num = Integer.parseInt(usernum);
-		int st_num = Integer.parseInt(stnum);
+		System.out.println("Received user_num: " + request.getParameter("user_num"));
+		System.out.println("Received st_num: " + request.getParameter("st_num"));
+
 		
 		IstoreOutDAO dao = sqlSession.getMapper(IstoreOutDAO.class);
 		
-		dao.st_Out_apply(sodto);
+		try 
+		{	
+			String usernum = request.getParameter("user_num");
+			String stnum = request.getParameter("st_num");
+			
+			
+			if(usernum == null || "null".equals(usernum) || usernum.isEmpty() 
+				|| stnum == null || "null".equals(stnum) || stnum.isEmpty()) 
+			{
+			    return "storeOutform.action?user_num=" + usernum + "&st_num=" + stnum;
+			}
+			
+			if(usernum == null || usernum.trim().isEmpty() 
+					||  stnum == null || stnum.trim().isEmpty()) 
+			{
+				return "storeOutform.action?user_num=" + usernum + "&st_num=" + stnum;
+			}
+
+			int user_num = Integer.parseInt(usernum);
+			int st_num = Integer.parseInt(stnum);
+			
+			
+			
+			int res = dao.st_Out_apply(user_num, st_num);
+			
+			System.out.println("user_num: " + usernum);
+			System.out.println("st_num: " + stnum);
+			
+			if (res == 0) 
+			{
+				return "storeOutform.action?user_num=" + user_num + "&st_num=" + st_num;
+			}
+				
+		} 
+		catch (Exception e) 
+		{
+			System.out.println(e.toString());
+		}
 		
 		return "redirect:main.action";
+		
 	}
 	
 	

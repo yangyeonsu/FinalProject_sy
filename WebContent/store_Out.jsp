@@ -206,6 +206,7 @@ function st_in_numcheck()
 
 		// Display the error
 		document.getElementById("err1").style.display = "inline";
+		return;
 	}	
 }
 
@@ -214,14 +215,11 @@ $(function()
 {
     $("#insert").click(function() 
     {
-        $("#err").css("display", "none");
-        $("#fileregi").css("border", "none");
-       
+        $("#err1").css("display", "none");
 		
-        if ($("#file").val() == "") 
+        if ($("#st_in_num").val() == "") 
         {
-            $("#err").text("사업자 서류를 등록해주세요.").css("display", "inline");
-            $("#fileregi").css("border", "3px solid red");
+            $("#err1").text("사업자 등록번호를 입력해주세요.").css("display", "inline");
             return;
         }
         
@@ -234,7 +232,7 @@ $(function()
 <body>
 <div class="mainFrame">
 	
-	<form action="storeOutinsert.action" method="post" id="outForm" enctype="multipart/form-data">
+	<form action="storeOutinsert.action" method="post" id="outForm">
 	
 	<div><c:import url="/WEB-INF/view/header_user.jsp"></c:import></div> <!-- header -->
 	
@@ -272,13 +270,12 @@ $(function()
 			
 			
 			<div class="button">
-				<button type="button" id="insert">신청</button>
+				<button type="submit" id="insert">신청</button>
 				<button type="reset">목록으로</button><br>
 			</div>
 			
 			
 			<!-- user_num -->
-			<input type="hidden" class="inputform" name="user_num" id="user_num" value="<%=(String) session.getAttribute("user_num")%>">
 			<input type="hidden" name="user_num" value="<%= userNum %>">
 			<input type="hidden" name="st_num" value="<%= stNum %>">
 
