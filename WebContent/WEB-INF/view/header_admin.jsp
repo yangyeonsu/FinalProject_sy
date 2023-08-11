@@ -126,27 +126,27 @@
 		padding-top: 0.5vh;
 		margin-bottom: 0.5;
 	}
-	
+	/* 
 	.alarm_menu
 	{
 		transition-duration: 0.5s;
 	    font-size: 0.8vw;
 	    background-color: #f5f3e7;
 	}
-	
+	 */
 	.person_listA, .person_listB
 	{
 		list-style-type: none;
 		padding: 0;
 	}
-	
+	/* 
 	.alarm_cl
 	{
 		font-size: 0.9vw;
     	font-weight: bold;
     	color: black;
 	}
-	
+	 */
 	.subListBtn
 	{
 		border: 0;
@@ -162,13 +162,14 @@ $(function() {
     
     $(".mypage_cl").click(function() {
         $(".mypage_menu").fadeToggle(300);
-        
+        /* 
         if ($('.alarm_menu').is(':visible'))
         {
         	$(".alarm_menu").hide();
         }
+         */
     });
-    
+    /* 
     $(".alarm_cl").click(function() {
         $(".alarm_menu").fadeToggle(300);
         
@@ -177,7 +178,7 @@ $(function() {
         	$(".mypage_menu").hide();
         }
     });
-    
+     */
     
     $("#logout").click(function()
 	{
@@ -205,10 +206,11 @@ $(function() {
 						<a href="#" class="mypage_cl" id="mypagetxt">${admin_name }</a>			
 					</div>
 				</div>
-				
+				<!-- 
 				<div id="alarm">
 						<a href="#" class="alarm_cl">알림</a>
 				</div>
+				 -->
 			</div>
 			<div class="sub_list">
 				<div class="mypage_menu">
@@ -218,6 +220,7 @@ $(function() {
 						<li><button type="button" id="logout" class="subListBtn" >로그아웃</button>
 					</ul>
 				</div>
+				<!-- 
 				<div class="alarm_menu">
 					<ul class="person_listB">
 						<li><a href="#">OOO경고 들어옴</a>
@@ -226,6 +229,7 @@ $(function() {
 						<li><a href="#">리뷰신고한거 처리됨</a>
 					</ul>
 				</div>
+				 -->
 			</div>
 		</div>
 	</header>
