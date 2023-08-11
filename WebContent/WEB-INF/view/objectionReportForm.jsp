@@ -5,9 +5,6 @@
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
 %>
-<%
-	ObjApplyViewDTO dto = (ObjApplyViewDTO)request.getAttribute("obj");
-%>
 <!DOCTYPE html>
 <html>
 <head>
