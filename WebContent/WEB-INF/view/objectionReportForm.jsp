@@ -104,6 +104,7 @@ button, .input
 	align-items: center;
 	border-radius: 10px 0 0 10px;
 	margin-right: 1vw;
+	border: 1px solid;
 }
 </style>
 
