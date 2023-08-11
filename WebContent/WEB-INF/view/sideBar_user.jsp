@@ -19,6 +19,7 @@
 <link rel="stylesheet" type="text/css" href="<%=cp%>/css/side_bar.css">
 
 <script type="text/javascript">
+	/*
 	$(function()
 	{
 		$(".left_sub_menu").hide();
@@ -40,7 +41,7 @@
 				$('.overlay').css("height", "100%");
 				$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
 				$('.overlay').css("z-index", "3");
-/* 				$('.overlay').css("margin-top", "1.011vh"); */
+ 				//$('.overlay').css("margin-top", "1.011vh");
 				$('#checkOverlay').attr("value", "true");
 			}
 
@@ -63,6 +64,7 @@
 			$('#checkOverlay').attr("value", "false");
 		});
 	});
+	*/
 </script>
 
 <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>

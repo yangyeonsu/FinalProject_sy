@@ -114,6 +114,8 @@
 				{
 					/* alert(result); */
 					$(this).html(result);
+					
+					$(".likeAddBtn[value='" + $(this).val() + "']").html(result);
 				},
 				error : function(e)
 				{
@@ -203,7 +205,7 @@
 									<div class="stImgBtnDiv">
 										<div class="stImgDiv">
 											<button type="button" value="${hot.st_num}" class="storeBtn"
-												onclick="location.href='stDetail-userView.action?st_num=${hot.st_num}'">
+												onclick="location.href='stdetail-userview.action?st_num=${hot.st_num}'">
 												<c:set var = "photo" value="${hot.photo_link }"/>
 									
 												<c:choose>
@@ -279,7 +281,7 @@
 												<div class="stImgDiv">
 													<button type="button" value="${jjim.st_num }"
 														class="storeBtn"
-														onclick="location.href='stDetail-userView.action?st_num=${jjim.st_num}'">
+														onclick="location.href='stdetail-userview.action?st_num=${jjim.st_num}'">
 														<c:set var = "photo" value="${jjim.photo_link }"/>
 														
 														<c:choose>
@@ -360,7 +362,7 @@
 												<div class="stImgDiv">
 													<button type="button" value="${ibmat.st_num }"
 														class="storeBtn"
-														onclick="location.href='stDetail-userView.action?st_num=${ibmat.st_num}'">
+														onclick="location.href='stdetail-userview.action?st_num=${ibmat.st_num}'">
 														<c:set var = "photo" value="${ibmat.photo_link }"/>
 														
 														<c:choose>

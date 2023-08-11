@@ -5,6 +5,8 @@
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
 %>
+<% String userNum = request.getParameter("user_num");
+	String stNum = request.getParameter("st_num"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,8 +25,8 @@
 {
 	width: 70vw;
 	margin-left: 15vw;
-	padding-top: 5vh;
-	padding-bottom: 5vh;
+	padding-top: 10vh;
+	padding-bottom: 10vh;
 	border: 5px solid #F7F4EA;
 	border-radius: 40px;
 }
@@ -44,17 +46,13 @@
 
 .inputform
 {
-	
 	width: 30vw;
 	border-radius: 0 10px 10px 0;
 	border: 1px solid #ccc;
 	padding: 8px 12px;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-#st_in_num
-{
-	width: 27.5v
-}
+
 .title
 {
 	background-color: #F7F4EA;
@@ -79,7 +77,6 @@
 }
 
 
-
 .button
 {
 	margin-top: 5vh;
@@ -90,7 +87,6 @@
 
 button
 {
-	
 	display: inline-block;
 	outline: none;
 	cursor: pointer;
@@ -125,20 +121,6 @@ button
     align-items: center;
 }
 
-.file_label 
-{
-    margin-right: 10px;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    border: 1px solid gray;
-    border-radius: 5px;
-}
-#st_in_num
-{
-	width: 25.5vw;
-}
-
 .file
 {
 	position: absolute;
@@ -149,10 +131,24 @@ button
     border: 0;
 }
 
-.file_label
+.contentform
 {
-	background-color: #F7F4EA;
+	width: 30vw;
+	height: 15vh;
+	border-radius: 0 10px 10px 0;
+	border: 1px solid #ccc;
+	padding: 8px 12px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
+#st_in_num
+{
+	width: 26vw;
+	border-radius: 0 10px 10px 0;
+	border: 1px solid #ccc;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 .upload-name
 {
 	width: 14.3vw;
@@ -170,35 +166,9 @@ button
 	border-radius: 0;
 }
 
-#st_in_num1
-{
-	width: 6vw;
-	border-radius: 10px;
-	margin-right: 0.5vw;
-}
-#st_in_num2
-{
-	width: 6vw;
-	border-radius: 10px;
-	margin-right: 0.5vw;
-	margin-left: 0.5vw;
-}
-#st_in_num3
-{
-	width: 6vw;
-	border-radius: 10px;
-	margin-left: 0.5vw;
-	margin-right: 1vw;
-}
 #insert
 {
 	margin-left: 2vw;
-}
-
-#st_location
-{
-	width: 24vw;
-	margin-right: 1vw;
 }
 
 </style>
@@ -220,18 +190,36 @@ function displayAndSetFileName()
     }
 }
 
+function st_in_numcheck() 
+{
+	var st_in_num = document.getElementById("st_in_num").value;
+	var check_num = document.getElementById("check_num").value;
+	
+	if (st_in_num == check_num) 
+	{
+		alert("인증 성공");
+	}
+	else
+	{
+		// Reset the text input
+		document.getElementById("st_in_num").value = "";
+
+		// Display the error
+		document.getElementById("err1").style.display = "inline";
+		return;
+	}	
+}
+
+
 $(function()
 {
     $("#insert").click(function() 
     {
-        $("#err").css("display", "none");
-        $("#fileregi").css("border", "none");
-       
+        $("#err1").css("display", "none");
 		
-        if ($("#file").val() == "") 
+        if ($("#st_in_num").val() == "") 
         {
-            $("#err").text("사업자 서류를 등록해주세요.").css("display", "inline");
-            $("#fileregi").css("border", "3px solid red");
+            $("#err1").text("사업자 등록번호를 입력해주세요.").css("display", "inline");
             return;
         }
         
@@ -244,7 +232,7 @@ $(function()
 <body>
 <div class="mainFrame">
 	
-	<form action="" method="post" id="outForm" enctype="multipart/form-data">
+	<form action="storeOutinsert.action" method="post" id="outForm">
 	
 	<div><c:import url="/WEB-INF/view/header_user.jsp"></c:import></div> <!-- header -->
 	
@@ -257,40 +245,40 @@ $(function()
 		<!-- 폐업 신청 -->
 		<div class="out_insert">
 			
+			<!-- 사업장 번호 확인 -->
+			<div class="igroup">
+				<div class="title">
+					사업장 번호 확인
+				</div>
+				<div class="input_group">
+				    <input type="text" id="st_in_num" name="st_in_num">
+				    <input type="hidden" class="check_num" id="check_num" value="${placeNum }"/>
+					<button type="button" class="cfb" onclick="st_in_numcheck()">인증하기</button>
+				</div>
+				<span id="err1" style="color: red; font-weight: bold; display: none;">잘못된 사업자 등록 번호 입니다.</span>
+			</div>
+			
+			
 			<!-- 폐업 사유 -->
 			<div class="igroup">
 				<div class="title">폐업사유</div>
 				<div class="content">
-					<input type="textarea" class="inputform" id="oContent"
-					placeholder="폐업 사유를 입력해주세요"/>
+					<textarea rows="" cols="" class="contentform" id="oContent"
+					placeholder="폐업 사유를 입력해주세요"></textarea>
 				</div>
 			</div> <!-- .out_content -->
 			
-			<!-- 서류등록 -->
-			<div class="igroup">
-				<div class="title">
-					폐업 인증 서류
-				</div>
-				<div class="input_group" id="fileregi">
-				    <label for="file" class="upload-name" id="upload-name01">파일 업로드 click here~!!!</label>
-				    <input type="file" id="file" class="file" onchange="displayAndSetFileName()" name="st_in_file">
-				    <input class="upload-name" id="upload-name" value="" placeholder="첨부파일" readonly>
-				</div>
-				<span id="err" style="color: red; font-weight: bold; display: none;"></span>
-			</div>
-			
-			
 			
 			<div class="button">
-				<button type="button" id="insert">신청</button>
+				<button type="submit" id="insert">신청</button>
 				<button type="reset">목록으로</button><br>
 			</div>
 			
 			
 			<!-- user_num -->
-			<input type="hidden" class="inputform" name="user_num" id="user_num"
-			value="<%=(String) session.getAttribute("user_num")%>">	
-			
+			<input type="hidden" name="user_num" value="<%= userNum %>">
+			<input type="hidden" name="st_num" value="<%= stNum %>">
+
 		</div> <!-- .out_insert -->
 		
 	
