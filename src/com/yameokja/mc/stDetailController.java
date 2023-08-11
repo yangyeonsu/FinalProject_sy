@@ -158,7 +158,7 @@ public class stDetailController
 		model.addAttribute("userRnist", userRnList);
 		model.addAttribute("userNrnList", userNrnList);
 		
-		result = "/WEB-INF/view/storeDetail.jsp";
+		result = "/WEB-INF/view/storeDetail_business.jsp";
 		
 		return result;
 	}
