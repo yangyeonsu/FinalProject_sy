@@ -36,7 +36,7 @@
 		<div class="middle">
 
 			
-			<c:import url="sideBar.jsp"></c:import>
+			<c:import url="sideBar_user.jsp"></c:import>
 			
 			<!-- 가운데 마이 페이지 영역 -->
 			<div class="col-md-8">

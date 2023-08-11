@@ -293,7 +293,7 @@ String cp = request.getContextPath();
 
 			<div id="column">
 
-				<c:import url="sideBar.jsp"></c:import>
+				<c:import url="sideBar_user.jsp"></c:import>
 			</div>
 
 			<div class="mainBody">

@@ -47,10 +47,16 @@ public class StoreController
 
 		model.addAttribute("user", user);
 		
+		ArrayList<StoreDTO> st_list = smDao.searchStoreInfo(user_num);
+		int st_num;
 		
-		int st_num = smDao.searchStoreInfo(user_num);
+		if(smDao.searchRepStore(user_num) == null)
+			st_num = st_list.get(0).getSt_num();
+		else
+			st_num = smDao.searchRepStore(user_num);
 		
-		session.setAttribute("st_num", st_num );
+		
+		session.setAttribute("st_num", st_num);
 				
 		ArrayList<HashMap<String, String>> hashmaplist = smDao.rv_key_sum(st_num);
 		
@@ -74,6 +80,8 @@ public class StoreController
 			star_labels.add("'" +star.get("QUARTER_START_DATE")+"'");
 			star_data.add(String.valueOf(star.get("AVERAGE_STAR_SCORE")));
 		}
+		
+		model.addAttribute("st_list", st_list);
 		
 		model.addAttribute("rv_labels", rv_labels.subList(0, 5));
 		model.addAttribute("rv_data", rv_data.subList(0, 5));
