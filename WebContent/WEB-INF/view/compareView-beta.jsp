@@ -19,10 +19,7 @@ String cp = request.getContextPath();
 <link rel="stylesheet" type="text/css" href="<%=cp%>/css/userMyPage.css">
 
 
-<!-- 배너 CSS -->
-<style type="text/css">
-<!--
-배너 -->.has_sub_menu {
+<!-- .has_sub_menu {
 	list-style-type: none;
 }
 
@@ -131,11 +128,8 @@ String cp = request.getContextPath();
 .has_sub {
 	width: 100%;
 }
-<!--
-배너
-  
--->
-</style>
+
+</style> -->
 
 <!-- 해당 페이지 CSS -->
 <style type="text/css">
@@ -145,8 +139,8 @@ String cp = request.getContextPath();
 
 .compTitle {
 	width: 15vw;
-	height: 15vh;
-	margin-left: 48vw;
+    height: 15vh;
+    margin-left: 30vw;
 }
 
 .compTitle span {
@@ -161,7 +155,7 @@ String cp = request.getContextPath();
 
 .compareBody {
 	width: 63vw;
-	margin-left: 18vw;
+	/* margin-left: 18vw; */
 	display: flex;
 	text-align: center;
 }
@@ -171,7 +165,7 @@ String cp = request.getContextPath();
 }
 
 .cCategory {
-	margin-top: 28.84vh;
+	margin-top: 28.65vh;
 	width: 11vw;
 }
 
@@ -308,10 +302,10 @@ String cp = request.getContextPath();
 		{
 			$(".compareBody").css(
 			{
-				"margin-left" : "26vw",
+				"margin-left" : "10vw",
 				"width" : "55vw"
 			});
-			$(".compTitle").css("margin-left", "47vw");
+			$(".compTitle").css("margin-left", "31vw");
 		}
 
 	});
@@ -475,7 +469,7 @@ String cp = request.getContextPath();
 		<div class="compareMain">
 
 			<div class="compTitle">
-				<span>비교하기</span>
+				<span>비교해보기</span>
 			</div>
 
 			<div id="여기가 큰 비교 틀 & 포문으로 들어갈 공간" class="compareBody">

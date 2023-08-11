@@ -163,12 +163,16 @@ public class AdminMainController
 	@RequestMapping(value="/reviewreportform.action", method=RequestMethod.GET)
 	public String reviewReportForm(Model model,HttpServletRequest request, RvApplyViewDTO dto)
 	{
-		String result;
+		HttpSession session = request.getSession();
 		
+		String result = "";
+		String admin_num = (String)session.getAttribute("admin_num");
 		int reviewNum = Integer.parseInt(request.getParameter("rep_apply_num"));
 		
+		IAdminMainDAO daoM = sqlSesion.getMapper(IAdminMainDAO.class);
 		IAdminFindDAO dao = sqlSesion.getMapper(IAdminFindDAO.class);
 		
+		model.addAttribute("admin_name", daoM.searchNum(admin_num, "num").getAdmin_name());
 		model.addAttribute("review", dao.rvSearch(reviewNum));
 		
 		result = "/WEB-INF/view/reviewReportForm.jsp";
@@ -179,12 +183,16 @@ public class AdminMainController
 	@RequestMapping(value="/errreportform.action", method=RequestMethod.GET)
 	public String storeErrReportForm(Model model,HttpServletRequest request, ReqApplyViewDTO dto)
 	{
-		String result;
+		HttpSession session = request.getSession();
 		
+		String result = "";
+		String admin_num = (String)session.getAttribute("admin_num");
 		int reqNum = Integer.parseInt(request.getParameter("req_apply_num"));
 		
+		IAdminMainDAO daoM = sqlSesion.getMapper(IAdminMainDAO.class);
 		IAdminFindDAO dao = sqlSesion.getMapper(IAdminFindDAO.class);
 		
+		model.addAttribute("admin_name", daoM.searchNum(admin_num, "num").getAdmin_name());
 		model.addAttribute("err", dao.accuSearch(reqNum));
 		
 		result = "/WEB-INF/view/storeErrReportForm.jsp";
@@ -195,12 +203,16 @@ public class AdminMainController
 	@RequestMapping(value="/objreportform.action", method=RequestMethod.GET)
 	public String objectionReportForm(Model model,HttpServletRequest request, ObjApplyViewDTO dto)
 	{
-		String result;
+		HttpSession session = request.getSession();
 		
+		String result = "";
+		String admin_num = (String)session.getAttribute("admin_num");
 		int objNum = Integer.parseInt(request.getParameter("obj_apply_num"));
 		
+		IAdminMainDAO daoM = sqlSesion.getMapper(IAdminMainDAO.class);
 		IAdminFindDAO dao = sqlSesion.getMapper(IAdminFindDAO.class);
 		
+		model.addAttribute("admin_name", daoM.searchNum(admin_num, "num").getAdmin_name());
 		model.addAttribute("obj", dao.objSearch(objNum));
 		
 		result = "/WEB-INF/view/objectionReportForm.jsp";
@@ -211,12 +223,16 @@ public class AdminMainController
 	@RequestMapping(value="/penaltyrevokeform.action", method=RequestMethod.GET)
 	public String penaltyRevokeForm(Model model,HttpServletRequest request, RevoApplyViewDTO dto)
 	{
-		String result;
+		HttpSession session = request.getSession();
 		
+		String result = "";
+		String admin_num = (String)session.getAttribute("admin_num");
 		int revoNum = Integer.parseInt(request.getParameter("revo_apply_num"));
 		
+		IAdminMainDAO daoM = sqlSesion.getMapper(IAdminMainDAO.class);
 		IAdminFindDAO dao = sqlSesion.getMapper(IAdminFindDAO.class);
 		
+		model.addAttribute("admin_name", daoM.searchNum(admin_num, "num").getAdmin_name());
 		model.addAttribute("revo", dao.revoSearch(revoNum));
 		
 		result = "/WEB-INF/view/penaltyRevokeForm.jsp";
