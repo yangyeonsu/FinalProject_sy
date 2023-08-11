@@ -31,6 +31,49 @@ String cp = request.getContextPath();
 	src="http://code.jquery.com/jquery.min.js"></script>
 
 <script type="text/javascript">
+	$(function()
+	{
+		$(".left_sub_menu").hide();
+		$(".has_sub").click(function()
+		{
+			$(".left_sub_menu").fadeToggle(300);
+			if ($('#checkOverlay').val() == "true")
+			{
+				$('.overlay').css("position", "fixed");
+				$('.overlay').css("width", "0%");
+				$('.overlay').css("height", "0%");
+				$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
+				$('.overlay').css("z-index", "0");
+				$('#checkOverlay').attr("value", "false");
+			} else
+			{
+				$('.overlay').css("position", "fixed");
+				$('.overlay').css("width", "100%");
+				$('.overlay').css("height", "100%");
+				$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
+				$('.overlay').css("z-index", "3");
+				$('.overlay').css("margin-top", "1.011vh");
+				$('#checkOverlay').attr("value", "true");
+			}
+
+		});
+		// 왼쪽메뉴 드롭다운
+		$(".sub_menu ul.small_menu").hide();
+		$(".sub_menu ul.big_menu").click(function()
+		{
+			$("ul", this).slideToggle(300);
+		});
+		// 외부 클릭 시 좌측 사이드 메뉴 숨기기
+		$('.overlay').on('click', function()
+		{
+			$('.left_sub_menu').fadeOut();
+			$('.overlay').css("position", "fixed");
+			$('.overlay').css("width", "0%");
+			$('.overlay').css("height", "0%");
+			$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
+			$('.overlay').css("z-index", "0");
+			$('#checkOverlay').attr("value", "false");
+		});
 
 		/// 신고하기 버튼 눌렀을 때
 		$(".repBtn").click(function()
@@ -43,6 +86,9 @@ String cp = request.getContextPath();
 		{
 			$rv_num = $("input[name=rvNumHidden]").val();
 			alert($rv_num);
+			
+			$st_num = $("input[name=st_num]").val();
+			alert($st_num);
 
 			var reviewRep = [];
 
@@ -72,212 +118,223 @@ String cp = request.getContextPath();
 				data :
 				{
 					"rv_num" : $rv_num,
-					"rep_rs_num" : $rep_rs_num
+					"rep_rs_num" : $rep_rs_num,
+					"st_num" : $st_num
 				},
-				success : function(result)
+				context : this,
+				success : function(html)
 				{
-					if (result == "1")
-					{
-						alert("신고가 완료되었습니다.");
-					} else
-					{
-						alert("신고 과정에서 오류가 발생했습니다. 다시 시도해주세요.")
-					}
 
+					alert("신고가 완료되었습니다.");
+					$(".info").html(html);
 				},
 				error : function(e)
 				{
 					alert(e.responseText);
 				}
 			});
-		});
-
-		
-
-		var totalChecked = 0;
-
-		function CountChecked(field)
-		{
-			if (field.checked)
-				totalChecked += 1;
-			else
-				totalChecked -= 1;
-
-			if (totalChecked > 1)
-			{
-				alert("한 개만 선택 가능합니다.");
-				field.checked = false;
-				totalChecked -= 1;
-			}
-
-		}
-
-		// 리뷰 작성 페이지로 이동
-		$("#insertReview").click(function()
-		{
-			$("#userForm").attr("action", "reviewRep.action");
-			$("#usesForm").submit();
-		});
-
-		// 모달--------------------------------------------------------------------------
-		function popupOpen()
-		{
-
-			if (document.all.popup.style.visibility == "hidden")
-			{
-				document.all.popup.style.visibility = "visible";
-				bgLayerOpen();
-
-				var $layerPopupObj = $('#popup');
-				var left = ($(window).scrollLeft() + ($(window).width() - $layerPopupObj
-						.width()) / 2);
-				var top = ($(window).scrollTop() + ($(window).height() - $layerPopupObj
-						.height()) / 2);
-
-				$layerPopupObj.css(
-				{
-					'left' : left,
-					'top' : top,
-					'position' : 'absolute'
-				});
-				$('body').css('position', 'relative').append($layerPopupObj);
-
-				return false;
-			} else
-			{
-				document.all.popup.style.visibility = "hidden";
-				bgLayerClear();
-				return false;
-			}
-
-		}
-
-		function bgLayerOpen()
-		{
-			if (!$('.bgLayer').length)
-			{
-				$('<div class="bgLayer"></div>').appendTo($('body'));
-			}
-			var object = $(".bgLayer");
-			var w = $(document).width() + 12;
-			var h = $(document).height();
-
-			object.css(
-			{
-				'width' : w,
-				'height' : h
-			});
-			object.fadeIn(500); //생성되는 시간 설정
-		}
-
-		function bgLayerClear()
-		{
-			var object = $('.bgLayer');
-
-			if (object.length)
-			{
-				object.fadeOut(500, function()
-				{
-					object.remove();
-
-				});
-			}
-		}
-
-		$(function()
-		{
-			$(window).resize(function()
-			{ //화면 크기 변할 시
-				$('.bgLayer').css('width', $(window).width() - 0);
-				$('.bgLayer').css('height', $(window).height() - 0);
-			});
-		});
-
+		})
 	});
-	
-	
-	// 추천/비추천
-	$(document).on("click",".recBtn", function()
+
+	var totalChecked = 0;
+
+	function CountChecked(field)
 	{
-		//alert("확인");
-		$rv_num = $(this).val();
+		if (field.checked)
+			totalChecked += 1;
+		else
+			totalChecked -= 1;
 
-		if ($(this).attr("name") == "rec")
+		if (totalChecked > 1)
 		{
-			$rec_nonrec_number = "1";
+			alert("한 개만 선택 가능합니다.");
+			field.checked = false;
+			totalChecked -= 1;
+		}
+
+	}
+
+	// 리뷰 작성 페이지로 이동
+	$("#insertReview").click(function()
+	{
+		$("#userForm").attr("action", "reviewRep.action");
+		$("#usesForm").submit();
+	});
+
+	// 리뷰 추천 / 비추천
+	$("#rec").click(function()
+	{
+
+	});
+
+	// 모달--------------------------------------------------------------------------
+	function popupOpen()
+	{
+
+		if (document.all.popup.style.visibility == "hidden")
+		{
+			document.all.popup.style.visibility = "visible";
+			bgLayerOpen();
+
+			var $layerPopupObj = $('#popup');
+			var left = ($(window).scrollLeft() + ($(window).width() - $layerPopupObj
+					.width()) / 2);
+			var top = ($(window).scrollTop() + ($(window).height() - $layerPopupObj
+					.height()) / 2);
+
+			$layerPopupObj.css(
+			{
+				'left' : left,
+				'top' : top,
+				'position' : 'absolute'
+			});
+			$('body').css('position', 'relative').append($layerPopupObj);
+
+			return false;
 		} else
-			$rec_nonrec_number = "2";
-
-		//alert($rec_nonrec_number);
-
-		$.ajax(
 		{
-			url : "recInsertDelete.action",
-			type : 'post',
-			data :
+			document.all.popup.style.visibility = "hidden";
+			bgLayerClear();
+			return false;
+		}
+
+	}
+
+	function bgLayerOpen()
+	{
+		if (!$('.bgLayer').length)
+		{
+			$('<div class="bgLayer"></div>').appendTo($('body'));
+		}
+		var object = $(".bgLayer");
+		var w = $(document).width() + 12;
+		var h = $(document).height();
+
+		object.css(
+		{
+			'width' : w,
+			'height' : h
+		});
+		object.fadeIn(500); //생성되는 시간 설정
+	}
+
+	function bgLayerClear()
+	{
+		var object = $('.bgLayer');
+
+		if (object.length)
+		{
+			object.fadeOut(500, function()
 			{
-				"rv_num" : $rv_num,
-				"rec_nonrec_number" : $rec_nonrec_number
-			},
-			dataType : "json",
-			success : function(html)
-			{
-				//alert(html.rv_num +"|"+ html.rec_nonrec_number + "|" + html.action);
-				//alert(html.rec + "|" + html.nonrec);
-				
-				if(html.action=="-1") // 같은 추천을 눌렀을 경우 -> rec_nonrec_number의 스타일을 없애고, count-1
-				{
-					if($rec_nonrec_number=="1")
-					{
-						$("#rec" + html.rv_num).css("border", "none");
-						$("#rec" + html.rv_num).html("추천 👍 ("+ html.rec +")");
-					}
-					else if($rec_nonrec_number=="2")
-					{
-						$("#nonrec" + html.rv_num).css("border", "none");
-						$("#nonrec" + html.rv_num).html("비추천 👎 ("+ html.nonrec +")");
-					}
-				}
-				else if(html.action=="0") // 그냥 추천/비추천 추가 -> 추가한 것에 스타일 추가, count+1
-				{
-					if($rec_nonrec_number=="1")
-					{
-						$("#rec" + html.rv_num).css("border", "2px solid #ef6351");
-						$("#rec" + html.rv_num).html("추천 👍 ("+ html.rec +")");
-					}
-					else if($rec_nonrec_number=="2")
-					{
-						$("#nonrec" + html.rv_num).css("border", "2px solid #ef6351");
-						$("#nonrec" + html.rv_num).html("비추천 👎 ("+ html.nonrec +")");
-					}
-				}
-				else if(html.action=="1") // 이미 눌려있는 상태에서 다른 추천 눌렀을 경우
-										  // -> 누른 추천에 스타일 추가, 이미 있는 것에 스타일 해제
-										  //    누른 추천에 count+1, 이미 있는 것에 count-1
-				{
-					if(html.rec_nonrec_number=="1")
-					{
-						$("#rec" + html.rv_num).css("border", "2px solid #ef6351");
-						$("#rec" + html.rv_num).html("추천 👍 ("+ html.rec +")");
-						$("#nonrec" + html.rv_num).css("border", "none");
-						$("#nonrec" + html.rv_num).html("비추천 👎 ("+ html.nonrec +")");
-						
-					}
-					else if($rec_nonrec_number=="2")
-					{
-						$("#rec" + html.rv_num).css("border", "none");
-						$("#rec" + html.rv_num).html("추천 👍 ("+ html.rec +")");
-						$("#nonrec" + html.rv_num).css("border", "2px solid #ef6351");
-						$("#nonrec" + html.rv_num).html("비추천 👎 ("+ html.nonrec +")");
-					}
-				}
-			},
-			error : function(e)
-			{
-				alert(e.responseText);
-			}
+				object.remove();
+
+			});
+		}
+	}
+
+	$(function()
+	{
+		$(window).resize(function()
+		{ //화면 크기 변할 시
+			$('.bgLayer').css('width', $(window).width() - 0);
+			$('.bgLayer').css('height', $(window).height() - 0);
 		});
 	});
+
+	// 추천/비추천
+	$(document).on(
+			"click",
+			".recBtn",
+			function()
+			{
+				//alert("확인");
+				$rv_num = $(this).val();
+
+				if ($(this).attr("name") == "rec")
+				{
+					$rec_nonrec_number = "1";
+				} else
+					$rec_nonrec_number = "2";
+
+				//alert($rec_nonrec_number);
+
+				$.ajax(
+				{
+					url : "recInsertDelete.action",
+					type : 'post',
+					data :
+					{
+						"rv_num" : $rv_num,
+						"rec_nonrec_number" : $rec_nonrec_number
+					},
+					dataType : "json",
+					success : function(html)
+					{
+						//alert(html.rv_num +"|"+ html.rec_nonrec_number + "|" + html.action);
+						//alert(html.rec + "|" + html.nonrec);
+
+						if (html.action == "-1") // 같은 추천을 눌렀을 경우 -> rec_nonrec_number의 스타일을 없애고, count-1
+						{
+							if ($rec_nonrec_number == "1")
+							{
+								$("#rec" + html.rv_num).css("border", "none");
+								$("#rec" + html.rv_num).html(
+										"추천 👍 (" + html.rec + ")");
+							} else if ($rec_nonrec_number == "2")
+							{
+								$("#nonrec" + html.rv_num)
+										.css("border", "none");
+								$("#nonrec" + html.rv_num).html(
+										"비추천 👎 (" + html.nonrec + ")");
+							}
+						} else if (html.action == "0") // 그냥 추천/비추천 추가 -> 추가한 것에 스타일 추가, count+1
+						{
+							if ($rec_nonrec_number == "1")
+							{
+								$("#rec" + html.rv_num).css("border",
+										"2px solid #ef6351");
+								$("#rec" + html.rv_num).html(
+										"추천 👍 (" + html.rec + ")");
+							} else if ($rec_nonrec_number == "2")
+							{
+								$("#nonrec" + html.rv_num).css("border",
+										"2px solid #ef6351");
+								$("#nonrec" + html.rv_num).html(
+										"비추천 👎 (" + html.nonrec + ")");
+							}
+						} else if (html.action == "1") // 이미 눌려있는 상태에서 다른 추천 눌렀을 경우
+						// -> 누른 추천에 스타일 추가, 이미 있는 것에 스타일 해제
+						//    누른 추천에 count+1, 이미 있는 것에 count-1
+						{
+							if (html.rec_nonrec_number == "1")
+							{
+								$("#rec" + html.rv_num).css("border",
+										"2px solid #ef6351");
+								$("#rec" + html.rv_num).html(
+										"추천 👍 (" + html.rec + ")");
+								$("#nonrec" + html.rv_num)
+										.css("border", "none");
+								$("#nonrec" + html.rv_num).html(
+										"비추천 👎 (" + html.nonrec + ")");
+
+							} else if ($rec_nonrec_number == "2")
+							{
+								$("#rec" + html.rv_num).css("border", "none");
+								$("#rec" + html.rv_num).html(
+										"추천 👍 (" + html.rec + ")");
+								$("#nonrec" + html.rv_num).css("border",
+										"2px solid #ef6351");
+								$("#nonrec" + html.rv_num).html(
+										"비추천 👎 (" + html.nonrec + ")");
+							}
+						}
+					},
+					error : function(e)
+					{
+						alert(e.responseText);
+					}
+				});
+			});
 </script>
 
 </head>
@@ -319,12 +376,13 @@ String cp = request.getContextPath();
 											</div>
 											<div class="likeRevC score">
 												별점 ⭐<span>${s.star_avg}</span>
+												
 											</div>
-
 											<div class="likeRevC reviewNum">
 												리뷰 수 &nbsp; <span>${s.rv_count}</span>
 											</div>
 										</div>
+										<input type="hidden" name="st_num" value="${s.st_num }">
 									</div>
 								</div>
 							</div>
@@ -453,8 +511,12 @@ String cp = request.getContextPath();
 									<div class="none">해당 항목이 존재하지 않습니다.</div>
 								</c:if>
 								<div class="storeCheck">
-									<div class="stCheckListName"><가게 옵션></div>
-									<div class="stCheckListYesorno"><여부></div>
+									<div class="stCheckListName">
+										<가게 옵션>
+									</div>
+									<div class="stCheckListYesorno">
+										<여부>
+									</div>
 								</div>
 								<c:forEach var="stCheck" items="${stCheckList }">
 									<div class="storeCheck">
@@ -514,6 +576,7 @@ String cp = request.getContextPath();
 									<div class="none">"작성된 리뷰가 존재하지 않습니다."</div>
 								</c:if>
 								<c:forEach var="rv" items="${reviews }">
+									<c:set var="rn" value="${rv.rv_num }" />
 									<div class="reviews">
 										<div class="rvTop">
 											<div class="userNickname">"${rv.user_nickname }"</div>
@@ -549,10 +612,10 @@ String cp = request.getContextPath();
 												</c:choose>
 											</div>
 											<div class="contentPhotoDiv">
-												<div class="rvContentDiv">${rv.rv_content }</div>
+												<div class="rvContentDiv" id="${rn }">${rv.rv_content }</div>
 												<div class="rvPhotoDiv">
 													<c:forEach var="photos" items="${rvPhotos }">
-														<c:if test="${photos.rv_num == rv.rv_num }">
+														<c:if test="${photos.rv_num eq rn }">
 															<img alt="" class="rvphoto"
 																src="<%=cp %>/images/${photos.photo_link }" />
 														</c:if>
@@ -564,40 +627,36 @@ String cp = request.getContextPath();
 
 										<div class="rvBottom">
 											<div class="recNonrecBtnDiv">
-												<c:set var="rv_num" value="${rv.rv_num }"/>
-												<c:forEach var="userRvRec" items="${userReviewList }">
-													<c:choose>
-														<c:when test="${(userRvRec.rv_num eq rv_num) 
-															&& (userRvRec.rec_nonrec_number eq 1) }">
-															<button type="button" id="nonrec${rv_num }" name="nonrec"
-																class="recBtn rvBtn" value="${rv.rv_num }">비추천 👎
-																(${rv.nonrec })</button>
-															<button type="button" id="rec${rv_num }" name="rec"
-																class="recBtn rvBtn" value="${rv.rv_num }"
-																style="border: 2px solid #ef6351">추천 👍
-																(${rv.rec } )</button>
-														</c:when>
-														<c:when test="${(userRvRec.rv_num eq rv_num) 
-															&& (userRvRec.rec_nonrec_number eq 2) }">
-															<button type="button" id="nonrec${rv_num }" name="nonrec"
-																class="recBtn rvBtn" value="${rv.rv_num }"
-																style="border: 2px solid #ef6351">비추천 👎
-																(${rv.nonrec })</button>
-															<button type="button" id="rec${rv_num }" name="rec"
-																class="recBtn rvBtn" value="${rv.rv_num }">추천 👍
-																(${rv.rec } )</button>
-														</c:when>
-														<c:when test="${(userRvRec.rv_num ne rv_num)}">
-															<button type="button" id="nonrec${rv_num }" name="nonrec"
-																class="recBtn rvBtn" value="${rv.rv_num }">비추천 👎
-																(${rv.nonrec })</button>
-															<button type="button" id="rec${rv_num }" name="rec"
-																class="recBtn rvBtn" value="${rv.rv_num }">추천 👍
-																(${rv.rec } )</button>
-														</c:when>
-														
-													</c:choose>
-												</c:forEach>
+												<c:choose>
+													<c:when
+														test="${not empty userRnList and fn:contains(userRnList, rn)}">
+														<button type="button" id="nonrec${rn }" name="nonrec"
+															class="recBtn rvBtn" value="${rn }">비추천 👎
+															(${rv.nonrec })</button>
+														<button type="button" id="rec${rn }" name="rec"
+															class="recBtn rvBtn" value="${rn }"
+															style="border: 2px solid #ef6351">추천 👍
+															(${rv.rec } )</button>
+													</c:when>
+													<c:when
+														test="${not empty userNrnList and fn:contains(userNrnList, rn)}">
+														<button type="button" id="nonrec${rn }" name="nonrec"
+															class="recBtn rvBtn" value="${rn }"
+															style="border: 2px solid #ef6351">비추천 👎
+															(${rv.nonrec })</button>
+														<button type="button" id="rec${rn }" name="rec"
+															class="recBtn rvBtn" value="${rn }">추천 👍
+															(${rv.rec } )</button>
+													</c:when>
+													<c:otherwise>
+														<button type="button" id="nonrec${rn }" name="nonrec"
+															class="recBtn rvBtn" value="${rn }">비추천 👎
+															(${rv.nonrec })</button>
+														<button type="button" id="rec${rn}" name="rec"
+															class="recBtn rvBtn" value="${rn }">추천 👍
+															(${rv.rec } )</button>
+													</c:otherwise>
+												</c:choose>
 											</div>
 										</div>
 									</div>
@@ -648,7 +707,7 @@ String cp = request.getContextPath();
 
 
 			<c:import url="compare_box.jsp"></c:import>
-			
+
 		</div>
 	</form>
 	<div class="footer">
