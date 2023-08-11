@@ -155,6 +155,10 @@ input[type="radio"]
 	padding-top: 10px;
 	height: 25px;
 }
+#penaltyRevokeReport
+{
+	cursor: not-allowed;
+}
 
 </style>
 
@@ -258,22 +262,30 @@ input[type="radio"]
 					<textarea id="penaltyRevokeReport" readonly="readonly" style="width: 72%; height: 5em; 3px; resize: none;">${revo.getRevo_rs() }</textarea>
 				</div>
 				
+				<c:if test="${state ne '처리완료' }">
+					<div style="width: 87%; text-align: right; margin-top: 1vh;">
+						<label class="label"><input type="radio" class="check" name="res" id="approve"><span id="span">승인</span></label>
+						<label class="label"><input type="radio" class="check" name="res" id="reject" value="true"><span id="span">반려</span></label>
+					</div>
+					
+					<br>
+					<div class="igroup2" style="width: 100%;">
+						<textarea id="myTextarea" style="width: 72%; height: 10em; resize: none;" placeholder="반려사유를 입력해주세요."></textarea>
+					</div>
+					
+					
+					<br><br>
+					<div class="sendBtn">
+						<input type="button" class="sendResult" value="처리 하기">
+					</div>
+				</c:if>
 				
-				<div style="width: 87%; text-align: right; margin-top: 1vh;">
-					<label class="label"><input type="radio" class="check" name="res" id="approve"><span id="span">승인</span></label>
-					<label class="label"><input type="radio" class="check" name="res" id="reject" value="true"><span id="span">요청반려</span></label>
-				</div>
-				
-				<br>
-				<div class="igroup2" style="width: 100%;">
-					<textarea id="myTextarea" style="width: 72%; height: 10em; resize: none;" placeholder="반려사유를 입력해주세요."></textarea>
-				</div>
-				
-				
-				<br><br>
-				<div class="sendBtn">
-					<input type="button" class="sendResult" value="처리 하기">
-				</div>
+				<c:if test="${state eq '처리완료' }">
+					<br><br>
+					<div class="igroup" style="width: 100%; color: red; margin-left: 22%; font-size: 20pt">
+						처리가 완료된 패널티 회수 신청서 입니다.
+					</div>
+				</c:if>
 			</div>
 		</div>
 	</div>

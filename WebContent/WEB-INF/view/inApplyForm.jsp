@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	request.setCharacterEncoding("UTF-8");
-String cp = request.getContextPath();
+	String cp = request.getContextPath();
 %>
 <!DOCTYPE html>
 <html>
@@ -328,11 +328,10 @@ input[type="radio"] {
 <body>
 
 	<div class="bframe">
-		<form action="storeregiinsert.action" method="post" id="userForm"
-			enctype="multipart/form-data">
+		<form action="storeregiinsert.action" method="post" id="userForm" enctype="multipart/form-data">
 			<!-- header -->
 			<div>
-				<c:import url="header_user.jsp"></c:import>
+				<c:import url="header_admin.jsp"></c:import>
 			</div>
 
 			<div class="middle">
@@ -420,26 +419,34 @@ input[type="radio"] {
 						</div>
 					</div>
 
-
-					<div class="checkLabel">
-						<label class="label"><input type="radio" class="check"
-							name="res" id="approve"><span>승인</span></label> <label
-							class="label"><input type="radio" class="check"
-							name="res" id="reject" value="true"><span>반려</span></label>
-					</div>
-
-					<!-- 가게 주소 -->
-					<div class="igroup rejText">
-						<div class="title">반려 사유</div>
-						<div class="rejReason">
-							<textarea id="myTextarea" name="memo" rows="4" cols="50"
-								placeholder="반려사유를 입력해주세요."></textarea>
+					<c:if test="${state ne '처리완료' }">
+					
+						<div class="checkLabel">
+							<label class="label">
+							<input type="radio" class="check" name="res" id="approve"><span>승인</span></label>
+							<label class="label"><input type="radio" class="check" name="res" id="reject" value="true"><span>반려</span></label>
 						</div>
-					</div>
-
-					<div class="sendBtn">
-						<input type="button" class="sendResult" value="처리 하기">
-					</div>
+	
+						<!-- 가게 주소 -->
+						<div class="igroup rejText">
+							<div class="title">반려 사유</div>
+							<div class="rejReason">
+								<textarea id="myTextarea" name="memo" rows="4" cols="50" placeholder="반려사유를 입력해주세요."></textarea>
+							</div>
+						</div>
+						
+						<br><br>
+						<div class="sendBtn">
+							<input type="button" class="sendResult" value="처리 하기">
+						</div>
+						
+					</c:if>
+					<c:if test="${state eq '처리완료' }">
+						<br><br>
+						<div class="igroup" style="width: 100%; color: red; margin-left: 22%; font-size: 20pt">
+							처리가 완료된 패널티 회수 신청서 입니다.
+						</div>
+					</c:if>
 				</div>
 				<!-- st_info_insert -->
 			</div>
@@ -447,6 +454,8 @@ input[type="radio"] {
 
 
 		</form>
+		<!-- footer -->
+		<div><c:import url="/WEB-INF/view/footer.jsp"></c:import></div>
 	</div>
 
 </body>
