@@ -1,15 +1,16 @@
-<%@page import="com.yameokja.mc.RvApplyViewDTO"%>
-<%@page import="java.util.ArrayList"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <% 
    request.setCharacterEncoding("UTF-8");
    String cp = request.getContextPath();
 %>
+<<<<<<< Updated upstream
 <%
 	RvApplyViewDTO dto = (RvApplyViewDTO)request.getAttribute("review");
    //System.out.print(dto.getUser_id());
 %>
+=======
+>>>>>>> Stashed changes
 <!DOCTYPE html>
 <html>
 <head>
@@ -244,6 +245,7 @@ span
 </head>
 <body>
 
+<<<<<<< Updated upstream
 <div class="bframe">
    
    <!-- header -->
@@ -287,17 +289,58 @@ span
 		<div class="igroup" >
 			<div class="title" style="margin-bottom: 0.5vh;">
 				<span>리뷰내용</span>
+=======
+<!-- header -->
+<c:import url="/WEB-INF/view/header_admin.jsp"></c:import>
+<!-- 사이드바 -->
+<div id="leftSideBar">
+</div>
+
+
+<!-- body -->
+<div id="title" style="padding: 10px;">
+<h1>리뷰신고서</h1><br>
+</div>
+
+<div id="body">
+	<div id="leftSide"></div>
+	
+	<div id="center">
+		<hr>
+		<br>
+		<div id="more">
+			<div style="width: 50%;">
+				신고자 : <input type="text" id="reporter" value="홍길동" style="border: 0px; width: 70px;">
+			</div>
+			<div style="width: 50%; text-align: right;">
+				신고일 : <input type="text" id="reportDate" value="2023.08.04" style="border: 0px; text-align: right; width: 70px;">
+			</div>
+		</div>
+		
+		<div id="more">
+			<div style="width: 50%;">
+				피신고자 : <input type="text" id="reported" value="둘리" style="border: 0px; width: 70px;">
+			</div>
+			<div style="width: 50%; text-align: right;">
+				작성일 : <input type="text" id="createDate" value="2023.08.01" style="border: 0px; text-align: right; width: 70px;">
+>>>>>>> Stashed changes
 			</div>
 		</div>
 		<div class="igroup2" style="width: 100%;">
 		<textarea id="reviewReport" readonly="readonly" style="width: 72%; height: 10em; resize: none;">${review.getRv_content() }</textarea>
 		</div>
 		
+<<<<<<< Updated upstream
 		
          
 		<div class="igroup2">
 			<div style="width: 50%; font-size: 11pt;">
 				리뷰신고카테고리명 : ${review.getRep_rs_name()}
+=======
+		<div id="more" style="margin-bottom: 2vh;">
+			<div style="width: 50%;">
+				리뷰신고카테고리명 : <input type="text" value="??" style="border: 0px; width: 100px;">
+>>>>>>> Stashed changes
 			</div>
 			<div style="width: 42%; text-align: right; margin-top: 1vh; font-size: 11pt;">
 				<button class="stInfoBtn" id="${review.getSt_num() }">${review.getSt_name() } 페이지로 가기</button>

@@ -47,10 +47,16 @@ public class StoreController
 
 		model.addAttribute("user", user);
 		
+		ArrayList<StoreDTO> st_list = smDao.searchStoreInfo(user_num);
+		int st_num;
 		
-		int st_num = smDao.searchStoreInfo(user_num);
+		if(smDao.searchRepStore(user_num) == null)
+			st_num = st_list.get(0).getSt_num();
+		else
+			st_num = smDao.searchRepStore(user_num);
 		
-		session.setAttribute("st_num", st_num );
+		
+		session.setAttribute("st_num", st_num);
 				
 		ArrayList<HashMap<String, String>> hashmaplist = smDao.rv_key_sum(st_num);
 		
@@ -75,6 +81,8 @@ public class StoreController
 			star_data.add(String.valueOf(star.get("AVERAGE_STAR_SCORE")));
 		}
 		
+		model.addAttribute("st_list", st_list);
+		
 		model.addAttribute("rv_labels", rv_labels.subList(0, 5));
 		model.addAttribute("rv_data", rv_data.subList(0, 5));
 		
@@ -87,33 +95,6 @@ public class StoreController
 		model.addAttribute("alarm", uDao.userAlarm(user_num));
 		
 		result = "/WEB-INF/view/StoreMainPage.jsp";
-		
-		return result;
-	}
-	
-	
-	@RequestMapping(value="/stdetailmodify.action", method=RequestMethod.POST)
-	public String stDetailForm(HttpServletRequest request, Model model)
-	{
-		HttpSession session = request.getSession();
-		
-		String user_num = (String)session.getAttribute("user_num");
-		int st_num = (Integer)session.getAttribute("st_num");
-		
-		String result = "";
-		
-		IUserDAO udao = sqlSession.getMapper(IUserDAO.class);
-		IStoreMainDAO sdao = sqlSession.getMapper(IStoreMainDAO.class);
-		
-		UserDTO user = udao.searchUserInfo(user_num, "num");
-		
-		if (sdao.check_stDetail(st_num) > 0)
-		{}
-		else
-		{
-			result = "/WEB-INF/view/st_detail_form.jsp";
-		}
-		
 		
 		return result;
 	}
