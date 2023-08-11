@@ -409,6 +409,7 @@ public class UserController
 		
 		session.removeAttribute("user_num");
 		session.removeAttribute("admin_num");
+		session.removeAttribute("store_num");
 		
 		result = "redirect:yameokja.action";
 		
