@@ -184,7 +184,7 @@ span
 	padding-top: 10px;
 	height: 25px;
 }
-#reviewReject
+#myTextarea
 {
 	display: none;
 }
@@ -215,9 +215,9 @@ span
 		    if ($(this).is(":checked")) 
 		    {
 		       if ($(this).val() == "true")
-		          $("#reviewReject").css("display", "flex");
+		          $("#myTextarea").css("display", "flex");
 		       else
-		          $("#reviewReject").css("display", "none");
+		          $("#myTextarea").css("display", "none");
 		    }
 		});
 		
@@ -293,7 +293,6 @@ span
 		<textarea id="reviewReport" readonly="readonly" style="width: 72%; height: 10em; resize: none;">${review.getRv_content() }</textarea>
 		</div>
 		
-		
          
 		<div class="igroup2">
 			<div style="width: 50%; font-size: 11pt;">
@@ -310,29 +309,9 @@ span
 			<label class="label"><input type="radio" class="check" name="res" id="reject" value="true"><span id="span">반려</span></label>
 		</div>
          
-         <!-- 
-		<div class="igroup2" style="width: 100%;">
-			<textarea id="reviewReject"  style="width: 72%; height: 10em; resize: none; border-radius: 10px;" placeholder="반려사유기재"></textarea>
-		</div>
-        
-        <div class="igroup" >
-			<span class="errorMsg" id="err">반려사유를 입력해야 합니다.</span>
-		</div>
-		 -->
-		<!-- 
-		<div style="width: 87%; text-align: right; margin-top: 1vh;">
-			<button value="중재" onclick="mediateBtn()">중재</button>
-			<button value="반려" onclick="rejectBtn()">반려</button>
-		</div>
-		 -->
 		 
-		<div class="igroup rejText">
-           <div class="title">
-              반려 사유
-           </div>
-           <div class="rejReason">
+		<div class="igroup2" style="width: 100%;">
            <textarea id="myTextarea" style="width: 72%; height: 10em; resize: none;" placeholder="반려사유를 입력해주세요."></textarea>
-           </div>
         </div>
    		
    		<div class="sendBtn">

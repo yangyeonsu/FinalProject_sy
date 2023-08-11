@@ -106,7 +106,7 @@ button, .input
 	margin-right: 1vw;
 	border: 1px solid;
 }
-#errReport
+#myTextarea
 {
 	display: none;
 }
@@ -128,17 +128,6 @@ input[type="radio"]
 </style>
 
 <script type="text/javascript">
-	function reqBtn()
-	{
-		
-		if ($("#errReport").val() == "")
-		{
-			$("#err").css("display", "inline");
-			$("#errReport").focus();
-			return;
-		}
-		
-	};
 	
 	$(function ()
 	{
@@ -147,12 +136,12 @@ input[type="radio"]
 		    if ($(this).is(":checked")) 
 		    {
 		       if ($(this).val() == "true")
-		          $("#errReport").css("display", "flex");
+		          $("#myTextarea").css("display", "flex");
 		       else
-		          $("#errReport").css("display", "none");
+		          $("#myTextarea").css("display", "none");
 		    }
 		});
-		/* 
+		 
 		$(".sendResult").click(function()
 		{
 			if ($(".check:checked").length == 0)
@@ -169,7 +158,7 @@ input[type="radio"]
 				}
 			}
 		});
-		 */
+		
 	});
 </script>
 
@@ -215,16 +204,22 @@ input[type="radio"]
 			</div>
 			
 			<div style="width: 87%; text-align: right; margin-top: 1vh;">
-				<label class="label"><input type="radio" class="check" name="res" id="agree"><button id="agree" style="margin-left: 1vh;">요청승인</button></label>
-				<label class="label"><input type="radio" class="check" name="res" id="reject" value="true"><button value="반려" onclick="reqBtn()">요청반려</button></label>
+				<!-- <label class="label"><input type="radio" class="check" name="res" id="agree"><button id="agree" style="margin-left: 1vh;">요청승인</button></label> -->
+				<label class="label"><input type="radio" class="check" name="res" id="approve"><span>요청승인</span></label>
+				<!-- <label class="label"><input type="radio" class="check" name="res" id="reject" value="true"><button value="반려" onclick="reqBtn()">요청반려</button></label> -->
+				<label class="label"><input type="radio" class="check" name="res" id="reject" value="true"><span>요청반려</span></label>
 			</div>
-			
+			<!-- 
 			<div class="igroup2" style="width: 100%;">
 				<textarea id="errReport"  style="width: 72%; height: 10em; resize: none; border-radius: 10px;" placeholder="반려사유기재"></textarea>
 			</div>
 			
 			<div class="igroup" >
 				<span class="errorMsg" id="err">반려사유를 입력해야 합니다.</span>
+			</div>
+			 -->
+			<div class="igroup2" style="width: 100%;">
+				<textarea id="myTextarea" style="width: 72%; height: 10em; resize: none;" placeholder="반려사유를 입력해주세요."></textarea>
 			</div>
 			
 			<div class="sendBtn">
