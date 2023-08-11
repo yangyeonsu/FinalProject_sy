@@ -129,6 +129,10 @@ input[type="radio"]
 	padding-top: 10px;
 	height: 25px;
 }
+#storeErrReport
+{
+	cursor: not-allowed;
+}
 
 </style>
 
@@ -216,29 +220,32 @@ input[type="radio"]
 				<textarea id="storeErrReport" readonly="readonly" style="width: 72%; height: 5em; 3px; resize: none;">${err.getReq_rs() }</textarea>
 			</div>
 			
-			<div style="width: 87%; text-align: right; margin-top: 1vh;">
-				<!-- <label class="label"><input type="radio" class="check" name="res" id="agree"><button id="agree" style="margin-left: 1vh;">요청승인</button></label> -->
-				<label class="label"><input type="radio" class="check" name="res" id="approve"><span id="span">승인</span></label>
-				<!-- <label class="label"><input type="radio" class="check" name="res" id="reject" value="true"><button value="반려" onclick="reqBtn()">요청반려</button></label> -->
-				<label class="label"><input type="radio" class="check" name="res" id="reject" value="true"><span id="span">반려</span></label>
-			</div>
-			<br><br>
-			<!-- 
-			<div class="igroup2" style="width: 100%;">
-				<textarea id="errReport"  style="width: 72%; height: 10em; resize: none; border-radius: 10px;" placeholder="반려사유기재"></textarea>
-			</div>
+			<c:if test="${state ne '처리완료' }">
+				
+				<div style="width: 87%; text-align: right; margin-top: 1vh;">
+					<label class="label"><input type="radio" class="check" name="res" id="approve"><span id="span">승인</span></label>
+					<label class="label"><input type="radio" class="check" name="res" id="reject" value="true"><span id="span">반려</span></label>
+				</div>
+				<br><br>
+				
+				<div class="igroup2" style="width: 100%;">
+					<textarea id="myTextarea" style="width: 72%; height: 10em; resize: none;" placeholder="반려사유를 입력해주세요."></textarea>
+				</div>
+				
+				<br>
+				
+				<div class="sendBtn">
+					<input type="button" class="sendResult" value="처리 하기">
+				</div>
+				
+			</c:if>
 			
-			<div class="igroup" >
-				<span class="errorMsg" id="err">반려사유를 입력해야 합니다.</span>
-			</div>
-			 -->
-			<div class="igroup2" style="width: 100%;">
-				<textarea id="myTextarea" style="width: 72%; height: 10em; resize: none;" placeholder="반려사유를 입력해주세요."></textarea>
-			</div>
-			<br>
-			<div class="sendBtn">
-				<input type="button" class="sendResult" value="처리 하기">
-			</div>
+			<c:if test="${state eq '처리완료' }">
+				<br><br>
+				<div class="igroup" style="width: 100%; color: red; margin-left: 30%; font-size: 20pt; text-align: center; width: 600px; margin: 0 auto;">
+					처리가 완료된 가게정보오류수정요청서 입니다.
+				</div>
+			</c:if>
 			
 		</div>
 	</div>
