@@ -216,15 +216,12 @@ button
 	            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
 	            var addr = ''; // 주소 변수
 	            var extraAddr = ''; // 참고항목 변수
-	            var query = '';
 	
 	            //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
 	            if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
 	                addr = data.roadAddress;
-	            	query = data.query;
 	            } else { // 사용자가 지번 주소를 선택했을 경우(J)
 	                addr = data.jibunAddress;
-	                query = data.query;
 	            }
 	
 	            // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
@@ -252,8 +249,6 @@ button
 	            // 우편번호와 주소 정보를 해당 필드에 넣는다.
 	            document.getElementById('st_location').value = addr + extraAddr;
 	            /* document.getElementById("sample6_address").value = addr; */
-	            document.getElementById('query').value = query;
-	            
 	            // 커서를 상세주소 필드로 이동한다.
 	            document.getElementById("st_location_dt").focus();
 	        }
@@ -487,7 +482,6 @@ button
 					<div class="input_group">
 						<input type="text" class="inputform" name="st_location" id="st_location" placeholder="주소" readonly>
 						<button type="button" id="addrsc" onclick="sample6_execDaumPostcode()">주소 찾기</button>
-						<input type="hidden" id="query">
 					</div>
 					<span id="err6" style="color: red; font-weight: bold; display: none;"></span>
 				</div>

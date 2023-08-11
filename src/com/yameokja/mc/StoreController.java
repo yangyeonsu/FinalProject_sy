@@ -98,31 +98,4 @@ public class StoreController
 		
 		return result;
 	}
-	
-	
-	@RequestMapping(value="/stdetailmodify.action", method=RequestMethod.POST)
-	public String stDetailForm(HttpServletRequest request, Model model)
-	{
-		HttpSession session = request.getSession();
-		
-		String user_num = (String)session.getAttribute("user_num");
-		int st_num = (Integer)session.getAttribute("st_num");
-		
-		String result = "";
-		
-		IUserDAO udao = sqlSession.getMapper(IUserDAO.class);
-		IStoreMainDAO sdao = sqlSession.getMapper(IStoreMainDAO.class);
-		
-		UserDTO user = udao.searchUserInfo(user_num, "num");
-		
-		if (sdao.check_stDetail(st_num) > 0)
-		{}
-		else
-		{
-			result = "/WEB-INF/view/st_detail_form.jsp";
-		}
-		
-		
-		return result;
-	}
 }

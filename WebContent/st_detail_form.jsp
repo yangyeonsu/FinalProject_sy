@@ -286,6 +286,9 @@ table
 .input:focus + .line-box .line {
   width: 100%;
 }
+.label-active {
+  top: -3em;
+}
 
 .label-txt {
   position: absolute;
@@ -297,11 +300,6 @@ table
   color: rgb(120,120,120);
   transition: ease .3s;
 }
-
-.label-active {
-  top: -3em;
-}
-
 .storeOption input
 {
 	zoom:1.5;

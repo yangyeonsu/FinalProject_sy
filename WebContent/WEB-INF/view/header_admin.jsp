@@ -195,7 +195,7 @@ $(function() {
 
 	<header id="store_header">
 		<div class="headerImg">
-			<a href="adminmain.action"><img id="headerLogo" src="<%=cp %>/images/logo_text.png"></a>
+			<a href="main.action"><img id="headerLogo" src="<%=cp %>/images/logo_text.png"></a>
 		</div>
 		
 		<div id="headerAlarm">
