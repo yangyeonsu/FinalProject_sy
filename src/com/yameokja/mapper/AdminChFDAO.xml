@@ -91,4 +91,6 @@
         ON IA.USER_NUM = UU.USER_NUM
         WHERE IN_APPLY_NUM = #{in_apply_num}
 	</select>
+	
+	
 </mapper>
