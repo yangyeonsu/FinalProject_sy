@@ -32,40 +32,32 @@ public class store_OutController
 	{
 		String result = null;
 		
-		result = "WEB-INF/view/store_Out.jsp";
+		result = "store_Out.jsp";
 		
 		return result;
 	}
 	
-	@RequestMapping(value = "/storeregiinsert.action", method=RequestMethod.POST)
-	public String StoreregiInsert(HttpServletRequest request, HttpServletResponse response) 
+	@RequestMapping(value = "/storeOutinsert.action", method=RequestMethod.POST)
+	public String StoreOutinsert(HttpServletRequest request, HttpServletResponse response) 
 	{
 		HttpSession session = request.getSession();
 		String rootPath = servletContext.getRealPath("/");
 		String CHARSET = "utf-8";
 		int LIMIT_SIZE_BYTES = 5 * 1024 * 1024;
 		
-		StoreregiDTO srdto = new StoreregiDTO();
+		storeOutDTO sodto = new storeOutDTO();
 		
 		// 경로상 디렉터리가 존재하지 않으면... 만든다.
-		String savePath_stIn = rootPath + File.separator + "Store_In_File";
-		File st_in_dir = new File(savePath_stIn);
-		if (!st_in_dir.exists())
+		String savePath_stOut = rootPath + File.separator + "Store_Out_File";
+		File st_out_dir = new File(savePath_stOut);
+		if (!st_out_dir.exists())
 		{
-			st_in_dir.mkdirs();
-		}
-		
-		// 경로상 디렉터리가 존재하지 않으면... 만든다.
-		String savePath_stPlace = rootPath + File.separator + "Store_Place_File";
-		File st_place_dir = new File(savePath_stPlace);
-		if (!st_place_dir.exists())
-		{
-			st_place_dir.mkdirs();
+			st_out_dir.mkdirs();
 		}
 		
 		
 		DiskFileItemFactory fileItemFactory = new DiskFileItemFactory();
-		fileItemFactory.setRepository(st_in_dir);
+		fileItemFactory.setRepository(st_out_dir);
 		fileItemFactory.setSizeThreshold(LIMIT_SIZE_BYTES);
 		ServletFileUpload fileUpload = new ServletFileUpload(fileItemFactory);
 		
@@ -76,54 +68,31 @@ public class store_OutController
             {
                 if (!item.isFormField())
                 {
-                	if (item.getFieldName().equals("st_in_file"))
+                	if (item.getFieldName().equals("st_out_file"))
                 	{
 	                    if (item.getSize() > 0)
 	                    {
 	                        String separator = File.separator;
 	                        int index =  item.getName().lastIndexOf(separator);
 	                        String fileName = item.getName().substring(index  + 1);
-	                        File uploadFile = new File(savePath_stIn +  separator + fileName);
+	                        File uploadFile = new File(savePath_stOut +  separator + fileName);
 	                        item.write(uploadFile);
-	                        srdto.setSt_in_file(String.valueOf(uploadFile));
+	                        sodto.setSt_out_file(String.valueOf(uploadFile));
 	                        
 	                    }
                 	}
-                	else if (item.getFieldName().equals("st_place_file"))
-                	{
-	                    if (item.getSize() > 0)
-	                    {
-	                        String separator = File.separator;
-	                        int index =  item.getName().lastIndexOf(separator);
-	                        String fileName = item.getName().substring(index  + 1);
-	                        File uploadFile = new File(savePath_stPlace +  separator + fileName);
-	                        item.write(uploadFile);
-	                        srdto.setSt_place_file(String.valueOf(uploadFile));
-	                    }
-                	}
+                	
                 }
                 else
                 {
-                	if (item.getFieldName().equals("st_in_num"))
+                	if (item.getFieldName().equals("st_out_num"))
                 	{
                 		String tmpStr = item.getString(CHARSET);
-                		int st_in_num = Integer.parseInt(tmpStr.substring(1, tmpStr.length()));
-                		srdto.setSt_in_num(st_in_num);
-                	}
-                	else if (item.getFieldName().equals("st_place_num"))
-                	{
-                		String tmpStr = item.getString(CHARSET);
-                		int st_place_num = Integer.parseInt(tmpStr.substring(1, tmpStr.length()));
-                		srdto.setSt_in_num(st_place_num);
+                		int st_out_num = Integer.parseInt(tmpStr.substring(1, tmpStr.length()));
+                		sodto.setSt_out_num(st_out_num);
                 	}
                 	else if (item.getFieldName().equals("st_name"))
-                		srdto.setSt_name(item.getString(CHARSET));
-                	else if (item.getFieldName().equals("st_location"))
-                		srdto.setSt_location(item.getString(CHARSET));
-                	else if (item.getFieldName().equals("st_location_dt"))
-                		srdto.setSt_location_dt(item.getString(CHARSET));
-                	else if (item.getFieldName().equals("st_tel"))
-                		srdto.setSt_tel(item.getString(CHARSET));
+                		sodto.setSt_name(item.getString(CHARSET));
                 } 
             }
 		}
@@ -133,11 +102,11 @@ public class store_OutController
 			System.out.println(e.toString());
 		}
 		
-		srdto.setUser_num((String)session.getAttribute("user_num"));
+		sodto.setUser_num((String)session.getAttribute("user_num"));
 		
-		IStoreregiDAO dao = sqlSession.getMapper(IStoreregiDAO.class);
+		IstoreOutDAO dao = sqlSession.getMapper(IstoreOutDAO.class);
 		
-		dao.St_In_Apply(srdto);
+		dao.st_Out_apply(sodto);
 		
 		return "redirect:main.action";
 	}
