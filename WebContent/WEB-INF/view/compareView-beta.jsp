@@ -463,7 +463,7 @@ String cp = request.getContextPath();
 
 	<div class="mainBody">
 
-		<c:import url="sideBar.jsp"></c:import>
+		<c:import url="sideBar_user.jsp"></c:import>
 
 
 		<div class="compareMain">
