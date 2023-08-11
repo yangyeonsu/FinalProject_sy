@@ -3,16 +3,26 @@ package com.yameokja.mc;
 public class RvApplyViewDTO
 {
 	/*
-	REP_APPLY_NUM, USER_ID, REG_DATE, ACCU_NUM, WRITE_DATE, REP_RS_NAME, ST_NAME, ST_NUM
+	REP_APPLY_NUM, USER_ID, REG_DATE, ACCU_NUM, WRITE_DATE, REP_RS_NAME, ST_NAME, ST_NUM, RV_CONTENT
 	*/
 	
-	private String reg_date, user_id, accu_num, st_name, write_date, rep_rs_name;
+	private String reg_date, user_id, accu_num, st_name, write_date, rep_rs_name, rv_content;
 	private int rep_apply_num, st_num;
 	
 	// getter / setter
 	public int getSt_num()
 	{
 		return st_num;
+	}
+
+	public String getRv_content()
+	{
+		return rv_content;
+	}
+
+	public void setRv_content(String rv_content)
+	{
+		this.rv_content = rv_content;
 	}
 
 	public void setSt_num(int st_num)
