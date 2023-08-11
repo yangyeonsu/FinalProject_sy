@@ -113,7 +113,7 @@ String cp = request.getContextPath();
 
 			$.ajax(
 			{
-				url : "reviewRep.action",
+				url : "reviewrep.action",
 				type : 'post',
 				data :
 				{
@@ -159,12 +159,6 @@ String cp = request.getContextPath();
 	{
 		$("#userForm").attr("action", "reviewRep.action");
 		$("#usesForm").submit();
-	});
-
-	// 리뷰 추천 / 비추천
-	$("#rec").click(function()
-	{
-
 	});
 
 	// 모달--------------------------------------------------------------------------
@@ -260,7 +254,7 @@ String cp = request.getContextPath();
 
 				$.ajax(
 				{
-					url : "recInsertDelete.action",
+					url : "recinsertdelete.action",
 					type : 'post',
 					data :
 					{

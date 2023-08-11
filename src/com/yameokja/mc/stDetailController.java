@@ -25,7 +25,7 @@ public class stDetailController
 	@Autowired
 	private SqlSession sqlSession;
 	
-	@RequestMapping(value="/stDetail-userView.action", method = RequestMethod.GET)
+	@RequestMapping(value="/stdetail-userview.action", method = RequestMethod.GET)
 	public String stDetail(HttpServletRequest request, Model model)
 	{
 		HttpSession session = request.getSession();
@@ -163,7 +163,7 @@ public class stDetailController
 		return result;
 	}
 	
-	@RequestMapping(value="/reviewRep.action")
+	@RequestMapping(value="/reviewrep.action")
 		@ResponseBody
 	public String insertReviewRep(@RequestParam("rv_num") int rv_num, @RequestParam("rep_rs_num") int rep_rs_num, @RequestParam("st_num") int st_num, HttpServletRequest request, Model model)
 	{
@@ -194,7 +194,7 @@ public class stDetailController
 		return html;
 	}
 	
-	@RequestMapping(value="/recInsertDelete.action")
+	@RequestMapping(value="/recinsertdelete.action")
 		@ResponseBody
 	public String recInsertDelete(@RequestParam("rv_num") int rv_num, @RequestParam("rec_nonrec_number") int rec_nonrec_number, HttpServletRequest request)
 	{
