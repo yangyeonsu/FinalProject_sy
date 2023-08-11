@@ -2,9 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.yameokja.mc.IStoreMainDAO">
-	<select id="searchStoreInfo" resultType="java.lang.Integer">
-		SELECT ST_NUM
+	<select id="searchStoreInfo" resultType="com.yameokja.mc.StoreDTO">
+		SELECT ST_NUM, ST_NAME
 		FROM STORE_VIEW
+		WHERE USER_NUM = #{user_num}
+	</select>
+	
+	<select id="searchRepStore" resultType="java.lang.Integer">
+		SELECT ST_NUM
+		FROM REP_STORE
 		WHERE USER_NUM = #{user_num}
 	</select>
 	

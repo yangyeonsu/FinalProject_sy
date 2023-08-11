@@ -87,16 +87,16 @@
 	<div class="left_sub_menu">
 		<div class="sub_menu">
 			<h2>MENU</h2>
-			<c:if test="${st_num != null }">
+			<c:if test="${session.st_num != null }">
 			<ul class="big_menu">
 						
 				<li>가게 리스트<i class="arrow fas fa-angle-right"></i></li>
 
 				<ul class="small_menu">
-					<li><a href="#" class="small_menuA">가게1</a></li>
+					<!-- <li><a href="#" class="small_menuA">가게1</a></li>
 					<li><a href="#" class="small_menuA">가게2</a></li>
 					<li><a href="#" class="small_menuA">가게3</a></li>
-					<li><a href="#" class="small_menuA">가게4</a></li>
+					<li><a href="#" class="small_menuA">가게4</a></li> -->
 				</ul>
 			</ul>
 			</c:if>
@@ -108,7 +108,7 @@
 				</ul>
 			</ul>
 			<ul class="big_menu">
-				<li>경고 내역</li>
+				<li><a href="penaltyList.action" class="small_menuA">경고내역</a></li>
 			</ul>
 		</div>
 	</div>

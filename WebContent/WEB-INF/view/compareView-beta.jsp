@@ -19,10 +19,7 @@ String cp = request.getContextPath();
 <link rel="stylesheet" type="text/css" href="<%=cp%>/css/userMyPage.css">
 
 
-<!-- 배너 CSS -->
-<style type="text/css">
-<!--
-배너 -->.has_sub_menu {
+<!-- .has_sub_menu {
 	list-style-type: none;
 }
 
@@ -131,11 +128,8 @@ String cp = request.getContextPath();
 .has_sub {
 	width: 100%;
 }
-<!--
-배너
-  
--->
-</style>
+
+</style> -->
 
 <!-- 해당 페이지 CSS -->
 <style type="text/css">
