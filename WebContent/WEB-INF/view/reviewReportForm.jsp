@@ -189,6 +189,7 @@ span
 {
 	display: none;
 }
+
 </style>
 
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
@@ -319,7 +320,8 @@ span
 			</div>
 		</c:if>
 		<c:if test="${state eq '처리완료' }">
-			<div class="igroup" style="width: 100%; color: red; margin-left: 30%; font-size: 20pt">
+			<br><br>
+			<div class="igroup" style="width: 100%; color: red; margin-left: 30%; font-size: 20pt; text-align: center; width: 500px; margin: 0 auto;">
 				처리가 완료된 리뷰신고서 입니다.
 			</div>
 		</c:if>

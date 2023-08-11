@@ -125,7 +125,10 @@ input[type="radio"]
 {
 	display: none;
 }
-
+#objReport
+{
+	cursor: not-allowed;
+}
 </style>
 
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
@@ -181,7 +184,7 @@ input[type="radio"]
 	
 	<div class="middle">
 		<div class="top">
-			<h1>가게정보오류수정요청서</h1>
+			<h1>이의제기요청서</h1>
 			<hr>
 		</div>
 		
@@ -211,26 +214,35 @@ input[type="radio"]
 				<div class="igroup" >
 					<div style="width: 100%;">
 						${obj.getPhoto_link() }
-						<button style="font-size: 8pt;">파일다운로드</button>
+						
+						<c:if test="${state ne '처리완료' }">
+							<button style="font-size: 8pt;">파일다운로드</button>
+						</c:if>
+					</div>
+				</div>
+				
+				<c:if test="${state ne '처리완료' }">
+					<div style="width: 87%; text-align: right; margin-top: 1vh;">
+						<label class="label"><input type="radio" class="check" name="res" id="approve"><span id="span">승인</span></label>
+						<label class="label"><input type="radio" class="check" name="res" id="reject" value="true"><span id="span">반려</span></label>
 					</div>
 					
+					<div class="igroup2" style="width: 100%;">
+						<textarea id="myTextarea" style="width: 72%; height: 10em; resize: none;" placeholder="반려사유를 입력해주세요."></textarea>
+					</div>
 					
-				</div>
+					<br><br>
+					<div class="sendBtn">
+						<input type="button" class="sendResult" value="처리 하기">
+					</div>
+				</c:if>
 				
-				<div style="width: 87%; text-align: right; margin-top: 1vh;">
-					<label class="label"><input type="radio" class="check" name="res" id="approve"><span id="span">승인</span></label>
-					<label class="label"><input type="radio" class="check" name="res" id="reject" value="true"><span id="span">반려</span></label>
-				</div>
-				
-				<div class="igroup2" style="width: 100%;">
-					<textarea id="myTextarea" style="width: 72%; height: 10em; resize: none;" placeholder="반려사유를 입력해주세요."></textarea>
-				</div>
-				
-				
-				<br><br>
-				<div class="sendBtn">
-					<input type="button" class="sendResult" value="처리 하기">
-				</div>
+				<c:if test="${state eq '처리완료' }">
+					<br><br>
+					<div class="igroup" style="width: 100%; color: red; font-size: 20pt; text-align: center; width: 500px; margin: 0 auto;">
+						처리가 완료된 이의제기요청서 입니다.
+					</div>
+				</c:if>
 				
 			</div>
 		</div>
