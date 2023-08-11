@@ -44,14 +44,8 @@
 	display: flex;
 }
 
-.button
-{
-	margin-top: 3vh;
-	margin-bottom: 3vh;
-	text-align: center;
-}
 
-button, .input, #span
+#button, .input, #span
 {
 	
 	display: inline-block;
@@ -216,7 +210,7 @@ input[type="radio"]
 						${obj.getPhoto_link() }
 						
 						<c:if test="${state ne '처리완료' }">
-							<button style="font-size: 8pt;">파일다운로드</button>
+							<button id="button" style="font-size: 8pt;">파일다운로드</button>
 						</c:if>
 					</div>
 				</div>

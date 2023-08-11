@@ -47,14 +47,7 @@
 	display: flex;
 }
 
-.button
-{
-	margin-top: 3vh;
-	margin-bottom: 3vh;
-	text-align: center;
-}
-
-button, .input, #span
+.input, #span
 {
 	
 	display: inline-block;
