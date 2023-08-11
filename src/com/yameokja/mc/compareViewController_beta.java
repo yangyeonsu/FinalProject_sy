@@ -20,7 +20,7 @@ public class compareViewController_beta
 	@Autowired
 	private SqlSession sqlSession;
 
-	@RequestMapping(value="/compareView.action", method = RequestMethod.POST)
+	@RequestMapping(value="/compareview.action", method = RequestMethod.POST)
 	public String stDetail(HttpServletRequest request, Model model, String checkedCompare)
 	{
 		HttpSession session = request.getSession();

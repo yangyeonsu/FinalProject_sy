@@ -25,7 +25,7 @@ public class stDetailController
 	@Autowired
 	private SqlSession sqlSession;
 	
-	@RequestMapping(value="/stDetail-userView.action", method = RequestMethod.GET)
+	@RequestMapping(value="/stdetail-userview.action", method = RequestMethod.GET)
 	public String stDetail(HttpServletRequest request, Model model)
 	{
 		HttpSession session = request.getSession();
@@ -79,6 +79,25 @@ public class stDetailController
 		{
 			model.addAttribute("breakTime", breakTime);
 		}
+		else
+			model.addAttribute("breakTime", null);
+		
+		// 가게 결제수단
+		ArrayList<String> stPayList = dao.stPay(st_num);
+		model.addAttribute("stPayList", stPayList);
+		
+		// 가게 체크박스
+		ArrayList<StoreCheckDTO> stCheckList = dao.stcheck(st_num);
+		
+		if(stCheckList.size()>0)
+		{
+			model.addAttribute("stCheckList", stCheckList);
+		}
+		else
+		{
+			model.addAttribute("stCheckList", null);
+		}
+		
 		
 		// 가게 메뉴
 		ArrayList<StoreMenuDTO> menuLists = dao.menuLists(st_num);
@@ -90,6 +109,15 @@ public class stDetailController
 		else
 			model.addAttribute("menuLists", null);
 		
+		// 리뷰 키워드
+		ArrayList<StoreReviewKeyDTO> reviewKeys = dao.reviewKeys(st_num);
+		
+		if(reviewKeys.size() > 0)
+		{
+			model.addAttribute("reviewKeys", reviewKeys);
+		}
+		else
+			model.addAttribute("reviewKeys", null);
 		
 		// 가게 리뷰목록
 		ArrayList<StoreReviewDTO> reviews = dao.reviews(st_num);
@@ -101,38 +129,19 @@ public class stDetailController
 		else
 			model.addAttribute("reviews", null);
 		
+		// 가게 리뷰 사진 목록
+		ArrayList<StoreRvPhotoDTO> rvPhotos = dao.rvPhoto(st_num);
 		
-		// 리뷰 키워드
-		ArrayList<StoreReviewKeyDTO> reviewKeys = dao.reviewKeys(st_num);
-		
-		if(reviewKeys.size() > 0)
-		{
-			model.addAttribute("reviewKeys", reviewKeys);
-		}
-		else
-			model.addAttribute("reviewKeys", null);
-		
-		
-		/*
-		model.addAttribute("holiday", dao.holiday(st_num));
-		model.addAttribute("others", dao.others(st_num));
-		model.addAttribute("stName", dao.stName(st_num));
-		model.addAttribute("creviewScore", dao.creviewScore(st_num));
-		model.addAttribute("creviewNum", dao.creviewNum(st_num));
-		model.addAttribute("tel", dao.tel(st_num));
-		model.addAttribute("lo", dao.lo(st_num));
-		*/
-
-
+		model.addAttribute("rvPhotos", rvPhotos);
 		
 		if (comList.size() > 0)
 			model.addAttribute("comList", mdao.getStoreList(comList));
 		else
 			model.addAttribute("comList", null);
 		
-
 		// 사용자의 해당 가게 추천/비추천 내역
-		ArrayList<userRvRecDTO> userReviewList = dao.userReviewList(st_num, user_num);
+		ArrayList<Integer> userRnList = dao.userRnList(st_num, user_num);
+		ArrayList<Integer> userNrnList = dao.userNrnList(st_num, user_num);
 		
 		/*
 		for (userRvRecDTO dto : userReviewList)
@@ -142,22 +151,21 @@ public class stDetailController
 		}
 		*/
 		
-		if(userReviewList.size()>0)
-		{
-			model.addAttribute("userReviewList", userReviewList);
-		}
-		else
-			model.addAttribute("userReviewList", null);
-	
+		/*
+		 * if(userReviewList.size()>0) { model.addAttribute("userReviewList",
+		 * userReviewList); } else model.addAttribute("userReviewList", null);
+		 */
+		model.addAttribute("userRnist", userRnList);
+		model.addAttribute("userNrnList", userNrnList);
+		
 		result = "/WEB-INF/view/storeDetail.jsp";
 		
 		return result;
 	}
-
 	
-	@RequestMapping(value="/reviewRep.action")
+	@RequestMapping(value="/reviewrep.action")
 		@ResponseBody
-	public String insertReviewRep(@RequestParam("rv_num") int rv_num, @RequestParam("rep_rs_num") int rep_rs_num, HttpServletRequest request, Model model)
+	public String insertReviewRep(@RequestParam("rv_num") int rv_num, @RequestParam("rep_rs_num") int rep_rs_num, @RequestParam("st_num") int st_num, HttpServletRequest request, Model model)
 	{
 		HttpSession session = request.getSession();
 		String user_num = (String)session.getAttribute("user_num");
@@ -165,15 +173,28 @@ public class stDetailController
 		IstDetailDAO_userView dao = sqlSession.getMapper(IstDetailDAO_userView.class);
 		
 		int resultNum = dao.reviewRepInsert(rv_num, user_num, rep_rs_num);
+		ArrayList<StoreDetailDTO> stores = dao.store(st_num);
+		int likenum = dao.clikeNum(st_num);
+		//System.out.println("확인");
 		
-		System.out.println("확인");
+		String html = "";
+		
+		html += "<div class=\"likeRevC likeNum\">";
+		html += "	찜 ❤ &nbsp; <span>" + likenum + "</span>";
+		html += "</div>";
+		html += "<div class=\"likeRevC score\">";
+		html += "	별점 ⭐<span>" + stores.get(0).getStar_avg() + "</span>";
+		html += "</div>";
+		html += "<div class=\"likeRevC reviewNum\">";
+		html += "	리뷰 수 &nbsp; <span>" + stores.get(0).getRv_count() + "</span>";
+		html += "</div>";
 		
 		String result = String.valueOf(resultNum);
 		
-		return result;
+		return html;
 	}
 	
-	@RequestMapping(value="/recInsertDelete.action")
+	@RequestMapping(value="/recinsertdelete.action")
 		@ResponseBody
 	public String recInsertDelete(@RequestParam("rv_num") int rv_num, @RequestParam("rec_nonrec_number") int rec_nonrec_number, HttpServletRequest request)
 	{
@@ -234,5 +255,5 @@ public class stDetailController
 	}
 		
 		
-
+	
 }
