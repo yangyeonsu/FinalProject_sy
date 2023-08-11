@@ -30,6 +30,7 @@ public class compareViewController_beta
 		
 		IcompareViewDAO dao = sqlSession.getMapper(IcompareViewDAO .class);
 		IUserDAO uDao = sqlSession.getMapper(IUserDAO.class);
+		IMainDAO mdao = sqlSession.getMapper(IMainDAO.class);
 		
 		// 사용자 정보
 		UserDTO user = uDao.searchUserInfo(user_num, "num");
@@ -44,9 +45,13 @@ public class compareViewController_beta
 		
 		model.addAttribute("user", user);
 		
-		System.out.println(checkedCompare.substring(0, checkedCompare.length() - 1));
+		/*
+		 * System.out.println(checkedCompare.substring(0, checkedCompare.length() - 1));
+		 */
 		String tmpStr = checkedCompare.substring(0, checkedCompare.length() - 1);
 		String[] comparedStore = tmpStr.split(",");
+		
+		List<Integer> comList = mdao.getStoreComList(user_num);
 		
 		List<Integer> stnumList = new ArrayList<Integer>();
 		
@@ -67,6 +72,11 @@ public class compareViewController_beta
 		model.addAttribute("store", stores);
 		model.addAttribute("openClose", openCloses);
 		model.addAttribute("stcheck", stChecks);
+		
+		if (comList.size() > 0)
+			model.addAttribute("comList", mdao.getStoreList(comList));
+		else
+			model.addAttribute("comList", null);
 		
 		/*
 		//int st_num = Integer.parseInt(request.getParameter("st_num"));
