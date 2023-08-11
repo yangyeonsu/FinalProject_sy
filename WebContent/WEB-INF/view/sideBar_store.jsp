@@ -107,7 +107,7 @@
 				</ul>
 			</ul>
 			<ul class="big_menu">
-				<li>경고 내역</li>
+				<li><a href="penaltyList.action" class="small_menuA">경고내역</a></li>
 			</ul>
 		</div>
 	</div>

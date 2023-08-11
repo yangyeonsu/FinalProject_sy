@@ -14,7 +14,6 @@
 <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
 <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
 
-penaltyList-beta
 
 <link rel="stylesheet" type="text/css" href="<%=cp%>/css/user_main.css">
 
@@ -89,7 +88,7 @@ penaltyList-beta
 	.st_name
 	{
 		text-align: center;
-		width: 12vw;
+		width: 14vw;
 		padding: 1vh;;
 	}
 	.no-data-message
@@ -103,7 +102,7 @@ penaltyList-beta
 <body>
 
 	<div class="header">
-		<c:import url="/WEB-INF/view/header_user.jsp"></c:import>
+		<c:import url="header_user.jsp"></c:import>
 	</div>
 
 	
@@ -133,9 +132,9 @@ penaltyList-beta
 					    <c:otherwise>
 					        <c:forEach var="pl" items="${penList}">
 					            <div class="report_content">
-					                <div class="rpt_content">${pl.reg_date }</div>
+					                <div class="pen_subtitle">${pl.reg_date }</div>
 					                <div class="st_name">${pl.st_name }</div>
-					                <div class="rpt_content">${pl.final_date }</div>
+					                <div class="pen_subtitle">${pl.write_date }</div>
 					            </div>
 					        </c:forEach>
 					    </c:otherwise>

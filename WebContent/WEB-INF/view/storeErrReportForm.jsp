@@ -104,7 +104,27 @@ button, .input
 	align-items: center;
 	border-radius: 10px 0 0 10px;
 	margin-right: 1vw;
+	border: 1px solid;
 }
+#errReport
+{
+	display: none;
+}
+
+input[type="radio"] 
+{
+  display: none;
+}
+.sendBtn
+{
+	display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 1%;
+    
+}
+
+
 </style>
 
 <script type="text/javascript">
@@ -119,6 +139,38 @@ button, .input
 		}
 		
 	};
+	
+	$(function ()
+	{
+		$(".check").change(function() 
+		{
+		    if ($(this).is(":checked")) 
+		    {
+		       if ($(this).val() == "true")
+		          $("#errReport").css("display", "flex");
+		       else
+		          $("#errReport").css("display", "none");
+		    }
+		});
+		/* 
+		$(".sendResult").click(function()
+		{
+			if ($(".check:checked").length == 0)
+			{
+				alert("승인 / 반려 중 하나를 선택해주세요.");
+				return;
+			}
+			else if($(".check:checked").val() == "true")
+			{
+				if($("#myTextarea").val().trim() == "" || $("#myTextarea").val().trim() == null)
+				{
+					alert("반려사유를 입력해주셔야 합니다.");
+					return;
+				}
+			}
+		});
+		 */
+	});
 </script>
 
 </head>
@@ -152,38 +204,33 @@ button, .input
 				</div>
 			</div>
 			<br>
-			<div class="st_info_insert2">
-				<div class="igroup" >
-					<div class="title" style="margin-bottom: 0.5vh;">
-						<span>요청사유</span>
-					</div>
+			
+			<div class="igroup" >
+				<div class="title" style="margin-bottom: 0.5vh;">
+					<span>요청사유</span>
 				</div>
-				<div class="igroup2" style="width: 100%;">
-					<textarea id="storeErrReport" readonly="readonly" style="width: 72%; height: 5em; 3px; resize: none;">${err.getReq_rs() }</textarea>
-				</div>
-				
-				<div style="width: 87%; text-align: right; margin-top: 1vh;">
-					<button id="agree" style="margin-left: 1vh;">요청승인</button>
-				</div>
-		
-				<div class="igroup" >
-					<div class="title" style="margin-bottom: 0.5vh;">
-						<span>반려사유</span>
-					</div>
-				</div>
-				
-				<div class="igroup2" style="width: 100%;">
-					<textarea id="errReport"  style="width: 72%; height: 10em; resize: none; border-radius: 10px;" placeholder="반려사유기재"></textarea>
-				</div>
-				
-				<div class="igroup" >
-					<span class="errorMsg" id="err">반려사유를 입력해야 합니다.</span>
-				</div>
-				<div style="width: 87%; text-align: right; margin-top: 1vh;">
-					<button value="반려" onclick="reqBtn()">요청반려</button>
-				</div>
-				
 			</div>
+			<div class="igroup2" style="width: 100%;">
+				<textarea id="storeErrReport" readonly="readonly" style="width: 72%; height: 5em; 3px; resize: none;">${err.getReq_rs() }</textarea>
+			</div>
+			
+			<div style="width: 87%; text-align: right; margin-top: 1vh;">
+				<label class="label"><input type="radio" class="check" name="res" id="agree"><button id="agree" style="margin-left: 1vh;">요청승인</button></label>
+				<label class="label"><input type="radio" class="check" name="res" id="reject" value="true"><button value="반려" onclick="reqBtn()">요청반려</button></label>
+			</div>
+			
+			<div class="igroup2" style="width: 100%;">
+				<textarea id="errReport"  style="width: 72%; height: 10em; resize: none; border-radius: 10px;" placeholder="반려사유기재"></textarea>
+			</div>
+			
+			<div class="igroup" >
+				<span class="errorMsg" id="err">반려사유를 입력해야 합니다.</span>
+			</div>
+			
+			<div class="sendBtn">
+				<input type="button" class="sendResult" value="처리 하기">
+			</div>
+			
 		</div>
 	</div>
 	

@@ -21,11 +21,11 @@ String cp = request.getContextPath();
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery.min.js"></script>
 
-<link rel="stylesheet" type="text/css"
-	href="<%=cp%>/css/storeDetail.css">
-
 <link rel="stylesheet" type="text/css" href="<%=cp%>/css/userMyPage.css">
 <link rel="stylesheet" type="text/css" href="<%=cp%>/css/side_bar.css">
+
+<link rel="stylesheet" type="text/css"
+	href="<%=cp%>/css/storeDetail.css">
 
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery.min.js"></script>
@@ -647,76 +647,8 @@ String cp = request.getContextPath();
 			<!-- main -->
 
 
-			<!-- 비교함 영역 -->
-			<div id="compareDiv">
-				<div class="rectDiv">
-					<!-- 비교함 이름 영역 -->
-					<div class="comNameDiv">
-						<span style="font-color: #ef6351">비교함</span>
-					</div>
-					<!-- 비교함 담은 가게 리스트 영역 -->
-					<div class="comStoreListDiv">
-						<c:choose>
-							<c:when
-								test="${fn:length(comList) == null or fn:length(comList) == 0 }">
-								<c:forEach begin="0" end="9">
-									<div class="comStoreDiv">
-										<!-- 한 가게 대표사진 영역 -->
-										<div class="comStoreImgDiv">
-											<img class="comStNoImg" src="<%=cp%>/images/comp_img01.png">
-										</div>
-										<!-- 한 가게 가게이름 영역 -->
-										<div class="comStoreNameDiv"></div>
-									</div>
-								</c:forEach>
-							</c:when>
-							<c:otherwise>
-								<!-- 한 가게 영역 -->
-								<c:forEach var="com" items="${comList}" varStatus="status">
-									<div class="comStoreDiv">
-										<!-- 한 가게 대표사진 영역 -->
-										<div class="comStoreImgDiv">
-											<button type="button" value="${com.st_num}" class="comDelete">X</button>
-											<label for="${com.st_num}" class="stLabel"> <input
-												type="checkbox" class="comStImgCB" name="comStImgCB"
-												id="${com.st_num}"> <c:set var="photo"
-													value="${com.photo_link }" /> <c:choose>
-													<c:when test="${empty photo}">
-														<img class="stImg" src="<%=cp%>/images/logo_text.png">
-													</c:when>
-													<c:otherwise>
-														<img class="stImg" src="<%=cp%>/${photo}">
-													</c:otherwise>
-												</c:choose>
-											</label>
-										</div>
-										<!-- 한 가게 가게이름 영역 -->
-										<div class="comStoreNameDiv">${com.st_name}</div>
-									</div>
-								</c:forEach>
-								<c:forEach begin="0" end="${10 - fn:length(comList)}">
-									<div class="comStoreDiv">
-										<!-- 한 가게 대표사진 영역 -->
-										<div class="comStoreImgDiv">
-											<img class="comStNoImg" src="<%=cp%>/images/comp_img01.png">
-										</div>
-										<!-- 한 가게 가게이름 영역 -->
-										<div class="comStoreNameDiv"></div>
-									</div>
-								</c:forEach>
-							</c:otherwise>
-						</c:choose>
-					</div>
-					<input type="hidden" id="checkedCompare" name="checkedCompare">
-				</div>
-				<input type="hidden" name="regionChk" id="regionChk"> <input
-					type="hidden" name="foodlabelChk" id="foodlabelChk"> <input
-					type="hidden" name="stKeyChk" id="stKeyChk">
-
-				<div class="comStoreBtnDiv">
-					<button type="button" class="btn" id="comBtn" name="comBtn">비교하기</button>
-				</div>
-			</div>
+			<c:import url="compare_box.jsp"></c:import>
+			
 		</div>
 	</form>
 	<div class="footer">

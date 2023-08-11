@@ -24,7 +24,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    margin-left: 9vw;
+    margin-left: 7vw;
     /* padding-left: 1vw;
     padding-right: 1vw; */
     padding-left: 1vw;
@@ -83,6 +83,7 @@
     width: 4.5vw;
     height: 4.5vw;
     object-fit: cover;
+    cursor: pointer;
 }
 
 /* 비교함의 가게영역 이미지의 label */
