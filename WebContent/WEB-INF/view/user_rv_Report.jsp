@@ -106,7 +106,7 @@
 
 	
 	
-	
+	<div class="middle">
 	<c:import url="sideBar_user.jsp"></c:import>
 		
 		

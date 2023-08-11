@@ -26,12 +26,55 @@
 <script type="text/javascript">
 	$(function()
 	{
+		$(".left_sub_menu").hide();
+		$(".has_sub").click(function()
+		{
+			$(".left_sub_menu").fadeToggle(300);
+			if ($('#checkOverlay').val() == "true")
+			{
+				$('.overlay').css("position", "fixed");
+				$('.overlay').css("width", "0%");
+				$('.overlay').css("height", "0%");
+				$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
+				$('.overlay').css("z-index", "0");
+				$('#checkOverlay').attr("value", "false");
+			} else
+			{
+				$('.overlay').css("position", "fixed");
+				$('.overlay').css("width", "100%");
+				$('.overlay').css("height", "100%");
+				$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
+				$('.overlay').css("z-index", "3");
+/* 				$('.overlay').css("margin-top", "1.011vh"); */
+				$('#checkOverlay').attr("value", "true");
+			}
+
+		});
+		// 왼쪽메뉴 드롭다운
+		$(".sub_menu ul.small_menu").hide();
+		$(".sub_menu ul.big_menu").click(function()
+		{
+			$("ul", this).slideToggle(300);
+		});
+		// 외부 클릭 시 좌측 사이드 메뉴 숨기기
+		$('.overlay').on('click', function()
+		{
+			$('.left_sub_menu').fadeOut();
+			$('.overlay').css("position", "fixed");
+			$('.overlay').css("width", "0%");
+			$('.overlay').css("height", "0%");
+			$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
+			$('.overlay').css("z-index", "0");
+			$('#checkOverlay').attr("value", "false");
+		});
+		
+		
+		
 		$(".reviewTd").click(function()
 		{
 			var reportNum = $(this).attr("id");
 			//alert(reportNum);
-			var state = $(this).parent().attr('id');
-			$(location).attr("href","reviewreportform.action?rep_apply_num="+reportNum+"&state="+state);
+			$(location).attr("href","reviewreportform.action?rep_apply_num="+reportNum);
 			
 		});
 		
@@ -39,8 +82,7 @@
 		{
 			var reportNum = $(this).siblings("[id]").attr("id");
 			//alert(reportNum);
-			var state = $(this).parent().attr('id');
-			$(location).attr("href","errreportform.action?req_apply_num="+reportNum+"&state="+state);
+			$(location).attr("href","errreportform.action?req_apply_num="+reportNum);
 			
 		});
 
@@ -48,8 +90,7 @@
 		{
 			var reportNum = $(this).siblings("[id]").attr("id");
 			//alert(reportNum);
-			var state = $(this).parent().attr('id');
-			$(location).attr("href","objreportform.action?obj_apply_num="+reportNum+"&state="+state);
+			$(location).attr("href","objreportform.action?obj_apply_num="+reportNum);
 			
 		});
 
@@ -57,17 +98,8 @@
 		{
 			var reportNum = $(this).siblings("[id]").attr("id");
 			//alert(reportNum);
-			var state = $(this).parent().attr('id');
-			$(location).attr("href","penaltyrevokeform.action?revo_apply_num="+reportNum+"&state="+state);
+			$(location).attr("href","penaltyrevokeform.action?revo_apply_num="+reportNum);
 			
-		});
-		
-		$(".inTd").click(function()
-		{
-			var inNum = $(this).attr("id");
-			/* alert(inNum); */
-			var state = $(this).parent().attr('id');
-			$(location).attr("href","inapplyform.action?in_apply_num="+inNum+"&state="+state);
 		});
 		
 	});
@@ -81,7 +113,55 @@
 	<!-- header -->
 	<c:import url="header_admin.jsp"></c:import>
 
-	<c:import url="sideBar_user.jsp"></c:import>
+	<!-- container -->
+	<div id="container">
+		<!-- 왼쪽 사이드 바 -->
+		<div class="left side-menu">
+			<div class="sidebar-inner">
+				<div id="sidebar-menu">
+					<ul class="has_sub_menu">
+						<li class="has_sub"><a href="javascript:void(0);"
+							class="waves-effect"> <i class="fas fa-bars"
+								style="color: #fff"></i>
+						</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	
+		<div class="col-md-2" id="mleft">
+			<div class="left_sub_menu">
+				<div class="sub_menu">
+					<h2>MENU</h2>
+					<ul class="big_menu">
+						<li>가게 리스트<i class="arrow fas fa-angle-right"></i></li>
+	
+						<ul class="small_menu">
+							<li><a href="#" class="small_menuA">가게1</a></li>
+							<li><a href="#" class="small_menuA">가게2</a></li>
+							<li><a href="#" class="small_menuA">가게3</a></li>
+							<li><a href="#" class="small_menuA">가게4</a></li>
+						</ul>
+					</ul>
+					<ul class="big_menu">
+						<li>접수 내역<i class="arrow fas fa-angle-right"></i></li>
+						<ul class="small_menu">
+							<li><a href="#" class="small_menuA">소메뉴2-1</a></li>
+							<li><a href="#" class="small_menuA">소메뉴2-2</a></li>
+						</ul>
+					</ul>
+					<ul class="big_menu">
+						<li>경고 내역</li>
+					</ul>
+					<ul class="big_menu">
+						<li>새로운 가게 등록 신청</li>
+					</ul>
+				</div>
+			</div>
+			<div class="overlay">
+				<input type="hidden" id="checkOverlay" value="false">
+			</div>
+		</div>
 		
 		
 		<div id="mainDiv">
@@ -112,7 +192,7 @@
 						</thead>
 						<tbody>
 							<c:forEach var="review" items="${rvList }" begin="0" end="4">
-							<tr id="${review.state }">
+							<tr>
 								<td class="reviewTd" id="${review.report_num }">${review.reg_date }</td>
 								<td class="reviewTd" id="${review.report_num }">${review.user_id }</td>
 								<td class="reviewTd" id="${review.report_num }">${review.st_name }</td>
@@ -147,7 +227,7 @@
 						</thead>
 						<tbody>
 							<c:forEach var="err" items="${reqList }" begin="0" end="4">
-							<tr id="${err.state }">
+							<tr>
 								<td class="errTd" id="${err.report_num }">${err.reg_date }</td>
 								<td class="errTd" id="${err.report_num }">${err.user_id }</td>
 								<td class="errTd" id="${err.report_num }">${err.st_name }</td>
@@ -180,7 +260,7 @@
 						</thead>
 						<tbody>
 							<c:forEach var="obj" items="${objList }" begin="0" end="4">
-							<tr id="${obj.state }">
+							<tr>
 								<td class="objTd" id="${obj.report_num }">${obj.reg_date }</td>
 								<td class="objTd" id="${obj.report_num }">${obj.st_name }</td>
 								<td class="objTd" id="${obj.report_num }">${obj.state }</td>
@@ -213,7 +293,7 @@
 						</thead>
 						<tbody>
 							<c:forEach var="revo" items="${revoList }" begin="0" end="4">
-							<tr id="${revo.state }">
+							<tr>
 								<td class="revoTd" id="${revo.report_num }">${revo.reg_date }</td>
 								<td class="revoTd" id="${revo.report_num }">${revo.st_name }</td>
 								<td class="revoTd" id="${revo.report_num }">${revo.state }</td>
@@ -248,21 +328,16 @@
 							<c:forEach var="inout" items="${inoutList }" begin="0" end="4">
 							<tr>
 								<c:if test="${inout.cat eq '등록' }">
-								<td style="background-color: green;" id="${inout.report_num }">${inout.cat }</td>
-								<td class="inTd" id="${inout.report_num }">${inout.reg_date }</td>
-								<td class="inTd" id="${inout.report_num }">${inout.user_id }</td>
-								<td class="inTd" id="${inout.report_num }">${inout.state }</td>
-								<td class="inTd" id="${inout.report_num }">${inout.final_date }</td>
-								<td class="inTd" id="${inout.report_num }">${inout.admin_id }</td>
+								<td style="background-color: green;">${inout.cat }</td>
 								</c:if>
 								<c:if test="${inout.cat eq '폐업' }">
-								<td class="outTd" style="background-color: pink;" id="${inout.report_num }">${inout.cat }</td>
-								<td class="outTd" id="${inout.report_num }">${inout.reg_date }</td>
-								<td class="outTd" id="${inout.report_num }">${inout.user_id }</td>
-								<td class="outTd" id="${inout.report_num }">${inout.state }</td>
-								<td class="outTd" id="${inout.report_num }">${inout.final_date }</td>
-								<td class="outTd" id="${inout.report_num }">${inout.admin_id }</td>
+								<td style="background-color: pink;">${inout.cat }</td>
 								</c:if>
+								<td>${inout.reg_date }</td>
+								<td>${inout.user_id }</td>
+								<td>${inout.state }</td>
+								<td>${inout.final_date }</td>
+								<td>${inout.admin_id }</td>
 							</tr>
 							</c:forEach>
 						</tbody>

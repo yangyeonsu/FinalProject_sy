@@ -76,6 +76,7 @@ String cp = request.getContextPath();
 		});
 	});
 
+
 	var totalChecked = 0;
 
 	function CountChecked(field)
@@ -93,6 +94,7 @@ String cp = request.getContextPath();
 		}
 
 	}
+
 </script>
 </head>
 <body>

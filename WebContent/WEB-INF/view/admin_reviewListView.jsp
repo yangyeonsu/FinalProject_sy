@@ -29,7 +29,8 @@
 		{
 			var reportNum = $(this).siblings("[id]").attr("id");
 			//alert(reportNum);
-			$(location).attr("href","reviewreportform.action?rep_apply_num="+reportNum);
+			var state = $(this).parent().attr('id');
+			$(location).attr("href","reviewreportform.action?rep_apply_num="+reportNum+"&state="+state);
 			
 		});
 		
@@ -79,7 +80,7 @@
 						</thead>
 						<tbody>
 							<c:forEach var="review" items="${rvList }">
-							<tr>
+							<tr id="${review.state }">
 								<td class="reviewTd" id="${review.report_num }">${review.reg_date }</td>
 								<td class="reviewTd" id="${review.report_num }">${review.user_id }</td>
 								<td class="reviewTd" id="${review.report_num }">${review.st_name }</td>

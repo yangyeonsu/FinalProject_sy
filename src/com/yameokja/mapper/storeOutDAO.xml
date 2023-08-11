@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yameokja.mc.IstoreOutDAO">
+	
+	<select id="placeNum" resultType="java.lang.Integer">
+		SELECT IA.ST_PLACE_NUM AS ST_PLACE_NUM
+		FROM IN_APPLY IA
+		JOIN IN_PROCESS IP ON IA.IN_APPLY_NUM = IP.IN_APPLY_NUM
+		JOIN ST_LIST SL ON SL.IN_PROCESS_NUM = IP.IN_PROCESS_NUM
+		WHERE IA.USER_NUM = #{user_num} AND SL.ST_NUM = #{st_num}
+	</select>
+	
+	<insert id="st_Out_apply">
+		INSERT INTO OUT_APPLY (OUT_APPLY_NUM, IN_PROCESS_NUM, REG_DATE, ADMIN_READ_DATE)
+		SELECT 
+		    (SELECT NVL(MAX(OUT_APPLY_NUM)+1,0) FROM OUT_APPLY) AS OUT_APPLY_NUM
+		    , IP.IN_PROCESS_NUM AS IN_PROCESS_NUM
+		    , SYSDATE
+		    , NULL
+		FROM IN_PROCESS IP
+		JOIN IN_APPLY IA ON IA.IN_APPLY_NUM = IP.IN_APPLY_NUM
+		JOIN ST_LIST SL ON SL.IN_PROCESS_NUM = IP.IN_PROCESS_NUM
+		WHERE IA.USER_NUM = #{user_num, jdbcType=INTEGER} AND SL.ST_NUM = #{st_num, jdbcType=INTEGER}
+	</insert>
+
+
+</mapper>

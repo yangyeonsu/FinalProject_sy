@@ -168,12 +168,14 @@ public class AdminMainController
 		String result = "";
 		String admin_num = (String)session.getAttribute("admin_num");
 		int reviewNum = Integer.parseInt(request.getParameter("rep_apply_num"));
+		String state = request.getParameter("state");
 		
 		IAdminMainDAO daoM = sqlSesion.getMapper(IAdminMainDAO.class);
 		IAdminFindDAO dao = sqlSesion.getMapper(IAdminFindDAO.class);
 		
 		model.addAttribute("admin_name", daoM.searchNum(admin_num, "num").getAdmin_name());
 		model.addAttribute("review", dao.rvSearch(reviewNum));
+		model.addAttribute("state", state);
 		
 		result = "/WEB-INF/view/reviewReportForm.jsp";
 		
@@ -188,12 +190,14 @@ public class AdminMainController
 		String result = "";
 		String admin_num = (String)session.getAttribute("admin_num");
 		int reqNum = Integer.parseInt(request.getParameter("req_apply_num"));
+		String state = request.getParameter("state");
 		
 		IAdminMainDAO daoM = sqlSesion.getMapper(IAdminMainDAO.class);
 		IAdminFindDAO dao = sqlSesion.getMapper(IAdminFindDAO.class);
 		
 		model.addAttribute("admin_name", daoM.searchNum(admin_num, "num").getAdmin_name());
 		model.addAttribute("err", dao.accuSearch(reqNum));
+		model.addAttribute("state", state);
 		
 		result = "/WEB-INF/view/storeErrReportForm.jsp";
 		
@@ -263,6 +267,7 @@ public class AdminMainController
 		
 		return result;
 	}
+	
 	
 	@RequestMapping(value="/filedownload.action", method= {RequestMethod.POST, RequestMethod.GET})
 		@ResponseBody

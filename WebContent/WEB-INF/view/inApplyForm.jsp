@@ -1,8 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
-   request.setCharacterEncoding("UTF-8");
-   String cp = request.getContextPath();
+	request.setCharacterEncoding("UTF-8");
+	String cp = request.getContextPath();
 %>
 <!DOCTYPE html>
 <html>
@@ -11,171 +11,149 @@
 <title>가게 등록</title>
 <link rel="stylesheet" type="text/css" href="css/main.css">
 <style type="text/css">
-
-.bframe
-{
-   display: flex;
-   flex-direction: column;
+.bframe {
+	display: flex;
+	flex-direction: column;
 }
 
-
-.st_info_insert
-{
-   width: 70vw;
-   margin-left: 15vw;
-   padding-top: 3vh;
-   padding-bottom: 5vh;
-   border: 5px solid #F7F4EA;
-   border-radius: 40px;
-}
-.top
-{
-   width: 70vw;
-   margin-left: 15vw;
-   text-align: center;
+.st_info_insert {
+	width: 70vw;
+	margin-left: 15vw;
+	padding-top: 3vh;
+	padding-bottom: 5vh;
+	border: 5px solid #F7F4EA;
+	border-radius: 40px;
 }
 
-
-.inputform
-{
-   background-color: #f5f5f5;
-   border: 1px solid #ccc;
-   color: #555;
-   cursor: not-allowed;
-   width: 23.8vw;
-   border-radius: 0 10px 10px 0;
-   padding: 8px 12px;
-   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-   margin: 0;
+.top {
+	width: 70vw;
+	margin-left: 15vw;
+	text-align: center;
 }
 
-.fileDown
-{
-   height: 50%;
-   width: 23.8vw;
+.inputform {
+	background-color: #f5f5f5;
+	border: 1px solid #ccc;
+	color: #555;
+	cursor: not-allowed;
+	width: 23.8vw;
+	border-radius: 0 10px 10px 0;
+	padding: 8px 12px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	margin: 0;
 }
 
-#st_in_num
-{
-   width: 27.5v
-}
-.title
-{
-   background-color: #F7F4EA;
-   width: 8vw;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   border-radius: 10px 0 0 10px;
-   margin-right: 1vw;
+.fileDown {
+	height: 50%;
+	width: 23.8vw;
 }
 
-.igroup
-{
-   margin-left: 18vw;
-   margin-top: 1%;
-   width: 55vw;
-   display: flex;
+#st_in_num {
+	width: 27.5v
 }
 
-#insert
-{
-   margin-left: 2vw;
+.title {
+	background-color: #F7F4EA;
+	width: 8vw;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 10px 0 0 10px;
+	margin-right: 1vw;
 }
 
-.input_group
-{
-    display: flex;
-    align-items: center;
+.igroup {
+	margin-left: 18vw;
+	margin-top: 1%;
+	width: 55vw;
+	display: flex;
 }
 
-
-#st_in_num1
-{
-   width: 6vw;
-   border-radius: 10px;
-   margin-right: 0.5vw;
-}
-#st_in_num2
-{
-   width: 6vw;
-   border-radius: 10px;
-   margin-right: 0.5vw;
-   margin-left: 0.5vw;
-}
-#st_in_num3
-{
-   width: 6vw;
-   border-radius: 10px;
-   margin-left: 0.5vw;
-   margin-right: 1vw;
+#insert {
+	margin-left: 2vw;
 }
 
-.checkLabel
-{
-   display: flex;
-    flex-direction: row;
-    justify-content: center;
-    padding-left: 25.9vw;
-    margin-top: 1% 
+.input_group {
+	display: flex;
+	align-items: center;
 }
 
-input[type="radio"] 
-{
-  display: none;
+#st_in_num1 {
+	width: 6vw;
+	border-radius: 10px;
+	margin-right: 0.5vw;
 }
 
-.checkLabel input[type="radio"] + span 
-{
-   display: inline-block;
-   padding: 5px 10px;
-   border: 1px solid #dfdfdf;
-   border-radius: 10px 10px;
-   background-color: #ffffff;
-   width: 3vw;
-   text-align: center;
-   cursor: pointer;
+#st_in_num2 {
+	width: 6vw;
+	border-radius: 10px;
+	margin-right: 0.5vw;
+	margin-left: 0.5vw;
 }
 
-.checkLabel input[type="radio"]:checked + span 
-{
-        background-color: #F7F4EA;
+#st_in_num3 {
+	width: 6vw;
+	border-radius: 10px;
+	margin-left: 0.5vw;
+	margin-right: 1vw;
 }
 
-.sendBtn
-{
-   display: flex;
-    flex-direction: row;
-    justify-content: center;
-    margin-top: 1% 
+.checkLabel {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	padding-left: 25.9vw;
+	margin-top: 1%
 }
 
-#myTextarea
-{
-   width: 24.6vw;
-   resize: none;
-   border-color: gray;
+input[type="radio"] {
+	display: none;
 }
 
-
-#myTextarea:focus
-{
-      border-color: gray;
+.checkLabel input[type="radio"]+span {
+	display: inline-block;
+	padding: 5px 10px;
+	border: 1px solid #dfdfdf;
+	border-radius: 10px 10px;
+	background-color: #ffffff;
+	width: 3vw;
+	text-align: center;
+	cursor: pointer;
 }
 
-.rejText
-{
-   display: none;
+.checkLabel input[type="radio"]:checked+span {
+	background-color: #F7F4EA;
 }
 
-#in_file, #place_file
-{
-   display: none;
-} 
+.sendBtn {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	margin-top: 1%
+}
+
+#myTextarea {
+	width: 24.6vw;
+	resize: none;
+	border-color: gray;
+}
+
+#myTextarea:focus {
+	border-color: gray;
+}
+
+.rejText {
+	display: none;
+}
+
+#in_file, #place_file {
+	display: none;
+}
 </style>
 
-<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
-<script type="text/javascript" src="<%=cp %>/js/jquery-ui.js"></script>
+<script type="text/javascript"
+	src="http://code.jquery.com/jquery.min.js"></script>
+<script type="text/javascript" src="<%=cp%>/js/jquery-ui.js"></script>
 <script type="text/javascript">
 
    $(function()
@@ -209,7 +187,7 @@ input[type="radio"]
          }
       });
       
-      $(".download").click(function()
+     /*  $(".download").click(function()
       {
          $path = $(this).val();
          alert($path);
@@ -236,138 +214,249 @@ input[type="radio"]
                alert(e.responseText);
             }
          });
-      });
-   });            
+      }); */
+      
+      
+      /*$(".download").click(function()
+		{
+			var load = $(this).val();
+			alert(load);
+			var saveFileName = $(this).attr("id");
+			alert(saveFileName)
+			
+			$("#adminForm").submit(function()
+			{
+				
+				/*
+				$(this).ajaxSubmit({ 
+					url: "filedownload.action" 
+						, contentType: "application/x-www-form-urlencoded;charset=UTF-8" 
+						, xhr: function () { 
+								let xhr = new XMLHttpRequest(); 
+								xhr.onreadystatechange = function () { 
+				                    //response 데이터를 바이너리로 처리한다. 세팅하지 않으면 default가 text 
+									xhr.responseType = "blob"; 
+								}; 
+								return xhr; 
+							} 
+						, type: "post"
+						, data :
+							{
+								"path" : $path,
+								"saveFileName" : $saveFileName
+							}
+						, success: function (data, message, xhr) { 
+							hideAjaxImage(); 
+							if (xhr.readyState == 4 && xhr.status == 200) {
+								// 성공했을때만 파일 다운로드 처리하고
+								let disposition = xhr.getResponseHeader('Content-Disposition'); 
+								let filename; 
+								if (disposition && disposition.indexOf('attachment') !== -1) { 
+									let filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/; 
+									let matches = filenameRegex.exec(disposition); 
+									if (matches != null && matches[1]) 
+										filename = matches[1].replace(/['"]/g, ''); 
+								} 
+								let blob = new Blob([data]); 
+								let link = document.createElement('a'); 
+								link.href = window.URL.createObjectURL(blob); 
+								link.download = filename; 
+								link.click(); 
+							}else{   
+							    //실패했을때는 alert 메시지 출력
+								alertPopup("다운로드에 실패하였습니다."); 
+							} 
+						} );
+					*/
+					
+					/* $.ajax({
+						url: 'filedownload.action',
+		                method: 'POST',
+		                loadingTarget: true,
+		                data: {
+		                	"load" : load,
+							"saveFileName" : saveFileName
+		                	},
+		                dataType: 'json',
+		                success: function(data) {
+
+		                  if (data.header.success) {
+
+		                      if(!data.body)
+
+		                          return;
+
+		                      var path = 'path=' + data.body;
+
+		                      location.href = 'filedownload.action?' +  encodeURI(path , "UTF-8");
+
+		                    }
+
+		                }
+
+		            }); 
+			});*/
+			
+	/* document.getElementById('downloadButton').addEventListener('click', function() */
+	$(".download").click(function()
+	{
+		var path = $(this).val();
+		alert(path);
+		var saveFileName = $(this).attr("id");
+		alert(saveFileName);
+	    
+	    // 경로와 파일명을 URL 인코딩
+	    var encodedPath = encodeURIComponent(path);
+	    var encodedFileName = encodeURIComponent(saveFileName);
+	    
+	    // 다운로드 링크 생성
+	    var link = document.createElement('a');
+	    link.href = encodedPath;
+	    link.download = encodedFileName;
+	    link.target = '_blank'; // 다운로드 창이 새 창에서 열리도록 설정 (선택사항)
+	    
+	    // 링크 클릭 및 제거
+	    document.body.appendChild(link);
+	    link.click();
+	    document.body.removeChild(link);
+    });
+});           
 </script>
 
 
 </head>
 <body>
 
-<div class="bframe">
-   <form action="storeregiinsert.action" method="post" id="userForm" enctype="multipart/form-data">
-   <!-- header -->
-   <div><c:import url="header_user.jsp"></c:import></div>
-   
-   <div class="middle">
-      <div class="top">
-         <h1>사업자 등록 인증</h1>
-         <hr>
-      </div>
-      
-      <!-- 입력 부분 -->
-      <div class="st_info_insert">
-      
-            <!-- 사업자 등록 번호 -->
-            <div class="igroup">
-               <div class="title">
-                  사업자 등록 번호
-               </div>
-               <div class="input_group">
-                  <p class="inputform" id="st_in_num1" >${in.st_in_num }</p> - 
-                  <p class="inputform" id="st_in_num2" >${in.st_in_num }</p> - 
-                  <p class="inputform" id="st_in_num3" >${in.st_in_num }</p>
-               </div>
-            </div>
-            
-            <!-- 서류등록 -->
-            <div class="igroup">
-               <div class="title">
-                  사업자 서류
-               </div>
-               <div class="input_group" id="fileregi1">
-                   <p class="inputform"><button type="button" class="download" value="${in.st_in_file }" id="${in.in_file_name }"></button>
-                   <label for="${in.in_file_name }">${in.in_file_name }</label></p>
-               </div>
-            </div>
-            
-            <!-- 사업장 관리 번호 -->
-            <div class="igroup">
-               <div class="title">
-                  사업장 관리 번호
-               </div>
-               <div class="input_group">
-                  <p class="inputform" id="st_place_num">${in.st_place_num }</p>
-               </div>
-            </div>
-            
-            <!-- 사업장 서류 등록 -->
-            <div class="igroup">
-               <div class="title">
-                  사업장 서류
-               </div>
-               <div class="input_group">
-                  <p class="inputform" id="st_place_num"><button type="button" class="download" value="${in.st_place_file }" id="${in.place_file_name }"></button>
-                  <label for="${in.place_file_name }">${in.place_file_name }</label></p>
-               </div>
-            </div>
-             
-            <!-- 가게 명 -->
-            <div class="igroup">
-               <div class="title">
-                  가게 명
-               </div>
-               <div class="input_group">
-                  <p class="inputform" id="st_place_num">${in.st_name }</p>
-               </div>
-            </div>
-            
-            <!-- 가게 주소 -->
-            <div class="igroup">
-               <div class="title">
-                  가게 주소
-               </div>
-               <div class="input_group">
-                  <p class="inputform" id="st_place_num">${in.st_location }</p>
-               </div>
-            </div>
-            
-            <!-- 가게 상세 주소 -->
-            <div class="igroup">
-               <div class="title">
-                  가게 상세 주소
-               </div>
-               <div class="input_group">
-                  <p class="inputform" id="st_place_num">${in.st_location_dt }</p>
-               </div>
-            </div>
-            
-            <!-- 가게 번호 -->
-            <div class="igroup">
-               <div class="title">
-                  가게 번호
-               </div>
-               <div class="input_group">
-                  <p class="inputform" id="st_place_num">${in.st_tel }</p>
-               </div>
-            </div>
-            
-            
-            <div class="checkLabel">
-               <label class="label"><input type="radio" class="check" name="res" id="approve"><span>승인</span></label>
-               <label class="label"><input type="radio" class="check" name="res" id="reject" value="true"><span>반려</span></label>
-            </div>
-            
-            <!-- 가게 주소 -->
-            <div class="igroup rejText">
-               <div class="title">
-                  반려 사유
-               </div>
-               <div class="rejReason">
-               <textarea id="myTextarea" name="memo" rows="4" cols="50" placeholder="반려사유를 입력해주세요."></textarea>
-               </div>
-            </div>
-            
-            <div class="sendBtn">
-               <input type="button" class="sendResult" value="처리 하기">
-            </div>
-      </div> <!-- st_info_insert -->
-   </div>
-   
-   
+	<div class="bframe">
+		<form action="storeregiinsert.action" method="post" id="userForm" enctype="multipart/form-data">
+			<!-- header -->
+			<div>
+				<c:import url="header_admin.jsp"></c:import>
+			</div>
 
-   </form>
-</div>
+			<div class="middle">
+				<div class="top">
+					<h1>사업자 등록 인증</h1>
+					<hr>
+				</div>
+
+				<!-- 입력 부분 -->
+				<div class="st_info_insert">
+
+					<!-- 사업자 등록 번호 -->
+					<div class="igroup">
+						<div class="title">사업자 등록 번호</div>
+						<div class="input_group">
+							<p class="inputform" id="st_in_num1">${in.st_in_num }</p>
+							-
+							<p class="inputform" id="st_in_num2">${in.st_in_num }</p>
+							-
+							<p class="inputform" id="st_in_num3">${in.st_in_num }</p>
+						</div>
+					</div>
+
+					<!-- 서류등록 -->
+					<div class="igroup">
+						<div class="title">사업자 서류</div>
+						<div class="input_group" id="fileregi1">
+							<p class="inputform">
+								<button type="button" class="download" value="${in.st_in_file }"
+									id="${in.in_file_name }"></button>
+								<label for="${in.in_file_name }">${in.in_file_name }</label>
+							</p>
+						</div>
+					</div>
+
+					<!-- 사업장 관리 번호 -->
+					<div class="igroup">
+						<div class="title">사업장 관리 번호</div>
+						<div class="input_group">
+							<p class="inputform" id="st_place_num">${in.st_place_num }</p>
+						</div>
+					</div>
+
+					<!-- 사업장 서류 등록 -->
+					<div class="igroup">
+						<div class="title">사업장 서류</div>
+						<div class="input_group">
+							<p class="inputform" id="st_place_num">
+								<button type="button" class="download"
+									value="${in.st_place_file }" id="${in.place_file_name }"></button>
+								<label for="${in.place_file_name }">${in.place_file_name }</label>
+							</p>
+						</div>
+					</div>
+
+					<!-- 가게 명 -->
+					<div class="igroup">
+						<div class="title">가게 명</div>
+						<div class="input_group">
+							<p class="inputform" id="st_place_num">${in.st_name }</p>
+						</div>
+					</div>
+
+					<!-- 가게 주소 -->
+					<div class="igroup">
+						<div class="title">가게 주소</div>
+						<div class="input_group">
+							<p class="inputform" id="st_place_num">${in.st_location }</p>
+						</div>
+					</div>
+
+					<!-- 가게 상세 주소 -->
+					<div class="igroup">
+						<div class="title">가게 상세 주소</div>
+						<div class="input_group">
+							<p class="inputform" id="st_place_num">${in.st_location_dt }</p>
+						</div>
+					</div>
+
+					<!-- 가게 번호 -->
+					<div class="igroup">
+						<div class="title">가게 번호</div>
+						<div class="input_group">
+							<p class="inputform" id="st_place_num">${in.st_tel }</p>
+						</div>
+					</div>
+
+					<c:if test="${state ne '처리완료' }">
+					
+						<div class="checkLabel">
+							<label class="label">
+							<input type="radio" class="check" name="res" id="approve"><span>승인</span></label>
+							<label class="label"><input type="radio" class="check" name="res" id="reject" value="true"><span>반려</span></label>
+						</div>
+	
+						<!-- 가게 주소 -->
+						<div class="igroup rejText">
+							<div class="title">반려 사유</div>
+							<div class="rejReason">
+								<textarea id="myTextarea" name="memo" rows="4" cols="50" placeholder="반려사유를 입력해주세요."></textarea>
+							</div>
+						</div>
+						
+						<br><br>
+						<div class="sendBtn">
+							<input type="button" class="sendResult" value="처리 하기">
+						</div>
+						
+					</c:if>
+					<c:if test="${state eq '처리완료' }">
+						<br><br>
+						<div class="igroup" style="width: 100%; color: red; margin-left: 22%; font-size: 20pt">
+							처리가 완료된 패널티 회수 신청서 입니다.
+						</div>
+					</c:if>
+				</div>
+				<!-- st_info_insert -->
+			</div>
+
+
+
+		</form>
+		<!-- footer -->
+		<div><c:import url="/WEB-INF/view/footer.jsp"></c:import></div>
+	</div>
 
 </body>
 </html>
