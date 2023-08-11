@@ -15,13 +15,13 @@
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 
 <style type="text/css">
-	body
+	body5
 	{
 		margin: 0px;
 		font-family: 'IBM Plex Sans KR', sans-serif;
 	}
 	
-	#store_header
+	#store_header5
 	{
 		/* position: relative;
 	    width: 88vw;
@@ -41,20 +41,20 @@
 	    
 	}
 
-	#headerAlarm
+	#headerAlarm5
 	{
 	    width: 70vw;
 	    padding-left: 10vw;
 	}
 	
-	#headerLogo
+	#headerLogo5
 	{
 		display: flex;
 		justify-content: flex-end;	
 		max-width: 8vw;
 	}
 
-	.headerBtn
+	.headerBtn5
 	{
 	    display: flex;
 	    width: 10vw;
@@ -64,7 +64,7 @@
 	    position: static;
 	}
 	
-	.menuBtn
+	.menuBtn5
 	{
 		display: flex;
 		width: 7vw;
@@ -162,13 +162,14 @@ $(function() {
     
     $(".mypage_cl").click(function() {
         $(".mypage_menu").fadeToggle(300);
-        
+        /* 
         if ($('.alarm_menu').is(':visible'))
         {
         	$(".alarm_menu").hide();
         }
+         */
     });
-    
+    /* 
     $(".alarm_cl").click(function() {
         $(".alarm_menu").fadeToggle(300);
         
@@ -177,7 +178,7 @@ $(function() {
         	$(".mypage_menu").hide();
         }
     });
-    
+     */
     
     $("#logout").click(function()
 	{
@@ -191,24 +192,26 @@ $(function() {
 
 </head>
 
-<body>
+<body5>
 
-	<header id="store_header">
+	<header id="store_header5">
 		<div class="headerImg">
-			<a href="adminmain.action"><img id="headerLogo" src="<%=cp %>/images/logo_text.png"></a>
+			<a href="adminmain.action"><img id="headerLogo5" src="<%=cp %>/images/logo_text.png"></a>
 		</div>
 		
-		<div id="headerAlarm">
-			<div class="headerBtn">
-				<div class="menuBtn">
+		<div id="headerAlarm5">
+			<div class="headerBtn5">
+				<div class="menuBtn5">
 					<div id="mypage">
 						<a href="#" class="mypage_cl" id="mypagetxt">${admin_name }</a>			
 					</div>
 				</div>
 				
+				<!-- 
 				<div id="alarm">
 						<a href="#" class="alarm_cl">알림</a>
 				</div>
+				 -->
 			</div>
 			<div class="sub_list">
 				<div class="mypage_menu">
@@ -218,6 +221,8 @@ $(function() {
 						<li><button type="button" id="logout" class="subListBtn" >로그아웃</button>
 					</ul>
 				</div>
+				
+				<!-- 
 				<div class="alarm_menu">
 					<ul class="person_listB">
 						<li><a href="#">OOO경고 들어옴</a>
@@ -226,6 +231,7 @@ $(function() {
 						<li><a href="#">리뷰신고한거 처리됨</a>
 					</ul>
 				</div>
+				 -->
 			</div>
 		</div>
 	</header>

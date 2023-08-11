@@ -48,14 +48,7 @@
    display: flex;
 }
 
-.button
-{
-   margin-top: 3vh;
-   margin-bottom: 3vh;
-   text-align: center;
-}
-
-button, .input, .sendResult, #span
+.stInfoBtn, .input, .sendResult, #span
 {
    display: inline-block;
    outline: none;
