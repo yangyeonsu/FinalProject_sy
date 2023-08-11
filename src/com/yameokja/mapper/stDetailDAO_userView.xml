@@ -54,7 +54,6 @@
 		WHERE SL.ST_NUM = #{st_num, jdbcType=INTEGER}
  	</select>
  	
-<<<<<<< Updated upstream
  	<!-- 결제수단 -->
  	<select id="stPay" resultType="java.lang.String">
  		SELECT PL.PAY_NAME
@@ -84,8 +83,6 @@
 		ORDER BY CL2.CHBOX_NUM
  	</select>
  	
-=======
->>>>>>> Stashed changes
  	<!-- 메뉴 및 가격 가져오기-->
  	<select id="menuLists" resultType="com.yameokja.mc.StoreMenuDTO">
  		SELECT MENU_NUM, MENU_NAME, PRICE, IMAGE_LINK
@@ -124,7 +121,6 @@
 		WHERE T.ST_NUM = #{st_num, jdbcType=INTEGER}
         ORDER BY RV_NUM 
 	</select>
-<<<<<<< Updated upstream
 
 	<!-- 리뷰 사진 -->
 	<select id="rvPhoto" resultType="com.yameokja.mc.StoreRvPhotoDTO">
@@ -134,9 +130,6 @@
 		WHERE RB.ST_NUM = #{st_num, jdbcType=INTEGER}
 	</select>
 	
-=======
- 	
->>>>>>> Stashed changes
  	<!-- 리뷰 키워드 -->
  	<select id="reviewKeys" resultType = "com.yameokja.mc.StoreReviewKeyDTO">
  		SELECT RKL.RV_KEY_NAME AS RV_KEY_NAME
@@ -217,8 +210,6 @@
 	
 
 	
-=======
- 	 	
  	<!-- 휴일 가지고 오는 쿼리문 
  	<select id="holiday" resultType="com.yameokja.mc.stDetailDTO_userView">
  		SELECT WDL.DAY_NAME AS DAY_NAME
@@ -312,6 +303,4 @@
 		WHERE ST_LIST.ST_NUM = #{st_num}
  	</select> -->
  	
- 
->>>>>>> Stashed changes
 </mapper>

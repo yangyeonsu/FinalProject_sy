@@ -130,7 +130,7 @@ public class stDetailController
 		else
 			model.addAttribute("comList", null);
 		
-<<<<<<< Updated upstream
+
 		// 사용자의 해당 가게 추천/비추천 내역
 		ArrayList<userRvRecDTO> userReviewList = dao.userReviewList(st_num, user_num);
 		
@@ -148,15 +148,12 @@ public class stDetailController
 		}
 		else
 			model.addAttribute("userReviewList", null);
-		
-=======
-
->>>>>>> Stashed changes
+	
 		result = "/WEB-INF/view/storeDetail.jsp";
 		
 		return result;
 	}
-<<<<<<< Updated upstream
+
 	
 	@RequestMapping(value="/reviewRep.action")
 		@ResponseBody
@@ -237,7 +234,5 @@ public class stDetailController
 	}
 		
 		
-	
-=======
->>>>>>> Stashed changes
+
 }
