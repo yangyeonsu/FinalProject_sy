@@ -114,6 +114,8 @@
 				{
 					/* alert(result); */
 					$(this).html(result);
+					
+					$(".likeAddBtn[value='" + $(this).val() + "']").html(result);
 				},
 				error : function(e)
 				{
