@@ -51,10 +51,7 @@
 	padding: 8px 12px;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-#st_in_num
-{
-	width: 27.5v
-}
+
 .title
 {
 	background-color: #F7F4EA;
@@ -79,7 +76,6 @@
 }
 
 
-
 .button
 {
 	margin-top: 5vh;
@@ -90,7 +86,6 @@
 
 button
 {
-	
 	display: inline-block;
 	outline: none;
 	cursor: pointer;
@@ -125,19 +120,6 @@ button
     align-items: center;
 }
 
-.file_label 
-{
-    margin-right: 10px;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    border: 1px solid gray;
-    border-radius: 5px;
-}
-#st_in_num
-{
-	width: 25.5vw;
-}
 
 .file
 {
@@ -149,10 +131,6 @@ button
     border: 0;
 }
 
-.file_label
-{
-	background-color: #F7F4EA;
-}
 .upload-name
 {
 	width: 14.3vw;
@@ -170,35 +148,10 @@ button
 	border-radius: 0;
 }
 
-#st_in_num1
-{
-	width: 6vw;
-	border-radius: 10px;
-	margin-right: 0.5vw;
-}
-#st_in_num2
-{
-	width: 6vw;
-	border-radius: 10px;
-	margin-right: 0.5vw;
-	margin-left: 0.5vw;
-}
-#st_in_num3
-{
-	width: 6vw;
-	border-radius: 10px;
-	margin-left: 0.5vw;
-	margin-right: 1vw;
-}
+
 #insert
 {
 	margin-left: 2vw;
-}
-
-#st_location
-{
-	width: 24vw;
-	margin-right: 1vw;
 }
 
 </style>
