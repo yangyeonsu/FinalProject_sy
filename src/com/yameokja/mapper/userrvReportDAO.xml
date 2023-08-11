@@ -9,7 +9,7 @@
 	</select>
 
 	<select id="user_rv_Report" resultType="com.yameokja.mc.UserrvreportDTO">
-		SELECT REG_DATE, ST_NAME, STATUS, FINAL_DATE
+		SELECT REG_DATE, ST_NAME, REPORTEDUSERID, STATUS, FINAL_DATE
 		FROM (
 			SELECT RA.REG_DATE AS REG_DATE, IA.ST_NAME AS ST_NAME, UU.USER_ID AS REPORTEDUSERID, CASE WHEN RA.ADMIN_READ_DATE IS NULL THEN '미확인'
 	                                                                       WHEN RA.ADMIN_READ_DATE IS NOT NULL AND RP.FINAL_DATE IS NULL THEN '처리중'
