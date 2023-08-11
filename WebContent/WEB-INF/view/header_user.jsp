@@ -1,5 +1,6 @@
  <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <% 
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
@@ -220,7 +221,7 @@ $(function()
 				<div class="mypage_menu">
 					<ul class="person_listA">
 						<li><a href="usermypage.action">마이 페이지</a>
-						<c:if test="${st_num != null }">
+						<c:if test="${session.st_num != null}">
 							<li><a href="storemain.action">사업자 메인 페이지</a>
 						</c:if>
 						<li><a href="logout.action">로그아웃</a>
@@ -230,6 +231,9 @@ $(function()
 					<ul class="person_listB">
 						<c:forEach var="al" items="${alarm }">
 							<c:choose>
+								<c:when test="${fn:length(alarm) == 0 or fn:length(alarm) == null}">
+									<li>현재 알람이 존재하지 않습니다.
+								</c:when>
 								<c:when test="${al.commentary eq 'REQ_REJECT' }">
 									<c:choose>
 										<c:when test="${al.check_date eq '-' }">
