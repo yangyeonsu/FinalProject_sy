@@ -30,7 +30,8 @@
 		{
 			var reportNum = $(this).attr("id");
 			//alert(reportNum);
-			$(location).attr("href","reviewreportform.action?rep_apply_num="+reportNum);
+			var state = $(this).parent().attr('id');
+			$(location).attr("href","reviewreportform.action?rep_apply_num="+reportNum+"&state="+state);
 			
 		});
 		
@@ -38,7 +39,8 @@
 		{
 			var reportNum = $(this).siblings("[id]").attr("id");
 			//alert(reportNum);
-			$(location).attr("href","errreportform.action?req_apply_num="+reportNum);
+			var state = $(this).parent().attr('id');
+			$(location).attr("href","errreportform.action?req_apply_num="+reportNum+"&state="+state);
 			
 		});
 
@@ -46,7 +48,8 @@
 		{
 			var reportNum = $(this).siblings("[id]").attr("id");
 			//alert(reportNum);
-			$(location).attr("href","objreportform.action?obj_apply_num="+reportNum);
+			var state = $(this).parent().attr('id');
+			$(location).attr("href","objreportform.action?obj_apply_num="+reportNum+"&state="+state);
 			
 		});
 
@@ -54,7 +57,8 @@
 		{
 			var reportNum = $(this).siblings("[id]").attr("id");
 			//alert(reportNum);
-			$(location).attr("href","penaltyrevokeform.action?revo_apply_num="+reportNum);
+			var state = $(this).parent().attr('id');
+			$(location).attr("href","penaltyrevokeform.action?revo_apply_num="+reportNum+"&state="+state);
 			
 		});
 		
@@ -62,7 +66,8 @@
 		{
 			var inNum = $(this).attr("id");
 			/* alert(inNum); */
-			$(location).attr("href","inapplyform.action?in_apply_num="+inNum);
+			var state = $(this).parent().attr('id');
+			$(location).attr("href","inapplyform.action?in_apply_num="+inNum+"&state="+state);
 		});
 		
 	});
@@ -107,7 +112,7 @@
 						</thead>
 						<tbody>
 							<c:forEach var="review" items="${rvList }" begin="0" end="4">
-							<tr>
+							<tr id="${review.state }">
 								<td class="reviewTd" id="${review.report_num }">${review.reg_date }</td>
 								<td class="reviewTd" id="${review.report_num }">${review.user_id }</td>
 								<td class="reviewTd" id="${review.report_num }">${review.st_name }</td>
@@ -142,7 +147,7 @@
 						</thead>
 						<tbody>
 							<c:forEach var="err" items="${reqList }" begin="0" end="4">
-							<tr>
+							<tr id="${err.state }">
 								<td class="errTd" id="${err.report_num }">${err.reg_date }</td>
 								<td class="errTd" id="${err.report_num }">${err.user_id }</td>
 								<td class="errTd" id="${err.report_num }">${err.st_name }</td>
@@ -175,7 +180,7 @@
 						</thead>
 						<tbody>
 							<c:forEach var="obj" items="${objList }" begin="0" end="4">
-							<tr>
+							<tr id="${obj.state }">
 								<td class="objTd" id="${obj.report_num }">${obj.reg_date }</td>
 								<td class="objTd" id="${obj.report_num }">${obj.st_name }</td>
 								<td class="objTd" id="${obj.report_num }">${obj.state }</td>
@@ -207,15 +212,8 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>2023.04.30</td>
-								<td>맛시따</td>
-								<td>미확인</td>
-								<td>-</td>
-								<td>-</td>
-							</tr>
 							<c:forEach var="revo" items="${revoList }" begin="0" end="4">
-							<tr>
+							<tr id="${revo.state }">
 								<td class="revoTd" id="${revo.report_num }">${revo.reg_date }</td>
 								<td class="revoTd" id="${revo.report_num }">${revo.st_name }</td>
 								<td class="revoTd" id="${revo.report_num }">${revo.state }</td>
@@ -248,7 +246,7 @@
 						</thead>
 						<tbody>
 							<c:forEach var="inout" items="${inoutList }" begin="0" end="4">
-							<tr>
+							<tr id="${inout.state }">
 								<c:if test="${inout.cat eq '등록' }">
 								<td style="background-color: green;" id="${inout.report_num }">${inout.cat }</td>
 								<td class="inTd" id="${inout.report_num }">${inout.reg_date }</td>
