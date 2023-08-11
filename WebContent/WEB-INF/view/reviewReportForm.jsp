@@ -130,8 +130,9 @@ cursor: not-allowed;
 	align-items: center;
 	border-radius: 10px 0 0 10px;
 	margin-right: 1vw;
-	border: 1px solid;
-	
+	/* border: 1px solid; */
+	height: 3vh;
+	padding: 0.5vh 0.5vh 0.5vh 0.5vh	
 }
 .sendBtn
 {
@@ -233,6 +234,7 @@ span
 				if($("#myTextarea").val().trim() == "" || $("#myTextarea").val().trim() == null)
 				{
 					alert("반려사유를 입력해주셔야 합니다.");
+					$("#myTextarea").focus();
 					return;
 				}
 			}
