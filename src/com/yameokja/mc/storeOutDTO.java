@@ -2,29 +2,18 @@ package com.yameokja.mc;
 
 public class storeOutDTO 
 {
-private String user_num, st_name, admin_read_date, reg_date;
-	
+	private String admin_read_date, reg_date;
+	private int out_apply_num, st_num, st_place_num, user_num, in_process_num;
 	private long st_out_num;
 	
-	private String st_out_file;
-	
-	private String out_file_name;
 	
 	// getter / setter
-	public String getUser_num() {
+	public int getUser_num() {
 		return user_num;
 	}
 
-	public void setUser_num(String user_num) {
+	public void setUser_num(int user_num) {
 		this.user_num = user_num;
-	}
-
-	public String getSt_name() {
-		return st_name;
-	}
-
-	public void setSt_name(String st_name) {
-		this.st_name = st_name;
 	}
 
 	public String getAdmin_read_date() {
@@ -51,19 +40,35 @@ private String user_num, st_name, admin_read_date, reg_date;
 		this.st_out_num = st_out_num;
 	}
 
-	public String getSt_out_file() {
-		return st_out_file;
+	public int getOut_apply_num() {
+		return out_apply_num;
 	}
 
-	public void setSt_out_file(String st_out_file) {
-		this.st_out_file = st_out_file;
+	public void setOut_apply_num(int out_apply_num) {
+		this.out_apply_num = out_apply_num;
 	}
 
-	public String getOut_file_name() {
-		return out_file_name;
+	public int getSt_num() {
+		return st_num;
 	}
 
-	public void setOut_file_name(String out_file_name) {
-		this.out_file_name = out_file_name;
+	public void setSt_num(int st_num) {
+		this.st_num = st_num;
+	}
+
+	public int getSt_place_num() {
+		return st_place_num;
+	}
+
+	public void setSt_place_num(int st_place_num) {
+		this.st_place_num = st_place_num;
+	}
+
+	public int getIn_process_num() {
+		return in_process_num;
+	}
+
+	public void setIn_process_num(int in_process_num) {
+		this.in_process_num = in_process_num;
 	}
 }

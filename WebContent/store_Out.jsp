@@ -5,6 +5,8 @@
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
 %>
+<% String userNum = request.getParameter("user_num");
+	String stNum = request.getParameter("st_num"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -139,6 +141,14 @@ button
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+#st_in_num
+{
+	width: 26vw;
+	border-radius: 0 10px 10px 0;
+	border: 1px solid #ccc;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 .upload-name
 {
 	width: 14.3vw;
@@ -180,6 +190,26 @@ function displayAndSetFileName()
     }
 }
 
+function st_in_numcheck() 
+{
+	var st_in_num = document.getElementById("st_in_num").value;
+	var check_num = document.getElementById("check_num").value;
+	
+	if (st_in_num == check_num) 
+	{
+		alert("인증 성공");
+	}
+	else
+	{
+		// Reset the text input
+		document.getElementById("st_in_num").value = "";
+
+		// Display the error
+		document.getElementById("err1").style.display = "inline";
+	}	
+}
+
+
 $(function()
 {
     $("#insert").click(function() 
@@ -204,7 +234,7 @@ $(function()
 <body>
 <div class="mainFrame">
 	
-	<form action="" method="post" id="outForm" enctype="multipart/form-data">
+	<form action="storeOutinsert.action" method="post" id="outForm" enctype="multipart/form-data">
 	
 	<div><c:import url="/WEB-INF/view/header_user.jsp"></c:import></div> <!-- header -->
 	
@@ -217,6 +247,20 @@ $(function()
 		<!-- 폐업 신청 -->
 		<div class="out_insert">
 			
+			<!-- 사업장 번호 확인 -->
+			<div class="igroup">
+				<div class="title">
+					사업장 번호 확인
+				</div>
+				<div class="input_group">
+				    <input type="text" id="st_in_num" name="st_in_num">
+				    <input type="hidden" class="check_num" id="check_num" value="${placeNum }"/>
+					<button type="button" class="cfb" onclick="st_in_numcheck()">인증하기</button>
+				</div>
+				<span id="err1" style="color: red; font-weight: bold; display: none;">잘못된 사업자 등록 번호 입니다.</span>
+			</div>
+			
+			
 			<!-- 폐업 사유 -->
 			<div class="igroup">
 				<div class="title">폐업사유</div>
@@ -226,19 +270,6 @@ $(function()
 				</div>
 			</div> <!-- .out_content -->
 			
-			<!-- 서류등록 -->
-			<div class="igroup">
-				<div class="title">
-					폐업 인증 서류
-				</div>
-				<div class="input_group" id="fileregi">
-				    <label for="file" class="upload-name" id="upload-name01">파일 업로드 click here~!!!</label>
-				    <input type="file" id="file" class="file" onchange="displayAndSetFileName()" name="st_in_file">
-				    <input class="upload-name" id="upload-name" value="" placeholder="첨부파일" readonly>
-				</div>
-				<span id="err" style="color: red; font-weight: bold; display: none;"></span>
-			</div>
-			
 			
 			<div class="button">
 				<button type="button" id="insert">신청</button>
@@ -247,9 +278,10 @@ $(function()
 			
 			
 			<!-- user_num -->
-			<input type="hidden" class="inputform" name="user_num" id="user_num"
-			value="<%=(String) session.getAttribute("user_num")%>">	
-			
+			<input type="hidden" class="inputform" name="user_num" id="user_num" value="<%=(String) session.getAttribute("user_num")%>">
+			<input type="hidden" name="user_num" value="<%= userNum %>">
+			<input type="hidden" name="st_num" value="<%= stNum %>">
+
 		</div> <!-- .out_insert -->
 		
 	
