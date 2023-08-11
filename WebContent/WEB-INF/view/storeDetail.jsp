@@ -133,7 +133,12 @@ String cp = request.getContextPath();
 					alert(e.responseText);
 				}
 			});
-		})
+		});
+		
+		$("#modifyReqBtn").click(function()
+		{
+			
+		});
 	});
 
 	var totalChecked = 0;
@@ -357,7 +362,7 @@ String cp = request.getContextPath();
 
 								<div class="background" style="font-weight: bold;">
 									<div class="storeName">
-										<span style="font-size: 30pt; font-weight: bold;">${s.st_name }</span>
+										<span style="font-size: 28pt; font-weight: bold;">${s.st_name }</span>
 									</div>
 									<div class="revBoard">
 										<div class="storeImgDiv">
@@ -518,6 +523,10 @@ String cp = request.getContextPath();
 										<div class="stCheckYesorno">${stCheck.yesorno }</div>
 									</div>
 								</c:forEach>
+								
+								<div name="stCheckModifyReq">
+									<button type="button" id="modifyReqBtn">정보오류수정요청</button>
+								</div>
 							</div>
 						</div>
 					</c:forEach>

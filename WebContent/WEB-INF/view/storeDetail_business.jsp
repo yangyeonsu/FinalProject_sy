@@ -26,6 +26,29 @@ String cp = request.getContextPath();
 
 <link rel="stylesheet" type="text/css"
 	href="<%=cp%>/css/storeDetail.css">
+	
+<style type="text/css">
+	#storeInfoModify
+	{
+	   width: 100px;
+	    height: 30px;
+	    margin-left: 1vw;
+	    border-radius: 5px;
+	    border: none;
+	    background-color: #ef6351;
+	    color: #fff;
+	    font-weight: bold;
+	}
+	
+	.storeName
+	{
+		display: flex;
+	    align-items: center;
+	    justify-content: center;
+	    width: 25vw;
+	    padding-left: 4vw;
+	}
+</style>
 
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery.min.js"></script>
@@ -75,92 +98,9 @@ String cp = request.getContextPath();
 			$('#checkOverlay').attr("value", "false");
 		});
 
-		/// 신고하기 버튼 눌렀을 때
-		$(".repBtn").click(function()
-		{
-			alert($(this).val());
-			$("input[name=rvNumHidden]").attr("value", $(this).val());
-		});
-
-		$("#decBtn").click(function()
-		{
-			$rv_num = $("input[name=rvNumHidden]").val();
-			alert($rv_num);
-			
-			$st_num = $("input[name=st_num]").val();
-			alert($st_num);
-
-			var reviewRep = [];
-
-			$("input:checkbox[name=reviewRep]:checked").each(function()
-			{
-				reviewRep.push($(this).val());
-			});
-
-			$rep_rs_num = reviewRep[0];
-
-			if (reviewRep.length == null || reviewRep.length == 0)
-			{
-				alert("신고사유를 선택해주세요.");
-				return;
-			}
-
-			$("input:checkbox[name=reviewRep]:checked").each(function()
-			{
-				$(this).prop("checked", false);
-				totalChecked = 0;
-			});
-
-			$.ajax(
-			{
-				url : "reviewrep.action",
-				type : 'post',
-				data :
-				{
-					"rv_num" : $rv_num,
-					"rep_rs_num" : $rep_rs_num,
-					"st_num" : $st_num
-				},
-				context : this,
-				success : function(html)
-				{
-
-					alert("신고가 완료되었습니다.");
-					$(".info").html(html);
-				},
-				error : function(e)
-				{
-					alert(e.responseText);
-				}
-			});
-		})
 	});
 
-	var totalChecked = 0;
-
-	function CountChecked(field)
-	{
-		if (field.checked)
-			totalChecked += 1;
-		else
-			totalChecked -= 1;
-
-		if (totalChecked > 1)
-		{
-			alert("한 개만 선택 가능합니다.");
-			field.checked = false;
-			totalChecked -= 1;
-		}
-
-	}
-
-	// 리뷰 작성 페이지로 이동
-	$("#insertReview").click(function()
-	{
-		$("#userForm").attr("action", "reviewRep.action");
-		$("#usesForm").submit();
-	});
-
+	
 	// 모달--------------------------------------------------------------------------
 	function popupOpen()
 	{
@@ -235,100 +175,7 @@ String cp = request.getContextPath();
 		});
 	});
 
-	// 추천/비추천
-	$(document).on(
-			"click",
-			".recBtn",
-			function()
-			{
-				//alert("확인");
-				$rv_num = $(this).val();
-
-				if ($(this).attr("name") == "rec")
-				{
-					$rec_nonrec_number = "1";
-				} else
-					$rec_nonrec_number = "2";
-
-				//alert($rec_nonrec_number);
-
-				$.ajax(
-				{
-					url : "recinsertdelete.action",
-					type : 'post',
-					data :
-					{
-						"rv_num" : $rv_num,
-						"rec_nonrec_number" : $rec_nonrec_number
-					},
-					dataType : "json",
-					success : function(html)
-					{
-						//alert(html.rv_num +"|"+ html.rec_nonrec_number + "|" + html.action);
-						//alert(html.rec + "|" + html.nonrec);
-
-						if (html.action == "-1") // 같은 추천을 눌렀을 경우 -> rec_nonrec_number의 스타일을 없애고, count-1
-						{
-							if ($rec_nonrec_number == "1")
-							{
-								$("#rec" + html.rv_num).css("border", "none");
-								$("#rec" + html.rv_num).html(
-										"추천 👍 (" + html.rec + ")");
-							} else if ($rec_nonrec_number == "2")
-							{
-								$("#nonrec" + html.rv_num)
-										.css("border", "none");
-								$("#nonrec" + html.rv_num).html(
-										"비추천 👎 (" + html.nonrec + ")");
-							}
-						} else if (html.action == "0") // 그냥 추천/비추천 추가 -> 추가한 것에 스타일 추가, count+1
-						{
-							if ($rec_nonrec_number == "1")
-							{
-								$("#rec" + html.rv_num).css("border",
-										"2px solid #ef6351");
-								$("#rec" + html.rv_num).html(
-										"추천 👍 (" + html.rec + ")");
-							} else if ($rec_nonrec_number == "2")
-							{
-								$("#nonrec" + html.rv_num).css("border",
-										"2px solid #ef6351");
-								$("#nonrec" + html.rv_num).html(
-										"비추천 👎 (" + html.nonrec + ")");
-							}
-						} else if (html.action == "1") // 이미 눌려있는 상태에서 다른 추천 눌렀을 경우
-						// -> 누른 추천에 스타일 추가, 이미 있는 것에 스타일 해제
-						//    누른 추천에 count+1, 이미 있는 것에 count-1
-						{
-							if (html.rec_nonrec_number == "1")
-							{
-								$("#rec" + html.rv_num).css("border",
-										"2px solid #ef6351");
-								$("#rec" + html.rv_num).html(
-										"추천 👍 (" + html.rec + ")");
-								$("#nonrec" + html.rv_num)
-										.css("border", "none");
-								$("#nonrec" + html.rv_num).html(
-										"비추천 👎 (" + html.nonrec + ")");
-
-							} else if ($rec_nonrec_number == "2")
-							{
-								$("#rec" + html.rv_num).css("border", "none");
-								$("#rec" + html.rv_num).html(
-										"추천 👍 (" + html.rec + ")");
-								$("#nonrec" + html.rv_num).css("border",
-										"2px solid #ef6351");
-								$("#nonrec" + html.rv_num).html(
-										"비추천 👎 (" + html.nonrec + ")");
-							}
-						}
-					},
-					error : function(e)
-					{
-						alert(e.responseText);
-					}
-				});
-			});
+	
 </script>
 
 </head>
@@ -357,7 +204,8 @@ String cp = request.getContextPath();
 
 								<div class="background" style="font-weight: bold;">
 									<div class="storeName">
-										<span style="font-size: 30pt; font-weight: bold;">${s.st_name }</span>
+										<span style="font-size: 28pt; font-weight: bold;">${s.st_name }</span>
+										<button type="button" id="storeInfoModify">가게정보 수정</button>
 									</div>
 									<div class="revBoard">
 										<div class="storeImgDiv">
@@ -591,9 +439,7 @@ String cp = request.getContextPath();
 								</div>
 							</div>
 						</div>
-						
-						
-						....
+
 					</div>
 					<!-- class="col-md-8  container4" -->
 				</div>
