@@ -403,7 +403,7 @@ String cp = request.getContextPath();
 									<div class="stImgDiv">
 										<button type="button" value="${store.st_num }"
 												class="storeBtn"
-												onclick="location.href='stDetail-userView.action?st_num=${store.st_num}'">
+												onclick="location.href='stdetail-userview.action?st_num=${store.st_num}'">
 											<c:set var = "photo" value="${store.photo_link }"/>
 											
 											<c:choose>

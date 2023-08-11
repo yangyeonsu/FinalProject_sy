@@ -93,7 +93,7 @@
  	<!-- 리뷰 + 추천 비추천 가져오기 -->
  	<select id="reviews" resultType="com.yameokja.mc.StoreReviewDTO">
 		SELECT UU.USER_NICKNAME AS USER_NICKNAME,T.REC AS REC, T.NONREC AS NONREC
-		     , T.RV_CONTENT AS RV_CONTENT, T.STAR_SCORE AS STAR_SCORE, T.REG_DATE AS REG_DATE
+		     , T.RV_CONTENT AS RV_CONTENT, T.STAR_SCORE AS STAR_SCORE, T.REG_DATE AS REG_DATE, T.RV_NUM AS RV_NUM
 		FROM
 		(                          
 		SELECT RB.RV_NUM AS RV_NUM, NVL(RNR.REC, 0) AS REC, NVL(RNR.NONREC, 0) AS NONREC
@@ -154,19 +154,38 @@
 -->
 		
 	<!-- 해당 유저가 해당 가게 리뷰에 누른 추천/비추천 내역 -->
-	<select id="userReviewList" resultType="com.yameokja.mc.userRvRecDTO">
+	<!-- <select id="userReviewList" resultType="com.yameokja.mc.userRvRecDTO">
 		SELECT RB.RV_NUM AS RV_NUM, RRN.REC_NONREC_NUMBER AS REC_NONREC_NUMBER
 		FROM RV_REC_NONREC RRN LEFT JOIN RV_BOX RB
 		  ON RRN.RV_NUM = RB.RV_NUM
 		WHERE RRN.USER_NUM = #{user_num}
 		  AND RB.ST_NUM = #{st_num}
+	</select> -->
+	
+	
+	<select id="userRnList" resultType="java.lang.Integer">
+		SELECT RB.RV_NUM AS RV_NUM
+		FROM RV_REC_NONREC RRN LEFT JOIN RV_BOX RB
+		  ON RRN.RV_NUM = RB.RV_NUM
+		WHERE RRN.USER_NUM = #{user_num}
+		  AND RB.ST_NUM = #{st_num}
+		  AND RRN.REC_NONREC_NUMBER = 1
+	</select>
+	
+	<select id="userNrnList" resultType="java.lang.Integer">
+		SELECT RB.RV_NUM AS RV_NUM
+		FROM RV_REC_NONREC RRN LEFT JOIN RV_BOX RB
+		  ON RRN.RV_NUM = RB.RV_NUM
+		WHERE RRN.USER_NUM = #{user_num}
+		  AND RB.ST_NUM = #{st_num}
+		  AND RRN.REC_NONREC_NUMBER = 2
 	</select>
 	
 
  	<!-- 리뷰 신고 -->
 	<insert id="reviewRepInsert">
 		INSERT INTO REP_APPLY(REP_APPLY_NUM, RV_NUM, USER_NUM, REP_RS_NUM)
-		VALUES (17, #{rv_num}, #{user_num}, #{rep_rs_num})
+		VALUES (28, #{rv_num}, #{user_num}, #{rep_rs_num})
 	</insert> 
 
 	<!-- 리뷰 추천/비추천 식별 -->
