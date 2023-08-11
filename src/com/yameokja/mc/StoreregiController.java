@@ -27,7 +27,7 @@ public class StoreregiController
 	@Autowired
     private ServletContext servletContext;
 	
-	@RequestMapping(value = "/storegiinsertform.action", method= {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = "/storegiinsertform.action", method=RequestMethod.POST)
 	public String SoreregiInsertForm()
 	{
 		String result = null;
@@ -139,7 +139,7 @@ public class StoreregiController
 		
 		dao.St_In_Apply(srdto);
 		
-		return "redirect:main.action";
+		return "redirect:usermain.action";
 	}
 	
 	

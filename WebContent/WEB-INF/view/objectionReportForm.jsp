@@ -5,9 +5,6 @@
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
 %>
-<%
-	ObjApplyViewDTO dto = (ObjApplyViewDTO)request.getAttribute("obj");
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -104,6 +101,7 @@ button, .input
 	align-items: center;
 	border-radius: 10px 0 0 10px;
 	margin-right: 1vw;
+	border: 1px solid;
 }
 </style>
 

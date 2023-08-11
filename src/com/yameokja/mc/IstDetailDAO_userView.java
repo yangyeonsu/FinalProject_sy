@@ -23,6 +23,7 @@ public interface IstDetailDAO_userView
 	public ArrayList<StoreReviewKeyDTO> reviewKeys(int st_num);				// 리뷰 키워드
 	public ArrayList<StoreRvPhotoDTO> rvPhoto(int st_num);					// 리뷰 사진
 	public ArrayList<userRvRecDTO> userReviewList(@Param("st_num") int st_num, @Param("user_num") String user_num);	// 특정 유저가 가게의 리뷰에 누른 추천/비추천 내역
+
 	
 	
 	// 리뷰 신고

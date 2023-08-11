@@ -299,7 +299,7 @@ $(function ()
 
 <div class="container">
 	
-	<c:import url="sideBar.jsp"></c:import>
+	<c:import url="sideBar_store.jsp"></c:import>
 
 	<div class="storemain_body">
 		<c:if test="">

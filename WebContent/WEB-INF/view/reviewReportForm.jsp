@@ -55,9 +55,8 @@
    text-align: center;
 }
 
-button, .input
+button, .input, .sendResult, #span
 {
-   
    display: inline-block;
    outline: none;
    cursor: pointer;
@@ -119,6 +118,76 @@ button, .input
    justify-content: space-between;
    margin-left: 10vw;
 }
+#reviewReport{
+cursor: not-allowed;
+}
+.title
+{
+	background-color: #F7F4EA;
+	width: 8vw;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 10px 0 0 10px;
+	margin-right: 1vw;
+	border: 1px solid;
+	
+}
+.sendBtn
+{
+	display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 1%;
+    
+}
+
+.checkLabel
+{
+	display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding-left: 40vw;
+    margin-top: 1% 
+}
+
+ 
+input[type="radio"] 
+{
+  display: none;
+}
+
+.checkLabel input[type="radio"] + span 
+{
+	display: inline-block;
+	padding: 5px 10px;
+	border: 1px solid #dfdfdf;
+	border-radius: 40px;
+	background-color: #ffffff;
+	width: 3vw;
+	text-align: center;
+	cursor: pointer;
+}
+
+
+.checkLabel input[type="radio"]:checked + span 
+{
+        background-color: light-gray;
+}
+
+span
+{
+	height: 27px;
+}
+#span
+{
+	padding-top: 10px;
+	height: 25px;
+}
+#myTextarea
+{
+	display: none;
+}
 </style>
 
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
@@ -126,16 +195,50 @@ button, .input
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <script type="text/javascript">
-   
+   /* 
    function rejectBtn()
    {
+	  
       if ($("#reviewReject").val() == "")
       {
          $("#err").css("display", "inline");
          $("#reviewReject").focus();
          return;
       }
+      
    };
+    */
+	$(function ()
+	{
+		$(".check").change(function() 
+		{
+		    if ($(this).is(":checked")) 
+		    {
+		       if ($(this).val() == "true")
+		          $("#myTextarea").css("display", "flex");
+		       else
+		          $("#myTextarea").css("display", "none");
+		    }
+		});
+		
+		$(".sendResult").click(function()
+		{
+			if ($(".check:checked").length == 0)
+			{
+				alert("승인 / 중재 / 반려 중 하나를 선택해주세요.");
+				return;
+			}
+			else if($(".check:checked").val() == "true")
+			{
+				if($("#myTextarea").val().trim() == "" || $("#myTextarea").val().trim() == null)
+				{
+					alert("반려사유를 입력해주셔야 합니다.");
+					return;
+				}
+			}
+		});
+	});
+   
 </script>
 
 </head>
@@ -180,10 +283,16 @@ button, .input
 				</div>
 			</div>
 		</div>
-         
-		<div class="igroup2" style="width: 100%;">
-			<textarea id="reviewReport" readonly="readonly" style="width: 72%; height: 10em; resize: none;">리뷰내용이 일치하지 않음.</textarea>
+		
+		<div class="igroup" >
+			<div class="title" style="margin-bottom: 0.5vh;">
+				<span>리뷰내용</span>
+			</div>
 		</div>
+		<div class="igroup2" style="width: 100%;">
+		<textarea id="reviewReport" readonly="readonly" style="width: 72%; height: 10em; resize: none;">${review.getRv_content() }</textarea>
+		</div>
+		
          
 		<div class="igroup2">
 			<div style="width: 50%; font-size: 11pt;">
@@ -195,22 +304,20 @@ button, .input
 		</div>
          
 		<div style="width: 87%; text-align: right; margin-top: 2vh; margin-bottom: 2vh;">
-			<input class="input" type="submit" style="width: 120px; border-radius: 20px;" value="승인">
+			<label class="label"><input type="radio" class="check" name="res" id="approve"><span id="span">승인</span></label>
+			<label class="label"><input type="radio" class="check" name="res" id="middle"><span id="span">중재</span></label>
+			<label class="label"><input type="radio" class="check" name="res" id="reject" value="true"><span id="span">반려</span></label>
 		</div>
          
+		 
 		<div class="igroup2" style="width: 100%;">
-			<textarea id="reviewReject"  style="width: 72%; height: 10em; resize: none; border-radius: 10px;" placeholder="반려사유기재"></textarea>
+           <textarea id="myTextarea" style="width: 72%; height: 10em; resize: none;" placeholder="반려사유를 입력해주세요."></textarea>
+        </div>
+   		
+   		<div class="sendBtn">
+			<input type="button" class="sendResult" value="처리 하기">
 		</div>
-        
-        <div class="igroup" >
-			<span class="errorMsg" id="err">반려사유를 입력해야 합니다.</span>
-		</div>
-		
-		<div style="width: 87%; text-align: right; margin-top: 1vh;">
-			<button value="중재" onclick="mediateBtn()">중재</button>
-			<button value="반려" onclick="rejectBtn()">반려</button>
-		</div>
-   
+   		
 		</div> <!-- st_info_insert -->
 	</div>
    

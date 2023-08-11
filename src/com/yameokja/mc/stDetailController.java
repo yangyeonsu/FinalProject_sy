@@ -79,25 +79,6 @@ public class stDetailController
 		{
 			model.addAttribute("breakTime", breakTime);
 		}
-		else
-			model.addAttribute("breakTime", null);
-		
-		// 가게 결제수단
-		ArrayList<String> stPayList = dao.stPay(st_num);
-		model.addAttribute("stPayList", stPayList);
-		
-		// 가게 체크박스
-		ArrayList<StoreCheckDTO> stCheckList = dao.stcheck(st_num);
-		
-		if(stCheckList.size()>0)
-		{
-			model.addAttribute("stCheckList", stCheckList);
-		}
-		else
-		{
-			model.addAttribute("stCheckList", null);
-		}
-		
 		
 		// 가게 메뉴
 		ArrayList<StoreMenuDTO> menuLists = dao.menuLists(st_num);
@@ -109,15 +90,6 @@ public class stDetailController
 		else
 			model.addAttribute("menuLists", null);
 		
-		// 리뷰 키워드
-		ArrayList<StoreReviewKeyDTO> reviewKeys = dao.reviewKeys(st_num);
-		
-		if(reviewKeys.size() > 0)
-		{
-			model.addAttribute("reviewKeys", reviewKeys);
-		}
-		else
-			model.addAttribute("reviewKeys", null);
 		
 		// 가게 리뷰목록
 		ArrayList<StoreReviewDTO> reviews = dao.reviews(st_num);
@@ -129,16 +101,36 @@ public class stDetailController
 		else
 			model.addAttribute("reviews", null);
 		
-		// 가게 리뷰 사진 목록
-		ArrayList<StoreRvPhotoDTO> rvPhotos = dao.rvPhoto(st_num);
 		
-		model.addAttribute("rvPhotos", rvPhotos);
+		// 리뷰 키워드
+		ArrayList<StoreReviewKeyDTO> reviewKeys = dao.reviewKeys(st_num);
+		
+		if(reviewKeys.size() > 0)
+		{
+			model.addAttribute("reviewKeys", reviewKeys);
+		}
+		else
+			model.addAttribute("reviewKeys", null);
+		
+		
+		/*
+		model.addAttribute("holiday", dao.holiday(st_num));
+		model.addAttribute("others", dao.others(st_num));
+		model.addAttribute("stName", dao.stName(st_num));
+		model.addAttribute("creviewScore", dao.creviewScore(st_num));
+		model.addAttribute("creviewNum", dao.creviewNum(st_num));
+		model.addAttribute("tel", dao.tel(st_num));
+		model.addAttribute("lo", dao.lo(st_num));
+		*/
+
+
 		
 		if (comList.size() > 0)
 			model.addAttribute("comList", mdao.getStoreList(comList));
 		else
 			model.addAttribute("comList", null);
 		
+
 		// 사용자의 해당 가게 추천/비추천 내역
 		ArrayList<userRvRecDTO> userReviewList = dao.userReviewList(st_num, user_num);
 		
@@ -156,11 +148,12 @@ public class stDetailController
 		}
 		else
 			model.addAttribute("userReviewList", null);
-		
+	
 		result = "/WEB-INF/view/storeDetail.jsp";
 		
 		return result;
 	}
+
 	
 	@RequestMapping(value="/reviewRep.action")
 		@ResponseBody
@@ -241,5 +234,5 @@ public class stDetailController
 	}
 		
 		
-	
+
 }
