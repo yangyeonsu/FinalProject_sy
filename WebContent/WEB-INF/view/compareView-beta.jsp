@@ -139,8 +139,8 @@ String cp = request.getContextPath();
 
 .compTitle {
 	width: 15vw;
-    height: 15vh;
-    margin-left: 30vw;
+	height: 15vh;
+	margin-left: 30vw;
 }
 
 .compTitle span {
@@ -151,6 +151,7 @@ String cp = request.getContextPath();
 
 .compareMain {
 	width: 100vw;
+	margin-left: 3vw;
 }
 
 .compareBody {
@@ -463,7 +464,7 @@ String cp = request.getContextPath();
 
 	<div class="mainBody">
 
-		<c:import url="sideBar.jsp"></c:import>
+		<c:import url="sideBar_user.jsp"></c:import>
 
 
 		<div class="compareMain">
@@ -500,7 +501,7 @@ String cp = request.getContextPath();
 								<div id="비교하는 가게 이름" class="cName">${st1.st_name}</div>
 								<div id="비교하는 가게 대표 사진" class="photo1">
 									<img id="가게 대표사진" class="phStore"
-									src="<%=cp %>/${st1.photo_link}">
+										src="<%=cp %>/${st1.photo_link}">
 								</div>
 								<div id="가게 주소" class="cLo">${st1.st_location}</div>
 
@@ -511,43 +512,43 @@ String cp = request.getContextPath();
 								</div>
 							</c:if>
 						</c:forEach>
-							<!-- cBox -->
-							<div class="cBox">
-								<c:forEach var="op" items="${openClose}" varStatus="oc_status">
-									<c:if test="${oc_status.index + 1 == st_count.index}">
-										<div id="가게 주" class="week">
-											<div id="days" class="cDay">${op.day_name}
-												${op.operate_time} ${op.holiday}</div>
-										</div>
-									</c:if>
-								</c:forEach>
-								<c:forEach var="ml" items="${menuLists}" varStatus="ml_status">
-									<c:if test="${ml_status.index + 1 == st_count.index}">
-										<div id="가게 평균 가격" class="cList">${ml.price_avg}</div>
-										<div id="가게 대표 메뉴 이름" class="cList">${ml.menu_name}</div>
-										<div id="가게 대표 메뉴 이미지" class="photo2">
-											<img id="가게 대표사진" class="phMenu"
-												src="<%=cp %>/images/${ml.image_link}">
-										</div>
-									</c:if>
-								</c:forEach>
-								<c:forEach var="st" items="${store}" varStatus="st_status2">
-									<c:if test="${st_status2.index + 1 == st_count.index}">
-										<div id="가게 최대 수용 인원" class="cList">${st.max_customers}</div>
-									</c:if>
-								</c:forEach>
-								
-								<c:forEach var="sc" items="${stcheck}" varStatus="sc_status">
-									<c:if test="${sc_status.index + 1 == st_count.index}">
-										<div id="가게 옵션" class="cOptions">
-											<c:forEach begin="1" end="6" varStatus="optNum">
-												<div id="화장실 존재 여부" class="cOpt">
-													${sc.chbox_name} : <input type="checkbox" class="chBox"
-														value="${sc.yesorno}" id="${optNum.index }" />
-												</div>
-											</c:forEach>
-										</div>
-									</c:if>
+						<!-- cBox -->
+						<div class="cBox">
+							<c:forEach var="op" items="${openClose}" varStatus="oc_status">
+								<c:if test="${oc_status.index + 1 == st_count.index}">
+									<div id="가게 주" class="week">
+										<div id="days" class="cDay">${op.day_name}
+											${op.operate_time} ${op.holiday}</div>
+									</div>
+								</c:if>
+							</c:forEach>
+							<c:forEach var="ml" items="${menuLists}" varStatus="ml_status">
+								<c:if test="${ml_status.index + 1 == st_count.index}">
+									<div id="가게 평균 가격" class="cList">${ml.price_avg}</div>
+									<div id="가게 대표 메뉴 이름" class="cList">${ml.menu_name}</div>
+									<div id="가게 대표 메뉴 이미지" class="photo2">
+										<img id="가게 대표사진" class="phMenu"
+											src="<%=cp %>/images/${ml.image_link}">
+									</div>
+								</c:if>
+							</c:forEach>
+							<c:forEach var="st" items="${store}" varStatus="st_status2">
+								<c:if test="${st_status2.index + 1 == st_count.index}">
+									<div id="가게 최대 수용 인원" class="cList">${st.max_customers}</div>
+								</c:if>
+							</c:forEach>
+
+							<c:forEach var="sc" items="${stcheck}" varStatus="sc_status">
+								<c:if test="${sc_status.index + 1 == st_count.index}">
+									<div id="가게 옵션" class="cOptions">
+										<c:forEach begin="1" end="6" varStatus="optNum">
+											<div id="화장실 존재 여부" class="cOpt">
+												${sc.chbox_name} : <input type="checkbox" class="chBox"
+													value="${sc.yesorno}" id="${optNum.index }" />
+											</div>
+										</c:forEach>
+									</div>
+								</c:if>
 							</c:forEach>
 						</div>
 						<!-- cBox -->
