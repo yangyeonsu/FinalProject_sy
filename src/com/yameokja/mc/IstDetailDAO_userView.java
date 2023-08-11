@@ -11,7 +11,6 @@ import org.apache.ibatis.annotations.Param;
 
 public interface IstDetailDAO_userView
 {
-<<<<<<< Updated upstream
 	public ArrayList<StoreOpencloseDTO> openClose(int st_num);  			// 영업시간 + 휴무
 	public ArrayList<StoreBreaktimeDTO> breakTime(int st_num);	 			// 브레이크 타임
 	public ArrayList<StoreDetailDTO> store(int st_num);	     				// 가게이름, 좋아요 수, 별점 평균, 리뷰 수, 전화번호, 주소...
@@ -24,20 +23,7 @@ public interface IstDetailDAO_userView
 	public ArrayList<StoreReviewKeyDTO> reviewKeys(int st_num);				// 리뷰 키워드
 	public ArrayList<StoreRvPhotoDTO> rvPhoto(int st_num);					// 리뷰 사진
 	public ArrayList<userRvRecDTO> userReviewList(@Param("st_num") int st_num, @Param("user_num") String user_num);	// 특정 유저가 가게의 리뷰에 누른 추천/비추천 내역
-=======
-	public ArrayList<StoreOpencloseDTO> openClose(int st_num);  	// 영업시간 + 휴무
-	public ArrayList<StoreBreaktimeDTO> breakTime(int st_num);	 	// 브레이크 타임
-	public ArrayList<StoreDetailDTO> store(int st_num);	     		// 가게이름, 좋아요 수, 별점 평균, 리뷰 수, 전화번호, 주소...
-	public int clikeNum(int st_num);							 	// 좋아요 수
-	
-	public ArrayList<StoreMenuDTO> menuLists(int st_num);  			// 가게 메뉴, 가격, 이미지링크
-	public ArrayList<StoreReviewDTO> reviews(int st_num);  	    	// 리뷰 + 추천/비추천
-	public ArrayList<StoreKeyDTO> stKeys(int st_num);  				// 가게 키워드
-	public ArrayList<StoreReviewKeyDTO> reviewKeys(int st_num);		// 리뷰 키워드
-	
-	public int reviewInsert(int st_num, String user_num, String rv_content		// 리뷰 등록
-							, int star_score);
->>>>>>> Stashed changes
+
 	
 	
 	// 리뷰 신고
