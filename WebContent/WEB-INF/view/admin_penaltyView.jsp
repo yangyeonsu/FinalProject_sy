@@ -29,7 +29,8 @@
 		{
 			var reportNum = $(this).siblings("[id]").attr("id");
 			//alert(reportNum);
-			$(location).attr("href","penaltyrevokeform.action?revo_apply_num="+reportNum);
+			var state = $(this).parent().attr('id');
+			$(location).attr("href","penaltyrevokeform.action?revo_apply_num="+reportNum+"&state="+state);
 			
 		});
 	});
@@ -45,48 +46,47 @@
 	<c:import url="sideBar_user.jsp"></c:import>
 		
 		
-		<div id="mainDiv">
+	<div id="mainDiv">
+		
+		<!-- 접수내역관리 -->
+		<div id="receive">
+			<h1>패널티회수 접수내역 관리</h1>
 			
-			<!-- 접수내역관리 -->
-			<div id="receive">
-				<h1>패널티회수 접수내역 관리</h1>
-				
-				<!-- 패널티회수 box -->
-				<div id="penaltyBox" style="height: auto;">
-	
-					<div class="more" id="more">
-						<h3><a href="#">패널티회수</a></h3>
-					</div>
-				
-					<table id="penalty_list" style="margin-bottom: 20px;">
-						<thead>
-							<tr>	
-								<th>신청일자</th>
-								<th>가게 이름</th>
-								<th>처리상태</th>
-								<th>처리일자</th>
-								<th>처리한 관리자</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach var="revo" items="${revoList }">
-							<tr>
-								<td class="revoTd" id="${revo.report_num }">${revo.reg_date }</td>
-								<td class="revoTd" id="${revo.report_num }">${revo.st_name }</td>
-								<td class="revoTd" id="${revo.report_num }">${revo.state }</td>
-								<td class="revoTd" id="${revo.report_num }">${revo.final_date }</td>
-								<td class="revoTd" id="${revo.report_num }">${revo.admin_id }</td>
-							</tr>
-							</c:forEach>
-						</tbody>
-	
-					</table>
+			<!-- 패널티회수 box -->
+			<div id="penaltyBox" style="height: auto;">
+
+				<div class="more" id="more">
+					<h3><a href="#">패널티회수</a></h3>
 				</div>
-				
-				<div class="back" id="more">
-					<h3></h3>
-					<a href="mainAdminView.action" class="backBtn" style="font-size: 10pt;">뒤로가기</a>
-				</div>
+			
+				<table id="penalty_list" style="margin-bottom: 20px;">
+					<thead>
+						<tr>	
+							<th>신청일자</th>
+							<th>가게 이름</th>
+							<th>처리상태</th>
+							<th>처리일자</th>
+							<th>처리한 관리자</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach var="revo" items="${revoList }">
+						<tr id="${revo.state }">
+							<td class="revoTd" id="${revo.report_num }">${revo.reg_date }</td>
+							<td class="revoTd" id="${revo.report_num }">${revo.st_name }</td>
+							<td class="revoTd" id="${revo.report_num }">${revo.state }</td>
+							<td class="revoTd" id="${revo.report_num }">${revo.final_date }</td>
+							<td class="revoTd" id="${revo.report_num }">${revo.admin_id }</td>
+						</tr>
+						</c:forEach>
+					</tbody>
+
+				</table>
+			</div>
+			
+			<div class="back" id="more">
+				<h3></h3>
+				<a href="mainAdminView.action" class="backBtn" style="font-size: 10pt;">뒤로가기</a>
 			</div>
 		</div>
 	</div>

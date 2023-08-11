@@ -29,7 +29,8 @@
 		{
 			var reportNum = $(this).siblings("[id]").attr("id");
 			//alert(reportNum);
-			$(location).attr("href","objreportform.action?obj_apply_num="+reportNum);
+			var state = $(this).parent().attr('id');
+			$(location).attr("href","objreportform.action?obj_apply_num="+reportNum+"&state="+state);
 			
 		});
 	});
@@ -73,7 +74,7 @@
 						</thead>
 						<tbody>
 							<c:forEach var="obj" items="${objList }">
-							<tr>
+							<tr id="${obj.state }">
 								<td class="objTd" id="${obj.report_num }">${obj.reg_date }</td>
 								<td class="objTd" id="${obj.report_num }">${obj.st_name }</td>
 								<td class="objTd" id="${obj.report_num }">${obj.state }</td>
