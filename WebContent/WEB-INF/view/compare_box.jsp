@@ -164,7 +164,7 @@ String cp = request.getContextPath();
 		</div>
 
 		<div class="comStoreBtnDiv">
-			<button type="button" class="btn" id="comBtn" name="comBtn">비교하기</button>
+			<button type="button" id="comBtn" name="comBtn">비교하기</button>
 		</div>
 	</div>
 
