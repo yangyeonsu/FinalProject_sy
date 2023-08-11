@@ -88,10 +88,11 @@
 	
 	</div>
 	<!-- onclick="location.href='storegiinsertform.action'" -->
-	<div class="ftStAdd">
-		<button type="button" id="fsa" class="fsaBtn" >사업자 등록하기</button>
-	</div>
-
+	<c:if test="${admin_num eq NULL }">
+		<div class="ftStAdd">
+			<button type="button" id="fsa" class="fsaBtn" >사업자 등록하기</button>
+		</div>
+	</c:if>
 </footer>	
 
 </body>
