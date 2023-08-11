@@ -286,11 +286,32 @@ public class UserController
 	    HttpSession session = request.getSession();
 	    String user_num = (String)session.getAttribute("user_num");
 	    
+	    LocalDate currentDate = LocalDate.now();
+        int monthValue = currentDate.getMonthValue();
+	    
 	    String actionName = "/user_stupdate_relist.action";
 	    
-	    IUserstupdaterelistDAO dao = sqlSession.getMapper(IUserstupdaterelistDAO.class);
-	    
 	    String result = null;
+	    
+	    
+	    
+	    
+	    
+	    IUserstupdaterelistDAO dao = sqlSession.getMapper(IUserstupdaterelistDAO.class);
+	    IUserDAO udao = sqlSession.getMapper(IUserDAO.class);
+	    
+	    UserDTO user = udao.searchUserInfo(user_num, "num");
+	    
+	    if (1 <= monthValue && monthValue <= 6)
+		{
+			user.setPoint_sum(udao.secondHalf(user_num).point_sum);
+			user.setUser_grade(udao.firstHalf(user_num).user_grade);
+		}
+		else if(7 <= monthValue && monthValue <= 12)
+		{
+			user.setPoint_sum(udao.firstHalf(user_num).point_sum);
+			user.setUser_grade(udao.secondHalf(user_num).user_grade);
+		}
 	    
 	    // 이전 페이지(?)로부터 넘어온 게시물 번호 수신
 		String strNum = request.getParameter("num");
@@ -339,7 +360,7 @@ public class UserController
 		 */
 	    
 	    model.addAttribute("pageIndex", Paging.pageIndexList(currentPage, totalPage, actionName));
-		
+	    model.addAttribute("user", user);
 	    model.addAttribute("user_stupdate_relist", user_stupdate_relist);
 	    result = "/WEB-INF/view/user_StUpdate_reList.jsp";
 	    
@@ -352,11 +373,28 @@ public class UserController
 	    HttpSession session = request.getSession();
 	    String user_num = (String)session.getAttribute("user_num");
 	    
+	    LocalDate currentDate = LocalDate.now();
+        int monthValue = currentDate.getMonthValue();
+	    
 	    String actionName = "/seur_rv_report.action";
 	    
 	    String result = null;
 	    
 	    IuserrvReportDAO dao = sqlSession.getMapper(IuserrvReportDAO.class);
+	    IUserDAO udao = sqlSession.getMapper(IUserDAO.class);
+	    
+	    UserDTO user = udao.searchUserInfo(user_num, "num");
+	    
+	    if (1 <= monthValue && monthValue <= 6)
+		{
+			user.setPoint_sum(udao.secondHalf(user_num).point_sum);
+			user.setUser_grade(udao.firstHalf(user_num).user_grade);
+		}
+		else if(7 <= monthValue && monthValue <= 12)
+		{
+			user.setPoint_sum(udao.firstHalf(user_num).point_sum);
+			user.setUser_grade(udao.secondHalf(user_num).user_grade);
+		}
 	    
 	    // 이전 페이지(?)로부터 넘어온 게시물 번호 수신
  		String strNum = request.getParameter("num");
@@ -394,6 +432,7 @@ public class UserController
 	    List<UserrvreportDTO> rvReportList = dao.user_rv_Report(user_num, startRow, endRow); // 여러 개의 DTO 객체를 리스트로 가져옴
 	    
 	    model.addAttribute("user_rv_Report", rvReportList); // 리스트를 전달
+	    model.addAttribute("user", user);
 	    result = "/WEB-INF/view/user_rv_Report.jsp";
 	    
 	    return result;

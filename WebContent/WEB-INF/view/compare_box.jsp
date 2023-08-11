@@ -58,7 +58,7 @@ $(function() {
         });
         
      	
-        alert(checkArray);
+      /*   alert(checkArray); */
         
         $("#checkedCompare").attr("value", checkArray);
 
