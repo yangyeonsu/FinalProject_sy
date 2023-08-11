@@ -242,132 +242,6 @@ String cp = request.getContextPath();
 	float: right;
 }
 
-
-.has_sub_menu
-{
-	list-style-type: none;
-}
-
-.side-menu 
-{
-	top: 50px;
-	width: 5vw;
-	z-index: 10;
-	background: #ef6351;
-	border-right: 1px solid rgba(0, 0, 0, 0.07);
-	height: 90%;
-	margin-top: 5.7vh;
-	position: fixed;
-	align-items: center;
-}
-
-#sidebar-menu li 
-{
-	font-size: 1.5rem;
-}
-
-#sidebar-menu .fas 
-{
-	padding-top: 3vh;
-	padding-left: 1.2vw
-}
-
-.left_sub_menu 
-{
-	position: fixed;
-	top: 50px;
-	width: 18vw;
-	z-index: 10;
-	left: 4.6vw;
-	background: white;
-	height: 90%;
-	margin-top: 5.7vh;
-}
-
-.sub_menu 
-{
-	margin-top: 50px;
-}
-
-.left_sub_menu>.sub_menu li:hover 
-{
-	color: ff5858;
-	background-color: #e1e1e1;
-}
-
-.left_sub_menu>.sub_menu li 
-{
-	color: black;
-	font-size: 17px;
-	font-weight: 600;
-	padding: 20px 0px 8px 14px;
-	border-bottom: 1px solid #e1e1e1;
-}
-
-.sub_menu>h2 
-{
-	padding-bottom: 4px;
-	border-bottom: 3px solid #797979;
-	margin-top: 30px;
-	font-size: 21px;
-	font-weight: 600;
-	color: #333;
-	margin-left: 10px;
-	margin-right: 10px;
-	font-family: 'NotoKrB';
-}
-
-.fas 
-{
-	color: #ff5858;
-	font-size: 20px;
-	line-height: 20px;
-	float: right;
-	margin-top: 0.6vh;
-	margin-right: 2vw;
-}
-
-.sub_menu>.big_menu>.small_menu li 
-{
-	color: black;
-	font-size: 14px;
-	font-weight: 600;
-	border-bottom: 0px solid #e1e1e1;
-}
-
-.big_menu 
-{
-	list-style-type: none;
-	cursor: pointer;
-}
-
-.samll_menu 
-{
-	position: fixed;
-	list-style-type: none;
-	padding-inline-start: 0px;
-	list-style: none;
-	transition-duration: 0.5s;
-}
-
-.small_menuA 
-{
-	color: black;
-	text-decoration-line: none;
-	background-color: transparent;
-	margin-bottom: 1vh
-}
-
-.big_menu ul 
-{
-	margin-top: 0;
-	margin-bottom: 0;
-}
-
-.has_sub 
-{
-	width: 100%;
-}
 .main
 {
 	margin: 10%;
@@ -412,6 +286,9 @@ table
 .input:focus + .line-box .line {
   width: 100%;
 }
+.label-active {
+  top: -3em;
+}
 
 .label-txt {
   position: absolute;
@@ -423,11 +300,6 @@ table
   color: rgb(120,120,120);
   transition: ease .3s;
 }
-
-.label-active {
-  top: -3em;
-}
-
 .storeOption input
 {
 	zoom:1.5;
@@ -455,52 +327,7 @@ table
 </style>
 
 
-<script type="text/javascript">
-	$(function()
-	{
-		$(".left_sub_menu").hide();
-		$(".has_sub").click(function()
-		{
-			$(".left_sub_menu").fadeToggle(300);
-			if ($('#checkOverlay').val() == "true")
-			{
-				$('.overlay').css("position", "fixed");
-				$('.overlay').css("width", "0%");
-				$('.overlay').css("height", "0%");
-				$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
-				$('.overlay').css("z-index", "0");
-				$('#checkOverlay').attr("value", "false");
-			} else
-			{
-				$('.overlay').css("position", "fixed");
-				$('.overlay').css("width", "100%");
-				$('.overlay').css("height", "100%");
-				$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
-				$('.overlay').css("z-index", "3");
-				$('.overlay').css("margin-top", "1.011vh");
-				$('#checkOverlay').attr("value", "true");
-			}
-
-		});
-		// 왼쪽메뉴 드롭다운
-		$(".sub_menu ul.small_menu").hide();
-		$(".sub_menu ul.big_menu").click(function()
-		{
-			$("ul", this).slideToggle(300);
-		});
-		// 외부 클릭 시 좌측 사이드 메뉴 숨기기
-		$('.overlay').on('click', function()
-		{
-			$('.left_sub_menu').fadeOut();
-			$('.overlay').css("position", "fixed");
-			$('.overlay').css("width", "0%");
-			$('.overlay').css("height", "0%");
-			$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
-			$('.overlay').css("z-index", "0");
-			$('#checkOverlay').attr("value", "false");
-		});
-	});
-	
+<script type="text/javascript">	
 	
 	$(document).ready(function(){
 
