@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
 	request.setCharacterEncoding("UTF-8");
 String cp = request.getContextPath();
@@ -10,8 +11,7 @@ String cp = request.getContextPath();
 <html>
 <head>
 <meta charset="UTF-8">
-<title>storeDetail-userView.jsp</title>
-
+<title>YameokJa</title>
 
 <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
 <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
@@ -21,207 +21,14 @@ String cp = request.getContextPath();
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery.min.js"></script>
 
-<<<<<<< Updated upstream
 <link rel="stylesheet" type="text/css" href="<%=cp%>/css/userMyPage.css">
 <link rel="stylesheet" type="text/css" href="<%=cp%>/css/side_bar.css">
 
 <link rel="stylesheet" type="text/css"
 	href="<%=cp%>/css/storeDetail.css">
-=======
-<link rel="stylesheet" type="text/css" href="<%=cp%>/css/storeDetail.css">
-
-<link rel="stylesheet" type="text/css" href="<%=cp%>/css/userMyPage.css">
-<link rel="stylesheet" type="text/css" href="<%=cp%>/css/side_bar.css">
-
->>>>>>> Stashed changes
 
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery.min.js"></script>
-
-<!-- 부가적인 테마
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"> -->
-
-<!-- <style type="text/css">
-#body {
-	width: 100%;
-	display: flex;
-}
-
-.mainBody {
-	background-color: #F7F4EA;
-	margin-left: 20vw;
-	width: 60vw;
-}
-
-.main {
-	padding-top: 2vh;
-}
-
-.container1 {
-	float: left;
-}
-
-.main-left {
-	width: 50%;
-	height: 40vh;
-	float: left;
-	text-align: center;
-}
-
-.main-right {
-	width: 50%;
-	height: 40vh;
-	float: right;
-	text-align: center;
-}
-
-.opli, .btli {
-	border: 2vw;
-	width: 10vw;
-	height: 3vh;
-}
-
-#weekList li, .time li {
-	padding-bottom: 0.5vw;
-	padding-right: 0.5vw;
-	padding-left: 0.5vw;
-	padding-top: 0.5vw;
-	list-style: none;
-	border-radius: 11px;
-}
-
-.revKeyList li {
-	padding-bottom: 0.3vw;
-	padding-top: 0.3vw;
-	background-color: #F8E6E0;
-	border: 1px solid #F781BE;
-	margin: 0.5vw;
-	border-radius: 11px;
-	list-style: none;
-}
-
-.revKeyList input {
-	background: none;
-	border: 0;
-	list-style: none;
-}
-
-.openclose {
-	width: 50%;
-	float: left;
-}
-
-.time {
-	width: 50%;
-	float: left;
-	text-align: center;
-}
-
-.btli {
-	text-align: center;
-}
-
-.container2 {
-	margin-top: 20vh;
-	margin-left: 4vw;
-}
-
-.info {
-	width: 100%;
-	height: 50%;
-	display: flex;
-	padding-right: 2vw;
-	text-align: left;
-	margin: 1vw;
-}
-
-.info input, textarea {
-	width: 35vw;
-	height: 4vh;
-	background-color: #F8E6E0;
-	border: 0;
-}
-
-.container3, .container4 {
-	width: 100%;
-	float: left;
-	margin-top: 3vh;
-}
-
-.container3 {
-	padding-left: 0.2vw;
-}
-
-.thumbnail {
-	width: 10vw;
-	height: 17vh;
-	float: left;
-}
-
-.img-rounded {
-	width: 100%;
-	height: 100%;
-}
-
-.main ul {
-	list-style-type: none;
-}
-
-.menu {
-	display: flex;
-	justify-content: space-evenly;
-	padding-right: 5vw;
-	padding-left: 5vw;
-}
-
-.form {
-	padding-left: 3vw;
-}
-
-.revBoard {
-	padding-left: 2vw;
-}
-
-.menuList {
-	display: flex;
-	margin-left: 3vw;
-}
-
-.menuPhoto {
-	padding: 1vw;
-}
-
-.revBack {
-	width: 90%;
-	height: 14vh;
-	background-color: #EED2CE;
-	border-radius: 11px;
-}
-
-.btn {
-	background-color: #F7AF97;
-	border: 1px #EF6351;
-	border-radius: 8px;
-	color: white;
-	font-size: 10pt;
-	font-family: 'IBM Plex Sans KR', sans-serif;
-	cursor: pointer;
-}
-
-#repCon {
-	float: right;
-}
-
-.reViews {
-	padding-bottom: 2vh;
-}
-
-.recBtn {
-	float: right;
-}
-</style> -->
-
 
 <script type="text/javascript">
 
@@ -231,7 +38,6 @@ String cp = request.getContextPath();
 			alert($(this).val());
 			$("input[name=rvNumHidden]").attr("value", $(this).val());
 		});
-<<<<<<< Updated upstream
 
 		$("#decBtn").click(function()
 		{
@@ -385,18 +191,6 @@ String cp = request.getContextPath();
 				$('.bgLayer').css('width', $(window).width() - 0);
 				$('.bgLayer').css('height', $(window).height() - 0);
 			});
-=======
-		// 외부 클릭 시 좌측 사이드 메뉴 숨기기
-		$('.overlay').on('click', function()
-		{
-			$('.left_sub_menu').fadeOut();
-			$('.overlay').css("position", "fixed");
-			$('.overlay').css("width", "0%");
-			$('.overlay').css("height", "0%");
-			$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
-			$('.overlay').css("z-index", "0");
-			$('#checkOverlay').attr("value", "false");
->>>>>>> Stashed changes
 		});
 
 	});
@@ -490,7 +284,7 @@ String cp = request.getContextPath();
 
 
 <body>
-<form action="search.action" id="userForm" method="post">
+	<form action="" id="userForm" method="post">
 		<div class="header">
 			<c:import url="header_user.jsp"></c:import>
 		</div>
@@ -499,7 +293,7 @@ String cp = request.getContextPath();
 
 			<div id="column">
 
-				<c:import url="sideBar.jsp"></c:import>
+				<c:import url="sideBar_user.jsp"></c:import>
 			</div>
 
 			<div class="mainBody">
@@ -546,28 +340,70 @@ String cp = request.getContextPath();
 											<div id='opencloseholidayName'>
 												<div class="dayname">요일</div>
 												<div class="time">운영시간</div>
-												<div class="holiday">휴무</div>
 											</div>
 											<div id="opencloseholidayList">
+												<c:if test="${empty openClose }">
+													<div class="ochList">
+														<div class="dayname">월요일</div>
+														<div class="time">-</div>
+														<div class="holiday">-</div>
+													</div>
+													<div class="ochList">
+														<div class="dayname">화요일</div>
+														<div class="time">-</div>
+														<div class="holiday">-</div>
+													</div>
+													<div class="ochList">
+														<div class="dayname">수요일</div>
+														<div class="time">-</div>
+														<div class="holiday">-</div>
+													</div>
+													<div class="ochList">
+														<div class="dayname">목요일</div>
+														<div class="time">-</div>
+														<div class="holiday">-</div>
+													</div>
+													<div class="ochList">
+														<div class="dayname">금요일</div>
+														<div class="time">-</div>
+														<div class="holiday">-</div>
+													</div>
+													<div class="ochList">
+														<div class="dayname">토요일</div>
+														<div class="time">-</div>
+														<div class="holiday">-</div>
+													</div>
+													<div class="ochList">
+														<div class="dayname">일요일</div>
+														<div class="time">-</div>
+														<div class="holiday">-</div>
+													</div>
+												</c:if>
 												<c:forEach var="op" items="${openClose}">
-													<%-- <li><input class="opli" type="text"
-												style="text-align: center;"
-												placeholder="${op.day_name} ${op.start_time}:00 ~ ${op.end_time}:00"
-												readonly="readonly" /></li> --%>
 													<div class="ochList">
 														<div class="dayname">${op.day_name }</div>
-														<div class="time">${op.operate_time }</div>
-														<div class="holiday">${op.holiday }</div>
+														<c:choose>
+															<c:when test="${op.holiday eq '휴무' }">
+																<div class="time">휴무</div>
+															</c:when>
+															<c:otherwise>
+																<div class="time">${op.operate_time }</div>
+															</c:otherwise>
+														</c:choose>
+
 													</div>
 												</c:forEach>
 											</div>
 										</div>
 										<div id="breakTime">
+											<div class="breakName">브레이크타임</div>
+
+											<c:if test="${empty breakTime }">
+												-
+											</c:if>
 											<c:forEach var="breakTime" items="${breakTime }">
-												<div class="breakName">브레이크타임</div>
 												<div class="breakList">
-													<div>[${breakTime.week_weekend }]
-														&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+													<div>[${breakTime.week_weekend }] &nbsp;&nbsp;</div>
 													<div>${breakTime.start_breaktime }~
 														${breakTime.end_breaktime }</div>
 												</div>
@@ -584,19 +420,34 @@ String cp = request.getContextPath();
 							</c:forEach>
 						</div>
 
-						<div class="storeinfo">
-							<div class="storeInfoList">
-								<div id="catName" class="siList1">카테고리</div>
-								<div id="addrName" class="siList1">주소</div>
-								<div id="telName" class="siList1">전화번호</div>
-								<div id="emailName" class="siList1">e-mail</div>
-								<div id="maxName" class="siList1">최대수용인원수</div>
-								<div id="payName" class="siList1">결제수단</div>
-								<div id="explainName" class="siList1">가게 설명</div>
+						<div class="storeMiddle">
+							<div class="storeinfo">
+								<div class="storeInfoList">
+									<div id="catName" class="siList1">카테고리</div>
+									<div id="addrName" class="siList1">주소</div>
+									<div id="telName" class="siList1">전화번호</div>
+									<div id="emailName" class="siList1">e-mail</div>
+									<div id="maxName" class="siList1">최대수용인원수</div>
+									<div id="payName" class="siList1">결제수단</div>
+									<div id="explainName" class="siList1">가게 설명</div>
 
+								</div>
+
+								<div class="storeInfoValue">
+									<div id="cat" class="siList2">${s.food_name }</div>
+									<div id="addr" class="siList2">${s.st_location }</div>
+									<div id="tel" class="siList2">${s.st_tel }</div>
+									<div id="email" class="siList2">${s.st_email }</div>
+									<div id="max" class="siList2">${s.max_customers }</div>
+									<div id="pay" class="siList2">
+										<c:forEach var="stPay" items="${stPayList}">
+										&nbsp;${stPay } 
+									</c:forEach>
+									</div>
+									<div id="explain" class="siList2">${s.st_explain }</div>
+								</div>
 							</div>
 
-<<<<<<< Updated upstream
 							<div class="storeChecks">
 								<c:if test="${empty stCheckList }">
 									<div class="none">해당 항목이 존재하지 않습니다.</div>
@@ -611,61 +462,57 @@ String cp = request.getContextPath();
 										<div class="stCheckYesorno">${stCheck.yesorno }</div>
 									</div>
 								</c:forEach>
-=======
-							<div class="storeInfoValue">
-								<div id="cat" class="siList2">${s.food_name }</div>
-								<div id="addr" class="siList2">${s.st_location }</div>
-								<div id="tel" class="siList2">${s.st_tel }</div>
-								<div id="email" class="siList2">${s.st_email }</div>
-								<div id="max" class="siList2">${s.max_customers }</div>
-								<div id="pay" class="siList2"></div>
-								<div id="explain" class="siList2">${s.st_explain }</div>
->>>>>>> Stashed changes
 							</div>
-
-
-							<!-- <div>
-						
-							체크박스 들어올 영역!!
-						
-							</div> -->
 						</div>
 					</c:forEach>
 
-					<div id="menuboard" class="container3">
+
+					<div id="menuboard" class="container2">
 
 						<!-- 메뉴 -->
 						<h2>메뉴</h2>
 						<div class="menuList">
+							<c:if test="${empty menuLists }">
+								<div class="none">"등록된 메뉴가 존재하지 않습니다."</div>
+							</c:if>
 							<c:forEach var="ml" items="${menuLists }">
 								<div class="menu">
 									<div class="menuPhoto">
 										<img class="thumbnail" src="<%=cp %>/images/${ml.image_link }" />
 									</div>
-									<div class="menuName">${ml.menu_name }</div>
-									<div class="menuPrice">${ml.price }원</div>
+									<div class="menuName">"${ml.menu_name }"</div>
+									<div class="menuPrice">
+										<fmt:formatNumber value="${ml.price }" pattern="#,###" />
+										원
+									</div>
 								</div>
 							</c:forEach>
 						</div>
 					</div>
 
-					<div class=" container4">
+					<div class=" container3">
 						<div id="reviewList">
 							<h2>리뷰</h2>
 
 
 							<div class="rvKeyList">
+								<c:if test="${empty reviewKeys }">
+									<div class="none">"등록된 리뷰 키워드가 존재하지 않습니다."</div>
+								</c:if>
 								<c:forEach var="rvKey" items="${reviewKeys }">
-									<div class="rvKey">${rvKey.rv_key_name }</div>
-									<div class="rvKeyCount">[${rvKey.rv_key_count }]</div>
+									<div class="rvKey">"${rvKey.rv_key_name }"</div>
+									<div class="rvKeyCount">(${rvKey.rv_key_count })</div>
 								</c:forEach>
 							</div>
 							<!-- class="revKeyList"  -->
 
 							<div id="revList">
 								<div class="reviewInsertBtnDiv">
-									<button type="submit" class="btn" id="insertReview">리뷰작성하기</button>
+									<button type="button" class="btn" id="insertReview">리뷰작성하기</button>
 								</div>
+								<c:if test="${empty reviews }">
+									<div class="none">"작성된 리뷰가 존재하지 않습니다."</div>
+								</c:if>
 								<c:forEach var="rv" items="${reviews }">
 									<div class="reviews">
 										<div class="rvTop">
@@ -682,7 +529,7 @@ String cp = request.getContextPath();
 											<div class="starScore">
 												<c:choose>
 													<c:when test="${rv.star_score eq 5}">
-													⭐⭐⭐⭐⭐⭐
+													⭐⭐⭐⭐⭐
 												</c:when>
 													<c:when test="${rv.star_score eq 4}">
 													⭐⭐⭐⭐
@@ -696,12 +543,22 @@ String cp = request.getContextPath();
 													<c:when test="${rv.star_score eq 1}">
 													⭐
 												</c:when>
-													<c:when test="${rv.star_score eq 0}">
+													<c:otherwise>
 													-
-												</c:when>
+												</c:otherwise>
 												</c:choose>
 											</div>
-											<div class="rvContent">${rv.rv_content }</div>
+											<div class="contentPhotoDiv">
+												<div class="rvContentDiv">${rv.rv_content }</div>
+												<div class="rvPhotoDiv">
+													<c:forEach var="photos" items="${rvPhotos }">
+														<c:if test="${photos.rv_num == rv.rv_num }">
+															<img alt="" class="rvphoto"
+																src="<%=cp %>/images/${photos.photo_link }" />
+														</c:if>
+													</c:forEach>
+												</div>
+											</div>
 											<div class="regDate">${rv.reg_date }</div>
 										</div>
 
@@ -758,7 +615,6 @@ String cp = request.getContextPath();
 								<div class="popCont">
 									<div class="list">
 										<label for="commercial"> <input type="checkbox"
-<<<<<<< Updated upstream
 											class="reviewRep" id="commercial" name="reviewRep" value="1"
 											onclick="CountChecked(this)">원치 않는 상업적인 리뷰
 										</label><br> <br> <label for="intended"> <input
@@ -772,15 +628,6 @@ String cp = request.getContextPath();
 											type="checkbox" id="violent" name="reviewRep"
 											class="reviewRep" value="4" onclick="CountChecked(this)">욕설,
 											성적, 폭력적인 리뷰
-=======
-											id="commercial">원치 않는 상업적인 리뷰
-										</label><br> <br> <label for="intended"> <input
-											type="checkbox" id="intended">악의적인 리뷰
-										</label><br> <br> <label for="wrong"> <input
-											type="checkbox" id="wrong">잘못된 정보
-										</label><br> <br> <label for="violent"> <input
-											type="checkbox" id="violent">욕설, 성적, 폭력적인 리뷰
->>>>>>> Stashed changes
 										</label><br> <br>
 									</div>
 								</div>
@@ -796,11 +643,10 @@ String cp = request.getContextPath();
 			</div>
 
 			<!-- id="container1" class="col-md-8" -->
-		
-		<!-- main -->
+
+			<!-- main -->
 
 
-<<<<<<< Updated upstream
 			<c:import url="compare_box.jsp"></c:import>
 			
 		</div>
@@ -809,84 +655,5 @@ String cp = request.getContextPath();
 		<c:import url="footer.jsp"></c:import>
 	</div>
 
-=======
-			<!-- 비교함 영역 -->
-			<div id="compareDiv">
-				<div class="rectDiv">
-					<!-- 비교함 이름 영역 -->
-					<div class="comNameDiv">
-						<span style="font-color: #ef6351">비교함</span>
-					</div>
-					<!-- 비교함 담은 가게 리스트 영역 -->
-					<div class="comStoreListDiv">
-						<c:choose>
-							<c:when
-								test="${fn:length(comList) == null or fn:length(comList) == 0 }">
-								<c:forEach begin="0" end="9">
-									<div class="comStoreDiv">
-										<!-- 한 가게 대표사진 영역 -->
-										<div class="comStoreImgDiv">
-											<img class="comStNoImg" src="<%=cp%>/images/comp_img01.png">
-										</div>
-										<!-- 한 가게 가게이름 영역 -->
-										<div class="comStoreNameDiv"></div>
-									</div>
-								</c:forEach>
-							</c:when>
-							<c:otherwise>
-								<!-- 한 가게 영역 -->
-								<c:forEach var="com" items="${comList}" varStatus="status">
-									<div class="comStoreDiv">
-										<!-- 한 가게 대표사진 영역 -->
-										<div class="comStoreImgDiv">
-											<button type="button" value="${com.st_num}" class="comDelete">X</button>
-											<label for="${com.st_num}" class="stLabel"> <input
-												type="checkbox" class="comStImgCB" name="comStImgCB" id="${com.st_num}">
-												<c:set var="photo" value="${com.photo_link }" />
-												
-												<c:choose>
-													<c:when test="${empty photo}">
-														<img class="stImg" src="<%=cp%>/images/logo_text.png">
-													</c:when>
-													<c:otherwise>
-														<img class="stImg" src="<%=cp%>/${photo}">
-													</c:otherwise>
-												</c:choose>
-											</label>
-										</div>
-										<!-- 한 가게 가게이름 영역 -->
-										<div class="comStoreNameDiv">${com.st_name}</div>
-									</div>
-								</c:forEach>
-								<c:forEach begin="0" end="${10 - fn:length(comList)}">
-									<div class="comStoreDiv">
-										<!-- 한 가게 대표사진 영역 -->
-										<div class="comStoreImgDiv">
-											<img class="comStNoImg" src="<%=cp%>/images/comp_img01.png">
-										</div>
-										<!-- 한 가게 가게이름 영역 -->
-										<div class="comStoreNameDiv"></div>
-									</div>
-							</c:forEach>
-						</c:otherwise>
-					</c:choose>
-				</div>
-				<input type="hidden" id="checkedCompare" name="checkedCompare">
-			</div>
-			<input type="hidden" name="regionChk" id="regionChk">
-			<input type="hidden" name="foodlabelChk" id="foodlabelChk">
-			<input type="hidden" name="stKeyChk" id="stKeyChk">
-	
-			<div class="comStoreBtnDiv">
-				<button type="button" class="btn" id="comBtn" name="comBtn">비교하기</button>
-			</div>
-		</div>
-	</div>
-
-		<div class="footer">
-			<c:import url="footer.jsp"></c:import>
-		</div>
-</form>
->>>>>>> Stashed changes
 </body>
 </html>

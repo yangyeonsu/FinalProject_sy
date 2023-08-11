@@ -209,12 +209,50 @@
 	
 	.modifyBtn
 	{
-		font-size: small;
+		/* font-size: small; */
 		width: 6vw;
 		height: 5vh;
 		margin-top: 3.2vw;
 		margin-left: 2vh;
+
+
+		border-radius: 10px;
+		font-size: 0.6vw;
+		border: 1px solid #ef6351;
+	  	background-color: white;
+	  	color: #ef6351;
+	  	cursor: pointer;
+	  	align-content: center;
 	}
+	
+	.modifyBtn:hover
+	{
+		width: 6vw;
+		height: 5vh;
+		border-radius: 10px;
+		font-size: 0.6vw;
+		border: 1px solid #ef6351;
+	  	background-color: #fef1ef;
+	  	color: #ef6351;
+	  	cursor: pointer;
+	  	align-content: center;
+	  	box-shadow: 0 0 10px #ef6351;
+	}
+	
+	.modifyBtn:action
+	{
+		width: 6vw;
+		height: 5vh;
+		border-radius: 10px;
+		font-size: 0.6vw;
+		border: 1px solid #ef6351;
+	  	background-color: #f9ab9f;
+	  	color: #ef6351;
+	  	cursor: pointer;
+	  	align-content: center;
+	  	box-shadow: 0 0 10px #ef6351;
+	  }
+	
 	
 	i
 	{
@@ -237,7 +275,6 @@
 
 <script type="text/javascript">
 
-<<<<<<< Updated upstream
 $(function ()
 {
     
@@ -247,44 +284,6 @@ $(function ()
 		$("#userForm").attr("action", "stdetailmodify.action");
 		$("#userForm").submit();
 	});
-=======
-$(function () {
-    $(".left_sub_menu").hide();
-    $(".has_sub").click(function () {
-        $(".left_sub_menu").fadeToggle(300);
-        if ($('#checkOverlay').val()=="true")
-		{
-			$('.overlay').css("position", "fixed");
-			$('.overlay').css("width", "0%");
-			$('.overlay').css("height", "0%");
-			$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
-			$('#checkOverlay').attr("value", "false");
-		}
-		else
-		{
-			$('.overlay').css("position", "fixed");
-			$('.overlay').css("width", "100%");
-			$('.overlay').css("height", "100%");
-			$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
-			$('#checkOverlay').attr("value", "true");
-		}
-       
-    });
-    // 왼쪽메뉴 드롭다운
-    $(".sub_menu ul.small_menu").hide();
-    $(".sub_menu ul.big_menu").click(function () {
-        $("ul", this).slideToggle(300);
-    });
-    // 외부 클릭 시 좌측 사이드 메뉴 숨기기
-    $('.overlay').on('click', function () {
-        $('.left_sub_menu').fadeOut();
-        $('.overlay').css("position", "fixed");
-		$('.overlay').css("width", "0%");
-		$('.overlay').css("height", "0%");
-		$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
-		$('#checkOverlay').attr("value", "false");
-    });
->>>>>>> Stashed changes
 });
 
 </script>
@@ -300,55 +299,7 @@ $(function () {
 
 <div class="container">
 	
-<<<<<<< Updated upstream
-	<c:import url="sideBar.jsp"></c:import>
-=======
-	<!-- 왼쪽 메뉴 -->
-	<div class="left side-menu">
-	    <div class="sidebar-inner">
-	        <div id="sidebar-menu">
-	            <ul class="has_sub_menu">
-	                <li class="has_sub">
-	                	<a href="javascript:void(0);" class="waves-effect">
-	                    <i class="fas fa-bars" style="color:#fff"></i>
-	                	</a>
-	                </li>
-	            </ul>
-	        </div>
-	    </div>
-	</div>
-	
-	<!-- 왼쪽 서브 메뉴 -->
-    <div class="left_sub_menu">
-		<div class="sub_menu">
-			<h2>MENU</h2>
-			<ul class="big_menu">
-				<li>가게 리스트<i class="arrow fas fa-angle-right"></i></li>
-			
-				<ul class="small_menu">
-					<li><a href="#" class="small_menuA">가게1</a></li>
-	                <li><a href="#" class="small_menuA">가게2</a></li>
-	                <li><a href="#" class="small_menuA">가게3</a></li>
-	                <li><a href="#" class="small_menuA">가게4</a></li>
-	            </ul>
-	        </ul>
-			<ul class="big_menu">
-				<li>접수 내역<i class="arrow fas fa-angle-right"></i></li>
-				<ul class="small_menu">
-					<li><a href="#" class="small_menuA">소메뉴2-1</a></li>
-					<li><a href="#" class="small_menuA">소메뉴2-2</a></li>
-				</ul>
-			</ul>
-			<ul class="big_menu">
-				<li>경고 내역</li>
-			</ul>
-			<ul class="big_menu">
-				<li>새로운 가게 등록 신청</i></li>
-			</ul>
-		</div>
-	</div>
-	<div class="overlay"><input type="hidden" id="checkOverlay" value="false"></div>
->>>>>>> Stashed changes
+	<c:import url="sideBar_store.jsp"></c:import>
 
 	<div class="storemain_body">
 		<c:if test="">

@@ -6,6 +6,7 @@
 		SELECT ST_NUM, ST_NAME
 		FROM STORE_VIEW
 		WHERE USER_NUM = #{user_num}
+		ORDER BY REG_DATE DESC
 	</select>
 	
 	<select id="searchRepStore" resultType="java.lang.Integer">
