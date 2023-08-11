@@ -23,8 +23,8 @@
 {
 	width: 70vw;
 	margin-left: 15vw;
-	padding-top: 5vh;
-	padding-bottom: 5vh;
+	padding-top: 10vh;
+	padding-bottom: 10vh;
 	border: 5px solid #F7F4EA;
 	border-radius: 40px;
 }
@@ -44,7 +44,6 @@
 
 .inputform
 {
-	
 	width: 30vw;
 	border-radius: 0 10px 10px 0;
 	border: 1px solid #ccc;
@@ -120,7 +119,6 @@ button
     align-items: center;
 }
 
-
 .file
 {
 	position: absolute;
@@ -129,6 +127,16 @@ button
     padding: 0;
     overflow: hidden;
     border: 0;
+}
+
+.contentform
+{
+	width: 30vw;
+	height: 15vh;
+	border-radius: 0 10px 10px 0;
+	border: 1px solid #ccc;
+	padding: 8px 12px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .upload-name
@@ -147,7 +155,6 @@ button
 {
 	border-radius: 0;
 }
-
 
 #insert
 {
@@ -214,8 +221,8 @@ $(function()
 			<div class="igroup">
 				<div class="title">폐업사유</div>
 				<div class="content">
-					<input type="textarea" class="inputform" id="oContent"
-					placeholder="폐업 사유를 입력해주세요"/>
+					<textarea rows="" cols="" class="contentform" id="oContent"
+					placeholder="폐업 사유를 입력해주세요"></textarea>
 				</div>
 			</div> <!-- .out_content -->
 			
@@ -231,7 +238,6 @@ $(function()
 				</div>
 				<span id="err" style="color: red; font-weight: bold; display: none;"></span>
 			</div>
-			
 			
 			
 			<div class="button">
