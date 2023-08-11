@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-public class store_OutController
+public class storeOutController
 {
 	@Autowired 
 	private SqlSession sqlSession;
@@ -32,7 +32,7 @@ public class store_OutController
 		
 		model.addAttribute("placeNum", dao.placeNum(user_num, st_num));
 		
-		result = "store_Out.jsp";
+		result = "storeOut.jsp";
 		
 		return result;
 	}
