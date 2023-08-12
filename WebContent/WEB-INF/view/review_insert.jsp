@@ -25,20 +25,21 @@ String cp = request.getContextPath();
 			
 			var skArr = [];
 			
-			if ($("#sk1").val() != null)
+			if ($("#sk1").val() != "")
 				skArr.push($("#sk1").val().trim());
-			if ($("#sk2").val() != null)
+			if ($("#sk2").val() != "")
 				skArr.push($("#sk2").val().trim());
-			if ($("#sk3").val() != null)
+			if ($("#sk3").val() != "")
 				skArr.push($("#sk3").val().trim());
-			if ($("#sk4").val() != null)
+			if ($("#sk4").val() != "")
 				skArr.push($("#sk4").val().trim());
-			if ($("#sk5").val() != null)
+			if ($("#sk5").val() != "")
 				skArr.push($("#sk5").val().trim());
 			
 			alert(skArr[0]);
 				
 			$("input[name=skArrHidden]").attr("value", skArr);
+			alert($("input[name=skArrHidden]").val());
 			
 			$("#userForm").attr("action", "insertreview.action");
 			$("#userForm").submit();
