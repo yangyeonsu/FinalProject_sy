@@ -184,7 +184,7 @@
 /* 가게 키워드 영역 */
 .storeKeywordsDiv
 {
-    text-align: center;
+	text-align: center;
     font-weight: bold;
     width: 60vw;
     font-size: 13pt;
@@ -192,6 +192,7 @@
     border: 2px solid #f7f4ea;
     border-radius: 5px;
     padding-top: 15px;
+    box-shadow: 1.5px 1.5px 1.5px #ede9d0;
 }
 
 /* 가게 정보 + 가게 옵션(체크박스) 영역 */
@@ -231,6 +232,7 @@
     border-radius: 8px;
     height: 20px;
     margin: 0.5vw 0.5vw 0 0;
+    box-shadow: 1.5px 1.5px 1.5px #ede9d0;
 }
 
 .siList1
@@ -282,6 +284,7 @@
     margin: 0.5vw 0.5vw 0 0;
     width: 10.5vw;
     font-weight: bold;
+    box-shadow: 1.5px 1.5px 1.5px #ede9d0;
 }
 
 .stCheckYesorno
@@ -289,6 +292,21 @@
 	text-align: center;
 }
 
+#modifyReqBtn
+{
+	margin-top: 1vw;
+    width: 8vw;
+    height: 20px;
+    border: 1px solid #ede9d0;
+    border-radius: 5px;
+    color: #4d4b4b;
+    font-weight: bold;
+    box-shadow: 3px 3px 3px #ede9d0;
+    background-color: #fff;
+    margin-right: 0.8vw;
+    font-size: 0.6vw;
+    cursor: pointer;
+}
 
 /* 메뉴 영역 */
 
@@ -356,16 +374,20 @@
 }
 
 /* 리뷰 영역 */
-.btn {
-    background-color: #F7AF97;
-    border: 1px #EF6351;
-    border-radius: 8px;
-    color: white;
-    font-size: 10pt;
-    font-family: 'IBM Plex Sans KR', sans-serif;
-    cursor: pointer;
+#insertReview
+{    
+    margin-bottom: 1vw;
     width: 6.2vw;
-    height: 40px;
+    height: 30px;
+    border: 1px solid #ede9d0;
+    border-radius: 5px;
+    color: #4d4b4b;
+    font-weight: bold;
+    box-shadow: 3px 3px 3px #ede9d0;
+    background-color: #fff;
+    margin-right: 0.8vw;
+    font-size: 0.6vw;
+    cursor: pointer;
 }
 
 .reviewInsertBtnDiv
@@ -408,10 +430,17 @@
 {
     border-radius: 8px;
     border: none;
-    background-color: #f7f4ea;
+    background-color: #fff;
     margin-left: 5px;
     height: 30px;
     cursor: pointer;
+    box-shadow: 2.5px 2.5px 2.5px #f7f4ea;
+}
+
+.repBtn
+{
+	font-size: 0.2vw;
+	box-shadow: 2.5px 3px 2.5px #f7f4ea;
 }
 
 .rvBtn:hover
@@ -586,7 +615,7 @@
 }
 
 /* 모달 */
-#popup {
+#popup{
 	overflow: hidden;
 	height: auto;
 	display: block;
@@ -604,7 +633,26 @@
 	background-color:rgba(251, 251, 246, 0.8);
 }
 
-#popup h4 {
+#reqPopup
+{
+	overflow: hidden;
+	height: auto;
+	display: block;
+	border-radius: 3px;
+	box-shadow: 1px 1.5px 1.5px #333;
+	width: 400px;
+	height: 380px;
+	z-index: 200;
+	position: fixed;
+  	top: 50%;
+  	left: 50%;
+  	/* transform: translate(-50%, -50%); */
+	/* top: 20%;
+	left: 10%; */
+	background-color:rgba(251, 251, 246, 0.8);
+}
+
+#popup h4{
 	font-size: 15px;
 	height: 24px;
 	padding: 8px 0 2px 15px;
@@ -612,7 +660,16 @@
 	font-weight: normal;
 }
 
-#popup h4 a.close {
+#reqPopup h4 {
+	font-size: 15px;
+	height: 24px;
+	padding: 8px 0 2px 15px;
+	color: #3a001e;
+	font-weight: normal;
+}
+
+
+#popup h4 a.close,  #reqPopup h4 a.close {
 	float: right;
 	padding-right: 8px;
 	color: #3a001e;
@@ -620,7 +677,7 @@
 	margin-right: 2%;
 }
 
-#popup h3 {
+#popup h3, #reqPopup h3 {
 	text-align: center;
 }
 
@@ -657,7 +714,7 @@
 }
 
 /* .popCont li:last-child{border-bottom:1px solid #eaeaea; padding-bottom:3px;} */
-.popCont strong {
+.popCont strong, .reqPopup strong {
 	float: left;
 	width: 30%;
 	background: #aaa;
@@ -667,19 +724,19 @@
 	border-right: 1px solid #eaeaea;
 }
 
-.popCont span {
+.popCont span, .reqPopup span {
 	display: block;
 	float: left;
 	padding: 7px 0 7px 8px;
 }
 
-#popup .dec {
+#popup .dec, #reqPopup .req{
 	margin-left: 40%;
 	margin-top: 20px;
 	height: 40px;
 }
 
-#popup #decBtn {
+#popup #decBtn #reqPopup #reqBtn{
 	width: 80px;
 	height: 25px;
 	float: left;
