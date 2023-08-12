@@ -25,14 +25,32 @@ public class storeOutController
 		
 		String usernum = request.getParameter("user_num");
 		String stnum = request.getParameter("st_num");
-		int user_num = Integer.parseInt(usernum);
-		int st_num = Integer.parseInt(stnum);
+		String user_num = null;
+		int st_num = 0;
+
+		if(usernum != null && !usernum.isEmpty()) 
+		{
+		    user_num = usernum;
+		}
+		if(stnum != null && !stnum.isEmpty()) 
+		{
+		    st_num = Integer.parseInt(stnum);
+		}
+
 		
 		IstoreOutDAO dao = sqlSession.getMapper(IstoreOutDAO.class);
 		
+		System.out.println("user_num : " + user_num);
+		System.out.println("st_num : " + st_num);
+		System.out.println(dao.placeNum(user_num, st_num));
+		
 		model.addAttribute("placeNum", dao.placeNum(user_num, st_num));
 		
-		result = "storeOut.jsp";
+		System.out.println("user_num : " + user_num);
+		System.out.println("st_num : " + st_num);
+		System.out.println(dao.placeNum(user_num, st_num));
+		
+		result = "/WEB-INF/view/storeOut.jsp";
 		
 		return result;
 	}
@@ -65,7 +83,7 @@ public class storeOutController
 				return "storeOutform.action?user_num=" + usernum + "&st_num=" + stnum;
 			}
 
-			int user_num = Integer.parseInt(usernum);
+			String user_num = usernum;
 			int st_num = Integer.parseInt(stnum);
 			
 			
