@@ -21,7 +21,7 @@ public interface IstDetailDAO_userView
 	public ArrayList<StoreMenuDTO> menuLists(int st_num);  					// 가게 메뉴, 가격, 이미지링크
 	public ArrayList<StoreReviewDTO> reviews(int st_num);  	    			// 리뷰 + 추천/비추천
 	public ArrayList<StoreKeyDTO> stKeys(int st_num);  						// 가게 키워드
-	public ArrayList<StoreReviewKeyDTO> reviewKeys(int st_num);				// 리뷰 키워드
+	public ArrayList<StoreReviewKeyDTO> reviewKeys(int st_num);				// 해당 가게의 리뷰 키워드
 	public ArrayList<StoreRvPhotoDTO> rvPhoto(int st_num);					// 리뷰 사진
 	public ArrayList<Integer> userRnList(@Param("st_num") int st_num, @Param("user_num") String user_num);	// 특정 유저가 가게의 리뷰에 누른 추천/비추천 내역
 	public ArrayList<Integer> userNrnList(@Param("st_num") int st_num, @Param("user_num") String user_num);	// 특정 유저가 가게의 리뷰에 누른 추천/비추천 내역
@@ -45,4 +45,7 @@ public interface IstDetailDAO_userView
 	public Integer searchStChboxnum(@Param("st_num") int st_num, @Param("chbox_num") int chbox_num);
 	// 가게정보오류수정요청 INSERT
 	public int reqApply(@Param("user_num") String user_num, @Param("req_rs") String req_rs, @Param("st_chbox_num") int st_chbox_num);
+	
+	// 리뷰 키워드 범례 리스트
+	public ArrayList<StoreReviewKeyDTO> reviewKeywords();
 }
