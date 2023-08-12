@@ -11,6 +11,7 @@ String cp = request.getContextPath();
 <meta charset="UTF-8">
 <title>review_insert</title>
 <link rel="stylesheet" type="text/css" href="css/review_insert.css">
+<script type="text/javascript" 	src="http://code.jquery.com/jquery.min.js"></script>
 
 <script type="text/javascript">
 	
@@ -18,8 +19,8 @@ String cp = request.getContextPath();
 	{
 		$("#submitReviewBtn").click(function()
 		{
-			var star = $("select[name=starSelect]option:selected").val();
-			$("#starHidden").attr("value", $star);
+			var star = $("#starSelect").val();
+			$("#starHidden").attr("value", star);
 			alert($("#starHidden").val());
 			
 			var skArr = [];
@@ -39,7 +40,7 @@ String cp = request.getContextPath();
 				
 			$("input[name=skArrHidden]").attr("value", skArr);
 			
-			$("#userForm").attr("action", "/insertreview.action");
+			$("#userForm").attr("action", "insertreview.action");
 			$("#userForm").submit();
 		});		
 	});
@@ -149,7 +150,8 @@ String cp = request.getContextPath();
 
 			<!-- 리뷰작성완료 버튼 -->
 			<div class="reviewInsertBtnDiv">
-				<button id="submitReviewBtn" class="reviewBtn">작성완료</button>
+				<input type="hidden" id="st_num" name="st_num" value="${st_num }">
+				<button type="button" id="submitReviewBtn" class="reviewBtn">작성완료</button>
 			</div>
 
 		</div>
