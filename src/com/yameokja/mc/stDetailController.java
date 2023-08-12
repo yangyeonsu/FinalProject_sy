@@ -255,7 +255,7 @@ public class stDetailController
 		
 	}
 	
-	//
+	// 가게정보오류수정요청
 	@RequestMapping(value = "/reqapply.action")
 		@ResponseBody
 	public int reqApply(@RequestParam("req_rs") String req_rs, @RequestParam("st_num") int st_num, @RequestParam("chbox_num") int chbox_num, HttpServletRequest request)
@@ -273,6 +273,29 @@ public class stDetailController
 		
 		// 찾은 st_chbox_num 으로 req_apply에 데이터 insert
 		result = dao.reqApply(user_num, req_rs, st_chbox_num);
+		
+		return result;
+	}
+	
+	//리뷰 작성 폼 연결
+	@RequestMapping(value="/insertReview.action")
+	public String insertReview(HttpServletRequest request, Model model)
+	{
+		String result = "";
+		
+		int st_num = Integer.parseInt(request.getParameter("st_num"));
+		String st_name = request.getParameter("st_name");
+		
+		model.addAttribute("st_num", st_num);
+		model.addAttribute("st_name", st_name);
+		
+		IstDetailDAO_userView dao = sqlSession.getMapper(IstDetailDAO_userView.class);
+		
+		ArrayList<StoreReviewKeyDTO> reviewKeywords = dao.reviewKeywords();
+		
+		model.addAttribute("reviewKeywords", reviewKeywords);
+		
+		result = "/WEB-INF/view/review_insert.jsp";
 		
 		return result;
 	}
