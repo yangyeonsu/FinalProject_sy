@@ -50,7 +50,7 @@ public interface IstDetailDAO_userView
 	
 	
 	// 리뷰 입력
-	public int reviewInsert(String user_num, int st_num, String rv_content, int star_score);
+	public int reviewInsert(@Param("user_num") String user_num, @Param("st_num") int st_num, @Param("rv_content") String rv_content, @Param("star_score") int star_score);
 	
 	// 가게 검색 키워드 존재여부
 	public Integer skeywordSearch(int st_num, String search_name);

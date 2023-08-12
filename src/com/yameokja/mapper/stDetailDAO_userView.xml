@@ -251,7 +251,7 @@
 	<!-- 리뷰 입력 -->
 	<insert id="reviewInsert">
 		INSERT INTO RV_BOX(RV_NUM, USER_NUM, ST_NUM, RV_CONTENT, STAR_SCORE)
-		VALUES (39, #{user_num}, #{st_num}, #{rv_content}, #{star_score})
+		VALUES (40, #{user_num}, #{st_num}, #{rv_content}, #{star_score})
 	</insert>
 	
 	<!-- rv_num 가져오는 쿼리문 -->
@@ -266,7 +266,7 @@
 	<!-- 리뷰 키워드 입력 -->
 	<insert id="rKeywordInsert">
 		INSERT INTO RV_KEY(CHOSEN_RV_KEY_NUM, RV_NUM, RV_KEY_NUM)
-		VALUES (36, #{rv_num}, #{rv_key_num})
+		VALUES (8, #{rv_num}, #{rv_key_num})
 	</insert>
 	
 	<!-- 검색 키워드 존재여부 -->
