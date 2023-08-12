@@ -9,6 +9,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.xml.ws.RequestWrapper;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -253,7 +254,28 @@ public class stDetailController
 		return html;
 		
 	}
+	
+	//
+	@RequestMapping(value = "/reqapply.action")
+		@ResponseBody
+	public int reqApply(@RequestParam("req_rs") String req_rs, @RequestParam("st_num") int st_num, @RequestParam("chbox_num") int chbox_num, HttpServletRequest request)
+	{
+		int result = 0;
 		
+		HttpSession session = request.getSession();
+		String user_num = (String)session.getAttribute("user_num");
+		
+		IstDetailDAO_userView dao = sqlSession.getMapper(IstDetailDAO_userView.class);
+		
+		// st_num 과 chbox_num으로 st_chbox_num 찾기
+		int st_chbox_num = 0;
+		st_chbox_num = dao.searchStChboxnum(st_num, chbox_num);
+		
+		// 찾은 st_chbox_num 으로 req_apply에 데이터 insert
+		result = dao.reqApply(user_num, req_rs, st_chbox_num);
+		
+		return result;
+	}
 		
 	
 }

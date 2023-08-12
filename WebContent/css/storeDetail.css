@@ -614,13 +614,13 @@
 	width: 100%;
 }
 
-/* 모달 */
+/* 리뷰신고 모달 */
 #popup{
 	overflow: hidden;
 	height: auto;
 	display: block;
-	border-radius: 3px;
-	box-shadow: 1px 1.5px 1.5px #333;
+	border-radius: 20px;
+	box-shadow: 1.5px 2px 2px #333;
 	width: 400px;
 	height: 380px;
 	z-index: 200;
@@ -630,26 +630,7 @@
   	/* transform: translate(-50%, -50%); */
 	/* top: 20%;
 	left: 10%; */
-	background-color:rgba(251, 251, 246, 0.8);
-}
-
-#reqPopup
-{
-	overflow: hidden;
-	height: auto;
-	display: block;
-	border-radius: 3px;
-	box-shadow: 1px 1.5px 1.5px #333;
-	width: 400px;
-	height: 380px;
-	z-index: 200;
-	position: fixed;
-  	top: 50%;
-  	left: 50%;
-  	/* transform: translate(-50%, -50%); */
-	/* top: 20%;
-	left: 10%; */
-	background-color:rgba(251, 251, 246, 0.8);
+	background-color:#fff;
 }
 
 #popup h4{
@@ -660,16 +641,7 @@
 	font-weight: normal;
 }
 
-#reqPopup h4 {
-	font-size: 15px;
-	height: 24px;
-	padding: 8px 0 2px 15px;
-	color: #3a001e;
-	font-weight: normal;
-}
-
-
-#popup h4 a.close,  #reqPopup h4 a.close {
+#popup h4 a.close{
 	float: right;
 	padding-right: 8px;
 	color: #3a001e;
@@ -677,7 +649,7 @@
 	margin-right: 2%;
 }
 
-#popup h3, #reqPopup h3 {
+#popup h3{
 	text-align: center;
 }
 
@@ -713,30 +685,13 @@
     margin-right: 0.5vw;
 }
 
-/* .popCont li:last-child{border-bottom:1px solid #eaeaea; padding-bottom:3px;} */
-.popCont strong, .reqPopup strong {
-	float: left;
-	width: 30%;
-	background: #aaa;
-	color: #FFF;
-	padding: 7px 0;
-	text-align: center;
-	border-right: 1px solid #eaeaea;
-}
-
-.popCont span, .reqPopup span {
-	display: block;
-	float: left;
-	padding: 7px 0 7px 8px;
-}
-
-#popup .dec, #reqPopup .req{
+#popup .dec{
 	margin-left: 40%;
 	margin-top: 20px;
 	height: 40px;
 }
 
-#popup #decBtn #reqPopup #reqBtn{
+#popup #decBtn{
 	width: 80px;
 	height: 25px;
 	float: left;
@@ -756,8 +711,136 @@
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background: #000;
+	background: #f7f4ea;
 	opacity: .5;
 	filter: alpha(opacity = 50);
 	z-index: 15;
 } 
+
+
+/* 가게정보오류수정요청 모달 */
+#reqPopup
+{
+	overflow: hidden;
+	height: auto;
+	display: block;
+	border-radius: 20px;
+	box-shadow: 1.5px 2px 2px #333;
+	width: 500px;
+	height: 600px;
+	z-index: 200;
+	position: fixed;
+  	top: 50%;
+  	left: 50%;
+  	/* transform: translate(-50%, -50%); */
+	/* top: 20%;
+	left: 10%; */
+	background-color:#fff;
+}
+
+#reqPopup h4{
+	font-size: 15px;
+	height: 24px;
+	padding: 8px 0 2px 15px;
+	color: #3a001e;
+	font-weight: normal;
+}
+
+#reqPopup h4 a.close {
+    float: right;
+    padding-right: 8px;
+    color: #3a001e;
+    font-family: verdana;
+    margin-right: 2%;
+    font-weight: bold;
+}
+
+#reqPopup h3 {
+	text-align: center;
+}
+
+.reqPopCont {
+    display: block;
+    background: #FFF;
+    border: 3px solid #EF6351;
+    padding: 15px 20px;
+    border-radius: 5px;
+    height: 350px;
+    width: 80%;
+    margin-left: 4%;
+}
+
+.reqPopCont .list {
+    height: 100%;
+    width: 100%;
+    /* display: inline-block; */
+    margin: 0;
+    font-size: 12pt;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.oplist
+{
+	display: flex;
+    justify-content: space-between;
+    width: 400px;
+    margin-left: 10px;
+}
+
+.oplistName label .oplistOption label
+{
+	height: 20px;
+}
+
+.oplistName
+{
+    width: 250px;
+    text-align: center;
+    font-weight: bold;
+    height: 20px;
+}
+
+.oplistOption
+{
+    width: 100px;
+    text-align: center;
+    font-weight: bold;
+    height: 10px;
+}
+
+.list input[type=checkbox]
+{
+    transform: scale(1.3);
+    accent-color: #ef6351;
+    position: relative;
+    top: 0.1vw;
+	margin-left: 50px;
+}
+
+.reqRs
+{
+    display: flex;
+    align-items: center;
+}
+
+#reqPopup .req{
+	margin-left: 40%;
+	margin-top: 20px;
+	height: 40px;
+}
+
+#reqPopup #reqBtn{
+	width: 120px;
+	height: 25px;
+	float: left;
+	align-content: center;
+	font-size: 8pt;
+	font-weight: bold;
+	border: 1px solid #ef6351;
+	border-radius: 5px;
+	background-color: #ef6351;
+	color: white;
+	cursor: pointer;
+}
