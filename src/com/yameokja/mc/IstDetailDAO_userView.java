@@ -53,13 +53,13 @@ public interface IstDetailDAO_userView
 	public int reviewInsert(@Param("user_num") String user_num, @Param("st_num") int st_num, @Param("rv_content") String rv_content, @Param("star_score") int star_score);
 	
 	// 가게 검색 키워드 존재여부
-	public Integer skeywordSearch(int st_num, String search_name);
+	public Integer skeywordSearch(@Param("st_num")int st_num, @Param("search_name")String search_name);
 	
 	// 가게 검색 키워드 count update
-	public int skeywordUpdate(int st_num, String search_name);
+	public int skeywordUpdate(@Param("st_num")int st_num, @Param("search_name")String search_name);
 	
 	// 가게 검색 키워드 insert
-	public int sKeywordInsert(int st_num, String search_name);
+	public int sKeywordInsert(@Param("st_num")int st_num, @Param("search_name")String search_name);
 	
 	
 }
