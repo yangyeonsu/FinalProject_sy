@@ -5,8 +5,10 @@
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
 %>
-<% String userNum = request.getParameter("user_num");
-	String stNum = request.getParameter("st_num"); %>
+<% 
+	String userNum = request.getParameter("user_num");
+	String stNum = request.getParameter("st_num");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -234,7 +236,7 @@ $(function()
 	
 	<form action="storeOutinsert.action" method="post" id="outForm">
 	
-	<div><c:import url="/WEB-INF/view/header_user.jsp"></c:import></div> <!-- header -->
+	<div><c:import url="header_user.jsp"></c:import></div> <!-- header -->
 	
 	<div class="center">
 		<div class="head">
@@ -285,7 +287,7 @@ $(function()
 	</div> <!-- .center -->
 	
 	<!-- footer -->
-	<div><c:import url="/WEB-INF/view/footer.jsp"></c:import></div>
+	<div><c:import url="footer.jsp"></c:import></div>
 	
 	</form> <!-- #outform -->
 </div>	<!-- class="mainFrame" -->

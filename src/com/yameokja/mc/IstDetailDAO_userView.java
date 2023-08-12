@@ -8,6 +8,7 @@ package com.yameokja.mc;
 import java.util.ArrayList;
 
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.RequestParam;
 
 public interface IstDetailDAO_userView
 {
@@ -40,4 +41,8 @@ public interface IstDetailDAO_userView
 	// 리뷰 추천/비추천 카운트
 	public int reviewRecCount(@Param("rv_num") int rv_num,@Param("rec_nonrec_number") int rec_nonrec_number);
 
+	// st_chbox_num 찾기
+	public Integer searchStChboxnum(@Param("st_num") int st_num, @Param("chbox_num") int chbox_num);
+	// 가게정보오류수정요청 INSERT
+	public int reqApply(@Param("user_num") String user_num, @Param("req_rs") String req_rs, @Param("st_chbox_num") int st_chbox_num);
 }
