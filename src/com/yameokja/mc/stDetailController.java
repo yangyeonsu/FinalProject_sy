@@ -39,7 +39,7 @@ public class stDetailController
 		IUserDAO uDao = sqlSession.getMapper(IUserDAO.class);
 		
 		int st_num = Integer.parseInt(request.getParameter("st_num"));
-		System.out.println(st_num);
+		//System.out.println(st_num);
 		// 사용자 정보
 		UserDTO user = uDao.searchUserInfo(user_num, "num");
 		
@@ -255,6 +255,9 @@ public class stDetailController
 		
 	}
 
+	
+	// 가게정보오류수정요청
+
 	@RequestMapping(value = "/reqapply.action")
 		@ResponseBody
 	public int reqApply(@RequestParam("req_rs") String req_rs, @RequestParam("st_num") int st_num, @RequestParam("chbox_num") int chbox_num, HttpServletRequest request)
@@ -275,5 +278,83 @@ public class stDetailController
 		
 		return result;
 	}
+
 	
+	//리뷰 작성 폼 연결
+	@RequestMapping(value="/insertreveiwform.action")
+	public String insertReviewForm(HttpServletRequest request, Model model)
+	{
+		String result = "";
+		
+		HttpSession session = request.getSession();
+		String user_num = (String)session.getAttribute("user_num");
+
+		int st_num = Integer.parseInt(request.getParameter("st_num"));
+		String st_name = request.getParameter("st_name");
+
+		model.addAttribute("st_num", st_num);
+		model.addAttribute("st_name", st_name);
+		
+		System.out.println("st_num: " + st_num);
+		System.out.println("st_name: " + st_name);
+		System.out.println("user_name: " + user_num);
+		
+		IstDetailDAO_userView dao = sqlSession.getMapper(IstDetailDAO_userView.class);
+		
+		ArrayList<StoreReviewKeyDTO> reviewKeywords = dao.reviewKeywords();
+		
+		model.addAttribute("reviewKeywords", reviewKeywords);
+
+		result = "/WEB-INF/view/review_insert.jsp";
+		
+		return result;
+	}
+	
+	// 리뷰 입력
+	@RequestMapping(value="/insertreview.action")
+	public String insertReview(HttpServletRequest request, Model model)
+	{
+		String result = null;
+		// 사용자 정보 st_num
+		HttpSession session = request.getSession();
+		String user_num = (String)session.getAttribute("user_num");
+		
+		// 가게 번호, 별점, 리뷰내용
+		int st_num = Integer.parseInt(request.getParameter("st_num"));
+		int star_score = Integer.parseInt(request.getParameter("starHidden"));
+		String rv_content = request.getParameter("reviewContent");
+		
+		IstDetailDAO_userView dao = sqlSession.getMapper(IstDetailDAO_userView.class);
+		// rv_box에 insert
+		dao.reviewInsert(user_num, st_num, rv_content, star_score);
+		
+		
+		// 가게 검색 키워드 받는 배열
+		String[] skArr = request.getParameterValues("skArrHidden");
+		
+		String[] skList = null;
+		skList = skArr[0].split(",");
+		
+		System.out.println(skList[0]);
+		
+		for (int i = 0; i < skList.length; i++)
+		{
+			// 작성된 가게 검색키워드가 없으면
+			if(dao.skeywordSearch(st_num, skList[i]) == null)
+			{	// 바로 insert
+				dao.sKeywordInsert(st_num, skList[i]);
+			}
+			else // 작성된 가게 검색키워드가 있으면
+				// 있는 가게 검색 키워드에 count += 1
+				dao.skeywordUpdate(st_num, skList[i]);
+		}
+		
+		// 가게상세페이지로 가기 위해 st_num을 model로 전송
+		model.addAttribute("st_num", st_num);
+		
+		result = "redirect:stdetail-userview.action";
+		
+		return result;
+	}
+
 }

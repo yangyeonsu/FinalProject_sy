@@ -76,6 +76,13 @@ String cp = request.getContextPath();
 		});
 		
 		
+		// 리뷰 작성 페이지로 이동
+		$("#insertReview").click(function()
+		{
+			$("#userForm").attr("action", "insertreveiwform.action");
+			$("#userForm").submit();
+		});
+		
 		// 비교함에서 삭제
 		$(document).on("click",".comDelete", function()
 		{
@@ -266,13 +273,6 @@ String cp = request.getContextPath();
 			}
 		}
 		
-
-		// 리뷰 작성 페이지로 이동
-		$("#insertReview").click(function()
-		{
-			$("#userForm").attr("action", "reviewRep.action");
-			$("#usesForm").submit();
-		});
 	});
 
 
@@ -508,6 +508,7 @@ String cp = request.getContextPath();
 								<div class="background" style="font-weight: bold;">
 									<div class="storeName">
 										<span style="font-size: 28pt; font-weight: bold;">${s.st_name }</span>
+										<input type="hidden" name="st_name" value="${s.st_name }">
 									</div>
 									<div class="revBoard">
 										<div class="storeImgDiv">
