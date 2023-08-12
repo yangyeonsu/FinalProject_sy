@@ -325,7 +325,7 @@ input[type="radio"] {
 
 </head>
 <body>
-
+<form id="adminForm" method="post">
 	<div class="bframe">
 		<form action="storeregiinsert.action" method="post" id="userForm" enctype="multipart/form-data">
 			<!-- header -->
@@ -456,6 +456,6 @@ input[type="radio"] {
 		<!-- footer -->
 		<div><c:import url="/WEB-INF/view/footer.jsp"></c:import></div>
 	</div>
-
+</form>
 </body>
 </html>
