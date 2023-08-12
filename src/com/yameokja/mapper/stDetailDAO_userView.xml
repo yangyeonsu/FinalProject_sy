@@ -66,7 +66,8 @@
  	
  	<!-- 체크박스 -->
  	<select id="stcheck" resultType="com.yameokja.mc.StoreCheckDTO">
- 		SELECT CL2.CHBOX_NAME AS CHBOX_NAME
+ 		SELECT CL2.CHBOX_NUM AS CHBOX_NUM
+ 			 , CL2.CHBOX_NAME AS CHBOX_NAME
 		     , CASE T.YN_NUM WHEN 1 THEN '○'
 		                     WHEN 2 THEN 'Ⅹ'
 		                     ELSE '-'
@@ -227,7 +228,19 @@
 		  AND REC_NONREC_NUMBER = #{rec_nonrec_number}
 	</select>
 	
-
+	<!-- chbox_num -> st_chbox_num 찾는 쿼리문 -->
+	<select id="searchStChboxnum" resultType="java.lang.Integer">
+		SELECT ST_CHBOX_NUM
+		FROM ST_CHBOX
+		WHERE ST_NUM = #{st_num}
+		  AND CHBOX_NUM = #{chbox_num}
+	</select>
+	
+	<!-- 가게정보수정요청 insert -->
+	<insert id="reqApply">
+		INSERT INTO REQ_APPLY(REQ_APPLY_NUM, USER_NUM, ST_CHBOX_NUM, REQ_RS)
+		VALUES (10, #{user_num}, #{st_chbox_num}, #{req_rs})
+	</insert>
 	
  	<!-- 휴일 가지고 오는 쿼리문 
  	<select id="holiday" resultType="com.yameokja.mc.stDetailDTO_userView">
