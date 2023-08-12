@@ -25,7 +25,7 @@ String cp = request.getContextPath();
 <link rel="stylesheet" type="text/css" href="<%=cp%>/css/side_bar.css">
 
 <link rel="stylesheet" type="text/css"
-	href="<%=cp%>/css/storeDetail.css">
+	href="<%=cp%>/css/storeDetail_modal.css">
 	
 <style type="text/css">
 	#storeInfoModify
@@ -47,6 +47,12 @@ String cp = request.getContextPath();
 	    justify-content: center;
 	    width: 25vw;
 	    padding-left: 4vw;
+	}
+	
+	body
+	{
+		 max-height: calc(100vh - 200px);
+	    overflow-y: auto;
 	}
 </style>
 

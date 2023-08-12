@@ -296,9 +296,6 @@ span
 			<div style="width: 50%; font-size: 11pt;">
 				리뷰신고카테고리명 : ${review.getRep_rs_name()}
 			</div>
-			<div style="width: 42%; text-align: right; margin-top: 1vh; font-size: 11pt;">
-				<button class="stInfoBtn" value="<%=dto.getSt_num() %>">${review.getSt_name() } 페이지로 가기</button>
-			</div>
 		</div>
 		
 		<%-- 
