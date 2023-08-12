@@ -274,9 +274,9 @@ input[type="radio"]
 				
 			</c:if>
 			
-			<c:if test="${state eq '처리완료' }">
+			<c:if test="${state ne '처리완료' }">
 				<br><br>
-				<div class="igroup" style="width: 100%; color: red; margin-left: 30%; font-size: 20pt; text-align: center; width: 600px; margin: 0 auto;">
+				<div class="igroup" style="width: 100%; color: red; font-size: 20pt; text-align: center; width: 570px; margin: 0 auto;">
 					처리가 완료된 가게정보오류수정요청서 입니다.
 				</div>
 			</c:if>
