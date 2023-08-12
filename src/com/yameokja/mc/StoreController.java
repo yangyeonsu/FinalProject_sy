@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class StoreController
@@ -128,4 +129,21 @@ public class StoreController
 		
 		return result;
 	}
+  
+  @RequestMapping(value = "/rvReply.action", method = {RequestMethod.GET, RequestMethod.POST})
+	public String rvReply(@RequestParam("rv_num") int rv_num, @RequestParam("reply_content") String reply_content, HttpServletRequest request, Model model)
+	{	
+		int rvReplynum = 0;
+		
+		HttpSession session = request.getSession();
+		String user_num = (String)session.getAttribute("user_num");
+		
+		IStoreMainDAO dao = sqlSession.getMapper(IStoreMainDAO.class);
+		
+		rvReplynum = dao.reviewReply(rv_num, reply_content);
+		
+		
+	    return "redirect:storemain.action";
+  }
+  
 }
