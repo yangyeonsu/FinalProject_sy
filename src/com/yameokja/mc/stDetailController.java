@@ -39,7 +39,7 @@ public class stDetailController
 		IUserDAO uDao = sqlSession.getMapper(IUserDAO.class);
 		
 		int st_num = Integer.parseInt(request.getParameter("st_num"));
-		System.out.println(st_num);
+		//System.out.println(st_num);
 		// 사용자 정보
 		UserDTO user = uDao.searchUserInfo(user_num, "num");
 		
@@ -281,24 +281,76 @@ public class stDetailController
 
 	
 	//리뷰 작성 폼 연결
-	@RequestMapping(value="/insertReview.action")
-	public String insertReview(HttpServletRequest request, Model model)
+	@RequestMapping(value="/insertreveiwform.action")
+	public String insertReviewForm(HttpServletRequest request, Model model)
 	{
 		String result = "";
 		
-		int st_num = Integer.parseInt(request.getParameter("st_num"));
-		String st_name = request.getParameter("st_name");
+		HttpSession session = request.getSession();
+		String user_num = (String)session.getAttribute("user_num");
 		
-		model.addAttribute("st_num", st_num);
-		model.addAttribute("st_name", st_name);
-		
-		IstDetailDAO_userView dao = sqlSession.getMapper(IstDetailDAO_userView.class);
-		
-		ArrayList<StoreReviewKeyDTO> reviewKeywords = dao.reviewKeywords();
-		
-		model.addAttribute("reviewKeywords", reviewKeywords);
+		try
+		{
+			String st_num = request.getParameter("st_num");
+			String st_name = request.getParameter("st_name");
+
+			model.addAttribute("st_num", st_num);
+			model.addAttribute("st_name", st_name);
+			
+			System.out.println("st_num: " + st_num);
+			System.out.println("st_name: " + st_name);
+			System.out.println("user_name: " + user_num);
+			
+			IstDetailDAO_userView dao = sqlSession.getMapper(IstDetailDAO_userView.class);
+			
+			ArrayList<StoreReviewKeyDTO> reviewKeywords = dao.reviewKeywords();
+			
+			model.addAttribute("reviewKeywords", reviewKeywords);
+			
+		} catch (Exception e)
+		{
+			System.out.println(e.toString());
+		}
 		
 		result = "/WEB-INF/view/review_insert.jsp";
+		
+		return result;
+	}
+	
+	// 리뷰 입력
+	@RequestMapping(value="/insertreview.action")
+	public String insertReview(HttpServletRequest request, Model model)
+	{
+		String result = null;
+		
+		HttpSession session = request.getSession();
+		String user_num = (String)session.getAttribute("user_num");
+		
+		int st_num = Integer.parseInt(request.getParameter("st_num"));
+		int star_score = Integer.parseInt(request.getParameter("starHidden"));
+		String rv_content = request.getParameter("reviewContent");
+		
+		IstDetailDAO_userView dao = sqlSession.getMapper(IstDetailDAO_userView.class);
+		dao.reviewInsert(user_num, st_num, rv_content, star_score);
+		
+		String[] skArr = request.getParameterValues("skArrHidden");
+		
+		String[] skList = null;
+		skList = skArr[0].split(",");
+		
+		for (int i = 0; i < skList.length; i++)
+		{
+			if(dao.skeywordSearch(st_num, skList[i]) == null)
+			{
+				dao.sKeywordInsert(st_num, skList[i]);
+			}
+			else
+				dao.skeywordUpdate(st_num, skList[i]);
+		}
+		
+		model.addAttribute("st_num", st_num);
+		
+		result = "redirect:stdetail-userview.action";
 		
 		return result;
 	}
