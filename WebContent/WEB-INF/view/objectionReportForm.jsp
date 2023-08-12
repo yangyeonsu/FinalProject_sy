@@ -263,7 +263,7 @@ input[type="radio"]
 				
 				<c:if test="${state eq '처리완료' }">
 					<br><br>
-					<div class="igroup" style="width: 100%; color: red; font-size: 20pt; text-align: center; width: 500px; margin: 0 auto;">
+					<div class="igroup" style="width: 100%; color: red; font-size: 20pt; text-align: center; width: 465px; margin: 0 auto;">
 						처리가 완료된 이의제기요청서 입니다.
 					</div>
 				</c:if>
