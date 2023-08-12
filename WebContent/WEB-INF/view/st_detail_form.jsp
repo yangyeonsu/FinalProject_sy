@@ -33,13 +33,15 @@ String cp = request.getContextPath();
 {	
 	width: 100%;
 	display: flex;
+	flex-direction: column;
 }
 
 .mainBody
 {	
 	/* background-color: #F7F4EA; */
-	margin-left : 5vw;
-	width: 80vw;
+	/* margin-left : 19vw; */
+	width: 65vw;
+	padding-left: 7vw;
 }
 
 .main 
@@ -526,416 +528,415 @@ table
 
 	<div id="body">
 	
-		<div id="column"></div>
+		<div id="column">
 
 		<c:import url="sideBar_user.jsp"></c:import>
-	</div>
-		
-		
-	
-	<div class="mainBody" style="margin: 0 auto;">
-		
-		<div id="st_detail_header">
-			<h1>매장 정보 기입(선택)</h1><br>
-			<hr>
+
 		</div>
 		
-		<!-- 영업시간 -->
-		<div class="opentime">
-			<div>
-				<table border="0">
-					<tr>
-						<th style="border-bottom: 5px solid;">&nbsp;&nbsp;영업시간&nbsp;&nbsp;</th>
-					</tr>
-					<tr>
-						<td></td>
-						<th style="padding-right: 1vh;">월요일</th>
-						<td>10:00</td>
-						<td> ~ </td>
-						<td>10:00</td>
-						<td><input type="checkbox" id="rest1"></td>
-						<td><label for="rest1">휴무</label></td>
-					</tr>
-					<tr>
-						<td></td>
-						<th style="padding-right: 1vh;">화요일</th>
-						<td>10:00</td>
-						<td> ~ </td>
-						<td>10:00</td>
-						<td><input type="checkbox" id="rest2"></td>
-						<td><label for="rest2">휴무</label></td>
-					</tr>
-					<tr>
-						<td></td>
-						<th style="padding-right: 1vh;">수요일</th>
-						<td>10:00</td>
-						<td> ~ </td>
-						<td>10:00</td>
-						<td><input type="checkbox" id="rest3"></td>
-						<td><label for="rest3">휴무</label></td>
-					</tr>
-					<tr>
-						<td></td>
-						<th style="padding-right: 1vh;">목요일</th>
-						<td>10:00</td>
-						<td> ~ </td>
-						<td>10:00</td>
-						<td><input type="checkbox" id="rest4"></td>
-						<td><label for="rest4">휴무</label></td>
-					</tr>
-					<tr>
-						<td></td>
-						<th style="padding-right: 1vh;">금요일</th>
-						<td>10:00</td>
-						<td> ~ </td>
-						<td>10:00</td>
-						<td><input type="checkbox" id="rest5"></td>
-						<td><label for="rest5">휴무</label></td>
-					</tr>
-					<tr>
-						<td></td>
-						<th style="padding-right: 1vh;">토요일</th>
-						<td>10:00</td>
-						<td> ~ </td>
-						<td>10:00</td>
-						<td><input type="checkbox" id="rest6"></td>
-						<td><label for="rest6">휴무</label></td>
-					</tr>
-					<tr>
-						<td></td>
-						<th style="padding-right: 1vh;">일요일</th>
-						<td>10:00</td>
-						<td> ~ </td>
-						<td>10:00</td>
-						<td><input type="checkbox" id="rest7"></td>
-						<td><label for="rest7">휴무</label></td>
-					</tr>
-				</table>
+	
+		<div class="mainBody" style="margin: 0 auto;">
+			
+			<div id="st_detail_header">
+				<h1>매장 정보 기입(선택)</h1><br>
+				<hr>
 			</div>
+			
+			<!-- 영업시간 -->
+			<div class="opentime">
+				<div>
+					<table border="0">
+						<tr>
+							<th style="border-bottom: 5px solid;">&nbsp;&nbsp;영업시간&nbsp;&nbsp;</th>
+						</tr>
+						<tr>
+							<td></td>
+							<th style="padding-right: 1vh;">월요일</th>
+							<td>10:00</td>
+							<td> ~ </td>
+							<td>10:00</td>
+							<td><input type="checkbox" id="rest1"></td>
+							<td><label for="rest1">휴무</label></td>
+						</tr>
+						<tr>
+							<td></td>
+							<th style="padding-right: 1vh;">화요일</th>
+							<td>10:00</td>
+							<td> ~ </td>
+							<td>10:00</td>
+							<td><input type="checkbox" id="rest2"></td>
+							<td><label for="rest2">휴무</label></td>
+						</tr>
+						<tr>
+							<td></td>
+							<th style="padding-right: 1vh;">수요일</th>
+							<td>10:00</td>
+							<td> ~ </td>
+							<td>10:00</td>
+							<td><input type="checkbox" id="rest3"></td>
+							<td><label for="rest3">휴무</label></td>
+						</tr>
+						<tr>
+							<td></td>
+							<th style="padding-right: 1vh;">목요일</th>
+							<td>10:00</td>
+							<td> ~ </td>
+							<td>10:00</td>
+							<td><input type="checkbox" id="rest4"></td>
+							<td><label for="rest4">휴무</label></td>
+						</tr>
+						<tr>
+							<td></td>
+							<th style="padding-right: 1vh;">금요일</th>
+							<td>10:00</td>
+							<td> ~ </td>
+							<td>10:00</td>
+							<td><input type="checkbox" id="rest5"></td>
+							<td><label for="rest5">휴무</label></td>
+						</tr>
+						<tr>
+							<td></td>
+							<th style="padding-right: 1vh;">토요일</th>
+							<td>10:00</td>
+							<td> ~ </td>
+							<td>10:00</td>
+							<td><input type="checkbox" id="rest6"></td>
+							<td><label for="rest6">휴무</label></td>
+						</tr>
+						<tr>
+							<td></td>
+							<th style="padding-right: 1vh;">일요일</th>
+							<td>10:00</td>
+							<td> ~ </td>
+							<td>10:00</td>
+							<td><input type="checkbox" id="rest7"></td>
+							<td><label for="rest7">휴무</label></td>
+						</tr>
+					</table>
+				</div>
+				<br>
+				<div>
+					<table border="0">
+						<tr>
+							<th style="border-bottom: 5px solid;">브레이크타임</th>
+						</tr>
+						<tr>
+							<td></td>
+							<th style="padding-right: 1vh;">평일</th>
+							<td>10:00</td>
+							<td> ~ </td>
+							<td>10:00</td>
+							<td><input type="checkbox" id="breaktime1"></td>
+							<td><label for="breaktime1">없음</label></td>
+						</tr>
+						<tr>
+							<td></td>
+							<th style="padding-right: 1vh;">주말</th>
+							<td>10:00</td>
+							<td> ~ </td>
+							<td>10:00</td>
+							<td><input type="checkbox" id="breaktime2"></td>
+							<td><label for="breaktime2">없음</label></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			
 			<br>
-			<div>
+			<!-- 결제수단 -->
+			<div class="card">
 				<table border="0">
 					<tr>
-						<th style="border-bottom: 5px solid;">브레이크타임</th>
-					</tr>
-					<tr>
-						<td></td>
-						<th style="padding-right: 1vh;">평일</th>
-						<td>10:00</td>
-						<td> ~ </td>
-						<td>10:00</td>
-						<td><input type="checkbox" id="breaktime1"></td>
-						<td><label for="breaktime1">없음</label></td>
-					</tr>
-					<tr>
-						<td></td>
-						<th style="padding-right: 1vh;">주말</th>
-						<td>10:00</td>
-						<td> ~ </td>
-						<td>10:00</td>
-						<td><input type="checkbox" id="breaktime2"></td>
-						<td><label for="breaktime2">없음</label></td>
+						<th style="border-bottom: 5px solid;">&nbsp;&nbsp;&nbsp;결제수단&nbsp;&nbsp;&nbsp;</th>
+						<td>
+							<input type="checkbox" id="chbox1" name="card"><label for="chbox1">제로페이</label>
+							<input type="checkbox" id="chbox2" name="card"><label for="chbox2">카카오페이</label>
+							<input type="checkbox" id="chbox3" name="card"><label for="chbox3">네이버페이</label>
+							<input type="checkbox" id="chbox4" name="card"><label for="chbox4">지역화폐</label>
+						</td>
 					</tr>
 				</table>
 			</div>
-		</div>
-		
-		<br>
-		<!-- 결제수단 -->
-		<div class="card">
-			<table border="0">
-				<tr>
-					<th style="border-bottom: 5px solid;">&nbsp;&nbsp;&nbsp;결제수단&nbsp;&nbsp;&nbsp;</th>
-					<td>
-						<input type="checkbox" id="chbox1" name="card"><label for="chbox1">제로페이</label>
-						<input type="checkbox" id="chbox2" name="card"><label for="chbox2">카카오페이</label>
-						<input type="checkbox" id="chbox3" name="card"><label for="chbox3">네이버페이</label>
-						<input type="checkbox" id="chbox4" name="card"><label for="chbox4">지역화폐</label>
-					</td>
-				</tr>
-			</table>
-		</div>
-		
-		<br>
-		<!-- 음식 카테고리 -->
-		<div class="food_cat">
-			<table border="0">
-				<tr>
-					<th style="border-bottom: 5px solid;">음식 카테고리</th>
-					<td>
-						<input type="checkbox" id="chbox1" name="food_cat"><label for="chbox1">한식</label>
-						<input type="checkbox" id="chbox2" name="food_cat"><label for="chbox2">일식</label>
-						<input type="checkbox" id="chbox3" name="food_cat"><label for="chbox3">중식</label>
-						<input type="checkbox" id="chbox4" name="food_cat"><label for="chbox4">양식</label>
-						<input type="checkbox" id="chbox5" name="food_cat"><label for="chbox5">카페</label>
-						<input type="checkbox" id="chbox6" name="food_cat"><label for="chbox6">베이커리</label>
-					</td>
-				</tr>
-			</table>
-		</div>
-		
-		<br>
-		
-		<!-- 메뉴등록 -->
-		<div class="food_menu">
-			<table border="0">
-				<tr>
-					<th style="border-bottom: 5px solid;">메뉴</th>
-				</tr>
-				<tr>
-					<td></td>
-					
-					<td>
-						<div>
-							<img src="#" style="width: 200px; height: 150px;">
-						</div>
-						<div>
-							<p style="text-align: center;">떡볶이</p>
-						</div>
-					</td>
-					
-					<td>
-						<div>
+			
+			<br>
+			<!-- 음식 카테고리 -->
+			<div class="food_cat">
+				<table border="0">
+					<tr>
+						<th style="border-bottom: 5px solid;">음식 카테고리</th>
+						<td>
+							<input type="checkbox" id="chbox1" name="food_cat"><label for="chbox1">한식</label>
+							<input type="checkbox" id="chbox2" name="food_cat"><label for="chbox2">일식</label>
+							<input type="checkbox" id="chbox3" name="food_cat"><label for="chbox3">중식</label>
+							<input type="checkbox" id="chbox4" name="food_cat"><label for="chbox4">양식</label>
+							<input type="checkbox" id="chbox5" name="food_cat"><label for="chbox5">카페</label>
+							<input type="checkbox" id="chbox6" name="food_cat"><label for="chbox6">베이커리</label>
+						</td>
+					</tr>
+				</table>
+			</div>
+			
+			<br>
+			
+			<!-- 메뉴등록 -->
+			<div class="food_menu">
+				<table border="0">
+					<tr>
+						<th style="border-bottom: 5px solid;">메뉴</th>
+					</tr>
+					<tr>
+						<td></td>
+						
+						<td>
+							<div>
 								<img src="#" style="width: 200px; height: 150px;">
-						</div>
-						<div>
-							<p style="text-align: center;">어묵</p>
-						</div>
-					</td>
-					<td>
-						<div>
-							<img src="#" style="width: 200px; height: 150px;">
-						</div>
-						<div>
-							<p style="text-align: center;">순대</p>
-						</div>				
-					</td>
-					<td>
-						<div style="width: 200px; height: 150px; display: flex; justify-content: center;">
-							<input type="button" class="plusBtn" value="+" style="border: 1; margin: auto; display: block;"> 
-						</div>
-						<div>
-							<p style="text-align: center;">&nbsp;</p>
-						</div>
+							</div>
+							<div>
+								<p style="text-align: center;">떡볶이</p>
+							</div>
+						</td>
 						
-					</td>
-				</tr>
-			</table>
-		</div>
-		
-		
-		<!-- 수용인원 -->
-		<label id="label">
-			<p class="label-txt">수용인원</p>
-			<input type="text" class="input">
-			<div class="line-box">
-			  	<div class="line"></div>
-			</div>
-		</label>
-		
-		
-		<!-- 사업자 이메일 -->
-		<label id="label">
-			<p class="label-txt">사업자 이메일</p>
-			<input type="text" class="input">
-			<div class="line-box">
-			    <div class="line"></div>
-			</div>
-		</label>
-		
-		
-		
-		<!-- 가게 설명 -->
-		<label id="label">
-			<p class="label-txt">가게 설명</p>
-			<input type="text" class="input">
-			<div class="line-box">
-			    <div class="line"></div>
-			</div>
-		</label>
-		
-		
-		<!-- 가게페이지 링크 -->
-		<label id="label">
-			<p class="label-txt label-active">가게페이지 링크</p>
-			<input type="text" class="input">
-			<div class="line-box">
-			    <div class="line"></div>
-			</div>
-		</label>
-		
-		
-		<!-- 가게 옵션 -->
-		<div class="storeOption">
-			<div>
-				<table border="0">
-					<tr>
-						<th style="border-bottom: 5px solid;">&nbsp;&nbsp;가게옵션&nbsp;&nbsp;</th>
-					</tr>
-					<tr>
-						<td></td>
-						<th style="padding-right: 1vh; text-align: left;">화장실 존재 여부</th>
-						<td><input type="checkbox" name="toilet" id="toilet" onclick="checkOnlyOne(this)"></td>
-						<td style="padding-right: 1vh;"><label for="toilet">있음</label></td>
-						<td><input type="checkbox" name="toilet" id="toilet2" onclick="checkOnlyOne(this)"></td>
-						<td><label for="toilet2">없음</label></td>
-					</tr>
-					<tr>
-						<td></td>
-						<th style="padding-right: 1vh; text-align: left;">애견 동반 여부</th>
-						<td><input type="checkbox" name="puppy" id="puppy"></td>
-						<td style="padding-right: 1vh;"><label for="puppy">가능</label></td>
-						<td><input type="checkbox" name="puppy" id="puppy2"></td>
-						<td><label for="puppy2">불가능</label></td>
-					</tr>
-					
-					<tr>
-						<td></td>
-						<th style="padding-right: 1vh; text-align: left;">연회석 존재 여부</th>
-						<td><input type="checkbox" name="room" id="room"></td>
-						<td><label for="room">있음</label></td>
-						<td><input type="checkbox" name="room" id="room2"></td>
-						<td><label for="room2">없음</label></td>
-					</tr>
-					<tr>
-						<td></td>
-						<th style="padding-right: 1vh; text-align: left;">예약 가능 여부</th>
-						<td><input type="checkbox" name="reservation" id="reservation"></td>
-						<td><label for="reservation">가능</label></td>
-						<td><input type="checkbox" name="reservation" id="reservation2"></td>
-						<td><label for="reservation2">불가능</label></td>
-					</tr>
-					<tr>
-						<td></td>
-						<th style="padding-right: 1vh; text-align: left;">주차 가능 여부</th>
-						<td><input type="checkbox" name="parking" id="parking"></td>
-						<td><label for="parking">가능</label></td>           
-						<td><input type="checkbox" name="parking" id="parking2"></td>
-						<td><label for="parking2">불가능</label></td>
-					</tr>
-					<tr>
-						<td></td>
-						<th style="padding-right: 2vh; text-align: left;">무선 인터넷 사용 가능 여부</th>
-						<td><input type="checkbox" name="internet" id="internet"></td>
-						<td><label for="internet">가능</label></td>           
-						<td><input type="checkbox" name="internet" id="internet2"></td>
-						<td><label for="internet2">불가능</label></td>          
+						<td>
+							<div>
+									<img src="#" style="width: 200px; height: 150px;">
+							</div>
+							<div>
+								<p style="text-align: center;">어묵</p>
+							</div>
+						</td>
+						<td>
+							<div>
+								<img src="#" style="width: 200px; height: 150px;">
+							</div>
+							<div>
+								<p style="text-align: center;">순대</p>
+							</div>				
+						</td>
+						<td>
+							<div style="width: 200px; height: 150px; display: flex; justify-content: center;">
+								<input type="button" class="plusBtn" value="+" style="border: 1; margin: auto; display: block;"> 
+							</div>
+							<div>
+								<p style="text-align: center;">&nbsp;</p>
+							</div>
+							
+						</td>
 					</tr>
 				</table>
 			</div>
-		</div>
-		
-		
-		<!-- 가게 선택 키워드 -->
-		<div>
-			<div class="userIbmat">
-			<div class="ibmatTitleDiv">
-				<span id="ibmatTitle">가게키워드 선택</span> &nbsp;&nbsp;&nbsp;&nbsp;
-			</div>
-		
-			<div class="ibmatSelectDiv">
-				
-				<div class="selectLeft">
-					<label class="ibmatlabel" for="ibmat1">
-						<input type="checkbox" class="ibmatCB" id="ibmat1">
-						인테리어가 멋져요
-					</label>
-					<br><br>
-					
-					
-					<label class="ibmatlabel" for="ibmat2">
-						<input type="checkbox" class="ibmatCB" id="ibmat2">
-						혼자오기 좋아요
-					</label>
-					<br><br>
-				
-					<label class="ibmatlabel" for="ibmat3">
-						<input type="checkbox" class="ibmatCB" id="ibmat3">
-						단체모임하기 좋아요
-					</label>
-					<br><br>
+			
+			
+			<!-- 수용인원 -->
+			<label id="label">
+				<p class="label-txt">수용인원</p>
+				<input type="text" class="input">
+				<div class="line-box">
+				  	<div class="line"></div>
+				</div>
+			</label>
+			
+			
+			<!-- 사업자 이메일 -->
+			<label id="label">
+				<p class="label-txt">사업자 이메일</p>
+				<input type="text" class="input">
+				<div class="line-box">
+				    <div class="line"></div>
+				</div>
+			</label>
+			
+			
+			
+			<!-- 가게 설명 -->
+			<label id="label">
+				<p class="label-txt">가게 설명</p>
+				<input type="text" class="input">
+				<div class="line-box">
+				    <div class="line"></div>
+				</div>
+			</label>
+			
+			
+			<!-- 가게페이지 링크 -->
+			<label id="label">
+				<p class="label-txt label-active">가게페이지 링크</p>
+				<input type="text" class="input">
+				<div class="line-box">
+				    <div class="line"></div>
+				</div>
+			</label>
+			
+			
+			<!-- 가게 옵션 -->
+			<div class="storeOption">
+				<div>
+					<table border="0">
+						<tr>
+							<th style="border-bottom: 5px solid;">&nbsp;&nbsp;가게옵션&nbsp;&nbsp;</th>
+						</tr>
+						<tr>
+							<td></td>
+							<th style="padding-right: 1vh; text-align: left;">화장실 존재 여부</th>
+							<td><input type="checkbox" name="toilet" id="toilet" onclick="checkOnlyOne(this)"></td>
+							<td style="padding-right: 1vh;"><label for="toilet">있음</label></td>
+							<td><input type="checkbox" name="toilet" id="toilet2" onclick="checkOnlyOne(this)"></td>
+							<td><label for="toilet2">없음</label></td>
+						</tr>
+						<tr>
+							<td></td>
+							<th style="padding-right: 1vh; text-align: left;">애견 동반 여부</th>
+							<td><input type="checkbox" name="puppy" id="puppy"></td>
+							<td style="padding-right: 1vh;"><label for="puppy">가능</label></td>
+							<td><input type="checkbox" name="puppy" id="puppy2"></td>
+							<td><label for="puppy2">불가능</label></td>
+						</tr>
 						
-					<label class="ibmatlabel" for="ibmat4">
-						<input type="checkbox" class="ibmatCB" id="ibmat4">
-						매장이 넓어요
-					</label>
-					<br><br>
+						<tr>
+							<td></td>
+							<th style="padding-right: 1vh; text-align: left;">연회석 존재 여부</th>
+							<td><input type="checkbox" name="room" id="room"></td>
+							<td><label for="room">있음</label></td>
+							<td><input type="checkbox" name="room" id="room2"></td>
+							<td><label for="room2">없음</label></td>
+						</tr>
+						<tr>
+							<td></td>
+							<th style="padding-right: 1vh; text-align: left;">예약 가능 여부</th>
+							<td><input type="checkbox" name="reservation" id="reservation"></td>
+							<td><label for="reservation">가능</label></td>
+							<td><input type="checkbox" name="reservation" id="reservation2"></td>
+							<td><label for="reservation2">불가능</label></td>
+						</tr>
+						<tr>
+							<td></td>
+							<th style="padding-right: 1vh; text-align: left;">주차 가능 여부</th>
+							<td><input type="checkbox" name="parking" id="parking"></td>
+							<td><label for="parking">가능</label></td>           
+							<td><input type="checkbox" name="parking" id="parking2"></td>
+							<td><label for="parking2">불가능</label></td>
+						</tr>
+						<tr>
+							<td></td>
+							<th style="padding-right: 2vh; text-align: left;">무선 인터넷 사용 가능 여부</th>
+							<td><input type="checkbox" name="internet" id="internet"></td>
+							<td><label for="internet">가능</label></td>           
+							<td><input type="checkbox" name="internet" id="internet2"></td>
+							<td><label for="internet2">불가능</label></td>          
+						</tr>
+					</table>
+				</div>
+			</div>
+			
+			
+			<!-- 가게 선택 키워드 -->
+			<div>
+				<div class="ibmatTitleDiv">
+					<span id="ibmatTitle">가게키워드 선택</span> &nbsp;&nbsp;&nbsp;&nbsp;
+				</div>
+			
+				<div class="ibmatSelectDiv">
+					
+					<div class="selectLeft">
+						<label class="ibmatlabel" for="ibmat1">
+							<input type="checkbox" class="ibmatCB" id="ibmat1">
+							인테리어가 멋져요
+						</label>
+						<br><br>
+						
+						
+						<label class="ibmatlabel" for="ibmat2">
+							<input type="checkbox" class="ibmatCB" id="ibmat2">
+							혼자오기 좋아요
+						</label>
+						<br><br>
+					
+						<label class="ibmatlabel" for="ibmat3">
+							<input type="checkbox" class="ibmatCB" id="ibmat3">
+							단체모임하기 좋아요
+						</label>
+						<br><br>
+							
+						<label class="ibmatlabel" for="ibmat4">
+							<input type="checkbox" class="ibmatCB" id="ibmat4">
+							매장이 넓어요
+						</label>
+						<br><br>
+					</div>
+					
+					<div class="selectRight">	
+						<label class="ibmatlabel" for="ibmat5">
+							<input type="checkbox" class="ibmatCB" id="ibmat5">
+							애견메뉴가 있어요
+						</label>
+						<br><br>
+					
+						<label class="ibmatlabel" for="ibmat6">
+							<input type="checkbox" class="ibmatCB" id="ibmat6">
+							포장이 가능해요
+						</label>
+						<br><br>
+					</div>
+					
+				</div>
+			</div>
+			
+			<!-- 가게 검색 키워드 -->
+			<div>
+				<div class="ibmatTitleDiv">
+					<span id="ibmatTitle">가게검색 키워드</span> &nbsp;&nbsp;&nbsp;&nbsp;
+				</div>
+			</div>
+			
+			<label id="label">
+				<p class="label-txt label-active">가게 검색 키워드1 (5글자 이내)</p>
+				<input type="text" class="input" id="why1">
+				<div class="line-box">
+				    <div class="line"></div>
 				</div>
 				
-				<div class="selectRight">	
-					<label class="ibmatlabel" for="ibmat5">
-						<input type="checkbox" class="ibmatCB" id="ibmat5">
-						애견메뉴가 있어요
-					</label>
-					<br><br>
-				
-					<label class="ibmatlabel" for="ibmat6">
-						<input type="checkbox" class="ibmatCB" id="ibmat6">
-						포장이 가능해요
-					</label>
-					<br><br>
+				<span id="errMessage1" style="color: red; display: none;">5글자 이내로 입력해주세요</span>
+			</label>
+			
+			<label id="label">
+				<p class="label-txt label-active">가게 검색 키워드2 (5글자 이내)</p>
+				<input type="text" class="input" id="why2">
+				<div class="line-box">
+				    <div class="line"></div>
 				</div>
 				
+				<span id="errMessage2" style="color: red; display: none;">5글자 이내로 입력해주세요</span>
+			</label>
+			
+			<label id="label">
+				<p class="label-txt label-active">가게 검색 키워드3 (5글자 이내)</p>
+				<input type="text" class="input" id="why3">
+				<div class="line-box">
+				    <div class="line"></div>
+				</div>
+				
+				<span id="errMessage3" style="color: red; display: none;">5글자 이내로 입력해주세요</span>
+			</label>
+			
+			
+			<br><br>
+			<!-- 등록버튼 -->
+			<div class="btnSend">
+				<input type="submit" value="등록">
 			</div>
+			
+			
+			
+			
+				
+		</div><!-- mainbody -->
+			
+		
+		<div class="footer">
+			<c:import url="/WEB-INF/view/footer.jsp"></c:import>
 		</div>
-		
-		<!-- 가게 검색 키워드 -->
-		<div>
-			<div class="userIbmat">
-			<div class="ibmatTitleDiv">
-				<span id="ibmatTitle">가게검색 키워드</span> &nbsp;&nbsp;&nbsp;&nbsp;
-			</div>
-		</div>
-		
-		<label id="label">
-			<p class="label-txt label-active">가게 검색 키워드1 (5글자 이내)</p>
-			<input type="text" class="input" id="why1">
-			<div class="line-box">
-			    <div class="line"></div>
-			</div>
 			
-			<span id="errMessage1" style="color: red; display: none;">5글자 이내로 입력해주세요</span>
-		</label>
 		
-		<label id="label">
-			<p class="label-txt label-active">가게 검색 키워드2 (5글자 이내)</p>
-			<input type="text" class="input" id="why2">
-			<div class="line-box">
-			    <div class="line"></div>
-			</div>
-			
-			<span id="errMessage2" style="color: red; display: none;">5글자 이내로 입력해주세요</span>
-		</label>
-		
-		<label id="label">
-			<p class="label-txt label-active">가게 검색 키워드3 (5글자 이내)</p>
-			<input type="text" class="input" id="why3">
-			<div class="line-box">
-			    <div class="line"></div>
-			</div>
-			
-			<span id="errMessage3" style="color: red; display: none;">5글자 이내로 입력해주세요</span>
-		</label>
-		
-		
-		<br><br>
-		<!-- 등록버튼 -->
-		<div class="btnSend">
-			<input type="submit" value="등록">
-		</div>
-		
-			
-			
-	</div><!-- mainbody -->
-	
-
-
-	
-	<div class="footer">
-		<c:import url="/WEB-INF/view/footer.jsp"></c:import>
 	</div>
-
-</div>
 <!-- main -->
 	
 </form>
