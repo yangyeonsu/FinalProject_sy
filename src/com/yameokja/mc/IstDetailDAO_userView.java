@@ -26,8 +26,6 @@ public interface IstDetailDAO_userView
 	public ArrayList<Integer> userRnList(@Param("st_num") int st_num, @Param("user_num") String user_num);	// 특정 유저가 가게의 리뷰에 누른 추천/비추천 내역
 	public ArrayList<Integer> userNrnList(@Param("st_num") int st_num, @Param("user_num") String user_num);	// 특정 유저가 가게의 리뷰에 누른 추천/비추천 내역
 
-	
-	
 	// 리뷰 신고
 	public int reviewRepInsert(@Param("rv_num") int rv_num, @Param("user_num") String user_num, @Param("rep_rs_num") int rep_rs_num);	
 	// 리뷰 식별
@@ -46,6 +44,22 @@ public interface IstDetailDAO_userView
 	// 가게정보오류수정요청 INSERT
 	public int reqApply(@Param("user_num") String user_num, @Param("req_rs") String req_rs, @Param("st_chbox_num") int st_chbox_num);
 	
+	
 	// 리뷰 키워드 범례 리스트
 	public ArrayList<StoreReviewKeyDTO> reviewKeywords();
+	
+	
+	// 리뷰 입력
+	public int reviewInsert(String user_num, int st_num, String rv_content, int star_score);
+	
+	// 가게 검색 키워드 존재여부
+	public Integer skeywordSearch(int st_num, String search_name);
+	
+	// 가게 검색 키워드 count update
+	public int skeywordUpdate(int st_num, String search_name);
+	
+	// 가게 검색 키워드 insert
+	public int sKeywordInsert(int st_num, String search_name);
+	
+	
 }
