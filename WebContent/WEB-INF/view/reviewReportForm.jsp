@@ -221,13 +221,26 @@ span
 				}
 			}
 		});
+		
+		$(".stInfoBtn").click(function(event)
+		{
+			alert("확인");
+			event.preventDefault();
+			
+			var stNum = $(this).val();
+			/* $(location).attr("href","stdetail-userview.action?st_num="+stNum); */
+			window.location.href="stdetail-userview.action?st_num="+stNum;
+			
+		});
+		
+		
 	});
    
 </script>
 
 </head>
 <body>
-
+<form id="adminForm" method="get">
 <div class="bframe">
    
    <!-- header -->
@@ -284,7 +297,7 @@ span
 				리뷰신고카테고리명 : ${review.getRep_rs_name()}
 			</div>
 			<div style="width: 42%; text-align: right; margin-top: 1vh; font-size: 11pt;">
-				<button class="stInfoBtn" id="${review.getSt_num() }">${review.getSt_name() } 페이지로 가기</button>
+				<button class="stInfoBtn" value="<%=dto.getSt_num() %>">${review.getSt_name() } 페이지로 가기</button>
 			</div>
 		</div>
 		
@@ -328,6 +341,7 @@ span
 	<div><c:import url="/WEB-INF/view/footer.jsp"></c:import></div>
 
 </div>
+</form>
 
 </body>
 </html>

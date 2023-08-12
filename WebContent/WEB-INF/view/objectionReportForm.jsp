@@ -200,7 +200,7 @@ input[type="radio"]
 
 </head>
 <body>
-
+<form id="adminForm" method="post">
 <div class="bframe">
 	
 	<!-- header -->
@@ -276,7 +276,7 @@ input[type="radio"]
 	<!-- footer -->
 	<div><c:import url="/WEB-INF/view/footer.jsp"></c:import></div>
 </div>
-
+</form>
 
 
 </body>
