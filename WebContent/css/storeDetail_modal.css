@@ -1,0 +1,616 @@
+@charset "UTF-8";
+/* 사용할 때 구문 : font-family: 'IBM Plex Sans KR', sans-serif; */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500&display=swap');
+
+#body {
+	width: 100%;
+	display: flex;
+	font-family: 'IBM Plex Sans KR', sans-serif;
+	flex-wrap: nowrap;
+    margin:0px;
+    padding: 0px;        
+}
+
+.form {
+	padding-left: 3vw;
+}
+
+/* 메인 가게 상세정보 */
+.mainBody {
+	margin-left: 7vw;
+    width: 60vw;
+}
+
+.main {
+	padding-top: 2vh;
+    display: flex;
+    width: 65vw;
+}
+
+.container1 {
+	float: left;
+}
+
+/* 가게 이름 + 사진 + 찜수 + 별점 + 리뷰수 구역*/
+.main-left {
+	width: 30vw;
+    height: 38vh;
+    float: left;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+.storeName
+{
+	margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: #f7f4ea;
+}
+
+.revBoard {
+    width: 30vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.storeImgDiv
+{
+	width: 30vw;
+	height: 20vh;
+}
+
+.storeImg
+{
+	max-width: 30vw;
+	max-height: 20vh;
+	object-fit: cover;
+}
+
+.info {
+	width: 24vw;
+    display: flex;
+    margin-top: 10px;
+    text-align: center;
+    justify-content: space-around;
+    margin-bottom: 25px;
+    font-size: 15pt;
+}
+
+/* 영업시간 안내 구역 */
+.main-right {
+	width: 30vw;
+    height: 36vh;
+    /* float: right; */
+    text-align: center;
+    margin-left: 5vw;
+    margin-top: 1vw;
+}
+
+#weekList
+{
+	display: flex;
+	flex-direction: column;
+	width: 24vw;
+}
+
+#opencloseholiday
+{
+    display: flex;
+    flex-direction: column;
+    height: 22vh;
+}
+
+#opencloseholidayName
+{
+	display: flex;
+    width: 20vw;
+    justify-content: space-around;
+    font-size: 13pt;
+}
+
+#opencloseholidayList
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 20vw;
+    height: 100%;
+    font-size: 11pt;
+    border: 2px solid #f7f4ea;
+    border-radius: 5px;
+}
+
+.openclose {
+	width: 50%;
+	float: left;
+}
+
+.time {
+	width: 50%;
+	float: left;
+	text-align: center;
+}
+
+.breakName
+{
+	margin-right: 10px;
+}
+
+#breakTime
+{
+	display: flex;
+    font-size: 10pt;
+    justify-content: flex-end;
+    width: 20vw;
+    margin-left: 5px;
+}
+
+.breakList
+{
+    display: flex;
+    justify-content: center;
+    color: #4d4b4b;
+    margin-right: 5px;
+}
+
+.ocName
+{
+    width: 20vw;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.ochList
+{
+	display: flex;
+    margin-bottom: 3px;
+    color: #4d4b4b;
+    justify-content: space-around;
+}
+
+.dayname, .time, .holiday
+{
+	width: 10vw;
+}
+
+.background
+{
+	font-weight: bold;
+}
+
+
+/* 가게 키워드 영역 */
+.storeKeywordsDiv
+{
+	text-align: center;
+    font-weight: bold;
+    width: 60vw;
+    font-size: 13pt;
+    height: 40px;
+    border: 2px solid #f7f4ea;
+    border-radius: 5px;
+    padding-top: 15px;
+    box-shadow: 1.5px 1.5px 1.5px #ede9d0;
+}
+
+/* 가게 정보 + 가게 옵션(체크박스) 영역 */
+.storeMiddle
+{
+	display: flex;
+}
+
+/* 가게 정보 영역 */
+.storeinfo
+{
+    display: flex;
+    justify-content: flex-start;
+    width: 35vw;
+    margin-top: 1vw;
+    text-align: left;
+}
+
+.storeInfoList
+{
+	display: flex;
+	flex-direction: column;
+	width: 10vw;
+}
+
+.storeInfoValue
+{
+	display: flex;
+	flex-direction: column;
+	width: 25vw;
+}
+
+.siList1, .siList2
+{
+    border: 2px solid #f7f4ea;
+   	padding: 8px;
+    border-radius: 8px;
+    height: 20px;
+    margin: 0.5vw 0.5vw 0 0;
+    box-shadow: 1.5px 1.5px 1.5px #ede9d0;
+}
+
+.siList1
+{
+	font-weight: bold;
+}
+
+#explainName, #explain
+{
+	height: 50px;
+}
+
+/* 가게 옵션(체크박스) 영역 */
+.storeChecks
+{
+    display: flex;
+    flex-direction: column;
+    width: 25vw;
+    margin-top: 1vw;
+    padding: 0 0 0 1vw;
+    align-items: flex-end;
+    border-left: 3px solid #ede9d0;
+    margin-left: 0.5vw;
+}
+
+.storeCheck
+{
+    display: flex;
+    justify-content: space-between;
+}
+
+.stCheckListName, .stCheckListYesorno
+{
+	padding: 8px;
+    height: 20px;
+    margin: 0.5vw 0.5vw 0 0;
+    width: 10.5vw;
+    font-weight: bold;
+    text-align: center;
+}
+
+
+.stCheckName, .stCheckYesorno
+{
+    border: 2px solid #f7f4ea;
+    padding: 8px;
+    border-radius: 8px;
+    height: 20px;
+    margin: 0.5vw 0.5vw 0 0;
+    width: 10.5vw;
+    font-weight: bold;
+    box-shadow: 1.5px 1.5px 1.5px #ede9d0;
+}
+
+.stCheckYesorno
+{
+	text-align: center;
+}
+
+#modifyReqBtn
+{
+	margin-top: 1vw;
+    width: 8vw;
+    height: 20px;
+    border: 1px solid #ede9d0;
+    border-radius: 5px;
+    color: #4d4b4b;
+    font-weight: bold;
+    box-shadow: 3px 3px 3px #ede9d0;
+    background-color: #fff;
+    margin-right: 0.8vw;
+    font-size: 0.6vw;
+    cursor: pointer;
+}
+
+/* 메뉴 영역 */
+
+.container2 {
+	padding-left: 0.2vw;
+}
+
+.container2, .container3 {
+	width: 100%;
+	float: left;
+	margin-top: 5vh;
+}
+
+.menuName
+{
+	font-weight: bold;
+}
+
+.thumbnail {
+    width: 8vw;
+    height: 8vw;
+    float: left;
+    border-radius: 5px;
+}
+
+.menuList {
+	display: flex;
+    margin-top: 50px;
+    justify-content: center;
+}
+
+.menu {
+	display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding-right: 2vw;
+    padding-left: 2vw;
+    align-items: center;
+}
+
+/* 리뷰 키워드 영역 */
+.rvKeyList
+{
+	display: flex;
+    border: 2px solid #f7f4ea;
+    padding: 5px;
+    border-radius: 8px;
+    justify-content: center;
+    height: 80px;
+    align-items: center;
+}
+
+.rvKey
+{
+    font-size: 13pt;
+    font-weight: bold;
+    margin-right: 3px;
+}
+
+.rvKeyCount
+{
+	font-size: 13pt;
+    font-weight: bold;
+    margin-right: 15px;
+}
+
+/* 리뷰 영역 */
+#insertReview
+{    
+    margin-bottom: 1vw;
+    width: 6.2vw;
+    height: 30px;
+    border: 1px solid #ede9d0;
+    border-radius: 5px;
+    color: #4d4b4b;
+    font-weight: bold;
+    box-shadow: 3px 3px 3px #ede9d0;
+    background-color: #fff;
+    margin-right: 0.8vw;
+    font-size: 0.6vw;
+    cursor: pointer;
+}
+
+.reviewInsertBtnDiv
+{
+	width: 8vw;
+    padding-left: 53.8vw;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.none, .noneMenu
+{
+	text-align: center;
+	color: #4d4b4b;
+}
+
+.reviews {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.rvTop
+{
+	display: flex;
+    justify-content: space-between;
+    padding: 0 5px 0 5px;
+}
+
+.userNickname
+{
+	font-size: 13pt;
+	font-weight: bold;
+	background-color: #f7f4ea;
+}
+
+.rvBtn
+{
+    border-radius: 8px;
+    border: none;
+    background-color: #fff;
+    margin-left: 5px;
+    height: 30px;
+    cursor: pointer;
+    box-shadow: 2.5px 2.5px 2.5px #f7f4ea;
+}
+
+.repBtn
+{
+	font-size: 0.2vw;
+	box-shadow: 2.5px 3px 2.5px #f7f4ea;
+}
+
+.rvBtn:hover
+{
+	border-radius: 8px;
+	border: none;
+	background-color: #f7f4ea;
+	margin-left: 5px;
+	height: 30px;
+	pointer: cursor;
+}
+
+.starScore
+{
+    height: 20px;
+    width: 10vw;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    font-size: 11pt;
+}
+
+.contentPhotoDiv
+{
+    border: 2px solid #f7f4ea;
+    border-radius: 5px;
+    padding: 5px;
+	display: flex;
+	flex-direction: column;
+}
+
+.rvContentDiv
+{
+	height: 100px;
+}
+
+.rvPhotoDiv
+{
+    padding-left: 5px;
+}
+
+.rvphoto
+{
+	max-width: 80px;
+	max-height: 80px;
+	width: 80px;
+	height: 80px;
+	object-fit: cover;
+	border-radius: 5px;
+}
+
+.regDate
+{
+	float: right;
+    font-size: 8pt;
+    color: #4d4b4b;
+}
+
+.recBtn {
+	float: right;
+}
+
+
+/* 화면 좌측 사이드 바 영역 */
+.has_sub_menu {
+	list-style-type: none;
+}
+
+.side-menu {
+	top: 50px;
+	width: 5vw;
+	z-index: 10;
+	background: #ef6351;
+	border-right: 1px solid rgba(0, 0, 0, 0.07);
+	height: 90%;
+	margin-top: 5.7vh;
+	position: fixed;
+	align-items: center;
+}
+
+#sidebar-menu li {
+	font-size: 1.5rem;
+}
+
+#sidebar-menu .fas {
+	padding-top: 3vh;
+	padding-left: 1.2vw
+}
+
+.left_sub_menu {
+	position: fixed;
+	top: 50px;
+	width: 18vw;
+	z-index: 10;
+	left: 4.6vw;
+	background: white;
+	height: 90%;
+	margin-top: 5.7vh;
+}
+
+.sub_menu {
+	margin-top: 50px;
+}
+
+.left_sub_menu>.sub_menu li:hover {
+	color: ff5858;
+	background-color: #e1e1e1;
+}
+
+.left_sub_menu>.sub_menu li {
+	color: black;
+	font-size: 17px;
+	font-weight: 600;
+	padding: 20px 0px 8px 14px;
+	border-bottom: 1px solid #e1e1e1;
+}
+
+.sub_menu>h2 {
+	padding-bottom: 4px;
+	border-bottom: 3px solid #797979;
+	margin-top: 30px;
+	font-size: 21px;
+	font-weight: 600;
+	color: #333;
+	margin-left: 10px;
+	margin-right: 10px;
+	font-family: 'NotoKrB';
+}
+
+.fas {
+	color: #ff5858;
+	font-size: 20px;
+	line-height: 20px;
+	float: right;
+	margin-top: 0.6vh;
+	margin-right: 2vw;
+}
+
+.sub_menu>.big_menu>.small_menu li {
+	color: black;
+	font-size: 14px;
+	font-weight: 600;
+	border-bottom: 0px solid #e1e1e1;
+}
+
+.big_menu {
+	list-style-type: none;
+	cursor: pointer;
+}
+
+.samll_menu {
+	position: fixed;
+	list-style-type: none;
+	padding-inline-start: 0px;
+	list-style: none;
+	transition-duration: 0.5s;
+}
+
+.small_menuA {
+	color: black;
+	text-decoration-line: none;
+	background-color: transparent;
+	margin-bottom: 1vh
+}
+
+.big_menu ul {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.has_sub {
+	width: 100%;
+}
+

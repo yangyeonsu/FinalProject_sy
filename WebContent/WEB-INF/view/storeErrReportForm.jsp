@@ -14,6 +14,8 @@
 <meta charset="UTF-8">
 <title>storeErrReportForm.jsp</title>
 
+<link rel="stylesheet" type="text/css" href="<%=cp%>/css/st_modal.css">
+
 <style type="text/css">
 .st_info_insert
 {
@@ -54,7 +56,7 @@
 	text-align: center;
 }
 
-.input, #span
+.input
 {
 	
 	display: inline-block;
@@ -124,6 +126,40 @@ input[type="radio"]
     justify-content: center;
     margin-top: 1%;
 }
+
+.checkLabel
+{
+	display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding-left: 40vw;
+    margin-top: 1% 
+}
+
+ 
+input[type="radio"] 
+{
+  display: none;
+}
+
+.label input[type="radio"] + span 
+{
+	display: inline-block;
+	padding: 5px 10px;
+	border: 1px solid #dfdfdf;
+	border-radius: 10px 10px;
+	background-color: #ffffff;
+	width: 3vw;
+	text-align: center;
+	cursor: pointer;
+}
+
+
+.label input[type="radio"]:checked + span 
+{
+        background-color:  #F7F4EA;
+}
+
 #span
 {
 	padding-top: 10px;
@@ -132,6 +168,17 @@ input[type="radio"]
 #storeErrReport
 {
 	cursor: not-allowed;
+}
+
+#popup
+{
+    
+}
+
+.middle
+{
+	display: flex;
+	flex-direction: column;
 }
 
 </style>
@@ -177,11 +224,88 @@ input[type="radio"]
 		});
 		
 	});
+	
+	
+	
+	function PopupOpen()
+	{
+
+		if (document.all.popup.style.visibility == "hidden")
+		{
+			document.all.popup.style.visibility = "visible";
+			bgLayerOpen();
+
+			var $layerPopupObj = $('#popup');
+			var left = ($(window).scrollLeft() + ($(window).width() - $layerPopupObj
+					.width()) / 2);
+			var top = ($(window).scrollTop() + ($(window).height() - $layerPopupObj
+					.height()) / 2);
+
+			$layerPopupObj.css(
+			{
+				'left' : left,
+				'top' : top,
+				'position' : 'absolute'
+			});
+			$('body').css('position', 'relative').append($layerPopupObj);
+
+			return false;
+		} else
+		{
+			document.all.popup.style.visibility = "hidden";
+			bgLayerClear();
+			return false;
+		}
+
+	}
+	
+	
+
+	function bgLayerOpen()
+	{
+		if (!$('.bgLayer').length)
+		{
+			$('<div class="bgLayer"></div>').appendTo($('body'));
+		}
+		var object = $(".bgLayer");
+		var w = $(document).width() + 12;
+		var h = $(document).height();
+
+		object.css(
+		{
+			'width' : w,
+			'height' : h
+		});
+		object.fadeIn(500); //생성되는 시간 설정
+	}
+
+	function bgLayerClear()
+	{
+		var object = $('.bgLayer');
+
+		if (object.length)
+		{
+			object.fadeOut(500, function()
+			{
+				object.remove();
+
+			});
+		}
+	}
+
+	$(function()
+	{
+		$(window).resize(function()
+		{ //화면 크기 변할 시
+			$('.bgLayer').css('width', $(window).width() - 0);
+			$('.bgLayer').css('height', $(window).height() - 0);
+		});
+	});
 </script>
 
 </head>
 <body>
-
+<form id="adminForm" method="post">
 <div class="bframe">
 	
 	<!-- header -->
@@ -219,6 +343,9 @@ input[type="radio"]
 			<div class="igroup2" style="width: 100%;">
 				<textarea id="storeErrReport" readonly="readonly" style="width: 72%; height: 5em; 3px; resize: none;">${err.getReq_rs() }</textarea>
 			</div>
+			<div style="width: 42%; text-align: right; margin-top: 1vh; font-size: 11pt;">
+				<button type="button" class="stInfoBtn" value="${err.st_num }" onclick="javascript:PopupOpen()">${err.st_name } 페이지로 가기</button>
+			</div>
 			
 			<c:if test="${state ne '처리완료' }">
 				
@@ -242,19 +369,27 @@ input[type="radio"]
 			
 			<c:if test="${state eq '처리완료' }">
 				<br><br>
-				<div class="igroup" style="width: 100%; color: red; margin-left: 30%; font-size: 20pt; text-align: center; width: 600px; margin: 0 auto;">
+				<div class="igroup" style="width: 100%; color: red; font-size: 20pt; text-align: center; width: 570px; margin: 0 auto;">
 					처리가 완료된 가게정보오류수정요청서 입니다.
 				</div>
 			</c:if>
 			
 		</div>
+		<div class="stDetailPopup" id="popup" style="position: absolute; visibility: hidden;">
+			<h4>
+				<a href="#" class="close" onClick="javascript:PopupOpen()">X</a>
+			</h4>
+			<c:import url="storeDetail_modal.jsp"></c:import>
+		</div>
+		
+		
 	</div>
 	
 	
 	<!-- footer -->
 	<div><c:import url="/WEB-INF/view/footer.jsp"></c:import></div>
 </div>
-
+</form>
 
 
 </body>

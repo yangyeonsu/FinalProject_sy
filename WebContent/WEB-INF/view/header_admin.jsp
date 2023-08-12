@@ -182,6 +182,7 @@ $(function() {
     
     $("#logout").click(function()
 	{
+    	//alert("확인");
     	$("#adminForm").attr("action","logout.action");
 		$("#adminForm").submit();
 	});
