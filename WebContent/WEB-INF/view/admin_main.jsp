@@ -20,7 +20,6 @@
 	.continer{
 		position: static;
 	}
-	
 </style>
 
 <!-- 배너 스크립트 -->
@@ -127,9 +126,9 @@
 <body>
 <form id="adminForm" method="post">
 	<!-- header -->
-	<c:import url="header_admin.jsp"></c:import>
+	<header><c:import url="header_admin.jsp"></c:import></header>
 
-	<c:import url="sideBar_user.jsp"></c:import>
+		<c:import url="sideBar_user.jsp"></c:import>
 		
 		
 		<div id="mainDiv">

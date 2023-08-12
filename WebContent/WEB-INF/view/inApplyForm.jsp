@@ -9,7 +9,6 @@
 <head>
 <meta charset="UTF-8">
 <title>가게 등록</title>
-<link rel="stylesheet" type="text/css" href="css/main.css">
 <style type="text/css">
 .bframe {
 	display: flex;
