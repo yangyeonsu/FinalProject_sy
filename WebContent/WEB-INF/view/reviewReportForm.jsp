@@ -48,7 +48,7 @@
    display: flex;
 }
 
-.stInfoBtn, .input, .sendResult, #span
+.stInfoBtn, .input, .sendResult
 {
    display: inline-block;
    outline: none;
@@ -151,12 +151,12 @@ input[type="radio"]
   display: none;
 }
 
-.checkLabel input[type="radio"] + span 
+.label input[type="radio"] + span 
 {
 	display: inline-block;
 	padding: 5px 10px;
 	border: 1px solid #dfdfdf;
-	border-radius: 40px;
+	border-radius: 10px 10px;
 	background-color: #ffffff;
 	width: 3vw;
 	text-align: center;
@@ -164,9 +164,9 @@ input[type="radio"]
 }
 
 
-.checkLabel input[type="radio"]:checked + span 
+.label input[type="radio"]:checked + span 
 {
-        background-color: light-gray;
+        background-color:  #F7F4EA;
 }
 
 span
@@ -300,7 +300,7 @@ span
 		<c:if test="${state ne '처리완료' }">
 			<div style="width: 87%; text-align: right; margin-top: 2vh; margin-bottom: 2vh;">
 				<label class="label"><input type="radio" class="check" name="res" id="approve"><span id="span">승인</span></label>
-				<label class="label"><input type="radio" class="check" name="res" id="middle"><span id="span">중재</span></label>
+				<label class="label"><input type="radio" class="check" name="res" id="middle" value="true"><span id="span">중재</span></label>
 				<label class="label"><input type="radio" class="check" name="res" id="reject" value="true"><span id="span">반려</span></label>
 			</div>
 			
@@ -314,7 +314,7 @@ span
 		</c:if>
 		<c:if test="${state eq '처리완료' }">
 			<br><br>
-			<div class="igroup" style="width: 100%; color: red; margin-left: 30%; font-size: 20pt; text-align: center; width: 500px; margin: 0 auto;">
+			<div class="igroup" style="width: 100%; color: red; font-size: 20pt; text-align: center; width: 410px; margin: 0 auto">
 				처리가 완료된 리뷰신고서 입니다.
 			</div>
 		</c:if>

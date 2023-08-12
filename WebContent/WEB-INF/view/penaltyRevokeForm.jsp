@@ -47,7 +47,7 @@
 	display: flex;
 }
 
-.input, #span
+.input
 {
 	
 	display: inline-block;
@@ -128,10 +128,7 @@
    justify-content: space-between;
    margin-left: 10vw;
 }
-input[type="radio"] 
-{
-  display: none;
-}
+
 .sendBtn
 {
 	display: flex;
@@ -139,6 +136,40 @@ input[type="radio"]
     justify-content: center;
     margin-top: 1%;
 }
+
+.checkLabel
+{
+	display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding-left: 40vw;
+    margin-top: 1% 
+}
+
+ 
+input[type="radio"] 
+{
+  display: none;
+}
+
+.label input[type="radio"] + span 
+{
+	display: inline-block;
+	padding: 5px 10px;
+	border: 1px solid #dfdfdf;
+	border-radius: 10px 10px;
+	background-color: #ffffff;
+	width: 3vw;
+	text-align: center;
+	cursor: pointer;
+}
+
+
+.label input[type="radio"]:checked + span 
+{
+        background-color:  #F7F4EA;
+}
+
 #myTextarea
 {
 	display: none;
@@ -257,7 +288,7 @@ input[type="radio"]
 				
 				<c:if test="${state ne '처리완료' }">
 					<div style="width: 87%; text-align: right; margin-top: 1vh;">
-						<label class="label"><input type="radio" class="check" name="res" id="approve"><span id="span">승인</span></label>
+						<label class="label"><input type="radio" class="check" name="res" id="approve"><span id="span" style="font-size: 9pt; padding: 0 auto;">승인</span></label>
 						<label class="label"><input type="radio" class="check" name="res" id="reject" value="true"><span id="span">반려</span></label>
 					</div>
 					
@@ -275,7 +306,7 @@ input[type="radio"]
 				
 				<c:if test="${state eq '처리완료' }">
 					<br><br>
-					<div class="igroup" style="width: 100%; color: red; margin-left: 22%; font-size: 20pt">
+					<div class="igroup" style="width: 100%; color: red; font-size: 20pt; text-align: center; width: 510px; margin: 0 auto;">
 						처리가 완료된 패널티 회수 신청서 입니다.
 					</div>
 				</c:if>

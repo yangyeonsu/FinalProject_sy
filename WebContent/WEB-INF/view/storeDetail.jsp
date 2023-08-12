@@ -135,10 +135,43 @@ String cp = request.getContextPath();
 			});
 		});
 		
-		$("#modifyReqBtn").click(function()
+		// 리뷰 작성
+		$("#insertReview").click(function()
 		{
 			
 		});
+		
+		// 가게 정보 오류 수정 요청
+		$("#modifyReqBtn").click(function()
+		{
+			alert($(this).val());
+		});
+
+			
+		$("#reqBtn").click(function()
+		{
+			var optionReq = [];
+
+			$("input:checkbox[name=optionCheck]:checked").each(function()
+			{
+				optionReq.push($(this).val());
+			});
+
+			$rep_op_num = optionReq[0];
+
+			if (optionReq.length == null || optionReq.length == 0)
+			{
+				alert("정보수정을 요청하고자 하는 항목 하나를 선택해주세요!");
+				return;
+			}
+
+			$("input:checkbox[name=optionCheck]:checked").each(function()
+			{
+				$(this).prop("checked", false);
+				totalChecked = 0;
+			});
+		});
+		
 	});
 
 	var totalChecked = 0;
@@ -166,6 +199,23 @@ String cp = request.getContextPath();
 		$("#usesForm").submit();
 	});
 
+	var optionTotalChecked = 0;
+
+	function optionCountChecked(field)
+	{
+		if (field.checked)
+			optionTotalChecked += 1;
+		else
+			optionTotalChecked -= 1;
+
+		if (optionTotalChecked > 1)
+		{
+			alert("한 개만 선택 가능합니다.");
+			field.checked = false;
+			optionTotalChecked -= 1;
+		}
+
+	}
 	// 모달--------------------------------------------------------------------------
 	function popupOpen()
 	{
@@ -193,6 +243,38 @@ String cp = request.getContextPath();
 		} else
 		{
 			document.all.popup.style.visibility = "hidden";
+			bgLayerClear();
+			return false;
+		}
+
+	}
+	
+	function reqPopupOpen()
+	{
+
+		if (document.all.reqPopup.style.visibility == "hidden")
+		{
+			document.all.reqPopup.style.visibility = "visible";
+			bgLayerOpen();
+
+			var $layerPopupObj = $('#reqPopup');
+			var left = ($(window).scrollLeft() + ($(window).width() - $layerPopupObj
+					.width()) / 2);
+			var top = ($(window).scrollTop() + ($(window).height() - $layerPopupObj
+					.height()) / 2);
+
+			$layerPopupObj.css(
+			{
+				'left' : left,
+				'top' : top,
+				'position' : 'absolute'
+			});
+			$('body').css('position', 'relative').append($layerPopupObj);
+
+			return false;
+		} else
+		{
+			document.all.reqPopup.style.visibility = "hidden";
 			bgLayerClear();
 			return false;
 		}
@@ -525,7 +607,7 @@ String cp = request.getContextPath();
 								</c:forEach>
 								
 								<div name="stCheckModifyReq">
-									<button type="button" id="modifyReqBtn">정보오류수정요청</button>
+									<button type="button" id="modifyReqBtn" onclick="reqPopupOpen()">정보오류수정요청</button>
 								</div>
 							</div>
 						</div>
@@ -695,6 +777,27 @@ String cp = request.getContextPath();
 								</div>
 								<div class="dec">
 									<button id="decBtn" onclick="popupOpen()">신고하기</button>
+								</div>
+							</div>
+							
+							<div id="reqPopup" style="position: absolute; visibility: hidden;">
+								<h4>
+									<a href="#" class="close" onClick="javascript:reqPopupOpen()">X</a>
+								</h4>
+								<h3>가게정보오류수정요청</h3>
+								<div class="reqPopCont">
+									<div class="list">
+										<c:forEach var="checkOption" items="${stCheckList}">
+											<label for="${checkOption.chbox_name }">
+												<input type="checkbox" id="${checkOption.chbox_name }" value="${checkOption.chbox_name }" 
+												 name="optionCheck" onclick="optionCountChecked(this)">
+												${checkOption.chbox_name }
+											</label><br><br>
+										</c:forEach>
+									</div>
+								</div>
+								<div class="req">
+									<button id="reqBtn" onclick="reqPopupOpen()">신고하기</button>
 								</div>
 							</div>
 						</div>
