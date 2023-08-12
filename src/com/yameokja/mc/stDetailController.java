@@ -328,6 +328,7 @@ public class stDetailController
 		// rv_box에 insert
 		dao.reviewInsert(user_num, st_num, rv_content, star_score);
 		
+		/* System.out.println(request.getParameterValues("skArrHidden")); */
 		
 		// 가게 검색 키워드 받는 배열
 		String[] skArr = request.getParameterValues("skArrHidden");
@@ -335,7 +336,7 @@ public class stDetailController
 		String[] skList = null;
 		skList = skArr[0].split(",");
 		
-		System.out.println(skList[0]);
+		
 		
 		for (int i = 0; i < skList.length; i++)
 		{
