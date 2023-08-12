@@ -63,7 +63,7 @@
 		FROM OBJ_APPLY_VIEW OAV
 		LEFT JOIN OBJ_PHOTO OP
 		ON OP.OBJ_APPLY_NUM = OAV.OBJ_APPLY_NUM
-		WHERE OBJ_APPLY_NUM = #{obj_apply_num}
+		WHERE OAV.OBJ_APPLY_NUM = #{obj_apply_num}
 	</select>
 	
 	
@@ -91,4 +91,6 @@
         ON IA.USER_NUM = UU.USER_NUM
         WHERE IN_APPLY_NUM = #{in_apply_num}
 	</select>
+	
+	
 </mapper>

@@ -1,3 +1,4 @@
+<%@page import="com.yameokja.mc.ReportListDTO"%>
 <%@page import="com.yameokja.mc.RvApplyViewDTO"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
@@ -8,7 +9,6 @@
 %>
 <%
 	RvApplyViewDTO dto = (RvApplyViewDTO)request.getAttribute("review");
-   //System.out.print(dto.getUser_id());
 %>
 <!DOCTYPE html>
 <html>
@@ -48,14 +48,7 @@
    display: flex;
 }
 
-.button
-{
-   margin-top: 3vh;
-   margin-bottom: 3vh;
-   text-align: center;
-}
-
-button, .input, .sendResult, #span
+.stInfoBtn, .input, .sendResult, #span
 {
    display: inline-block;
    outline: none;
@@ -130,8 +123,9 @@ cursor: not-allowed;
 	align-items: center;
 	border-radius: 10px 0 0 10px;
 	margin-right: 1vw;
-	border: 1px solid;
-	
+	/* border: 1px solid; */
+	height: 3vh;
+	padding: 0.5vh 0.5vh 0.5vh 0.5vh	
 }
 .sendBtn
 {
@@ -188,6 +182,7 @@ span
 {
 	display: none;
 }
+
 </style>
 
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
@@ -195,19 +190,7 @@ span
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <script type="text/javascript">
-   /* 
-   function rejectBtn()
-   {
-	  
-      if ($("#reviewReject").val() == "")
-      {
-         $("#err").css("display", "inline");
-         $("#reviewReject").focus();
-         return;
-      }
-      
-   };
-    */
+	
 	$(function ()
 	{
 		$(".check").change(function() 
@@ -233,6 +216,7 @@ span
 				if($("#myTextarea").val().trim() == "" || $("#myTextarea").val().trim() == null)
 				{
 					alert("반려사유를 입력해주셔야 합니다.");
+					$("#myTextarea").focus();
 					return;
 				}
 			}
@@ -257,6 +241,7 @@ span
       
 	      <!-- 입력 부분 -->
 		<div class="st_info_insert">
+		<!-- test="{state eq "ㅊㄹ" -->
 	      
 	          
 		<div class="repot_date_list">
@@ -290,7 +275,7 @@ span
 			</div>
 		</div>
 		<div class="igroup2" style="width: 100%;">
-		<textarea id="reviewReport" readonly="readonly" style="width: 72%; height: 10em; resize: none;">${review.getRv_content() }</textarea>
+			<textarea id="reviewReport" readonly="readonly" style="width: 72%; height: 10em; resize: none;">${review.getRv_content() }</textarea>
 		</div>
 		
          
@@ -302,21 +287,38 @@ span
 				<button class="stInfoBtn" id="${review.getSt_num() }">${review.getSt_name() } 페이지로 가기</button>
 			</div>
 		</div>
-         
-		<div style="width: 87%; text-align: right; margin-top: 2vh; margin-bottom: 2vh;">
-			<label class="label"><input type="radio" class="check" name="res" id="approve"><span id="span">승인</span></label>
-			<label class="label"><input type="radio" class="check" name="res" id="middle"><span id="span">중재</span></label>
-			<label class="label"><input type="radio" class="check" name="res" id="reject" value="true"><span id="span">반려</span></label>
-		</div>
-         
-		 
-		<div class="igroup2" style="width: 100%;">
-           <textarea id="myTextarea" style="width: 72%; height: 10em; resize: none;" placeholder="반려사유를 입력해주세요."></textarea>
-        </div>
-   		
-   		<div class="sendBtn">
-			<input type="button" class="sendResult" value="처리 하기">
-		</div>
+		
+		<%-- 
+		<c:when test="${state eq '처리중' or '미처리'}">
+			<div style="width: 87%; text-align: right; margin-top: 2vh; margin-bottom: 2vh;">
+				<label class="label"><input type="radio" class="check" name="res" id="approve"><span id="span">승인</span></label>
+				<label class="label"><input type="radio" class="check" name="res" id="middle"><span id="span">중재</span></label>
+				<label class="label"><input type="radio" class="check" name="res" id="reject" value="true"><span id="span">반려</span></label>
+			</div>
+		</c:when>
+		 --%>
+		<c:if test="${state ne '처리완료' }">
+			<div style="width: 87%; text-align: right; margin-top: 2vh; margin-bottom: 2vh;">
+				<label class="label"><input type="radio" class="check" name="res" id="approve"><span id="span">승인</span></label>
+				<label class="label"><input type="radio" class="check" name="res" id="middle"><span id="span">중재</span></label>
+				<label class="label"><input type="radio" class="check" name="res" id="reject" value="true"><span id="span">반려</span></label>
+			</div>
+			
+			<div class="igroup2" style="width: 100%;">
+           		<textarea id="myTextarea" style="width: 72%; height: 10em; resize: none;" placeholder="반려사유를 입력해주세요."></textarea>
+	        </div>
+	   		
+	   		<div class="sendBtn">
+				<input type="button" class="sendResult" value="처리 하기">
+			</div>
+		</c:if>
+		<c:if test="${state eq '처리완료' }">
+			<br><br>
+			<div class="igroup" style="width: 100%; color: red; margin-left: 30%; font-size: 20pt; text-align: center; width: 500px; margin: 0 auto;">
+				처리가 완료된 리뷰신고서 입니다.
+			</div>
+		</c:if>
+        
    		
 		</div> <!-- st_info_insert -->
 	</div>

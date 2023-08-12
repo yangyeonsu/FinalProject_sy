@@ -76,7 +76,9 @@ String cp = request.getContextPath();
 		});
 	});
 
+
 	var comTotalChecked = 0;
+
 
 	function comCountChecked(field)
 	{
@@ -93,6 +95,7 @@ String cp = request.getContextPath();
 		}
 
 	}
+
 </script>
 </head>
 <body>

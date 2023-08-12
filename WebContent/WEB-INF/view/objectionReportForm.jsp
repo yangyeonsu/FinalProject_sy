@@ -44,14 +44,8 @@
 	display: flex;
 }
 
-.button
-{
-	margin-top: 3vh;
-	margin-bottom: 3vh;
-	text-align: center;
-}
 
-button, .input
+#button, .input, #span
 {
 	
 	display: inline-block;
@@ -101,22 +95,77 @@ button, .input
 	align-items: center;
 	border-radius: 10px 0 0 10px;
 	margin-right: 1vw;
-	border: 1px solid;
+	/* border: 1px solid; */
+	height: 3vh;
+	padding: 0.5vh 0.5vh 0.5vh 0.5vh
+}
+#span
+{
+	padding-top: 10px;
+	height: 25px;
+}
+input[type="radio"] 
+{
+  display: none;
+}
+.sendBtn
+{
+	display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 1%;
+}
+#myTextarea
+{
+	display: none;
+}
+#objReport
+{
+	cursor: not-allowed;
 }
 </style>
 
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+<script type="text/javascript" src="<%=cp %>/js/jquery-ui.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
 <script type="text/javascript">
-	function reqBtn()
+	
+	$(function ()
 	{
-		
-		if ($("#errReport").val() == "")
+		$(".check").change(function() 
 		{
-			$("#err").css("display", "inline");
-			$("#errReport").focus();
-			return;
-		}
+			if ($(this).is(":checked")) 
+			{
+				if ($(this).val() == "true")
+					$("#myTextarea").css("display", "flex");
+				else
+					$("#myTextarea").css("display", "none");
+			}
+		});
+		 
+		$(".sendResult").click(function()
+		{
+			//alert("확인");
+			
+			if ($(".check:checked").length == 0)
+			{
+				alert("승인 / 반려 중 하나를 선택해주세요.");
+				return;
+			}
+			else if($(".check:checked").val() == "true")
+			{
+				if($("#myTextarea").val().trim() == "" || $("#myTextarea").val().trim() == null)
+				{
+					alert("반려사유를 입력해주셔야 합니다.");
+					$("#myTextarea").focus();
+					return;
+				}
+			}
+			
+		});
 		
-	};
+	});
 </script>
 
 </head>
@@ -129,7 +178,7 @@ button, .input
 	
 	<div class="middle">
 		<div class="top">
-			<h1>가게정보오류수정요청서</h1>
+			<h1>이의제기요청서</h1>
 			<hr>
 		</div>
 		
@@ -159,33 +208,35 @@ button, .input
 				<div class="igroup" >
 					<div style="width: 100%;">
 						${obj.getPhoto_link() }
-						<button style="font-size: 8pt;">파일다운로드</button>
-					</div>
-					
-					
-				</div>
-				
-				<div style="width: 87%; text-align: right; margin-top: 1vh;">
-					<button id="agree" style="margin-left: 1vh;">요청승인</button>
-				</div>
-				
-				<div class="igroup" >
-					<div class="title" style="margin-bottom: 0.5vh;">
-						반려 사유
+						
+						<c:if test="${state ne '처리완료' }">
+							<button id="button" style="font-size: 8pt;">파일다운로드</button>
+						</c:if>
 					</div>
 				</div>
 				
-				<div class="igroup2" style="width: 100%;">
-					<textarea id="errReport"  style="width: 72%; height: 10em; resize: none; border-radius: 10px;" placeholder="반려사유기재"></textarea>
-				</div>
+				<c:if test="${state ne '처리완료' }">
+					<div style="width: 87%; text-align: right; margin-top: 1vh;">
+						<label class="label"><input type="radio" class="check" name="res" id="approve"><span id="span">승인</span></label>
+						<label class="label"><input type="radio" class="check" name="res" id="reject" value="true"><span id="span">반려</span></label>
+					</div>
+					
+					<div class="igroup2" style="width: 100%;">
+						<textarea id="myTextarea" style="width: 72%; height: 10em; resize: none;" placeholder="반려사유를 입력해주세요."></textarea>
+					</div>
+					
+					<br><br>
+					<div class="sendBtn">
+						<input type="button" class="sendResult" value="처리 하기">
+					</div>
+				</c:if>
 				
-				<div class="igroup" >
-					<span class="errorMsg" id="err">반려사유를 입력해야 합니다.</span>
-				</div>
-				
-				<div style="width: 87%; text-align: right; margin-top: 1vh;">
-					<button value="반려" onclick="reqBtn()">요청반려</button>
-				</div>
+				<c:if test="${state eq '처리완료' }">
+					<br><br>
+					<div class="igroup" style="width: 100%; color: red; font-size: 20pt; text-align: center; width: 500px; margin: 0 auto;">
+						처리가 완료된 이의제기요청서 입니다.
+					</div>
+				</c:if>
 				
 			</div>
 		</div>

@@ -33,31 +33,31 @@
 		
 		$("#joinBtn").click(function()
 		{
-			$(".accept").css("display", "none");
-			var blank_pattern = /[\s]/g;
+			 $(".accept").css("display", "none");
+			 /*var blank_pattern = /[\s]/g; */
 			
-			if ($("#userName").val() == "")
+			if ($("#user_name").val() == "")
 			{
 				$("#nameError").css("display", "inline");
-				$("#userName").focus();
+				$("#user_name").focus();
 				return;
 			}
-			if ($("#userSsn1").val() == "")
+			if ($("#user_ssn1").val() == "")
 			{
 				$("#ssnError").css("display", "inline");
-				$("#userSsn1").focus();
+				$("#user_ssn1").focus();
 				return;
 			}
-			if ($("#userSsn2").val() == "")
+			if ($("#user_ssn2").val() == "")
 			{
 				$("#ssnError").css("display", "inline");
-				$("#userSsn2").focus();
+				$("#user_ssn2").focus();
 				return;
 			}
-			if ($("#userTel").val() == "")
+			if ($("#user_tel").val() == "")
 			{
 				$("#telError").css("display", "inline");
-				$("#userTel").focus();
+				$("#user_tel").focus();
 				return;
 			}
 			
@@ -84,17 +84,17 @@
 				return;
 			}
 			
-			if ($("#userId").val() == "")
+			if ($("#user_id").val() == "")
 			{
 				$("#idError").css("display", "inline");
-				$("#userId").focus();
+				$("#user_id").focus();
 				return;
 			}
-			else if (blank_pattern.test($("#userId").val()) == true)
+			else if (blank_pattern.test($("#user_id").val()) == true)
 			{
 				$("#idError").html("아이디에는 공백을 사용할 수 없습니다.");
 				$("#idError").css("display", "inline");
-				$("#userId").focus();
+				$("#user_id").focus();
 				return;
 			}
 			
@@ -106,10 +106,10 @@
 				return;
 			}
 			
-			if ($("#userPw").val() == "")
+			if ($("#user_pw").val() == "")
 			{
 				$("#pw1Error").css("display", "inline");
-				$("#userPw1").focus();
+				$("#user_pw").focus();
 				return;
 			}
 			if ($("#userPwCheck").val() == "")
@@ -118,7 +118,7 @@
 				$("#userPw2").focus();
 				return;
 			}
-			if ($("#userNickName").val() == "")
+			if ($("#user_nickName").val() == "")
 			{
 				$("#nickNameError").css("display", "inline");
 				$("#userNickName").focus();
@@ -318,8 +318,8 @@
 			</div>
 			
 			<div class="userSsn">
-				<input type="text" id="user_ssn1" name="user_ssn1">&nbsp;&nbsp;-&nbsp;
-				<input type="password" id="user_ssn2" name="user_ssn2">
+				<input type="text" id="user_ssn1" name="user_ssn1" maxlength="6">&nbsp;&nbsp;-&nbsp;
+				<input type="password" id="user_ssn2" name="user_ssn2" maxlength="7">
 				<span id="ssnError" class="accept">주민등록번호를 입력해주세요.</span>
 			</div>
 			

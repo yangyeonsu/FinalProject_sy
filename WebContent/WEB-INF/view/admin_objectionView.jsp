@@ -21,6 +21,54 @@
 	
 </style>
 
+<!-- 배너 스크립트 -->
+<script type="text/javascript">
+	$(function()
+	{
+		$(".left_sub_menu").hide();
+		$(".has_sub").click(function()
+		{
+			$(".left_sub_menu").fadeToggle(300);
+			if ($('#checkOverlay').val() == "true")
+			{
+				$('.overlay').css("position", "fixed");
+				$('.overlay').css("width", "0%");
+				$('.overlay').css("height", "0%");
+				$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
+				$('.overlay').css("z-index", "0");
+				$('#checkOverlay').attr("value", "false");
+			} else
+			{
+				$('.overlay').css("position", "fixed");
+				$('.overlay').css("width", "100%");
+				$('.overlay').css("height", "100%");
+				$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
+				$('.overlay').css("z-index", "3");
+				$('.overlay').css("margin-top", "1.011vh");
+				$('#checkOverlay').attr("value", "true");
+			}
+
+		});
+		// 왼쪽메뉴 드롭다운
+		$(".sub_menu ul.small_menu").hide();
+		$(".sub_menu ul.big_menu").click(function()
+		{
+			$("ul", this).slideToggle(300);
+		});
+		// 외부 클릭 시 좌측 사이드 메뉴 숨기기
+		$('.overlay').on('click', function()
+		{
+			$('.left_sub_menu').fadeOut();
+			$('.overlay').css("position", "fixed");
+			$('.overlay').css("width", "0%");
+			$('.overlay').css("height", "0%");
+			$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
+			$('.overlay').css("z-index", "0");
+			$('#checkOverlay').attr("value", "false");
+		});
+	});
+</script>
+
 <script type="text/javascript">
 	$(function()
 	{
@@ -29,7 +77,8 @@
 		{
 			var reportNum = $(this).siblings("[id]").attr("id");
 			//alert(reportNum);
-			$(location).attr("href","objreportform.action?obj_apply_num="+reportNum);
+			var state = $(this).parent().attr('id');
+			$(location).attr("href","objreportform.action?obj_apply_num="+reportNum+"&state="+state);
 			
 		});
 	});
@@ -73,7 +122,7 @@
 						</thead>
 						<tbody>
 							<c:forEach var="obj" items="${objList }">
-							<tr>
+							<tr id="${obj.state }">
 								<td class="objTd" id="${obj.report_num }">${obj.reg_date }</td>
 								<td class="objTd" id="${obj.report_num }">${obj.st_name }</td>
 								<td class="objTd" id="${obj.report_num }">${obj.state }</td>
