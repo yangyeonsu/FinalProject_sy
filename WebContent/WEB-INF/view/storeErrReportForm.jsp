@@ -54,7 +54,7 @@
 	text-align: center;
 }
 
-.input, #span
+.input
 {
 	
 	display: inline-block;
@@ -124,6 +124,40 @@ input[type="radio"]
     justify-content: center;
     margin-top: 1%;
 }
+
+.checkLabel
+{
+	display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding-left: 40vw;
+    margin-top: 1% 
+}
+
+ 
+input[type="radio"] 
+{
+  display: none;
+}
+
+.label input[type="radio"] + span 
+{
+	display: inline-block;
+	padding: 5px 10px;
+	border: 1px solid #dfdfdf;
+	border-radius: 10px 10px;
+	background-color: #ffffff;
+	width: 3vw;
+	text-align: center;
+	cursor: pointer;
+}
+
+
+.label input[type="radio"]:checked + span 
+{
+        background-color:  #F7F4EA;
+}
+
 #span
 {
 	padding-top: 10px;
@@ -240,9 +274,9 @@ input[type="radio"]
 				
 			</c:if>
 			
-			<c:if test="${state eq '처리완료' }">
+			<c:if test="${state ne '처리완료' }">
 				<br><br>
-				<div class="igroup" style="width: 100%; color: red; margin-left: 30%; font-size: 20pt; text-align: center; width: 600px; margin: 0 auto;">
+				<div class="igroup" style="width: 100%; color: red; font-size: 20pt; text-align: center; width: 570px; margin: 0 auto;">
 					처리가 완료된 가게정보오류수정요청서 입니다.
 				</div>
 			</c:if>

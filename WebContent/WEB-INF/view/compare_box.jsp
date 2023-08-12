@@ -68,7 +68,7 @@ String cp = request.getContextPath();
 			$("input:checkbox[name=comStImgCB]:checked").each(function()
 			{
 				$(this).prop("checked", false);
-				totalChecked = 0;
+				comTotalChecked = 0;
 			});
 
 			$("#userForm").attr("action", "compareview.action");
@@ -77,20 +77,21 @@ String cp = request.getContextPath();
 	});
 
 
-	var totalChecked = 0;
+	var comTotalChecked = 0;
 
-	function CountChecked(field)
+
+	function comCountChecked(field)
 	{
 		if (field.checked)
-			totalChecked += 1;
+			comTotalChecked += 1;
 		else
-			totalChecked -= 1;
+			comTotalChecked -= 1;
 
-		if (totalChecked > 3)
+		if (comTotalChecked > 3)
 		{
 			alert("3개까지만 선택 가능합니다.");
 			field.checked = false;
-			totalChecked -= 1;
+			comTotalChecked -= 1;
 		}
 
 	}
