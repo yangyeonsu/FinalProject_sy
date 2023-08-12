@@ -38,7 +38,7 @@ public class stDetailController
 		IUserDAO uDao = sqlSession.getMapper(IUserDAO.class);
 		
 		int st_num = Integer.parseInt(request.getParameter("st_num"));
-		
+		System.out.println(st_num);
 		// 사용자 정보
 		UserDTO user = uDao.searchUserInfo(user_num, "num");
 		
@@ -253,7 +253,6 @@ public class stDetailController
 		return html;
 		
 	}
-		
-		
+	
 	
 }
