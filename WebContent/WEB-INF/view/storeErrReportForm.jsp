@@ -54,7 +54,7 @@
 	text-align: center;
 }
 
-button, .input, #span
+.input, #span
 {
 	
 	display: inline-block;
