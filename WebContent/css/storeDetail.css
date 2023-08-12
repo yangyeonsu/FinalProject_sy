@@ -615,7 +615,7 @@
 }
 
 /* 모달 */
-#popup {
+#popup{
 	overflow: hidden;
 	height: auto;
 	display: block;
@@ -633,7 +633,26 @@
 	background-color:rgba(251, 251, 246, 0.8);
 }
 
-#popup h4 {
+#reqPopup
+{
+	overflow: hidden;
+	height: auto;
+	display: block;
+	border-radius: 3px;
+	box-shadow: 1px 1.5px 1.5px #333;
+	width: 400px;
+	height: 380px;
+	z-index: 200;
+	position: fixed;
+  	top: 50%;
+  	left: 50%;
+  	/* transform: translate(-50%, -50%); */
+	/* top: 20%;
+	left: 10%; */
+	background-color:rgba(251, 251, 246, 0.8);
+}
+
+#popup h4{
 	font-size: 15px;
 	height: 24px;
 	padding: 8px 0 2px 15px;
@@ -641,7 +660,16 @@
 	font-weight: normal;
 }
 
-#popup h4 a.close {
+#reqPopup h4 {
+	font-size: 15px;
+	height: 24px;
+	padding: 8px 0 2px 15px;
+	color: #3a001e;
+	font-weight: normal;
+}
+
+
+#popup h4 a.close,  #reqPopup h4 a.close {
 	float: right;
 	padding-right: 8px;
 	color: #3a001e;
@@ -649,7 +677,7 @@
 	margin-right: 2%;
 }
 
-#popup h3 {
+#popup h3, #reqPopup h3 {
 	text-align: center;
 }
 
@@ -686,7 +714,7 @@
 }
 
 /* .popCont li:last-child{border-bottom:1px solid #eaeaea; padding-bottom:3px;} */
-.popCont strong {
+.popCont strong, .reqPopup strong {
 	float: left;
 	width: 30%;
 	background: #aaa;
@@ -696,19 +724,19 @@
 	border-right: 1px solid #eaeaea;
 }
 
-.popCont span {
+.popCont span, .reqPopup span {
 	display: block;
 	float: left;
 	padding: 7px 0 7px 8px;
 }
 
-#popup .dec {
+#popup .dec, #reqPopup .req{
 	margin-left: 40%;
 	margin-top: 20px;
 	height: 40px;
 }
 
-#popup #decBtn {
+#popup #decBtn #reqPopup #reqBtn{
 	width: 80px;
 	height: 25px;
 	float: left;
