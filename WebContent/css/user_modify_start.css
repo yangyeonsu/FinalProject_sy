@@ -1,0 +1,121 @@
+@charset "UTF-8";
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500&display=swap');
+
+body
+{
+	font-family: 'IBM Plex Sans KR', sans-serif;
+	margin:0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.modifyPwTitleDiv
+{
+	height: 80vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	align-items: center;
+
+}
+
+.modifyPwTitleDiv span
+{
+	font-weight: bold;
+	font-size: 25pt;
+}
+
+.pwInsertDiv
+{
+	display:flex;
+	justify-content: space-evenly;
+	width: 30vw;
+}
+
+.pwInsertListDiv
+{
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	height: 20vh;
+}
+
+.pwInsert
+{
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	height: 20vh;
+}
+
+#userPw1, #userPw2
+{
+	height: 25px;
+	border: 1px solid #dfdfdf;
+  	border-radius:5px;
+  	text-align: center;
+}
+
+#userPw1:hover, #userPw2:hover
+{
+	height: 25px;
+	outline: none; 
+	border-color: #ef6351; 
+	box-shadow: 0 0 5px #ef6351;
+  	text-align: center;
+}
+
+#userPw1:focus, #userPw2:focus
+{
+	height: 25px;
+	outline: none; 
+	border-color: #ef6351; 
+	box-shadow: 0 0 5px #ef6351;
+  	text-align: center;
+}
+
+#pwInsertBtn
+{
+	width: 5.5vw;
+	height: 28px;
+	border-radius: 5px;
+	font-size: 0.6vw;
+	border: 1px solid #ef6351;
+	background-color: white;
+  	color: #ef6351;
+  	cursor: pointer;
+  	align-content: center;
+  	margin-left: 1vw;
+}
+
+#pwInsertBtn:hover
+{
+	width: 5.5vw;
+	height: 28px;
+	border-radius: 5px;
+	font-size: 0.6vw;
+	border: 1px solid #ef6351;
+  	color: #ef6351;
+  	cursor: pointer;
+  	align-content: center;
+  	margin-left: 1vw;
+  	box-shadow: 0 0 10px #ef6351;
+}
+
+
+#pwInsertBtn:active
+{
+	width: 5.5vw;
+	height: 28px;
+	border-radius: 5px;
+	font-size: 0.6vw;
+	border: 1px solid #ef6351;
+	background-color: #fff1f0;
+  	color: #ef6351;
+  	cursor: pointer;
+  	align-content: center;
+  	margin-left: 1vw;
+  	box-shadow: 0 0 10px #ef6351;
+}

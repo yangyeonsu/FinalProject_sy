@@ -105,9 +105,10 @@ body
 
 .reviewKeywordCB
 {
-    border: 2px solid #f7f4ea;
+	border: 2px solid #f7f4ea;
     width: 40vw;
-    height: 25vh;
+    height: 23vh;
+    margin-bottom: 3vh;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -115,11 +116,23 @@ body
     padding: 1vw;
 }
 
-.cb
+.stCb
 {
 	display: flex;
+	flex-direction: column;
 	width: 40vw;
 	justify-content: space-between;
+}
+
+.stCbList
+{
+	margin-top: 1vw;
+    margin-bottom: 1vw;
+}
+
+.stCbList label
+{
+	margin-right: 1vw;
 }
 
 input[type=checkbox]
