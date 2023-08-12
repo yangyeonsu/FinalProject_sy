@@ -282,6 +282,14 @@ input[type="radio"]
 			</c:if>
 			
 		</div>
+		<div id="popup" style="position: absolute; visibility: hidden;">
+			<h4>
+				<a href="#" class="close" onClick="javascript:reqPopupOpen()">X</a>
+			</h4>
+			<c:import url="/WEB-INF/view/storeDetail_modal"></c:import>
+		</div>
+		
+		
 	</div>
 	
 	
