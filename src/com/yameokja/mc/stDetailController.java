@@ -39,7 +39,7 @@ public class stDetailController
 		IUserDAO uDao = sqlSession.getMapper(IUserDAO.class);
 		
 		int st_num = Integer.parseInt(request.getParameter("st_num"));
-		
+		System.out.println(st_num);
 		// 사용자 정보
 		UserDTO user = uDao.searchUserInfo(user_num, "num");
 		
@@ -254,8 +254,10 @@ public class stDetailController
 		return html;
 		
 	}
+
 	
 	// 가게정보오류수정요청
+
 	@RequestMapping(value = "/reqapply.action")
 		@ResponseBody
 	public int reqApply(@RequestParam("req_rs") String req_rs, @RequestParam("st_num") int st_num, @RequestParam("chbox_num") int chbox_num, HttpServletRequest request)
@@ -276,6 +278,7 @@ public class stDetailController
 		
 		return result;
 	}
+
 	
 	//리뷰 작성 폼 연결
 	@RequestMapping(value="/insertReview.action")
@@ -299,6 +302,5 @@ public class stDetailController
 		
 		return result;
 	}
-		
-	
+
 }
