@@ -242,6 +242,12 @@
 		VALUES (10, #{user_num}, #{st_chbox_num}, #{req_rs})
 	</insert>
 	
+	<!-- 리뷰키워드 범례 리스트 -->
+	<select id="reviewKeywords" resultType="com.yameokja.mc.StoreReviewKeyDTO">
+		SELECT RV_KEY_NUM, RV_KEY_NAME
+		FROM RV_KEY_LABEL
+	</select>
+	
  	<!-- 휴일 가지고 오는 쿼리문 
  	<select id="holiday" resultType="com.yameokja.mc.stDetailDTO_userView">
  		SELECT WDL.DAY_NAME AS DAY_NAME
