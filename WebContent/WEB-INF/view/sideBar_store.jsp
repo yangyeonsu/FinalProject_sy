@@ -17,7 +17,7 @@
 
 <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
 <link rel="stylesheet" type="text/css" href="<%=cp%>/css/side_bar.css">
-
+<!-- 
 <script type="text/javascript">
 	$(function()
 	{
@@ -63,7 +63,7 @@
 			$('#checkOverlay').attr("value", "false");
 		});
 	});
-</script>
+</script> -->
 
 <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
 </head>
