@@ -45,7 +45,7 @@
 }
 
 
-#button, .input, #span
+#button, .input
 {
 	
 	display: inline-block;
@@ -104,10 +104,6 @@
 	padding-top: 10px;
 	height: 25px;
 }
-input[type="radio"] 
-{
-  display: none;
-}
 .sendBtn
 {
 	display: flex;
@@ -115,6 +111,40 @@ input[type="radio"]
     justify-content: center;
     margin-top: 1%;
 }
+
+.checkLabel
+{
+	display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding-left: 40vw;
+    margin-top: 1% 
+}
+
+ 
+input[type="radio"] 
+{
+  display: none;
+}
+
+.label input[type="radio"] + span 
+{
+	display: inline-block;
+	padding: 5px 10px;
+	border: 1px solid #dfdfdf;
+	border-radius: 10px 10px;
+	background-color: #ffffff;
+	width: 3vw;
+	text-align: center;
+	cursor: pointer;
+}
+
+
+.label input[type="radio"]:checked + span 
+{
+        background-color:  #F7F4EA;
+}
+
 #myTextarea
 {
 	display: none;
