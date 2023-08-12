@@ -251,7 +251,7 @@
 	<!-- 리뷰 입력 -->
 	<insert id="reviewInsert">
 		INSERT INTO RV_BOX(RV_NUM, USER_NUM, ST_NUM, RV_CONTENT, STAR_SCORE)
-		VALUES (40, #{user_num}, #{st_num}, #{rv_content}, #{star_score})
+		VALUES (47, #{user_num}, #{st_num}, #{rv_content}, #{star_score})
 	</insert>
 	
 	<!-- rv_num 가져오는 쿼리문 -->
@@ -263,12 +263,31 @@
 		  AND RV_CONTENT = #{rv_content}
 	</select>
 	
+	<!-- 리뷰 키워드 존재여부 -->
+	<select id="rKeywordSearch" resultType="java.lang.Integer">
+		SELECT RV_KEY_NUM
+		FROM RV_KEY
+		WHERE ST_NUM = #{st_num}
+		  AND RV_KEY_NUM = #{rv_key_num}
+	</select>
+	
+	<!-- 리뷰 키워드 존재시 count + 1 -->
+	<update id="rKeywordUpdate">
+		UPDATE RV_KEY
+		SET COUNT = COUNT + 1
+		WHERE ST_NUM = #{st_num}
+		  AND RV_KEY_NUM = #{rv_key_num}
+	</update>
+	
+	
 	<!-- 리뷰 키워드 입력 -->
 	<insert id="rKeywordInsert">
-		INSERT INTO RV_KEY(CHOSEN_RV_KEY_NUM, RV_NUM, RV_KEY_NUM)
-		VALUES (8, #{rv_num}, #{rv_key_num})
+		INSERT INTO RV_KEY(CHOSEN_RV_KEY_NUM, ST_NUM, RV_KEY_NUM)
+		VALUES (10, #{st_num}, #{rv_key_num})
 	</insert>
 	
+
+
 	<!-- 검색 키워드 존재여부 -->
 	<select id="skeywordSearch" resultType="java.lang.Integer">
 		SELECT SEARCH_NUM

@@ -257,7 +257,6 @@ public class stDetailController
 
 	
 	// 가게정보오류수정요청
-
 	@RequestMapping(value = "/reqapply.action")
 		@ResponseBody
 	public int reqApply(@RequestParam("req_rs") String req_rs, @RequestParam("st_num") int st_num, @RequestParam("chbox_num") int chbox_num, HttpServletRequest request)
@@ -278,7 +277,6 @@ public class stDetailController
 		
 		return result;
 	}
-
 	
 	//리뷰 작성 폼 연결
 	@RequestMapping(value="/insertreveiwform.action")
@@ -324,19 +322,38 @@ public class stDetailController
 		int star_score = Integer.parseInt(request.getParameter("starHidden"));
 		String rv_content = request.getParameter("reviewContent");
 		
+		System.out.println("st_num: " + st_num);
+		System.out.println("user_name: " + user_num);
+		
+		
+		
+		// 리뷰키워드 받는 배열
+		String[] rkArr = request.getParameterValues("rkArrHidden");
+		System.out.println("rkArr[0]: " + rkArr[0]);
 		IstDetailDAO_userView dao = sqlSession.getMapper(IstDetailDAO_userView.class);
 		// rv_box에 insert
 		dao.reviewInsert(user_num, st_num, rv_content, star_score);
 		
-		/* System.out.println(request.getParameterValues("skArrHidden")); */
+		String[] rkList = null;
+		rkList = rkArr[0].split(",");
+		
+		for (int i = 0; i < rkList.length; i++)
+		{
+			if(dao.rKeywordSearch(st_num, Integer.parseInt(rkList[i]))==null)
+			{
+				dao.rKeywordInsert(st_num, Integer.parseInt(rkList[i]));
+			}
+			else
+				dao.rkeywordUpdate(st_num, Integer.parseInt(rkList[i]));
+			
+			System.out.println(rkList[i]);
+		}
 		
 		// 가게 검색 키워드 받는 배열
 		String[] skArr = request.getParameterValues("skArrHidden");
 		
 		String[] skList = null;
 		skList = skArr[0].split(",");
-		
-		
 		
 		for (int i = 0; i < skList.length; i++)
 		{
@@ -349,6 +366,7 @@ public class stDetailController
 				// 있는 가게 검색 키워드에 count += 1
 				dao.skeywordUpdate(st_num, skList[i]);
 		}
+
 		
 		// 가게상세페이지로 가기 위해 st_num을 model로 전송
 		model.addAttribute("st_num", st_num);
