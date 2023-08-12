@@ -79,7 +79,7 @@ String cp = request.getContextPath();
 		// 리뷰 작성 페이지로 이동
 		$("#insertReview").click(function()
 		{
-			$("#userForm").attr("action", "insertReview.action");
+			$("#userForm").attr("action", "insertreveiwform.action");
 			$("#userForm").submit();
 		});
 		

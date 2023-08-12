@@ -248,6 +248,49 @@
 		FROM RV_KEY_LABEL
 	</select>
 	
+	<!-- 리뷰 입력 -->
+	<insert id="reviewInsert">
+		INSERT INTO RV_BOX(RV_NUM, USER_NUM, ST_NUM, RV_CONTENT, STAR_SCORE)
+		VALUES (39, #{user_num}, #{st_num}, #{rv_content}, #{star_score})
+	</insert>
+	
+	<!-- rv_num 가져오는 쿼리문 -->
+	<select id="rv_num" resultType="java.lang.Integer">
+		SELECT RV_NUM
+		FROM RV_BOX
+		WHERE USER_NUM = #{user_num}
+		  AND ST_NUM = #{st_num}
+		  AND RV_CONTENT = #{rv_content}
+	</select>
+	
+	<!-- 리뷰 키워드 입력 -->
+	<insert id="rKeywordInsert">
+		INSERT INTO RV_KEY(CHOSEN_RV_KEY_NUM, RV_NUM, RV_KEY_NUM)
+		VALUES (36, #{rv_num}, #{rv_key_num})
+	</insert>
+	
+	<!-- 검색 키워드 존재여부 -->
+	<select id="skeywordSearch" resultType="java.lang.Integer">
+		SELECT SEARCH_NUM
+		FROM SEARCH_KEY
+		WHERE ST_NUM = #{st_num}
+		  AND SEARCH_NAME = #{search_name}
+	</select>
+	
+	<!-- 검색 키워드 존재시 count + 1 -->
+	<update id="skeywordUpdate">
+		UPDATE SEARCH_KEY
+		SET COUNT = COUNT + 1
+		WHERE ST_NUM = #{st_num}
+		  AND SEARCH_NAME = #{search_name}
+	</update>
+	
+	<!-- 검색 키워드 입력 -->
+	<insert id="sKeywordInsert">
+		INSERT INTO SEARCH_KEY(SEARCH_NUM, ST_NUM, SEARCH_NAME)
+		VALUES (7, #{st_num}, #{search_name})
+	</insert>
+	
  	<!-- 휴일 가지고 오는 쿼리문 
  	<select id="holiday" resultType="com.yameokja.mc.stDetailDTO_userView">
  		SELECT WDL.DAY_NAME AS DAY_NAME
