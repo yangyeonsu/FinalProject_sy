@@ -45,7 +45,8 @@
 
 	<!-- 체크박스 -->
 	<select id="stcheck" resultType="com.yameokja.mc.StoreCheckDTO">
-		SELECT CL2.CHBOX_NAME AS CHBOX_NAME
+		SELECT CL2.CHBOX_NUM AS CHBOX_NUM
+		, CL2.CHBOX_NAME AS CHBOX_NAME
 		, CASE T.YN_NUM WHEN 1 THEN '○'
 		WHEN 2 THEN 'Ⅹ'
 		ELSE '-'
@@ -72,16 +73,19 @@
 
 
 	<!-- 메뉴 및 가격, 평균 가져오기 -->
-	<select id="menuLists" resultType="com.yameokja.mc.compareViewDTO">
-		SELECT (SELECT NVL(ROUND(AVG(MENU.PRICE), 0), 0)
+	<!-- 
+	<select id="menuLists" resultType="com.yameokja.mc.StoreMenuDTO">
+		SELECT 
+		(SELECT NVL(ROUND(AVG(MENU.PRICE), 0), 0)
 		FROM MENU
 		INNER JOIN ST_LIST SL ON SL.ST_NUM = MENU.ST_NUM
 		WHERE SL.ST_NUM = #{st_num}) AS PRICE_AVG,
 		sub.MENU_NAME AS MENU_NAME,
 		sub.PRICE AS PRICE,
 		sub.IMAGE_LINK AS IMAGE_LINK
+		sub.ST_NUM AS ST_NUM
 		FROM
-		(SELECT MENU_NUM, MENU_NAME, PRICE, IMAGE_LINK
+		(SELECT SL.ST_NUM, MENU_NUM, MENU_NAME, PRICE, IMAGE_LINK
 		FROM MENU
 		INNER JOIN ST_LIST SL ON SL.ST_NUM = MENU.ST_NUM
 		WHERE SL.ST_NUM IN (
@@ -92,6 +96,26 @@
 		ORDER BY MENU_NUM ASC) sub
 		WHERE  <![CDATA[ ROWNUM <= 1 ]]>
 	</select>
+	 -->
 
-
+	
+	<!-- 메뉴 및 가격 가져오기 --> 
+	<select id="menuList" resultType="com.yameokja.mc.StoreMenuDTO">
+		SELECT ST_NUM, MENU_NUM, MENU_NAME, PRICE, IMAGE_LINK
+		FROM MENU
+		WHERE ST_NUM = #{st_num}
+        <![CDATA[AND ROWNUM<=2]]>
+	</select>
+	 
+	<!-- 메뉴 평균 가져오기 -->
+	<select id="menuAvg" resultType="com.yameokja.mc.StoreMenuDTO">
+		SELECT ST_NUM, ROUND(AVG(PRICE),0) AS PRICE_AVG
+		FROM MENU
+		WHERE ST_NUM IN (
+			<foreach collection="list" item="st_num" separator=",">
+				#{st_num}
+			</foreach>
+		)
+        GROUP BY ST_NUM
+	</select>
 </mapper>

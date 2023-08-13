@@ -2,7 +2,9 @@ package com.yameokja.mc;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -65,9 +67,31 @@ public class compareViewController_beta
 		ArrayList<StoreDetailDTO> stores = dao.store(stnumList);
 		
 		ArrayList<StoreOpencloseDTO> openCloses = dao.openClose(stnumList);	//-- 비교함에서 선택한 가게 영업정보 리스트
+		
+		// 가게 메뉴 평균가격
+		ArrayList<StoreMenuDTO> menuAvgLists = dao.menuAvg(stnumList);
+		model.addAttribute("menuAvgLists", menuAvgLists);
+		
+		// 가게 메뉴
+		ArrayList<StoreMenuDTO> menuLists = null;
+		
+		for (int i = 0; i < stnumList.size(); i++)
+		{
+			StoreMenuDTO dto = new StoreMenuDTO();
+			dto = dao.menuList(stnumList.get(i));
+			menuLists.add(dto);
+		}
+		
+		if(menuLists.size()>0)
+		{
+			model.addAttribute("menuLists", menuLists);
+		}
+		else
+			model.addAttribute("menuLists", null);
 			
 		ArrayList<StoreCheckDTO> stChecks = dao.stcheck(stnumList);			//-- 비교함에서 선택한 가게 체크정보 리스트
 		
+		model.addAttribute("stnumList", stnumList);
 		model.addAttribute("storeLen", stnumList.size());
 		model.addAttribute("store", stores);
 		model.addAttribute("openClose", openCloses);
