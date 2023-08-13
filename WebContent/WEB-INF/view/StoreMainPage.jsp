@@ -425,6 +425,7 @@ $(document).ready(function()
 		
 		<div class="storemain_bodyTop">
 			<p class="storeName">토리네 도토리묵</p>
+			<input type="hidden" id="st_num" name="st_num" value="${session.st_num }">
 			<button type="button" class="modifyBtn">
 				가게 정보 수정
 			</button>
