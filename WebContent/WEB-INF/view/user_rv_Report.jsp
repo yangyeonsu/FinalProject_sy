@@ -298,10 +298,14 @@
 					        <c:forEach var="rvreport" items="${user_rv_Report}">
 					            <div class="report_content">
 					                <div class="rpt_content" onclick="rvPopupOpen()">${rvreport.reg_date }</div>
-					                <div class="st_name">${rvreport.st_name }</div>
-					                <div class="rpt_content">${rvreport.reporteduserid }</div>
-					                <div class="rpt_content" id="status">${rvreport.status }</div>
-					                <div class="rpt_content">${rvreport.final_date }</div>
+					                <div class="st_name" onclick="rvPopupOpen()">${rvreport.st_name }</div>
+					                <div class="rpt_content" onclick="rvPopupOpen()">${rvreport.reporteduserid }</div>
+					                <div class="rpt_content" id="status" onclick="rvPopupOpen()">${rvreport.status }</div>
+					                <div class="rpt_content" onclick="rvPopupOpen()">${rvreport.final_date }</div>
+					                <%-- 
+					                <div>${rvreport.rep_rej_num }</div>
+					                <div>${rvreport.rej_rs }</div>
+					                 --%>
 					            </div>
 					        </c:forEach>
 					    </c:otherwise>
