@@ -53,7 +53,8 @@
 	<!-- 리뷰 답글 insert -->
 	<insert id="reviewReply">
 		INSERT INTO RV_REPLY(REPLY_NUM, RV_NUM, REPLY_CONTENT, REG_DATE)
-		VALUES(SELECT NVL(MAX(OUT_APPLY_NUM)+1,0) FROM RV_REPLY, #{user_num}, #{reply_content},SYSDATE)
+		VALUES ((SELECT NVL(MAX(REPLY_NUM), 0) + 1 FROM RV_REPLY)
+		    	,#{rv_num}, #{reply_content}, SYSDATE)
 	</insert>
 	
 	<!-- 가게가 선택할 수 있는 음식 카테고리 -->
@@ -81,6 +82,7 @@
 		FROM WEEK_WEEKEND_LABEL
 		ORDER BY WEEK_WEEKEND_NUM
 	</select>
+
 
 </mapper>
 
