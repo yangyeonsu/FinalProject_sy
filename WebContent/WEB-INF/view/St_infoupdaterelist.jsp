@@ -176,7 +176,7 @@
 						<div class="rpt_subtitle">수정요청일자</div>
 						<div class="rpt_subtitle">이의제기 신청여부</div>
 						<div class="rpt_subtitle">패널티</div>
-					</div>
+				<%-- 	</div>
 					<c:choose>
 					    <c:when test="${empty }">
 					        <div class="no-data-message">가게정보수정요청 내역이 없습니다.</div>
@@ -190,7 +190,7 @@
 					            </div>
 					        </c:forEach>
 					    </c:otherwise>
-					</c:choose>
+					</c:choose> --%>
 					
 					<!-- 페이징 처리 -->
 					<div class="pagination">
