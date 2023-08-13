@@ -11,7 +11,8 @@ String cp = request.getContextPath();
 <meta charset="UTF-8">
 <title>review_insert</title>
 <link rel="stylesheet" type="text/css" href="css/review_insert.css">
-<script type="text/javascript" 	src="http://code.jquery.com/jquery.min.js"></script>
+<script type="text/javascript"
+	src="http://code.jquery.com/jquery.min.js"></script>
 
 <script type="text/javascript">
 	
@@ -19,10 +20,23 @@ String cp = request.getContextPath();
 	{
 		$("#submitReviewBtn").click(function()
 		{
+			// 리뷰 키워드 선택값
+			var rkArr = [];
+			
+			$("input:checkbox[name=rvKeyCb]:checked").each(function()
+			{
+				rkArr.push($(this).val());
+			});
+			
+			$("#rvArrHidden").val(rkArr);
+			alert($("#rvArrHidden").val());
+			
+			// 별점 입력값
 			var star = $("#starSelect").val();
 			$("#starHidden").attr("value", star);
 			alert($("#starHidden").val());
 			
+			// 검색 키워드 입력값
 			var skArr = [];
 			
 			if ($("#sk1").val() != "")
@@ -35,11 +49,10 @@ String cp = request.getContextPath();
 				skArr.push($("#sk4").val().trim());
 			if ($("#sk5").val() != "")
 				skArr.push($("#sk5").val().trim());
-			
-			alert(skArr[0]);
-				
+
 			$("input[name=skArrHidden]").attr("value", skArr);
-			alert($("input[name=skArrHidden]").val());
+			//alert($("input[name=skArrHidden]").val());
+
 			
 			$("#userForm").attr("action", "insertreview.action");
 			$("#userForm").submit();
@@ -73,19 +86,19 @@ String cp = request.getContextPath();
 								<c:when test="${status.index == 0 }">
 									<div class="stCbList">
 										<label for="${rvKey.rv_key_num }"> <input
-											type="checkbox" value="${rvKey.rv_key_num }"
+											type="checkbox" name="rvKeyCb" value="${rvKey.rv_key_num }"
 											id="${rvKey.rv_key_num }">${rvKey.rv_key_name }
 										</label>
 								</c:when>
 								<c:when test="${status.index mod 5 == 0}">
 					</div>
 					<div class="stCbList">
-						<label for="${rvKey.rv_key_num }"> <input type="checkbox"
+						<label for="${rvKey.rv_key_num }"> <input type="checkbox" name="rvKeyCb" 
 							value="${rvKey.rv_key_num }" id="${rvKey.rv_key_num }">${rvKey.rv_key_name }
 						</label>
 						</c:when>
 						<c:otherwise>
-							<label for="${rvKey.rv_key_num }"> <input type="checkbox"
+							<label for="${rvKey.rv_key_num }"> <input type="checkbox" name="rvKeyCb" 
 								value="${rvKey.rv_key_num }" id="${rvKey.rv_key_num }">${rvKey.rv_key_name }
 							</label>
 						</c:otherwise>
@@ -93,6 +106,7 @@ String cp = request.getContextPath();
 						</c:forEach>
 					</div>
 				</div>
+				<input type="hidden" id="rvArrHidden" name="rkArrHidden">
 			</div>
 
 			<!-- 검색 키워드 작성 -->
@@ -105,8 +119,8 @@ String cp = request.getContextPath();
 
 				<!-- 검색 키워드 작성란 -->
 				<div class="searchKeyword">
-					1. <input type="text" id="sk1"class="searchKeywordtxt"> 2. <input
-						type="text" id="sk2" class="searchKeywordtxt"> 3. <input
+					1. <input type="text" id="sk1" class="searchKeywordtxt"> 2.
+					<input type="text" id="sk2" class="searchKeywordtxt"> 3. <input
 						type="text" id="sk3" class="searchKeywordtxt"> 4. <input
 						type="text" id="sk4" class="searchKeywordtxt"> 5. <input
 						type="text" id="sk5" class="searchKeywordtxt">
