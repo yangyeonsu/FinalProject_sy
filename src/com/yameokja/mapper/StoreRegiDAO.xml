@@ -5,7 +5,7 @@
 	
 	<insert id="St_In_Apply">
 		INSERT INTO IN_APPLY(IN_APPLY_NUM, USER_NUM, ST_IN_NUM, ST_IN_FILE, ST_PLACE_NUM, ST_PLACE_FILE, ST_NAME , ST_LOCATION, ST_LOCATION_DT, ST_TEL, REG_DATE)
-		VALUES(50, #{user_num}, #{st_in_num}, #{st_in_file}, #{st_place_num}, #{st_place_file}, #{st_name}, #{st_location}, #{st_location_dt}, #{st_tel}, SYSDATE)
+		VALUES(62, #{user_num}, #{st_in_num}, #{st_in_file}, #{st_place_num}, #{st_place_file}, #{st_name}, #{st_location}, #{st_location_dt}, #{st_tel}, SYSDATE)
 	</insert>
 
 

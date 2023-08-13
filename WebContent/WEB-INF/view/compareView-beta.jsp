@@ -437,6 +437,7 @@ body {
 								<div id="stName${st_num }" class="cName">[ ${st.st_name} ]</div>
 								<div id="stPhoto${st_num }" class="photo">
 									<img class="phStore" src="<%=cp %>/${st.photo_link}">
+
 								</div>
 								<div id="stAddr${st_num }" class="cLo">${st.st_location}</div>
 
@@ -449,6 +450,7 @@ body {
 						</c:forEach>
 						<!-- cBox -->
 						<div class="cBox">
+
 							<c:forEach var="op" items="${openClose }">
 								<c:if test="${op.st_num == st_num }">
 									<div id="opWeek${st_num }" class="lDay">
@@ -463,6 +465,7 @@ body {
 												</c:otherwise>
 											</c:choose>
 										</div>
+
 									</div>
 								</c:if>
 							</c:forEach>
