@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yameokja.mc.IStinfoUpdaterelistDAO">
+	<select id="count_relist" resultType="java.lang.Integer">
+		
+	</select>
+
+	<select id="stinfoupdatelist" resultType="com.yameokja.mc.StinfoUpdaterelistDTO">
+	     SELECT FINAL_DATE, OBJYN, PTYN
+	    FROM (
+	        SELECT 
+	            RP.FINAL_DATE AS FINAL_DATE
+                , CASE WHEN OA.REG_DATE IS NOT NULL THEN '○'
+                    ELSE 'x'
+                    END AS OBJYN
+                , CASE WHEN PT.PENTYPE_NUM IS NOT NULL THEN '○'
+                    ELSE 'x'
+                    END AS PTYN
+	            , ROW_NUMBER() OVER (ORDER BY RP.FINAL_DATE DESC) AS RNUM
+	        FROM 
+	            REQ_APPLY RA 
+	            JOIN ST_CHBOX SC ON RA.ST_CHBOX_NUM = SC.ST_CHBOX_NUM
+	            JOIN ST_LIST SL ON SC.ST_NUM = SL.ST_NUM
+	            JOIN IN_PROCESS IP ON SL.IN_PROCESS_NUM = IP.IN_PROCESS_NUM
+	            JOIN IN_APPLY IA ON IP.IN_APPLY_NUM = IA.IN_APPLY_NUM
+	            JOIN REQ_PROCESS RP ON RA.REQ_APPLY_NUM = RP.REQ_APPLY_NUM
+                JOIN OBJ_APPLY OA ON RP.REQ_PROCESS_NUM = OA.REQ_PROCESS_NUM
+                JOIN PENALTY PT ON RP.REQ_PROCESS_NUM = PT.REQ_PROCESS_NUM
+	        WHERE 
+	            IA.USER_NUM = #{user_num}
+	    )
+	    WHERE  RNUM BETWEEN #{startRow} AND #{endRow}
+	</select>
+</mapper>
