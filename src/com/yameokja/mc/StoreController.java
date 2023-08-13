@@ -107,10 +107,11 @@ public class StoreController
 		
 		HttpSession session = request.getSession();
 		
+		IstDetailDAO_userView dao = sqlSession.getMapper(IstDetailDAO_userView.class);
 		IUserDAO uDao = sqlSession.getMapper(IUserDAO.class);
 		
-		
 		String user_num = (String)session.getAttribute("user_num");
+		int st_num = Integer.parseInt((String)session.getAttribute("st_num"));
 		
 		UserDTO user = uDao.searchUserInfo(user_num, "num");
 
@@ -125,23 +126,139 @@ public class StoreController
 		model.addAttribute("user", user);
 		
 		
+		// 가게 기본 사항
+		model.addAttribute("store", dao.store(st_num));
+		
+		// 가게 찜 수
+		model.addAttribute("clikeNum", dao.clikeNum(st_num));
+		
+		// 가게 키워드
+		ArrayList<StoreKeyDTO> stKeyList =  dao.stKeys(st_num);
+		
+		if(stKeyList.size()>0)
+		{
+			model.addAttribute("stKeys", stKeyList);
+		}
+		else
+			model.addAttribute("stKeys", null);
+		
+		// 가게 영업시간 + 휴무일
+		model.addAttribute("openClose", dao.openClose(st_num));
+		
+		// 가게 브레이크 타임
+		ArrayList<StoreBreaktimeDTO> breakTime = dao.breakTime(st_num);
+		if(breakTime.size() > 0)
+		{
+			model.addAttribute("breakTime", breakTime);
+		}
+		else
+			model.addAttribute("breakTime", null);
+		
+		// 가게 결제수단
+		ArrayList<String> stPayList = dao.stPay(st_num);
+		model.addAttribute("stPayList", stPayList);
+		
+		// 가게 체크박스
+		ArrayList<StoreCheckDTO> stCheckList = dao.stcheck(st_num);
+		
+		if(stCheckList.size()>0)
+		{
+			model.addAttribute("stCheckList", stCheckList);
+		}
+		else
+		{
+			model.addAttribute("stCheckList", null);
+		}
+		
+		
+		// 가게 메뉴
+		ArrayList<StoreMenuDTO> menuLists = dao.menuLists(st_num);
+		
+		if(menuLists.size()>0)
+		{
+			model.addAttribute("menuLists", menuLists);
+		}
+		else
+			model.addAttribute("menuLists", null);
+		
+		
+		
 		result = "/WEB-INF/view/st_detail_form.jsp";
 		
 		return result;
 	}
   
-  @RequestMapping(value = "/rvReply.action", method = {RequestMethod.GET, RequestMethod.POST})
-	public String rvReply(@RequestParam("rv_num") int rv_num, @RequestParam("reply_content") String reply_content, HttpServletRequest request, Model model)
+	@RequestMapping(value = "/rvReply.action", method = RequestMethod.POST)
+	public String rvReply(HttpServletRequest request, Model model)
 	{	
-		int rvReplynum = 0;
+		
+		String rvnum = request.getParameter("rv_num"); // "parameterName"은 실제 파라미터 이름으로 바꿔야 합니다.
+		String reply_content = request.getParameter("reply_content");
+		System.out.println("reply_content: " + reply_content);
+		System.out.println("reply_content from HttpServletRequest: " + reply_content);
+
+
+		
+        // 점검 코드
+        if (rvnum == null || reply_content == null) 
+        {
+            System.out.println("경고: 'parameterName' 값이 null 입니다.");
+        } 
+        else if (rvnum.isEmpty()) 
+        {
+            System.out.println("경고: 'parameterName' 값이 비어있습니다.");
+        } 
+        else 
+        {
+            try 
+            {
+                Integer.parseInt(rvnum);
+            } catch (NumberFormatException e) 
+            {
+                System.out.println("경고: 'parameterName' 값이 숫자 형태가 아닙니다. 값: " + rvnum);
+            }
+        }
+        
+        if(reply_content == null || reply_content.trim().isEmpty()) 
+        {
+            // 에러 메시지를 반환하거나 기타 오류 처리를 수행
+            return "redirect:storemain.action";  // 예제용 반환 값, 실제로 적절한 페이지나 메시지로 변경해야 합니다.
+        }
+
 		
 		HttpSession session = request.getSession();
-		String user_num = (String)session.getAttribute("user_num");
-		
 		IStoreMainDAO dao = sqlSession.getMapper(IStoreMainDAO.class);
+		IUserDAO uDao = sqlSession.getMapper(IUserDAO.class);
+		StoreReviewDTO dto = new StoreReviewDTO();
 		
+		String user_num = (String)session.getAttribute("user_num");
+		Integer stNumInteger = (Integer)session.getAttribute("st_num");
+		String stnum = (stNumInteger != null) ? stNumInteger.toString() : null;
+		int st_num = Integer.parseInt(stnum);
+		
+		UserDTO user = uDao.searchUserInfo(user_num, "num");
+
+		LocalDate currentDate = LocalDate.now();
+		int month = currentDate.getMonthValue();
+
+		if (month < 7)
+			user.setUser_grade(uDao.firstHalf(user_num).user_grade);
+		else
+			user.setUser_grade(uDao.secondHalf(user_num).user_grade);
+
+		model.addAttribute("user", user);
+		session.setAttribute("st_num", st_num);
+		
+		int rvReplynum = 0;
+		
+		int rv_num = 0; 
+		rv_num = Integer.parseInt(rvnum);
+		dto.setRv_content(reply_content);
+		dto.setRv_num(rv_num);
+		
+		
+		//rvReplynum = dao.reviewReply(dto);
 		rvReplynum = dao.reviewReply(rv_num, reply_content);
-		
 		
 	    return "redirect:storemain.action";
   }

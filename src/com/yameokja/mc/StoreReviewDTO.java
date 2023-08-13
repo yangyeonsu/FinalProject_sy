@@ -2,7 +2,7 @@ package com.yameokja.mc;
 
 public class StoreReviewDTO
 {
-	private String user_nickname, rv_content, reg_date;
+	private String user_nickname, rv_content, reg_date, reply_content, user_num;
 	private int rv_num, star_score, rec, nonrec;
 	
 
@@ -62,6 +62,22 @@ public class StoreReviewDTO
 	public void setNonrec(int nonrec)
 	{
 		this.nonrec = nonrec;
+	}
+	public String getReply_content()
+	{
+		return reply_content;
+	}
+	public void setReply_content(String reply_content)
+	{
+		this.reply_content = reply_content;
+	}
+	public String getUser_num()
+	{
+		return user_num;
+	}
+	public void setUser_num(String user_num)
+	{
+		this.user_num = user_num;
 	}
 	
 	

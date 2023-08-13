@@ -288,9 +288,6 @@ table
 .input:focus + .line-box .line {
   width: 100%;
 }
-.label-active {
-  top: -3em;
-}
 
 .label-txt {
   position: absolute;
@@ -302,6 +299,10 @@ table
   color: rgb(120,120,120);
   transition: ease .3s;
 }
+.label-active {
+  top: -3em;
+}
+
 .storeOption input
 {
 	zoom:1.5;
@@ -324,6 +325,32 @@ table
 {
 	display: flex;
 	justify-content: space-evenly;
+}
+.button {
+    display: flex;
+    justify-content: center;
+}
+label {
+    cursor: pointer;
+    font-size: 1em;
+}
+
+
+input[name="chooseFile"]
+{
+    visibility: hidden;
+}
+
+
+.scrollable-row
+{
+        max-width: 50vw; /* 스크롤 가능한 최대 높이 설정 */
+        overflow-x: auto; /* 세로 스크롤 적용 */
+       /*  border: 1px solid #ccc; */
+}
+.scrollable-row table
+{
+        width: 100%;
 }
 
 </style>
@@ -465,6 +492,66 @@ table
 	    });
 	});
 	
+	function loadFile(input) {
+		
+		var name = document.getElementById('fileName');
+		var container = input.parentNode.querySelector('.image-show');
+	    
+	    // 이미 업로드된 사진이 있을 경우 삭제
+	    var existingImage = container.querySelector('img');
+	    if (existingImage) {
+	        container.removeChild(existingImage);
+	    }
+
+	    var file = input.files[0]; // 선택된 파일 가져오기
+	    name.textContent = file.name;
+
+	    var newImage = document.createElement('img');
+	    newImage.setAttribute('class', 'img');
+	    
+	    // 이미지 source 가져오기
+	    newImage.src = URL.createObjectURL(file);
+
+	    newImage.style.width = '30vw';
+	    newImage.style.height = '50%';
+	    newImage.style.objectFit = 'contain';
+
+	    // 이미지를 image-show div에 추가
+	    container.appendChild(newImage);
+
+	    // 이미지는 화면에 나타나도록 설정
+	    newImage.style.visibility = 'visible';
+
+	};
+	
+	function plusTd()
+	{
+	    var table = document.getElementById('food_table');
+	    var lastRow = table.rows[table.rows.length - 1]; // 맨 뒤에 <tr> 추가
+	    
+	    var cellCount = lastRow.cells.length;
+
+	    var newCell = lastRow.insertCell(cellCount-1); // <td> 추가
+	    
+	    var content = "<div class='button'>";
+	    content += "	<label for='file1'>";
+	    content += "	👉 음식 사진 업로드 👈";
+	    content += "	</label>";
+	    content += "</div>";
+	    content += "<input type='file' id='file1' name='chooseFile' accept='image/*' onchange='loadFile(this)'>";
+	    content += "<div class='image-show'></div>";
+	    content += "<p id='fileName' style='font-size: small'></p>";
+	    content += "<label id='label'>";
+	    content += "	<input type='text' class='input'>";
+	    content += "	<div class='line-box' style='width:60%; margin-left: 3vw;'>";
+	    content += "		<div class='line'></div>";
+	    content += "	</div>";
+	    content += "</label>";
+	    
+	    newCell.innerHTML = content; // <td> 내용 설정
+	    
+
+	};
     
 	
 </script>
@@ -516,12 +603,24 @@ table
 		});
 	});
 </script>
+<script type="text/javascript">
+
+	$(function()
+	{
+		$("#openTime, #closeTime").on("change", function() {
+	        var rowClass = $(this).closest("tr").attr("class");
+	        
+	        alert(rowClass);
+		});
+	});
+
+</script>
 
 </head>
 
 
 <body>
-<form action="search.action" id="userForm" method="post">
+<form action="search.action" id="userForm" method="post" enctype="multipart/form-data">
 	<div class="header">
 		<c:import url="/WEB-INF/view/header_user.jsp"></c:import>
 	</div>
@@ -549,67 +648,263 @@ table
 						<tr>
 							<th style="border-bottom: 5px solid;">&nbsp;&nbsp;영업시간&nbsp;&nbsp;</th>
 						</tr>
-						<tr>
+						<tr class="week">
 							<td></td>
 							<th style="padding-right: 1vh;">월요일</th>
-							<td>10:00</td>
+							<td>
+								<select id="openTime">
+									<option value="nocheck">시간 선택</option>
+									<c:forEach var="i" begin="0" end="23" >
+										<c:forEach var="k" begin="1" end="2">
+										<c:if test="${k eq 1 }">
+											<option value="${i }:00">${i }:00</option>
+										</c:if>
+										<c:if test="${k eq 2 }">
+											<option value="${i }:30">${i }:30</option>
+										</c:if>								
+										</c:forEach>
+									</c:forEach>
+								</select>
+							</td>
 							<td> ~ </td>
-							<td>10:00</td>
-							<td><input type="checkbox" id="rest1"></td>
+							<td>
+								<select id="closeTime">
+									<option value="nocheck">시간 선택</option>
+									<c:forEach var="i" begin="0" end="23" >
+										<c:forEach var="k" begin="1" end="2">
+										<c:if test="${k eq 1 }">
+											<option value="${i }:00">${i }:00</option>
+										</c:if>
+										<c:if test="${k eq 2 }">
+											<option value="${i }:30">${i }:30</option>
+										</c:if>								
+										</c:forEach>
+									</c:forEach>
+								</select>
+							</td>
+							<td><input type="checkbox" id="rest1" value="2"></td>
 							<td><label for="rest1">휴무</label></td>
 						</tr>
-						<tr>
+						<tr class="week">
 							<td></td>
 							<th style="padding-right: 1vh;">화요일</th>
-							<td>10:00</td>
+							<td>
+								<select id="openTime">
+									<option value="nocheck">시간 선택</option>
+									<c:forEach var="i" begin="0" end="23" >
+										<c:forEach var="k" begin="1" end="2">
+										<c:if test="${k eq 1 }">
+											<option value="${i }:00">${i }:00</option>
+										</c:if>
+										<c:if test="${k eq 2 }">
+											<option value="${i }:30">${i }:30</option>
+										</c:if>								
+										</c:forEach>
+									</c:forEach>
+								</select>
+							</td>
 							<td> ~ </td>
-							<td>10:00</td>
-							<td><input type="checkbox" id="rest2"></td>
+							<td>
+								<select id="closeTime">
+									<option value="nocheck">시간 선택</option>
+									<c:forEach var="i" begin="0" end="23" >
+										<c:forEach var="k" begin="1" end="2">
+										<c:if test="${k eq 1 }">
+											<option value="${i }:00">${i }:00</option>
+										</c:if>
+										<c:if test="${k eq 2 }">
+											<option value="${i }:30">${i }:30</option>
+										</c:if>								
+										</c:forEach>
+									</c:forEach>
+								</select>
+							</td>
+							<td><input type="checkbox" id="rest2" value="3"></td>
 							<td><label for="rest2">휴무</label></td>
 						</tr>
-						<tr>
+						<tr class="week">
 							<td></td>
 							<th style="padding-right: 1vh;">수요일</th>
-							<td>10:00</td>
+							<td>
+								<select id="openTime">
+									<option value="nocheck">시간 선택</option>
+									<c:forEach var="i" begin="0" end="23" >
+										<c:forEach var="k" begin="1" end="2">
+										<c:if test="${k eq 1 }">
+											<option value="${i }:00">${i }:00</option>
+										</c:if>
+										<c:if test="${k eq 2 }">
+											<option value="${i }:30">${i }:30</option>
+										</c:if>								
+										</c:forEach>
+									</c:forEach>
+								</select>
+							</td>
 							<td> ~ </td>
-							<td>10:00</td>
-							<td><input type="checkbox" id="rest3"></td>
+							<td>
+								<select id="closeTime">
+									<option value="nocheck">시간 선택</option>
+									<c:forEach var="i" begin="0" end="23" >
+										<c:forEach var="k" begin="1" end="2">
+										<c:if test="${k eq 1 }">
+											<option value="${i }:00">${i }:00</option>
+										</c:if>
+										<c:if test="${k eq 2 }">
+											<option value="${i }:30">${i }:30</option>
+										</c:if>								
+										</c:forEach>
+									</c:forEach>
+								</select>
+							</td>
+							<td><input type="checkbox" id="rest3" value="4"></td>
 							<td><label for="rest3">휴무</label></td>
 						</tr>
-						<tr>
+						<tr class="week">
 							<td></td>
 							<th style="padding-right: 1vh;">목요일</th>
-							<td>10:00</td>
+							<td>
+								<select id="openTime">
+									<option value="nocheck">시간 선택</option>
+									<c:forEach var="i" begin="0" end="23" >
+										<c:forEach var="k" begin="1" end="2">
+										<c:if test="${k eq 1 }">
+											<option value="${i }:00">${i }:00</option>
+										</c:if>
+										<c:if test="${k eq 2 }">
+											<option value="${i }:30">${i }:30</option>
+										</c:if>								
+										</c:forEach>
+									</c:forEach>
+								</select>
+							</td>
 							<td> ~ </td>
-							<td>10:00</td>
-							<td><input type="checkbox" id="rest4"></td>
+							<td>
+								<select id="closeTime">
+									<option value="nocheck">시간 선택</option>
+									<c:forEach var="i" begin="0" end="23" >
+										<c:forEach var="k" begin="1" end="2">
+										<c:if test="${k eq 1 }">
+											<option value="${i }:00">${i }:00</option>
+										</c:if>
+										<c:if test="${k eq 2 }">
+											<option value="${i }:30">${i }:30</option>
+										</c:if>								
+										</c:forEach>
+									</c:forEach>
+								</select>
+							</td>
+							<td><input type="checkbox" id="rest4" value="5"></td>
 							<td><label for="rest4">휴무</label></td>
 						</tr>
-						<tr>
+						<tr class="week">
 							<td></td>
 							<th style="padding-right: 1vh;">금요일</th>
-							<td>10:00</td>
+							<td>
+								<select id="openTime">
+									<option value="nocheck">시간 선택</option>
+									<c:forEach var="i" begin="0" end="23" >
+										<c:forEach var="k" begin="1" end="2">
+										<c:if test="${k eq 1 }">
+											<option value="${i }:00">${i }:00</option>
+										</c:if>
+										<c:if test="${k eq 2 }">
+											<option value="${i }:30">${i }:30</option>
+										</c:if>								
+										</c:forEach>
+									</c:forEach>
+								</select>
+							</td>
 							<td> ~ </td>
-							<td>10:00</td>
-							<td><input type="checkbox" id="rest5"></td>
+							<td>
+								<select id="closeTime">
+									<option value="nocheck">시간 선택</option>
+									<c:forEach var="i" begin="0" end="23" >
+										<c:forEach var="k" begin="1" end="2">
+										<c:if test="${k eq 1 }">
+											<option value="${i }:00">${i }:00</option>
+										</c:if>
+										<c:if test="${k eq 2 }">
+											<option value="${i }:30">${i }:30</option>
+										</c:if>								
+										</c:forEach>
+									</c:forEach>
+								</select>
+							</td>
+							<td><input type="checkbox" id="rest5" value="6"></td>
 							<td><label for="rest5">휴무</label></td>
 						</tr>
-						<tr>
+						<tr class="weekend">
 							<td></td>
 							<th style="padding-right: 1vh;">토요일</th>
-							<td>10:00</td>
+							<td>
+								<select id="openTime">
+									<option value="nocheck">시간 선택</option>
+									<c:forEach var="i" begin="0" end="23" >
+										<c:forEach var="k" begin="1" end="2">
+										<c:if test="${k eq 1 }">
+											<option value="${i }:00">${i }:00</option>
+										</c:if>
+										<c:if test="${k eq 2 }">
+											<option value="${i }:30">${i }:30</option>
+										</c:if>								
+										</c:forEach>
+									</c:forEach>
+								</select>
+							</td>
 							<td> ~ </td>
-							<td>10:00</td>
-							<td><input type="checkbox" id="rest6"></td>
+							<td>
+								<select id="closeTime">
+									<option value="nocheck" class="weekend">시간 선택</option>
+									<c:forEach var="i" begin="0" end="23" >
+										<c:forEach var="k" begin="1" end="2">
+										<c:if test="${k eq 1 }">
+											<option value="${i }:00">${i }:00</option>
+										</c:if>
+										<c:if test="${k eq 2 }">
+											<option value="${i }:30">${i }:30</option>
+										</c:if>								
+										</c:forEach>
+									</c:forEach>
+								</select>
+							</td>
+							<td><input type="checkbox" id="rest6" value="7"></td>
 							<td><label for="rest6">휴무</label></td>
 						</tr>
-						<tr>
+						<tr class="weekend">
 							<td></td>
 							<th style="padding-right: 1vh;">일요일</th>
-							<td>10:00</td>
+							<td>
+								<select id="openTime">
+									<option value="nocheck">시간 선택</option>
+									<c:forEach var="i" begin="0" end="23" >
+										<c:forEach var="k" begin="1" end="2">
+										<c:if test="${k eq 1 }">
+											<option value="${i }:00">${i }:00</option>
+										</c:if>
+										<c:if test="${k eq 2 }">
+											<option value="${i }:30">${i }:30</option>
+										</c:if>								
+										</c:forEach>
+									</c:forEach>
+								</select>
+							</td>
 							<td> ~ </td>
-							<td>10:00</td>
-							<td><input type="checkbox" id="rest7"></td>
+							<td>
+								<select id="closeTime">
+									<option value="nocheck">시간 선택</option>
+									<c:forEach var="i" begin="0" end="23" >
+										<c:forEach var="k" begin="1" end="2">
+										<c:if test="${k eq 1 }">
+											<option value="${i }:00">${i }:00</option>
+										</c:if>
+										<c:if test="${k eq 2 }">
+											<option value="${i }:30">${i }:30</option>
+										</c:if>								
+										</c:forEach>
+									</c:forEach>
+								</select>
+							</td>
+							<td><input type="checkbox" id="rest7" value="1"></td>
 							<td><label for="rest7">휴무</label></td>
 						</tr>
 					</table>
@@ -623,18 +918,74 @@ table
 						<tr>
 							<td></td>
 							<th style="padding-right: 1vh;">평일</th>
-							<td>10:00</td>
+							<td>
+								<select id="openTime">
+									<option value="nocheck">시간 선택</option>
+									<c:forEach var="i" begin="0" end="23" >
+										<c:forEach var="k" begin="1" end="2">
+										<c:if test="${k eq 1 }">
+											<option value="${i }:00">${i }:00</option>
+										</c:if>
+										<c:if test="${k eq 2 }">
+											<option value="${i }:30">${i }:30</option>
+										</c:if>								
+										</c:forEach>
+									</c:forEach>
+								</select>
+							</td>
 							<td> ~ </td>
-							<td>10:00</td>
+							<td>
+								<select id="openTime">
+									<option value="nocheck">시간 선택</option>
+									<c:forEach var="i" begin="0" end="23" >
+										<c:forEach var="k" begin="1" end="2">
+										<c:if test="${k eq 1 }">
+											<option value="${i }:00">${i }:00</option>
+										</c:if>
+										<c:if test="${k eq 2 }">
+											<option value="${i }:30">${i }:30</option>
+										</c:if>								
+										</c:forEach>
+									</c:forEach>
+								</select>
+							</td>
 							<td><input type="checkbox" id="breaktime1"></td>
 							<td><label for="breaktime1">없음</label></td>
 						</tr>
 						<tr>
 							<td></td>
 							<th style="padding-right: 1vh;">주말</th>
-							<td>10:00</td>
+							<td>
+								<select id="openTime">
+									<option value="nocheck">시간 선택</option>
+									<c:forEach var="i" begin="0" end="23" >
+										<c:forEach var="k" begin="1" end="2">
+										<c:if test="${k eq 1 }">
+											<option value="${i }:00">${i }:00</option>
+										</c:if>
+										<c:if test="${k eq 2 }">
+											<option value="${i }:30">${i }:30</option>
+										</c:if>								
+										</c:forEach>
+									</c:forEach>
+								</select>
+							</td>
 							<td> ~ </td>
-							<td>10:00</td>
+							<td>
+								<select id="openTime">
+									<option value="nocheck">시간 선택</option>
+									<c:forEach var="i" begin="0" end="23" >
+										<c:forEach var="k" begin="1" end="2">
+										<c:if test="${k eq 1 }">
+											<option value="${i }:00">${i }:00</option>
+										</c:if>
+										<c:if test="${k eq 2 }">
+											<option value="${i }:30">${i }:30</option>
+										</c:if>								
+										</c:forEach>
+									</c:forEach>
+								</select>
+							</td>
 							<td><input type="checkbox" id="breaktime2"></td>
 							<td><label for="breaktime2">없음</label></td>
 						</tr>
@@ -649,10 +1000,11 @@ table
 					<tr>
 						<th style="border-bottom: 5px solid;">&nbsp;&nbsp;&nbsp;결제수단&nbsp;&nbsp;&nbsp;</th>
 						<td>
-							<input type="checkbox" id="chbox1" name="card"><label for="chbox1">제로페이</label>
-							<input type="checkbox" id="chbox2" name="card"><label for="chbox2">카카오페이</label>
-							<input type="checkbox" id="chbox3" name="card"><label for="chbox3">네이버페이</label>
-							<input type="checkbox" id="chbox4" name="card"><label for="chbox4">지역화폐</label>
+							<input type="checkbox" id="paych1" name="card"><label for="paych1">제로페이</label>
+							<input type="checkbox" id="paych2" name="card"><label for="paych2">카카오페이</label>
+							<input type="checkbox" id="paych3" name="card"><label for="paych3">네이버페이</label>
+							<input type="checkbox" id="paych4" name="card"><label for="paych4">페이코</label>
+							<input type="checkbox" id="paych5" name="card"><label for="paych5">지역화폐</label>
 						</td>
 					</tr>
 				</table>
@@ -665,12 +1017,15 @@ table
 					<tr>
 						<th style="border-bottom: 5px solid;">음식 카테고리</th>
 						<td>
-							<input type="checkbox" id="chbox1" name="food_cat"><label for="chbox1">한식</label>
-							<input type="checkbox" id="chbox2" name="food_cat"><label for="chbox2">일식</label>
-							<input type="checkbox" id="chbox3" name="food_cat"><label for="chbox3">중식</label>
-							<input type="checkbox" id="chbox4" name="food_cat"><label for="chbox4">양식</label>
-							<input type="checkbox" id="chbox5" name="food_cat"><label for="chbox5">카페</label>
-							<input type="checkbox" id="chbox6" name="food_cat"><label for="chbox6">베이커리</label>
+							<input type="checkbox" id="foodch1" name="food_cat"><label for="foodch1">한식</label>
+							<input type="checkbox" id="foodch2" name="food_cat"><label for="foodch2">일식</label>
+							<input type="checkbox" id="foodch3" name="food_cat"><label for="foodch3">중식</label>
+							<input type="checkbox" id="foodch4" name="food_cat"><label for="foodch4">양식</label>
+							<input type="checkbox" id="foodch5" name="food_cat"><label for="foodch5">퓨전</label>
+							<input type="checkbox" id="foodch6" name="food_cat"><label for="foodch6">멕시칸</label>
+							<input type="checkbox" id="foodch7" name="food_cat"><label for="foodch7">아시안</label>
+							<input type="checkbox" id="foodch8" name="food_cat"><label for="foodch8">카페</label>
+							<input type="checkbox" id="foodch9" name="food_cat"><label for="foodch9">베이커리</label>
 						</td>
 					</tr>
 				</table>
@@ -679,42 +1034,48 @@ table
 			<br>
 			
 			<!-- 메뉴등록 -->
-			<div class="food_menu">
-				<table border="0">
+			<div class="food_menu scrollable-row">
+				<table id="food_table" border="0">
 					<tr>
 						<th style="border-bottom: 5px solid;">메뉴</th>
 					</tr>
-					<tr>
+					<tr class="menuTr">
 						<td></td>
-						
 						<td>
-							<div>
-								<img src="#" style="width: 200px; height: 150px;">
-							</div>
-							<div>
-								<p style="text-align: center;">떡볶이</p>
-							</div>
-						</td>
-						
-						<td>
-							<div>
-									<img src="#" style="width: 200px; height: 150px;">
-							</div>
-							<div>
-								<p style="text-align: center;">어묵</p>
-							</div>
+					    	<div class="button">
+								<label for="file1">
+									👉 음식 사진 업로드 👈
+								</label>
+						    </div>
+						    	<input type="file" id="file1" name="chooseFile" accept="image/*" onchange="loadFile(this)">
+						    <div class="image-show"></div>
+						    <p id="fileName" style="font-size: small"></p>
+							<label id="label">
+								<input type="text" class="input">
+								<div class="line-box" style="width:60%; margin-left: 3vw;">
+								    <div class="line"></div>
+								</div>
+							</label>
 						</td>
 						<td>
-							<div>
-								<img src="#" style="width: 200px; height: 150px;">
-							</div>
-							<div>
-								<p style="text-align: center;">순대</p>
-							</div>				
+							<div class="button">
+								<label for="file2">
+									👉 음식 사진 업로드 👈
+								</label>
+						    </div>
+						    	<input type="file" id="file2" name="chooseFile" accept="image/*" onchange="loadFile(this)">
+						    <div class="image-show"></div>
+						    <p id="fileName" style="font-size: small"></p>
+							<label id="label">
+								<input type="text" class="input">
+								<div class="line-box" style="width:60%; margin-left: 3vw;">
+								    <div class="line"></div>
+								</div>
+							</label>
 						</td>
 						<td>
 							<div style="width: 200px; height: 150px; display: flex; justify-content: center;">
-								<input type="button" class="plusBtn" value="+" style="border: 1; margin: auto; display: block;"> 
+								<input type="button" class="plusBtn" value="+" style="border: 1; margin: auto; display: block;" onclick="plusTd()"> 
 							</div>
 							<div>
 								<p style="text-align: center;">&nbsp;</p>
@@ -759,7 +1120,7 @@ table
 			
 			<!-- 가게페이지 링크 -->
 			<label id="label">
-				<p class="label-txt label-active">가게페이지 링크</p>
+				<p class="label-txt">가게페이지 링크</p>
 				<input type="text" class="input">
 				<div class="line-box">
 				    <div class="line"></div>

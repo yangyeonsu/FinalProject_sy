@@ -2,9 +2,10 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
 	request.setCharacterEncoding("UTF-8");
-String cp = request.getContextPath();
+	String cp = request.getContextPath();
 %>
 <!DOCTYPE html>
 <html>
@@ -19,120 +20,13 @@ String cp = request.getContextPath();
 <link rel="stylesheet" type="text/css" href="<%=cp%>/css/userMyPage.css">
 
 
-<!-- .has_sub_menu {
-	list-style-type: none;
-}
-
-.side-menu {
-	top: 50px;
-	width: 5vw;
-	z-index: 10;
-	background: #ef6351;
-	border-right: 1px solid rgba(0, 0, 0, 0.07);
-	height: 90%;
-	margin-top: 5.7vh;
-	position: fixed;
-	align-items: center;
-}
-
-#sidebar-menu li {
-	font-size: 1.5rem;
-}
-
-#sidebar-menu .fas {
-	padding-top: 3vh;
-	padding-left: 1.2vw
-}
-
-.left_sub_menu {
-	position: fixed;
-	top: 50px;
-	width: 18vw;
-	z-index: 10;
-	left: 4.6vw;
-	background: white;
-	height: 90%;
-	margin-top: 5.7vh;
-}
-
-.sub_menu {
-	margin-top: 50px;
-}
-
-.left_sub_menu>.sub_menu li:hover {
-	color: ff5858;
-	background-color: #e1e1e1;
-}
-
-.left_sub_menu>.sub_menu li {
-	color: black;
-	font-size: 17px;
-	font-weight: 600;
-	padding: 20px 0px 8px 14px;
-	border-bottom: 1px solid #e1e1e1;
-}
-
-.sub_menu>h2 {
-	padding-bottom: 4px;
-	border-bottom: 3px solid #797979;
-	margin-top: 30px;
-	font-size: 21px;
-	font-weight: 600;
-	color: #333;
-	margin-left: 10px;
-	margin-right: 10px;
-	font-family: 'NotoKrB';
-}
-
-.fas {
-	color: #ff5858;
-	font-size: 20px;
-	line-height: 20px;
-	float: right;
-	margin-top: 0.6vh;
-	margin-right: 2vw;
-}
-
-.sub_menu>.big_menu>.small_menu li {
-	color: black;
-	font-size: 14px;
-	font-weight: 600;
-	border-bottom: 0px solid #e1e1e1;
-}
-
-.big_menu {
-	list-style-type: none;
-	cursor: pointer;
-}
-
-.samll_menu {
-	position: fixed;
-	list-style-type: none;
-	padding-inline-start: 0px;
-	list-style: none;
-	transition-duration: 0.5s;
-}
-
-.small_menuA {
-	color: black;
-	text-decoration-line: none;
-	background-color: transparent;
-	margin-bottom: 1vh
-}
-
-.big_menu ul {
-	margin-top: 0;
-	margin-bottom: 0;
-}
-
-.has_sub {
-	width: 100%;
-}
-
-</style> -->
-
-<!-- 해당 페이지 CSS -->
 <style type="text/css">
+body {
+	font-family: 'IBM Plex Sans KR', sans-serif;
+    margin:0px;
+    padding: 0px;        
+}
+
 .mainBody {
 	display: flex;
 }
@@ -186,17 +80,38 @@ String cp = request.getContextPath();
 }
 
 .cList, .cLo {
-	height: 3vh;
-	font-size: 1rem;
-	font-weight: bold;
+    height: 3vh;
+    font-size: 1rem;
+    font-weight: bold;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.bt
+{
+	font-size: 0.8rem !important;
+}
+
+.bottomL
+{
+	border-bottom: 1px solid #ED8F83;
+}
+
+.ocTitle
+{
+	font-size: 1rem !important;
+    font-weight: bold;
+    padding-bottom: 1vh !important;
 }
 
 .lDay {
-	height: 3vh;
-	font-size: 1rem;
-	font-weight: bold;
-	padding-top: 0.5vh;
-	padding-bottom: 1.5vh;
+    /* height: 3vh; */
+    font-size: 0.8rem;
+    padding-top: 0.5vh;
+    padding-bottom: 1.5vh;
+    font-weight: bold;
 }
 
 .lWeek {
@@ -208,14 +123,17 @@ String cp = request.getContextPath();
 }
 
 .cMenu {
-	height: 18.75vh;
+    height: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .cat {
 	margin-top: 1vh;
 }
 
-.photo1 {
+.photo{
 	margin-bottom: 1vh;
 }
 
@@ -231,19 +149,30 @@ String cp = request.getContextPath();
 	padding-top: 1vh;
 }
 
-.cDay, .cOpt {
-	padding-top: 1.5vh;
-	height: 2vh;
-	font-size: 1rem;
-	font-weight: bold;
-	padding-bottom: 1.5vh;
+.cOpt {
+    padding-top: 1.5vh;
+    height: 2vh;
+    font-size: 1rem;
+    font-weight: bold;
+    padding-bottom: 1.5vh;
+    text-align: left;
+    padding-left: 4vw;
 }
 
 .phMenu {
-	width: 13.5vw;
-	height: 15vh;
+	max-width: 3.5vw;
+	max-height: 3.5vw;
+	object-fit: cover;
+}
+
+.menu
+{
+	display: flex;
+    align-items: center;
+    justify-content: flex-start;
 }
 </style>
+
 
 <!-- 배너 스크립트 -->
 <script type="text/javascript">
@@ -310,8 +239,9 @@ String cp = request.getContextPath();
 		}
 
 	});
+	
 
-	/* 영업 요일이 7주일 미만일 경우  */
+	/* 영업 요일이 7주일 미만일 경우 
 	$(document).ready(function()
 	{
 
@@ -327,7 +257,7 @@ String cp = request.getContextPath();
 
 		$(".week").each(function()
 		{
-			/* var numOfDays = $(this).find(".cDay").length; */
+			//var numOfDays = $(this).find(".cDay").length; 
 			if (maxNumOfDays == 6)
 			{
 				$(this).css("height", "29.5vh");
@@ -376,6 +306,7 @@ String cp = request.getContextPath();
 		});
 
 	});
+	 */
 
 	/* 체크박스 여부 표시에 따른 높이 변화 */
 	$(document).ready(function()
@@ -431,7 +362,7 @@ String cp = request.getContextPath();
 		});
 	});
 
-	/* 받은 값에 따른 체크박스 변화 */
+	/* 받은 값에 따른 체크박스 변화 
 	$(document).ready(function()
 	{
 		// value가 'none' 일 경우 표시 안 함
@@ -454,6 +385,7 @@ String cp = request.getContextPath();
 
 		});
 	});
+	*/
 </script>
 
 </head>
@@ -477,76 +409,107 @@ String cp = request.getContextPath();
 
 				<div class="cCategory">
 					<div class="cCat">
-						<div id="가게 음식 카테고리" class="cList cat">가게 음식 카테고리</div>
-						<div id="가게 평균 별점" class="cList">가게 평균 별점</div>
-						<div id="가게 리뷰 수" class="cList">가게 리뷰 수</div>
-						<div id="가게 주" class="lWeek">
-							<div id="일요일" class="lDay">영업 일/시간</div>
-						</div>
-						<div id="가게 대표 메뉴 이름" class="cList avgP">가게 평균 가격</div>
-						<div id="가게 평균 가격" class="cList cMenu">가게 대표 메뉴 이름</div>
-						<div id="가게 최대 수용 인원" class="cList">가게 최대 수용 인원</div>
-						<div id="가게 최대 수용 인원" class="cList lOptions">가게 옵션 유무</div>
+						<div id="stCatList" class="cList cat">가게 음식 카테고리</div>
+						<div id="stStarAvgList" class="cList">가게 평균 별점</div>
+						<div id="stRvNumList" class="cList bottomL">가게 리뷰 수</div>
+						<div id="sunList" class="lDay">&nbsp;&nbsp;</div>
+						<div id="monList" class="lDay">&nbsp;&nbsp;</div>
+						<div id="tueList" class="lDay">&nbsp;&nbsp;</div>
+						<div id="wedList" class="ocTitle lDay">영업시간</div>
+						<div id="thuList" class="lDay">&nbsp;&nbsp;</div>
+						<div id="friList" class="lDay">&nbsp;&nbsp;</div>
+						<div id="satList" class="lDay">&nbsp;&nbsp;</div>
+						<div id="stBreakTimeList" class="cList">브레이크타임</div>
+
+						<div id="stMenuAvgList" class="cList avgP">가게 평균 가격</div>
+						<div id="stMenuNameList" class="cList cMenu">가게 대표 메뉴 이름</div>
+						<div id="stMaxCList" class="cList">가게 최대 수용 인원</div>
+						<div id="stCbList" class="cList lOptions">가게 옵션 유무</div>
 					</div>
 					<!-- cCat -->
 				</div>
 
-				<c:set var="st_len" value="${storeLen }" />
-				<!-- 비교할 가게 갯수 -->
+				<c:forEach var="tempstN" items="${stnumList }">
+					<c:set var="st_num" value="${tempstN }" />
+					<div id="compareSpace" class="compareSpace">
+						<c:forEach var="st" items="${store}" varStatus="st_status">
+							<c:if test="${st.st_num == st_num }">
+								<div id="stName${st_num }" class="cName">[ ${st.st_name} ]</div>
+								<div id="stPhoto${st_num }" class="photo">
+									<img class="phStore" src="<%=cp %>/${st.photo_link}">
 
-				<c:forEach begin="1" end="${storeLen}" varStatus="st_count">
-					<div id="비교하는 가게 공간" class="compareSpace">
-						<c:forEach var="st1" items="${store}" varStatus="st_status">
-							<c:if test="${st_status.index + 1 == st_count.index}">
-								<div id="비교하는 가게 이름" class="cName">${st1.st_name}</div>
-								<div id="비교하는 가게 대표 사진" class="photo1">
-									<img id="가게 대표사진" class="phStore"
-										src="<%=cp %>/${st1.photo_link}">
 								</div>
-								<div id="가게 주소" class="cLo">${st1.st_location}</div>
+								<div id="stAddr${st_num }" class="cLo">${st.st_location}</div>
 
 								<div class="cBox">
-									<div id="가게 음식 카테고리" class="cList cat">${st1.food_name}</div>
-									<div id="가게 평균 별점" class="cList">${st1.star_avg}</div>
-									<div id="가게 리뷰 수" class="cList">${st1.rv_count}</div>
+									<div id="stCat${st_num }" class="cList cat">${st.food_name}</div>
+									<div id="stStarAvg${st_num }" class="cList">⭐${st.star_avg}</div>
+									<div id="stRevieN${st_num }" class="cList bottomL">${st.rv_count}</div>
 								</div>
 							</c:if>
 						</c:forEach>
 						<!-- cBox -->
 						<div class="cBox">
-							<c:forEach var="op" items="${openClose}" varStatus="oc_status">
-								<c:if test="${oc_status.index + 1 == st_count.index}">
-									<div id="가게 주" class="week">
-										<div id="days" class="cDay">${op.day_name}
-											${op.operate_time} ${op.holiday}</div>
+
+							<c:forEach var="op" items="${openClose }">
+								<c:if test="${op.st_num == st_num }">
+									<div id="opWeek${st_num }" class="lDay">
+										<div id="days" class="cDay">${op.day_name }&nbsp;&nbsp;
+											${op.operate_time}&nbsp;&nbsp;
+											<c:choose>
+												<c:when test="${op.holiday eq '휴무'}">
+													휴무
+												</c:when>
+												<c:otherwise>
+
+												</c:otherwise>
+											</c:choose>
+										</div>
+
 									</div>
 								</c:if>
 							</c:forEach>
-							<c:forEach var="ml" items="${menuLists}" varStatus="ml_status">
-								<c:if test="${ml_status.index + 1 == st_count.index}">
-									<div id="가게 평균 가격" class="cList">${ml.price_avg}</div>
-									<div id="가게 대표 메뉴 이름" class="cList">${ml.menu_name}</div>
-									<div id="가게 대표 메뉴 이미지" class="photo2">
-										<img id="가게 대표사진" class="phMenu"
-											src="<%=cp %>/images/${ml.image_link}">
-									</div>
-								</c:if>
-							</c:forEach>
-							<c:forEach var="st" items="${store}" varStatus="st_status2">
-								<c:if test="${st_status2.index + 1 == st_count.index}">
-									<div id="가게 최대 수용 인원" class="cList">${st.max_customers}</div>
+							
+							<div class="cList bt">
+								<c:forEach var="bt" items="${breakTimeList }">
+									<c:if test="${bt.st_num == st_num }">
+										
+											[${bt.week_weekend }] &nbsp; : &nbsp;
+											${bt.start_breaktime }&nbsp;~&nbsp;${bt.end_breaktime } &nbsp;&nbsp;
+										
+										<br>
+									</c:if>
+								</c:forEach>
+							</div>
+
+							<div class="cList">
+								<c:forEach var="menuP" items="${menuAvgLists }">
+									<c:if test="${menuP.st_num==st_num }">
+										<fmt:formatNumber value="${menuP.price_avg}" pattern="#,###" /> 원
+									</c:if>
+								</c:forEach>
+							</div>
+
+							<div id="stMenu${st_num}" class="cList cMenu">
+								<c:forEach var="menu" items="${menuLists }">
+									<c:if test="${menu.st_num==st_num }">
+										<div class="menu">
+											<img class="phMenu" src="<%=cp %>/images/${menu.image_link}">
+											&nbsp;&nbsp; ${menu.menu_name} &nbsp;&nbsp; ${menu.price} <br>
+										</div>
+									</c:if>
+								</c:forEach>
+							</div>
+							<c:forEach var="max" items="${store}">
+								<c:if test="${max.st_num == st_num }">
+									<div id="stMaxC${st_num }" class="cList bottomL">${max.max_customers}</div>
 								</c:if>
 							</c:forEach>
 
-							<c:forEach var="sc" items="${stcheck}" varStatus="sc_status">
-								<c:if test="${sc_status.index + 1 == st_count.index}">
-									<div id="가게 옵션" class="cOptions">
-										<c:forEach begin="1" end="6" varStatus="optNum">
-											<div id="화장실 존재 여부" class="cOpt">
-												${sc.chbox_name} : <input type="checkbox" class="chBox"
-													value="${sc.yesorno}" id="${optNum.index }" />
-											</div>
-										</c:forEach>
+							<c:forEach var="sc" items="${stChekList}">
+								<c:if test="${sc.st_num == st_num }">
+									<div id="${st_num }_${sc.chbox_num}" class="cOpt">
+										${sc.chbox_name} : ${sc.yesorno }
 									</div>
 								</c:if>
 							</c:forEach>
