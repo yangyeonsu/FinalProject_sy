@@ -504,11 +504,12 @@ input[name="chooseFile"]
 	        container.removeChild(existingImage);
 	    }
 
-	    var file = input.files[0]; // 선택된 파일 가져오기
-	    name.textContent = file.name;
 
 	    var newImage = document.createElement('img');
 	    newImage.setAttribute('class', 'img');
+	    
+	    var file = input.files[0]; // 선택된 파일 가져오기
+	    name.textContent = file.name;
 	    
 	    // 이미지 source 가져오기
 	    newImage.src = URL.createObjectURL(file);
@@ -550,8 +551,6 @@ input[name="chooseFile"]
 	    content += "</label>";
 	    
 	    newCell.innerHTML = content; // <td> 내용 설정
-	    
-
 	};
     
 	
