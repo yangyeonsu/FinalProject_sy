@@ -31,6 +31,7 @@ public class compareViewController_beta
 		IcompareViewDAO dao = sqlSession.getMapper(IcompareViewDAO .class);
 		IUserDAO uDao = sqlSession.getMapper(IUserDAO.class);
 		IMainDAO mdao = sqlSession.getMapper(IMainDAO.class);
+		IstDetailDAO_userView sdDao = sqlSession.getMapper(IstDetailDAO_userView .class);
 		
 		// 사용자 정보
 		UserDTO user = uDao.searchUserInfo(user_num, "num");
@@ -65,132 +66,96 @@ public class compareViewController_beta
 		ArrayList<StoreDetailDTO> stores = dao.store(stnumList);
 		
 		ArrayList<StoreOpencloseDTO> openCloses = dao.openClose(stnumList);	//-- 비교함에서 선택한 가게 영업정보 리스트
-			
-		ArrayList<StoreCheckDTO> stChecks = dao.stcheck(stnumList);			//-- 비교함에서 선택한 가게 체크정보 리스트
 		
+		// 가게 브레이크 타임
+		ArrayList<StoreBreaktimeDTO> breakTimeList = new ArrayList<StoreBreaktimeDTO>();	//-- 최종 가게들의 브레이크타임 리스트
+		
+		for (int i = 0; i < stnumList.size(); i++)
+		{		
+			ArrayList<StoreBreaktimeDTO> templists = new ArrayList<StoreBreaktimeDTO>();	
+			templists = sdDao.breakTime(stnumList.get(i));									//-- 가게 하나 당의 브레이크타임 리스트
+				
+			for (int j = 0; j < templists.size(); j++)
+			{
+				breakTimeList.add(templists.get(j));	//--StoreBreaktimeDTO 객체 하나
+			}
+		}
+		
+		if(breakTimeList.size()>0)
+		{
+			model.addAttribute("breakTimeList", breakTimeList);
+		}
+		else
+			model.addAttribute("breakTimeList", null);
+		
+		// 가게 메뉴 평균가격
+		ArrayList<StoreMenuDTO> menuAvgLists = dao.menuAvg(stnumList);
+		model.addAttribute("menuAvgLists", menuAvgLists);
+		
+		// 가게 메뉴
+		ArrayList<StoreMenuDTO> menuLists = new ArrayList<StoreMenuDTO>();
+		
+		
+		for (int i = 0; i < stnumList.size(); i++)
+		{
+			StoreMenuDTO dto = new StoreMenuDTO();
+			if(dao.menuList(stnumList.get(i))!=null)
+			{
+				try
+				{
+					dto = dao.menuList(stnumList.get(i));
+					menuLists.add(dto);
+					
+				} catch (Exception e)
+				{
+					System.out.println(e.toString());
+				}
+			}
+		}
+		
+		if(menuLists.size()>0)
+		{
+			model.addAttribute("menuLists", menuLists);
+		}
+		else
+			model.addAttribute("menuLists", null);
+			
+		
+		//-- 비교함에서 선택한 가게 체크정보 리스트
+		
+		ArrayList<StoreCheckDTO> stChekList = new ArrayList<StoreCheckDTO>();
+		
+		for (int i = 0; i < stnumList.size(); i++)
+		{
+			//System.out.println("st_num : " + stnumList.get(i));
+			ArrayList<StoreCheckDTO> templists = new ArrayList<StoreCheckDTO>();	
+			templists = dao.comStcheck(stnumList.get(i));									//-- 가게 하나 당의 체크박스 리스트
+				
+			for (int j = 0; j < templists.size(); j++)
+			{
+				stChekList.add(templists.get(j));	//--StoreCheckDTO 객체 하나
+				//System.out.println("chbox_num : " + templists.get(j).getChbox_num());
+			}
+		}
+		
+		if(stChekList.size()>0)
+		{
+			model.addAttribute("stChekList", stChekList);
+		}
+		else
+			model.addAttribute("stChekList", null);		
+		
+		model.addAttribute("stnumList", stnumList);
 		model.addAttribute("storeLen", stnumList.size());
 		model.addAttribute("store", stores);
 		model.addAttribute("openClose", openCloses);
-		model.addAttribute("stcheck", stChecks);
 		
 		if (comList.size() > 0)
 			model.addAttribute("comList", mdao.getStoreList(comList));
 		else
 			model.addAttribute("comList", null);
 		
-		/*
-		//int st_num = Integer.parseInt(request.getParameter("st_num"));
-		String st_numString = request.getParameter("st_num");
-		System.out.println("Received st_num: " + st_numString);
 		
-		if (st_numString == null || st_numString.isEmpty()) 
-		{
-		    // Handle error or return a default value
-		}
-		String[] values = st_numString.split(",");
-		
-		int storeLen = values.length;
-		
-		ArrayList<ArrayList<StoreDetailDTO>> stores = new ArrayList<>();
-		ArrayList<ArrayList<StoreOpencloseDTO>> openCloses = new ArrayList<>();
-		ArrayList<ArrayList<StoreCheckDTO>> stChecks = new ArrayList<>();
-		ArrayList<ArrayList<compareViewDTO>> menus = new ArrayList<>();
-		*/
-		
-		/*
-		for (Integer value : stnumList) // st_num 들
-		{
-		    try 
-		    {
-		        int st_num = Integer.parseInt(value.trim());
-
-		        ArrayList<StoreDetailDTO> storeForCurrentNum = dao.store(st_num);
-		        
-		        System.out.println("Fetched size for st_num " + st_num + ": " + storeForCurrentNum.size());
-		        
-		        // Only add to 'stores' if there's data
-		        if (storeForCurrentNum != null && !storeForCurrentNum.isEmpty()) 
-		        {
-		            stores.add(storeForCurrentNum);
-		            System.out.println("Data added for st_num " + st_num);
-		        } 
-		        else 
-		        {
-		            System.out.println("No data or null data for st_num " + st_num);
-		        }
-
-		        openCloses.add(dao.openClose(st_num));
-		        stChecks.add(dao.stcheck(st_num));
-		        menus.add(dao.menuLists(st_num));
-
-		        System.out.println("stores after adding data for st_num " + st_num + ": " + stores);
-
-		    } 
-		    catch(NumberFormatException nfe)
-		    {
-		        System.out.println("Failed to parse st_num value: " + value);
-		        System.out.println(nfe.toString());
-		    } 
-		    catch(Exception e)
-		    {
-		        System.out.println(e.toString());
-		    }
-		}
-		*/
-		
-
-		//model.addAttribute("menuLists", menus);
-		
-		
-		
-		//----------------------------------------
-
-
-		//----------------------------------------
-
-		
-		/*
-		for (String value : values)
-		{
-		    try 
-		    {
-		    		int st_num = Integer.parseInt(value.trim());
-		
-					// 가게 기본 사항
-					model.addAttribute("store", dao.store(st_num));
-					
-					
-					// 가게 영업시간 + 휴무일
-					model.addAttribute("openClose", dao.openClose(st_num));
-					
-					
-					// 가게 체크박스
-					ArrayList<StoreCheckDTO> stCheckList = dao.stcheck(st_num);
-					if(stCheckList.size()>0)
-					{
-						model.addAttribute("stCheckList", stCheckList);
-					}
-					else
-					{
-						model.addAttribute("stCheckList", null);
-					}
-					
-					
-					// 가게 메뉴
-					ArrayList<compareViewDTO> menuLists = dao.menuLists(st_num);
-					if(menuLists.size()>0)
-					{
-						model.addAttribute("menuLists", menuLists);
-					}
-					else
-						model.addAttribute("menuLists", null);
-		    }
-		    catch (Exception e) 
-		    {
-		        System.out.println(e.toString());
-		    }
-		}
-		*/
 		
 		result = "/WEB-INF/view/compareView-beta.jsp";
 		
