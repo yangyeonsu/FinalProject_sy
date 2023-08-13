@@ -497,7 +497,7 @@ String cp = request.getContextPath();
 				<c:forEach begin="1" end="${storeLen}" varStatus="st_count">
 					<div id="비교하는 가게 공간" class="compareSpace">
 						<c:forEach var="st1" items="${store}" varStatus="st_status">
-							<c:if test="${st_status.index + 1 == st_count.index}">
+							<c:if test="${st_status.index == st_count.index}">
 								<div id="비교하는 가게 이름" class="cName">${st1.st_name}</div>
 								<div id="비교하는 가게 대표 사진" class="photo1">
 									<img id="가게 대표사진" class="phStore"
@@ -514,8 +514,8 @@ String cp = request.getContextPath();
 						</c:forEach>
 						<!-- cBox -->
 						<div class="cBox">
-							<c:forEach var="op" items="${openClose}" varStatus="oc_status">
-								<c:if test="${oc_status.index + 1 == st_count.index}">
+							<c:forEach var="op" items="${openClose}" begin="1" end="7"varStatus="oc_status">
+								<c:if test="${oc_status.index == st_count.index}">
 									<div id="가게 주" class="week">
 										<div id="days" class="cDay">${op.day_name}
 											${op.operate_time} ${op.holiday}</div>
