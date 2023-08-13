@@ -15,5 +15,6 @@ public interface IStoreMainDAO
 	public ArrayList<ReviewDTO> rv_list(int st_num);
 	
 	// 리뷰 답글 
-	public int reviewReply(@RequestParam("rv_num") int rv_num, @RequestParam("reply_content") String reply_content);
+	//public int reviewReply(@RequestParam("rv_num") int rv_num, @RequestParam("reply_content") String reply_content);
+	public int reviewReply(int rv_num, String reply_content);
 }
