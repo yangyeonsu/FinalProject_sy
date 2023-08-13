@@ -325,14 +325,11 @@ public class stDetailController
 		System.out.println("st_num: " + st_num);
 		System.out.println("user_name: " + user_num);
 		
-		
-		
 		// 리뷰키워드 받는 배열
 		String[] rkArr = request.getParameterValues("rkArrHidden");
 		System.out.println("rkArr[0]: " + rkArr[0]);
+		
 		IstDetailDAO_userView dao = sqlSession.getMapper(IstDetailDAO_userView.class);
-		// rv_box에 insert
-		dao.reviewInsert(user_num, st_num, rv_content, star_score);
 		
 		String[] rkList = null;
 		rkList = rkArr[0].split(",");
@@ -348,6 +345,9 @@ public class stDetailController
 			
 			System.out.println(rkList[i]);
 		}
+		
+		// rv_box에 insert
+		dao.reviewInsert(user_num, st_num, rv_content, star_score);
 		
 		// 가게 검색 키워드 받는 배열
 		String[] skArr = request.getParameterValues("skArrHidden");

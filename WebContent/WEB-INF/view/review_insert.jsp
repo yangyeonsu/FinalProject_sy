@@ -23,14 +23,13 @@ String cp = request.getContextPath();
 			// 리뷰 키워드 선택값
 			var rkArr = [];
 			
-			$("input[name=rvKeyCb]:checked").each(function()
+			$("input:checkbox[name=rvKeyCb]:checked").each(function()
 			{
-				var chk = $(this).val();
-				rkArr.push(chk);
+				rkArr.push($(this).val());
 			});
 			
-			$("input[name=rvArrHidden]").attr("value", rkArr);
-			alert($("input[name=rvArrHidden]").val());
+			$("#rvArrHidden").val(rkArr);
+			alert($("#rvArrHidden").val());
 			
 			// 별점 입력값
 			var star = $("#starSelect").val();
@@ -107,7 +106,7 @@ String cp = request.getContextPath();
 						</c:forEach>
 					</div>
 				</div>
-				<input type="hidden" id="rvArrHidden">
+				<input type="hidden" id="rvArrHidden" name="rkArrHidden">
 			</div>
 
 			<!-- 검색 키워드 작성 -->
