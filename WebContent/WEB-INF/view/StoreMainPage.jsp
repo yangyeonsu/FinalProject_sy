@@ -353,7 +353,6 @@ $(function ()
 	});
 });
 
-
 // 답글달기
 $(document).ready(function()
 {
@@ -368,15 +367,25 @@ $(document).ready(function()
         sendReplyButtons.toggle();
     });
 	
-	
-    $(".review_reply_btn").click(function(event)
+    $(".review_reply_btn").click(function(event) 
     {
-        event.preventDefault(); // prevent the default behavior of the button
-        var $form = $(this).closest('form'); // get the closest form to this button
-        $form.attr("action", "rvReply.action");
-        $form.submit();
-    });
+        var replyTextarea = $(this).closest('.review').find('textarea.review_reply_txtarea');
+        if(!replyTextarea.val().trim()) 
+        {
+            alert("답글을 입력해주세요!");
+            event.preventDefault();
+        } 
+        else 
+        {
+            $(".rvReplyForm").submit();
+        }
+        
+        console.log("RV_NUM:", $(this).closest('.review').find('input[name="rv_num"]').val());
+        console.log("Reply content:", replyTextarea.val());
 
+
+    });
+    
 });
 
 </script>
@@ -460,10 +469,10 @@ $(document).ready(function()
 				                </div>
 			                </c:when>
 					        <c:otherwise>
-								    <form action="" class="rvReplyForm" method="post">
+								    <form action="rvReply.action" class="rvReplyForm" method="post">
 								        <div class="review_reply">
-								            <textarea cols="30" rows="3" class="review_reply_txtarea" name="reply_content"></textarea>
-								            <input type="hidden" name="reviewNum" value="${review.rv_num }" />
+								            <textarea cols="30" rows="2.5" class="review_reply_txtarea" id="reply_content" name="reply_content"></textarea>
+								            <input type="hidden" name="rv_num" value="${review.rv_num }" />
 								            <div class="sendBtn">
 								                <button type="button" class="review_reply_btn">리뷰답글</button>
 								                <button type="reset" class="review_reply_btn">취소하기</button>
