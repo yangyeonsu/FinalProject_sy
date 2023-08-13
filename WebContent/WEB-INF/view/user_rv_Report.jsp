@@ -1,5 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
@@ -14,11 +16,12 @@
 <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
 <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
 
-
-
 <link rel="stylesheet" type="text/css" href="<%=cp%>/css/user_main.css">
-
 <link rel="stylesheet" type="text/css" href="<%=cp%>/css/userMyPage.css">
+
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="<%=cp%>/css/storeDetail.css">
 
 <style type="text/css">
 	
@@ -142,6 +145,91 @@
 			$('#checkOverlay').attr("value", "false");
 		});
 	});
+	
+	
+	// 모달----------------------------------------------------------------
+	function rvPopupOpen()
+	{
+		//alert("확인");
+		/* 
+		var rvreport = {
+				status: "반려"
+		}; 
+		 */
+		/* if (rvreport.status === "처리완료") { */
+		var status = $("#status").html();
+		//alert(status);
+		
+		if (status == "처리완료") {
+	        //alert("rvreport의 상태는 '처리완료'입니다.");
+	        
+	        if (document.all.rvPopup.style.visibility == "hidden")
+			{
+				//alert("확인");
+				
+				document.all.rvPopup.style.visibility = "visible";
+				bgLayerOpen();
+				
+				//alert("확인");
+				
+				var $layerPopupObj = $('#rvPopup');
+				var left = ($(window).scrollLeft() + ($(window).width() - $layerPopupObj
+						.width()) / 2);
+				var top = ($(window).scrollTop() + ($(window).height() - $layerPopupObj
+						.height()) / 4);
+	
+				$layerPopupObj.css(
+				{
+					'left' : left,
+					'top' : top,
+					'position' : 'absolute'
+				});
+				$('body').css('position', 'relative').append($layerPopupObj);
+	
+				return false;
+			} 
+			else
+			{
+				document.all.rvPopup.style.visibility = "hidden";
+				bgLayerClear();
+				return false;
+			}
+	    }
+	}
+	
+	
+	function bgLayerOpen()
+	{
+		if (!$('.bgLayer').length)
+		{
+			$('<div class="bgLayer"></div>').appendTo($('body'));
+		}
+		var object = $(".bgLayer");
+		var w = $(document).width();
+		var h = $(document).height();
+
+		object.css(
+		{
+			'width' : w,
+			'height' : h
+		});
+		object.fadeIn(500); //생성되는 시간 설정
+	}
+	
+	function bgLayerClear()
+	{
+		var object = $('.bgLayer');
+
+		if (object.length)
+		{
+			object.fadeOut(500, function()
+			{
+				object.remove();
+
+			});
+		}
+	}
+	
 </script>
 	
 
@@ -166,6 +254,7 @@
 					리뷰 신고 내역
 				</div>
 				<hr>
+				<%-- 
 				<div class="rv_reportlist">
 					<div class="subtitle">
 						<div class="rpt_subtitle">신고일자</div>
@@ -181,7 +270,7 @@
 					    <c:otherwise>
 					        <c:forEach var="rvreport" items="${user_rv_Report}">
 					            <div class="report_content">
-					                <div class="rpt_content">${rvreport.reg_date }</div>
+					                <div class="rpt_content" id="">${rvreport.reg_date }</div>
 					                <div class="st_name">${rvreport.st_name }</div>
 					                <div class="rpt_content">${rvreport.reporteduserid }</div>
 					                <div class="rpt_content">${rvreport.status }</div>
@@ -191,6 +280,64 @@
 					    </c:otherwise>
 					</c:choose>
 				</div>
+				--%>
+				
+				<div class="rv_reportlist">
+					<div class="subtitle">
+						<div class="rpt_subtitle">신고일자</div>
+						<div class="st_name">가게명</div>
+						<div class="rpt_subtitle">피신고자ID</div>
+						<div class="rpt_subtitle">처리상태</div>
+						<div class="rpt_subtitle">처리일자</div>
+					</div>
+					<c:choose>
+					    <c:when test="${empty user_rv_Report}">
+					        <div class="no-data-message">리뷰 신고 내역이 존재하지 않습니다.</div>
+					    </c:when>
+					    <c:otherwise>
+					        <c:forEach var="rvreport" items="${user_rv_Report}">
+					            <div class="report_content">
+					                <div class="rpt_content" onclick="rvPopupOpen()">${rvreport.reg_date }</div>
+					                <div class="st_name">${rvreport.st_name }</div>
+					                <div class="rpt_content">${rvreport.reporteduserid }</div>
+					                <div class="rpt_content" id="status">${rvreport.status }</div>
+					                <div class="rpt_content">${rvreport.final_date }</div>
+					            </div>
+					        </c:forEach>
+					    </c:otherwise>
+					</c:choose>
+				</div>
+				
+				
+				
+				<div id="rvPopup" style="position: absolute; visibility: hidden;">
+					<h4>
+						<a href="#" class="close" onClick="javascript:rvPopupOpen()">Ⅹ</a>
+					</h4>
+					<h3>리뷰신고 반려사유</h3>
+					<div class="rvPopCont">
+						<div class="list">
+							<div class="reqRs">
+								<h5 style="margin-top: 0">반려사유 &nbsp;&nbsp;&nbsp; </h5>
+								<textarea rows="5" cols="42" id="rvRs" style="resize: none; margin-top: 3vh;">반려사유</textarea>
+							</div>
+							
+						</div>
+						<div class="rv">
+							<button id="rvBtn" onClick="javascript:rvPopupOpen()">확인</button>
+						</div>
+					</div>
+					
+				</div>
+				
+				
+				
+				
+				
+				
+				
+				
+				
 			</div>
 		</div><!-- right_content -->
 		

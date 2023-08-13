@@ -178,7 +178,7 @@ span
 	padding-top: 10px;
 	height: 25px;
 }
-#myTextarea
+#myTextarea1, #myTextarea2
 {
 	display: none;
 }
@@ -197,10 +197,21 @@ span
 		{
 		    if ($(this).is(":checked")) 
 		    {
-		       if ($(this).val() == "true")
-		          $("#myTextarea").css("display", "flex");
+		       if ($(this).val() == "trueR")
+		    	{
+		          $("#myTextarea2").css("display", "flex");
+		          $("#myTextarea1").css("display", "none");
+		    	}
+		       else if($(this).val()=="trueM")
+		    	{
+		    	  $("#myTextarea1").css("display", "flex");
+		    	  $("#myTextarea2").css("display", "none");
+		    	}
 		       else
-		          $("#myTextarea").css("display", "none");
+				{
+		          $("#myTextarea2").css("display", "none");
+		          $("#myTextarea1").css("display", "none");
+				}
 		    }
 		});
 		
@@ -211,12 +222,21 @@ span
 				alert("승인 / 중재 / 반려 중 하나를 선택해주세요.");
 				return;
 			}
-			else if($(".check:checked").val() == "true")
+			else if($(".check:checked").val() == "trueM")
 			{
-				if($("#myTextarea").val().trim() == "" || $("#myTextarea").val().trim() == null)
+				if($("#myTextarea1").val().trim() == "" || $("#myTextarea1").val().trim() == null)
+				{
+					alert("중재사유를 입력해주셔야 합니다.");
+					$("#myTextarea1").focus();
+					return;
+				}
+			}
+			else if($(".check:checked").val() == "trueR")
+			{
+				if($("#myTextarea2").val().trim() == "" || $("#myTextarea2").val().trim() == null)
 				{
 					alert("반려사유를 입력해주셔야 합니다.");
-					$("#myTextarea").focus();
+					$("#myTextarea2").focus();
 					return;
 				}
 			}
@@ -310,12 +330,15 @@ span
 		<c:if test="${state ne '처리완료' }">
 			<div style="width: 87%; text-align: right; margin-top: 2vh; margin-bottom: 2vh;">
 				<label class="label"><input type="radio" class="check" name="res" id="approve"><span id="span">승인</span></label>
-				<label class="label"><input type="radio" class="check" name="res" id="middle" value="true"><span id="span">중재</span></label>
-				<label class="label"><input type="radio" class="check" name="res" id="reject" value="true"><span id="span">반려</span></label>
+				<label class="label"><input type="radio" class="check" name="res" id="middle" value="trueM"><span id="span">중재</span></label>
+				<label class="label"><input type="radio" class="check" name="res" id="reject" value="trueR"><span id="span">반려</span></label>
 			</div>
 			
 			<div class="igroup2" style="width: 100%;">
-           		<textarea id="myTextarea" style="width: 72%; height: 10em; resize: none;" placeholder="반려사유를 입력해주세요."></textarea>
+           		<textarea id="myTextarea2" style="width: 72%; height: 10em; resize: none;" placeholder="반려사유를 입력해주세요."></textarea>
+	        </div>
+	        <div class="igroup2" style="width: 100%;">
+           		<textarea id="myTextarea1" style="width: 72%; height: 10em; resize: none;" placeholder="중재사유를 입력해주세요."></textarea>
 	        </div>
 	   		
 	   		<div class="sendBtn">

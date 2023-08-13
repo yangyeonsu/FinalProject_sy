@@ -64,6 +64,7 @@ public class StoreregiController
 		}
 		
 		
+		
 		DiskFileItemFactory fileItemFactory = new DiskFileItemFactory();
 		fileItemFactory.setRepository(st_in_dir);
 		fileItemFactory.setSizeThreshold(LIMIT_SIZE_BYTES);
@@ -107,14 +108,14 @@ public class StoreregiController
                 	if (item.getFieldName().equals("st_in_num"))
                 	{
                 		String tmpStr = item.getString(CHARSET);
-                		int st_in_num = Integer.parseInt(tmpStr.substring(1, tmpStr.length()));
+                		int st_in_num = Integer.parseInt(tmpStr.substring(0, tmpStr.length()));
                 		srdto.setSt_in_num(st_in_num);
                 	}
                 	else if (item.getFieldName().equals("st_place_num"))
                 	{
                 		String tmpStr = item.getString(CHARSET);
-                		int st_place_num = Integer.parseInt(tmpStr.substring(1, tmpStr.length()));
-                		srdto.setSt_in_num(st_place_num);
+                		int st_place_num = Integer.parseInt(tmpStr.substring(0, tmpStr.length()));
+                		srdto.setSt_place_num(st_place_num);
                 	}
                 	else if (item.getFieldName().equals("st_name"))
                 		srdto.setSt_name(item.getString(CHARSET));
@@ -132,6 +133,13 @@ public class StoreregiController
 			e.printStackTrace();
 			System.out.println(e.toString());
 		}
+		
+		System.out.println("st_in_num: " + srdto.getSt_in_num());
+		System.out.println("st_place_num: " + srdto.getSt_place_num());
+		System.out.println("st_name: " + srdto.getSt_name());
+		System.out.println("st_location: " + srdto.getSt_location());
+		System.out.println("st_location_z dt: " + srdto.getSt_location_dt());
+		System.out.println(srdto.getSt_tel());
 		
 		srdto.setUser_num((String)session.getAttribute("user_num"));
 		
