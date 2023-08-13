@@ -55,6 +55,32 @@
 		INSERT INTO RV_REPLY(REPLY_NUM, RV_NUM, REPLY_CONTENT, REG_DATE)
 		VALUES(SELECT NVL(MAX(OUT_APPLY_NUM)+1,0) FROM RV_REPLY, #{user_num}, #{reply_content},SYSDATE)
 	</insert>
+	
+	<!-- 가게가 선택할 수 있는 음식 카테고리 -->
+	<select id="foodLabel" resultType="com.yameokja.mc.FoodLabelDTO">
+		SELECT FOOD_NUM, FOOD_NAME
+		FROM FOOD_LABEL
+	</select>
+	
+	<!-- 가게가 선택할 수 있는 결제 카테고리 -->
+	<select id="payLabel" resultType="com.yameokja.mc.PayLabelDTO">
+		SELECT PAY_NUM, PAY_NAME
+		FROM PAY_LABEL
+	</select>
+	
+	<!-- 요일 라벨 가져오는 카테고리 -->
+	<select id="weekDayLabel" resultType="java.lang.String">
+		SELECT DAY_NAME
+		FROM WEEKDAY_LABEL
+		ORDER BY DAY_NUM
+	</select>
+	
+	<!-- 평일 주말 라벨 -->
+	<select id="weekWeekendDayLabel" resultType="java.lang.String">
+		SELECT WEEK_WEEKEND
+		FROM WEEK_WEEKEND_LABEL
+		ORDER BY WEEK_WEEKEND_NUM
+	</select>
 
 </mapper>
 

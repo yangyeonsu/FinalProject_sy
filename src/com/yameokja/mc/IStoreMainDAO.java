@@ -16,4 +16,9 @@ public interface IStoreMainDAO
 	
 	// 리뷰 답글 
 	public int reviewReply(@RequestParam("rv_num") int rv_num, @RequestParam("reply_content") String reply_content);
+	
+	public ArrayList<FoodLabelDTO> foodLabel();
+	public ArrayList<PayLabelDTO> payLabel();
+	public ArrayList<String> weekDayLabel();
+	public ArrayList<String> weekWeekendDayLabel();
 }

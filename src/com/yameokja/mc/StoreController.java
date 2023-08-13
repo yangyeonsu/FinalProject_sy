@@ -108,10 +108,11 @@ public class StoreController
 		HttpSession session = request.getSession();
 		
 		IstDetailDAO_userView dao = sqlSession.getMapper(IstDetailDAO_userView.class);
+		IStoreMainDAO sdao = sqlSession.getMapper(IStoreMainDAO.class);
 		IUserDAO uDao = sqlSession.getMapper(IUserDAO.class);
 		
 		String user_num = (String)session.getAttribute("user_num");
-		int st_num = Integer.parseInt((String)session.getAttribute("st_num"));
+		int st_num = (int) session.getAttribute("st_num");
 		
 		UserDTO user = uDao.searchUserInfo(user_num, "num");
 
@@ -125,16 +126,17 @@ public class StoreController
 
 		model.addAttribute("user", user);
 		
+		// 가게가 선택할 수 있는 카테고리
+		model.addAttribute("foodLabel", sdao.foodLabel());
+		model.addAttribute("payLabel", sdao.payLabel());
+		model.addAttribute("weekdayLabel", sdao.weekDayLabel());
+		model.addAttribute("weekWeekendDayLabel", sdao.weekWeekendDayLabel());
 		
 		// 가게 기본 사항
 		model.addAttribute("store", dao.store(st_num));
 		
-		// 가게 찜 수
-		model.addAttribute("clikeNum", dao.clikeNum(st_num));
-		
 		// 가게 키워드
 		ArrayList<StoreKeyDTO> stKeyList =  dao.stKeys(st_num);
-		
 		if(stKeyList.size()>0)
 		{
 			model.addAttribute("stKeys", stKeyList);
@@ -143,7 +145,14 @@ public class StoreController
 			model.addAttribute("stKeys", null);
 		
 		// 가게 영업시간 + 휴무일
-		model.addAttribute("openClose", dao.openClose(st_num));
+		ArrayList<StoreOpencloseDTO> openClose =  dao.openClose(st_num);
+		if(openClose.size() > 0)
+		{
+			model.addAttribute("openClose", openClose);
+		}
+		else
+			model.addAttribute("openClose", null);
+		
 		
 		// 가게 브레이크 타임
 		ArrayList<StoreBreaktimeDTO> breakTime = dao.breakTime(st_num);
