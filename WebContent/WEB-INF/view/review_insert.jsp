@@ -15,30 +15,29 @@ String cp = request.getContextPath();
 	src="http://code.jquery.com/jquery.min.js"></script>
 
 <script type="text/javascript">
-	
 	$(function()
 	{
 		$("#submitReviewBtn").click(function()
 		{
 			// 리뷰 키워드 선택값
 			var rkArr = [];
-			
+
 			$("input:checkbox[name=rvKeyCb]:checked").each(function()
 			{
 				rkArr.push($(this).val());
 			});
-			
+
 			$("#rvArrHidden").val(rkArr);
 			alert($("#rvArrHidden").val());
-			
+
 			// 별점 입력값
 			var star = $("#starSelect").val();
 			$("#starHidden").attr("value", star);
 			alert($("#starHidden").val());
-			
+
 			// 검색 키워드 입력값
 			var skArr = [];
-			
+
 			if ($("#sk1").val() != "")
 				skArr.push($("#sk1").val().trim());
 			if ($("#sk2").val() != "")
@@ -53,12 +52,79 @@ String cp = request.getContextPath();
 			$("input[name=skArrHidden]").attr("value", skArr);
 			//alert($("input[name=skArrHidden]").val());
 
-			
 			$("#userForm").attr("action", "insertreview.action");
 			$("#userForm").submit();
-		});		
+		});
 	});
+
+	function loadFile(input)
+	{
+
+		var name = document.getElementById('fileName');
+		var container = input.parentNode.querySelector('.image-show');
+		
+		container.setAttribute('id', $("input[name=chooseFile]").attr("id"));
+
+		// 이미 업로드된 사진이 있을 경우 삭제
+		var existingImage = container.querySelector('img');
+		if (existingImage)
+		{
+			container.removeChild(existingImage);
+		}
+
+		var file = input.files[0]; // 선택된 파일 가져오기
+		name.textContent = file.name;
+
+		var newImage = document.createElement('img');
+		newImage.setAttribute('class', 'img');
+
+		// 이미지 source 가져오기
+		newImage.src = URL.createObjectURL(file);
+
+		newImage.style.width = '30vw';
+		newImage.style.height = '50%';
+		newImage.style.objectFit = 'contain';
+
+		// 이미지를 image-show div에 추가
+		container.appendChild(newImage);
+
+		// 이미지는 화면에 나타나도록 설정
+		newImage.style.visibility = 'visible';
+
+	};
 	
+	function plusTd()
+	{
+	   /* var table = document.getElementById('food_table'); */
+	   /* var lastRow = table.rows[table.rows.length - 1]; // 맨 뒤에 <tr> 추가 */
+	    
+	   /* var cellCount = lastRow.cells.length; */
+
+	   /* var newCell = lastRow.insertCell(cellCount-1); // <td> 추가 */
+	    //newDiv = document.createElement("div");
+	    //newDiv.class='button';
+	    
+	    var element = document.getElementById('reviewPhotoDiv');
+	    var num =  $('.button').length + 1;
+	   
+	    var content = "<div class='button'>";
+	    content += "	<label for='file" + num + "'>";
+	    content += "	👉사진 업로드👈";
+	    content += "	</label>";
+	    content += "	</div>";
+	    content += "<input type='file' id='file" + num + "' name='chooseFile' accept='image/*' onchange='loadFile(this)' style='visibility: hidden'>";
+	    content += "<div class='image-show' id='img" + num + "'></div>";
+	    content += "<p class='fileName' style='font-size: small'></p>";
+	    content += "<label class='label'>";
+	    content += "	<div class='line-box' style='width:60%; margin-left: 3vw;'>";
+	    content += "		<div class='line'></div>";
+	    content += "	</div>";
+	    content += "</label>";
+	    content += "</div>";
+	    
+	   // $(".reviewPhotoDiv").innerText += content;
+	    element.innerHTML += content;
+	}
 </script>
 
 </head>
@@ -93,13 +159,15 @@ String cp = request.getContextPath();
 								<c:when test="${status.index mod 5 == 0}">
 					</div>
 					<div class="stCbList">
-						<label for="${rvKey.rv_key_num }"> <input type="checkbox" name="rvKeyCb" 
-							value="${rvKey.rv_key_num }" id="${rvKey.rv_key_num }">${rvKey.rv_key_name }
+						<label for="${rvKey.rv_key_num }"> <input type="checkbox"
+							name="rvKeyCb" value="${rvKey.rv_key_num }"
+							id="${rvKey.rv_key_num }">${rvKey.rv_key_name }
 						</label>
 						</c:when>
 						<c:otherwise>
-							<label for="${rvKey.rv_key_num }"> <input type="checkbox" name="rvKeyCb" 
-								value="${rvKey.rv_key_num }" id="${rvKey.rv_key_num }">${rvKey.rv_key_name }
+							<label for="${rvKey.rv_key_num }"> <input type="checkbox"
+								name="rvKeyCb" value="${rvKey.rv_key_num }"
+								id="${rvKey.rv_key_num }">${rvKey.rv_key_name }
 							</label>
 						</c:otherwise>
 						</c:choose>
@@ -156,10 +224,32 @@ String cp = request.getContextPath();
 				<div class="reviewInsertDiv">
 					<textarea rows="6" cols="135" name="reviewContent"></textarea>
 				</div>
+				
+				<div
+					style="width: 40px; height: 40px; display: flex; justify-content: center;">
+					<input type="button" class="plusBtn" value="+"
+						style="border: 1; margin: auto; display: block;"
+						onclick="plusTd()">
+				</div>
 
 				<!-- 리뷰사진 업로드 버튼 -->
-				<div class="reviewPhotoDiv">
-					<button id="photoUploadBtn" class="reviewBtn">사진첨부</button>
+				<div class="reviewPhotoDiv" id="reviewPhotoDiv">
+					<div class="button">
+						<label for="file1"> 👉사진 업로드👈 </label>
+					</div>
+					<input type="file" id="file1" name="chooseFile" accept="image/*"
+						onchange="loadFile(this)" style="visibility: hidden">
+					<div class="image-show" id="img1"></div>
+					<p class="fileName" style="font-size: small"></p>
+					<label class="label">
+						<div class="line-box" style="width: 60%; margin-left: 3vw;">
+							<div class="line"></div>
+						</div>
+					</label>
+					
+					<div>
+						<p style="text-align: center;">&nbsp;</p>
+					</div>
 				</div>
 			</div>
 

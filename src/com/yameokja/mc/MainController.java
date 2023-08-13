@@ -545,11 +545,16 @@ public class MainController
 		
 		ArrayList<Integer> filterResult = dao.filterSearchList(regionCbList, catCbList, stKeyCbList, finalKeyword);
 		
-		/* System.out.println(filterResult); */
-		
-		ArrayList<StoreDTO> searchList = dao.getStoreList(filterResult);
-		
-		model.addAttribute("searchList", searchList);
+		if(filterResult==null)
+		{
+			ArrayList<StoreDTO> searchList = dao.getStoreList(filterResult);
+			
+			model.addAttribute("searchList", searchList);
+		}
+		else
+		{
+			model.addAttribute("searhList", null);
+		}
 
 		result = "/WEB-INF/view/user_main_2.jsp";
 		
