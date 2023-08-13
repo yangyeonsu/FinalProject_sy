@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class StoreController
@@ -98,4 +99,51 @@ public class StoreController
 		
 		return result;
 	}
+	
+	@RequestMapping(value="/stdetailmodify.action", method = RequestMethod.POST)
+	public String stDetailModify(HttpServletRequest request, Model model)
+	{
+		String result = "";
+		
+		HttpSession session = request.getSession();
+		
+		IUserDAO uDao = sqlSession.getMapper(IUserDAO.class);
+		
+		
+		String user_num = (String)session.getAttribute("user_num");
+		
+		UserDTO user = uDao.searchUserInfo(user_num, "num");
+
+		LocalDate currentDate = LocalDate.now();
+		int month = currentDate.getMonthValue();
+
+		if (month < 7)
+			user.setUser_grade(uDao.firstHalf(user_num).user_grade);
+		else
+			user.setUser_grade(uDao.secondHalf(user_num).user_grade);
+
+		model.addAttribute("user", user);
+		
+		
+		result = "/WEB-INF/view/st_detail_form.jsp";
+		
+		return result;
+	}
+  
+  @RequestMapping(value = "/rvReply.action", method = {RequestMethod.GET, RequestMethod.POST})
+	public String rvReply(@RequestParam("rv_num") int rv_num, @RequestParam("reply_content") String reply_content, HttpServletRequest request, Model model)
+	{	
+		int rvReplynum = 0;
+		
+		HttpSession session = request.getSession();
+		String user_num = (String)session.getAttribute("user_num");
+		
+		IStoreMainDAO dao = sqlSession.getMapper(IStoreMainDAO.class);
+		
+		rvReplynum = dao.reviewReply(rv_num, reply_content);
+		
+		
+	    return "redirect:storemain.action";
+  }
+  
 }

@@ -109,6 +109,9 @@
 			<ul class="big_menu">
 				<li><a href="penaltyList.action" class="small_menuA">경고내역</a></li>
 			</ul>
+			<ul class="big_menu">
+    			<li><a href="storeOutform.action?user_num=${user_num}&st_num=${st_num}" class="small_menuA">폐업신청</a></li>
+			</ul>
 		</div>
 	</div>
 	<div class="overlay">

@@ -47,7 +47,7 @@
 	가게명 체크박스항목명 여부명 정보오류요청사유 요청자
 	-->
 	<select id="accuSearch" resultType="com.yameokja.mc.ReqApplyViewDTO">
-		SELECT REQ_APPLY_NUM, ST_NAME, CHBOX_NAME, YN_NAME, REQ_RS, USER_ID
+		SELECT REQ_APPLY_NUM, ST_NAME, CHBOX_NAME, YN_NAME, REQ_RS, USER_ID, ST_NUM
 		FROM REQ_APPLY_VIEW
 		WHERE REQ_APPLY_NUM = #{req_apply_num}
 	</select>

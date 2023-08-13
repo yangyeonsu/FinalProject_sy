@@ -90,13 +90,6 @@
 				$("#user_id").focus();
 				return;
 			}
-			else if (blank_pattern.test($("#user_id").val()) == true)
-			{
-				$("#idError").html("아이디에는 공백을 사용할 수 없습니다.");
-				$("#idError").css("display", "inline");
-				$("#user_id").focus();
-				return;
-			}
 			
 			if ($("#idAccept").val() == "false")
 			{
@@ -115,7 +108,14 @@
 			if ($("#userPwCheck").val() == "")
 			{
 				$("#pw2Error").css("display", "inline");
-				$("#userPw2").focus();
+				$("#userPwCheck").focus();
+				return;
+			}
+			else if ($("#pwCheckVal").val != "true")
+			{
+				$("#pw2Error").html("비밀번호가 일치하지 않습니다.");
+				$("#pw2Error").css("display", "inline");
+				$("#userPwCheck").focus();
 				return;
 			}
 			if ($("#user_nickName").val() == "")
@@ -158,41 +158,54 @@
 		{
 			var blank_pattern = /[\s]/g;
 			$("#idError").css("display", "none");
-
+			$("#idAcceptText").css("display", "none");
+			
+			
+			var originId = $.trim($("#user_id").val());
+			
+			if (originId == "" || originId == null)
+			{
+				$("#idError").html("아이디를 입력해주세요.");
+				$("#idError").css("display", "inline");
+				$("#user_id").focus();
+				return;
+			}
+			else 
+			{
+				var Id = originId.replace(/\s/g, '');
+				
+				if (originId.length !== Id.length)
+				{					
+					$("#idError").html("아이디에는 공백을 사용할 수 없습니다.");
+					$("#idError").css("display", "inline");
+					$("#user_id").focus();
+					return;
+				}
+					
+			}
+			
 			$.ajax(
 			{
 				type: "POST"
 				, url:"idduplicheck.action" 
 	            , data: {
-	            	"user_id": $.trim($("#userId").val())
+	            	"user_id": $.trim($("#user_id").val())
 	            	}
 				, dataType: "json"
-				, beforeSend: function()
-				{
-					var str = $("#userId").val();
-					if (str == "")
-					{
-						$("#idError").css("display", "inline");
-						$("#userId").focus();
-						return false;
-					}
-				}
 				, success:function(data)
 				{
 					if (data.count == "0")
 					{
+						alert(data.count);
 						$("#idAcceptText").css("display", "inline");
 						$("#idAccept").val("true");
 					}
-					else if (data.count == "-1")
-					{
-						$("#idAcceptText").html("아이디에는 공백을 사용할 수 없습니다.");
-						$("#idAcceptText").css("display", "inline");
-					}
 					else
 					{
-						$("#idAcceptText").html("이미 존재하는 아이디 입니다.");
-						$("#idAcceptText").css("display", "inline");
+						$("#idError").html("이미 존재하는 아이디 입니다.");
+						$("#idError").css("display", "inline");
+						$("#idAccept").val("false");
+						$("#user_id").focus();
 					}
 				}
 				, err:function(e)
@@ -200,40 +213,67 @@
 					alert(e.responseText);
 				}
 			});
+		});
+		
+		$("#user_id").keydown(function()
+		{
+			$("#idAccept").val("false");
 		});
 		
 		$("#nickNameAccept").click(function()
 		{
 			$("#nickNameError").css("display", "none");
+			$("#nNAcceptText").css("display", "none");
+			
+			var originNick = $.trim($("#user_nickname").val());
+			
+			if (originNick == "" || originNick == null)
+			{
+				$("#nickNameError").html("닉네임을 입력해주세요.");
+				$("#nickNameError").css("display", "inline");
+				$("#user_nickname").focus();
+				return;
+			}
+			else 
+			{
+				var nickName = originNick.replace(/\s/g, '');
+				
+				if (originNick.length !== nickName.length)
+				{					
+					$("#nickNameError").html("닉네임에는 공백을 사용할 수 없습니다.");
+					$("#nickNameError").css("display", "inline");
+					$("#user_nickname").focus();
+					return;
+				}
+					
+			}
+			
+			alert(originNick);
 			
 			$.ajax(
 			{
-				type: "POST"
-				, url:"nickduplicheck.action" 
+				url:"nickduplicheck.action"
+				, type: "POST"
 	            , data: {
-	            	"user_nick" : $.trim($("#userNickName").val())	
+	            	"user_nick" : $.trim($("#user_nickname").val())
 	            }
 				, dataType: "json"
-				, beforeSend: function()
-				{
-					if ($("#userNickName").val() == "")
-					{
-						$("#nickNameError").css("display", "inline");
-						$("#userNickName").focus();
-						return false;
-					}
-				}
 				, success:function(data)
 				{
 					if (data.count == "0")
 					{
+						alert(data.cont);
+						
 						$("#nNAcceptText").css("display", "inline");
 						$("#nickNameAccept").val("true");
 					}
 					else
 					{
-						$("#nNAcceptText").html("이미 존재하는 닉네임 입니다.");
-						$("#nNAcceptText").css("display", "inline");
+						$("#nickNameError").html("이미 존재하는 닉네임 입니다.");
+						$("#nickNameError").css("display", "inline");
+						$("#nickNameAccept").val("false");
+						$("#user_nickname").focus();
+						return;
 					}
 				}
 				, err:function(e)
@@ -243,6 +283,38 @@
 			});
 		});
 		
+		$("#user_nickname").keydown(function()
+		{
+			$("#nickNameAccept").val("false");
+			
+		});
+		
+		$("#userPwCheck").keyup(function()
+		{
+			$("#pwAcceptText").css("display", "none");
+			$("#pw2Error").css("display", "none");
+			
+			if ($("#user_pw").val() == "")
+			{
+				$("#pw1Error").css("display", "inline");
+				$("#userPwCheck").val("");
+				$("#user_pw").focus();
+				return;
+			}
+			
+			if ($("#userPwCheck").val() == $("#user_pw").val())
+			{
+					$("#pwAcceptText").html("비밀번호가 일치합니다.");
+					$("#pwAcceptText").css("display", "inline");
+					$("#pwCheckVal").val() = "false";
+			}		
+			else
+			{
+				$("#pwAcceptText").html("비밀번호가 일치하지 않습니다.");
+				$("#pwAcceptText").css("display", "inline");
+				$("#pwCheckVal").val() = "true";
+			}
+		});
 		
 	});
 	
@@ -354,7 +426,8 @@
 				<div>
 					<input type="password" id="userPwCheck">
 					<span id="pw2Error" class="accept">비밀번호를 한번 더 입력해주세요.</span> 
-					<i id="pwAcceptText" class="accept">확인되었습니다.</i>
+					<i id="pwAcceptText" class="accept" >확인되었습니다.</i>
+					<input type="hidden" id="pwCheckVal" value="false">
 				</div>
 			</div>
 			

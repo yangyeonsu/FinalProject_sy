@@ -267,6 +267,26 @@
 	}
 	
 	
+	.review_reply
+	{
+		float: right;
+		padding-right: 0.8vw;
+	}
+	.review_reply_txtarea
+	{
+	    display: none;         
+	    vertical-align: middle; 
+	    float: right;
+		padding-right: 0.8vw;
+	}
+	
+	.review_reply_btn
+	{	
+		float: right;
+		display: none;
+	}
+	
+	
       
 </style>
 
@@ -326,13 +346,37 @@
 
 $(function ()
 {
-    
-    
     $(".modifyBtn").click(function()
 	{
 		$("#userForm").attr("action", "stdetailmodify.action");
 		$("#userForm").submit();
 	});
+});
+
+
+// 답글달기
+$(document).ready(function()
+{
+	
+	// 답글쓰기 버튼 토글
+    $('.reviewReply').click(function()
+    {
+        var replyTextarea = $(this).closest('.review').find('textarea.review_reply_txtarea');
+        var sendReplyButtons = $(this).closest('.review').find('button.review_reply_btn');
+        
+        replyTextarea.toggle(); 
+        sendReplyButtons.toggle();
+    });
+	
+	
+    $(".review_reply_btn").click(function(event)
+    {
+        event.preventDefault(); // prevent the default behavior of the button
+        var $form = $(this).closest('form'); // get the closest form to this button
+        $form.attr("action", "rvReply.action");
+        $form.submit();
+    });
+
 });
 
 </script>
@@ -403,12 +447,32 @@ $(function ()
 							</div>
 							<div class="sendBtn">
 								<button type="button" value="${review.rv_num }">신고하기</button>
-								<button type="button" value="${review.rv_num }">답글쓰기</button>
+								<button type="button" class="reviewReply" value="${review.rv_num }">답글쓰기</button>
 							</div>
 						</div>
-						<div class="review_body">
-							${review.rv_content }
-						</div>
+						
+			            <div class="review_body">
+			                ${review.rv_content }
+			                <c:choose>
+			       			<c:when test="${not empty review.reply_content}">
+				                <div class="review_reply">
+				                    <span class="review_reply">답글 : ${review.reply_content}</span>
+				                </div>
+			                </c:when>
+					        <c:otherwise>
+								    <form action="" class="rvReplyForm" method="post">
+								        <div class="review_reply">
+								            <textarea cols="30" rows="3" class="review_reply_txtarea" name="reply_content"></textarea>
+								            <input type="hidden" name="reviewNum" value="${review.rv_num }" />
+								            <div class="sendBtn">
+								                <button type="button" class="review_reply_btn">리뷰답글</button>
+								                <button type="reset" class="review_reply_btn">취소하기</button>
+								            </div>
+								        </div>
+								    </form>
+							</c:otherwise>
+					    	</c:choose>
+			            </div>
 					</div>
 				</c:forEach>
 				
