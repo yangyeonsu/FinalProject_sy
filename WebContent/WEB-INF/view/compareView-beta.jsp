@@ -20,120 +20,159 @@
 <link rel="stylesheet" type="text/css" href="<%=cp%>/css/userMyPage.css">
 
 
-<!-- .has_sub_menu {
-	list-style-type: none;
+<style type="text/css">
+body {
+	font-family: 'IBM Plex Sans KR', sans-serif;
+    margin:0px;
+    padding: 0px;        
 }
 
-.side-menu {
-	top: 50px;
-	width: 5vw;
-	z-index: 10;
-	background: #ef6351;
-	border-right: 1px solid rgba(0, 0, 0, 0.07);
-	height: 90%;
-	margin-top: 5.7vh;
-	position: fixed;
-	align-items: center;
+.mainBody {
+	display: flex;
 }
 
-#sidebar-menu li {
+.compTitle {
+	width: 15vw;
+	height: 15vh;
+	margin-left: 30vw;
+}
+
+.compTitle span {
+	font-size: 3rem;
+	font-weight: bold;
+	text-align: center;
+}
+
+.compareMain {
+	width: 100vw;
+	margin-left: 3vw;
+}
+
+.compareBody {
+	width: 63vw;
+	/* margin-left: 18vw; */
+	display: flex;
+	text-align: center;
+}
+
+.compareSpace {
+	width: 16.5vw;
+}
+
+.cCategory {
+	margin-top: 28.65vh;
+	width: 11vw;
+}
+
+.cList, .week, .lWeek, .cOptions, .lOptions {
+	border-top: 1px solid #EB8F83;
+	padding-top: 1vh;
+	padding-bottom: 1vh;
+}
+
+.cName {
 	font-size: 1.5rem;
+	font-weight: bold;
 }
 
-#sidebar-menu .fas {
-	padding-top: 3vh;
-	padding-left: 1.2vw
+.cBox {
+	border-left: 1px solid #EB8F83;
 }
 
-.left_sub_menu {
-	position: fixed;
-	top: 50px;
-	width: 18vw;
-	z-index: 10;
-	left: 4.6vw;
-	background: white;
-	height: 90%;
-	margin-top: 5.7vh;
+.cList, .cLo {
+    height: 3vh;
+    font-size: 1rem;
+    font-weight: bold;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
 }
 
-.sub_menu {
-	margin-top: 50px;
+.bt
+{
+	font-size: 0.8rem !important;
 }
 
-.left_sub_menu>.sub_menu li:hover {
-	color: ff5858;
-	background-color: #e1e1e1;
+.bottomL
+{
+	border-bottom: 1px solid #ED8F83;
 }
 
-.left_sub_menu>.sub_menu li {
-	color: black;
-	font-size: 17px;
-	font-weight: 600;
-	padding: 20px 0px 8px 14px;
-	border-bottom: 1px solid #e1e1e1;
+.ocTitle
+{
+	font-size: 1rem !important;
+    font-weight: bold;
+    padding-bottom: 1vh !important;
 }
 
-.sub_menu>h2 {
-	padding-bottom: 4px;
-	border-bottom: 3px solid #797979;
-	margin-top: 30px;
-	font-size: 21px;
-	font-weight: 600;
-	color: #333;
-	margin-left: 10px;
-	margin-right: 10px;
-	font-family: 'NotoKrB';
+.lDay {
+    /* height: 3vh; */
+    font-size: 0.8rem;
+    padding-top: 0.5vh;
+    padding-bottom: 1.5vh;
+    font-weight: bold;
 }
 
-.fas {
-	color: #ff5858;
-	font-size: 20px;
-	line-height: 20px;
-	float: right;
-	margin-top: 0.6vh;
-	margin-right: 2vw;
+.lWeek {
+	height: 35vh;
 }
 
-.sub_menu>.big_menu>.small_menu li {
-	color: black;
-	font-size: 14px;
-	font-weight: 600;
-	border-bottom: 0px solid #e1e1e1;
+.lOptions, .cOptions {
+	height: 30vh;
 }
 
-.big_menu {
-	list-style-type: none;
-	cursor: pointer;
+.cMenu {
+    height: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.samll_menu {
-	position: fixed;
-	list-style-type: none;
-	padding-inline-start: 0px;
-	list-style: none;
-	transition-duration: 0.5s;
+.cat {
+	margin-top: 1vh;
 }
 
-.small_menuA {
-	color: black;
-	text-decoration-line: none;
-	background-color: transparent;
-	margin-bottom: 1vh
+.photo{
+	margin-bottom: 1vh;
 }
 
-.big_menu ul {
-	margin-top: 0;
-	margin-bottom: 0;
+.phStore {
+	width: 15vw;
+	height: 20vh;
+	padding-bottom: vh;
+	padding: 1px;
 }
 
-.has_sub {
-	width: 100%;
+.week {
+	height: 35vh;
+	padding-top: 1vh;
 }
 
-</style> -->
+.cOpt {
+    padding-top: 1.5vh;
+    height: 2vh;
+    font-size: 1rem;
+    font-weight: bold;
+    padding-bottom: 1.5vh;
+    text-align: left;
+    padding-left: 4vw;
+}
 
-<link rel="stylesheet" type="text/css"
-	href="<%=cp%>/css/compareView.css">
+.phMenu {
+	max-width: 3.5vw;
+	max-height: 3.5vw;
+	object-fit: cover;
+}
+
+.menu
+{
+	display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+</style>
+
 
 <!-- 배너 스크립트 -->
 <script type="text/javascript">
@@ -200,8 +239,9 @@
 		}
 
 	});
+	
 
-	/* 영업 요일이 7주일 미만일 경우  */
+	/* 영업 요일이 7주일 미만일 경우 
 	$(document).ready(function()
 	{
 
@@ -217,7 +257,7 @@
 
 		$(".week").each(function()
 		{
-			/* var numOfDays = $(this).find(".cDay").length; */
+			//var numOfDays = $(this).find(".cDay").length; 
 			if (maxNumOfDays == 6)
 			{
 				$(this).css("height", "29.5vh");
@@ -266,6 +306,7 @@
 		});
 
 	});
+	 */
 
 	/* 체크박스 여부 표시에 따른 높이 변화 */
 	$(document).ready(function()
@@ -321,7 +362,7 @@
 		});
 	});
 
-	/* 받은 값에 따른 체크박스 변화 */
+	/* 받은 값에 따른 체크박스 변화 
 	$(document).ready(function()
 	{
 		// value가 'none' 일 경우 표시 안 함
@@ -344,6 +385,7 @@
 
 		});
 	});
+	*/
 </script>
 
 </head>
@@ -377,6 +419,7 @@
 						<div id="thuList" class="lDay">&nbsp;&nbsp;</div>
 						<div id="friList" class="lDay">&nbsp;&nbsp;</div>
 						<div id="satList" class="lDay">&nbsp;&nbsp;</div>
+						<div id="stBreakTimeList" class="cList">브레이크타임</div>
 
 						<div id="stMenuAvgList" class="cList avgP">가게 평균 가격</div>
 						<div id="stMenuNameList" class="cList cMenu">가게 대표 메뉴 이름</div>
@@ -423,6 +466,18 @@
 									</div>
 								</c:if>
 							</c:forEach>
+							
+							<div class="cList bt">
+								<c:forEach var="bt" items="${breakTimeList }">
+									<c:if test="${bt.st_num == st_num }">
+										
+											[${bt.week_weekend }] &nbsp; : &nbsp;
+											${bt.start_breaktime }&nbsp;~&nbsp;${bt.end_breaktime } &nbsp;&nbsp;
+										
+										<br>
+									</c:if>
+								</c:forEach>
+							</div>
 
 							<div class="cList">
 								<c:forEach var="menuP" items="${menuAvgLists }">
@@ -444,17 +499,14 @@
 							</div>
 							<c:forEach var="max" items="${store}">
 								<c:if test="${max.st_num == st_num }">
-									<div id="stMaxC${st_num }" class="cList">${max.max_customers}</div>
+									<div id="stMaxC${st_num }" class="cList bottomL">${max.max_customers}</div>
 								</c:if>
 							</c:forEach>
 
-							<c:forEach var="sc" items="${stcheck}">
+							<c:forEach var="sc" items="${stChekList}">
 								<c:if test="${sc.st_num == st_num }">
-									<div id="scOp${st_num }" class="cOptions">
-										<div id="${st_num }_${sc.chbox_num}" class="cOpt">
-											${sc.chbox_name} : <input type="checkbox" class="chBox"
-												value="${sc.yesorno}" id="${optNum.index }" />
-										</div>
+									<div id="${st_num }_${sc.chbox_num}" class="cOpt">
+										${sc.chbox_name} : ${sc.yesorno }
 									</div>
 								</c:if>
 							</c:forEach>
