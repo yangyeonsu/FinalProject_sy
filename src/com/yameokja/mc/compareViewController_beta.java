@@ -73,13 +73,24 @@ public class compareViewController_beta
 		model.addAttribute("menuAvgLists", menuAvgLists);
 		
 		// 가게 메뉴
-		ArrayList<StoreMenuDTO> menuLists = null;
+		ArrayList<StoreMenuDTO> menuLists = new ArrayList<StoreMenuDTO>();
+		
 		
 		for (int i = 0; i < stnumList.size(); i++)
 		{
 			StoreMenuDTO dto = new StoreMenuDTO();
-			dto = dao.menuList(stnumList.get(i));
-			menuLists.add(dto);
+			if(dao.menuList(stnumList.get(i))!=null)
+			{
+				try
+				{
+					dto = dao.menuList(stnumList.get(i));
+					menuLists.add(dto);
+					
+				} catch (Exception e)
+				{
+					System.out.println(e.toString());
+				}
+			}
 		}
 		
 		if(menuLists.size()>0)

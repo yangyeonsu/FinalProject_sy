@@ -61,8 +61,11 @@ body {
 
 .cList, .cLo {
 	height: 3vh;
-	font-size: 1rem;
-	font-weight: bold;
+    font-size: 1rem;
+    font-weight: bold;
+    display: flex;
+    text-align: center;
+    justify-content: center;
 }
 
 .bottomL
@@ -93,7 +96,10 @@ body {
 }
 
 .cMenu {
-	height: 18.75vh;
+    height: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .cat {
@@ -135,6 +141,4 @@ body {
 	display: flex;
     align-items: center;
     justify-content: flex-start;
-    margin-left: 2vw;
-    margin-top: 1.5vh;
 }

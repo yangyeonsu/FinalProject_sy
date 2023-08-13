@@ -104,7 +104,7 @@
 		SELECT ST_NUM, MENU_NUM, MENU_NAME, PRICE, IMAGE_LINK
 		FROM MENU
 		WHERE ST_NUM = #{st_num}
-        <![CDATA[AND ROWNUM<=2]]>
+        <![CDATA[AND ROWNUM<=1]]>
 	</select>
 	 
 	<!-- 메뉴 평균 가져오기 -->
