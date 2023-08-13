@@ -175,8 +175,17 @@ input[type=checkbox]
 
 .reviewPhotoDiv
 {
-	margin-top: 1vw;
-    margin-left: 37vw;
+    margin-top: 1vw;
+    width: 45vw;
+    display: flex;
+}
+
+.image-show img
+{
+	max-width: 8vw;
+    max-height: 8vw;
+    object-fit: cover;
+    visibility: visible;
 }
 
 .reviewInsertBtnDiv 
