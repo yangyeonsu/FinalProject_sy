@@ -99,7 +99,7 @@
 		
 		<!-- 접수내역관리 -->
 		<div id="receive">
-			<h1>패널티회수 접수내역 관리</h1>
+			<h1>가게 등록/폐업 요청 접수내역 관리</h1>
 			
 			<!-- 가게 등록/폐업 요청 box -->
 			<div id="inout_Box" style="height: auto;">
