@@ -138,7 +138,12 @@ $(document).ready(function(){
 	
 	function loadFile(input) {
 		
-		var name = document.getElementById('fileName');
+		var table = document.getElementById('food_table');
+	    var lastRow = table.rows[table.rows.length - 1]; // 맨 뒤에 <tr> 추가
+	    
+	    var cellCount = lastRow.cells.length;
+		
+		var name = document.getElementById('fileName'+cellCount);
 		var container = input.parentNode.querySelector('.image-show');
 	    
 	    // 이미 업로드된 사진이 있을 경우 삭제
@@ -184,7 +189,7 @@ $(document).ready(function(){
 	    content += "</div>";
 	    content += "<input type='file' id='file1"+ cellCount +"' name='chooseFile' accept='image/*' onchange='loadFile(this)'>";
 	    content += "<div class='image-show'></div>";
-	    content += "<p id='fileName' style='font-size: small'></p>";
+	    content += "<p id='fileName"+ cellCount +"' style='font-size: small'></p>";
 	    content += "<label id='label'>";
 	    content += "	<input type='text' class='input'>";
 	    content += "	<div class='line-box' style='width:60%; margin-left: 3vw;'>";
@@ -196,3 +201,57 @@ $(document).ready(function(){
 	    
 
 	};
+	
+	$(function()
+			{
+				$(".left_sub_menu").hide();
+				$(".has_sub").click(function()
+				{
+					$(".left_sub_menu").fadeToggle(300);
+					if ($('#checkOverlay').val() == "true")
+					{
+						$('.overlay').css("position", "fixed");
+						$('.overlay').css("width", "0%");
+						$('.overlay').css("height", "0%");
+						$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
+						$('.overlay').css("z-index", "0");
+						$('#checkOverlay').attr("value", "false");
+					} else
+					{
+						$('.overlay').css("position", "fixed");
+						$('.overlay').css("width", "100%");
+						$('.overlay').css("height", "100%");
+						$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
+						$('.overlay').css("z-index", "3");
+						$('.overlay').css("margin-top", "1.011vh");
+						$('#checkOverlay').attr("value", "true");
+					}
+
+				});
+				// 왼쪽메뉴 드롭다운
+				$(".sub_menu ul.small_menu").hide();
+				$(".sub_menu ul.big_menu").click(function()
+				{
+					$("ul", this).slideToggle(300);
+				});
+				// 외부 클릭 시 좌측 사이드 메뉴 숨기기
+				$('.overlay').on('click', function()
+				{
+					$('.left_sub_menu').fadeOut();
+					$('.overlay').css("position", "fixed");
+					$('.overlay').css("width", "0%");
+					$('.overlay').css("height", "0%");
+					$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
+					$('.overlay').css("z-index", "0");
+					$('#checkOverlay').attr("value", "false");
+				});
+			});
+
+			$(function()
+			{
+				$("#openTime, #closeTime").on("change", function() {
+			        var rowClass = $(this).closest("tr").attr("class");
+			        
+			        alert(rowClass);
+				});
+			});
