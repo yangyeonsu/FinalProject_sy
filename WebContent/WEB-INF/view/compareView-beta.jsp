@@ -5,7 +5,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
 	request.setCharacterEncoding("UTF-8");
-	String cp = request.getContextPath();
+String cp = request.getContextPath();
 %>
 <!DOCTYPE html>
 <html>
@@ -23,8 +23,8 @@
 <style type="text/css">
 body {
 	font-family: 'IBM Plex Sans KR', sans-serif;
-    margin:0px;
-    padding: 0px;        
+	margin: 0px;
+	padding: 0px;
 }
 
 .mainBody {
@@ -80,37 +80,32 @@ body {
 }
 
 .cList, .cLo {
-    height: 3vh;
-    font-size: 1rem;
-    font-weight: bold;
-    display: flex;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
+	height: 3vh;
+	font-size: 1rem;
+	font-weight: bold;
+	display: flex;
+	text-align: center;
+	justify-content: center;
+	align-items: center;
 }
 
-.bt
-{
+.bt {
 	font-size: 0.8rem !important;
 }
 
-.bottomL
-{
+.bottomL {
 	border-bottom: 1px solid #ED8F83;
 }
 
-.ocTitle
-{
-	font-size: 1rem !important;
-    font-weight: bold;
-    padding-bottom: 1vh !important;
+.ocTitle {
+    font-size: 1rem !important;
 }
 
 .lDay {
-    /* height: 3vh; */
+    height: 2.48vh;
     font-size: 0.8rem;
     padding-top: 0.5vh;
-    padding-bottom: 1.5vh;
+    /* padding-bottom: 1.5vh; */
     font-weight: bold;
 }
 
@@ -123,17 +118,17 @@ body {
 }
 
 .cMenu {
-    height: 10vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+	height: 10vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .cat {
 	margin-top: 1vh;
 }
 
-.photo{
+.photo {
 	margin-bottom: 1vh;
 }
 
@@ -150,13 +145,13 @@ body {
 }
 
 .cOpt {
-    padding-top: 1.5vh;
-    height: 2vh;
-    font-size: 1rem;
-    font-weight: bold;
-    padding-bottom: 1.5vh;
-    text-align: left;
-    padding-left: 4vw;
+	padding-top: 1.5vh;
+	height: 2vh;
+	font-size: 1rem;
+	font-weight: bold;
+	padding-bottom: 1.5vh;
+	text-align: left;
+	padding-left: 4vw;
 }
 
 .phMenu {
@@ -165,11 +160,10 @@ body {
 	object-fit: cover;
 }
 
-.menu
-{
+.menu {
 	display: flex;
-    align-items: center;
-    justify-content: flex-start;
+	align-items: center;
+	justify-content: flex-start;
 }
 </style>
 
@@ -239,7 +233,6 @@ body {
 		}
 
 	});
-	
 
 	/* 영업 요일이 7주일 미만일 경우 
 	$(document).ready(function()
@@ -385,7 +378,7 @@ body {
 
 		});
 	});
-	*/
+	 */
 </script>
 
 </head>
@@ -436,8 +429,14 @@ body {
 							<c:if test="${st.st_num == st_num }">
 								<div id="stName${st_num }" class="cName">[ ${st.st_name} ]</div>
 								<div id="stPhoto${st_num }" class="photo">
-									<img class="phStore" src="<%=cp %>/${st.photo_link}">
-
+									<c:choose>
+										<c:when test="${empty st.photo_link }">
+											<img class="phStore" src="<%=cp%>/images/logo_text.png">
+										</c:when>
+										<c:otherwise>
+											<img class="phStore" src="<%=cp %>/${st.photo_link}">
+										</c:otherwise>
+									</c:choose>
 								</div>
 								<div id="stAddr${st_num }" class="cLo">${st.st_location}</div>
 
@@ -450,26 +449,29 @@ body {
 						</c:forEach>
 						<!-- cBox -->
 						<div class="cBox">
+							<div class="opCl">
+								<c:forEach var="op" items="${openClose }" varStatus="status">
+									<c:choose>
+										<c:when test="${op.st_num == st_num }">
+											<div id="opWeek${st_num }" class="lDay">
+												${op.day_name }&nbsp;&nbsp; ${op.operate_time}&nbsp;&nbsp;
+												<c:choose>
+													<c:when test="${op.holiday eq '휴무'}">
+														휴무
+													</c:when>
+													<c:otherwise>
 
-							<c:forEach var="op" items="${openClose }">
-								<c:if test="${op.st_num == st_num }">
-									<div id="opWeek${st_num }" class="lDay">
-										<div id="days" class="cDay">${op.day_name }&nbsp;&nbsp;
-											${op.operate_time}&nbsp;&nbsp;
-											<c:choose>
-												<c:when test="${op.holiday eq '휴무'}">
-													휴무
-												</c:when>
-												<c:otherwise>
-
-												</c:otherwise>
-											</c:choose>
-										</div>
-
-									</div>
-								</c:if>
-							</c:forEach>
-							
+													</c:otherwise>
+												</c:choose>
+											</div>
+										</c:when>
+										<c:when test="${!fn:contains(op.st_num, st_num) }">
+											<div class="lDay">
+											</div>
+										</c:when>
+									</c:choose>
+								</c:forEach>
+							</div>
 							<div class="cList bt">
 								<c:forEach var="bt" items="${breakTimeList }">
 									<c:if test="${bt.st_num == st_num }">
@@ -509,8 +511,7 @@ body {
 							<c:forEach var="sc" items="${stChekList}">
 								<c:if test="${sc.st_num == st_num }">
 									<div id="${st_num }_${sc.chbox_num}" class="cOpt">
-										${sc.chbox_name} : ${sc.yesorno }
-									</div>
+										${sc.chbox_name} : ${sc.yesorno }</div>
 								</c:if>
 							</c:forEach>
 						</div>
