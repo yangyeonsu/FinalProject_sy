@@ -74,6 +74,48 @@ String cp = request.getContextPath();
 			$('.overlay').css("z-index", "0");
 			$('#checkOverlay').attr("value", "false");
 		});
+		
+		
+		// 리뷰 작성 페이지로 이동
+		$("#insertReview").click(function()
+		{
+			$("#userForm").attr("action", "insertreveiwform.action");
+			$("#userForm").submit();
+		});
+		
+		// 비교함에서 삭제
+		$(document).on("click",".comDelete", function()
+		{
+			$st_num = $(this).val();
+			$user_num = "<%=(String) session.getAttribute("user_num")%>"
+
+			$.ajax(
+			{
+				url : "comdelete.action",
+				type : 'post',
+				data :
+				{
+					"user_num" : $user_num,
+					"st_num" : $st_num
+				},
+				success : function(data)
+				{
+					if (data == "")
+					{
+						alert("비교함에서 이미 삭제된 가게입니다.");
+					} else
+					{
+						/* alert(data); */
+						alert("비교함에서 삭제되었습니다.");
+						$(".comStoreListDiv").html(data);
+					}
+				},
+				error : function(e)
+				{
+					alert(e.responseText);
+				}
+			});
+		});
 
 		/// 신고하기 버튼 눌렀을 때
 		$(".repBtn").click(function()
@@ -86,7 +128,7 @@ String cp = request.getContextPath();
 		{
 			$rv_num = $("input[name=rvNumHidden]").val();
 			alert($rv_num);
-			
+
 			$st_num = $("input[name=st_num]").val();
 			alert($st_num);
 
@@ -104,6 +146,8 @@ String cp = request.getContextPath();
 				alert("신고사유를 선택해주세요.");
 				return;
 			}
+			
+			popupOpen();
 
 			$("input:checkbox[name=reviewRep]:checked").each(function()
 			{
@@ -135,87 +179,106 @@ String cp = request.getContextPath();
 			});
 		});
 		
-		// 리뷰 작성
-		$("#insertReview").click(function()
+		var totalChecked = 0;
+
+		function CountChecked(field)
 		{
-			
-		});
+			if (field.checked)
+				totalChecked += 1;
+			else
+				totalChecked -= 1;
+
+			if (totalChecked > 1)
+			{
+				alert("한 개만 선택 가능합니다.");
+				field.checked = false;
+				totalChecked -= 1;
+			}
+
+		}
 		
 		// 가게 정보 오류 수정 요청
-		$("#modifyReqBtn").click(function()
-		{
-			alert($(this).val());
-		});
-
-			
 		$("#reqBtn").click(function()
 		{
+			$st_num = $("input[name=st_num]").val();
+			alert($st_num);
+			
 			var optionReq = [];
 
 			$("input:checkbox[name=optionCheck]:checked").each(function()
 			{
 				optionReq.push($(this).val());
+				alert($(this).val());
 			});
 
-			$rep_op_num = optionReq[0];
+			$chbox_num = optionReq[0];
+			alert("st_num : " + $st_num + ", chbox_num :" + $chbox_num);
 
 			if (optionReq.length == null || optionReq.length == 0)
 			{
 				alert("정보수정을 요청하고자 하는 항목 하나를 선택해주세요!");
 				return;
 			}
+			
+			$req_rs = $("#reqRs").val();
+			alert("reqRs : " + $req_rs);
+			
+			reqPopupOpen();
 
 			$("input:checkbox[name=optionCheck]:checked").each(function()
 			{
 				$(this).prop("checked", false);
-				totalChecked = 0;
+				optionTotalChecked = 0;
+			});
+			
+			$.ajax(
+			{
+				url : "reqapply.action",
+				type : 'post',
+				data :
+				{
+					"req_rs" : $req_rs,
+					"chbox_num" : $chbox_num,
+					"st_num" : $st_num
+				},
+				context : this,
+				success : function(result)
+				{
+					if(result==1)
+					{
+						alert("가게정보 오류수정 요청이 완료되었습니다.");
+					}
+				},
+				error : function(e)
+				{
+					alert(e.responseText);
+				}
 			});
 		});
 		
+		var optionTotalChecked = 0;
+
+		function optionCountChecked()
+		{
+			if ($("input:checkbox[name=optionCheck]").checked)
+				optionTotalChecked += 1;
+			else
+				optionTotalChecked -= 1;
+
+			if (optionTotalChecked > 1)
+			{
+				alert("한 개만 선택 가능합니다.");
+				option.checked = false;
+				optionTotalChecked -= 1;
+			}
+		}
+		
 	});
 
-	var totalChecked = 0;
 
-	function CountChecked(field)
-	{
-		if (field.checked)
-			totalChecked += 1;
-		else
-			totalChecked -= 1;
 
-		if (totalChecked > 1)
-		{
-			alert("한 개만 선택 가능합니다.");
-			field.checked = false;
-			totalChecked -= 1;
-		}
 
-	}
 
-	// 리뷰 작성 페이지로 이동
-	$("#insertReview").click(function()
-	{
-		$("#userForm").attr("action", "reviewRep.action");
-		$("#usesForm").submit();
-	});
-
-	var optionTotalChecked = 0;
-
-	function optionCountChecked(field)
-	{
-		if (field.checked)
-			optionTotalChecked += 1;
-		else
-			optionTotalChecked -= 1;
-
-		if (optionTotalChecked > 1)
-		{
-			alert("한 개만 선택 가능합니다.");
-			field.checked = false;
-			optionTotalChecked -= 1;
-		}
-
-	}
 	// 모달--------------------------------------------------------------------------
 	function popupOpen()
 	{
@@ -248,7 +311,7 @@ String cp = request.getContextPath();
 		}
 
 	}
-	
+
 	function reqPopupOpen()
 	{
 
@@ -288,7 +351,7 @@ String cp = request.getContextPath();
 			$('<div class="bgLayer"></div>').appendTo($('body'));
 		}
 		var object = $(".bgLayer");
-		var w = $(document).width() + 12;
+		var w = $(document).width();
 		var h = $(document).height();
 
 		object.css(
@@ -445,6 +508,7 @@ String cp = request.getContextPath();
 								<div class="background" style="font-weight: bold;">
 									<div class="storeName">
 										<span style="font-size: 28pt; font-weight: bold;">${s.st_name }</span>
+										<input type="hidden" name="st_name" value="${s.st_name }">
 									</div>
 									<div class="revBoard">
 										<div class="storeImgDiv">
@@ -457,7 +521,7 @@ String cp = request.getContextPath();
 											</div>
 											<div class="likeRevC score">
 												별점 ⭐<span>${s.star_avg}</span>
-												
+
 											</div>
 											<div class="likeRevC reviewNum">
 												리뷰 수 &nbsp; <span>${s.rv_count}</span>
@@ -605,9 +669,10 @@ String cp = request.getContextPath();
 										<div class="stCheckYesorno">${stCheck.yesorno }</div>
 									</div>
 								</c:forEach>
-								
-								<div name="stCheckModifyReq">
-									<button type="button" id="modifyReqBtn" onclick="reqPopupOpen()">정보오류수정요청</button>
+
+								<div class="stCheckModifyReq">
+									<button type="button" id="modifyReqBtn"
+										onclick="reqPopupOpen()">정보오류수정요청</button>
 								</div>
 							</div>
 						</div>
@@ -753,7 +818,7 @@ String cp = request.getContextPath();
 
 							<div id="popup" style="position: absolute; visibility: hidden;">
 								<h4>
-									<a href="#" class="close" onClick="javascript:popupOpen()">X</a>
+									<a href="#" class="close" onClick="javascript:popupOpen()">Ⅹ</a>
 								</h4>
 								<h3>리뷰신고</h3>
 								<div class="popCont">
@@ -776,28 +841,47 @@ String cp = request.getContextPath();
 									</div>
 								</div>
 								<div class="dec">
-									<button id="decBtn" onclick="popupOpen()">신고하기</button>
+									<button id="decBtn">신고하기</button>
 								</div>
 							</div>
-							
-							<div id="reqPopup" style="position: absolute; visibility: hidden;">
+
+							<div id="reqPopup"
+								style="position: absolute; visibility: hidden;">
 								<h4>
-									<a href="#" class="close" onClick="javascript:reqPopupOpen()">X</a>
+									<a href="#" class="close" onClick="javascript:reqPopupOpen()">Ⅹ</a>
 								</h4>
 								<h3>가게정보오류수정요청</h3>
 								<div class="reqPopCont">
 									<div class="list">
 										<c:forEach var="checkOption" items="${stCheckList}">
-											<label for="${checkOption.chbox_name }">
-												<input type="checkbox" id="${checkOption.chbox_name }" value="${checkOption.chbox_name }" 
-												 name="optionCheck" onclick="optionCountChecked(this)">
-												${checkOption.chbox_name }
-											</label><br><br>
+												<div class="oplist">
+													<input
+													type="checkbox" id="${checkOption.chbox_name }"
+													value="${checkOption.chbox_num }" name="optionCheck"
+													onclick="optionCountChecked()">
+													
+													<div class="oplistName">
+													<label for="${checkOption.chbox_name }">
+														${checkOption.chbox_name }
+													</label>
+													</div>
+													<div class="oplistOption">
+													<label for="${checkOption.chbox_name }">
+														${checkOption.yesorno }
+													</label>
+													</div>
+												</div>
+												<br>
 										</c:forEach>
+										
+										<div class="reqRs">
+										<h5>요청사유 &nbsp;&nbsp;&nbsp; </h5>
+										<textarea rows="5" cols="45" id="reqRs"></textarea>
+										</div>
 									</div>
 								</div>
 								<div class="req">
-									<button id="reqBtn" onclick="reqPopupOpen()">신고하기</button>
+									<button id="reqBtn">정보수정요청하기</button>
 								</div>
 							</div>
 						</div>

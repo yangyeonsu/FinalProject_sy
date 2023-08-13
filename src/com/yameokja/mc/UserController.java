@@ -120,33 +120,15 @@ public class UserController
 	public String idCheck(@RequestParam("user_id") String user_id, String userid)
 	{
 		String result = "";
-		int count = 0;
 		
-		/*
-		if (userid.contains(" "))
-			result += "{\"count\":\"-1\"}";
-		else
-		{
-			IUserDAO udao = sqlSession.getMapper(IUserDAO.class);
-			count = udao.idCheck(userid);
-			
-			result += "{\"count\":\""+count+"\"}";
-		}
-		*/
 		
-		String[] arr = user_id.split(" ");
+		IUserDAO udao = sqlSession.getMapper(IUserDAO.class);
+		int count = udao.idCheck(user_id);
 		
-		if(arr.length>1)
-		{
-			result += "{\"count\":\"-1\"}";
-		}
-		else
-		{
-			IUserDAO udao = sqlSession.getMapper(IUserDAO.class);
-			count = udao.idCheck(user_id);
-			result += "{\"count\":\""+count+"\"}";
-		}
-
+		System.out.println(count);
+		
+		result += "{\"count\":\""+count+"\"}";
+		
 		return result;
 	}
 	
@@ -156,10 +138,14 @@ public class UserController
 	public String nickCheck(@RequestParam("user_nick") String user_nick, String usernick)
 	{
 		String result = "";
-		int count = 0;
+		
+		System.out.println(user_nick);
 		
 		IUserDAO udao = sqlSession.getMapper(IUserDAO.class);
-		count = udao.nickCheck(user_nick);
+		int count = udao.nickCheck(user_nick);
+		
+		System.out.println(user_nick);
+		System.out.println(count);
 		
 		result += "{\"count\":\""+count+"\"}";
 		

@@ -15,6 +15,7 @@ import java.io.FileInputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -196,7 +197,50 @@ public class AdminMainController
 		IAdminFindDAO dao = sqlSesion.getMapper(IAdminFindDAO.class);
 		
 		model.addAttribute("admin_name", daoM.searchNum(admin_num, "num").getAdmin_name());
-		model.addAttribute("err", dao.accuSearch(reqNum));
+		
+		ReqApplyViewDTO err = dao.accuSearch(reqNum);
+		model.addAttribute("err", err);
+		int st_num = err.getSt_num();
+		
+		IstDetailDAO_userView sddao = sqlSesion.getMapper(IstDetailDAO_userView.class);
+		
+		model.addAttribute("store", sddao.store(st_num));
+		model.addAttribute("clikeNum", sddao.clikeNum(st_num));
+		ArrayList<StoreKeyDTO> stKeyList =  sddao.stKeys(st_num);
+		if(stKeyList.size()>0)
+		{
+			model.addAttribute("stKeys", stKeyList);
+		}
+		else
+			model.addAttribute("stKeys", null);
+		model.addAttribute("openClose", sddao.openClose(st_num));
+		ArrayList<StoreBreaktimeDTO> breakTime = sddao.breakTime(st_num);
+		if(breakTime.size() > 0)
+		{
+			model.addAttribute("breakTime", breakTime);
+		}
+		else
+			model.addAttribute("breakTime", null);
+		ArrayList<String> stPayList = sddao.stPay(st_num);
+		model.addAttribute("stPayList", stPayList);
+		ArrayList<StoreCheckDTO> stCheckList = sddao.stcheck(st_num);
+		if(stCheckList.size()>0)
+		{
+			model.addAttribute("stCheckList", stCheckList);
+		}
+		else
+		{
+			model.addAttribute("stCheckList", null);
+		}
+		ArrayList<StoreMenuDTO> menuLists = sddao.menuLists(st_num);
+		if(menuLists.size()>0)
+		{
+			model.addAttribute("menuLists", menuLists);
+		}
+		else
+			model.addAttribute("menuLists", null);	
+		
+		
 		model.addAttribute("state", state);
 		
 		result = "/WEB-INF/view/storeErrReportForm.jsp";
