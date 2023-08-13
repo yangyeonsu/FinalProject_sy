@@ -137,15 +137,25 @@
 		 
 		$("#searchBtn").click(function()
 		{
-
 			$("#userForm").attr("action", "search.action");
-
-
 			$("#userForm").submit();
-		});
-		
-				    
+		});	    
 	});
+	
+	function enterkey() 
+	{	
+		if (window.event.keyCode == 13)
+		{
+			if ($("#typingArea").val() == "")
+			{
+				$("#typingArea").focus();
+				return;
+			}
+			
+			$("#userForm").attr("action", "search.action");
+			$("#userForm").submit();
+		}
+	}
 
 </script>
 
@@ -177,7 +187,7 @@
 					<div id="inputDiv">
 						<!-- 검색창 -->
 						<input type="text" id="typingArea" name="typingArea"
-							class="insert" placeholder="검색어를 입력해주세요.">
+							class="insert" placeholder="검색어를 입력해주세요." onkeyup="enterkey()">
 						<!-- 검색버튼 -->
 						<button type="button" id="searchBtn" name="searchBtn">
 							<img id="searchIcon" src="<%=cp%>/images/search_icon.png">
