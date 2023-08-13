@@ -343,7 +343,7 @@ input[type="radio"]
 			<div class="igroup2" style="width: 100%;">
 				<textarea id="storeErrReport" readonly="readonly" style="width: 72%; height: 5em; 3px; resize: none;">${err.getReq_rs() }</textarea>
 			</div>
-			<div style="width: 42%; text-align: right; margin-top: 1vh; font-size: 11pt;">
+			<div style="width: 87%; text-align: right; margin-top: 1vh; font-size: 11pt;">
 				<button type="button" class="stInfoBtn" value="${err.st_num }" onclick="javascript:PopupOpen()">${err.st_name } 페이지로 가기</button>
 			</div>
 			
