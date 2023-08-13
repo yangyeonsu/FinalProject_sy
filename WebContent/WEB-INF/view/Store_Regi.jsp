@@ -283,7 +283,12 @@ button
 	    $("#st_in_num1").focus();
 	    
 	    if (isValid)
+	    {
+	    	alert(st_in_numInput);
 	    	$("#st_in_num").val(st_in_numInput);
+	    }
+	    else
+	    	alert("가게 등록 번호 에러");
 	    
 	
 	    return isValid;
@@ -314,11 +319,7 @@ button
 	            $("#fileregi1").css("border", "3px solid red");
 	            return;
 	        }
-
-	        if (!st_in_numcheck()) {
-	            return;
-	        }
-
+	        
 	        if ($("#st_place_num").val() == "") {
 	            $("#err3").text("사업장 관리 번호를 입력해주세요.").css("display", "inline");
 	            $("#st_place_num").focus();
