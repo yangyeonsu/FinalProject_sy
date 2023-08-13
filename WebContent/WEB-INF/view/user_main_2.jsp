@@ -16,7 +16,8 @@ String cp = request.getContextPath();
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery.min.js"></script>
 
-<link rel="stylesheet" type="text/css" href="<%=cp%>/css/user_main_2.css">
+<link rel="stylesheet" type="text/css"
+	href="<%=cp%>/css/user_main_2.css">
 
 <script type="text/javascript">
 	$(document).ready(function()
@@ -248,54 +249,55 @@ String cp = request.getContextPath();
 	<form action="" id="userForm" method="POST">
 
 		<c:import url="header_userMain.jsp"></c:import>
-	
+
 		<div class=container>
-	
+
 			<!-- 비교함 외의 영역 -->
 			<div id="mainDiv">
-	
+
 				<!-- 메인로고 + 검색창 + 검색버튼 + 체크박스 구역 -->
 				<div id="searchArea">
-	
+
 					<!-- 메인로고 -->
 					<button type="button" id="logoImgBtn"
 						onclick="location.href='main.action'">
 						<img id="logoImg" name="logoImg" class="Img"
 							src="<%=cp%>/images/logo_text.png">
 					</button>
-	
+
 					<!-- 검색창 + 검색버튼 -->
 					<div id="inputDiv">
 						<!-- 검색창 -->
-						<input type="text" id="typingArea" name="typingArea" class="insert"
-							value=" ${keyword }">
+						<input type="text" id="typingArea" name="typingArea"
+							class="insert" value=" ${keyword }">
 						<button type="button" id="searchBtn" name="searchBtn">
 							<img id="searchIcon" src="<%=cp%>/images/search_icon.png">
 						</button>
 					</div>
-	
+
 					<div id="checkRegion">
 						<div id="regionBox">
 							<span>지역</span>
 						</div>
 						<div id="regionCB">
 							<c:forEach var="region" items="${regionList }">
-								<label for="${region.region_name }">
-									<c:choose>
+								<label for="${region.region_name }"> <c:choose>
 										<c:when test="${empty regionChecked}">
-											<input type="checkbox" class="checkBox" name="region" value="${region.region_name }" id="${region.region_name }"
-											> ${region.region_name }
+											<input type="checkbox" class="checkBox" name="region"
+												value="${region.region_name }" id="${region.region_name }"> ${region.region_name }
 										</c:when>
 										<c:otherwise>
 											<c:forEach var="rch" items="${regionChecked }">
 												<c:choose>
 													<c:when test="${region.region_name eq rch}">
-														<input type="checkbox" class="checkBox" name="region" value="${region.region_name }" id="${region.region_name }"
-														checked="checked"> ${region.region_name }
+														<input type="checkbox" class="checkBox" name="region"
+															value="${region.region_name }"
+															id="${region.region_name }" checked="checked"> ${region.region_name }
 													</c:when>
 													<c:otherwise>
-														<input type="checkbox" class="checkBox" name="region" value="${region.region_name }" id="${region.region_name }"
-														> ${region.region_name }
+														<input type="checkbox" class="checkBox" name="region"
+															value="${region.region_name }"
+															id="${region.region_name }"> ${region.region_name }
 													</c:otherwise>
 												</c:choose>
 											</c:forEach>
@@ -305,29 +307,30 @@ String cp = request.getContextPath();
 							</c:forEach>
 						</div>
 					</div>
-	
+
 					<div id="checkCat">
 						<div id="catBox">
 							<span>음식 카테고리</span>
 						</div>
 						<div id="catCB">
 							<c:forEach var="foodLabel" items="${foodLabelList }">
-								<label for="${foodLabel.food_name }">
-									<c:choose>
+								<label for="${foodLabel.food_name }"> <c:choose>
 										<c:when test="${empty catChecked}">
-											<input type="checkbox" class="checkBox" name="foodLabel" value="${foodLabel.food_name }" id="${foodLabel.food_name }"
-											> ${foodLabel.food_name }
+											<input type="checkbox" class="checkBox" name="foodLabel"
+												value="${foodLabel.food_name }" id="${foodLabel.food_name }"> ${foodLabel.food_name }
 										</c:when>
 										<c:otherwise>
 											<c:forEach var="cch" items="${catChecked }">
 												<c:choose>
 													<c:when test="${foodLabel.food_name eq cch}">
-														<input type="checkbox" class="checkBox" name="foodLabel" value="${foodLabel.food_name }" id="${foodLabel.food_name }"
-														checked="checked"> ${foodLabel.food_name }
+														<input type="checkbox" class="checkBox" name="foodLabel"
+															value="${foodLabel.food_name }"
+															id="${foodLabel.food_name }" checked="checked"> ${foodLabel.food_name }
 													</c:when>
 													<c:otherwise>
-														<input type="checkbox" class="checkBox" name="foodLabel" value="${foodLabel.food_name }" id="${foodLabel.food_name }"
-														> ${foodLabel.food_name }
+														<input type="checkbox" class="checkBox" name="foodLabel"
+															value="${foodLabel.food_name }"
+															id="${foodLabel.food_name }"> ${foodLabel.food_name }
 													</c:otherwise>
 												</c:choose>
 											</c:forEach>
@@ -337,29 +340,29 @@ String cp = request.getContextPath();
 							</c:forEach>
 						</div>
 					</div>
-	
+
 					<div id="checkStKey">
 						<div id="stKeyBox">
 							<span>가게 키워드</span>
 						</div>
 						<div id="stKeyCB">
 							<c:forEach var="stKey" items="${stKeyList }">
-								<label for="${stKey.st_keyword }">
-									<c:choose>
+								<label for="${stKey.st_keyword }"> <c:choose>
 										<c:when test="${empty stKeyChecked}">
-											<input type="checkbox" class="checkBox" name="stKey" value="${stKey.st_keyword }" id="${stKey.st_keyword }"
-											> ${stKey.st_keyword }
+											<input type="checkbox" class="checkBox" name="stKey"
+												value="${stKey.st_keyword }" id="${stKey.st_keyword }"> ${stKey.st_keyword }
 										</c:when>
 										<c:otherwise>
 											<c:forEach var="sch" items="${stKeyChecked }">
 												<c:choose>
 													<c:when test="${stKey.st_keyword eq sch}">
-														<input type="checkbox" class="checkBox" name="stKey" value="${stKey.st_keyword }" id="${stKey.st_keyword }"
-														checked="checked"> ${stKey.st_keyword }
+														<input type="checkbox" class="checkBox" name="stKey"
+															value="${stKey.st_keyword }" id="${stKey.st_keyword }"
+															checked="checked"> ${stKey.st_keyword }
 													</c:when>
 													<c:otherwise>
-														<input type="checkbox" class="checkBox" name="stKey" value="${stKey.st_keyword }" id="${stKey.st_keyword }"
-														> ${stKey.st_keyword }
+														<input type="checkbox" class="checkBox" name="stKey"
+															value="${stKey.st_keyword }" id="${stKey.st_keyword }"> ${stKey.st_keyword }
 													</c:otherwise>
 												</c:choose>
 											</c:forEach>
@@ -369,112 +372,120 @@ String cp = request.getContextPath();
 							</c:forEach>
 						</div>
 					</div>
-	
+
 					<!-- 검색버튼 -->
 					<div id="secondSearchBtnDiv">
 						<button type="button" id="secondSearchBtn" name="secondSearchBtn">
 							필터 검색하기</button>
 					</div>
-					<input type="hidden" name="regionChk" id="regionChk">
-					<input type="hidden" name="foodlabelChk" id="foodlabelChk">
-					<input type="hidden" name="stKeyChk" id="stKeyChk">
-	
+					<input type="hidden" name="regionChk" id="regionChk"> <input
+						type="hidden" name="foodlabelChk" id="foodlabelChk"> <input
+						type="hidden" name="stKeyChk" id="stKeyChk">
+
 				</div>
-	
-	
-	
+
+
+
 				<!-- 검색 결과 구역 -->
 				<div id="resultStDiv">
-	
-	
+
+
 					<div class="searchNameMore">
 						<div class="searchName">
 							▼ <span>검색 결과</span>
 						</div>
 					</div>
-	
+
 					<!-- 가게 구역 -->
 					<div class="storeList">
-						<c:forEach var="store" items="${searchList}">
-	
-							<div class="store">
-								<!-- 가게 사진 + 찜, 비교함추가 -->
-								<div class="stImgBtnDiv">
-									<div class="stImgDiv">
-										<button type="button" value="${store.st_num }"
-												class="storeBtn"
-												onclick="location.href='stdetail-userview.action?st_num=${store.st_num}'">
-											<c:set var = "photo" value="${store.photo_link }"/>
-											
-											<c:choose>
-												<c:when test="${empty photo}">
-													<img class="stImg" src="<%=cp%>/images/logo_text.png">
-												</c:when>
-												<c:otherwise>
-													<img class="stImg" src="<%=cp%>/${photo}">
-												</c:otherwise>
-											</c:choose>
-										</button>
-									</div>
-	
-									<div class="likeComAddBtn">
-										<button type="button" class="comAddBtn"
-											value="${store.st_num }">+</button>
-										
-										<div class="likeBtnDiv">
-											<c:set var="list" value="${userJjimList}" />
-											<c:set var="num" value="${store.st_num}" />
-	
-											<c:choose>
-												<c:when test="${list.contains(num)}">
-													<button type="button" class="likeAddBtn"
-														value="${store.st_num}">❤️</button>
-												</c:when>
-												<c:otherwise>
-													<button type="button" class="likeAddBtn"
-														value="${store.st_num}">🤍</button>
-												</c:otherwise>
-											</c:choose>
+						<c:choose>
+							<c:when test="${empty searchList}">
+								<div class="error">검색 결과가 존재하지 않습니다.</div>
+							</c:when>
+							<c:otherwise>
+
+
+								<c:forEach var="store" items="${searchList}">
+
+									<div class="store">
+										<!-- 가게 사진 + 찜, 비교함추가 -->
+										<div class="stImgBtnDiv">
+											<div class="stImgDiv">
+												<button type="button" value="${store.st_num }"
+													class="storeBtn"
+													onclick="location.href='stdetail-userview.action?st_num=${store.st_num}'">
+													<c:set var="photo" value="${store.photo_link }" />
+
+													<c:choose>
+														<c:when test="${empty photo}">
+															<img class="stImg" src="<%=cp%>/images/logo_text.png">
+														</c:when>
+														<c:otherwise>
+															<img class="stImg" src="<%=cp%>/${photo}">
+														</c:otherwise>
+													</c:choose>
+												</button>
+											</div>
+
+											<div class="likeComAddBtn">
+												<button type="button" class="comAddBtn"
+													value="${store.st_num }">+</button>
+
+												<div class="likeBtnDiv">
+													<c:set var="list" value="${userJjimList}" />
+													<c:set var="num" value="${store.st_num}" />
+
+													<c:choose>
+														<c:when test="${list.contains(num)}">
+															<button type="button" class="likeAddBtn"
+																value="${store.st_num}">❤️</button>
+														</c:when>
+														<c:otherwise>
+															<button type="button" class="likeAddBtn"
+																value="${store.st_num}">🤍</button>
+														</c:otherwise>
+													</c:choose>
+												</div>
+											</div>
+
+										</div>
+
+										<div class="name_reviewDiv">
+											<!-- 가게 명 -->
+											<div class="stName">${store.st_name}</div>
+
+											<!-- 별점 평점(리뷰 수) -->
+											<div class="startReviewDivs">
+												<span>⭐${store.star_avg}</span>(${store.rv_count})
+											</div>
 										</div>
 									</div>
-	
-								</div>
-	
-								<div class="name_reviewDiv">
-									<!-- 가게 명 -->
-									<div class="stName">${store.st_name}</div>
-	
-									<!-- 별점 평점(리뷰 수) -->
-									<div class="startReviewDivs">
-										<span>⭐${store.star_avg}</span>(${store.rv_count})
-									</div>
-								</div>
-							</div>
-	
-						</c:forEach>
-	
+
+								</c:forEach>
+							</c:otherwise>
+						</c:choose>
 					</div>
 					<!-- storeList end -->
-	
+
 				</div>
 				<!-- resultStDiv end -->
-	
-	
+
+
 				<!-- 더보기 버튼 -->
 				<div class="searchMore">
 					<button type="button" id="searchMore" style="margin: auto;">검색
 						결과 더보기</button>
 				</div>
-	
+
 			</div>
 			<!-- mainDiv end -->
-	
-	
-	
+
+
+
 			<c:import url="compare_box.jsp"></c:import>
-	
+
 		</div>
-	
+
 		<c:import url="footer.jsp"></c:import>
 	</form>
 </body>
