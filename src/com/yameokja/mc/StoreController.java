@@ -107,10 +107,11 @@ public class StoreController
 		
 		HttpSession session = request.getSession();
 		
+		IstDetailDAO_userView dao = sqlSession.getMapper(IstDetailDAO_userView.class);
 		IUserDAO uDao = sqlSession.getMapper(IUserDAO.class);
 		
-		
 		String user_num = (String)session.getAttribute("user_num");
+		int st_num = Integer.parseInt((String)session.getAttribute("st_num"));
 		
 		UserDTO user = uDao.searchUserInfo(user_num, "num");
 
@@ -125,12 +126,69 @@ public class StoreController
 		model.addAttribute("user", user);
 		
 		
+		// 가게 기본 사항
+		model.addAttribute("store", dao.store(st_num));
+		
+		// 가게 찜 수
+		model.addAttribute("clikeNum", dao.clikeNum(st_num));
+		
+		// 가게 키워드
+		ArrayList<StoreKeyDTO> stKeyList =  dao.stKeys(st_num);
+		
+		if(stKeyList.size()>0)
+		{
+			model.addAttribute("stKeys", stKeyList);
+		}
+		else
+			model.addAttribute("stKeys", null);
+		
+		// 가게 영업시간 + 휴무일
+		model.addAttribute("openClose", dao.openClose(st_num));
+		
+		// 가게 브레이크 타임
+		ArrayList<StoreBreaktimeDTO> breakTime = dao.breakTime(st_num);
+		if(breakTime.size() > 0)
+		{
+			model.addAttribute("breakTime", breakTime);
+		}
+		else
+			model.addAttribute("breakTime", null);
+		
+		// 가게 결제수단
+		ArrayList<String> stPayList = dao.stPay(st_num);
+		model.addAttribute("stPayList", stPayList);
+		
+		// 가게 체크박스
+		ArrayList<StoreCheckDTO> stCheckList = dao.stcheck(st_num);
+		
+		if(stCheckList.size()>0)
+		{
+			model.addAttribute("stCheckList", stCheckList);
+		}
+		else
+		{
+			model.addAttribute("stCheckList", null);
+		}
+		
+		
+		// 가게 메뉴
+		ArrayList<StoreMenuDTO> menuLists = dao.menuLists(st_num);
+		
+		if(menuLists.size()>0)
+		{
+			model.addAttribute("menuLists", menuLists);
+		}
+		else
+			model.addAttribute("menuLists", null);
+		
+		
+		
 		result = "/WEB-INF/view/st_detail_form.jsp";
 		
 		return result;
 	}
   
-  @RequestMapping(value = "/rvReply.action", method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = "/rvReply.action", method = {RequestMethod.GET, RequestMethod.POST})
 	public String rvReply(@RequestParam("rv_num") int rv_num, @RequestParam("reply_content") String reply_content, HttpServletRequest request, Model model)
 	{	
 		int rvReplynum = 0;
