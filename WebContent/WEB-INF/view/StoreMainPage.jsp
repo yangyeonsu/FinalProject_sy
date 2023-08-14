@@ -1159,19 +1159,8 @@ $(function name()
 									</div>
 								</div>
 								<div class="regDate" align="right">${rv.reg_date }</div>
-								
 								<div class="replyBox" align="right" style="display: none;" id="div${rv.rv_num }">
-									<c:choose>
-								        <c:when test="${not empty rv.reply_content}">
-								            사장님 : <input type="text" class="rvApplyContent" value="${rv.reply_content }">
-								        </c:when>
-								        <c:otherwise>
-								            사장님 : <input type="text" class="rvApplyContent">
-								        </c:otherwise>
-								    </c:choose>
-								    <input type="button" class="completeBtn" value="완료">
-									
-									<%-- 사장님 : <input type="text" class="rvApplyContent" value="${rv.reply_content }> <input type="button" class="completeBtn" value="완료"> --%>
+									사장님 : <input type="text" class="rvApplyContent"> <input type="button" class="completeBtn" value="완료">
 								</div>
 								
 							</div>
