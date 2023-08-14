@@ -49,67 +49,7 @@ String cp = request.getContextPath();
 			$(".recBtn").css("pointer-events", "none");
 		}
 
-		$(".comAddBtn").click(function()
-		{
-			var st_num = $(this).val()
-			
-			var user_num = "<%=(String) session.getAttribute("user_num")%>"
-			
-			$.ajax(
-			{
-				url : "comparingInsert.action",
-				type : "POST",
-				data : { "user_num" : user_num
-						, "st_num" : st_num },
-				dataType : "text",
-				success : function(data)
-				{
-					if (data == "")
-					{
-						alert("이미 비교함에 담긴 가게입니다.");
-					} else
-					{
-						$(".comStoreListDiv").html(data);
-					}
-				},
-				error : function(e)
-				{
-					alert(e.responseText);
-				}
-			});
-
-		});
-		
-		$(document).on("click",".likeAddBtn", function()
-		{
-			$st_num = $(this).val();
-			alert($st_num);
-			$user_num = "<%=(String) session.getAttribute("user_num")%>"
-			
-			$.ajax(
-			{
-				url : "jjimInsertDelete.action",
-				type : 'post',
-				data :
-				{
-					"st_num" : $st_num,
-					"user_num" : $user_num
-				},
-				context: this,
-				success : function(result)
-				{
-					/* alert(result); */
-					$(this).html(result);
-					
-					$(".likeAddBtn[value='" + $(this).val() + "']").html(result);
-				},
-				error : function(e)
-				{
-					alert(e.responseText);
-				}
-			});
-
-		});
+		// 왼쪽 사이드 바
 		$(".left_sub_menu").hide();
 		$(".has_sub").click(function()
 		{
@@ -152,14 +92,74 @@ String cp = request.getContextPath();
 			$('#checkOverlay').attr("value", "false");
 		});
 		
-		
-		// 리뷰 작성 페이지로 이동
-		$("#insertReview").click(function()
+		$(".comAddBtn").click(function()
 		{
-			$("#userForm").attr("action", "insertreveiwform.action");
-			$("#userForm").submit();
+			var st_num = $(this).val()
+			
+			var user_num = "<%=(String) session.getAttribute("user_num")%>"
+			
+			$.ajax(
+			{
+				url : "comparinginsert.action",
+				type : "POST",
+				data : { "user_num" : user_num
+						, "st_num" : st_num },
+				dataType : "text",
+				success : function(data)
+				{
+					if (data == "")
+					{
+						alert("이미 비교함에 담긴 가게입니다.");
+					} else
+					{
+						$(".comStoreListDiv").html(data);
+					}
+				},
+				error : function(e)
+				{
+					alert(e.responseText);
+				}
+			});
+
 		});
 		
+		$(document).on("click",".likeAddBtn", function()
+		{
+			$st_num = $(this).val();
+			$user_num = "<%=(String) session.getAttribute("user_num")%>"
+			
+			$.ajax(
+			{
+				url : "jjiminsertdelete.action",
+				type : 'post',
+				data :
+				{
+					"st_num" : $st_num,
+					"user_num" : $user_num
+				},
+				context: this,
+				success : function(result)
+				{
+					$(this).html(result);
+					
+					if(result=='❤')
+					{
+						$(".clikeNum").html(${clikeNum+1});
+					}
+					
+					if(result=='🤍')
+					{
+						$(".clikeNum").html(${clikeNum-1});
+					}
+					
+				},
+				error : function(e)
+				{
+					alert(e.responseText);
+				}
+			});
+		});
+
 		// 비교함에서 삭제
 		$(document).on("click",".comDelete", function()
 		{
@@ -193,8 +193,15 @@ String cp = request.getContextPath();
 				}
 			});
 		});
-
-		/// 신고하기 버튼 눌렀을 때
+		
+		// 리뷰 작성 페이지로 이동
+		$("#insertReview").click(function()
+		{
+			$("#userForm").attr("action", "insertreveiwform.action");
+			$("#userForm").submit();
+		});
+		
+		// 신고하기 버튼 눌렀을 때
 		$(".repBtn").click(function()
 		{
 			alert($(this).val());
@@ -278,18 +285,18 @@ String cp = request.getContextPath();
 		$("#reqBtn").click(function()
 		{
 			$st_num = $("input[name=st_num]").val();
-			alert($st_num);
+			//alert($st_num);
 			
 			var optionReq = [];
 
 			$("input:checkbox[name=optionCheck]:checked").each(function()
 			{
 				optionReq.push($(this).val());
-				alert($(this).val());
+				//alert($(this).val());
 			});
 
 			$chbox_num = optionReq[0];
-			alert("st_num : " + $st_num + ", chbox_num :" + $chbox_num);
+			//alert("st_num : " + $st_num + ", chbox_num :" + $chbox_num);
 
 			if (optionReq.length == null || optionReq.length == 0)
 			{
@@ -335,9 +342,9 @@ String cp = request.getContextPath();
 		
 		var optionTotalChecked = 0;
 
-		function optionCountChecked()
+		function optionCountChecked(field)
 		{
-			if ($("input:checkbox[name=optionCheck]").checked)
+			if (field.checked)
 				optionTotalChecked += 1;
 			else
 				optionTotalChecked -= 1;
@@ -586,7 +593,8 @@ String cp = request.getContextPath();
 									<div class="storeNameDiv">
 										<span style="font-size: 28pt; font-weight: bold;">${s.st_name }</span>
 										<input type="hidden" name="st_name" value="${s.st_name }">
-										<button type="button" class="comAddBtn" value="${s.st_num}" style="margin-left:1vw;">+</button>
+										<button type="button" class="comAddBtn" value="${s.st_num}"
+											style="margin-left: 1vw;">+</button>
 									</div>
 									<div class="revBoard">
 										<div class="storeImgDiv">
@@ -595,24 +603,25 @@ String cp = request.getContextPath();
 
 										<div class="info">
 											<div class="likeRevC likeNum">
-											
-												찜 
+
+												찜
 												<div class="likeBtnDiv" style="margin-right: 1vw;">
-												<c:set var="list" value="${userJjimList}" />
-												<c:set var="num" value="${s.st_num}" />
-	
-												<c:choose>
-													<c:when test="${list.contains(num)}">
-														<button type="button" class="likeAddBtn"
-															value="${s.st_num}">❤️</button>
-													</c:when>
-													<c:otherwise>
-														<button type="button" class="likeAddBtn"
-															value="${s.st_num}">🤍</button>
-													</c:otherwise>
-												</c:choose>
-												
-												</div> <span>${clikeNum }</span>
+													<c:set var="list" value="${userJjimList}" />
+													<c:set var="num" value="${s.st_num}" />
+
+													<c:choose>
+														<c:when test="${list.contains(num)}">
+															<button type="button" class="likeAddBtn"
+																value="${s.st_num}">❤️</button>
+														</c:when>
+														<c:otherwise>
+															<button type="button" class="likeAddBtn"
+																value="${s.st_num}">🤍</button>
+														</c:otherwise>
+													</c:choose>
+
+												</div>
+												<span class="clikeNum">${clikeNum }</span>
 											</div>
 											<div class="likeRevC score">
 												별점 ⭐<span>${s.star_avg}</span>
@@ -942,29 +951,26 @@ String cp = request.getContextPath();
 								<div class="reqPopCont">
 									<div class="list">
 										<c:forEach var="checkOption" items="${stCheckList}">
-												<div class="oplist">
-													<input
-													type="checkbox" id="${checkOption.chbox_name }"
+											<div class="oplist">
+												<input type="checkbox" id="${checkOption.chbox_name }"
 													value="${checkOption.chbox_num }" name="optionCheck"
 													onclick="optionCountChecked()">
-													
-													<div class="oplistName">
+
+												<div class="oplistName">
 													<label for="${checkOption.chbox_name }">
-														${checkOption.chbox_name }
-													</label>
-													</div>
-													<div class="oplistOption">
-													<label for="${checkOption.chbox_name }">
-														${checkOption.yesorno }
-													</label>
-													</div>
+														${checkOption.chbox_name } </label>
 												</div>
-												<br>
+												<div class="oplistOption">
+													<label for="${checkOption.chbox_name }">
+														${checkOption.yesorno } </label>
+												</div>
+											</div>
+											<br>
 										</c:forEach>
-										
+
 										<div class="reqRs">
-										<h5>요청사유 &nbsp;&nbsp;&nbsp; </h5>
-										<textarea rows="5" cols="45" id="reqRs"></textarea>
+											<h5>요청사유 &nbsp;&nbsp;&nbsp;</h5>
+											<textarea rows="5" cols="45" id="reqRs"></textarea>
 										</div>
 									</div>
 								</div>
