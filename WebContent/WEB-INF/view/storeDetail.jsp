@@ -33,6 +33,68 @@ String cp = request.getContextPath();
 <script type="text/javascript">
 	$(function()
 	{
+
+		$(".comAddBtn").click(function()
+		{
+			var st_num = $(this).val()
+			
+			var user_num = "<%=(String) session.getAttribute("user_num")%>"
+			
+			$.ajax(
+			{
+				url : "comparingInsert.action",
+				type : "POST",
+				data : { "user_num" : user_num
+						, "st_num" : st_num },
+				dataType : "text",
+				success : function(data)
+				{
+					if (data == "")
+					{
+						alert("이미 비교함에 담긴 가게입니다.");
+					} else
+					{
+						$(".comStoreListDiv").html(data);
+					}
+				},
+				error : function(e)
+				{
+					alert(e.responseText);
+				}
+			});
+
+		});
+		
+		$(document).on("click",".likeAddBtn", function()
+		{
+			$st_num = $(this).val();
+			alert($st_num);
+			$user_num = "<%=(String) session.getAttribute("user_num")%>"
+			
+			$.ajax(
+			{
+				url : "jjimInsertDelete.action",
+				type : 'post',
+				data :
+				{
+					"st_num" : $st_num,
+					"user_num" : $user_num
+				},
+				context: this,
+				success : function(result)
+				{
+					/* alert(result); */
+					$(this).html(result);
+					
+					$(".likeAddBtn[value='" + $(this).val() + "']").html(result);
+				},
+				error : function(e)
+				{
+					alert(e.responseText);
+				}
+			});
+
+		});
 		$(".left_sub_menu").hide();
 		$(".has_sub").click(function()
 		{
@@ -506,9 +568,10 @@ String cp = request.getContextPath();
 							<div class="placeholder main-left">
 
 								<div class="background" style="font-weight: bold;">
-									<div class="storeName">
+									<div class="storeNameDiv">
 										<span style="font-size: 28pt; font-weight: bold;">${s.st_name }</span>
 										<input type="hidden" name="st_name" value="${s.st_name }">
+										<button type="button" class="comAddBtn" value="${s.st_num}" style="margin-left:1vw;">+</button>
 									</div>
 									<div class="revBoard">
 										<div class="storeImgDiv">
@@ -517,7 +580,24 @@ String cp = request.getContextPath();
 
 										<div class="info">
 											<div class="likeRevC likeNum">
-												찜 ❤ &nbsp; <span>${clikeNum }</span>
+											
+												찜 
+												<div class="likeBtnDiv" style="margin-right: 1vw;">
+												<c:set var="list" value="${userJjimList}" />
+												<c:set var="num" value="${s.st_num}" />
+	
+												<c:choose>
+													<c:when test="${list.contains(num)}">
+														<button type="button" class="likeAddBtn"
+															value="${s.st_num}">❤️</button>
+													</c:when>
+													<c:otherwise>
+														<button type="button" class="likeAddBtn"
+															value="${s.st_num}">🤍</button>
+													</c:otherwise>
+												</c:choose>
+												
+												</div> <span>${clikeNum }</span>
 											</div>
 											<div class="likeRevC score">
 												별점 ⭐<span>${s.star_avg}</span>
@@ -548,37 +628,30 @@ String cp = request.getContextPath();
 												<c:if test="${empty openClose }">
 													<div class="ochList">
 														<div class="dayname">월요일</div>
-														<div class="time">-</div>
 														<div class="holiday">-</div>
 													</div>
 													<div class="ochList">
 														<div class="dayname">화요일</div>
-														<div class="time">-</div>
 														<div class="holiday">-</div>
 													</div>
 													<div class="ochList">
 														<div class="dayname">수요일</div>
-														<div class="time">-</div>
 														<div class="holiday">-</div>
 													</div>
 													<div class="ochList">
 														<div class="dayname">목요일</div>
-														<div class="time">-</div>
 														<div class="holiday">-</div>
 													</div>
 													<div class="ochList">
 														<div class="dayname">금요일</div>
-														<div class="time">-</div>
 														<div class="holiday">-</div>
 													</div>
 													<div class="ochList">
 														<div class="dayname">토요일</div>
-														<div class="time">-</div>
 														<div class="holiday">-</div>
 													</div>
 													<div class="ochList">
 														<div class="dayname">일요일</div>
-														<div class="time">-</div>
 														<div class="holiday">-</div>
 													</div>
 												</c:if>
