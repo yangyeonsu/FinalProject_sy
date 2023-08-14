@@ -150,6 +150,7 @@ public class StoreController
 		model.addAttribute("payLabel", sdao.payLabel());
 		model.addAttribute("weekdayLabel", sdao.weekDayLabel());
 		model.addAttribute("weekWeekendDayLabel", sdao.weekWeekendDayLabel());
+		model.addAttribute("chBoxLabel", sdao.chBoxLabel());
 		
 		// 가게 기본 사항
 		model.addAttribute("store", dao.store(st_num));
