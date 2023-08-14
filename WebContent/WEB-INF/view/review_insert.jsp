@@ -59,11 +59,10 @@ String cp = request.getContextPath();
 
 	function loadFile(input)
 	{
-
-		var name = document.getElementById('fileName');
+		var name = document.getElementById('fileName'+$(".button").length);
 		var container = input.parentNode.querySelector('.image-show');
 		
-		container.setAttribute('id', $("input[name=chooseFile]").attr("id"));
+		//container.setAttribute('id', $("input[name=file]").attr("id"));
 
 		// 이미 업로드된 사진이 있을 경우 삭제
 		var existingImage = container.querySelector('img');
@@ -107,21 +106,26 @@ String cp = request.getContextPath();
 	    var element = document.getElementById('reviewPhotoDiv');
 	    var num =  $('.button').length + 1;
 	   
-	    var content = "<div class='button'>";
-	    content += "	<label for='file" + num + "'>";
-	    content += "	👉사진 업로드👈";
-	    content += "	</label>";
+	    var content = "<div>";
+	    content += "	<div class='button'>"
+	    content += "		<label for='file" + num + "'>";
+	    content += "			👉사진 업로드👈";
+	    content += "		</label>";
 	    content += "	</div>";
-	    content += "<input type='file' id='file" + num + "' name='chooseFile' accept='image/*' onchange='loadFile(this)' style='visibility: hidden'>";
-	    content += "<div class='image-show' id='img" + num + "'></div>";
-	    content += "<p class='fileName' style='font-size: small'></p>";
-	    content += "<label class='label'>";
-	    content += "	<div class='line-box' style='width:60%; margin-left: 3vw;'>";
-	    content += "		<div class='line'></div>";
+	    content += "	<input type='file' id='file" + num + "' name='chooseFile' accept='image/*' onchange='loadFile(this)' style='visibility: hidden'>";
+	    content += "	<div class='image-show'></div>";
+	    content += "		<p id='fileName" + num + "' style='font-size: small'></p>";
+	    content += "		<label class='label'>";
+	    content += "		<div class='line-box' style='width:60%; margin-left: 3vw;'>";
+	    content += "			<div class='line'></div>";
+	    content += "		</div>";
+	    content += "		</label>";
 	    content += "	</div>";
-	    content += "</label>";
+	    content += "	<div>";
+	    content += "	<p style='text-align: center;'>&nbsp;</p>";
+	    content += "	</div>";
 	    content += "</div>";
-	    
+	                					
 	   // $(".reviewPhotoDiv").innerText += content;
 	    element.innerHTML += content;
 	}
@@ -234,21 +238,24 @@ String cp = request.getContextPath();
 
 				<!-- 리뷰사진 업로드 버튼 -->
 				<div class="reviewPhotoDiv" id="reviewPhotoDiv">
-					<div class="button">
-						<label for="file1"> 👉사진 업로드👈 </label>
-					</div>
-					<input type="file" id="file1" name="chooseFile" accept="image/*"
-						onchange="loadFile(this)" style="visibility: hidden">
-					<div class="image-show" id="img1"></div>
-					<p class="fileName" style="font-size: small"></p>
-					<label class="label">
-						<div class="line-box" style="width: 60%; margin-left: 3vw;">
-							<div class="line"></div>
-						</div>
-					</label>
-					
 					<div>
-						<p style="text-align: center;">&nbsp;</p>
+						<div class="button">
+							<label for="file1"> 👉사진 업로드👈 </label>
+						</div>
+						<input type="file" id="file1" name="chooseFile" accept="image/*"
+							onchange="loadFile(this)" style="visibility: hidden">
+						<div class="image-show"></div>
+						<p id="fileName1" style="font-size: small"></p>
+						<label class="label">
+							<div class="line-box" style="width: 60%; margin-left: 3vw;">
+								<div class="line"></div>
+							</div>
+						</label>
+						
+						<div>
+							<p style="text-align: center;">&nbsp;</p>
+						</div>
+					
 					</div>
 				</div>
 			</div>
