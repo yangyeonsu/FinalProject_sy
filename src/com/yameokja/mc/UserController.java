@@ -261,6 +261,9 @@ public class UserController
 		model.addAttribute("comparedlist", udao.searchComparedList(user_num));
 		model.addAttribute("tastekeyword", udao.searchTasteKeyword(user_num));
 		
+		model.addAttribute("alarm", udao.userAlarm(user_num));
+
+		
 		result = "WEB-INF/view/user_MyPage.jsp";
 		
 		return result;
@@ -434,7 +437,7 @@ public class UserController
 		
 		session.removeAttribute("user_num");
 		session.removeAttribute("admin_num");
-		session.removeAttribute("store_num");
+		session.removeAttribute("st_num");
 		
 		result = "redirect:yameokja.action";
 		
