@@ -221,7 +221,7 @@ $(function()
 				<div class="mypage_menu">
 					<ul class="person_listA">
 						<li><a href="usermypage.action">마이 페이지</a>
-						<c:if test="${session.st_num != null}">
+						<c:if test="${session.st_num ne '' or !empty session.st_num}">
 							<li><a href="storemain.action">사업자 메인 페이지</a>
 						</c:if>
 						<li><a href="logout.action">로그아웃</a>
