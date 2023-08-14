@@ -67,6 +67,31 @@ public class compareViewController_beta
 		
 		ArrayList<StoreOpencloseDTO> openCloses = dao.openClose(stnumList);	//-- 비교함에서 선택한 가게 영업정보 리스트
 		
+		
+		ArrayList<ArrayList<StoreOpencloseDTO>> dbstoc = new ArrayList<ArrayList<StoreOpencloseDTO>>();
+		
+		for (int st_num : stnumList)
+		{
+			ArrayList<StoreOpencloseDTO> stOc = new ArrayList<StoreOpencloseDTO>();
+			for (StoreOpencloseDTO opencloseDTO : openCloses)
+			{
+				if (opencloseDTO.getSt_num() == st_num)
+				{
+					System.out.println(opencloseDTO.getSt_num());
+					stOc.add(opencloseDTO);
+				}
+			}
+			
+			if (stOc.size() > 0)
+				dbstoc.add(stOc);
+			else
+				dbstoc.add(null);
+			
+			
+		}
+		
+		model.addAttribute("dbstoc", dbstoc);
+		
 		// 가게 브레이크 타임
 		ArrayList<StoreBreaktimeDTO> breakTimeList = new ArrayList<StoreBreaktimeDTO>();	//-- 최종 가게들의 브레이크타임 리스트
 		
