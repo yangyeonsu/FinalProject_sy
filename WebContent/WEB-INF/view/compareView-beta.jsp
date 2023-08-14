@@ -383,6 +383,7 @@ body {
 
 </head>
 <body>
+<form method="post" id="userForm">
 	<div class="header">
 		<c:import url="/WEB-INF/view/header_user.jsp"></c:import>
 	</div>
@@ -398,7 +399,7 @@ body {
 				<span>비교해보기</span>
 			</div>
 
-			<div id="여기가 큰 비교 틀 & 포문으로 들어갈 공간" class="compareBody">
+			<div id="compareBody" class="compareBody">
 
 				<div class="cCategory">
 					<div class="cCat">
@@ -422,7 +423,7 @@ body {
 					<!-- cCat -->
 				</div>
 
-				<c:forEach var="tempstN" items="${stnumList }">
+				<c:forEach var="tempstN" items="${stnumList }" varStatus="stnnumStatus">
 					<c:set var="st_num" value="${tempstN }" />
 					<div id="compareSpace" class="compareSpace">
 						<c:forEach var="st" items="${store}" varStatus="st_status">
@@ -450,27 +451,33 @@ body {
 						<!-- cBox -->
 						<div class="cBox">
 							<div class="opCl">
-								<c:forEach var="op" items="${openClose }" varStatus="status">
-									<c:choose>
-										<c:when test="${op.st_num == st_num }">
-											<div id="opWeek${st_num }" class="lDay">
-												${op.day_name }&nbsp;&nbsp; ${op.operate_time}&nbsp;&nbsp;
-												<c:choose>
-													<c:when test="${op.holiday eq '휴무'}">
-														휴무
-													</c:when>
-													<c:otherwise>
-
-													</c:otherwise>
-												</c:choose>
+								<c:set var="dbstocItem" value="${dbstoc[stnnumStatus.index]}" />
+								<c:choose>
+									<c:when test="${fn:length(dbstocItem) < 1}">
+										<c:forEach begin="0" end="7">
+											<div>
+												&nbsp;
 											</div>
-										</c:when>
-										<c:when test="${!fn:contains(op.st_num, st_num) }">
-											<div class="lDay">
-											</div>
-										</c:when>
-									</c:choose>
-								</c:forEach>
+										</c:forEach>
+									</c:when>
+									<c:otherwise>
+										<c:forEach var="opitem" items="${dbstocItem }">
+											<c:if test="${opitem.st_num == st_num }">
+												<div id="opWeek${st_num }" class="lDay">
+													${opitem.day_name }&nbsp;&nbsp; ${opitem.operate_time}&nbsp;&nbsp;
+													<c:choose>
+														<c:when test="${opitem.holiday eq '휴무'}">
+															휴무
+														</c:when>
+														<c:otherwise>
+		
+														</c:otherwise>
+													</c:choose>
+												</div>
+											</c:if>
+										</c:forEach>
+									</c:otherwise>
+								</c:choose>
 							</div>
 							<div class="cList bt">
 								<c:forEach var="bt" items="${breakTimeList }">
@@ -533,5 +540,6 @@ body {
 	<div class="footer">
 		<c:import url="/WEB-INF/view/footer.jsp"></c:import>
 	</div>
+</form>
 </body>
 </html>
