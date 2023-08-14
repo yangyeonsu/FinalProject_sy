@@ -197,20 +197,27 @@ public class StoreController
 		return result;
 	}
   
-	@RequestMapping(value = "/rvReply.action", method = RequestMethod.POST)
-	public String rvReply(@RequestParam int rv_num, @RequestParam String reply_content, HttpServletRequest request, Model model)
+	@RequestMapping(value="/rvReply.action", method = {RequestMethod.GET, RequestMethod.POST})
+	public String rvReply(HttpServletRequest request, Model model)
 	{	
+		String rvnum = request.getParameter("rv_num");
+		String reply_content = request.getParameter("reply_content");
+		int rv_num = 0;
 		
-		System.out.println("rv_num: " + rv_num);
+		System.out.println("rv_num: " + rvnum);
 		System.out.println("reply_content from HttpServletRequest: " + reply_content);
 
 
 		
         // 점검 코드
-        if (rv_num == 0) 
+        if (rvnum == null) 
         {
-            System.out.println("경고: 'rv_num' 값이 0 입니다.");
-        } 
+            System.out.println("경고: 'rv_num' 값이 null 입니다.");
+        }
+        else
+        {
+        	rv_num = Integer.parseInt(rvnum);
+        }
         
         if (reply_content == null) 
         {
@@ -228,7 +235,7 @@ public class StoreController
 		HttpSession session = request.getSession();
 		IStoreMainDAO dao = sqlSession.getMapper(IStoreMainDAO.class);
 		IUserDAO uDao = sqlSession.getMapper(IUserDAO.class);
-		StoreReviewDTO dto = new StoreReviewDTO();
+		//StoreReviewDTO dto = new StoreReviewDTO();
 		
 		String user_num = (String)session.getAttribute("user_num");
 		Integer stNumInteger = (Integer)session.getAttribute("st_num");
@@ -248,14 +255,13 @@ public class StoreController
 		model.addAttribute("user", user);
 		session.setAttribute("st_num", st_num);
 		
-		int rvReplynum = 0;
 		
-		dto.setRv_content(reply_content);
-		dto.setRv_num(rv_num);
+		//dto.setRv_content(reply_content);
+		//dto.setRv_num(rv_num);
 		
 		
-		//rvReplynum = dao.reviewReply(dto);
-		rvReplynum = dao.reviewReply(rv_num, reply_content);
+		//dao.reviewReply(dto);
+		dao.reviewReply(rv_num, reply_content);
 		
 	    return "redirect:storemain.action";
   }
