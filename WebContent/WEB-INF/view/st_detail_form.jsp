@@ -29,337 +29,14 @@ String cp = request.getContextPath();
 <!-- 부가적인 테마 -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 
-<style type="text/css">
-#body 
-{	
-	width: 100%;
-	display: flex;
-	flex-direction: column;
-}
+<link rel="stylesheet" type="text/css" href="<%=cp%>/css/st_detail.css">
 
-.mainBody
-{	
-	/* background-color: #F7F4EA; */
-	/* margin-left : 19vw; */
-	width: 65vw;
-	padding-left: 7vw;
-}
+<script type="text/javascript">
+/**
+ * 
+ */
 
-.main 
-{	
-	padding-top: 2vh;
-}
-
-.container1 
-{
-	float: left;
-}
-
-.main-left
-{
-	width: 50%;
-	height: 40vh;
-	float: left;
-	text-align: center;
-}
-
-.main-right 
-{
-	width: 50%;
-	height: 40vh;
-	float: right;
-	text-align: center;
-}
-
-
-.opli, .btli
-{
-	border : 2vw;
-	width: 10vw;
-	height: 3vh;
-}
-
-#weekList li, .time li
-{
-	padding-bottom: 0.5vw;
-	padding-right: 0.5vw;
-	padding-left: 0.5vw;
-	padding-top: 0.5vw;
-	list-style: none;
-	border-radius: 11px; 
-}
-
-.revKeyList li
-{	
-	padding-bottom: 0.3vw;
-	padding-top: 0.3vw;
-	background-color: #F8E6E0;
-	border : 1px solid #F781BE;
-	margin: 0.5vw;
-	border-radius: 11px; 
-	list-style: none;
-}
-
-.revKeyList input
-{	
-	background: none;
-	border : 0;
-	list-style: none;
-}
-
-.openclose
-{
-	width: 50%;
-	float: left;
-}
-
-.time 
-{
-	width: 50%;
-	float: left;
-	text-align: center;
-}
-
-.btli
-{
-	text-align: center;
-}
-
-.container2 
-{	
-	margin-top : 20vh;
-	margin-left: 4vw;
-}
-
-.info 
-{
-	width: 100%;
-	height: 50%;
-	display: flex;
-	padding-right: 2vw;
-	text-align: left;
-	margin: 1vw;
-}
-
-
-.info input, textarea
-{	
-	width: 35vw;
-	height: 4vh;
-	background-color: #F8E6E0;
-	border: 0;
-}
-
-.container3, .container4 
-{
-	width: 100%;
-	float: left;
-	margin-top: 3vh;
-}
-
-.container3
-{
-	padding-left: 0.2vw;
-}
-
-
-.thumbnail 
-{
-	width: 10vw;
-	height: 17vh;
-	float: left;
-}
-
-.img-rounded 
-{
-	width: 100%;
-	height: 100%;
-}
-
-.main ul 
-{
-	list-style-type: none;
-}
-
-.menu 
-{
-	display: flex;
-	justify-content: space-evenly;
-	padding-right: 5vw;
-	padding-left: 5vw;
-}
-
-
-.form 
-{
-	padding-left: 3vw;
-}
-
-.revBoard 
-{
-	padding-left: 2vw;
-}
-
-.menuList 
-{
-	display: flex;
-	margin-left: 3vw;
-}
-
-.menuPhoto 
-{
-	padding: 1vw;
-}
-
-.revBack 
-{	
-	width: 90%;
-	height: 14vh;
-	background-color: #EED2CE;
-	border-radius: 11px; 
-}
-
-.btn
-{
-	background-color: #F7AF97;
-    border: 1px #EF6351;
-    border-radius: 8px;
-    color: white;
-    font-size: 10pt;
-    font-family: 'IBM Plex Sans KR', sans-serif;
-    cursor: pointer;
-}
-
-#repCon 
-{
-	float: right;
-}
-
-.reViews 
-{
-	padding-bottom: 2vh;
-}
-
-.recBtn
-{
-	float: right;
-}
-
-.main
-{
-	margin: 10%;
-}
-table
-{
-	border-spacing: 6px;
-}
-
-#label {
-  display: block;
-  position: relative;
-  margin: 40px 0px;
-}
-
-.input {
-  width: 100%;
-  padding: 10px;
-  background: transparent;
-  border: none;
-  outline: none;
-}
-
-.line-box {
-  position: relative;
-  width: 100%;
-  height: 2px;
-  background: #BCBCBC;
-}
-
-.line {
-  position: absolute;
-  width: 0%;
-  height: 2px;
-  top: 0px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #ef6351;
-  transition: ease .6s;
-}
-
-.input:focus + .line-box .line {
-  width: 100%;
-}
-
-.label-txt {
-  position: absolute;
-  top: -1.6em;
-  padding: 10px;
-  font-family: sans-serif;
-  font-size: .8em;
-  letter-spacing: 1px;
-  color: rgb(120,120,120);
-  transition: ease .3s;
-}
-.label-active {
-  top: -3em;
-}
-
-.storeOption input
-{
-	zoom:1.5;
-}
-.food_cat input
-{
-	border: 0;
-	font-size: 13px;
-	width: 2vh;
-	margin-left: 1vh;
-}
-.card input
-{
-	border: 0;
-	font-size: 13px;
-	width: 2vh;
-	margin-left: 1vh;
-}
-.btnSend
-{
-	display: flex;
-	justify-content: space-evenly;
-}
-.button {
-    display: flex;
-    justify-content: center;
-}
-label {
-    cursor: pointer;
-    font-size: 1em;
-}
-
-
-input[name="chooseFile"]
-{
-    visibility: hidden;
-}
-
-
-.scrollable-row
-{
-        max-width: 50vw; /* 스크롤 가능한 최대 높이 설정 */
-        overflow-x: auto; /* 세로 스크롤 적용 */
-       /*  border: 1px solid #ccc; */
-}
-.scrollable-row table
-{
-        width: 100%;
-}
-
-</style>
-
-
-<script type="text/javascript">	
-	
-	$(document).ready(function(){
+$(document).ready(function(){
 
 		$('input[type="text"][class="input"]').focus(function(){
 			$(this).parent().find(".label-txt").addClass('label-active');
@@ -495,7 +172,12 @@ input[name="chooseFile"]
 	
 	function loadFile(input) {
 		
-		var name = document.getElementById('fileName');
+		var table = document.getElementById('food_table');
+	    var lastRow = table.rows[table.rows.length - 1]; // 맨 뒤에 <tr> 추가
+	    
+	    var cellCount = lastRow.cells.length;
+		
+		var name = document.getElementById('fileName'+cellCount);
 		var container = input.parentNode.querySelector('.image-show');
 	    
 	    // 이미 업로드된 사진이 있을 경우 삭제
@@ -504,12 +186,11 @@ input[name="chooseFile"]
 	        container.removeChild(existingImage);
 	    }
 
+	    var file = input.files[0]; // 선택된 파일 가져오기
+	    name.textContent = file.name;
 
 	    var newImage = document.createElement('img');
 	    newImage.setAttribute('class', 'img');
-	    
-	    var file = input.files[0]; // 선택된 파일 가져오기
-	    name.textContent = file.name;
 	    
 	    // 이미지 source 가져오기
 	    newImage.src = URL.createObjectURL(file);
@@ -542,7 +223,7 @@ input[name="chooseFile"]
 	    content += "</div>";
 	    content += "<input type='file' id='file1"+ cellCount +"' name='chooseFile' accept='image/*' onchange='loadFile(this)'>";
 	    content += "<div class='image-show'></div>";
-	    content += "<p id='fileName' style='font-size: small'></p>";
+	    content += "<p id='fileName"+ cellCount +"' style='font-size: small'></p>";
 	    content += "<label id='label'>";
 	    content += "	<input type='text' class='input'>";
 	    content += "	<div class='line-box' style='width:60%; margin-left: 3vw;'>";
@@ -551,70 +232,68 @@ input[name="chooseFile"]
 	    content += "</label>";
 	    
 	    newCell.innerHTML = content; // <td> 내용 설정
+	    
+
 	};
-    
 	
-</script>
-
-<!-- 배너 스크립트 -->
-<script type="text/javascript">
 	$(function()
-	{
-		$(".left_sub_menu").hide();
-		$(".has_sub").click(function()
-		{
-			$(".left_sub_menu").fadeToggle(300);
-			if ($('#checkOverlay').val() == "true")
 			{
-				$('.overlay').css("position", "fixed");
-				$('.overlay').css("width", "0%");
-				$('.overlay').css("height", "0%");
-				$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
-				$('.overlay').css("z-index", "0");
-				$('#checkOverlay').attr("value", "false");
-			} else
+				$(".left_sub_menu").hide();
+				$(".has_sub").click(function()
+				{
+					$(".left_sub_menu").fadeToggle(300);
+					if ($('#checkOverlay').val() == "true")
+					{
+						$('.overlay').css("position", "fixed");
+						$('.overlay').css("width", "0%");
+						$('.overlay').css("height", "0%");
+						$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
+						$('.overlay').css("z-index", "0");
+						$('#checkOverlay').attr("value", "false");
+					} else
+					{
+						$('.overlay').css("position", "fixed");
+						$('.overlay').css("width", "100%");
+						$('.overlay').css("height", "100%");
+						$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
+						$('.overlay').css("z-index", "3");
+						$('.overlay').css("margin-top", "1.011vh");
+						$('#checkOverlay').attr("value", "true");
+					}
+
+				});
+				// 왼쪽메뉴 드롭다운
+				$(".sub_menu ul.small_menu").hide();
+				$(".sub_menu ul.big_menu").click(function()
+				{
+					$("ul", this).slideToggle(300);
+				});
+				// 외부 클릭 시 좌측 사이드 메뉴 숨기기
+				$('.overlay').on('click', function()
+				{
+					$('.left_sub_menu').fadeOut();
+					$('.overlay').css("position", "fixed");
+					$('.overlay').css("width", "0%");
+					$('.overlay').css("height", "0%");
+					$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
+					$('.overlay').css("z-index", "0");
+					$('#checkOverlay').attr("value", "false");
+				});
+			});
+
+			$(function()
 			{
-				$('.overlay').css("position", "fixed");
-				$('.overlay').css("width", "100%");
-				$('.overlay').css("height", "100%");
-				$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
-				$('.overlay').css("z-index", "3");
-				$('.overlay').css("margin-top", "1.011vh");
-				$('#checkOverlay').attr("value", "true");
-			}
+				$("#openTime, #closeTime").on("change", function() {
+			        var rowClass = $(this).closest("tr").attr("class");
+			        
+			        alert(rowClass);
+				});
+			});
 
-		});
-		// 왼쪽메뉴 드롭다운
-		$(".sub_menu ul.small_menu").hide();
-		$(".sub_menu ul.big_menu").click(function()
-		{
-			$("ul", this).slideToggle(300);
-		});
-		// 외부 클릭 시 좌측 사이드 메뉴 숨기기
-		$('.overlay').on('click', function()
-		{
-			$('.left_sub_menu').fadeOut();
-			$('.overlay').css("position", "fixed");
-			$('.overlay').css("width", "0%");
-			$('.overlay').css("height", "0%");
-			$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
-			$('.overlay').css("z-index", "0");
-			$('#checkOverlay').attr("value", "false");
-		});
-	});
-</script>
-<script type="text/javascript">
 
-	$(function()
-	{
-		$("#openTime, #closeTime").on("change", function() {
-	        var rowClass = $(this).closest("tr").attr("class");
-	        
-	        alert(rowClass);
-		});
-	});
 
 </script>
+
 
 </head>
 
@@ -637,8 +316,8 @@ input[name="chooseFile"]
 		<div class="mainBody" style="margin: 0 auto;">
 			
 			<div id="st_detail_header">
-				<h1>${store.st_name } 정보 수정</h1><br>
-				<input type="hidden" id="st_num" name="st_num" value="${store.st_num }">
+				<h1><%-- ${store.st_name } --%> 정보 수정</h1><br>
+				<input type="hidden" id="st_num" name="st_num" value="${session.st_num }">
 				<hr>
 			</div>
 			
@@ -1073,7 +752,7 @@ input[name="chooseFile"]
 						    </div>
 						    	<input type="file" id="file1" name="chooseFile" accept="image/*" onchange="loadFile(this)">
 						    <div class="image-show"></div>
-						    <p id="fileName" style="font-size: small"></p>
+						    <p id="fileName1" style="font-size: small"></p>
 							<label id="label">
 								<input type="text" class="input">
 								<div class="line-box" style="width:60%; margin-left: 3vw;">
@@ -1089,7 +768,7 @@ input[name="chooseFile"]
 						    </div>
 						    	<input type="file" id="file2" name="chooseFile" accept="image/*" onchange="loadFile(this)">
 						    <div class="image-show"></div>
-						    <p id="fileName" style="font-size: small"></p>
+						    <p id="fileName2" style="font-size: small"></p>
 							<label id="label">
 								<input type="text" class="input">
 								<div class="line-box" style="width:60%; margin-left: 3vw;">

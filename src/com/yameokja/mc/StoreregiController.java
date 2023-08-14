@@ -2,6 +2,7 @@ package com.yameokja.mc;
 
 
 import java.io.File;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -15,6 +16,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -28,10 +30,32 @@ public class StoreregiController
     private ServletContext servletContext;
 	
 	@RequestMapping(value = "/storegiinsertform.action", method=RequestMethod.POST)
-	public String SoreregiInsertForm()
+	public String SoreregiInsertForm(HttpServletRequest request, Model model)
 	{
+		HttpSession session = request.getSession();
 		String result = null;
 		
+		String user_num = (String)session.getAttribute("user_num");
+		
+		IUserDAO udao = sqlSession.getMapper(IUserDAO.class);
+		
+		LocalDate currentDate = LocalDate.now();
+        int monthValue = currentDate.getMonthValue();
+		
+		UserDTO user = udao.searchUserInfo(user_num, "num");
+		
+		if (1 <= monthValue && monthValue <= 6)
+		{
+			user.setPoint_sum(udao.secondHalf(user_num).point_sum);
+			user.setUser_grade(udao.firstHalf(user_num).user_grade);
+		}
+		else if(7 <= monthValue && monthValue <= 12)
+		{
+			user.setPoint_sum(udao.firstHalf(user_num).point_sum);
+			user.setUser_grade(udao.secondHalf(user_num).user_grade);
+		}
+		
+		model.addAttribute("user", user);
 		result = "WEB-INF/view/Store_Regi.jsp";
 		
 		return result;
