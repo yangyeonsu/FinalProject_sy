@@ -261,6 +261,9 @@ public class UserController
 		model.addAttribute("comparedlist", udao.searchComparedList(user_num));
 		model.addAttribute("tastekeyword", udao.searchTasteKeyword(user_num));
 		
+		model.addAttribute("alarm", udao.userAlarm(user_num));
+
+		
 		result = "WEB-INF/view/user_MyPage.jsp";
 		
 		return result;
@@ -331,21 +334,16 @@ public class UserController
 	    int startRow = (currentPage - 1) * itemsPerPage + 1;
 	    int endRow = currentPage + itemsPerPage - 1;
 	    
-	    
-	    
-	    List<UserStupdaterelistDTO> user_stupdate_relist = dao.user_stupdate_relist(
-	        user_num, 
-	        startRow, 
-	        endRow
-	    );
-	    
 		/*
 		 * System.out.println(actionName);
 		 * 
 		 * System.out.println(Paging.pageIndexList(currentPage, totalPage, actionName));
 		 */
 	    
+	    
 	    model.addAttribute("pageIndex", Paging.pageIndexList(currentPage, totalPage, actionName));
+	    List<UserStupdaterelistDTO> user_stupdate_relist = dao.user_stupdate_relist(user_num, startRow, endRow);
+	    System.out.println(user_stupdate_relist);
 	    model.addAttribute("user", user);
 	    model.addAttribute("user_stupdate_relist", user_stupdate_relist);
 	    result = "/WEB-INF/view/user_StUpdate_reList.jsp";
@@ -416,7 +414,7 @@ public class UserController
 	    
  	    model.addAttribute("pageIndex", Paging.pageIndexList(currentPage, totalPage, actionName));
 	    List<UserrvreportDTO> rvReportList = dao.user_rv_Report(user_num, startRow, endRow); // 여러 개의 DTO 객체를 리스트로 가져옴
-	    
+	    System.out.println(rvReportList);
 	    model.addAttribute("user_rv_Report", rvReportList); // 리스트를 전달
 	    model.addAttribute("user", user);
 	    result = "/WEB-INF/view/user_rv_Report.jsp";
@@ -434,7 +432,7 @@ public class UserController
 		
 		session.removeAttribute("user_num");
 		session.removeAttribute("admin_num");
-		session.removeAttribute("store_num");
+		session.removeAttribute("st_num");
 		
 		result = "redirect:yameokja.action";
 		
