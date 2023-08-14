@@ -780,22 +780,22 @@ $(document).ready(function()
 	 
     $(".review_reply_btn").click(function(event) 
     {
-        var replyTextarea = $(this).closest('.review').find('textarea.review_reply_txtarea');
-        if(!replyTextarea.val().trim()) 
+        var thisForm = $(this).closest('.rvReplyForm'); // 해당 버튼의 폼을 선택
+        var replyTextarea = thisForm.find('textarea.review_reply_txtarea');
+        if (!replyTextarea.val().trim()) 
         {
             alert("답글을 입력해주세요!");
             event.preventDefault();
         } 
-        else 
+        else
         {
-            $(".rvReplyForm").submit();
+            thisForm.submit(); // 해당 폼 제출
         }
-        
-        console.log("RV_NUM:", $(this).closest('.review').find('input[name="rv_num"]').val());
+
+        console.log("RV_NUM:", thisForm.find('input[name="rv_num"]').val());
         console.log("Reply content:", replyTextarea.val());
-
-
     });
+
     
     
   	/// 신고하기 버튼 눌렀을 때
@@ -1193,9 +1193,37 @@ $(function name()
 								</label><br> <br>
 							</div>
 						</div>
+
 						<div class="dec">
 							<button id="decBtn">신고하기</button>
 						</div>
+
+						
+						<form action="rvReply.action" class="rvReplyForm" method="post">
+				            <div class="review_body">
+				                ${review.rv_content }
+				                <c:choose>
+				       			<c:when test="${not empty review.reply_content}">
+					                <div class="review_reply">
+					                    <span class="review_reply">답글 : ${review.reply_content}</span>
+					                </div>
+				                </c:when>
+						        <c:otherwise>
+									    
+									        <div class="review_reply">
+									            <textarea cols="30" rows="2" class="review_reply_txtarea" id="reply_content" name="reply_content"></textarea>
+									            <input type="hidden" name="rv_num" value="${review.rv_num }" />
+									            <div class="sendBtn">
+									                <button type="button" class="review_reply_btn">리뷰답글</button>
+									                <button type="reset" class="review_reply_btn">취소하기</button>
+									            </div>
+									        </div>
+									    
+								</c:otherwise>
+						    	</c:choose>
+				            </div>
+			            </form>
+
 					</div>
 				</div>
 			</div>
