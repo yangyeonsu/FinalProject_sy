@@ -17,7 +17,7 @@
 
 
 <link rel="stylesheet" type="text/css" href="<%=cp%>/css/user_main.css">
-
+<link rel="stylesheet" type="text/css" href="<%=cp%>/css/storeDetail.css">
 <link rel="stylesheet" type="text/css" href="<%=cp%>/css/userMyPage.css">
 
 <style type="text/css">
@@ -147,6 +147,103 @@
 			$('#checkOverlay').attr("value", "false");
 		});
 	});
+	
+	
+	// 모달 ----------------------------------------------
+	function reqPopupOpen()
+	{
+		//alert("확인");
+		
+		var status = $("#status").html();
+		//alert(status);
+		
+		if (status == "처리완료") 
+		{
+			//alert("status확인");
+			
+			var reject = $("#reject").html();
+			
+			if(reject=="반려")
+	        {
+				
+	        	var rejRsElements = document.querySelectorAll(".rej_rs");
+	            var rejRsContentElements = document.querySelectorAll(".rej_rs_content");
+	            
+	            //alert(rejRsContentElements);
+
+	            for (var i = 0; i < rejRsElements.length; i++) {
+	                var rejRsValue = rejRsElements[i].textContent;
+	                rejRsContentElements[i].textContent = rejRsValue;
+	            }
+			
+				if (document.all.rvPopup.style.visibility == "hidden")
+				{
+					//alert("확인");
+					
+					document.all.rvPopup.style.visibility = "visible";
+					bgLayerOpen();
+					
+					//alert("확인");
+					
+					var $layerPopupObj = $('#rvPopup');
+					var left = ($(window).scrollLeft() + ($(window).width() - $layerPopupObj
+							.width()) / 2);
+					var top = ($(window).scrollTop() + ($(window).height() - $layerPopupObj
+							.height()) / 4);
+		
+					$layerPopupObj.css(
+					{
+						'left' : left,
+						'top' : top,
+						'position' : 'absolute'
+					});
+					$('body').css('position', 'relative').append($layerPopupObj);
+		
+					return false;
+				} 
+				else
+				{
+					document.all.rvPopup.style.visibility = "hidden";
+					bgLayerClear();
+					return false;
+				}
+	        }
+		}
+			
+	}
+	
+	function bgLayerOpen()
+	{
+		if (!$('.bgLayer').length)
+		{
+			$('<div class="bgLayer"></div>').appendTo($('body'));
+		}
+		var object = $(".bgLayer");
+		var w = $(document).width();
+		var h = $(document).height();
+
+		object.css(
+		{
+			'width' : w,
+			'height' : h
+		});
+		object.fadeIn(500); //생성되는 시간 설정
+	}
+	
+	function bgLayerClear()
+	{
+		var object = $('.bgLayer');
+
+		if (object.length)
+		{
+			object.fadeOut(500, function()
+			{
+				object.remove();
+
+			});
+		}
+	}
+	
 </script>
 
 
@@ -185,10 +282,15 @@
 					    <c:otherwise>
 					        <c:forEach var="udre" items="${user_stupdate_relist}">
 					            <div class="report_content">
-					                <div class="rpt_content">${udre.reg_date }</div>
-					                <div class="st_name">${udre.st_name }</div>
-					                <div class="rpt_content">${udre.status }</div>
-					                <div class="rpt_content">${udre.final_date }</div>
+					                <div class="rpt_content" onclick="reqPopupOpen()">${udre.reg_date }</div>
+					                <div class="st_name" onclick="reqPopupOpen()">${udre.st_name }</div>
+					                <div class="rpt_content" id="status" onclick="reqPopupOpen()">${udre.status }</div>
+					                <div class="rpt_content" onclick="reqPopupOpen()">${udre.final_date }</div>
+					            	
+					            	<div id="reject" style="display: none;">${udre.req_process_num }</div>
+					                <div class="rej_rs" style="display: none;">${udre.rej_rs }</div>
+					                
+					            
 					            </div>
 					        </c:forEach>
 					    </c:otherwise>
@@ -207,9 +309,31 @@
 			                </c:otherwise>
 			            </c:choose>
 			        </div>
-					
+			        
+				</div>
+				
+				
+				<div id="rvPopup" style="position: absolute; visibility: hidden;">
+					<h4>
+						<a href="#" class="close" onClick="javascript:reqPopupOpen()">Ⅹ</a>
+					</h4>
+					<h3>가게정보수정요청 반려사유</h3>
+					<div class="rvPopCont">
+						<div class="list">
+							<div class="reqRs">
+								<h5 style="margin-top: 0">반려사유 &nbsp;&nbsp;&nbsp; </h5>
+								<%-- <textarea rows="5" cols="42" id="rvRs" style="resize: none; margin-top: 3vh;">${rvreport.rej_rs }</textarea> --%>
+								<textarea class="rej_rs_content" rows="5" cols="42" id="rvRs" style="resize: none; margin-top: 3vh;" disabled="disabled"></textarea>
+							</div>
+							
+						</div>
+						<div class="rv">
+							<button id="rvBtn" onClick="javascript:reqPopupOpen()">확인</button>
+						</div>
+					</div>
 					
 				</div>
+				
 			</div>
 		</div><!-- right_content -->
 		

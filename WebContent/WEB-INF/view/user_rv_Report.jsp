@@ -160,40 +160,63 @@
 		var status = $("#status").html();
 		//alert(status);
 		
-		if (status == "처리완료") {
+		if (status == "처리완료") 
+		{
 	        //alert("rvreport의 상태는 '처리완료'입니다.");
 	        
-	        if (document.all.rvPopup.style.visibility == "hidden")
-			{
-				//alert("확인");
+	        var reject = $("#reject").html();
+	        //alert("reject");
+	        
+	        // 처리상태가 반려일 때 모달창 띄우기
+	        if(reject=="반려")
+	        {
 				
-				document.all.rvPopup.style.visibility = "visible";
-				bgLayerOpen();
-				
-				//alert("확인");
-				
-				var $layerPopupObj = $('#rvPopup');
-				var left = ($(window).scrollLeft() + ($(window).width() - $layerPopupObj
-						.width()) / 2);
-				var top = ($(window).scrollTop() + ($(window).height() - $layerPopupObj
-						.height()) / 4);
-	
-				$layerPopupObj.css(
+	        	var rejRsElements = document.querySelectorAll(".rej_rs");
+	            var rejRsContentElements = document.querySelectorAll(".rej_rs_content");
+	            
+	            //alert(rejRsContentElements);
+
+	            for (var i = 0; i < rejRsElements.length; i++) {
+	                var rejRsValue = rejRsElements[i].textContent;
+	                rejRsContentElements[i].textContent = rejRsValue;
+	            }
+	        	
+		        if (document.all.rvPopup.style.visibility == "hidden")
 				{
-					'left' : left,
-					'top' : top,
-					'position' : 'absolute'
-				});
-				$('body').css('position', 'relative').append($layerPopupObj);
-	
-				return false;
-			} 
-			else
-			{
-				document.all.rvPopup.style.visibility = "hidden";
-				bgLayerClear();
-				return false;
-			}
+					//alert("확인");
+					
+					document.all.rvPopup.style.visibility = "visible";
+					bgLayerOpen();
+					
+					//alert("확인");
+					
+					var $layerPopupObj = $('#rvPopup');
+					var left = ($(window).scrollLeft() + ($(window).width() - $layerPopupObj
+							.width()) / 2);
+					var top = ($(window).scrollTop() + ($(window).height() - $layerPopupObj
+							.height()) / 4);
+		
+					$layerPopupObj.css(
+					{
+						'left' : left,
+						'top' : top,
+						'position' : 'absolute'
+					});
+					$('body').css('position', 'relative').append($layerPopupObj);
+		
+					return false;
+				} 
+				else
+				{
+					document.all.rvPopup.style.visibility = "hidden";
+					bgLayerClear();
+					return false;
+				}
+	        	
+	        	
+	        }
+	        
+	        
 	    }
 	}
 	
@@ -302,11 +325,12 @@
 					                <div class="rpt_content" onclick="rvPopupOpen()">${rvreport.reporteduserid }</div>
 					                <div class="rpt_content" id="status" onclick="rvPopupOpen()">${rvreport.status }</div>
 					                <div class="rpt_content" onclick="rvPopupOpen()">${rvreport.final_date }</div>
-					                <%-- 
-					                <div>${rvreport.rep_rej_num }</div>
-					                <div>${rvreport.rej_rs }</div>
-					                 --%>
+					                
+					                <div id="reject" style="display: none;">${rvreport.rep_rej_num }</div>
+					                <div class="rej_rs" style="display: none;">${rvreport.rej_rs }</div>
+					                
 					            </div>
+					           
 					        </c:forEach>
 					    </c:otherwise>
 					</c:choose>
@@ -323,7 +347,8 @@
 						<div class="list">
 							<div class="reqRs">
 								<h5 style="margin-top: 0">반려사유 &nbsp;&nbsp;&nbsp; </h5>
-								<textarea rows="5" cols="42" id="rvRs" style="resize: none; margin-top: 3vh;">반려사유</textarea>
+								<%-- <textarea rows="5" cols="42" id="rvRs" style="resize: none; margin-top: 3vh;">${rvreport.rej_rs }</textarea> --%>
+								<textarea class="rej_rs_content" rows="5" cols="42" id="rvRs" style="resize: none; margin-top: 3vh;" disabled="disabled"></textarea>
 							</div>
 							
 						</div>
