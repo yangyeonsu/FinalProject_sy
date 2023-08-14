@@ -3,8 +3,37 @@ package com.yameokja.mc;
 public class UserrvreportDTO
 {
 	private String reg_date, st_name, reporteduserid, final_date, status;
+	/*
+	private int rep_rej_num;
+	private String rej_rs;
+	*/
 	
 	// getter / setter
+	/*
+	public String getRej_rs()
+	{
+		return rej_rs;
+	}
+
+	public void setRej_rs(String rej_rs)
+	{
+		this.rej_rs = rej_rs;
+	}
+	
+
+	public int getRep_rej_num()
+	{
+		return rep_rej_num;
+	}
+
+	public void setRep_rej_num(int rep_rej_num)
+	{
+		this.rep_rej_num = rep_rej_num;
+	}
+	*/
+	
+	
+	
 	public String getReg_date()
 	{
 		return reg_date;
