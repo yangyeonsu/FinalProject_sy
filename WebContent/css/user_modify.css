@@ -172,6 +172,7 @@ body
 	border-radius: 5px;
 	font-size: 0.6vw;
 	border: 1px solid #ef6351;
+  	box-shadow: 2px 2px 2px #ef6351;
   	background-color: white;
   	color: #ef6351;
   	cursor: pointer;
@@ -179,35 +180,49 @@ body
   	margin-left: 1vw;
 }
 
-.joinBtn:hover
+.leaveBtn
 {
 	width: 5.5vw;
 	height: 28px;
 	border-radius: 5px;
 	font-size: 0.6vw;
-	border: 1px solid #ef6351;
+	font-weight: bold;
+	border: none;
   	background-color: white;
   	color: #ef6351;
   	cursor: pointer;
   	align-content: center;
-  	box-shadow: 0 0 10px #ef6351;
   	margin-left: 1vw;
-  	box-shadow: 0 0 10px #ef6351;
 }
 
-.joinBtn:active
+.joinBtn:hover, .leaveBtn:hover
 {
 	width: 5.5vw;
 	height: 28px;
 	border-radius: 5px;
 	font-size: 0.6vw;
 	border: 1px solid #ef6351;
-  	background-color: #fff1f0;
+  	background-color: #fef2f1;
+  	color: #ef6351;
+  	cursor: pointer;
+  	align-content: center;
+  	box-shadow: 2px 2px 2px #ef6351;
+  	margin-left: 1vw;
+}
+
+.joinBtn:active, .leaveBtn:active
+{
+	width: 5.5vw;
+	height: 28px;
+	border-radius: 5px;
+	font-size: 0.6vw;
+	border: 1px solid #ef6351;
+  	background-color: #fef2f1;
   	color: #ef6351;
   	cursor: pointer;
   	align-content: center;
   	margin-left: 1vw;
-  	box-shadow: 0 0 10px #ef6351;
+  	box-shadow: 2px 2px 2px #ef6351;
 }
 
 /* 회원정보수정 입력란 */
@@ -290,10 +305,14 @@ body
 /* 수정하기 버튼 영역 */
 .joinBtnDiv
 {
-	width: 50vw;
-    height: 20vh;
+    width: 45vw;
+    height: 10vh;
     display: flex;
     justify-content: center;
     padding-top: 10vh;
 }
 
+.leaveBtnDiv
+{
+	margin-right: 40vw;
+}
