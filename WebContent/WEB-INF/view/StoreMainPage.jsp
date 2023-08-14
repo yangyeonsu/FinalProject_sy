@@ -490,6 +490,8 @@ $(document).ready(function()
 		</div>
 	</div>
 </div>
+
+<c:import url="footer.jsp"></c:import>
 	
 	<script type="text/javascript">
 		var context = document.getElementById('myChart').getContext('2d');
