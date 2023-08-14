@@ -461,28 +461,30 @@ $(document).ready(function()
 							</div>
 						</div>
 						
-			            <div class="review_body">
-			                ${review.rv_content }
-			                <c:choose>
-			       			<c:when test="${not empty review.reply_content}">
-				                <div class="review_reply">
-				                    <span class="review_reply">답글 : ${review.reply_content}</span>
-				                </div>
-			                </c:when>
-					        <c:otherwise>
-								    <form action="rvReply.action" class="rvReplyForm" method="post">
-								        <div class="review_reply">
-								            <textarea cols="30" rows="2.5" class="review_reply_txtarea" id="reply_content" name="reply_content"></textarea>
-								            <input type="hidden" name="rv_num" value="${review.rv_num }" />
-								            <div class="sendBtn">
-								                <button type="button" class="review_reply_btn">리뷰답글</button>
-								                <button type="reset" class="review_reply_btn">취소하기</button>
-								            </div>
-								        </div>
-								    </form>
-							</c:otherwise>
-					    	</c:choose>
-			            </div>
+						<form action="rvReply.action" class="rvReplyForm" method="post">
+				            <div class="review_body">
+				                ${review.rv_content }
+				                <c:choose>
+				       			<c:when test="${not empty review.reply_content}">
+					                <div class="review_reply">
+					                    <span class="review_reply">답글 : ${review.reply_content}</span>
+					                </div>
+				                </c:when>
+						        <c:otherwise>
+									    
+									        <div class="review_reply">
+									            <textarea cols="30" rows="2" class="review_reply_txtarea" id="reply_content" name="reply_content"></textarea>
+									            <input type="hidden" name="rv_num" value="${review.rv_num }" />
+									            <div class="sendBtn">
+									                <button type="button" class="review_reply_btn">리뷰답글</button>
+									                <button type="reset" class="review_reply_btn">취소하기</button>
+									            </div>
+									        </div>
+									    
+								</c:otherwise>
+						    	</c:choose>
+				            </div>
+			            </form>
 					</div>
 				</c:forEach>
 				
