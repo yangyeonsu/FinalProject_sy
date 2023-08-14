@@ -99,7 +99,6 @@ public class stDetailController
 			model.addAttribute("stCheckList", null);
 		}
 		
-		
 		// 가게 메뉴
 		ArrayList<StoreMenuDTO> menuLists = dao.menuLists(st_num);
 		
@@ -158,6 +157,8 @@ public class stDetailController
 		 */
 		model.addAttribute("userRnist", userRnList);
 		model.addAttribute("userNrnList", userNrnList);
+		
+		model.addAttribute("userJjimList", mdao.userJjimSearch(user_num));
 		
 		result = "/WEB-INF/view/storeDetail.jsp";
 		
