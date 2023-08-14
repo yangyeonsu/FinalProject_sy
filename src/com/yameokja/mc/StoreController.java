@@ -112,6 +112,13 @@ public class StoreController
 		model.addAttribute("rv_key_list", smDao.rv_key_sum(st_num));
 		model.addAttribute("rv_list", smDao.rv_list(st_num));
 		
+		ArrayList<ReviewDTO> arr = smDao.rv_list(st_num);
+		for (ReviewDTO reviewDTO : arr)
+		{
+			System.out.println(reviewDTO.getReply_content());
+		}
+		/* model.addAttribute("reply_content", reply_content(rv_num)); */
+		
 		model.addAttribute("alarm", uDao.userAlarm(user_num));
 		
 		result = "/WEB-INF/view/StoreMainPage.jsp";

@@ -30,7 +30,7 @@ String cp = request.getContextPath();
 			
 			$.ajax(
 			{
-				url : "comparingInsert.action",
+				url : "comparinginsert.action",
 				type : "POST",
 				data : { "user_num" : user_num
 						, "st_num" : st_num },
@@ -74,7 +74,6 @@ String cp = request.getContextPath();
 						alert("비교함에서 이미 삭제된 가게입니다.");
 					} else
 					{
-						alert(data);
 						alert("비교함에서 삭제되었습니다.");
 						$(".comStoreListDiv").html(data);
 					}
@@ -89,12 +88,11 @@ String cp = request.getContextPath();
 		$(document).on("click",".likeAddBtn", function()
 		{
 			$st_num = $(this).val();
-			alert($st_num);
 			$user_num = "<%=(String) session.getAttribute("user_num")%>"
 
 			$.ajax(
 			{
-				url : "jjimInsertDelete.action",
+				url : "jjiminsertdelete.action",
 				type : 'post',
 				data :
 				{
@@ -104,7 +102,6 @@ String cp = request.getContextPath();
 				context : this,
 				success : function(result)
 				{
-					alert(result);
 					$(this).html(result);
 				},
 				error : function(e)
