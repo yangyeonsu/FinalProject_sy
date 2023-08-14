@@ -32,9 +32,7 @@ String cp = request.getContextPath();
 <link rel="stylesheet" type="text/css" href="<%=cp%>/css/st_detail.css">
 
 <script type="text/javascript">
-/**
- * 
- */
+
 
 $(document).ready(function(){
 
@@ -419,42 +417,55 @@ $(document).ready(function(){
 																			<option value="nocheck">시간 선택</option>
 																			<c:set var="starth" value="${fn:substring(oc.operate_time, 0, 2)}" />
 																			<c:set var="startm" value="${fn:substring(oc.operate_time, 3, 5)}" />
+																			
+																			<c:set var="starthNum" value="${starth}" />
+    																		<c:set var="startmNum" value="${startm}" />
+																			
+																			
 																			<c:forEach var="i" begin="0" end="23" >
 																				<c:forEach var="k" begin="1" end="2">
-																				<c:if test="${k eq 1 }">
-																				<c:choose>
-																					<c:when test="${i eq stath and k eq startm  }">
-																						<option value="${i }:00" selected="selected">${i }:00</option>
-																					</c:when>
-																					<c:otherwise>
-																						<option value="${i }:00">${i }:00</option>
-																					</c:otherwise>
-																				</c:choose>
-																				</c:if>
-																				<c:if test="${k eq 2 }">
-																				<c:choose>
-																					<c:when test="${i eq stath and k eq startm  }">
-																						<option value="${i }:00" selected="selected">${i }:00</option>
-																					</c:when>
-																					<c:otherwise>
-																						<option value="${i }:00">${i }:00</option>
-																					</c:otherwise>
-																				</c:choose>
-																				</c:if>								
+																					<c:if test="${k eq 1 }">
+																						<c:choose>
+																							<c:when test="${i eq starth and startm eq '00' }">
+																								<option value="${i }:00" selected="selected">${i }:00</option>
+																							</c:when>
+																							<c:otherwise>
+																								<option value="${i }:00">${i }:00</option>
+																							</c:otherwise>
+																						</c:choose>
+																					</c:if>
+																					<c:if test="${k eq 2 }">
+																						<c:choose>
+																							<c:when test="${i eq starth and startm eq '30' }">
+																								<option value="${i }:30" selected="selected">${i }:30</option>
+																							</c:when>
+																							<c:otherwise>
+																								<option value="${i }:30">${i }:30</option>
+																							</c:otherwise>
+																						</c:choose>
+																					</c:if>								
 																				</c:forEach>
 																			</c:forEach>
 																		</select>
+																		
 																	</td>
+																	<td> ~ </td>
 																	<td>
 																		<select class="closeTime">
 																			<option value="nocheck">시간 선택</option>
 																			<c:set var="endh" value="${fn:substring(oc.operate_time, 8, 10)}" />
-																			<c:set var="endm" value="${fn:substring(oc.operate_time, 11, fn:length(oc.operate_time))}" />
+																			<c:set var="endm" value="${fn:substring(oc.operate_time, 11, fn:length(oc.operate_time)+1)}" />
+																			
+																			<c:set var="endhNum" value="${endh}" />
+    																		<c:set var="endmNum" value="${endm}" />
+																			
+																			<c:out value="${endhNum }"></c:out>
+																			<c:out value="${endmNum }"></c:out>
 																			<c:forEach var="i" begin="0" end="23" >
 																				<c:forEach var="k" begin="1" end="2">
 																				<c:if test="${k eq 1 }">
 																				<c:choose>
-																					<c:when test="${i eq endh and k eq endm  }">
+																					<c:when test="${i eq endhNum and endmNum eq '00'}">
 																						<option value="${i }:00" selected="selected">${i }:00</option>
 																					</c:when>
 																					<c:otherwise>
@@ -464,11 +475,11 @@ $(document).ready(function(){
 																				</c:if>
 																				<c:if test="${k eq 2 }">
 																				<c:choose>
-																					<c:when test="${i eq endh and k eq endm  }">
-																						<option value="${i }:00" selected="selected">${i }:00</option>
+																					<c:when test="${i eq endhNum and endmNum eq '30' }">
+																						<option value="${i }:30" selected="selected">${i }:30</option>
 																					</c:when>
 																					<c:otherwise>
-																						<option value="${i }:00">${i }:00</option>
+																						<option value="${i }:30">${i }:30</option>
 																					</c:otherwise>
 																				</c:choose>
 																				</c:if>								
@@ -571,18 +582,17 @@ $(document).ready(function(){
 										</c:when>						            
 						            	<c:otherwise>
 						            		<c:forEach var="bt" items="${breakTime}">
-						            			<c:choose>
-						            				<c:when test="${bt.week_weekend eq ww }">
-						            					<td>
-															<select class="brOT">
-																<option value="nocheck">시간 선택</option>
-																<c:set var="btstarth" value="${fn:substring(bt.start_breaktime, 0, 2)}" />
-																<c:set var="btstartm" value="${fn:substring(bt.start_breaktime, 3, 5)}" />
-																<c:forEach var="i" begin="0" end="23" >
-																	<c:forEach var="k" begin="1" end="2">
+						            			<c:if test="${bt.week_weekend eq ww }">
+						            				<td>
+														<select class="brOT">
+															<option value="nocheck">시간 선택</option>
+															<c:set var="btstarth" value="${fn:substring(bt.start_breaktime, 0, 2)}" />
+															<c:set var="btstartm" value="${fn:substring(bt.start_breaktime, 3, 5)}" />
+															<c:forEach var="i" begin="0" end="23" >
+																<c:forEach var="k" begin="1" end="2">
 																	<c:if test="${k eq 1 }">
 																		<c:choose>
-																		<c:when test="${i eq btstarth and k eq btstartm }">
+																		<c:when test="${i eq btstarth and btstartm eq '00' }">
 																			<option value="${i }:00" selected="selected">${i }:00</option>
 																		</c:when>
 																		<c:otherwise>
@@ -592,7 +602,7 @@ $(document).ready(function(){
 																	</c:if>
 																	<c:if test="${k eq 2 }">
 																		<c:choose>
-																		<c:when test="${i eq btstarth and k eq btstartm }">
+																		<c:when test="${i eq btstarth and btstartm eq '30' }">
 																			<option value="${i }:30" selected="selected">${i }:30</option>
 																		</c:when>
 																		<c:otherwise>
@@ -600,21 +610,21 @@ $(document).ready(function(){
 																		</c:otherwise>
 																		</c:choose>
 																	</c:if>								
-																	</c:forEach>
 																</c:forEach>
-															</select>
-														</td>
-														<td> ~ </td>
-														<td>
-															<select class="brCT">
-																<option value="nocheck">시간 선택</option>
-																<c:set var="btendh" value="${fn:substring(bt.end_breaktime, 0, 2)}" />
-																<c:set var="btendm" value="${fn:substring(bt.end_breaktime, 3, 5)}" />
-																<c:forEach var="i" begin="0" end="23" >
-																	<c:forEach var="k" begin="1" end="2">
+															</c:forEach>
+														</select>
+													</td>
+													<td> ~ </td>
+													<td>
+														<select class="brCT">
+															<option value="nocheck">시간 선택</option>
+															<c:set var="btendh" value="${fn:substring(bt.end_breaktime, 0, 2)}" />
+															<c:set var="btendm" value="${fn:substring(bt.end_breaktime, 3, 5)}" />
+															<c:forEach var="i" begin="0" end="23" >
+																<c:forEach var="k" begin="1" end="2">
 																	<c:if test="${k eq 1 }">
 																		<c:choose>
-																		<c:when test="${i eq btendh and k eq btendm }">
+																		<c:when test="${i eq btendh and btendm eq '00' }">
 																			<option value="${i }:00" selected="selected">${i }:00</option>
 																		</c:when>
 																		<c:otherwise>
@@ -624,7 +634,7 @@ $(document).ready(function(){
 																	</c:if>
 																	<c:if test="${k eq 2 }">
 																		<c:choose>
-																		<c:when test="${i eq btendh and k eq btendm }">
+																		<c:when test="${i eq btendh and btendm eq '30' }">
 																			<option value="${i }:30" selected="selected">${i }:30</option>
 																		</c:when>
 																		<c:otherwise>
@@ -632,49 +642,14 @@ $(document).ready(function(){
 																		</c:otherwise>
 																		</c:choose>
 																	</c:if>								
-																	</c:forEach>
 																</c:forEach>
-															</select>
-														</td>
-														<td><input type="checkbox" id="breaktime1"></td>
-														<td><label for="breaktime1">없음</label></td>
-						            				</c:when>
-						            				<c:otherwise>
-						            					<td>
-															<select id="openTime">
-																	<option value="nocheck">시간 선택</option>
-																	<c:forEach var="i" begin="0" end="23" >
-																		<c:forEach var="k" begin="1" end="2">
-																		<c:if test="${k eq 1 }">
-																			<option value="${i }:00">${i }:00</option>
-																		</c:if>
-																		<c:if test="${k eq 2 }">
-																			<option value="${i }:30">${i }:30</option>
-																		</c:if>								
-																	</c:forEach>
-																</c:forEach>
-															</select>
-														</td>
-														<td> ~ </td>
-														<td>
-															<select id="openTime">
-																<option value="nocheck">시간 선택</option>
-																<c:forEach var="i" begin="0" end="23" >
-																	<c:forEach var="k" begin="1" end="2">
-																		<c:if test="${k eq 1 }">
-																			<option value="${i }:00">${i }:00</option>
-																		</c:if>
-																		<c:if test="${k eq 2 }">
-																			<option value="${i }:30">${i }:30</option>
-																		</c:if>								
-																	</c:forEach>
-																</c:forEach>
-															</select>
-														</td>
-														<td><input type="checkbox" id="breaktime2"></td>
-														<td><label for="breaktime2">없음</label></td>
-						            				</c:otherwise>
-						            			</c:choose>
+															</c:forEach>
+														</select>
+													</td>
+													<td><input type="checkbox" id="breaktime1"></td>
+													<td><label for="breaktime1">없음</label></td>
+						            			</c:if>
+
 						            		</c:forEach>
 						            	</c:otherwise>
 						            </c:choose>
@@ -694,14 +669,14 @@ $(document).ready(function(){
 								<c:if test="${fn:length(stPayList) > 0}">
 									<c:forEach var="paylabel" items="${payLabel }">
 										<c:choose>
-										<c:when test="${fn:contains(stPayList, paylabel.pay_name)}">
-											<input type="checkbox" id="paych${paylabel.pay_num }" name="pay" checked="checked">
-											<label for="paych${paylabel.pay_num }">${paylabel.pay_name }</label>
-										</c:when>
-										<c:otherwise>
-											<input type="checkbox" id="paych${paylabel.pay_num }" name="pay" checked="checked">
-											<label for="paych${paylabel.pay_num }">${paylabel.pay_name }</label>
-										</c:otherwise>
+											<c:when test="${fn:contains(stPayList, paylabel.pay_name)}">
+												<input type="checkbox" id="paych${paylabel.pay_num }" name="pay" checked="checked">
+												<label for="paych${paylabel.pay_num }">${paylabel.pay_name }</label>
+											</c:when>
+											<c:otherwise>
+												<input type="checkbox" id="paych${paylabel.pay_num }" name="pay" checked="checked">
+												<label for="paych${paylabel.pay_num }">${paylabel.pay_name }</label>
+											</c:otherwise>
 										</c:choose>
 									</c:forEach>
 								</c:if>
@@ -732,14 +707,14 @@ $(document).ready(function(){
 							<c:set var="food" value="${store.food_name }"/>
 							<c:forEach var="foodlabel" items="${foodLabel }">
 								<c:choose>
-								<c:when test="${foodlabel.food_name eq food }">
-									<input type="checkbox" id="foodch${foodlabel.food_num }" name="food_cat" checked="checked">
-									<label for="foodch${foodlabel.food_num }">${foodlabel.food_name }</label>
-								</c:when>
-								<c:otherwise>
-									<input type="checkbox" id="foodch${foodlabel.food_num }" name="food_cat">
-									<label for="foodch${foodlabel.food_num }">${foodlabel.food_name }</label>
-								</c:otherwise>
+									<c:when test="${foodlabel.food_name eq food }">
+										<input type="checkbox" id="foodch${foodlabel.food_num }" name="food_cat" checked="checked">
+										<label for="foodch${foodlabel.food_num }">${foodlabel.food_name }</label>
+									</c:when>
+									<c:otherwise>
+										<input type="checkbox" id="foodch${foodlabel.food_num }" name="food_cat">
+										<label for="foodch${foodlabel.food_num }">${foodlabel.food_name }</label>
+									</c:otherwise>
 								</c:choose>
 							</c:forEach>
 								<!-- <input type="checkbox" id="foodch8" name="food_cat"><label for="foodch8">카페</label>
@@ -807,7 +782,14 @@ $(document).ready(function(){
 				
 				<!-- 수용인원 -->
 				<label id="label">
-					<p class="label-txt">수용인원</p>
+					<c:choose>
+						<c:when test="${not empty store.max_customers}">
+							<p class="label-txt label-active">수용인원</p>
+						</c:when>
+						<c:otherwise>
+							<p class="label-txt">수용인원</p>
+						</c:otherwise>
+					</c:choose>
 					<input type="text" class="input" value="${store.max_customers }">
 					<div class="line-box">
 					  	<div class="line"></div>
@@ -817,7 +799,14 @@ $(document).ready(function(){
 				
 				<!-- 사업자 이메일 -->
 				<label id="label">
-					<p class="label-txt">사업자 이메일</p>
+					<c:choose>
+						<c:when test="${fn: length(store.st_email) > 0}">
+							<p class="label-txt label-active">사업자 이메일</p>
+						</c:when>
+						<c:otherwise>
+							<p class="label-txt">사업자 이메일</p>
+						</c:otherwise>
+					</c:choose>
 					<input type="text" class="input" value="${store.st_email }">
 					<div class="line-box">
 					    <div class="line"></div>
@@ -828,7 +817,14 @@ $(document).ready(function(){
 				
 				<!-- 가게 설명 -->
 				<label id="label">
-					<p class="label-txt">가게 설명</p>
+					<c:choose>
+						<c:when test="${fn: length(store.st_explain) > 0}">
+							<p class="label-txt label-active">가게 설명</p>
+						</c:when>
+						<c:otherwise>
+							<p class="label-txt">가게 설명</p>
+						</c:otherwise>
+					</c:choose>
 					<input type="text" class="input" value="${store.st_explain }">
 					<div class="line-box">
 					    <div class="line"></div>
@@ -838,7 +834,14 @@ $(document).ready(function(){
 				
 				<!-- 가게페이지 링크 -->
 				<label id="label">
-					<p class="label-txt">가게페이지 링크</p>
+					<c:choose>
+						<c:when test="${fn: length(store.st_explain) > 0 }">
+							<p class="label-txt label-active">가게페이지 링크</p>
+						</c:when>
+						<c:otherwise>
+							<p class="label-txt">가게페이지 링크</p>
+						</c:otherwise>
+					</c:choose>
 					<input type="text" class="input">
 					<div class="line-box">
 					    <div class="line"></div>
@@ -853,55 +856,17 @@ $(document).ready(function(){
 							<tr>
 								<th style="border-bottom: 5px solid;">&nbsp;&nbsp;가게옵션&nbsp;&nbsp;</th>
 							</tr>
-							<tr>
-								<td></td>
-								<th style="padding-right: 1vh; text-align: left;">화장실 존재 여부</th>
-								<td><input type="checkbox" name="toilet" id="toilet" onclick="checkOnlyOne(this)"></td>
-								<td style="padding-right: 1vh;"><label for="toilet">있음</label></td>
-								<td><input type="checkbox" name="toilet" id="toilet2" onclick="checkOnlyOne(this)"></td>
-								<td><label for="toilet2">없음</label></td>
-							</tr>
-							<tr>
-								<td></td>
-								<th style="padding-right: 1vh; text-align: left;">애견 동반 여부</th>
-								<td><input type="checkbox" name="puppy" id="puppy"></td>
-								<td style="padding-right: 1vh;"><label for="puppy">가능</label></td>
-								<td><input type="checkbox" name="puppy" id="puppy2"></td>
-								<td><label for="puppy2">불가능</label></td>
-							</tr>
 							
-							<tr>
-								<td></td>
-								<th style="padding-right: 1vh; text-align: left;">연회석 존재 여부</th>
-								<td><input type="checkbox" name="room" id="room"></td>
-								<td><label for="room">있음</label></td>
-								<td><input type="checkbox" name="room" id="room2"></td>
-								<td><label for="room2">없음</label></td>
-							</tr>
-							<tr>
-								<td></td>
-								<th style="padding-right: 1vh; text-align: left;">예약 가능 여부</th>
-								<td><input type="checkbox" name="reservation" id="reservation"></td>
-								<td><label for="reservation">가능</label></td>
-								<td><input type="checkbox" name="reservation" id="reservation2"></td>
-								<td><label for="reservation2">불가능</label></td>
-							</tr>
-							<tr>
-								<td></td>
-								<th style="padding-right: 1vh; text-align: left;">주차 가능 여부</th>
-								<td><input type="checkbox" name="parking" id="parking"></td>
-								<td><label for="parking">가능</label></td>           
-								<td><input type="checkbox" name="parking" id="parking2"></td>
-								<td><label for="parking2">불가능</label></td>
-							</tr>
-							<tr>
-								<td></td>
-								<th style="padding-right: 2vh; text-align: left;">무선 인터넷 사용 가능 여부</th>
-								<td><input type="checkbox" name="internet" id="internet"></td>
-								<td><label for="internet">가능</label></td>           
-								<td><input type="checkbox" name="internet" id="internet2"></td>
-								<td><label for="internet2">불가능</label></td>          
-							</tr>
+								<c:forEach var="chBox" items="${chBoxLabel }">
+									<tr>
+										<td></td>
+										<th style="padding-right: 1vh; text-align: left;">${chBox.chbox_name }</th>
+										<td><input type="checkbox" name="toilet" id="Ochbox${chBox.chbox_num }" onclick="checkOnlyOne(this)"></td>
+										<td style="padding-right: 1vh;"><label for="Ochbox${chBox.chbox_num }">있음</label></td>
+										<td><input type="checkbox" name="toilet" id="Xchbox${chBox.chbox_num }" onclick="checkOnlyOne(this)"></td>
+										<td><label for="Xchbox${chBox.chbox_num }">없음</label></td>
+									</tr>
+								</c:forEach>
 						</table>
 					</div>
 				</div>
