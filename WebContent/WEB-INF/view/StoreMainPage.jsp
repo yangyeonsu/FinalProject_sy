@@ -320,6 +320,10 @@ i {
 	font-size: 0.2vw;
 	box-shadow: 2.5px 3px 2.5px #f7f4ea;
 }
+.replyBtn{
+	font-size: 0.2vw;
+	box-shadow: 2.5px 3px 2.5px #f7f4ea;
+}
 
 .rvBtn:hover {
 	border-radius: 8px;
@@ -335,6 +339,7 @@ i {
 	width: 10vw;
 	margin-bottom: 10px;
 	margin-top: 10px;
+	margin-right: 0px;
 	font-size: 11pt;
 }
 
@@ -363,7 +368,8 @@ i {
 	border-radius: 5px;
 }
 
-.regDate {
+.regDate
+{
 	float: right;
 	font-size: 8pt;
 	color: #4d4b4b;
@@ -742,15 +748,27 @@ i {
 // 답글달기
 $(document).ready(function()
 {
+	/* 
+	$(".replyBtn").click(function()
+	{
+		//alert("확인");
+		$("#userForm").attr("action", "stdetailmodify.action");
+		$("#userForm").submit();
+	});
+	 */
 	
-	$(".modifyBtn").click(function()
-		{
-			$("#userForm").attr("action", "stdetailmodify.action");
-			$("#userForm").submit();
-		});
+	$(".replyBtn").click(function() 
+	{
+	    var replyId = $(this).val();
+	    
+	    $("#div"+replyId).css("display", "flex");
+	    
+	});
+
 	
+	/* 
 	// 답글쓰기 버튼 토글
-    $('.reviewReply').click(function()
+    $('.replyBtn').click(function()
     {
         var replyTextarea = $(this).closest('.review').find('textarea.review_reply_txtarea');
         var sendReplyButtons = $(this).closest('.review').find('button.review_reply_btn');
@@ -758,25 +776,26 @@ $(document).ready(function()
         replyTextarea.toggle(); 
         sendReplyButtons.toggle();
     });
-	
+	 */
+	 
     $(".review_reply_btn").click(function(event) 
     {
-        var replyTextarea = $(this).closest('.review').find('textarea.review_reply_txtarea');
-        if(!replyTextarea.val().trim()) 
+        var thisForm = $(this).closest('.rvReplyForm'); // 해당 버튼의 폼을 선택
+        var replyTextarea = thisForm.find('textarea.review_reply_txtarea');
+        if (!replyTextarea.val().trim()) 
         {
             alert("답글을 입력해주세요!");
             event.preventDefault();
         } 
-        else 
+        else
         {
-            $(".rvReplyForm").submit();
+            thisForm.submit(); // 해당 폼 제출
         }
-        
-        console.log("RV_NUM:", $(this).closest('.review').find('input[name="rv_num"]').val());
+
+        console.log("RV_NUM:", thisForm.find('input[name="rv_num"]').val());
         console.log("Reply content:", replyTextarea.val());
-
-
     });
+
     
     
   	/// 신고하기 버튼 눌렀을 때
@@ -859,6 +878,20 @@ $(document).ready(function()
 			optionTotalChecked -= 1;
 		}
 	}
+	
+	var selectedRvNum = null;
+
+    function toggleReplyBox(button) {
+        var rvNum = button.value;
+        var replyBox = document.querySelector(".replyBox");
+        if (selectedRvNum === rvNum) {
+            selectedRvNum = null;
+            replyBox.style.display = "none";
+        } else {
+            selectedRvNum = rvNum;
+            replyBox.style.display = "block";
+        }
+    }
 });
 
 
@@ -942,6 +975,50 @@ $(function()
 	});
 });
 
+
+$(function name()
+{
+	$(".completeBtn").click(function()
+	{
+		alert("확인");
+		/* var rv_num = $(this).parent().attr("id");						//-- 리뷰번호 */
+		
+		 var replyBoxId = $(this).parent().attr("id");
+		
+		 alert(replyBoxId);
+		 var rv_num = replyBoxId.substring(3);
+		 
+		 alert(rv_num);
+		 
+		var reply_content = $(".rvApplyContent").val();	//-- 답글내용
+		alert(reply_content);
+		
+		$.ajax({
+			type: "POST"
+			, url: "rvcompletebtn.action"
+			, data: {
+				"rv_num": rv_num,
+				"reply_content": reply_content
+			},
+			success: function(response)
+			{
+				/* $("#"+replyId).append("<p>" +response+ "</p>"); */
+				//$(".replyBox").html(response)
+				alert("갔다옴");
+				$("#div"+rv_num).html(response)
+			},
+			error: function(xhr, status, error)
+			{
+				console.error(error);
+			}
+		});
+	});
+});
+
+
+
+
+
 </script>
 
 
@@ -1020,8 +1097,12 @@ $(function()
 									<div class="userNickname">"${rv.user_nickname }"</div>
 									<div>
 										<button type="button" class="repBtn rvBtn"
-											onclick="popupOpen()" value="${rv.rv_num }">신고하기</button>
-
+											onclick="popupOpen()" value="${rv.rv_num }">신고하기
+										</button>
+										<button type="button" class="replyBtn rvBtn" value="${rv.rv_num }">
+											답글달기
+										</button>
+										
 									</div>
 								</div>
 
@@ -1049,34 +1130,43 @@ $(function()
 												</c:otherwise>
 										</c:choose>
 									</div>
-									<div class="contentPhotoDiv">
-										<div class="rvContentDiv" id="${rn }">${rv.rv_content }</div>
-										<div class="rvPhotoDiv">
-											<c:forEach var="photos" items="${rvPhotos }">
-												<c:if test="${photos.rv_num eq rn }">
-													<img alt="" class="rvphoto"
-														src="<%=cp %>/images/${photos.photo_link }" />
-												</c:if>
-											</c:forEach>
+									
+									<div class="rvBottom">
+										<div class="recNonrecBtnDiv">
+											<button type="button" id="nonrec${rn }" name="nonrec"
+												class="recBtn rvBtn" value="${rn }" disabled="disabled">비추천
+												👎 (${rv.nonrec })
+											</button>
+											<button type="button" id="rec${rn}" name="rec"
+												class="recBtn rvBtn" value="${rn }" disabled="disabled">추천
+												👍 (${rv.rec } )
+											</button>
 										</div>
 									</div>
-									<div class="regDate">${rv.reg_date }</div>
+										
 								</div>
-
-								<div class="rvBottom">
-									<div class="recNonrecBtnDiv">
-										<button type="button" id="nonrec${rn }" name="nonrec"
-											class="recBtn rvBtn" value="${rn }" disabled="disabled">비추천
-											👎 (${rv.nonrec })</button>
-										<button type="button" id="rec${rn}" name="rec"
-											class="recBtn rvBtn" value="${rn }" disabled="disabled">추천
-											👍 (${rv.rec } )</button>
+									
+									
+								<div class="contentPhotoDiv">
+									<div class="rvContentDiv" id="${rn }">${rv.rv_content }</div>
+									<div class="rvPhotoDiv">
+										<c:forEach var="photos" items="${rvPhotos }">
+											<c:if test="${photos.rv_num eq rn }">
+												<img alt="" class="rvphoto"
+													src="<%=cp %>/images/${photos.photo_link }" />
+											</c:if>
+										</c:forEach>
 									</div>
 								</div>
+								<div class="regDate" align="right">${rv.reg_date }</div>
+								<div class="replyBox" align="right" style="display: none;" id="div${rv.rv_num }">
+									사장님 : <input type="text" class="rvApplyContent"> <input type="button" class="completeBtn" value="완료">
+								</div>
 							</div>
+							<input type="hidden" value="${rn }" name="rvNumHidden"> 
+							<input type="hidden" value="" name="rep_rs_num">
 						</c:forEach>
-						<input type="hidden" value="" name="rvNumHidden"> <input
-							type="hidden" value="" name="rep_rs_num">
+						
 					</div>
 					<!-- id="revList" -->
 
@@ -1103,9 +1193,37 @@ $(function()
 								</label><br> <br>
 							</div>
 						</div>
+
 						<div class="dec">
 							<button id="decBtn">신고하기</button>
 						</div>
+
+						
+						<form action="rvReply.action" class="rvReplyForm" method="post">
+				            <div class="review_body">
+				                ${review.rv_content }
+				                <c:choose>
+				       			<c:when test="${not empty review.reply_content}">
+					                <div class="review_reply">
+					                    <span class="review_reply">답글 : ${review.reply_content}</span>
+					                </div>
+				                </c:when>
+						        <c:otherwise>
+									    
+									        <div class="review_reply">
+									            <textarea cols="30" rows="2" class="review_reply_txtarea" id="reply_content" name="reply_content"></textarea>
+									            <input type="hidden" name="rv_num" value="${review.rv_num }" />
+									            <div class="sendBtn">
+									                <button type="button" class="review_reply_btn">리뷰답글</button>
+									                <button type="reset" class="review_reply_btn">취소하기</button>
+									            </div>
+									        </div>
+									    
+								</c:otherwise>
+						    	</c:choose>
+				            </div>
+			            </form>
+
 					</div>
 				</div>
 			</div>

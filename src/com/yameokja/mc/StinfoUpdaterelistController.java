@@ -36,6 +36,9 @@ public class StinfoUpdaterelistController
 	    
 	    
 	    IStinfoUpdaterelistDAO dao = sqlSession.getMapper(IStinfoUpdaterelistDAO.class);
+	    IUserDAO udao = sqlSession.getMapper(IUserDAO.class);
+	    
+	    UserDTO user = udao.searchUserInfo(user_num, "num");
 	    
 	    
 	    // 이전 페이지(?)로부터 넘어온 게시물 번호 수신
@@ -72,15 +75,16 @@ public class StinfoUpdaterelistController
 	    
 	    
 	    
-	    List<StinfoUpdaterelistDTO> StinfoUpdaterelist = dao.StinfoUpdaterelist(
+	    List<StinfoUpdaterelistDTO> stinfoupdatelist = dao.stinfoupdatelist(
 	        user_num, 
 	        startRow, 
 	        endRow
 	    );
 	    
 	    model.addAttribute("pageIndex", Paging.pageIndexList(currentPage, totalPage, actionName));
-	    model.addAttribute("stinfoupdatelist", StinfoUpdaterelist);
-	    result = "/WEB-INF/view/St_infoupdaterelilst.jsp";
+	    model.addAttribute("user", user);
+	    model.addAttribute("stinfoupdatelist", stinfoupdatelist);
+	    result = "/WEB-INF/view/St_infoupdaterelist.jsp";
 	    
 	    return result;
 	};
