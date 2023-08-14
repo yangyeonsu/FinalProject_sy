@@ -126,6 +126,7 @@ public class StoreController
 		
 		IstDetailDAO_userView dao = sqlSession.getMapper(IstDetailDAO_userView.class);
 		IStoreMainDAO sdao = sqlSession.getMapper(IStoreMainDAO.class);
+		IMainDAO mdao = sqlSession.getMapper(IMainDAO.class);
 		IUserDAO uDao = sqlSession.getMapper(IUserDAO.class);
 		
 		String user_num = (String)session.getAttribute("user_num");
@@ -149,12 +150,13 @@ public class StoreController
 		model.addAttribute("weekdayLabel", sdao.weekDayLabel());
 		model.addAttribute("weekWeekendDayLabel", sdao.weekWeekendDayLabel());
 		model.addAttribute("chBoxLabel", sdao.chBoxLabel());
+		model.addAttribute("stKeyLabel", mdao.stKeyList());
 		
 		// 가게 기본 사항
 		model.addAttribute("store", dao.store(st_num));
 		
 		// 가게 키워드
-		ArrayList<StoreKeyDTO> stKeyList =  dao.stKeys(st_num);
+		ArrayList<String> stKeyList =  dao.stKeysStr(st_num);
 		if(stKeyList.size()>0)
 		{
 			model.addAttribute("stKeys", stKeyList);

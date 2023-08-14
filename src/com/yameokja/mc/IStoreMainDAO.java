@@ -23,5 +23,4 @@ public interface IStoreMainDAO
 	public ArrayList<String> weekDayLabel();
 	public ArrayList<String> weekWeekendDayLabel();
 	public ArrayList<ChboxDTO> chBoxLabel();
-
 }

@@ -235,58 +235,70 @@ $(document).ready(function(){
 	};
 	
 	$(function()
+	{
+		$(".left_sub_menu").hide();
+		$(".has_sub").click(function()
+		{
+			$(".left_sub_menu").fadeToggle(300);
+			if ($('#checkOverlay').val() == "true")
 			{
-				$(".left_sub_menu").hide();
-				$(".has_sub").click(function()
-				{
-					$(".left_sub_menu").fadeToggle(300);
-					if ($('#checkOverlay').val() == "true")
-					{
-						$('.overlay').css("position", "fixed");
-						$('.overlay').css("width", "0%");
-						$('.overlay').css("height", "0%");
-						$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
-						$('.overlay').css("z-index", "0");
-						$('#checkOverlay').attr("value", "false");
-					} else
-					{
-						$('.overlay').css("position", "fixed");
-						$('.overlay').css("width", "100%");
-						$('.overlay').css("height", "100%");
-						$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
-						$('.overlay').css("z-index", "3");
-						$('.overlay').css("margin-top", "1.011vh");
-						$('#checkOverlay').attr("value", "true");
-					}
-
-				});
-				// 왼쪽메뉴 드롭다운
-				$(".sub_menu ul.small_menu").hide();
-				$(".sub_menu ul.big_menu").click(function()
-				{
-					$("ul", this).slideToggle(300);
-				});
-				// 외부 클릭 시 좌측 사이드 메뉴 숨기기
-				$('.overlay').on('click', function()
-				{
-					$('.left_sub_menu').fadeOut();
-					$('.overlay').css("position", "fixed");
-					$('.overlay').css("width", "0%");
-					$('.overlay').css("height", "0%");
-					$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
-					$('.overlay').css("z-index", "0");
-					$('#checkOverlay').attr("value", "false");
-				});
-			});
-
-			$(function()
+				$('.overlay').css("position", "fixed");
+				$('.overlay').css("width", "0%");
+				$('.overlay').css("height", "0%");
+				$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
+				$('.overlay').css("z-index", "0");
+				$('#checkOverlay').attr("value", "false");
+			} else
 			{
-				$("#openTime, #closeTime").on("change", function() {
-			        var rowClass = $(this).closest("tr").attr("class");
-			        
-			        alert(rowClass);
-				});
-			});
+				$('.overlay').css("position", "fixed");
+				$('.overlay').css("width", "100%");
+				$('.overlay').css("height", "100%");
+				$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
+				$('.overlay').css("z-index", "3");
+				$('.overlay').css("margin-top", "1.011vh");
+				$('#checkOverlay').attr("value", "true");
+			}
+
+		});
+		// 왼쪽메뉴 드롭다운
+		$(".sub_menu ul.small_menu").hide();
+		$(".sub_menu ul.big_menu").click(function()
+		{
+			$("ul", this).slideToggle(300);
+		});
+		// 외부 클릭 시 좌측 사이드 메뉴 숨기기
+		$('.overlay').on('click', function()
+		{
+			$('.left_sub_menu').fadeOut();
+			$('.overlay').css("position", "fixed");
+			$('.overlay').css("width", "0%");
+			$('.overlay').css("height", "0%");
+			$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
+			$('.overlay').css("z-index", "0");
+			$('#checkOverlay').attr("value", "false");
+		});
+	});
+
+	$(function()
+	{
+		$("#openTime, #closeTime").on("change", function() {
+	        var rowClass = $(this).closest("tr").attr("class");
+	        
+	        alert(rowClass);
+		});
+		
+		$(".ibmatlabel").click(function()
+		{
+			var $this = $(this);
+			
+			var id = $this.attr("for");
+			
+			if ($("#"+id).is(":checked"))			
+				$(".ibmatlabel[for="+id+"]").css("border-bottom","3px solid #ef6351");
+			else
+				$(".ibmatlabel[for="+id+"]").css("border-bottom","none");
+		});
+	});
 
 
 
@@ -861,10 +873,31 @@ $(document).ready(function(){
 									<tr>
 										<td></td>
 										<th style="padding-right: 1vh; text-align: left;">${chBox.chbox_name }</th>
-										<td><input type="checkbox" name="toilet" id="Ochbox${chBox.chbox_num }" onclick="checkOnlyOne(this)"></td>
-										<td style="padding-right: 1vh;"><label for="Ochbox${chBox.chbox_num }">있음</label></td>
-										<td><input type="checkbox" name="toilet" id="Xchbox${chBox.chbox_num }" onclick="checkOnlyOne(this)"></td>
-										<td><label for="Xchbox${chBox.chbox_num }">없음</label></td>
+										<c:forEach var="stch" items="${stCheckList }">
+											<c:if test="${chBox.chbox_num eq stch.chbox_num }">
+												<c:choose>
+													<c:when test="${stch.yesorno eq '○' }">
+														<td><input type="checkbox" name="toilet" id="Ochbox${chBox.chbox_num }" onclick="checkOnlyOne(this)" checked="checked"></td>
+														<td style="padding-right: 1vh;"><label for="Ochbox${chBox.chbox_num }">있음</label></td>
+														<td><input type="checkbox" name="toilet" id="Xchbox${chBox.chbox_num }" onclick="checkOnlyOne(this)"></td>
+														<td><label for="Xchbox${chBox.chbox_num }">없음</label></td>	
+													</c:when>
+													<c:when test="${stch.yesorno eq 'Ⅹ' }">
+														<td><input type="checkbox" name="toilet" id="Ochbox${chBox.chbox_num }" onclick="checkOnlyOne(this)"></td>
+														<td style="padding-right: 1vh;"><label for="Ochbox${chBox.chbox_num }">있음</label></td>
+														<td><input type="checkbox" name="toilet" id="Xchbox${chBox.chbox_num }" onclick="checkOnlyOne(this)" checked="checked"></td>
+														<td><label for="Xchbox${chBox.chbox_num }">없음</label></td>
+													</c:when>
+													<c:otherwise>
+														<td><input type="checkbox" name="toilet" id="Ochbox${chBox.chbox_num }" onclick="checkOnlyOne(this)"></td>
+														<td style="padding-right: 1vh;"><label for="Ochbox${chBox.chbox_num }">있음</label></td>
+														<td><input type="checkbox" name="toilet" id="Xchbox${chBox.chbox_num }" onclick="checkOnlyOne(this)"></td>
+														<td><label for="Xchbox${chBox.chbox_num }">없음</label></td>
+													</c:otherwise>
+												</c:choose>
+											</c:if>
+										</c:forEach>
+										
 									</tr>
 								</c:forEach>
 						</table>
@@ -880,47 +913,27 @@ $(document).ready(function(){
 				
 					<div class="ibmatSelectDiv">
 						
-						<div class="selectLeft">
-							<label class="ibmatlabel" for="ibmat1">
-								<input type="checkbox" class="ibmatCB" id="ibmat1">
-								인테리어가 멋져요
-							</label>
-							<br><br>
-							
-							
-							<label class="ibmatlabel" for="ibmat2">
-								<input type="checkbox" class="ibmatCB" id="ibmat2">
-								혼자오기 좋아요
-							</label>
-							<br><br>
-						
-							<label class="ibmatlabel" for="ibmat3">
-								<input type="checkbox" class="ibmatCB" id="ibmat3">
-								단체모임하기 좋아요
-							</label>
-							<br><br>
+						<div class="stKey">
+							<c:forEach var="stKey" items="${stKeyLabel }">
+								<c:choose>
+									<c:when test="${fn: contains(stKeys, stkey) }">
+										<label class="ibmatlabel" for="ibmat${stKey.st_key_num }">
+											<input type="checkbox" class="ibmatCB" id="ibmat${stKey.st_key_num }" checked="checked">
+											${stKey.st_keyword }
+										</label>
+										<br><br>
+									</c:when>
+									<c:otherwise>
+										<label class="ibmatlabel" for="ibmat${stKey.st_key_num }">
+											<input type="checkbox" class="ibmatCB" id="ibmat${stKey.st_key_num }">
+											${stKey.st_keyword }
+										</label>
+										<br><br>
+									</c:otherwise>
+								</c:choose>
 								
-							<label class="ibmatlabel" for="ibmat4">
-								<input type="checkbox" class="ibmatCB" id="ibmat4">
-								매장이 넓어요
-							</label>
-							<br><br>
+							</c:forEach>
 						</div>
-						
-						<div class="selectRight">	
-							<label class="ibmatlabel" for="ibmat5">
-								<input type="checkbox" class="ibmatCB" id="ibmat5">
-								애견메뉴가 있어요
-							</label>
-							<br><br>
-						
-							<label class="ibmatlabel" for="ibmat6">
-								<input type="checkbox" class="ibmatCB" id="ibmat6">
-								포장이 가능해요
-							</label>
-							<br><br>
-						</div>
-						
 					</div>
 				</div>
 				
