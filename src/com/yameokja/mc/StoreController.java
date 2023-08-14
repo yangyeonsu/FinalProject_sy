@@ -12,9 +12,11 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class StoreController
@@ -287,6 +289,27 @@ public class StoreController
 		rvReplynum = dao.reviewReply(rv_num, reply_content);
 		
 	    return "redirect:storemain.action";
-  }
+	}
+	
+	@RequestMapping(value="/rvcompletebtn.action", method = RequestMethod.POST)
+		@ResponseBody
+	public String replyCheck(@RequestParam("rv_num") int rv_num, @RequestParam("reply_content") String reply_content)
+	{
+		String html= "";
+		
+		
+		System.out.println(rv_num);
+		System.out.println(reply_content);
+		
+		
+		IStoreMainDAO dao = sqlSession.getMapper(IStoreMainDAO.class);
+		int result = dao.reviewReply(rv_num, reply_content);
+		
+		html += "<div class=\"replyBox\">";
+		html += "사장님 : " + reply_content +"</div>";
+		
+		return html; 
+	}
+	
   
 }
