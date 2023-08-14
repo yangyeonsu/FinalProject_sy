@@ -41,12 +41,31 @@
     justify-content: center;
 }
 
-.storeName
+.storeNameDiv
 {
-	margin-top: 20px;
+    margin-top: 20px;
     margin-bottom: 20px;
     background-color: #f7f4ea;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
+.comAddBtn
+{
+	width: 20px;
+    height: 20px;
+    margin-top: 5px;
+    margin-left: 5px;
+    text-align: center;
+    font-size: 8pt;
+    border-radius: 50px;
+    background-color: #f17867;
+    border: 1px solid #f17867;
+    cursor: pointer;
+    color: white;
+}
+
 
 .revBoard {
     width: 30vw;
@@ -76,6 +95,25 @@
     justify-content: space-around;
     margin-bottom: 25px;
     font-size: 15pt;
+}
+
+.likeAddBtn
+{
+	width: 20px;
+    height: 20px;
+    margin-right: 5px;
+    padding-left: 2px;
+    text-align: center;
+    font-size: 15pt;
+    background-color: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+.likeRevC
+{
+	display: flex;
 }
 
 /* 영업시간 안내 구역 */
