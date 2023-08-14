@@ -19,6 +19,12 @@ String cp = request.getContextPath();
 	{
 		$("#submitReviewBtn").click(function()
 		{
+			if($("#reviewContent").val()=="")
+			{
+				alert("리뷰 내용을 입력해주세요.");
+				return;
+			}
+			
 			// 리뷰 키워드 선택값
 			var rkArr = [];
 
@@ -59,38 +65,55 @@ String cp = request.getContextPath();
 
 	function loadFile(input)
 	{
-		var name = document.getElementById('fileName'+$(".button").length);
-		var container = input.parentNode.querySelector('.image-show');
-		
-		//container.setAttribute('id', $("input[name=file]").attr("id"));
-
-		// 이미 업로드된 사진이 있을 경우 삭제
-		var existingImage = container.querySelector('img');
-		if (existingImage)
+		if($(".photoAdd").length > 5)
 		{
-			container.removeChild(existingImage);
+			alert("사진은 최대 5개까지 등록 가능합니다.");
+			return;
 		}
+		else
+		{
+			var name = document.getElementById('fileName'+$(".button").length);
+			var container = input.parentNode.querySelector('.image-show');
+			
+			// 이미 업로드된 사진이 있을 경우 삭제
+			var existingImage = container.querySelector('img');
+			if (existingImage)
+			{
+				container.removeChild(existingImage);
+				$("#fileName"+$(".button").length).html("");
+			}
 
-		var file = input.files[0]; // 선택된 파일 가져오기
-		name.textContent = file.name;
+			var file = input.files[0]; // 선택된 파일 가져오기
+			
+			if(file.name.length > 15)
+			{
+				name.textContent = file.name.substring(0,15) + "..." + file.name.slice(-4);
+			}
+			else
+				name.textContent = file.name;
+			
+			
 
-		var newImage = document.createElement('img');
-		newImage.setAttribute('class', 'img');
+			var newImage = document.createElement('img');
+			newImage.setAttribute('class', 'img');
 
-		// 이미지 source 가져오기
-		newImage.src = URL.createObjectURL(file);
+			// 이미지 source 가져오기
+			newImage.src = URL.createObjectURL(file);
 
-		newImage.style.width = '30vw';
-		newImage.style.height = '50%';
-		newImage.style.objectFit = 'contain';
+			newImage.style.width = '30vw';
+			newImage.style.height = '50%';
+			newImage.style.objectFit = 'contain';
 
-		// 이미지를 image-show div에 추가
-		container.appendChild(newImage);
+			// 이미지를 image-show div에 추가
+			container.appendChild(newImage);
 
-		// 이미지는 화면에 나타나도록 설정
-		newImage.style.visibility = 'visible';
-
+			// 이미지는 화면에 나타나도록 설정
+			newImage.style.visibility = 'visible';
+		}
+		
 	};
+
+	var count = 0;
 	
 	function plusTd()
 	{
@@ -103,10 +126,18 @@ String cp = request.getContextPath();
 	    //newDiv = document.createElement("div");
 	    //newDiv.class='button';
 	    
+	    count += 1;
+	    
+	    if (count >= 5)
+	    {
+	    	alert("사진은 5개까지만 추가가능합니다.");
+	    	return;
+	    }
+	    
 	    var element = document.getElementById('reviewPhotoDiv');
 	    var num =  $('.button').length + 1;
 	   
-	    var content = "<div>";
+	    var content = "<div class='photoAdd'>";
 	    content += "	<div class='button'>"
 	    content += "		<label for='file" + num + "'>";
 	    content += "			👉사진 업로드👈";
@@ -226,19 +257,35 @@ String cp = request.getContextPath();
 
 				<!-- 리뷰작성란 -->
 				<div class="reviewInsertDiv">
-					<textarea rows="6" cols="135" name="reviewContent"></textarea>
+					<textarea rows="6" cols="130" name="reviewContent" id="reviewContent" style="font-family: 'IBM Plex Sans KR', sans-serif;"></textarea>
 				</div>
+				<div id="test_cnt" style="margin-left: 42vw; font-size: 0.7vw;">(0 / 500)</div>
+				
+				<script>
+ 
+				    $(document).ready(function() {
+				        $('#reviewContent').on('keyup', function() {
+				            $('#test_cnt').html("("+$(this).val().length+" / 500)");
+				 
+				            if($(this).val().length > 500) {
+				                $(this).val($(this).val().substring(0, 500));
+				                $('#test_cnt').html("(500 / 500)");
+				            }
+				        });
+				    });
+			        
+			    </script>
 				
 				<div
-					style="width: 40px; height: 40px; display: flex; justify-content: center;">
-					<input type="button" class="plusBtn" value="+"
-						style="border: 1; margin: auto; display: block;"
-						onclick="plusTd()">
+					style="width: 45vw; height: 40px; display: flex; justify-content: flex-start;">
+					<input type="button" class="plusBtn" value="사진 더 추가하기"
+						style="display: block; font-size: 0.6vw; width: 7vw; height: 30px; margin-left: 0.5vw;"
+						onclick="plusTd()" countPhotoChecked(field)>
 				</div>
 
 				<!-- 리뷰사진 업로드 버튼 -->
 				<div class="reviewPhotoDiv" id="reviewPhotoDiv">
-					<div>
+					<div class="photoAdd">
 						<div class="button">
 							<label for="file1"> 👉사진 업로드👈 </label>
 						</div>
@@ -251,11 +298,6 @@ String cp = request.getContextPath();
 								<div class="line"></div>
 							</div>
 						</label>
-						
-						<div>
-							<p style="text-align: center;">&nbsp;</p>
-						</div>
-					
 					</div>
 				</div>
 			</div>

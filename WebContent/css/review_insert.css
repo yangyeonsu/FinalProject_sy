@@ -170,7 +170,7 @@ input[type=checkbox]
 {
 	display: flex;
     justify-content: flex-start;
-    width: 45vw;
+    width: 44vw;
 }
 
 .reviewPhotoDiv
@@ -178,6 +178,11 @@ input[type=checkbox]
     margin-top: 1vw;
     width: 45vw;
     display: flex;
+}
+
+.photoAdd
+{
+	width: 10vw;
 }
 
 .image-show img
