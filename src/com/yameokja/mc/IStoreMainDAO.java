@@ -15,12 +15,14 @@ public interface IStoreMainDAO
 	public ArrayList<ReviewDTO> rv_list(int st_num);
 
 	//public int reviewReply(@RequestParam("rv_num") int rv_num, @RequestParam("reply_content") String reply_content);
-	public int reviewReply(int rv_num, String reply_content);
-
+	// 리뷰댓글(insert)
+	public int reviewReply(@Param("rv_num") int rv_num,@Param("reply_content") String reply_content);
+	// 댓글내용
+	/* public ArrayList<ReviewDTO> reply_content(int rv_num); */
 	
 	public ArrayList<FoodLabelDTO> foodLabel();
 	public ArrayList<PayLabelDTO> payLabel();
 	public ArrayList<String> weekDayLabel();
 	public ArrayList<String> weekWeekendDayLabel();
-
+	public ArrayList<ChboxDTO> chBoxLabel();
 }
