@@ -48,9 +48,9 @@ String cp = request.getContextPath();
 	{
 		$("#comBtn").click(function()
 		{
-			if ($('input:checkbox[name=comStImgCB]:checked').length > 3)
+			if ($('input:checkbox[name=comStImgCB]:checked').length == 1)
 			{
-				alert("3개 이상 비교 불가");
+				alert("2개부터 비교 가능합니다.");
 				return;
 			}
 
@@ -133,7 +133,7 @@ String cp = request.getContextPath();
 									<button type="button" value="${com.st_num}" class="comDelete">X</button>
 									<label for="${com.st_num}" class="stLabel"> <input
 										type="checkbox" class="comStImgCB" name="comStImgCB"
-										id="${com.st_num}" onclick="CountChecked(this)"> <c:set var="photo"
+										id="${com.st_num}" onclick="comCountChecked(this)"> <c:set var="photo"
 											value="${com.photo_link }" /> <c:choose>
 											<c:when test="${empty photo}">
 												<img class="stImg" src="<%=cp%>/images/logo_text.png">

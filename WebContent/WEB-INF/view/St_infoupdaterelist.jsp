@@ -176,26 +176,26 @@
 						<div class="rpt_subtitle">수정요청일자</div>
 						<div class="rpt_subtitle">이의제기 신청여부</div>
 						<div class="rpt_subtitle">패널티</div>
-				<%-- 	</div>
+					</div>
 					<c:choose>
-					    <c:when test="${empty }">
+					    <c:when test="${empty stinfoupdatelist}">
 					        <div class="no-data-message">가게정보수정요청 내역이 없습니다.</div>
 					    </c:when>
 					    <c:otherwise>
-					        <c:forEach var="" items="${}">
+					        <c:forEach var="stud" items="${stinfoupdatelist}">
 					            <div class="report_content">
-					                <div class="rpt_content">${ }</div>
-					                <div class="rpt_content">${ }</div>
-					                <div class="rpt_content">${ }</div>
+					                <div class="rpt_content">${stud.final_date }</div>
+					                <div class="rpt_content">${stud.objyn }</div>
+					                <div class="rpt_content">${stud.ptyn }</div>
 					            </div>
 					        </c:forEach>
 					    </c:otherwise>
-					</c:choose> --%>
+					</c:choose>
 					
 					<!-- 페이징 처리 -->
 					<div class="pagination">
 			            <c:choose>
-			                <c:when test="${empty user_stupdate_relist}">
+			                <c:when test="${empty stinfoupdatelist}">
 			                    <p></p>
 			                </c:when>
 			                <c:otherwise>
