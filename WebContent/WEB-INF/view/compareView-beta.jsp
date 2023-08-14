@@ -383,6 +383,7 @@ body {
 
 </head>
 <body>
+<form method="post" id="userForm">
 	<div class="header">
 		<c:import url="/WEB-INF/view/header_user.jsp"></c:import>
 	</div>
@@ -398,7 +399,7 @@ body {
 				<span>비교해보기</span>
 			</div>
 
-			<div id="여기가 큰 비교 틀 & 포문으로 들어갈 공간" class="compareBody">
+			<div id="compareBody" class="compareBody">
 
 				<div class="cCategory">
 					<div class="cCat">
@@ -452,7 +453,7 @@ body {
 							<div class="opCl">
 								<c:set var="dbstocItem" value="${dbstoc[stnnumStatus.index]}" />
 								<c:choose>
-									<c:when test="${fn:length(dbstocItem) < 1 }">
+									<c:when test="${fn:length(dbstocItem) < 1}">
 										<c:forEach begin="0" end="7">
 											<div>
 												&nbsp;
@@ -539,5 +540,6 @@ body {
 	<div class="footer">
 		<c:import url="/WEB-INF/view/footer.jsp"></c:import>
 	</div>
+</form>
 </body>
 </html>
