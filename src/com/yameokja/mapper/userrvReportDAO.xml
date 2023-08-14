@@ -9,7 +9,7 @@
 	</select>
 
 	<select id="user_rv_Report" resultType="com.yameokja.mc.UserrvreportDTO">
-		
+		<!-- 
 		SELECT REG_DATE, ST_NAME, REPORTEDUSERID, STATUS, FINAL_DATE
 		FROM (
 			SELECT RA.REG_DATE AS REG_DATE, IA.ST_NAME AS ST_NAME, UU.USER_ID AS REPORTEDUSERID, CASE WHEN RA.ADMIN_READ_DATE IS NULL THEN '미확인'
@@ -35,8 +35,8 @@
 			WHERE RA.USER_NUM = #{user_num}
 		)
 		WHERE RNUM BETWEEN #{startRow} AND #{endRow}
+		 -->
 		
-		<!-- 
 		SELECT REG_DATE, ST_NAME, REPORTEDUSERID, STATUS, FINAL_DATE, REP_REJ_NUM, REJ_RS
 		FROM (
 		    SELECT RA.REG_DATE AS REG_DATE
@@ -71,6 +71,6 @@
 		    WHERE RA.USER_NUM = #{user_num}
 		)
 		WHERE RNUM BETWEEN #{startRow} AND #{endRow}
-		 -->
+		
 	</select>
 </mapper>
