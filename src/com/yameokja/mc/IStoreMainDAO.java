@@ -18,7 +18,7 @@ public interface IStoreMainDAO
 	// 리뷰댓글(insert)
 	public int reviewReply(@Param("rv_num") int rv_num,@Param("reply_content") String reply_content);
 	// 댓글내용
-	/* public ArrayList<ReviewDTO> reply_content(int rv_num); */
+	public ArrayList<ReviewDTO> reply_content(int rv_num); 
 	
 	public ArrayList<FoodLabelDTO> foodLabel();
 	public ArrayList<PayLabelDTO> payLabel();
