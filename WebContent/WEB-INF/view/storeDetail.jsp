@@ -33,6 +33,21 @@ String cp = request.getContextPath();
 <script type="text/javascript">
 	$(function()
 	{
+		if(${user_st_check}==1)
+		{
+			$(".likeAddBtn").html("🤍");
+			$(".likeAddBtn").attr("disabled", true);
+			$(".likeAddBtn").css("cursor", "none");
+			$(".likeAddBtn").css("pointer-events", "none");
+			$("#modifyReqBtn").attr("disabled", true);
+			$("#modifyReqBtn").css("pointer-events", "none");
+			$("#insertReview").attr("disabled", true);
+			$("#insertReview").css("pointer-events", "none");
+			$(".repBtn").attr("disabled", true);
+			$(".repBtn").css("pointer-events", "none");
+			$(".recBtn").attr("disabled", true);
+			$(".recBtn").css("pointer-events", "none");
+		}
 
 		$(".comAddBtn").click(function()
 		{
