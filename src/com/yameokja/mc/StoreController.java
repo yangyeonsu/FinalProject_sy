@@ -12,9 +12,11 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class StoreController
@@ -148,6 +150,7 @@ public class StoreController
 		model.addAttribute("payLabel", sdao.payLabel());
 		model.addAttribute("weekdayLabel", sdao.weekDayLabel());
 		model.addAttribute("weekWeekendDayLabel", sdao.weekWeekendDayLabel());
+		model.addAttribute("chBoxLabel", sdao.chBoxLabel());
 		
 		// 가게 기본 사항
 		model.addAttribute("store", dao.store(st_num));
@@ -214,36 +217,33 @@ public class StoreController
 		return result;
 	}
   
-	@RequestMapping(value = "/rvReply.action", method = RequestMethod.POST)
+	@RequestMapping(value="/rvReply.action", method = {RequestMethod.GET, RequestMethod.POST})
 	public String rvReply(HttpServletRequest request, Model model)
 	{	
-		
-		String rvnum = request.getParameter("rv_num"); // "parameterName"은 실제 파라미터 이름으로 바꿔야 합니다.
+		String rvnum = request.getParameter("rv_num");
 		String reply_content = request.getParameter("reply_content");
-		System.out.println("reply_content: " + reply_content);
+		int rv_num = 0;
+		
+		System.out.println("rv_num: " + rvnum);
 		System.out.println("reply_content from HttpServletRequest: " + reply_content);
 
 
 		
         // 점검 코드
-        if (rvnum == null || reply_content == null) 
+        if (rvnum == null) 
         {
-            System.out.println("경고: 'parameterName' 값이 null 입니다.");
-        } 
-        else if (rvnum.isEmpty()) 
-        {
-            System.out.println("경고: 'parameterName' 값이 비어있습니다.");
-        } 
-        else 
-        {
-            try 
-            {
-                Integer.parseInt(rvnum);
-            } catch (NumberFormatException e) 
-            {
-                System.out.println("경고: 'parameterName' 값이 숫자 형태가 아닙니다. 값: " + rvnum);
-            }
+            System.out.println("경고: 'rv_num' 값이 null 입니다.");
         }
+        else
+        {
+        	rv_num = Integer.parseInt(rvnum);
+        }
+        
+        if (reply_content == null) 
+        {
+            System.out.println("경고: 'reply_content' 값이 비어있습니다.");
+        } 
+       
         
         if(reply_content == null || reply_content.trim().isEmpty()) 
         {
@@ -255,7 +255,7 @@ public class StoreController
 		HttpSession session = request.getSession();
 		IStoreMainDAO dao = sqlSession.getMapper(IStoreMainDAO.class);
 		IUserDAO uDao = sqlSession.getMapper(IUserDAO.class);
-		StoreReviewDTO dto = new StoreReviewDTO();
+		//StoreReviewDTO dto = new StoreReviewDTO();
 		
 		String user_num = (String)session.getAttribute("user_num");
 		Integer stNumInteger = (Integer)session.getAttribute("st_num");
@@ -275,18 +275,36 @@ public class StoreController
 		model.addAttribute("user", user);
 		session.setAttribute("st_num", st_num);
 		
-		int rvReplynum = 0;
 		
-		int rv_num = 0; 
-		rv_num = Integer.parseInt(rvnum);
-		dto.setRv_content(reply_content);
-		dto.setRv_num(rv_num);
+		//dto.setRv_content(reply_content);
+		//dto.setRv_num(rv_num);
 		
 		
-		//rvReplynum = dao.reviewReply(dto);
-		rvReplynum = dao.reviewReply(rv_num, reply_content);
+		//dao.reviewReply(dto);
+		dao.reviewReply(rv_num, reply_content);
 		
 	    return "redirect:storemain.action";
-  }
+	}
+	
+	@RequestMapping(value="/rvcompletebtn.action", method = RequestMethod.POST)
+		@ResponseBody
+	public String replyCheck(@RequestParam("rv_num") int rv_num, @RequestParam("reply_content") String reply_content)
+	{
+		String html= "";
+		
+		
+		System.out.println(rv_num);
+		System.out.println(reply_content);
+		
+		
+		IStoreMainDAO dao = sqlSession.getMapper(IStoreMainDAO.class);
+		int result = dao.reviewReply(rv_num, reply_content);
+		
+		html += "<div class=\"replyBox\">";
+		html += "사장님 : " + reply_content +"</div>";
+		
+		return html; 
+	}
+	
   
 }

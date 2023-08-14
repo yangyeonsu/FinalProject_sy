@@ -83,6 +83,11 @@
 		ORDER BY WEEK_WEEKEND_NUM
 	</select>
 
+	<!-- 가게 체크박스 라벨 -->
+	<select id="chBoxLabel" resultType="com.yameokja.mc.ChboxDTO">
+		SELECT CHBOX_NUM, CHBOX_NAME
+		FROM CHBOX_LABEL
+	</select>
 
 </mapper>
 
