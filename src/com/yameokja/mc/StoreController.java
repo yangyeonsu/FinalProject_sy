@@ -158,7 +158,7 @@ public class StoreController
 		model.addAttribute("store", dao.store(st_num));
 		
 		// 가게 키워드
-		ArrayList<String> stKeyList =  dao.stKeysStr(st_num);
+		ArrayList<Integer> stKeyList =  dao.stKeysStr(st_num);
 		if(stKeyList.size()>0)
 		{
 			model.addAttribute("stKeys", stKeyList);

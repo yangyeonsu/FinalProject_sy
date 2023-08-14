@@ -29,8 +29,8 @@
  	</select>
  	
  	<!-- 가게 키워드 -->
- 	<select id="stKeysStr" resultType="java.lang.String">
- 		SELECT SKL.ST_KEYWORD AS ST_KEYWORD
+ 	<select id="stKeysStr" resultType="java.lang.Integer">
+ 		SELECT SKL.ST_KEY_NUM AS ST_KEY_NUM
 		FROM ST_KEY SK LEFT JOIN ST_KEY_LABEL SKL
 		  ON SK.ST_KEY_NUM = SKL.ST_KEY_NUM
 		WHERE SK.ST_NUM = #{st_num, jdbcType=INTEGER}

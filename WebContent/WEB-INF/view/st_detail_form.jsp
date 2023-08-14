@@ -746,38 +746,81 @@ $(document).ready(function(){
 						</tr>
 						<tr class="menuTr">
 							<td></td>
-							<td>
-						    	<div class="button">
-									<label for="file1">
-										👉 음식 사진 업로드 👈
-									</label>
-							    </div>
-							    	<input type="file" id="file1" name="chooseFile" accept="image/*" onchange="loadFile(this)">
-							    <div class="image-show"></div>
-							    <p id="fileName1" style="font-size: small"></p>
-								<label id="label">
-									<input type="text" class="input">
-									<div class="line-box" style="width:60%; margin-left: 3vw;">
-									    <div class="line"></div>
-									</div>
-								</label>
-							</td>
-							<td>
-								<div class="button">
-									<label for="file2">
-										👉 음식 사진 업로드 👈
-									</label>
-							    </div>
-							    	<input type="file" id="file2" name="chooseFile" accept="image/*" onchange="loadFile(this)">
-							    <div class="image-show"></div>
-							    <p id="fileName2" style="font-size: small"></p>
-								<label id="label">
-									<input type="text" class="input">
-									<div class="line-box" style="width:60%; margin-left: 3vw;">
-									    <div class="line"></div>
-									</div>
-								</label>
-							</td>
+							<c:choose>
+								<c:when test="${fn:length(menuLists) == 0}">
+									<td>
+								    	<div class="button">
+											<label for="file1">
+												👉 음식 사진 업로드 👈
+											</label>
+									    </div>
+									    	<input type="file" id="file1" name="chooseFile" accept="image/*" onchange="loadFile(this)">
+									    <div class="image-show"></div>
+									    <p id="fileName1" style="font-size: small"></p>
+										<label id="menu_label">
+											<input type="text" class="input" value="">
+											<div class="line-box" style="width:60%; margin-left: 3vw;">
+											    <div class="line"></div>
+											</div>
+										</label>
+										<label id="menu_label">
+											<input type="text" class="input" value="">
+											<div class="line-box" style="width:60%; margin-left: 3vw;">
+											    <div class="line"></div>
+											</div>
+										</label>
+									</td>
+									<td>
+										<div class="button">
+											<label for="file2">
+												👉 음식 사진 업로드 👈
+											</label>
+									    </div>
+									    	<input type="file" id="file2" name="chooseFile" accept="image/*" onchange="loadFile(this)">
+									    <div class="image-show"></div>
+									    <p id="fileName2" style="font-size: small"></p>
+										<label id="menu_label">
+											<input type="text" class="input" value="">
+											<div class="line-box" style="width:60%; margin-left: 3vw;">
+											    <div class="line"></div>
+											</div>
+										</label>
+										<label id="menu_label">
+											<input type="text" class="input" value="">
+											<div class="line-box" style="width:60%; margin-left: 3vw;">
+											    <div class="line"></div>
+											</div>
+										</label>
+									</td>
+								</c:when>
+								<c:otherwise>
+									<c:forEach var="menu" items="${menuLists }">
+										<td>
+									    	<div class="button">
+												<label for="file1">
+													👉 음식 사진 업로드 👈
+												</label>
+										    </div>
+										    	<input type="file" id="file1" name="chooseFile" accept="image/*" onchange="loadFile(this)">
+										    <div class="image-show"><img alt="" src=""${menu.image_link }></div>
+										    <p id="fileName1" style="font-size: small"></p>
+											<label id="menu_label">
+												<input type="text" class="input" value="${menu.menu_name }">
+												<div class="line-box" style="width:60%; margin-left: 3vw;">
+												    <div class="line"></div>
+												</div>
+											</label>
+											<label id="menu_label">
+												<input type="text" class="input" value="${menu.price }">
+												<div class="line-box" style="width:60%; margin-left: 3vw;">
+												    <div class="line"></div>
+												</div>
+											</label>
+										</td>
+									</c:forEach>
+								</c:otherwise>
+							</c:choose>
+							
 							<td>
 								<div style="width: 200px; height: 150px; display: flex; justify-content: center;">
 									<input type="button" class="plusBtn" value="+" style="border: 1; margin: auto; display: block;" onclick="plusTd()"> 
@@ -915,9 +958,10 @@ $(document).ready(function(){
 						
 						<div class="stKey">
 							<c:forEach var="stKey" items="${stKeyLabel }">
+								<c:set var="st_key_num" value="${stkey.st_key_num }"/>
 								<c:choose>
-									<c:when test="${fn: contains(stKeys, stkey) }">
-										<label class="ibmatlabel" for="ibmat${stKey.st_key_num }">
+									<c:when test="${fn: contains(stKeys, st_key_num) }">
+										<label class="ibmatlabel" for="ibmat${stKey.st_key_num }" style="border-bottom: 3px solid #ef6351;">
 											<input type="checkbox" class="ibmatCB" id="ibmat${stKey.st_key_num }" checked="checked">
 											${stKey.st_keyword }
 										</label>
