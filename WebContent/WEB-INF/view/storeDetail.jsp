@@ -548,37 +548,30 @@ String cp = request.getContextPath();
 												<c:if test="${empty openClose }">
 													<div class="ochList">
 														<div class="dayname">월요일</div>
-														<div class="time">-</div>
 														<div class="holiday">-</div>
 													</div>
 													<div class="ochList">
 														<div class="dayname">화요일</div>
-														<div class="time">-</div>
 														<div class="holiday">-</div>
 													</div>
 													<div class="ochList">
 														<div class="dayname">수요일</div>
-														<div class="time">-</div>
 														<div class="holiday">-</div>
 													</div>
 													<div class="ochList">
 														<div class="dayname">목요일</div>
-														<div class="time">-</div>
 														<div class="holiday">-</div>
 													</div>
 													<div class="ochList">
 														<div class="dayname">금요일</div>
-														<div class="time">-</div>
 														<div class="holiday">-</div>
 													</div>
 													<div class="ochList">
 														<div class="dayname">토요일</div>
-														<div class="time">-</div>
 														<div class="holiday">-</div>
 													</div>
 													<div class="ochList">
 														<div class="dayname">일요일</div>
-														<div class="time">-</div>
 														<div class="holiday">-</div>
 													</div>
 												</c:if>
