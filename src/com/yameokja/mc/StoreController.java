@@ -198,35 +198,25 @@ public class StoreController
 	}
   
 	@RequestMapping(value = "/rvReply.action", method = RequestMethod.POST)
-	public String rvReply(HttpServletRequest request, Model model)
+	public String rvReply(@RequestParam int rv_num, @RequestParam String reply_content, HttpServletRequest request, Model model)
 	{	
 		
-		String rvnum = request.getParameter("rv_num"); // "parameterName"은 실제 파라미터 이름으로 바꿔야 합니다.
-		String reply_content = request.getParameter("reply_content");
-		System.out.println("reply_content: " + reply_content);
+		System.out.println("rv_num: " + rv_num);
 		System.out.println("reply_content from HttpServletRequest: " + reply_content);
 
 
 		
         // 점검 코드
-        if (rvnum == null || reply_content == null) 
+        if (rv_num == 0) 
         {
-            System.out.println("경고: 'parameterName' 값이 null 입니다.");
+            System.out.println("경고: 'rv_num' 값이 0 입니다.");
         } 
-        else if (rvnum.isEmpty()) 
+        
+        if (reply_content == null) 
         {
-            System.out.println("경고: 'parameterName' 값이 비어있습니다.");
+            System.out.println("경고: 'reply_content' 값이 비어있습니다.");
         } 
-        else 
-        {
-            try 
-            {
-                Integer.parseInt(rvnum);
-            } catch (NumberFormatException e) 
-            {
-                System.out.println("경고: 'parameterName' 값이 숫자 형태가 아닙니다. 값: " + rvnum);
-            }
-        }
+       
         
         if(reply_content == null || reply_content.trim().isEmpty()) 
         {
@@ -260,8 +250,6 @@ public class StoreController
 		
 		int rvReplynum = 0;
 		
-		int rv_num = 0; 
-		rv_num = Integer.parseInt(rvnum);
 		dto.setRv_content(reply_content);
 		dto.setRv_num(rv_num);
 		

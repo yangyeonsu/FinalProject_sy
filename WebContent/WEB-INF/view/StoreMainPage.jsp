@@ -369,22 +369,22 @@ $(document).ready(function()
 	
     $(".review_reply_btn").click(function(event) 
     {
-        var replyTextarea = $(this).closest('.review').find('textarea.review_reply_txtarea');
-        if(!replyTextarea.val().trim()) 
+        var thisForm = $(this).closest('.rvReplyForm'); // 해당 버튼의 폼을 선택
+        var replyTextarea = thisForm.find('textarea.review_reply_txtarea');
+        if (!replyTextarea.val().trim()) 
         {
             alert("답글을 입력해주세요!");
             event.preventDefault();
         } 
-        else 
+        else
         {
-            $(".rvReplyForm").submit();
+            thisForm.submit(); // 해당 폼 제출
         }
-        
-        console.log("RV_NUM:", $(this).closest('.review').find('input[name="rv_num"]').val());
+
+        console.log("RV_NUM:", thisForm.find('input[name="rv_num"]').val());
         console.log("Reply content:", replyTextarea.val());
-
-
     });
+
     
 });
 
