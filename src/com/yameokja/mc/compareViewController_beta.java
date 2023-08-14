@@ -67,15 +67,17 @@ public class compareViewController_beta
 		
 		ArrayList<StoreOpencloseDTO> openCloses = dao.openClose(stnumList);	//-- 비교함에서 선택한 가게 영업정보 리스트
 		
-		ArrayList<StoreOpencloseDTO> stOc = new ArrayList<StoreOpencloseDTO>();
+		
 		ArrayList<ArrayList<StoreOpencloseDTO>> dbstoc = new ArrayList<ArrayList<StoreOpencloseDTO>>();
 		
 		for (int st_num : stnumList)
 		{
+			ArrayList<StoreOpencloseDTO> stOc = new ArrayList<StoreOpencloseDTO>();
 			for (StoreOpencloseDTO opencloseDTO : openCloses)
 			{
 				if (opencloseDTO.getSt_num() == st_num)
 				{
+					System.out.println(opencloseDTO.getSt_num());
 					stOc.add(opencloseDTO);
 				}
 			}
@@ -84,6 +86,8 @@ public class compareViewController_beta
 				dbstoc.add(stOc);
 			else
 				dbstoc.add(null);
+			
+			
 		}
 		
 		model.addAttribute("dbstoc", dbstoc);
