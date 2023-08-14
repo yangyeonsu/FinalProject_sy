@@ -30,6 +30,7 @@ public class StoreController
 		
 		/* int st_num = Integer.parseInt(str_st_num); */ 
 		
+		IstDetailDAO_userView dao = sqlSession.getMapper(IstDetailDAO_userView.class);
 		IStoreMainDAO smDao = sqlSession.getMapper(IStoreMainDAO.class);
 		IUserDAO uDao = sqlSession.getMapper(IUserDAO.class);
 		
@@ -81,6 +82,22 @@ public class StoreController
 			star_labels.add("'" +star.get("QUARTER_START_DATE")+"'");
 			star_data.add(String.valueOf(star.get("AVERAGE_STAR_SCORE")));
 		}
+		
+		
+		// 가게 리뷰목록
+		ArrayList<StoreReviewDTO> reviews = dao.reviews(st_num);
+		
+		if(reviews.size() > 0)
+		{
+			model.addAttribute("reviews", reviews);
+		}
+		else
+			model.addAttribute("reviews", null);
+		
+		// 가게 리뷰 사진 목록
+		ArrayList<StoreRvPhotoDTO> rvPhotos = dao.rvPhoto(st_num);
+		
+		model.addAttribute("rvPhotos", rvPhotos);
 		
 		model.addAttribute("st_list", st_list);
 		

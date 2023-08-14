@@ -115,7 +115,7 @@ public class AdminMainController
 		
 		IAdminMainDAO dao = sqlSesion.getMapper(IAdminMainDAO.class);
 		
-		model.addAttribute("admin_num", dao.searchNum(admin_num, "num").getAdmin_name());
+		model.addAttribute("admin_name", dao.searchNum(admin_num, "num").getAdmin_name());
 		model.addAttribute("revoList", dao.revoList());
 		
 		result = "/WEB-INF/view/admin_penaltyView.jsp";
@@ -132,7 +132,7 @@ public class AdminMainController
 		
 		IAdminMainDAO dao = sqlSesion.getMapper(IAdminMainDAO.class);
 		
-		model.addAttribute("admin_num", dao.searchNum(admin_num, "num").getAdmin_name());
+		model.addAttribute("admin_name", dao.searchNum(admin_num, "num").getAdmin_name());
 		model.addAttribute("inoutList", dao.inoutList());
 		
 		result = "/WEB-INF/view/admin_inoutView.jsp";

@@ -254,7 +254,6 @@ public class stDetailController
 		return html;
 		
 	}
-
 	
 	// 가게정보오류수정요청
 	@RequestMapping(value = "/reqapply.action")
@@ -289,13 +288,32 @@ public class stDetailController
 
 		int st_num = Integer.parseInt(request.getParameter("st_num"));
 		String st_name = request.getParameter("st_name");
-
+		
+		IUserDAO udao = sqlSession.getMapper(IUserDAO.class);
+		UserDTO user = udao.searchUserInfo(user_num, "num");
+		
+		LocalDate currentDate = LocalDate.now();
+        int monthValue = currentDate.getMonthValue();
+		
+		if (1 <= monthValue && monthValue <= 6)
+		{
+			user.setPoint_sum(udao.secondHalf(user_num).point_sum);
+			user.setUser_grade(udao.firstHalf(user_num).user_grade);
+		}
+		else if(7 <= monthValue && monthValue <= 12)
+		{
+			user.setPoint_sum(udao.firstHalf(user_num).point_sum);
+			user.setUser_grade(udao.secondHalf(user_num).user_grade);
+		}
+		
+		model.addAttribute("user", user);
+		
 		model.addAttribute("st_num", st_num);
 		model.addAttribute("st_name", st_name);
 		
-		System.out.println("st_num: " + st_num);
-		System.out.println("st_name: " + st_name);
-		System.out.println("user_name: " + user_num);
+		//System.out.println("st_num: " + st_num);
+		//System.out.println("st_name: " + st_name);
+		//System.out.println("user_name: " + user_num);
 		
 		IstDetailDAO_userView dao = sqlSession.getMapper(IstDetailDAO_userView.class);
 		
