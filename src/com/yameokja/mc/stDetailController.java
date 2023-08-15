@@ -218,6 +218,28 @@ public class stDetailController
 		return html;
 	}
 	
+	@RequestMapping(value = "/jjiminsertdeletedetail.action", method = RequestMethod.POST)
+		@ResponseBody
+	public String jjimSearch(@RequestParam("user_num") String user_num, @RequestParam("st_num") String st_num, Model model)
+	{
+		String result = "";
+	
+		IMainDAO dao = sqlSession.getMapper(IMainDAO.class);
+	
+		if (dao.jjimSearch(user_num, Integer.parseInt(st_num)) == 0)
+		{
+			dao.jjimInsert(user_num, Integer.parseInt(st_num));
+			result = "1";
+		} else
+		{
+			dao.jjimDelete(user_num, Integer.parseInt(st_num));
+			result = "0";
+		}
+	
+		return result;
+	}
+
+	
 	@RequestMapping(value="/recinsertdelete.action")
 		@ResponseBody
 	public String recInsertDelete(@RequestParam("rv_num") int rv_num, @RequestParam("rec_nonrec_number") int rec_nonrec_number, HttpServletRequest request)

@@ -33,7 +33,7 @@ String cp = request.getContextPath();
 <script type="text/javascript">
 	$(function()
 	{
-		if(${user_st_check}==1)
+		if(${user_st_check==1})
 		{
 			$(".likeAddBtn").html("🤍");
 			$(".likeAddBtn").attr("disabled", true);
@@ -74,12 +74,14 @@ String cp = request.getContextPath();
 			}
 
 		});
+		
 		// 왼쪽메뉴 드롭다운
 		$(".sub_menu ul.small_menu").hide();
 		$(".sub_menu ul.big_menu").click(function()
 		{
 			$("ul", this).slideToggle(300);
 		});
+		
 		// 외부 클릭 시 좌측 사이드 메뉴 숨기기
 		$('.overlay').on('click', function()
 		{
@@ -142,16 +144,16 @@ String cp = request.getContextPath();
 				{
 					$(this).html(result);
 					
-					if(result=='❤')
-					{
-						$(".clikeNum").html(${clikeNum+1});
-					}
+					var clikeNum = Number($(".clikeNum").html());
 					
-					if(result=='🤍')
+					if(result==='❤️')
 					{
-						$(".clikeNum").html(${clikeNum-1});
+						$(".clikeNum").html(clikeNum+1);
 					}
-					
+					else if(result==='🤍')
+					{
+						$(".clikeNum").html(clikeNum-1);
+					}
 				},
 				error : function(e)
 				{
@@ -263,24 +265,6 @@ String cp = request.getContextPath();
 			});
 		});
 		
-		var totalChecked = 0;
-
-		function CountChecked(field)
-		{
-			if (field.checked)
-				totalChecked += 1;
-			else
-				totalChecked -= 1;
-
-			if (totalChecked > 1)
-			{
-				alert("한 개만 선택 가능합니다.");
-				field.checked = false;
-				totalChecked -= 1;
-			}
-
-		}
-		
 		// 가게 정보 오류 수정 요청
 		$("#reqBtn").click(function()
 		{
@@ -339,26 +323,43 @@ String cp = request.getContextPath();
 				}
 			});
 		});
-		
-		var optionTotalChecked = 0;
-
-		function optionCountChecked(field)
-		{
-			if (field.checked)
-				optionTotalChecked += 1;
-			else
-				optionTotalChecked -= 1;
-
-			if (optionTotalChecked > 1)
-			{
-				alert("한 개만 선택 가능합니다.");
-				option.checked = false;
-				optionTotalChecked -= 1;
-			}
-		}
-		
+	
 	});
+	
+	var totalChecked = 0;
 
+	function CountChecked(field)
+	{
+		if (field.checked)
+			totalChecked += 1;
+		else
+			totalChecked -= 1;
+
+		if (totalChecked > 1)
+		{
+			alert("한 개만 선택 가능합니다.");
+			field.checked = false;
+			totalChecked -= 1;
+		}
+
+	}
+
+	var optionTotalChecked = 0;
+
+	function optionCountChecked(field)
+	{
+		if (field.checked)
+			optionTotalChecked += 1;
+		else
+			optionTotalChecked -= 1;
+
+		if (optionTotalChecked > 1)
+		{
+			alert("한 개만 선택 가능합니다.");
+			option.checked = false;
+			optionTotalChecked -= 1;
+		}
+	}
 
 
 
