@@ -169,6 +169,8 @@
 		INSERT INTO MENU(MENU_NUM, ST_NUM, MENU_NAME, PRICE, IMAGE_LINK)
 		VALUES(MENUSEQ.NEXTVAL, #{st_num}, #{menu_name}, #{price}, #{image_link, jdbcType=VARCHAR})
 	</insert>
+	
+	<delete id="stsearchKey"></delete>
 
 
 	<!-- 댓글 테이블에 리뷰번호 알아내기 -->
