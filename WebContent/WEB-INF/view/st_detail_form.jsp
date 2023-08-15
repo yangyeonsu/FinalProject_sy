@@ -309,9 +309,69 @@ $(document).ready(function(){
 				$(".ibmatlabel[for="+id+"]").css("border-bottom","none");
 		});
 		
+		$(".holiday").click(function()
+		{
+			var id = $(this).attr("id").slice(-1);
+			
+			
+			if ($(this).is(":checked"))
+			{
+				$('select[name=openTime'+id+']').val("nocheck");
+				$('select[name=closeTime'+id+']').val("nocheck");
+			}
+		});
+		
+		$(".nocheck").click(function()
+		{
+			var id = $(this).attr("id").slice(-1);
+			
+			
+			if ($(this).is(":checked"))
+			{
+				$('select[name=breakOT'+id+']').val("nocheck");
+				$('select[name=breakCT'+id+']').val("nocheck");
+			}
+		});
 		
 		$("#sbmitBtn").click(function()
 		{
+			var pays = [];
+			$("input:checkbox[name=pay]:checked").each(function(){
+				pays.push($(this).val()); 
+			});
+			$("#pays").val(pays);
+			
+			var foodcats = [];
+			$("input:checkbox[name=food_cat]:checked").each(function(){
+				foodcats.push($(this).attr("id").substring(6)); 
+			});
+			$("#foodcats").val(foodcats);
+			
+			var chBoxO = [];
+			var chBoxX = [];
+			$("input:checkbox[name=chBox]:checked").each(function(){
+				var chnum = $(this).attr("id");
+				
+				if (chnum.substring(0, 1) == "O")
+					chBoxO.push(chnum.substring(6));
+				else if (chnum.substring(0, 1) == "X")
+					chBoxX.push(chnum.substring(6));
+						
+			});
+			$("#chBoxO").val(chBoxO);
+			$("#chBoxX").val(chBoxX);
+			
+			var stKeys = [];
+			$("input:checkbox[name=stKey]:checked").each(function(){
+				
+				stKeys.push($(this).attr("id").substring(5)); 
+			});
+			$("#stKeys").val(stKeys);
+			
+			$("#breaktime1:checked").each(function(){
+				$("#nobreak").val("true");
+			});
+			
 			$("#userForm").submit();
 		});
 	});
@@ -358,11 +418,11 @@ $(document).ready(function(){
 						    <c:forEach var="weekday" items="${weekdayLabel }" varStatus="w">
 							    <tr class="week">
 							        <td></td>
-							        <th style="padding-right: 1vh;">${weekday }</th>
+							        <th style="padding-right: 1vh;">${weekday.day_name }</th>
 							        <c:choose>
 							            <c:when test="${empty openClose }">
 							            	<td>
-												<select id="openTime">
+												<select id="openTime" name="openTime${weekday.day_num }">
 													<option value="nocheck">시간 선택</option>
 													<c:forEach var="i" begin="0" end="23" >
 														<c:forEach var="k" begin="1" end="2">
@@ -378,7 +438,7 @@ $(document).ready(function(){
 											</td>
 											<td> ~ </td>
 											<td>
-												<select id="closeTime">
+												<select id="closeTime" name="closeTime${weekday.day_num }">
 													<option value="nocheck">시간 선택</option>
 													<c:forEach var="i" begin="0" end="23" >
 														<c:forEach var="k" begin="1" end="2">
@@ -393,17 +453,17 @@ $(document).ready(function(){
 												</select>
 											</td>
 											<td colspan="4">
-							                    <input type="checkbox" id="rest${w.index }" value="7" />
-							                    <label for="rest${w.index }">휴무</label>
+							                    <input type="checkbox" class="holiday" id="rest${weekday.day_num }" name="rest${weekday.day_num }" />
+							                    <label for="rest${weekday.day_num }">휴무</label>
 							                </td>
 										</c:when>
 										<c:otherwise>
 							                <c:forEach var="oc" items="${openClose }">
-							                	<c:if test="${oc.day_name eq weekday }">
+							                	<c:if test="${oc.day_name eq weekday.day_name }">
 								                    <c:choose>
 								                        <c:when test='${oc.holiday eq "휴무"}'>
 								                        	<td>
-																<select class="openTime">
+																<select class="openTime" name="openTime${weekday.day_num }">
 																	<option value="nocheck">시간 선택</option>
 																	<c:forEach var="i" begin="0" end="23" >
 																		<c:forEach var="k" begin="1" end="2">
@@ -419,7 +479,7 @@ $(document).ready(function(){
 															</td>
 															<td> ~ </td>
 															<td>
-																<select class="closeTime">
+																<select class="closeTime" name="closeTime${weekday.day_num }">
 																	<option value="nocheck">시간 선택</option>
 																	<c:forEach var="i" begin="0" end="23" >
 																		<c:forEach var="k" begin="1" end="2">
@@ -434,14 +494,14 @@ $(document).ready(function(){
 																</select>
 															</td>
 															<td colspan="4">
-								                                <input type="checkbox" id="rest${w.index }" value="7" checked="checked" />
-								                                <label for="rest${w.index }">휴무</label>
+								                                <input type="checkbox" class="holiday" id="rest${weekday.day_num }" name="rest${weekday.day_num }" checked="checked" />
+								                                <label for="rest${weekday.day_num }">휴무</label>
 								                            </td>
 								                        </c:when>
 								                        <c:when test='${oc.holiday eq "-"}'>
 												    			<c:if test="${fn:length(fn:trim(oc.operate_time)) > 1}">
 												    				<td>
-																		<select class="openTime">
+																		<select class="openTime" name="openTime${weekday.day_num }">
 																			<option value="nocheck">시간 선택</option>
 																			<c:set var="starth" value="${fn:substring(oc.operate_time, 0, 2)}" />
 																			<c:set var="startm" value="${fn:substring(oc.operate_time, 3, 5)}" />
@@ -479,7 +539,7 @@ $(document).ready(function(){
 																	</td>
 																	<td> ~ </td>
 																	<td>
-																		<select class="closeTime">
+																		<select class="closeTime" name="closeTime${weekday.day_num }">
 																			<option value="nocheck">시간 선택</option>
 																			<c:set var="endh" value="${fn:substring(oc.operate_time, 8, 10)}" />
 																			<c:set var="endm" value="${fn:substring(oc.operate_time, 11, fn:length(oc.operate_time)+1)}" />
@@ -515,12 +575,12 @@ $(document).ready(function(){
 																			</c:forEach>
 																		</select>
 																	</td>
-																	<td><input type="checkbox" id="rest${w.index }" value="7"></td>
-																	<td><label for="${w.index }">휴무</label></td>
+																	<td><input type="checkbox" class="holiday" id="rest${weekday.day_num }" name="rest${weekday.day_num }"></td>
+																	<td><label for="${weekday.day_num }">휴무</label></td>
 												    			</c:if>
 												    			<c:if test="${fn:length(fn:trim(oc.operate_time)) < 2}">
 												    				<td>
-																		<select class="openTime">
+																		<select class="openTime" name="openTime${weekday.day_num }">
 																			<option value="nocheck">시간 선택</option>
 																			<c:forEach var="i" begin="0" end="23" >
 																				<c:forEach var="k" begin="1" end="2">
@@ -536,7 +596,7 @@ $(document).ready(function(){
 																	</td>
 																	<td> ~ </td>
 																	<td>
-																		<select class="closeTime">
+																		<select class="closeTime" name="closeTime${weekday.day_num }">
 																			<option value="nocheck">시간 선택</option>
 																			<c:forEach var="i" begin="0" end="23" >
 																				<c:forEach var="k" begin="1" end="2">
@@ -550,6 +610,8 @@ $(document).ready(function(){
 																			</c:forEach>
 																		</select>
 																	</td>
+																	<td><input type="checkbox" class="holiday" id="rest${weekday.day_num }" name="rest${weekday.day_num }"></td>
+																	<td><label for="${weekday.day_num }">휴무</label></td>
 																</c:if>
 														</c:when>
 													</c:choose>
@@ -568,14 +630,14 @@ $(document).ready(function(){
 						    <tr>
 						        <th style="border-bottom: 5px solid;">브레이크타임</th>
 						    </tr>
-						    <c:forEach var="ww" items="${weekWeekendDayLabel}">
+						    <c:forEach var="ww" items="${weekWeekendDayLabel}" varStatus="wstatus">
 						        <tr>
 						            <td></td>
-						            <th style="padding-right: 1vh;">${ww}</th>
+						            <th style="padding-right: 1vh;">${ww.week_weekend }</th>
 						            <c:choose>
 										<c:when test="${empty breakTime }">
 											<td>
-												<select class="brOT">
+												<select class="brOT" name="breakOT${ww.week_weekend_num }">
 													<option value="nocheck">시간 선택</option>
 													<c:forEach var="i" begin="0" end="23" >
 														<c:forEach var="k" begin="1" end="2">
@@ -591,7 +653,7 @@ $(document).ready(function(){
 											</td>
 											<td> ~ </td>
 											<td>
-												<select class="brCT">
+												<select class="brCT" name="breakCT${ww.week_weekend_num }">
 													<option value="nocheck">시간 선택</option>
 													<c:forEach var="i" begin="0" end="23" >
 														<c:forEach var="k" begin="1" end="2">
@@ -605,14 +667,14 @@ $(document).ready(function(){
 													</c:forEach>
 												</select>
 											</td>
-											<td><input type="checkbox" id="breaktime2"></td>
-											<td><label for="breaktime2">없음</label></td>
+											<td><input type="checkbox" class="nocheck" id="nobreak${ww.week_weekend_num }"></td>
+											<td><label for="nobreak${ww.week_weekend_num }">없음</label></td>
 										</c:when>						            
 						            	<c:otherwise>
 						            		<c:forEach var="bt" items="${breakTime}">
-						            			<c:if test="${bt.week_weekend eq ww }">
+						            			<c:if test="${bt.week_weekend eq ww.week_weekend }">
 						            				<td>
-														<select class="brOT">
+														<select class="brOT" name="breakOT${ww.week_weekend_num }">
 															<option value="nocheck">시간 선택</option>
 															<c:set var="btstarth" value="${fn:substring(bt.start_breaktime, 0, 2)}" />
 															<c:set var="btstartm" value="${fn:substring(bt.start_breaktime, 3, 5)}" />
@@ -644,7 +706,7 @@ $(document).ready(function(){
 													</td>
 													<td> ~ </td>
 													<td>
-														<select class="brCT">
+														<select class="brCT" name="breakCT${ww.week_weekend_num }">
 															<option value="nocheck">시간 선택</option>
 															<c:set var="btendh" value="${fn:substring(bt.end_breaktime, 0, 2)}" />
 															<c:set var="btendm" value="${fn:substring(bt.end_breaktime, 3, 5)}" />
@@ -674,8 +736,8 @@ $(document).ready(function(){
 															</c:forEach>
 														</select>
 													</td>
-													<td><input type="checkbox" id="breaktime1"></td>
-													<td><label for="breaktime1">없음</label></td>
+													<td><input type="checkbox" class="nocheck" id="nobreak${ww.week_weekend_num }"></td>
+													<td><label for="nobreak${ww.week_weekend_num }">없음</label></td>
 						            			</c:if>
 
 						            		</c:forEach>
@@ -698,11 +760,11 @@ $(document).ready(function(){
 									<c:forEach var="paylabel" items="${payLabel }">
 										<c:choose>
 											<c:when test="${fn:contains(stPayList, paylabel.pay_name)}">
-												<input type="checkbox" id="paych${paylabel.pay_num }" name="pay" checked="checked">
+												<input type="checkbox" id="paych${paylabel.pay_num }" name="pay" checked="checked" value="${paylabel.pay_name }">
 												<label for="paych${paylabel.pay_num }">${paylabel.pay_name }</label>
 											</c:when>
 											<c:otherwise>
-												<input type="checkbox" id="paych${paylabel.pay_num }" name="pay" checked="checked">
+												<input type="checkbox" id="paych${paylabel.pay_num }" name="pay" value="${paylabel.pay_name }">
 												<label for="paych${paylabel.pay_num }">${paylabel.pay_name }</label>
 											</c:otherwise>
 										</c:choose>
@@ -711,7 +773,7 @@ $(document).ready(function(){
 								<c:if test="${fn:length(stPayList) == 0}">
 									<c:forEach var="paylabel" items="${payLabel }">
 										
-										<input type="checkbox" id="paych${paylabel.pay_num }" name="pay">
+										<input type="checkbox" id="paych${paylabel.pay_num }" name="pay" value="${paylabel.pay_name }">
 										<label for="paych${paylabel.pay_num }">${paylabel.pay_name }</label>
 										
 									</c:forEach>
@@ -720,6 +782,7 @@ $(document).ready(function(){
 								<!-- <input type="checkbox" id="paych3" name="card"><label for="paych3">네이버페이</label>
 								<input type="checkbox" id="paych4" name="card"><label for="paych4">페이코</label>
 								<input type="checkbox" id="paych5" name="card"><label for="paych5">지역화폐</label> -->
+								<input type="hidden" id="pays" name="pays">
 							</td>
 						</tr>
 					</table>
@@ -747,6 +810,7 @@ $(document).ready(function(){
 							</c:forEach>
 								<!-- <input type="checkbox" id="foodch8" name="food_cat"><label for="foodch8">카페</label>
 								<input type="checkbox" id="foodch9" name="food_cat"><label for="foodch9">베이커리</label> -->
+								<input type="hidden" id="foodcats" name="foodcats">
 							</td>
 						</tr>
 					</table>
@@ -845,7 +909,7 @@ $(document).ready(function(){
 							<p class="label-txt">수용인원</p>
 						</c:otherwise>
 					</c:choose>
-					<input type="text" class="input" value="${store.max_customers }">
+					<input type="text" class="input" value="${store.max_customers }" name="max_customers">
 					<div class="line-box">
 					  	<div class="line"></div>
 					</div>
@@ -862,7 +926,7 @@ $(document).ready(function(){
 							<p class="label-txt">사업자 이메일</p>
 						</c:otherwise>
 					</c:choose>
-					<input type="text" class="input" value="${store.st_email }">
+					<input type="text" class="input" value="${store.st_email }" name="st_email">
 					<div class="line-box">
 					    <div class="line"></div>
 					</div>
@@ -880,7 +944,7 @@ $(document).ready(function(){
 							<p class="label-txt">가게 설명</p>
 						</c:otherwise>
 					</c:choose>
-					<input type="text" class="input" value="${store.st_explain }">
+					<input type="text" class="input" value="${store.st_explain }" name="st_explain">
 					<div class="line-box">
 					    <div class="line"></div>
 					</div>
@@ -897,7 +961,7 @@ $(document).ready(function(){
 							<p class="label-txt">가게페이지 링크</p>
 						</c:otherwise>
 					</c:choose>
-					<input type="text" class="input">
+					<input type="text" class="input" name="st_link">
 					<div class="line-box">
 					    <div class="line"></div>
 					</div>
@@ -920,28 +984,29 @@ $(document).ready(function(){
 											<c:if test="${chBox.chbox_num eq stch.chbox_num }">
 												<c:choose>
 													<c:when test="${stch.yesorno eq '○' }">
-														<td><input type="checkbox" name="toilet" id="Ochbox${chBox.chbox_num }" onclick="checkOnlyOne(this)" checked="checked"></td>
+														<td><input type="checkbox" name="chBox" id="Ochbox${chBox.chbox_num }" onclick="checkOnlyOne(this)" checked="checked"></td>
 														<td style="padding-right: 1vh;"><label for="Ochbox${chBox.chbox_num }">있음</label></td>
-														<td><input type="checkbox" name="toilet" id="Xchbox${chBox.chbox_num }" onclick="checkOnlyOne(this)"></td>
+														<td><input type="checkbox" name="chBox" id="Xchbox${chBox.chbox_num }" onclick="checkOnlyOne(this)"></td>
 														<td><label for="Xchbox${chBox.chbox_num }">없음</label></td>	
 													</c:when>
 													<c:when test="${stch.yesorno eq 'Ⅹ' }">
-														<td><input type="checkbox" name="toilet" id="Ochbox${chBox.chbox_num }" onclick="checkOnlyOne(this)"></td>
+														<td><input type="checkbox" name="chBox" id="Ochbox${chBox.chbox_num }" onclick="checkOnlyOne(this)"></td>
 														<td style="padding-right: 1vh;"><label for="Ochbox${chBox.chbox_num }">있음</label></td>
-														<td><input type="checkbox" name="toilet" id="Xchbox${chBox.chbox_num }" onclick="checkOnlyOne(this)" checked="checked"></td>
+														<td><input type="checkbox" name="chBox" id="Xchbox${chBox.chbox_num }" onclick="checkOnlyOne(this)" checked="checked"></td>
 														<td><label for="Xchbox${chBox.chbox_num }">없음</label></td>
 													</c:when>
 													<c:otherwise>
-														<td><input type="checkbox" name="toilet" id="Ochbox${chBox.chbox_num }" onclick="checkOnlyOne(this)"></td>
+														<td><input type="checkbox" name="chBox" id="Ochbox${chBox.chbox_num }" onclick="checkOnlyOne(this)"></td>
 														<td style="padding-right: 1vh;"><label for="Ochbox${chBox.chbox_num }">있음</label></td>
-														<td><input type="checkbox" name="toilet" id="Xchbox${chBox.chbox_num }" onclick="checkOnlyOne(this)"></td>
+														<td><input type="checkbox" name="chBoxs" id="Xchbox${chBox.chbox_num }" onclick="checkOnlyOne(this)"></td>
 														<td><label for="Xchbox${chBox.chbox_num }">없음</label></td>
 													</c:otherwise>
 												</c:choose>
 											</c:if>
 										</c:forEach>
-										
 									</tr>
+									<input type="hidden" id="chBoxO" name="chBoxO">
+									<input type="hidden" id="chBoxX" name="chBoxX">
 								</c:forEach>
 						</table>
 					</div>
@@ -963,14 +1028,14 @@ $(document).ready(function(){
 								<c:choose>
 									<c:when test="${fn: contains(stKeys, st_key_num) }">
 										<label class="ibmatlabel" for="ibmat${stKey.st_key_num }" style="border-bottom: 3px solid #ef6351;">
-											<input type="checkbox" class="ibmatCB" id="ibmat${stKey.st_key_num }" checked="checked">
+											<input type="checkbox" class="ibmatCB" name="stKey" id="stkey${stKey.st_key_num }" checked="checked">
 											${stKey.st_keyword }
 										</label>
 										<br><br>
 									</c:when>
 									<c:otherwise>
 										<label class="ibmatlabel" for="ibmat${stKey.st_key_num }">
-											<input type="checkbox" class="ibmatCB" id="ibmat${stKey.st_key_num }">
+											<input type="checkbox" class="ibmatCB" name="stKey" id="stkey${stKey.st_key_num }">
 											${stKey.st_keyword }
 										</label>
 										<br><br>
@@ -978,6 +1043,7 @@ $(document).ready(function(){
 								</c:choose>
 								
 							</c:forEach>
+							<input type="hidden" name="s" id="stKeys">
 						</div>
 					</div>
 				</div>
@@ -991,7 +1057,7 @@ $(document).ready(function(){
 				
 				<label id="label">
 					<p class="label-txt label-active">가게 검색 키워드1 (5글자 이내)</p>
-					<input type="text" class="input" id="why1">
+					<input type="text" class="input" id="why1" name="searchKey">
 					<div class="line-box">
 					    <div class="line"></div>
 					</div>
@@ -1001,7 +1067,7 @@ $(document).ready(function(){
 				
 				<label id="label">
 					<p class="label-txt label-active">가게 검색 키워드2 (5글자 이내)</p>
-					<input type="text" class="input" id="why2">
+					<input type="text" class="input" id="why2" name="searchKey">
 					<div class="line-box">
 					    <div class="line"></div>
 					</div>
@@ -1011,7 +1077,7 @@ $(document).ready(function(){
 				
 				<label id="label">
 					<p class="label-txt label-active">가게 검색 키워드3 (5글자 이내)</p>
-					<input type="text" class="input" id="why3">
+					<input type="text" class="input" id="why3" name="searchKey">
 					<div class="line-box">
 					    <div class="line"></div>
 					</div>

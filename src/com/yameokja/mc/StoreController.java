@@ -331,6 +331,8 @@ public class StoreController
 	@RequestMapping(value="/stdetailinsert.action", method=RequestMethod.POST)
 	public String stDetailInsert(HttpServletRequest request, HttpServletResponse response)
 	{
+		
+		
 		HttpSession session = request.getSession();
 		String rootPath = servletContext.getRealPath("/");
 		String CHARSET = "utf-8";
@@ -346,7 +348,7 @@ public class StoreController
 			menu_img_dir.mkdirs();
 		}
 		
-		System.out.println("넘어와서 파일 만듬");
+		IStoreMainDAO smdao = sqlSession.getMapper(IStoreMainDAO.class);
 		
 		DiskFileItemFactory fileItemFactory = new DiskFileItemFactory();
 		fileItemFactory.setRepository(menu_img_dir);
@@ -355,9 +357,37 @@ public class StoreController
 		
 		try 
 		{
-			HashMap<String, StoreMenuDTO> menuMap = new HashMap<String, StoreMenuDTO>();
+			int st_num = 0;
+			String breakch = "";
 			
 			List<FileItem> items = fileUpload.parseRequest(request);
+			for (FileItem item : items)
+            {
+                if (item.isFormField() && item.getFieldName().equals("st_num"))
+                {
+                	
+            		st_num = Integer.parseInt(item.getString(CHARSET));
+                }
+            }
+			
+			smdao.stOCdelete(st_num);
+			smdao.bOCdelete(st_num);
+			smdao.holidaydelete(st_num);
+			smdao.paysdelete(st_num);
+			smdao.chBoxdelete(st_num);
+			smdao.stKeysdelete(st_num);
+			smdao.foodCatdelete(st_num);
+			smdao.menudelete(st_num);
+			
+			
+			
+			
+			HashMap<String, StoreMenuDTO> menuMap = new HashMap<String, StoreMenuDTO>();
+			ArrayList<StoreOpencloseDTO> soclist = new ArrayList<StoreOpencloseDTO>();
+			ArrayList<StoreBreaktimeDTO> boclist = new ArrayList<StoreBreaktimeDTO>();
+			
+			StoreDetailDTO sdto = new StoreDetailDTO();
+			
             for (FileItem item : items)
             {
                 if (!item.isFormField())
@@ -383,30 +413,177 @@ public class StoreController
             {
                 if (item.isFormField())
                 {
-                   	if(menuMap.keySet().contains(item.getFieldName().substring(0, item.getFieldName().length()-1)))
+                	
+                   	if(menuMap.keySet().contains(item.getFieldName().substring(0, 4)))
                 	{
                 		if (item.getFieldName().substring(item.getFieldName().length()-1).equals("m"))
-                			menuMap.get(item.getFieldName().substring(0, item.getFieldName().length()-1)).setMenu_name(item.getString(CHARSET)); 
+                			menuMap.get(item.getFieldName().substring(0, 4)).setMenu_name(item.getString(CHARSET)); 
                 		else if (item.getFieldName().substring(item.getFieldName().length()-1).equals("p"))
-                			menuMap.get(item.getFieldName().substring(0, item.getFieldName().length()-1)).setPrice(Integer.parseInt(item.getString(CHARSET)));
+                			menuMap.get(item.getFieldName().substring(0, 4)).setPrice(Integer.parseInt(item.getString(CHARSET)));
                 		
                 		System.out.println(item.getString(CHARSET));
                 	}
-                		
-					/*
-					 * else if (item.getFieldName().equals("st_place_num")) { String tmpStr =
-					 * item.getString(CHARSET); int st_place_num =
-					 * Integer.parseInt(tmpStr.substring(0, tmpStr.length()));
-					 * srdto.setSt_place_num(st_place_num); } else if
-					 * (item.getFieldName().equals("st_name"))
-					 * srdto.setSt_name(item.getString(CHARSET)); else if
-					 * (item.getFieldName().equals("st_location"))
-					 * srdto.setSt_location(item.getString(CHARSET)); else if
-					 * (item.getFieldName().equals("st_location_dt"))
-					 * srdto.setSt_location_dt(item.getString(CHARSET)); else if
-					 * (item.getFieldName().equals("st_tel"))
-					 * srdto.setSt_tel(item.getString(CHARSET));
-					 */
+                   	else if(item.getFieldName().substring(0, item.getFieldName().length()-1).equals("openTime"))
+                   	{
+                   		boolean flag = true;
+                   		if (!item.getString(CHARSET).equals("nocheck"))
+                   		{
+                   			for (StoreOpencloseDTO socdto : soclist)
+							{
+								if (socdto.getDay_num() == Integer.parseInt(item.getFieldName().substring(item.getFieldName().length()-1)))
+								{
+									socdto.setOpen_time(item.getString(CHARSET));
+									flag = false;
+								}
+							}
+                   			
+                   			if (flag)
+                   			{
+                   				StoreOpencloseDTO socdto = new StoreOpencloseDTO();
+                   				
+	                   			socdto.setDay_num(Integer.parseInt(item.getFieldName().substring(item.getFieldName().length()-1)));
+	                       		socdto.setOpen_time(item.getString(CHARSET));
+	                       		soclist.add(socdto);
+                   			}
+                   		}
+                   		
+                   	}
+                   	else if(item.getFieldName().substring(0, item.getFieldName().length()-1).equals("closeTime"))
+                   	{
+                   		boolean flag = true;
+                   		if (!item.getString(CHARSET).equals("nocheck"))
+                   		{
+                   			for (StoreOpencloseDTO socdto : soclist)
+							{
+								if (socdto.getDay_num() == Integer.parseInt(item.getFieldName().substring(item.getFieldName().length()-1)))
+								{
+									socdto.setClose_time(item.getString(CHARSET));
+									flag = false;
+								}
+							}
+                   			
+                   			if (flag)
+                   			{
+                   				StoreOpencloseDTO socdto = new StoreOpencloseDTO();
+                   				
+                   				socdto.setDay_num(Integer.parseInt(item.getFieldName().substring(item.getFieldName().length()-1)));
+                           		socdto.setClose_time(item.getString(CHARSET));
+                           		soclist.add(socdto);
+                   			}
+                   			
+                   		}	
+                   		
+                   	}
+                   	else if(item.getFieldName().substring(0, item.getFieldName().length()-1).equals("rest"))
+                   	{
+                   		Integer.parseInt(item.getFieldName().substring(item.getFieldName().length()-1));
+                   	}
+                   	else if(item.getFieldName().substring(0, item.getFieldName().length()-1).equals("breakOT"))
+                   	{
+                   		boolean flag = true;
+                   		if (!item.getString(CHARSET).equals("nocheck"))
+                   		{
+                   			for (StoreBreaktimeDTO bocdto : boclist)
+							{
+								if (bocdto.getWeek_weekend_num() == Integer.parseInt(item.getFieldName().substring(item.getFieldName().length()-1)))
+								{
+									bocdto.setStart_breaktime(item.getString(CHARSET));
+									flag = false;
+								}
+							}
+                   			
+                   			if (flag)
+                   			{
+                   				StoreBreaktimeDTO bocdto = new StoreBreaktimeDTO();
+                   				
+	                   			bocdto.setWeek_weekend_num(Integer.parseInt(item.getFieldName().substring(item.getFieldName().length()-1)));
+	                       		bocdto.setStart_breaktime(item.getString(CHARSET));
+	                       		boclist.add(bocdto);
+                   			}
+                   		}
+                   	}
+                   	else if(item.getFieldName().substring(0, item.getFieldName().length()-1).equals("breakCT"))
+                   	{
+                   		boolean flag = true;
+                   		if (!item.getString(CHARSET).equals("nocheck"))
+                   		{
+                   			for (StoreBreaktimeDTO bocdto : boclist)
+							{
+								if (bocdto.getWeek_weekend_num() == Integer.parseInt(item.getFieldName().substring(item.getFieldName().length()-1)))
+								{
+									bocdto.setEnd_breaktime(item.getString(CHARSET));
+									flag = false;
+								}
+							}
+                   			
+                   			if (flag)
+                   			{
+                   				StoreBreaktimeDTO bocdto = new StoreBreaktimeDTO();
+                   				
+                   				bocdto.setWeek_weekend_num(Integer.parseInt(item.getFieldName().substring(item.getFieldName().length()-1)));
+                           		bocdto.setEnd_breaktime(item.getString(CHARSET));
+                           		boclist.add(bocdto);
+                   			}
+                   			
+                   		}
+                   	}
+                   	else if(item.getFieldName().equals("pays"))
+                   	{
+                   		for (String pay : item.getString(CHARSET).split(","))
+                   		{
+                   			System.out.println(pay);
+                   			
+                   			smdao.paysinsert(Integer.parseInt(pay), st_num);
+                   		}
+                   	}
+                   	else if(item.getFieldName().equals("chBoxO"))
+                   	{
+                   		for (String chb : item.getString(CHARSET).split(","))
+                   		{
+                   			System.out.println(chb);
+                   			
+                   			smdao.chBoxinsert(st_num, Integer.parseInt(chb), 1);
+                   		}
+                   	}
+                   	else if(item.getFieldName().equals("chBoxX"))
+                   	{
+                   		for (String chb : item.getString(CHARSET).split(","))
+                   		{
+                   			System.out.println(chb);
+                   			
+                   			smdao.chBoxinsert(st_num, Integer.parseInt(chb), 2);                   			
+                   		}
+                   	}
+                   	else if(item.getFieldName().equals("stKeys"))
+                   	{
+                   		for (String stk : item.getString(CHARSET).split(","))
+                   		{
+                   			System.out.println(stk);
+                   			
+                   			smdao.stKeysinsert(st_num, Integer.parseInt(stk));
+                   		}
+                   	}
+                   	else if(item.getFieldName().equals("foodcats"))
+                   	{
+                   		for (String fc : item.getString(CHARSET).split(","))
+                   		{
+                   			System.out.println(fc);
+                   			
+                   			smdao.foodCatinsert(Integer.parseInt(fc), st_num);
+                   		}
+                   	}
+                   	else if(item.getFieldName().equals("st_email"))
+                   	{
+                   		sdto.setSt_email(item.getString(CHARSET));
+                   	}
+                   	else if(item.getFieldName().equals("st_explain"))
+                   	{
+                   		sdto.setSt_explain(item.getString(CHARSET));
+                   	}
+                   	else if(item.getFieldName().equals("searchKey"))
+                   	{
+                   		String searchkey = item.getString(CHARSET);
+                   	}
                 }
             }
 		}

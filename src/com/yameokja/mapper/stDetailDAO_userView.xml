@@ -144,15 +144,13 @@
  	<!-- 리뷰 키워드 -->
  	<select id="reviewKeys" resultType = "com.yameokja.mc.StoreReviewKeyDTO">
  		SELECT RKL.RV_KEY_NAME AS RV_KEY_NAME
-		     , COUNT(RKL.RV_KEY_NUM) AS RV_KEY_COUNT
-		FROM RV_KEY_LABEL RKL RIGHT JOIN (SELECT RK.RV_NUM AS RV_NUM, RK.RV_KEY_NUM AS RV_KEY_NUM
-		                                 FROM RV_BOX RB LEFT JOIN RV_KEY RK
-		                                   ON RB.RV_NUM = RK.RV_NUM
-		                                 WHERE RB.ST_NUM = #{st_num, jdbcType=INTEGER}) T
+		     , T.COUNT AS RV_KEY_COUNT
+		FROM RV_KEY_LABEL RKL RIGHT JOIN (SELECT RV_KEY_NUM, COUNT
+		                                 FROM RV_KEY
+		                                 WHERE ST_NUM = #{st_num, jdbcType=INTEGER}) T
 		  ON RKL.RV_KEY_NUM = T.RV_KEY_NUM
 		WHERE RKL.RV_KEY_NAME IS NOT NULL
-		GROUP BY (RKL.RV_KEY_NAME, RKL.RV_KEY_NUM)
-		ORDER BY RV_KEY_COUNT
+		ORDER BY T.COUNT
  	</select>
   	
 <!--
