@@ -94,21 +94,21 @@
 		<div class="joinInsertDiv">
 		
 			<div class="userName">
-				<input type="text" id="userName" readonly="readonly">
+				<input type="text" id="userName" readonly="readonly" value="${modify.getUser_name() }">
 			</div>
 			<div class="userSsn">
-				<input type="text" id="userSsn1" readonly="readonly">&nbsp;&nbsp;-&nbsp;
-				<input type="password" id="userSsn2" readonly="readonly">
+				<input type="text" id="userSsn1" readonly="readonly" value="${modify.getUser_ssn1() }">&nbsp;&nbsp;-&nbsp;
+				<input type="password" id="userSsn2" readonly="readonly"value="${modify.getUser_ssn2() }">
 			</div>
 			
 			<div class="userTel">
 				<div>
-					<input type="text" id="userTel" readonly="readonly">
+					<input type="text" id="userTel" readonly="readonly" value="${modify.getUser_tel() }">
 				</div>
 			</div>
 			
 			<div class="userId">
-				<input type="text" id="userId">
+				<input type="text" id="userId" value="${modify.getUser_id() }">
 			</div>
 			
 			<div class="userPw">

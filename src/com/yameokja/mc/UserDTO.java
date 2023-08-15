@@ -2,7 +2,7 @@ package com.yameokja.mc;
 
 public class UserDTO
 {
-	String user_num, user_id, user_pw, userName, user_ssn1, user_ssn2;
+	String user_num, user_id, user_pw, user_name, user_ssn1, user_ssn2;
 	String user_tel, user_nickname, user_email, user_grade;
 	int point_sum;
 	
@@ -35,15 +35,14 @@ public class UserDTO
 		this.user_pw = user_pw;
 	}
 	
-	public String getUserName()
+	public String getUser_name()
 	{
-		return userName;
+		return user_name;
 	}
-	public void setUserName(String userName)
+	public void setUser_name(String user_name)
 	{
-		this.userName = userName;
+		this.user_name = user_name;
 	}
-	
 	public String getUser_ssn1()
 	{
 		return user_ssn1;

@@ -439,4 +439,25 @@ public class UserController
 		return result;
 	}
 	
+	@RequestMapping(value="/usermodify.action", method = {RequestMethod.GET, RequestMethod.POST})
+	public String modify(HttpServletRequest request, Model model)
+	{
+		HttpSession session = request.getSession();
+		
+		String user_num = (String)session.getAttribute("user_num");
+		
+		String result = "";
+		
+		IUserDAO udao = sqlSession.getMapper(IUserDAO.class);
+	    
+	    UserDTO user = udao.userModify(user_num);
+	    //System.out.println(user_num);
+	    System.out.println(user.user_tel);
+	    //System.out.println(user.getUser_ssn1());
+	    model.addAttribute("modify", user);
+		
+		result = "WEB-INF/view/user_modify.jsp";
+		
+		return result;
+	}
 }
