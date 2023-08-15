@@ -894,7 +894,7 @@
 }
 
 /* 리뷰신고요청 모달 */
-#rvPopup
+#rvPopup, #midPopup
 {
 	overflow: hidden;
 	height: auto;
@@ -913,7 +913,7 @@
 	background-color:#fff;
 }
 
-#rvPopup h4{
+#rvPopup h4, #midPopup h4{
 	font-size: 15px;
 	height: 24px;
 	padding: 8px 0 2px 15px;
@@ -921,7 +921,7 @@
 	font-weight: normal;
 }
 
-#rvPopup h4 a.close {
+#rvPopup h4 a.close, #midPopup h4 a.close {
     float: right;
     padding-right: 8px;
     color: #3a001e;
@@ -930,7 +930,7 @@
     font-weight: bold;
 }
 
-#rvPopup h3 {
+#rvPopup h3, #midPopup h3 {
 	text-align: center;
 }
 
@@ -956,19 +956,19 @@
     align-items: center;
 }
 
-.rvRs
+.rvRs, .midRs
 {
     display: flex;
     align-items: center;
 }
 
-#rvPopup .rv{
+#rvPopup .rv, #midPopup .rv{
 	margin-left: 35%;
 	margin-top: 30px;
 	height: 40px;
 }
 
-#rvPopup #rvBtn{
+#rvPopup #rvBtn, #midPopup #rvBtn{
 	width: 120px;
 	height: 30px;
 	float: left;

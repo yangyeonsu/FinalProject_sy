@@ -7,6 +7,8 @@ public class UserrvreportDTO
 	private String rep_rej_num;
 	private String rej_rs;
 	
+	private String rep_mid_num;
+	private String mid_rs;
 	
 	// getter / setter
 	
@@ -31,6 +33,29 @@ public class UserrvreportDTO
 		this.rep_rej_num = rep_rej_num;
 	}
 	
+	
+	
+	
+	public String getRep_mid_num()
+	{
+		return rep_mid_num;
+	}
+
+	public void setRep_mid_num(String rep_mid_num)
+	{
+		this.rep_mid_num = rep_mid_num;
+	}
+
+	public String getMid_rs()
+	{
+		return mid_rs;
+	}
+
+	public void setMid_rs(String mid_rs)
+	{
+		this.mid_rs = mid_rs;
+	}
+
 	
 	
 	
