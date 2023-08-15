@@ -1,13 +1,21 @@
 package com.yameokja.mc;
 
 
+import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.ibatis.javassist.compiler.ast.Stmnt;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,6 +31,9 @@ public class StoreController
 {
 	@Autowired
 	private SqlSession sqlSession;
+	
+	@Autowired
+    private ServletContext servletContext;
 	
 	@RequestMapping(value="/storemain.action", method=RequestMethod.GET)
 	public String storeMainLoad(HttpServletRequest request, Model model)
@@ -135,6 +146,7 @@ public class StoreController
 		
 		IstDetailDAO_userView dao = sqlSession.getMapper(IstDetailDAO_userView.class);
 		IStoreMainDAO sdao = sqlSession.getMapper(IStoreMainDAO.class);
+		IMainDAO mdao = sqlSession.getMapper(IMainDAO.class);
 		IUserDAO uDao = sqlSession.getMapper(IUserDAO.class);
 		
 		String user_num = (String)session.getAttribute("user_num");
@@ -158,18 +170,20 @@ public class StoreController
 		model.addAttribute("weekdayLabel", sdao.weekDayLabel());
 		model.addAttribute("weekWeekendDayLabel", sdao.weekWeekendDayLabel());
 		model.addAttribute("chBoxLabel", sdao.chBoxLabel());
+		model.addAttribute("stKeyLabel", mdao.stKeyList());
 		
 		// 가게 기본 사항
 		model.addAttribute("store", dao.store(st_num));
 		
 		// 가게 키워드
-		ArrayList<StoreKeyDTO> stKeyList =  dao.stKeys(st_num);
+		ArrayList<Integer> stKeyList =  dao.stKeysStr(st_num);
 		if(stKeyList.size()>0)
 		{
 			model.addAttribute("stKeys", stKeyList);
 		}
 		else
 			model.addAttribute("stKeys", null);
+		System.out.println(stKeyList);
 		
 		// 가게 영업시간 + 휴무일
 		ArrayList<StoreOpencloseDTO> openClose =  dao.openClose(st_num);
@@ -311,6 +325,98 @@ public class StoreController
 		html += "사장님 : " + reply_content +"</div>";
 		
 		return html; 
+	}
+	
+	
+	@RequestMapping(value="/stdetailinsert.action", method=RequestMethod.POST)
+	public String stDetailInsert(HttpServletRequest request, HttpServletResponse response)
+	{
+		HttpSession session = request.getSession();
+		String rootPath = servletContext.getRealPath("/");
+		String CHARSET = "utf-8";
+		int LIMIT_SIZE_BYTES = 5 * 1024 * 1024;
+		
+		StoreregiDTO srdto = new StoreregiDTO();
+		
+		// 경로상 디렉터리가 존재하지 않으면... 만든다.
+		String savePath_menuImg = rootPath + File.separator + "Store_Menu_Img";
+		File menu_img_dir = new File(savePath_menuImg);
+		if (!menu_img_dir.exists())
+		{
+			menu_img_dir.mkdirs();
+		}
+		
+		System.out.println("넘어와서 파일 만듬");
+		
+		DiskFileItemFactory fileItemFactory = new DiskFileItemFactory();
+		fileItemFactory.setRepository(menu_img_dir);
+		fileItemFactory.setSizeThreshold(LIMIT_SIZE_BYTES);
+		ServletFileUpload fileUpload = new ServletFileUpload(fileItemFactory);
+		
+		try 
+		{
+			HashMap<String, StoreMenuDTO> menuMap = new HashMap<String, StoreMenuDTO>();
+			
+			List<FileItem> items = fileUpload.parseRequest(request);
+            for (FileItem item : items)
+            {
+                if (!item.isFormField())
+                {
+                	if (item.getSize() > 0)
+                    {
+                		StoreMenuDTO mdto = new StoreMenuDTO();
+                		
+                        String separator = File.separator;
+                        int index =  item.getName().lastIndexOf(separator);
+                        String fileName = item.getName().substring(index  + 1);
+                        File uploadFile = new File(savePath_menuImg +  separator + fileName);
+                        item.write(uploadFile);
+                        mdto.setImage_link(String.valueOf(uploadFile));
+                        
+                        menuMap.put(item.getFieldName(), mdto);
+                        
+                    }
+                }
+            }
+            
+            for (FileItem item : items)
+            {
+                if (item.isFormField())
+                {
+                   	if(menuMap.keySet().contains(item.getFieldName().substring(0, item.getFieldName().length()-1)))
+                	{
+                		if (item.getFieldName().substring(item.getFieldName().length()-1).equals("m"))
+                			menuMap.get(item.getFieldName().substring(0, item.getFieldName().length()-1)).setMenu_name(item.getString(CHARSET)); 
+                		else if (item.getFieldName().substring(item.getFieldName().length()-1).equals("p"))
+                			menuMap.get(item.getFieldName().substring(0, item.getFieldName().length()-1)).setPrice(Integer.parseInt(item.getString(CHARSET)));
+                		
+                		System.out.println(item.getString(CHARSET));
+                	}
+                		
+					/*
+					 * else if (item.getFieldName().equals("st_place_num")) { String tmpStr =
+					 * item.getString(CHARSET); int st_place_num =
+					 * Integer.parseInt(tmpStr.substring(0, tmpStr.length()));
+					 * srdto.setSt_place_num(st_place_num); } else if
+					 * (item.getFieldName().equals("st_name"))
+					 * srdto.setSt_name(item.getString(CHARSET)); else if
+					 * (item.getFieldName().equals("st_location"))
+					 * srdto.setSt_location(item.getString(CHARSET)); else if
+					 * (item.getFieldName().equals("st_location_dt"))
+					 * srdto.setSt_location_dt(item.getString(CHARSET)); else if
+					 * (item.getFieldName().equals("st_tel"))
+					 * srdto.setSt_tel(item.getString(CHARSET));
+					 */
+                }
+            }
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			System.out.println(e.toString());
+		}
+		
+		return "";
 	}
 	
   

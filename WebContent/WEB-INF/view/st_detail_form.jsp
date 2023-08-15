@@ -173,14 +173,15 @@ $(document).ready(function(){
 		var table = document.getElementById('food_table');
 	    var lastRow = table.rows[table.rows.length - 1]; // 맨 뒤에 <tr> 추가
 	    
-	    var cellCount = lastRow.cells.length;
+	    var cellCount = (lastRow.cells.length)-3;
 		
 		var name = document.getElementById('fileName'+cellCount);
-		var container = input.parentNode.querySelector('.image-show');
+		alert(cellCount);
+		var container = document.getElementById('image-show'+cellCount);
 	    
 	    // 이미 업로드된 사진이 있을 경우 삭제
 	    var existingImage = container.querySelector('img');
-	    if (existingImage) {
+	    if (existingImage!== null) {
 	        container.removeChild(existingImage);
 	    }
 
@@ -219,15 +220,24 @@ $(document).ready(function(){
 	    content += "	👉 음식 사진 업로드 👈";
 	    content += "	</label>";
 	    content += "</div>";
-	    content += "<input type='file' id='file1"+ cellCount +"' name='chooseFile' accept='image/*' onchange='loadFile(this)'>";
-	    content += "<div class='image-show'></div>";
-	    content += "<p id='fileName"+ cellCount +"' style='font-size: small'></p>";
-	    content += "<label id='label'>";
-	    content += "	<input type='text' class='input'>";
+	    content += "<input type='file' id='file"+ (cellCount-2) +"' name='file"+ (cellCount-2) +"' accept='image/*' onchange='loadFile(this)'>";
+	    content += "<div id='image-show"+(cellCount-2)+"'></div>";
+	    content += "<p id='fileName"+(cellCount-2)+"' style='font-size: small'></p>";
+	    content += "<label id='label menu_label'>";
+	    content += "	<p class='label-txt'>메뉴이름</p>";
+	    content += "	<input type='text' class='input' name='file"+ (cellCount-2) +"m'>";
 	    content += "	<div class='line-box' style='width:60%; margin-left: 3vw;'>";
 	    content += "		<div class='line'></div>";
 	    content += "	</div>";
 	    content += "</label>";
+	    content += "<label id='label menu_label'>";
+	    content += "	<p class='label-txt'>가격</p>";
+	    content += "	<input type='text' class='input' name='file"+ (cellCount-2) +"p'>";
+	    content += "	<div class='line-box' style='width:60%; margin-left: 3vw;'>";
+	    content += "		<div class='line'></div>";
+	    content += "	</div>";
+	    content += "</label>";
+	
 	    
 	    newCell.innerHTML = content; // <td> 내용 설정
 	    
@@ -235,58 +245,76 @@ $(document).ready(function(){
 	};
 	
 	$(function()
+	{
+		$(".left_sub_menu").hide();
+		$(".has_sub").click(function()
+		{
+			$(".left_sub_menu").fadeToggle(300);
+			if ($('#checkOverlay').val() == "true")
 			{
-				$(".left_sub_menu").hide();
-				$(".has_sub").click(function()
-				{
-					$(".left_sub_menu").fadeToggle(300);
-					if ($('#checkOverlay').val() == "true")
-					{
-						$('.overlay').css("position", "fixed");
-						$('.overlay').css("width", "0%");
-						$('.overlay').css("height", "0%");
-						$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
-						$('.overlay').css("z-index", "0");
-						$('#checkOverlay').attr("value", "false");
-					} else
-					{
-						$('.overlay').css("position", "fixed");
-						$('.overlay').css("width", "100%");
-						$('.overlay').css("height", "100%");
-						$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
-						$('.overlay').css("z-index", "3");
-						$('.overlay').css("margin-top", "1.011vh");
-						$('#checkOverlay').attr("value", "true");
-					}
-
-				});
-				// 왼쪽메뉴 드롭다운
-				$(".sub_menu ul.small_menu").hide();
-				$(".sub_menu ul.big_menu").click(function()
-				{
-					$("ul", this).slideToggle(300);
-				});
-				// 외부 클릭 시 좌측 사이드 메뉴 숨기기
-				$('.overlay').on('click', function()
-				{
-					$('.left_sub_menu').fadeOut();
-					$('.overlay').css("position", "fixed");
-					$('.overlay').css("width", "0%");
-					$('.overlay').css("height", "0%");
-					$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
-					$('.overlay').css("z-index", "0");
-					$('#checkOverlay').attr("value", "false");
-				});
-			});
-
-			$(function()
+				$('.overlay').css("position", "fixed");
+				$('.overlay').css("width", "0%");
+				$('.overlay').css("height", "0%");
+				$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
+				$('.overlay').css("z-index", "0");
+				$('#checkOverlay').attr("value", "false");
+			} else
 			{
-				$("#openTime, #closeTime").on("change", function() {
-			        var rowClass = $(this).closest("tr").attr("class");
-			        
-			        alert(rowClass);
-				});
-			});
+				$('.overlay').css("position", "fixed");
+				$('.overlay').css("width", "100%");
+				$('.overlay').css("height", "100%");
+				$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
+				$('.overlay').css("z-index", "3");
+				$('.overlay').css("margin-top", "1.011vh");
+				$('#checkOverlay').attr("value", "true");
+			}
+
+		});
+		// 왼쪽메뉴 드롭다운
+		$(".sub_menu ul.small_menu").hide();
+		$(".sub_menu ul.big_menu").click(function()
+		{
+			$("ul", this).slideToggle(300);
+		});
+		// 외부 클릭 시 좌측 사이드 메뉴 숨기기
+		$('.overlay').on('click', function()
+		{
+			$('.left_sub_menu').fadeOut();
+			$('.overlay').css("position", "fixed");
+			$('.overlay').css("width", "0%");
+			$('.overlay').css("height", "0%");
+			$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
+			$('.overlay').css("z-index", "0");
+			$('#checkOverlay').attr("value", "false");
+		});
+	});
+
+	$(function()
+	{
+		$("#openTime, #closeTime").on("change", function() {
+	        var rowClass = $(this).closest("tr").attr("class");
+	        
+	        alert(rowClass);
+		});
+		
+		$(".ibmatlabel").click(function()
+		{
+			var $this = $(this);
+			
+			var id = $this.attr("for");
+			
+			if ($("#"+id).is(":checked"))			
+				$(".ibmatlabel[for="+id+"]").css("border-bottom","3px solid #ef6351");
+			else
+				$(".ibmatlabel[for="+id+"]").css("border-bottom","none");
+		});
+		
+		
+		$("#sbmitBtn").click(function()
+		{
+			$("#userForm").submit();
+		});
+	});
 
 
 
@@ -297,7 +325,7 @@ $(document).ready(function(){
 
 
 <body>
-<form action="search.action" id="userForm" method="post" enctype="multipart/form-data">
+<form action="stdetailinsert.action" id="userForm" method="post" enctype="multipart/form-data">
 	<div class="header">
 		<c:import url="/WEB-INF/view/header_user.jsp"></c:import>
 	</div>
@@ -734,38 +762,65 @@ $(document).ready(function(){
 						</tr>
 						<tr class="menuTr">
 							<td></td>
-							<td>
-						    	<div class="button">
-									<label for="file1">
-										👉 음식 사진 업로드 👈
-									</label>
-							    </div>
-							    	<input type="file" id="file1" name="chooseFile" accept="image/*" onchange="loadFile(this)">
-							    <div class="image-show"></div>
-							    <p id="fileName1" style="font-size: small"></p>
-								<label id="label">
-									<input type="text" class="input">
-									<div class="line-box" style="width:60%; margin-left: 3vw;">
-									    <div class="line"></div>
-									</div>
-								</label>
-							</td>
-							<td>
-								<div class="button">
-									<label for="file2">
-										👉 음식 사진 업로드 👈
-									</label>
-							    </div>
-							    	<input type="file" id="file2" name="chooseFile" accept="image/*" onchange="loadFile(this)">
-							    <div class="image-show"></div>
-							    <p id="fileName2" style="font-size: small"></p>
-								<label id="label">
-									<input type="text" class="input">
-									<div class="line-box" style="width:60%; margin-left: 3vw;">
-									    <div class="line"></div>
-									</div>
-								</label>
-							</td>
+							<c:choose>
+								<c:when test="${fn:length(menuLists) == 0}">
+									<c:forEach begin="0" end="1" varStatus="status">
+										<td>
+									    	<div class="button">
+												<label for="file1">
+													👉 음식 사진 업로드 👈
+												</label>
+										    </div>
+										    	<input type="file" id="file${status.index }" name="file${status.index }" accept="image/*" onchange="loadFile(this)">
+										    <div id="image-show${status.index}"></div>
+										    <p id="fileName${status.index}" style="font-size: small"></p>
+											<label id="label menu_label">
+												<p class="label-txt">메뉴이름</p>
+												<input type="text" class="input" name="file${status.index }m" value="">
+												<div class="line-box" style="width:60%; margin-left: 3vw;">
+												    <div class="line"></div>
+												</div>
+											</label>
+											<label id="label menu_label">
+												<p class="label-txt">가격</p>											
+												<input type="text" class="input" name="file${status.index }p" value="">
+												<div class="line-box" style="width:60%; margin-left: 3vw;">
+												    <div class="line"></div>
+												</div>
+											</label>
+										</td>
+									</c:forEach>
+								</c:when>
+								<c:otherwise>
+									<c:forEach var="menu" items="${menuLists }" varStatus="status">
+										<td>
+									    	<div class="button">
+												<label for="file1">
+													👉 음식 사진 업로드 👈
+												</label>
+										    </div>
+										    	<input type="file" id="file${status.index }" name="chooseFile" accept="image/*" onchange="loadFile(this)">
+										    <div id="image-show${status.index}"><img alt="" src=""${menu.image_link }></div>
+										    <p id="fileName${status.index }" style="font-size: small"></p>
+											<label id="label menu_label">
+												<p class="label-txt label-active">메뉴이름</p>
+												<input type="text" class="input" value="${menu.menu_name }">
+												<div class="line-box" style="width:60%; margin-left: 3vw;">
+												    <div class="line"></div>
+												</div>
+											</label>
+											<label id="label menu_label">
+												<p class="label-txt label-active">가격</p>
+												<input type="text" class="input" value="${menu.price }">
+												<div class="line-box" style="width:60%; margin-left: 3vw;">
+												    <div class="line"></div>
+												</div>
+											</label>
+										</td>
+									</c:forEach>
+								</c:otherwise>
+							</c:choose>
+							
 							<td>
 								<div style="width: 200px; height: 150px; display: flex; justify-content: center;">
 									<input type="button" class="plusBtn" value="+" style="border: 1; margin: auto; display: block;" onclick="plusTd()"> 
@@ -861,10 +916,31 @@ $(document).ready(function(){
 									<tr>
 										<td></td>
 										<th style="padding-right: 1vh; text-align: left;">${chBox.chbox_name }</th>
-										<td><input type="checkbox" name="toilet" id="Ochbox${chBox.chbox_num }" onclick="checkOnlyOne(this)"></td>
-										<td style="padding-right: 1vh;"><label for="Ochbox${chBox.chbox_num }">있음</label></td>
-										<td><input type="checkbox" name="toilet" id="Xchbox${chBox.chbox_num }" onclick="checkOnlyOne(this)"></td>
-										<td><label for="Xchbox${chBox.chbox_num }">없음</label></td>
+										<c:forEach var="stch" items="${stCheckList }">
+											<c:if test="${chBox.chbox_num eq stch.chbox_num }">
+												<c:choose>
+													<c:when test="${stch.yesorno eq '○' }">
+														<td><input type="checkbox" name="toilet" id="Ochbox${chBox.chbox_num }" onclick="checkOnlyOne(this)" checked="checked"></td>
+														<td style="padding-right: 1vh;"><label for="Ochbox${chBox.chbox_num }">있음</label></td>
+														<td><input type="checkbox" name="toilet" id="Xchbox${chBox.chbox_num }" onclick="checkOnlyOne(this)"></td>
+														<td><label for="Xchbox${chBox.chbox_num }">없음</label></td>	
+													</c:when>
+													<c:when test="${stch.yesorno eq 'Ⅹ' }">
+														<td><input type="checkbox" name="toilet" id="Ochbox${chBox.chbox_num }" onclick="checkOnlyOne(this)"></td>
+														<td style="padding-right: 1vh;"><label for="Ochbox${chBox.chbox_num }">있음</label></td>
+														<td><input type="checkbox" name="toilet" id="Xchbox${chBox.chbox_num }" onclick="checkOnlyOne(this)" checked="checked"></td>
+														<td><label for="Xchbox${chBox.chbox_num }">없음</label></td>
+													</c:when>
+													<c:otherwise>
+														<td><input type="checkbox" name="toilet" id="Ochbox${chBox.chbox_num }" onclick="checkOnlyOne(this)"></td>
+														<td style="padding-right: 1vh;"><label for="Ochbox${chBox.chbox_num }">있음</label></td>
+														<td><input type="checkbox" name="toilet" id="Xchbox${chBox.chbox_num }" onclick="checkOnlyOne(this)"></td>
+														<td><label for="Xchbox${chBox.chbox_num }">없음</label></td>
+													</c:otherwise>
+												</c:choose>
+											</c:if>
+										</c:forEach>
+										
 									</tr>
 								</c:forEach>
 						</table>
@@ -880,47 +956,29 @@ $(document).ready(function(){
 				
 					<div class="ibmatSelectDiv">
 						
-						<div class="selectLeft">
-							<label class="ibmatlabel" for="ibmat1">
-								<input type="checkbox" class="ibmatCB" id="ibmat1">
-								인테리어가 멋져요
-							</label>
-							<br><br>
-							
-							
-							<label class="ibmatlabel" for="ibmat2">
-								<input type="checkbox" class="ibmatCB" id="ibmat2">
-								혼자오기 좋아요
-							</label>
-							<br><br>
-						
-							<label class="ibmatlabel" for="ibmat3">
-								<input type="checkbox" class="ibmatCB" id="ibmat3">
-								단체모임하기 좋아요
-							</label>
-							<br><br>
+						<div class="stKey">
+							<c:forEach var="stKey" items="${stKeyLabel }">
+								<c:set var="st_key_num" value="${stkey.st_key_num }"/>
+								<c:set var="stKeys" value="${stKeys }"/>
+								<c:choose>
+									<c:when test="${fn: contains(stKeys, st_key_num) }">
+										<label class="ibmatlabel" for="ibmat${stKey.st_key_num }" style="border-bottom: 3px solid #ef6351;">
+											<input type="checkbox" class="ibmatCB" id="ibmat${stKey.st_key_num }" checked="checked">
+											${stKey.st_keyword }
+										</label>
+										<br><br>
+									</c:when>
+									<c:otherwise>
+										<label class="ibmatlabel" for="ibmat${stKey.st_key_num }">
+											<input type="checkbox" class="ibmatCB" id="ibmat${stKey.st_key_num }">
+											${stKey.st_keyword }
+										</label>
+										<br><br>
+									</c:otherwise>
+								</c:choose>
 								
-							<label class="ibmatlabel" for="ibmat4">
-								<input type="checkbox" class="ibmatCB" id="ibmat4">
-								매장이 넓어요
-							</label>
-							<br><br>
+							</c:forEach>
 						</div>
-						
-						<div class="selectRight">	
-							<label class="ibmatlabel" for="ibmat5">
-								<input type="checkbox" class="ibmatCB" id="ibmat5">
-								애견메뉴가 있어요
-							</label>
-							<br><br>
-						
-							<label class="ibmatlabel" for="ibmat6">
-								<input type="checkbox" class="ibmatCB" id="ibmat6">
-								포장이 가능해요
-							</label>
-							<br><br>
-						</div>
-						
 					</div>
 				</div>
 				
@@ -965,7 +1023,7 @@ $(document).ready(function(){
 				<br><br>
 				<!-- 등록버튼 -->
 				<div class="btnSend">
-					<input type="submit" value="등록">
+					<input type="button" value="등록" id="sbmitBtn">
 				</div>
 				
 			

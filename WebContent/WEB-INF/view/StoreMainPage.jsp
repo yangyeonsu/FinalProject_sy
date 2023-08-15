@@ -744,6 +744,15 @@ i {
 
 
 <script type="text/javascript">
+$(function()
+{
+	$(".modifyBtn").click(function()
+	{
+		$("#userForm").attr("action", "stdetailmodify.action");
+		$("#userForm").submit();
+	});
+	
+});
 
 // 답글달기
 $(document).ready(function()
@@ -756,7 +765,7 @@ $(document).ready(function()
 		$("#userForm").submit();
 	});
 	 */
-	/* 
+	
 	$(".replyBtn").click(function() 
 	{
 	    var replyId = $(this).val();
@@ -764,6 +773,24 @@ $(document).ready(function()
 	    if($("#div"+replyId).css("display", "none"))
 	    	$("#div"+replyId).css("display", "flex");
 	   
+	});
+	
+	 /*
+	$(".replyBtn").click(function() 
+	{
+	    var replyId = $(this).val();
+	    var replyBox = $("#div" + replyId);
+	    
+	    if(replyBox.css("display") == "none")
+	    	replyBox.css("display", "block");
+	 	else
+	 		replyBox.css("display", "none");
+	});
+	
+	$(".completeBtn").click(function()
+	{
+		var replyBox = $(this).closet(".replyBox");
+		replyBox.css("display", "none");
 	});
 	 */
 	
@@ -1168,8 +1195,8 @@ $(function name()
 									사장님 : ${list.reply_content}
 								</div>
 								</c:if>
-								<div class="replyBox" align="right" id="div${rv.rv_num }">
-									사장님 : <input type="text" class="rvApplyContent"> <input type="button" class="completeBtn" value="완료">
+								<div class="replyBox" align="right" id="div${rv.rv_num }" style="display: none;">
+									사장님 : <input type="text" class="rvApplyContent" > <input type="button" class="completeBtn" value="완료">
 								</div>
 							</div>
 							<input type="hidden" value="${rn }" name="rvNumHidden"> 
