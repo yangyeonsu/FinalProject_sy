@@ -744,6 +744,15 @@ i {
 
 
 <script type="text/javascript">
+$(function()
+{
+	$(".modifyBtn").click(function()
+	{
+		$("#userForm").attr("action", "stdetailmodify.action");
+		$("#userForm").submit();
+	});
+	
+});
 
 // 답글달기
 $(document).ready(function()

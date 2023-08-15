@@ -173,14 +173,15 @@ $(document).ready(function(){
 		var table = document.getElementById('food_table');
 	    var lastRow = table.rows[table.rows.length - 1]; // 맨 뒤에 <tr> 추가
 	    
-	    var cellCount = lastRow.cells.length;
+	    var cellCount = (lastRow.cells.length)-3;
 		
 		var name = document.getElementById('fileName'+cellCount);
-		var container = input.parentNode.querySelector('.image-show');
+		alert(cellCount);
+		var container = document.getElementById('image-show'+cellCount);
 	    
 	    // 이미 업로드된 사진이 있을 경우 삭제
 	    var existingImage = container.querySelector('img');
-	    if (existingImage) {
+	    if (existingImage!== null) {
 	        container.removeChild(existingImage);
 	    }
 
@@ -219,15 +220,24 @@ $(document).ready(function(){
 	    content += "	👉 음식 사진 업로드 👈";
 	    content += "	</label>";
 	    content += "</div>";
-	    content += "<input type='file' id='file1"+ cellCount +"' name='chooseFile' accept='image/*' onchange='loadFile(this)'>";
-	    content += "<div class='image-show'></div>";
-	    content += "<p id='fileName"+ cellCount +"' style='font-size: small'></p>";
-	    content += "<label id='label'>";
-	    content += "	<input type='text' class='input'>";
+	    content += "<input type='file' id='file"+ (cellCount-2) +"' name='file"+ (cellCount-2) +"' accept='image/*' onchange='loadFile(this)'>";
+	    content += "<div id='image-show"+(cellCount-2)+"'></div>";
+	    content += "<p id='fileName"+(cellCount-2)+"' style='font-size: small'></p>";
+	    content += "<label id='label menu_label'>";
+	    content += "	<p class='label-txt'>메뉴이름</p>";
+	    content += "	<input type='text' class='input' name='file"+ (cellCount-2) +"m'>";
 	    content += "	<div class='line-box' style='width:60%; margin-left: 3vw;'>";
 	    content += "		<div class='line'></div>";
 	    content += "	</div>";
 	    content += "</label>";
+	    content += "<label id='label menu_label'>";
+	    content += "	<p class='label-txt'>가격</p>";
+	    content += "	<input type='text' class='input' name='file"+ (cellCount-2) +"p'>";
+	    content += "	<div class='line-box' style='width:60%; margin-left: 3vw;'>";
+	    content += "		<div class='line'></div>";
+	    content += "	</div>";
+	    content += "</label>";
+	
 	    
 	    newCell.innerHTML = content; // <td> 내용 설정
 	    
@@ -298,6 +308,12 @@ $(document).ready(function(){
 			else
 				$(".ibmatlabel[for="+id+"]").css("border-bottom","none");
 		});
+		
+		
+		$("#sbmitBtn").click(function()
+		{
+			$("#userForm").submit();
+		});
 	});
 
 
@@ -309,7 +325,7 @@ $(document).ready(function(){
 
 
 <body>
-<form action="search.action" id="userForm" method="post" enctype="multipart/form-data">
+<form action="stdetailinsert.action" id="userForm" method="post" enctype="multipart/form-data">
 	<div class="header">
 		<c:import url="/WEB-INF/view/header_user.jsp"></c:import>
 	</div>
@@ -748,69 +764,53 @@ $(document).ready(function(){
 							<td></td>
 							<c:choose>
 								<c:when test="${fn:length(menuLists) == 0}">
-									<td>
-								    	<div class="button">
-											<label for="file1">
-												👉 음식 사진 업로드 👈
-											</label>
-									    </div>
-									    	<input type="file" id="file1" name="chooseFile" accept="image/*" onchange="loadFile(this)">
-									    <div class="image-show"></div>
-									    <p id="fileName1" style="font-size: small"></p>
-										<label id="menu_label">
-											<input type="text" class="input" value="">
-											<div class="line-box" style="width:60%; margin-left: 3vw;">
-											    <div class="line"></div>
-											</div>
-										</label>
-										<label id="menu_label">
-											<input type="text" class="input" value="">
-											<div class="line-box" style="width:60%; margin-left: 3vw;">
-											    <div class="line"></div>
-											</div>
-										</label>
-									</td>
-									<td>
-										<div class="button">
-											<label for="file2">
-												👉 음식 사진 업로드 👈
-											</label>
-									    </div>
-									    	<input type="file" id="file2" name="chooseFile" accept="image/*" onchange="loadFile(this)">
-									    <div class="image-show"></div>
-									    <p id="fileName2" style="font-size: small"></p>
-										<label id="menu_label">
-											<input type="text" class="input" value="">
-											<div class="line-box" style="width:60%; margin-left: 3vw;">
-											    <div class="line"></div>
-											</div>
-										</label>
-										<label id="menu_label">
-											<input type="text" class="input" value="">
-											<div class="line-box" style="width:60%; margin-left: 3vw;">
-											    <div class="line"></div>
-											</div>
-										</label>
-									</td>
-								</c:when>
-								<c:otherwise>
-									<c:forEach var="menu" items="${menuLists }">
+									<c:forEach begin="0" end="1" varStatus="status">
 										<td>
 									    	<div class="button">
 												<label for="file1">
 													👉 음식 사진 업로드 👈
 												</label>
 										    </div>
-										    	<input type="file" id="file1" name="chooseFile" accept="image/*" onchange="loadFile(this)">
-										    <div class="image-show"><img alt="" src=""${menu.image_link }></div>
-										    <p id="fileName1" style="font-size: small"></p>
-											<label id="menu_label">
+										    	<input type="file" id="file${status.index }" name="file${status.index }" accept="image/*" onchange="loadFile(this)">
+										    <div id="image-show${status.index}"></div>
+										    <p id="fileName${status.index}" style="font-size: small"></p>
+											<label id="label menu_label">
+												<p class="label-txt">메뉴이름</p>
+												<input type="text" class="input" name="file${status.index }m" value="">
+												<div class="line-box" style="width:60%; margin-left: 3vw;">
+												    <div class="line"></div>
+												</div>
+											</label>
+											<label id="label menu_label">
+												<p class="label-txt">가격</p>											
+												<input type="text" class="input" name="file${status.index }p" value="">
+												<div class="line-box" style="width:60%; margin-left: 3vw;">
+												    <div class="line"></div>
+												</div>
+											</label>
+										</td>
+									</c:forEach>
+								</c:when>
+								<c:otherwise>
+									<c:forEach var="menu" items="${menuLists }" varStatus="status">
+										<td>
+									    	<div class="button">
+												<label for="file1">
+													👉 음식 사진 업로드 👈
+												</label>
+										    </div>
+										    	<input type="file" id="file${status.index }" name="chooseFile" accept="image/*" onchange="loadFile(this)">
+										    <div id="image-show${status.index}"><img alt="" src=""${menu.image_link }></div>
+										    <p id="fileName${status.index }" style="font-size: small"></p>
+											<label id="label menu_label">
+												<p class="label-txt label-active">메뉴이름</p>
 												<input type="text" class="input" value="${menu.menu_name }">
 												<div class="line-box" style="width:60%; margin-left: 3vw;">
 												    <div class="line"></div>
 												</div>
 											</label>
-											<label id="menu_label">
+											<label id="label menu_label">
+												<p class="label-txt label-active">가격</p>
 												<input type="text" class="input" value="${menu.price }">
 												<div class="line-box" style="width:60%; margin-left: 3vw;">
 												    <div class="line"></div>
@@ -959,6 +959,7 @@ $(document).ready(function(){
 						<div class="stKey">
 							<c:forEach var="stKey" items="${stKeyLabel }">
 								<c:set var="st_key_num" value="${stkey.st_key_num }"/>
+								<c:set var="stKeys" value="${stKeys }"/>
 								<c:choose>
 									<c:when test="${fn: contains(stKeys, st_key_num) }">
 										<label class="ibmatlabel" for="ibmat${stKey.st_key_num }" style="border-bottom: 3px solid #ef6351;">
@@ -1022,7 +1023,7 @@ $(document).ready(function(){
 				<br><br>
 				<!-- 등록버튼 -->
 				<div class="btnSend">
-					<input type="submit" value="등록">
+					<input type="button" value="등록" id="sbmitBtn">
 				</div>
 				
 			
