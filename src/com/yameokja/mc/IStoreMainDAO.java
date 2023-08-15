@@ -6,6 +6,8 @@ import java.util.HashMap;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.sun.org.glassfish.gmbal.ParameterNames;
+
 public interface IStoreMainDAO
 {
 	public ArrayList<StoreDTO> searchStoreInfo(String user_num);
@@ -36,6 +38,7 @@ public interface IStoreMainDAO
 	public int stKeysdelete(int st_num);
 	public int foodCatdelete(int st_num);
 	public int menudelete(int st_num);
+	public int stsearchKeydelete(int st_num);
 	
 	
 	// 업데이트 후 삽입
@@ -46,8 +49,15 @@ public interface IStoreMainDAO
 	public int holidayinsert(@Param("day_num")int day_num, @Param("st_num")int st_num);
 	public int paysinsert(@Param("pay_num")int pay_num, @Param("st_num")int st_num);
 	public int chBoxinsert(@Param("st_num")int st_num, @Param("chbox_num")int chbox_num, @Param("yn_num")int yn_num);
+	public int chBoxselect(@Param("st_num")int st_num, @Param("chbox_num")int chbox_num);
+	public int chBoxupdate(@Param("yn_num")int yn_num, @Param("st_num")int st_num, @Param("chbox_num")int chbox_num);
 	public int stKeysinsert(@Param("st_num")int st_num, @Param("st_key_num")int st_key_num);
 	public int foodCatinsert(@Param("food_num")int food_num, @Param("st_num")int st_num);
 	public int menuinsert(@Param("st_num")int st_num, @Param("menu_name")String menu_name
 			, @Param("price")int price, @Param("image_link")String image_link);
+	public int searchKeyinsert(@Param("st_num")int st_num, @Param("search_name")String search_name);
+	public int stsearchKeyUpdate(@Param("st_num")int st_num, @Param("search_name")String search_name);
+	public int searchKeyselect(@Param("st_num")int st_num, @Param("search_name")String search_name);
+	public int stsearchKeyinsert(@Param("st_num")int st_num, @Param("search_num")int search_num);
+	public int stsearchKeyselect(@Param("st_num")int st_num, @Param("search_num")int search_num);
 }
