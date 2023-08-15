@@ -18,7 +18,7 @@
 
 
 <link rel="stylesheet" type="text/css" href="<%=cp%>/css/user_main.css">
-
+<link rel="stylesheet" type="text/css" href="<%=cp%>/css/storeDetail.css">
 <link rel="stylesheet" type="text/css" href="<%=cp%>/css/userMyPage.css">
 
 
@@ -68,6 +68,97 @@
 			$('#checkOverlay').attr("value", "false");
 		});
 	});
+	
+	$(document).ready(function()
+	{
+		$("#rvBtn").click(function()
+		{
+			var userNum = "${user.user_num}";
+			window.location.href="usermodify.action?user_num=" +userNum;
+		});
+	});
+	
+	
+	// 모달 -------------------------------------
+	function pwPopupOpen()
+	{
+		//alert("확인");
+		var pw = document.querySelectorAll(".rej_rs_content");
+		
+		//alert(pw);
+		/* 
+		for (var i = 0; i < rejRsElements.length; i++) 
+		{
+            var pwValue = rejRsElements[i].textContent;
+            rejRsContentElements[i].textContent = rejRsValue;
+        }
+		 */
+		if (document.all.rvPopup.style.visibility == "hidden")
+		{
+			//alert("확인");
+			document.all.rvPopup.style.visibility = "visible";
+			bgLayerOpen();
+			//alert("visible check");
+			
+			var $layerPopupObj = $('#rvPopup');
+			
+			var left = ($(window).scrollLeft() + ($(window).width() - $layerPopupObj
+					.width()) / 2);
+			var top = ($(window).scrollTop() + ($(window).height() - $layerPopupObj
+					.height()) / 4);
+			
+			$layerPopupObj.css(
+			{
+				'left' : left,
+				'top' : top,
+				'position' : 'absolute'
+			});
+			$('body').css('position', 'relative').append($layerPopupObj);
+			
+			return false;
+		} 
+		else
+		{
+			document.all.rvPopup.style.visibility = "hidden";
+			bgLayerClear();
+			return false;
+		}
+		
+	}
+	
+	function bgLayerOpen()
+	{
+		if (!$('.bgLayer').length)
+		{
+			$('<div class="bgLayer"></div>').appendTo($('body'));
+		}
+		var object = $(".bgLayer");
+		var w = $(document).width();
+		var h = $(document).height();
+
+		object.css(
+		{
+			'width' : w,
+			'height' : h
+		});
+		object.fadeIn(500); //생성되는 시간 설정
+	}
+	
+	function bgLayerClear()
+	{
+		var object = $('.bgLayer');
+
+		if (object.length)
+		{
+			object.fadeOut(500, function()
+			{
+				object.remove();
+
+			});
+		}
+	}
+	
+	
 </script>
 
 
@@ -87,7 +178,10 @@
 			
 			<!-- 가운데 마이 페이지 영역 -->
 			<div class="col-md-8">
-				<div class="mypage">마이 페이지</div>
+				<div class="mypage">
+					마이 페이지
+					<input type="button" class="myPageBtn" value="개인정보수정" onclick="pwPopupOpen()" style="background-color: #EBC0B7; border-radius: 5px;" >
+				</div>
 				
 				<!-- 개인 정보 영역 -->
 				<div class="id">
@@ -225,6 +319,32 @@
 			<c:import url="compare_box.jsp"></c:import>
 		
 		
+		
+		
+			<!-- 비밀번호 확인 모달 -->
+			<div id="rvPopup" style="position: absolute; visibility: hidden;">
+				<h4>
+					<a href="#" class="close" onClick="javascript:pwPopupOpen()">Ⅹ</a>
+				</h4>
+				<h3>비밀번호 확인</h3>
+				<div class="rvPopCont">
+					<div class="list">
+						<div class="reqRs">
+							<h5 style="margin-top: 3vh; margin-left: 5vh;">비밀번호 입력 &nbsp;&nbsp;&nbsp; </h5>
+							<!-- <textarea class="rej_rs_content" rows="5" cols="42" id="rvRs" style="resize: none; margin-top: 3vh;" disabled="disabled"></textarea> -->
+							<input type="password" class="rej_rs_content" id="rvRs" style="height: 3vh; margin-left: 1vh; margin-top: 3vh; margin-bottom: 2vh;">
+						</div>
+						
+					</div>
+					<div class="rv">
+						<button id="rvBtn">확인</button>
+					</div>
+				</div>
+				
+			</div>
+			
+			
+			
 		
 		</div><!-- .middle end -->
 	</div><!-- container end -->

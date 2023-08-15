@@ -33,7 +33,51 @@
 					
 			})
 		}) 
+		
 	});
+	
+	$(document).ready(function() 
+	{
+	    $("#nickNameAccept").click(function() 
+	    {
+	        var nickName = $.trim($("#userNickName").val());
+	        //alert(nickName);
+	        
+	        $.ajax(
+	        {
+	        	url:"nicknamecheck.action",
+	        	type:"POST",
+	        	data:{"nickName":nickName},
+	        	dataType:"json",
+	        	success: function(data)
+				{
+	        		// 서버에서 응답이 성공한 경우 실행되는 부분
+	        		if(data.count=="0")
+	        		{
+	        			alert(data.count);
+	        			$("#nNAcceptText").css("display", "inline");
+	        			$("#nickNameAccept").val("true");
+	        		}
+	        		// 서버에서 응답이 실패한 경우 실행되는 부분
+	        		else
+	        		{
+	        			$("#nNAcceptText").html("이미 존재하는 닉네임 입니다.");
+	        			$("#nickNameAccept").css("display", "inline");
+	        			$("#nNAcceptText").val("false");
+	        			$("#userNickName").focus();
+						return;
+	        		}
+				},
+				error: function(e) 
+				{
+					alert(e.responseText);
+	            }
+	        })
+	    });
+	});
+	
+	
+	
 </script>
 
 
@@ -94,21 +138,21 @@
 		<div class="joinInsertDiv">
 		
 			<div class="userName">
-				<input type="text" id="userName" readonly="readonly">
+				<input type="text" id="userName" readonly="readonly" value="${modify.getUser_name() }">
 			</div>
 			<div class="userSsn">
-				<input type="text" id="userSsn1" readonly="readonly">&nbsp;&nbsp;-&nbsp;
-				<input type="password" id="userSsn2" readonly="readonly">
+				<input type="text" id="userSsn1" readonly="readonly" value="${modify.getUser_ssn1() }">&nbsp;&nbsp;-&nbsp;
+				<input type="password" id="userSsn2" readonly="readonly"value="${modify.getUser_ssn2() }">
 			</div>
 			
 			<div class="userTel">
 				<div>
-					<input type="text" id="userTel" readonly="readonly">
+					<input type="text" id="userTel" readonly="readonly" value="${modify.getUser_tel() }">
 				</div>
 			</div>
 			
 			<div class="userId">
-				<input type="text" id="userId">
+				<input type="text" id="userId" value="${modify.getUser_id() }">
 			</div>
 			
 			<div class="userPw">

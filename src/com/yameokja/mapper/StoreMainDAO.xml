@@ -24,14 +24,13 @@
 	</select>
 	
 	<select id="rv_key_sum" resultType="java.util.HashMap">
-		SELECT COUNT(RK.CHOSEN_RV_KEY_NUM) AS COUNT_RV_KEY, RKL.RV_KEY_NAME AS RV_KEY_NAME
+		SELECT RK.COUNT AS COUNT_RV_KEY, RKL.RV_KEY_NAME AS RV_KEY_NAME
 		FROM RV_KEY_LABEL RKL LEFT JOIN RV_KEY RK
 		                   ON RKL.RV_KEY_NUM = RK.RV_KEY_NUM
-		                   LEFT JOIN RV_BOX RB
-		                       ON RK.RV_NUM = RB.RV_NUM
-		WHERE RB.ST_NUM = #{st_num} OR RB.ST_NUM IS NULL
-		GROUP BY RKL.RV_KEY_NAME, RB.ST_NUM
-		ORDER BY COUNT(RK.CHOSEN_RV_KEY_NUM) DESC
+		                   LEFT JOIN ST_LIST SL
+		                       ON RK.ST_NUM = SL.ST_NUM
+		WHERE SL.ST_NUM = #{st_num} OR SL.ST_NUM IS NULL
+		ORDER BY RK.COUNT DESC
 	</select>
 	
 	<select id="rv_list" resultType="com.yameokja.mc.ReviewDTO">
@@ -70,15 +69,15 @@
 	</select>
 	
 	<!-- 요일 라벨 가져오는 카테고리 -->
-	<select id="weekDayLabel" resultType="java.lang.String">
-		SELECT DAY_NAME
+	<select id="weekDayLabel" resultType="com.yameokja.mc.StoreOpencloseDTO">
+		SELECT DAY_NAME, DAY_NUM
 		FROM WEEKDAY_LABEL
 		ORDER BY DAY_NUM
 	</select>
 	
 	<!-- 평일 주말 라벨 -->
-	<select id="weekWeekendDayLabel" resultType="java.lang.String">
-		SELECT WEEK_WEEKEND
+	<select id="weekWeekendDayLabel" resultType="com.yameokja.mc.weekWeekendDayLabel">
+		SELECT WEEK_WEEKEND, WEEK_WEEKEND_NUM
 		FROM WEEK_WEEKEND_LABEL
 		ORDER BY WEEK_WEEKEND_NUM
 	</select>
@@ -89,10 +88,137 @@
 		FROM CHBOX_LABEL
 	</select>
 	
-	<!-- 댓글 테이블에 리뷰번호 알아내기 -->
-	<select id="">
-		
+
+	<delete id="stOCdelete">
+		DELETE
+		FROM ST_OPENCLOSE
+		WHERE ST_NUM = #{st_num}
+	</delete>
+	<insert id="stOCinsert">
+		INSERT INTO ST_OPENCLOSE(ST_NUM, DAY_NUM, START_TIME, END_TIME)
+		VALUES(#{st_num}, #{day_num}, #{start_time, jdbcType=VARCHAR}, #{end_time, jdbcType=VARCHAR})
+	</insert>
+	
+	<delete id="bOCdelete">
+		DELETE
+		FROM BREAKTIME
+		WHERE ST_NUM = #{st_num}
+	</delete>
+	<insert id="bOCinsert">
+		INSERT INTO BREAKTIME(BREAKTIME_NUM, ST_NUM, WEEK_WEEKEND_NUM, START_BREAKTIME, END_BREAKTIME)
+		VALUES(400, #{st_num}, #{week_weekend_num}
+		, #{start_breaktime, jdbcType=VARCHAR}, #{end_breaktime, jdbcType=VARCHAR})
+	</insert>
+	
+	<delete id="holidaydelete">
+		DELETE
+		FROM ST_HOLIDAY
+		WHERE ST_NUM = #{st_num}
+	</delete>
+	<insert id="holidayinsert">
+		INSERT INTO ST_HOLIDAY(HOLIDAY_NUM, DAY_NUM, ST_NUM)
+		VALUES(400, #{day_num}, #{st_num})
+	</insert>
+	
+	<delete id="paysdelete">
+		DELETE
+		FROM ST_PAY
+		WHERE ST_NUM = #{st_num}
+	</delete>
+	<insert id="paysinsert">
+		INSERT INTO ST_PAY(ST_PAY_NUM, PAY_NUM, ST_NUM)
+		VALUES(400, #{pay_num}, #{st_num})
+	</insert>
+	
+	<delete id="chBoxdelete">
+		DELETE
+		FROM ST_CHBOX
+		WHERE ST_NUM = #{st_num}
+	</delete>
+	<insert id="chBoxinsert">
+		INSERT INTO ST_CHBOX(ST_CHBOX_NUM, ST_NUM, CHBOX_NUM, YN_NUM)
+		VALUES(400, #{st_num}, #{chbox_num}, #{yn_num})
+	</insert>
+	<select id="chBoxselect" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM ST_CHBOX
+		WHERE ST_NUM = #{st_num}
+		  AND CHBOX_NUM = #{chbox_num}
 	</select>
+	<update id="chBoxupdate">
+		UPDATE ST_CHBOX
+		<if test='yn_num eq -1'>
+		SET YN_NUM = #{jdbcType=INTEGER}
+		</if>
+		<if test='yn_num  ne "num"'>
+		SET YN_NUM = #{yn_num, jdbcType=INTEGER}
+		</if>
+		WHERE ST_NUM = #{st_num}
+		  AND CHBOX_NUM = #{chbox_num}
+	</update>
+	
+	<delete id="stKeysdelete">
+		DELETE
+		FROM ST_KEY
+		WHERE ST_NUM = #{st_num}
+	</delete>
+	<insert id="stKeysinsert">
+		INSERT INTO ST_KEY(ST_CHOSEN_KEY_NUM, ST_NUM, ST_KEY_NUM)
+		VALUES(400, #{st_num}, #{st_key_num})
+	</insert>
+	
+	<delete id="foodCatdelete">
+		DELETE
+		FROM ST_FOOD
+		WHERE ST_NUM = #{st_num}
+	</delete>
+	<insert id="foodCatinsert">
+		INSERT INTO ST_FOOD(ST_FOOD_NUM, FOOD_NUM, ST_NUM)
+		VALUES(400, #{food_num}, #{st_num})
+	</insert>
+	
+	<delete id="menudelete">
+		DELETE
+		FROM MENU
+		WHERE ST_NUM = #{st_num}
+	</delete>
+	<insert id="menuinsert">
+		INSERT INTO MENU(MENU_NUM, ST_NUM, MENU_NAME, PRICE, IMAGE_LINK)
+		VALUES(400, #{st_num}, #{menu_name}, #{price}, #{image_link, jdbcType=VARCHAR})
+	</insert>
+	
+	<delete id="stsearchKeydelete">
+		DELETE
+		FROM ST_SEARCH_KEY
+		WHERE ST_NUM = #{st_num}
+	</delete>
+	<insert id="searchKeyinsert">
+		INSERT INTO SEARCH_KEY(SEARCH_NUM, ST_NUM, SEARCH_NAME, COUNT)
+		VALUES(400, #{st_num}, #{search_name}, DEFAULT)
+	</insert>
+	<update id="stsearchKeyUpdate">
+		UPDATE SEARCH_KEY
+		SET COUNT = COUNT + 1
+		WHERE ST_NUM = #{st_num}
+		  AND SEARCH_NAME = #{search_name}
+	</update>
+	<select id="searchKeyselect" resultType="java.lang.Integer">
+		SELECT NVL(SEARCH_NUM, -1)
+		FROM SEARCH_KEY
+		WHERE ST_NUM = #{st_num}
+		  AND SEARCH_NUM = #{searh_name}
+	</select>
+	<insert id="stsearchKeyinsert">
+		INSERT INTO ST_SEARCH_KEY(ST_NUM, SEARCH_NUM)
+		VALUES(#{st_num}, #{search_num})
+	</insert>
+	<select id="stsearchKeyselect" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM ST_SEARCH_KEY
+		WHERE ST_NUM = #{st_num}
+		  AND SEARCH_NUM = #{search_num}
+	</select>
+
 </mapper>
 
 

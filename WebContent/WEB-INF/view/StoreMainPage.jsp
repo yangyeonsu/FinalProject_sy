@@ -1013,10 +1013,10 @@ $(function name()
 		
 		 var replyBoxId = $(this).parent().attr("id");
 		
-		 alert(replyBoxId);
+		 //alert(replyBoxId);
 		 var rv_num = replyBoxId.substring(3);
 		 
-		 alert(rv_num);
+		 //alert(rv_num);
 		 
 		var reply_content = $(".rvApplyContent").val();	//-- 답글내용
 		alert(reply_content);
@@ -1032,7 +1032,7 @@ $(function name()
 			{
 				/* $("#"+replyId).append("<p>" +response+ "</p>"); */
 				//$(".replyBox").html(response)
-				alert("갔다옴");
+				//alert("갔다옴");
 				$("#div"+rv_num).html(response)
 			},
 			error: function(xhr, status, error)

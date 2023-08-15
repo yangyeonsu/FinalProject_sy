@@ -3,9 +3,11 @@ package com.yameokja.mc;
 public class StoreBreaktimeDTO
 {
 	private String week_weekend, start_breaktime, end_breaktime;
-	private int st_num;
+	private int st_num, week_weekend_num;
 
 	
+	
+
 	// getter/setter 구성
 	public int getSt_num()
 	{
@@ -46,4 +48,13 @@ public class StoreBreaktimeDTO
 		this.end_breaktime = end_breaktime;
 	}
 	
+	public int getWeek_weekend_num()
+	{
+		return week_weekend_num;
+	}
+
+	public void setWeek_weekend_num(int week_weekend_num)
+	{
+		this.week_weekend_num = week_weekend_num;
+	}
 }

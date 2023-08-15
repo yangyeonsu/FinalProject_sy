@@ -176,13 +176,27 @@ input[type=checkbox]
 .reviewPhotoDiv
 {
     margin-top: 1vw;
-    width: 45vw;
+    width: 43vw;
     display: flex;
 }
 
 .photoAdd
 {
 	width: 10vw;
+}
+
+.rvPhotoDiv
+{
+	width: 43vw;
+    height: 60px;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.rvphotospan
+{
+	font-size: 10pt;
 }
 
 .plusBtn
