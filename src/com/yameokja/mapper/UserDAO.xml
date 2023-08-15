@@ -149,6 +149,12 @@
 		ORDER BY CHECK_DATE	
 	</select>
 	
+	<select id="userModify" resultType="com.yameokja.mc.UserDTO">
+		SELECT USER_NUM, USER_NAME, USER_SSN1, USER_SSN2, USER_ID, USER_TEL
+		FROM USING_USER
+		WHERE USER_NUM = #{user_num}
+	</select>
+	
 	
 </mapper>
 
