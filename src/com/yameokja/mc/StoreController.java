@@ -365,19 +365,21 @@ public class StoreController
             {
                 if (item.isFormField() && item.getFieldName().equals("st_num"))
                 {
-                	
+                	System.out.println(item.getString(CHARSET));
             		st_num = Integer.parseInt(item.getString(CHARSET));
                 }
             }
 			
 			smdao.stOCdelete(st_num);
+			smdao.holidaydelete(st_num);
 			smdao.bOCdelete(st_num);
 			smdao.holidaydelete(st_num);
 			smdao.paysdelete(st_num);
-			smdao.chBoxdelete(st_num);
 			smdao.stKeysdelete(st_num);
 			smdao.foodCatdelete(st_num);
 			smdao.menudelete(st_num);
+			smdao.stsearchKeydelete(st_num);
+			
 			
 			
 			
@@ -413,15 +415,26 @@ public class StoreController
             {
                 if (item.isFormField())
                 {
-                	
-                   	if(menuMap.keySet().contains(item.getFieldName().substring(0, 4)))
+                	if(item.getFieldName().substring(0, 4).equals("file"))
                 	{
-                		if (item.getFieldName().substring(item.getFieldName().length()-1).equals("m"))
-                			menuMap.get(item.getFieldName().substring(0, 4)).setMenu_name(item.getString(CHARSET)); 
-                		else if (item.getFieldName().substring(item.getFieldName().length()-1).equals("p"))
-                			menuMap.get(item.getFieldName().substring(0, 4)).setPrice(Integer.parseInt(item.getString(CHARSET)));
-                		
-                		System.out.println(item.getString(CHARSET));
+	                   	if(menuMap.keySet().contains(item.getFieldName().substring(0, item.getFieldName().length()-1)))
+	                	{
+	                		if (item.getFieldName().substring(item.getFieldName().length()-1).equals("m"))
+	                			menuMap.get(item.getFieldName().substring(0, 4)).setMenu_name(item.getString(CHARSET)); 
+	                		else if (item.getFieldName().substring(item.getFieldName().length()-1).equals("p"))
+	                			menuMap.get(item.getFieldName().substring(0, 4)).setPrice(Integer.parseInt(item.getString(CHARSET)));
+	                	}
+	                   	else
+	                   	{
+	                   		StoreMenuDTO menu = new StoreMenuDTO();
+	                   		
+	                   		if (item.getFieldName().substring(item.getFieldName().length()-1).equals("m"))
+	                			menu.setMenu_name(item.getString(CHARSET)); 
+	                		else if (item.getFieldName().substring(item.getFieldName().length()-1).equals("p"))
+	                			menu.setPrice(Integer.parseInt(item.getString(CHARSET)));
+	                   		
+	                   		//menuMap.put(item.getFieldName().substring(0, item.getFieldName().length()-1), value)
+	                   	}
                 	}
                    	else if(item.getFieldName().substring(0, item.getFieldName().length()-1).equals("openTime"))
                    	{
@@ -476,7 +489,9 @@ public class StoreController
                    	}
                    	else if(item.getFieldName().substring(0, item.getFieldName().length()-1).equals("rest"))
                    	{
-                   		Integer.parseInt(item.getFieldName().substring(item.getFieldName().length()-1));
+                   		int dayNum = Integer.parseInt(item.getFieldName().substring(item.getFieldName().length()-1));
+                   		
+                   		smdao.holidayinsert(dayNum, st_num);
                    	}
                    	else if(item.getFieldName().substring(0, item.getFieldName().length()-1).equals("breakOT"))
                    	{
@@ -542,7 +557,14 @@ public class StoreController
                    		{
                    			System.out.println(chb);
                    			
-                   			smdao.chBoxinsert(st_num, Integer.parseInt(chb), 1);
+                   			int chbNum = Integer.parseInt(chb);
+                   			
+                   			if (smdao.chBoxselect(st_num, chbNum) == 0)
+                   				smdao.chBoxinsert(st_num, chbNum, 1);
+                   			else
+                   			{
+                   				smdao.chBoxupdate(1, st_num, chbNum);
+                   			}
                    		}
                    	}
                    	else if(item.getFieldName().equals("chBoxX"))
@@ -551,7 +573,27 @@ public class StoreController
                    		{
                    			System.out.println(chb);
                    			
-                   			smdao.chBoxinsert(st_num, Integer.parseInt(chb), 2);                   			
+                   			int chbNum = Integer.parseInt(chb);
+                   			
+                   			if (smdao.chBoxselect(st_num, chbNum) == 0)
+                   				smdao.chBoxinsert(st_num, chbNum, 2);
+                   			else
+                   			{
+                   				smdao.chBoxupdate(2, st_num, chbNum);
+                   			}                 			
+                   		}
+                   	}
+                   	else if(item.getFieldName().equals("uncheck"))
+                   	{
+                   		for (String chb : item.getString(CHARSET).split(","))
+                   		{
+                   			System.out.println(chb);
+                   			
+                   			int chbNum = Integer.parseInt(chb);
+                   			
+                   			if (smdao.chBoxselect(st_num, chbNum) != 0)
+                   				smdao.chBoxupdate(-1, st_num, chbNum);
+                   			
                    		}
                    	}
                    	else if(item.getFieldName().equals("stKeys"))
@@ -583,9 +625,59 @@ public class StoreController
                    	else if(item.getFieldName().equals("searchKey"))
                    	{
                    		String searchkey = item.getString(CHARSET);
+                   		int searchNum = smdao.searchKeyselect(st_num, searchkey);
+                   		
+                   		if (searchNum == -1)
+                   		{
+                   			smdao.searchKeyinsert(st_num, searchkey);
+                   			searchNum = smdao.searchKeyselect(st_num, searchkey);
+                   			smdao.stsearchKeyinsert(st_num, searchNum);
+                   		}
+                   		else
+                   		{
+                   			if (smdao.stsearchKeyselect(st_num, searchNum) == 0)
+                   			{
+                   				smdao.stsearchKeyUpdate(st_num, searchkey);
+                   				smdao.stsearchKeyinsert(st_num, searchNum);
+                   			}
+                   		}
                    	}
                 }
             }
+            
+			/*
+			 * menuMap = new HashMap<String, StoreMenuDTO>(); ArrayList<StoreOpencloseDTO>
+			 * soclist = new ArrayList<StoreOpencloseDTO>(); ArrayList<StoreBreaktimeDTO>
+			 * boclist = new ArrayList<StoreBreaktimeDTO>();
+			 */
+			
+            for (String key : menuMap.keySet()) 
+            {
+                String menuName = menuMap.get(key).getMenu_name();
+                String image = menuMap.get(key).getImage_link();
+                int price = menuMap.get(key).getPrice();
+                
+                smdao.menuinsert(st_num, menuName, price, image);
+            }
+            
+            for (StoreOpencloseDTO socdto : soclist)
+			{
+            	int dayNum = socdto.getDay_num();
+            	String openTime = socdto.getOpen_time();
+            	String closeTime = socdto.getClose_time();
+            	
+            	smdao.stOCinsert(st_num, dayNum, openTime, closeTime);
+				
+			}
+            
+            for (StoreBreaktimeDTO sbdto : boclist)
+			{
+				int wNum = sbdto.getWeek_weekend_num();
+				String startTime = sbdto.getStart_breaktime();
+				String endTime = sbdto.getEnd_breaktime();
+				
+				smdao.bOCinsert(st_num, wNum, startTime, endTime);
+			}
 		}
 		catch (Exception e)
 		{
@@ -593,7 +685,7 @@ public class StoreController
 			System.out.println(e.toString());
 		}
 		
-		return "";
+		return "redirect:storemain.action";
 	}
 	
   
