@@ -315,41 +315,19 @@ public class AdminMainController
 	
 	@RequestMapping(value="/filedownload.action", method= {RequestMethod.POST, RequestMethod.GET})
 		@ResponseBody
-	public void fileDownload(@RequestParam("path") String path, @RequestParam("saveFileName") String saveFileName, HttpServletResponse response
+	public String fileDownload(@RequestParam("path")String path, @RequestParam("fileName")String fileName, HttpServletResponse response
 			, HttpServletRequest request, Model model)
 	{
 		
 		System.out.println(path);
-		System.out.println(saveFileName);
+		System.out.println(fileName);
+
 		
-		fileDown(path, saveFileName, response, request);
+		if (FileManager.doFileDownload(fileName, path, response))
+			return "1";
+		else
+			return "-1";
 		
 	}
 	
-	
-	public boolean fileDown(String path, String saveFileName, HttpServletResponse response, HttpServletRequest request)
-	{
-		/* MediaType.ALL */
-		try
-		{
-			response.setContentType("application/octet-stream");
-
-	        response.setHeader("Content-Disposition", "attachment; fileName=\"" + URLEncoder.encode(saveFileName,"UTF-8")+"\";");
-	        response.setHeader("Content-Transfer-Encoding", "binary");
-
-	        // 파일 읽어 응답
-	        byte[] fileByte = FileUtils.readFileToByteArray(new File(path));
-	        response.getOutputStream().write(fileByte);
-	        response.getOutputStream().flush();
-	        response.getOutputStream().close();
-	        
-	        return true;
-			
-		} catch (Exception e)
-		{
-			System.out.println(e.toString());
-			return false;
-		}
-		
-	}
 }
