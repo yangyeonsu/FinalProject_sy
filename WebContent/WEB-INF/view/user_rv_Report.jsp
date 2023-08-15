@@ -165,12 +165,13 @@
 	        //alert("rvreport의 상태는 '처리완료'입니다.");
 	        
 	        var reject = $("#reject").html();
-	        //alert("reject");
+	        var mid = $("#mid").html();
+	        //alert(mid);
 	        
 	        // 처리상태가 반려일 때 모달창 띄우기
 	        if(reject=="반려")
 	        {
-				
+				//alert("반려~");
 	        	var rejRsElements = document.querySelectorAll(".rej_rs");
 	            var rejRsContentElements = document.querySelectorAll(".rej_rs_content");
 	            
@@ -212,10 +213,59 @@
 					bgLayerClear();
 					return false;
 				}
-	        	
-	        	
 	        }
 	        
+	        
+	        
+	        
+	        
+			if(mid=="중재")
+			{
+				//alert("중재~");	
+				var midRsElements = document.querySelectorAll(".mid_rs");
+	            var midRsContentElements = document.querySelectorAll(".mid_rs_content");
+	            
+	            //alert(midRsContentElements);
+	            
+	            for (var i = 0; i < midRsElements.length; i++) {
+	                var midRsValue = midRsElements[i].textContent;
+	                midRsContentElements[i].textContent = midRsValue;
+	            }
+	            
+	            if (document.all.midPopup.style.visibility == "hidden")
+				{
+					//alert("확인");
+					
+					document.all.midPopup.style.visibility = "visible";
+					bgLayerOpen();
+					
+					//alert("visible check");
+					
+					var $layerPopupObj = $('#midPopup');
+					var left = ($(window).scrollLeft() + ($(window).width() - $layerPopupObj
+							.width()) / 2);
+					var top = ($(window).scrollTop() + ($(window).height() - $layerPopupObj
+							.height()) / 4);
+		
+					$layerPopupObj.css(
+					{
+						'left' : left,
+						'top' : top,
+						'position' : 'absolute'
+					});
+					$('body').css('position', 'relative').append($layerPopupObj);
+		
+					return false;
+					
+				} 
+				else
+				{
+					document.all.midPopup.style.visibility = "hidden";
+					bgLayerClear();
+					return false;
+				}
+	            
+			}
 	        
 	    }
 	}
@@ -329,6 +379,9 @@
 					                <div id="reject" style="display: none;">${rvreport.rep_rej_num }</div>
 					                <div class="rej_rs" style="display: none;">${rvreport.rej_rs }</div>
 					                
+					                <div id="mid" style="display: none;">${rvreport.rep_mid_num }</div>
+					                <div class="mid_rs" style="display: none;">${rvreport.mid_rs }</div>
+					                
 					            </div>
 					           
 					        </c:forEach>
@@ -337,7 +390,7 @@
 				</div>
 				
 				
-				
+				<!-- 반려모달 -->
 				<div id="rvPopup" style="position: absolute; visibility: hidden;">
 					<h4>
 						<a href="#" class="close" onClick="javascript:rvPopupOpen()">Ⅹ</a>
@@ -360,8 +413,27 @@
 				</div>
 				
 				
-				
-				
+				<!-- 중재모달 -->
+				<div id="midPopup" style="position: absolute; visibility: hidden;">
+					<h4>
+						<a href="#" class="close" onClick="javascript:rvPopupOpen()">Ⅹ</a>
+					</h4>
+					<h3>리뷰신고 중재사유</h3>
+					<div class="rvPopCont">
+						<div class="list">
+							<div class="midRs">
+								<h5 style="margin-top: 0">반려사유 &nbsp;&nbsp;&nbsp; </h5>
+								<%-- <textarea rows="5" cols="42" id="rvRs" style="resize: none; margin-top: 3vh;">${rvreport.rej_rs }</textarea> --%>
+								<textarea class="mid_rs_content" rows="5" cols="42" id="midRs" style="resize: none; margin-top: 3vh;" disabled="disabled"></textarea>
+							</div>
+							
+						</div>
+						<div class="rv">
+							<button id="rvBtn" onClick="javascript:rvPopupOpen()">확인</button>
+						</div>
+					</div>
+					
+				</div>
 				
 				
 				
