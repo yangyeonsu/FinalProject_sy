@@ -35,10 +35,6 @@ String cp = request.getContextPath();
 	{
 		if(${user_st_check==1})
 		{
-			$(".likeAddBtn").html("🤍");
-			$(".likeAddBtn").attr("disabled", true);
-			$(".likeAddBtn").css("cursor", "none");
-			$(".likeAddBtn").css("pointer-events", "none");
 			$("#modifyReqBtn").attr("disabled", true);
 			$("#modifyReqBtn").css("pointer-events", "none");
 			$("#insertReview").attr("disabled", true);
