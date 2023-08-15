@@ -194,7 +194,7 @@
  	<!-- 리뷰 신고 -->
 	<insert id="reviewRepInsert">
 		INSERT INTO REP_APPLY(REP_APPLY_NUM, RV_NUM, USER_NUM, REP_RS_NUM)
-		VALUES (28, #{rv_num}, #{user_num}, #{rep_rs_num})
+		VALUES (31, #{rv_num}, #{user_num}, #{rep_rs_num})
 	</insert> 
 
 	<!-- 리뷰 추천/비추천 식별 -->
@@ -259,7 +259,7 @@
 	<!-- 리뷰 입력 -->
 	<insert id="reviewInsert">
 		INSERT INTO RV_BOX(RV_NUM, USER_NUM, ST_NUM, RV_CONTENT, STAR_SCORE)
-		VALUES (48, #{user_num}, #{st_num}, #{rv_content}, #{star_score})
+		VALUES (50, #{user_num}, #{st_num}, #{rv_content}, #{star_score})
 	</insert>
 	
 	<!-- rv_num 가져오는 쿼리문 -->
@@ -313,6 +313,22 @@
 	<insert id="sKeywordInsert">
 		INSERT INTO SEARCH_KEY(SEARCH_NUM, ST_NUM, SEARCH_NAME)
 		VALUES (7, #{st_num}, #{search_name})
+	</insert>
+	
+	<!-- 리뷰 사진 입력을 위한 rv_num 검색 -->
+	<select id="searchRvNum">
+		SELECT RV_NUM
+		FROM RV_BOX
+		WHERE USER_NUM = #{user_num, jdbcType=VARCHAR}
+		  AND ST_NUM = #{st_num, jdbcType=INTEGER}
+		  AND RV_CONTENT = #{rv_content, jdbcType=VARCHAR}
+		  AND STAR_SCORE = #{star_score, jdbcType=INTEGER}
+	</select>
+	
+	<!-- 리뷰 사진 입력 -->
+	<insert id="rvPhotoInsert">
+		INSERT INTO RV_PHOTO(RV_PHOTO_NUM, RV_NUM, PHOTO_LINK)
+		VALUES (11, #{rv_num}, #{photo_link})
 	</insert>
  	
 </mapper>

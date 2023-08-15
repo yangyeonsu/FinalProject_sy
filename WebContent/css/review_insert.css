@@ -185,6 +185,20 @@ input[type=checkbox]
 	width: 10vw;
 }
 
+.rvPhotoDiv
+{
+	width: 43vw;
+    height: 60px;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.rvphotospan
+{
+	font-size: 10pt;
+}
+
 .plusBtn
 {
 	margin-top: 1vw;

@@ -72,5 +72,9 @@ public interface IstDetailDAO_userView
 	// 가게 검색 키워드 insert
 	public int sKeywordInsert(@Param("st_num")int st_num, @Param("search_name")String search_name);
 	
+	// rv_num 검색
+	public int searchRvNum(@Param("st_num")int st_num, @Param("rv_content")String rv_content, @Param("star_score")int star_score);
 	
+	// 리뷰 사진 insert
+	public int rvPhotoInsert(@Param("rv_num")int rv_num, @Param("photo_link") String photo_link);
 }
