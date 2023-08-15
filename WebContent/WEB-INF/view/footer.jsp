@@ -17,17 +17,16 @@
 <style type="text/css">
 	footer
 	{
-		display: flex;
-		justify-content: space-around;
-		width: 95.8vw;
-		height: 25vh;
-		font-size: 0.8vw;
-		color: #9b9b9b;
-		background-color: #f9f9f9;
-		padding-top: 20vh;
-		padding-left: 3vw;
-		margin-top: 5vh;
-		
+	    display: flex;
+	    justify-content: space-around;
+	    width: 95.8vw;
+	    height: 15vh;
+	    font-size: 0.8vw;
+	    color: #9b9b9b;
+	    background-color: #f9f9f9;
+	    padding-top: 10vh;
+	    padding-left: 3vw;
+	    margin-top: 5vh;
 	}
 	
 	.ftNav

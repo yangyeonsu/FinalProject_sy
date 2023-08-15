@@ -1,16 +1,20 @@
 package com.yameokja.mc;
 
+import java.io.File;
 import java.time.LocalDate;
 
 import java.util.ArrayList;
 
 import java.util.List;
-import java.util.Map;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.xml.ws.RequestWrapper;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +29,9 @@ public class stDetailController
 {
 	@Autowired
 	private SqlSession sqlSession;
+	
+	@Autowired
+    private ServletContext servletContext;
 	
 	@RequestMapping(value="/stdetail-userview.action", method = RequestMethod.GET)
 	public String stDetail(HttpServletRequest request, Model model)
@@ -356,9 +363,9 @@ public class stDetailController
 		model.addAttribute("st_num", st_num);
 		model.addAttribute("st_name", st_name);
 		
-		//System.out.println("st_num: " + st_num);
-		//System.out.println("st_name: " + st_name);
-		//System.out.println("user_name: " + user_num);
+		System.out.println("st_num: " + st_num);
+		System.out.println("st_name: " + st_name);
+		System.out.println("user_name: " + user_num);
 		
 		IstDetailDAO_userView dao = sqlSession.getMapper(IstDetailDAO_userView.class);
 		
@@ -373,7 +380,7 @@ public class stDetailController
 	
 	// 리뷰 입력
 	@RequestMapping(value="/insertreview.action")
-	public String insertReview(HttpServletRequest request, Model model)
+	public String insertReview(HttpServletRequest request, Model model, HttpServletResponse response)
 	{
 		String result = null;
 		// 사용자 정보 st_num
@@ -404,7 +411,7 @@ public class stDetailController
 				dao.rKeywordInsert(st_num, Integer.parseInt(rkList[i]));
 			}
 			else
-				dao.rkeywordUpdate(st_num, Integer.parseInt(rkList[i]));
+				dao.rKeywordUpdate(st_num, Integer.parseInt(rkList[i]));
 			
 			System.out.println(rkList[i]);
 		}
@@ -433,6 +440,61 @@ public class stDetailController
 		
 		// 가게상세페이지로 가기 위해 st_num을 model로 전송
 		model.addAttribute("st_num", st_num);
+		
+		
+		// 사진 업로드
+		String rootPath = servletContext.getRealPath("/");
+		String CHARSET = "utf-8";
+		int LIMIT_SIZE_BYTES = 5 * 1024 * 1024;
+		
+		StoreregiDTO srdto = new StoreregiDTO();
+		
+		// 경로상 디렉터리가 존재하지 않으면... 만든다.
+		String savePath_reviewImg = rootPath + File.separator + "Review_Insert_Img";
+		File review_img_dir = new File(savePath_reviewImg);
+		if (!review_img_dir.exists())
+		{
+			review_img_dir.mkdirs();
+		}
+		
+		IStoreMainDAO smdao = sqlSession.getMapper(IStoreMainDAO.class);
+		
+		DiskFileItemFactory fileItemFactory = new DiskFileItemFactory();
+		fileItemFactory.setRepository(review_img_dir);
+		fileItemFactory.setSizeThreshold(LIMIT_SIZE_BYTES);
+		ServletFileUpload fileUpload = new ServletFileUpload(fileItemFactory);
+		
+		try 
+		{
+            List<FileItem> items = fileUpload.parseRequest(request);
+            for (FileItem item : items)
+            {
+                if (!item.isFormField())	// 파일 형식인지 아닌지 판단
+                {
+                	if (item.getFieldName().equals("chooseFile"))
+                	{
+	                    if (item.getSize() > 0)
+	                    {
+	                        String separator = File.separator;
+	                        int index =  item.getName().lastIndexOf(separator);
+	                        String fileName = item.getName().substring(index  + 1);
+	                        File uploadFile = new File(savePath_reviewImg +  separator + fileName);
+	                        item.write(uploadFile);
+	                        srdto.setSt_in_file(String.valueOf(uploadFile));
+	                        
+	                        // rv_num 검색
+	                        int rv_num = dao.searchRvNum(st_num, rv_content, star_score);
+	                        dao.rvPhotoInsert(rv_num, String.valueOf(uploadFile));
+	                    }
+                	}
+                }
+            }
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			System.out.println(e.toString());
+		}
 		
 		result = "redirect:stdetail-userview.action";
 		
