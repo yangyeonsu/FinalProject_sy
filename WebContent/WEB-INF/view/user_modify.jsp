@@ -33,7 +33,51 @@
 					
 			})
 		}) 
+		
 	});
+	
+	$(document).ready(function() 
+	{
+	    $("#nickNameAccept").click(function() 
+	    {
+	        var nickName = $.trim($("#userNickName").val());
+	        //alert(nickName);
+	        
+	        $.ajax(
+	        {
+	        	url:"nicknamecheck.action",
+	        	type:"POST",
+	        	data:{"nickName":nickName},
+	        	dataType:"json",
+	        	success: function(data)
+				{
+	        		// 서버에서 응답이 성공한 경우 실행되는 부분
+	        		if(data.count=="0")
+	        		{
+	        			alert(data.count);
+	        			$("#nNAcceptText").css("display", "inline");
+	        			$("#nickNameAccept").val("true");
+	        		}
+	        		// 서버에서 응답이 실패한 경우 실행되는 부분
+	        		else
+	        		{
+	        			$("#nNAcceptText").html("이미 존재하는 닉네임 입니다.");
+	        			$("#nickNameAccept").css("display", "inline");
+	        			$("#nNAcceptText").val("false");
+	        			$("#userNickName").focus();
+						return;
+	        		}
+				},
+				error: function(e) 
+				{
+					alert(e.responseText);
+	            }
+	        })
+	    });
+	});
+	
+	
+	
 </script>
 
 

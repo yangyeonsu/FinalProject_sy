@@ -219,11 +219,6 @@
 		  AND SEARCH_NUM = #{search_num}
 	</select>
 
-
-	<!-- 댓글 테이블에 리뷰번호 알아내기 -->
-	<select id="">
-		
-	</select>
 </mapper>
 
 

@@ -22,6 +22,7 @@ public interface IStoreMainDAO
 	// 댓글내용
 	public ArrayList<ReviewDTO> reply_content(int rv_num); 
 	
+	
 	public ArrayList<FoodLabelDTO> foodLabel();
 	public ArrayList<PayLabelDTO> payLabel();
 	public ArrayList<StoreOpencloseDTO> weekDayLabel();

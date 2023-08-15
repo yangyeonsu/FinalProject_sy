@@ -155,6 +155,12 @@
 		WHERE USER_NUM = #{user_num}
 	</select>
 	
+	<!-- (ajax)닉네임중복검사 -->
+	<select id="nickName" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS COUNT
+		FROM USING_USER
+		WHERE USER_NICKNAME = #{nickName}
+	</select>
 	
 </mapper>
 
