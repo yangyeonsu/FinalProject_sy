@@ -31,6 +31,20 @@ body {
 	display: flex;
 }
 
+.likeAddBtn
+{
+	width: 20px;
+    height: 20px;
+    margin-right: 5px;
+    padding-left: 2px;
+    text-align: center;
+    font-size: 11pt;
+    background-color: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
 .compTitle {
 	width: 15vw;
 	height: 15vh;
@@ -213,6 +227,43 @@ body {
 			$('.overlay').css("z-index", "0");
 			$('#checkOverlay').attr("value", "false");
 		});
+		
+		$(document).on("click",".likeAddBtn", function()
+		{
+			$st_num = $(this).val();
+			$user_num = "<%=(String) session.getAttribute("user_num")%>"
+			
+			$.ajax(
+			{
+				url : "jjiminsertdelete.action",
+				type : 'post',
+				data :
+				{
+					"st_num" : $st_num,
+					"user_num" : $user_num
+				},
+				context: this,
+				success : function(result)
+				{
+					$(this).html(result);
+					
+					if(result==='❤')
+					{
+						$(".clikeNum").html(${clikeNum+1});
+					}
+					
+					if(result==='🤍')
+					{
+						$(".clikeNum").html(${clikeNum-1});
+					}
+					
+				},
+				error : function(e)
+				{
+					alert(e.responseText);
+				}
+			});
+		});
 	});
 </script>
 
@@ -231,6 +282,77 @@ body {
 			});
 			$(".compTitle").css("margin-left", "31vw");
 		}
+		
+		$(document).on("click",".likeAddBtn", function()
+				{
+					$st_num = $(this).val();
+					$user_num = "<%=(String) session.getAttribute("user_num")%>"
+					
+					$.ajax(
+					{
+						url : "jjiminsertdelete.action",
+						type : 'post',
+						data :
+						{
+							"st_num" : $st_num,
+							"user_num" : $user_num
+						},
+						context: this,
+						success : function(result)
+						{
+							$(this).html(result);
+							
+							if(result==='❤')
+							{
+								$(".clikeNum").html(${clikeNum+1});
+							}
+							
+							if(result==='🤍')
+							{
+								$(".clikeNum").html(${clikeNum-1});
+							}
+							
+						},
+						error : function(e)
+						{
+							alert(e.responseText);
+						}
+					});
+				});
+
+				// 비교함에서 삭제
+				$(document).on("click",".comDelete", function()
+				{
+					$st_num = $(this).val();
+					$user_num = "<%=(String) session.getAttribute("user_num")%>"
+
+					$.ajax(
+					{
+						url : "comdelete.action",
+						type : 'post',
+						data :
+						{
+							"user_num" : $user_num,
+							"st_num" : $st_num
+						},
+						success : function(data)
+						{
+							if (data == "")
+							{
+								alert("비교함에서 이미 삭제된 가게입니다.");
+							} else
+							{
+								/* alert(data); */
+								alert("비교함에서 삭제되었습니다.");
+								$(".comStoreListDiv").html(data);
+							}
+						},
+						error : function(e)
+						{
+							alert(e.responseText);
+						}
+					});
+				});
 
 	});
 
@@ -405,6 +527,7 @@ body {
 					<div class="cCat">
 						<div id="stCatList" class="cList cat">가게 음식 카테고리</div>
 						<div id="stStarAvgList" class="cList">가게 평균 별점</div>
+						<div id="stLikeNumList" class="cList">가게 찜 수</div>
 						<div id="stRvNumList" class="cList bottomL">가게 리뷰 수</div>
 						<div id="sunList" class="lDay">&nbsp;&nbsp;</div>
 						<div id="monList" class="lDay">&nbsp;&nbsp;</div>
@@ -444,6 +567,29 @@ body {
 								<div class="cBox">
 									<div id="stCat${st_num }" class="cList cat">${st.food_name}</div>
 									<div id="stStarAvg${st_num }" class="cList">⭐${st.star_avg}</div>
+									<div id="stLikeNum${st_num }" class="cList likeBtnDiv">
+										<c:set var="list" value="${userJjimList}" />
+										<c:set var="num" value="${st_num}" />
+
+										<c:choose>
+											<c:when test="${list.contains(num)}">
+												<button type="button" class="likeAddBtn"
+													value="${st_num}">❤️</button>
+												<span class="clikeNum">
+													${clikeNumList.get(st_num) }
+												</span>
+											</c:when>
+											<c:otherwise>
+												<button type="button" class="likeAddBtn"
+													value="${st_num}">🤍</button>
+												<span class="clikeNum">
+													${clikeNumList.get(st_num) }
+												</span>
+											</c:otherwise>
+										</c:choose>
+
+									</div>
+									
 									<div id="stRevieN${st_num }" class="cList bottomL">${st.rv_count}</div>
 								</div>
 							</c:if>

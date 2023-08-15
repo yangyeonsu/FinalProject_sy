@@ -2,6 +2,7 @@ package com.yameokja.mc;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -67,6 +68,16 @@ public class compareViewController_beta
 		
 		ArrayList<StoreOpencloseDTO> openCloses = dao.openClose(stnumList);	//-- 비교함에서 선택한 가게 영업정보 리스트
 		
+		HashMap<Integer, Integer> clikeNumList = new HashMap<Integer, Integer>();
+		
+		// 가게 찜 수
+		for (int i = 0; i < stnumList.size(); i++)
+		{				
+			clikeNumList.put(stnumList.get(i), sdDao.clikeNum(stnumList.get(i)));
+		}
+		
+		model.addAttribute("clikeNumList", clikeNumList);
+		
 		
 		ArrayList<ArrayList<StoreOpencloseDTO>> dbstoc = new ArrayList<ArrayList<StoreOpencloseDTO>>();
 		
@@ -86,8 +97,6 @@ public class compareViewController_beta
 				dbstoc.add(stOc);
 			else
 				dbstoc.add(null);
-			
-			
 		}
 		
 		model.addAttribute("dbstoc", dbstoc);
@@ -180,7 +189,7 @@ public class compareViewController_beta
 		else
 			model.addAttribute("comList", null);
 		
-		
+		model.addAttribute("userJjimList", mdao.userJjimSearch(user_num));
 		
 		result = "/WEB-INF/view/compareView-beta.jsp";
 		
