@@ -28,6 +28,15 @@
 		WHERE SK.ST_NUM = #{st_num, jdbcType=INTEGER}
  	</select>
  	
+ 	<!-- 가게 키워드 -->
+ 	<select id="stKeysStr" resultType="java.lang.Integer">
+ 		SELECT SKL.ST_KEY_NUM AS ST_KEY_NUM
+		FROM ST_KEY SK LEFT JOIN ST_KEY_LABEL SKL
+		  ON SK.ST_KEY_NUM = SKL.ST_KEY_NUM
+		WHERE SK.ST_NUM = #{st_num, jdbcType=INTEGER}
+ 	</select>
+ 	
+ 	
  	<!-- 영업시간 가지고 오는 쿼리문 : 요일, 시작시간, 끝시간, 휴무여부 -->
  	<select id="openClose" resultType="com.yameokja.mc.StoreOpencloseDTO">
 	 	SELECT W.DAY_NUM AS DAY_NUM, W.DAY_NAME AS DAY_NAME, S.ST_NUM AS ST_NUM, O.START_TIME||' ~ '||O.END_TIME AS OPERATE_TIME

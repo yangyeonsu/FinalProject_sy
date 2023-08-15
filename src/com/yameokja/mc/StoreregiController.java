@@ -158,13 +158,6 @@ public class StoreregiController
 			System.out.println(e.toString());
 		}
 		
-		System.out.println("st_in_num: " + srdto.getSt_in_num());
-		System.out.println("st_place_num: " + srdto.getSt_place_num());
-		System.out.println("st_name: " + srdto.getSt_name());
-		System.out.println("st_location: " + srdto.getSt_location());
-		System.out.println("st_location_z dt: " + srdto.getSt_location_dt());
-		System.out.println(srdto.getSt_tel());
-		
 		srdto.setUser_num((String)session.getAttribute("user_num"));
 		
 		IStoreregiDAO dao = sqlSession.getMapper(IStoreregiDAO.class);

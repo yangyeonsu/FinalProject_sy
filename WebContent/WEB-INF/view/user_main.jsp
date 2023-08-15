@@ -34,7 +34,7 @@
 			
 			$.ajax(
 			{
-				url : "comparingInsert.action",
+				url : "comparinginsert.action",
 				type : "POST",
 				data : { "user_num" : user_num
 						, "st_num" : st_num },
@@ -97,12 +97,11 @@
 		$(document).on("click",".likeAddBtn", function()
 		{
 			$st_num = $(this).val();
-			alert($st_num);
 			$user_num = "<%=(String) session.getAttribute("user_num")%>"
 			
 			$.ajax(
 			{
-				url : "jjimInsertDelete.action",
+				url : "jjiminsertdelete.action",
 				type : 'post',
 				data :
 				{

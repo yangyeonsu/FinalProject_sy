@@ -181,7 +181,7 @@ public class MainController
 		return result;
 	}
 	
-	@RequestMapping(value = "/comparingInsert.action", method = RequestMethod.POST)
+	@RequestMapping(value = "/comparinginsert.action", method = RequestMethod.POST)
 		@ResponseBody
 	public Object comparingInsert(@RequestParam("user_num") String user_num, @RequestParam("st_num") String st_num,  Model model)
 	{
@@ -327,7 +327,7 @@ public class MainController
 		return html;
 	}
 
-	@RequestMapping(value = "/jjimInsertDelete.action", method = RequestMethod.POST)
+	@RequestMapping(value = "/jjiminsertdelete.action", method = RequestMethod.POST)
 		@ResponseBody
 	public String jjimSearch(@RequestParam("user_num") String user_num, @RequestParam("st_num") String st_num, Model model)
 	{

@@ -40,7 +40,7 @@
 </head>
 <body>
 
-<c:import url="header_user_sh.jsp"></c:import>
+<c:import url="header_user.jsp"></c:import>
 
 <div class="joinContainer">
 	<!-- 회원가입타이틀영역 -->
@@ -203,6 +203,11 @@
 	<!-- 가입하기 버튼 -->
 	<div class="joinBtnDiv">
 		<button type="button" id="joinBtn" class="joinBtn">수정하기</button>
+	</div>
+	
+	<!-- 탈퇴하기 버튼 -->
+	<div class="leaveBtnDiv">
+		<button type="button" id="leaveBtn" class="leaveBtn">계정탈퇴하기</button>
 	</div>
 </div>
 

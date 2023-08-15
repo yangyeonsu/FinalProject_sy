@@ -744,6 +744,15 @@ i {
 
 
 <script type="text/javascript">
+$(function()
+{
+	$(".modifyBtn").click(function()
+	{
+		$("#userForm").attr("action", "stdetailmodify.action");
+		$("#userForm").submit();
+	});
+	
+});
 
 // 답글달기
 $(document).ready(function()
@@ -761,10 +770,29 @@ $(document).ready(function()
 	{
 	    var replyId = $(this).val();
 	    
-	    $("#div"+replyId).css("display", "flex");
-	    
+	    if($("#div"+replyId).css("display", "none"))
+	    	$("#div"+replyId).css("display", "flex");
+	   
 	});
-
+	
+	 /*
+	$(".replyBtn").click(function() 
+	{
+	    var replyId = $(this).val();
+	    var replyBox = $("#div" + replyId);
+	    
+	    if(replyBox.css("display") == "none")
+	    	replyBox.css("display", "block");
+	 	else
+	 		replyBox.css("display", "none");
+	});
+	
+	$(".completeBtn").click(function()
+	{
+		var replyBox = $(this).closet(".replyBox");
+		replyBox.css("display", "none");
+	});
+	 */
 	
 	/* 
 	// 답글쓰기 버튼 토글
@@ -1090,7 +1118,9 @@ $(function name()
 						<c:if test="${empty reviews }">
 							<div class="none">"작성된 리뷰가 존재하지 않습니다."</div>
 						</c:if>
+						<c:forEach var="list" items="${rv_list }">
 						<c:forEach var="rv" items="${reviews }">
+							
 							<c:set var="rn" value="${rv.rv_num }" />
 							<div class="reviews">
 								<div class="rvTop">
@@ -1159,15 +1189,20 @@ $(function name()
 									</div>
 								</div>
 								<div class="regDate" align="right">${rv.reg_date }</div>
-								<div class="replyBox" align="right" style="display: none;" id="div${rv.rv_num }">
-									사장님 : <input type="text" class="rvApplyContent"> <input type="button" class="completeBtn" value="완료">
-								</div>
 								
+								<c:if test="${rv.rv_num == list.rv_num}">
+								<div class="replyBox" align="right" id="div${rv.rv_num }">
+									사장님 : ${list.reply_content}
+								</div>
+								</c:if>
+								<div class="replyBox" align="right" id="div${rv.rv_num }" style="display: none;">
+									사장님 : <input type="text" class="rvApplyContent" > <input type="button" class="completeBtn" value="완료">
+								</div>
 							</div>
 							<input type="hidden" value="${rn }" name="rvNumHidden"> 
 							<input type="hidden" value="" name="rep_rs_num">
 						</c:forEach>
-						
+						</c:forEach>
 					</div>
 					<!-- id="revList" -->
 
@@ -1224,7 +1259,7 @@ $(function name()
 						    	</c:choose>
 				            </div>
 			            </form>
-
+						
 					</div>
 				</div>
 			</div>

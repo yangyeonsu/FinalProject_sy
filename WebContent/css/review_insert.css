@@ -185,6 +185,27 @@ input[type=checkbox]
 	width: 10vw;
 }
 
+.plusBtn
+{
+	margin-top: 1vw;
+    width: 8vw;
+    height: 20px;
+    border: 1px solid #ede9d0;
+    border-radius: 5px;
+    color: #4d4b4b;
+    font-weight: bold;
+    box-shadow: 3px 3px 3px #ede9d0;
+    background-color: #fff;
+    margin-right: 0.8vw;
+    font-size: 0.6vw;
+    cursor: pointer;
+}
+
+.plusBtn:hover
+{
+	background-color: #f8f5eb;
+}
+
 .image-show img
 {
 	max-width: 8vw;
@@ -205,4 +226,25 @@ input[type=checkbox]
 	height: 30px;
 	width: 150px;
 	font-weight: bold;
+}
+
+#submitReviewBtn
+{
+    margin-top: 1vw;
+    width: 8vw;
+    height: 25px;
+    border: 1px solid #f9ab9f;
+    border-radius: 5px;
+    color: #4d4b4b;
+    font-weight: bold;
+    box-shadow: 3px 3px 3px #ef6351;
+    background-color: #fff;
+    margin-right: 0.8vw;
+    font-size: 0.6vw;
+    cursor: pointer;
+}
+
+#submitReviewBtn:hover
+{
+    background-color: #feeae7;
 }
