@@ -300,6 +300,38 @@ input[type="radio"] {
 	$(".download").click(function()
 	{
 		var path = $(this).val();
+		var fileName = $(this).attr("id");
+		
+		alert(path);
+		alert(fileName);
+		/* Download.jsp?saveFileName=" + req.getFilesystemName("uploadFile") */
+				
+		$.ajax(
+		{
+			url: 'filedownload.jsp',
+               method: 'POST',
+               data: 
+               {
+	               	"path" : path,
+					"fileName" : fileName
+               	},
+               dataType: "text",
+               success: function(data) 
+               {
+					if (data == "1")
+						alert("다운로드 성공");
+					else
+						alert("다운로드 실패");
+
+               },
+			error : function(e)
+			{
+					alert(e.responseText);
+			}
+
+         }); 
+				
+		/* var path = $(this).val();
 		alert(path);
 		var saveFileName = $(this).attr("id");
 		alert(saveFileName);
@@ -317,7 +349,7 @@ input[type="radio"] {
 	    // 링크 클릭 및 제거
 	    document.body.appendChild(link);
 	    link.click();
-	    document.body.removeChild(link);
+	    document.body.removeChild(link); */
     });
 });           
 </script>
