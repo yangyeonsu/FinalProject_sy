@@ -8,8 +8,8 @@ public class StoreDTO
 	private double star_avg;
 	private int st_num, rv_count;
 	
-	
 	// getter / setter 구성
+	
 	public String getSt_name()
 	{
 		return st_name;

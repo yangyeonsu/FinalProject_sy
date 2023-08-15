@@ -34,12 +34,12 @@ String cp = request.getContextPath();
 			});
 
 			$("#rvArrHidden").val(rkArr);
-			alert($("#rvArrHidden").val());
+			alert("리뷰 키워드 선택값 : " + $("#rvArrHidden").val());
 
 			// 별점 입력값
 			var star = $("#starSelect").val();
 			$("#starHidden").attr("value", star);
-			alert($("#starHidden").val());
+			alert("별점 입력값 : " + $("#starHidden").val());
 
 			// 검색 키워드 입력값
 			var skArr = [];
@@ -56,7 +56,7 @@ String cp = request.getContextPath();
 				skArr.push($("#sk5").val().trim());
 
 			$("input[name=skArrHidden]").attr("value", skArr);
-			//alert($("input[name=skArrHidden]").val());
+			alert("검색 키워드 선택값 : " + $("input[name=skArrHidden]").val());
 
 			$("#userForm").attr("action", "insertreview.action");
 			$("#userForm").submit();
@@ -65,6 +65,8 @@ String cp = request.getContextPath();
 
 	function loadFile(input)
 	{
+		var num = $(input).attr("id").slice(-1);
+		
 		if($(".photoAdd").length > 5)
 		{
 			alert("사진은 최대 5개까지 등록 가능합니다.");
@@ -72,7 +74,7 @@ String cp = request.getContextPath();
 		}
 		else
 		{
-			var name = document.getElementById('fileName'+$(".button").length);
+			var name = document.getElementById('fileName'+num);
 			var container = input.parentNode.querySelector('.image-show');
 			
 			// 이미 업로드된 사진이 있을 경우 삭제
@@ -80,7 +82,7 @@ String cp = request.getContextPath();
 			if (existingImage)
 			{
 				container.removeChild(existingImage);
-				$("#fileName"+$(".button").length).html("");
+				$("#fileName"+num).html("");
 			}
 
 			var file = input.files[0]; // 선택된 파일 가져오기
@@ -144,7 +146,7 @@ String cp = request.getContextPath();
 	    content += "		</label>";
 	    content += "	</div>";
 	    content += "	<input type='file' id='file" + num + "' name='chooseFile' accept='image/*' onchange='loadFile(this)' style='visibility: hidden'>";
-	    content += "	<div class='image-show'></div>";
+	    content += "	<div class='image-show'" + num + "></div>";
 	    content += "		<p id='fileName" + num + "' style='font-size: small'></p>";
 	    content += "		<label class='label'>";
 	    content += "		<div class='line-box' style='width:60%; margin-left: 3vw;'>";
@@ -259,7 +261,7 @@ String cp = request.getContextPath();
 				<div class="reviewInsertDiv">
 					<textarea rows="6" cols="130" name="reviewContent" id="reviewContent" style="font-family: 'IBM Plex Sans KR', sans-serif;"></textarea>
 				</div>
-				<div id="test_cnt" style="margin-left: 42vw; font-size: 0.7vw;">(0 / 500)</div>
+				<div id="test_cnt" style="margin-left: 24vw; font-size: 0.7vw; width: 20vw; text-align: right;">(0 / 500)</div>
 				
 				<script>
  
@@ -276,10 +278,10 @@ String cp = request.getContextPath();
 			        
 			    </script>
 				
-				<div
-					style="width: 45vw; height: 40px; display: flex; justify-content: flex-start;">
+				<div class="rvPhotoDiv">
+					<span class="rvphotospan"><i>리뷰 사진을 첨부하면 추가 포인트(+5p)가 지급됩니다!</i></span>
 					<input type="button" class="plusBtn" value="사진 더 추가하기"
-						style="display: block; font-size: 0.6vw; width: 7vw; height: 30px; margin-left: 0.5vw;"
+						style="display: block; font-size: 0.6vw; width: 7vw; height: 30px;"
 						onclick="plusTd()" countPhotoChecked(field)>
 				</div>
 
