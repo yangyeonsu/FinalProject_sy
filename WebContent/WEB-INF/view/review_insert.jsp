@@ -34,12 +34,12 @@ String cp = request.getContextPath();
 			});
 
 			$("#rvArrHidden").val(rkArr);
-			alert($("#rvArrHidden").val());
+			alert("리뷰 키워드 선택값 : " + $("#rvArrHidden").val());
 
 			// 별점 입력값
 			var star = $("#starSelect").val();
 			$("#starHidden").attr("value", star);
-			alert($("#starHidden").val());
+			alert("별점 입력값 : " + $("#starHidden").val());
 
 			// 검색 키워드 입력값
 			var skArr = [];
@@ -56,7 +56,7 @@ String cp = request.getContextPath();
 				skArr.push($("#sk5").val().trim());
 
 			$("input[name=skArrHidden]").attr("value", skArr);
-			//alert($("input[name=skArrHidden]").val());
+			alert("검색 키워드 선택값 : " + $("input[name=skArrHidden]").val());
 
 			$("#userForm").attr("action", "insertreview.action");
 			$("#userForm").submit();
@@ -259,7 +259,7 @@ String cp = request.getContextPath();
 				<div class="reviewInsertDiv">
 					<textarea rows="6" cols="130" name="reviewContent" id="reviewContent" style="font-family: 'IBM Plex Sans KR', sans-serif;"></textarea>
 				</div>
-				<div id="test_cnt" style="margin-left: 42vw; font-size: 0.7vw;">(0 / 500)</div>
+				<div id="test_cnt" style="margin-left: 24vw; font-size: 0.7vw; width: 20vw; text-align: right;">(0 / 500)</div>
 				
 				<script>
  

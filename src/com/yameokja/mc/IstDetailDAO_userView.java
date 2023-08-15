@@ -58,7 +58,7 @@ public interface IstDetailDAO_userView
 	public Integer rKeywordSearch(@Param("st_num") int st_num, @Param("rv_key_num") int rv_key_num);
 	
 	// 리뷰 키워드 count update
-	public int rkeywordUpdate(@Param("st_num")int st_num, @Param("rv_key_num")int rv_key_num);
+	public int rKeywordUpdate(@Param("st_num")int st_num, @Param("rv_key_num")int rv_key_num);
 	
 	// 리뷰 키워드 입력
 	public int rKeywordInsert(@Param("st_num")int st_num, @Param("rv_key_num")int rv_key_num);

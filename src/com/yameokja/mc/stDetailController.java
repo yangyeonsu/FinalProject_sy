@@ -5,11 +5,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.xml.ws.RequestWrapper;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -356,9 +354,9 @@ public class stDetailController
 		model.addAttribute("st_num", st_num);
 		model.addAttribute("st_name", st_name);
 		
-		//System.out.println("st_num: " + st_num);
-		//System.out.println("st_name: " + st_name);
-		//System.out.println("user_name: " + user_num);
+		System.out.println("st_num: " + st_num);
+		System.out.println("st_name: " + st_name);
+		System.out.println("user_name: " + user_num);
 		
 		IstDetailDAO_userView dao = sqlSession.getMapper(IstDetailDAO_userView.class);
 		
@@ -404,7 +402,7 @@ public class stDetailController
 				dao.rKeywordInsert(st_num, Integer.parseInt(rkList[i]));
 			}
 			else
-				dao.rkeywordUpdate(st_num, Integer.parseInt(rkList[i]));
+				dao.rKeywordUpdate(st_num, Integer.parseInt(rkList[i]));
 			
 			System.out.println(rkList[i]);
 		}
