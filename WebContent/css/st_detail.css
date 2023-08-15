@@ -228,6 +228,14 @@ table
   display: block;
   position: relative;
   margin: 40px 0px;
+  
+}
+
+#menu_label
+{
+	align-items: baseline;
+    display: flex;
+    flex-direction: column;
 }
 
 .input {
@@ -301,9 +309,20 @@ table
     display: flex;
     justify-content: center;
 }
+
+.stKey
+{
+	display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-left: 2.176vw;
+}
+
 label {
     cursor: pointer;
     font-size: 1em;
+    padding-right: 4vw;
+    height: 10%;
 }
 
 

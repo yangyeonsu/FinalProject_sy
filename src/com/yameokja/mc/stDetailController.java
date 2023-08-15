@@ -37,6 +37,7 @@ public class stDetailController
 		IstDetailDAO_userView dao = sqlSession.getMapper(IstDetailDAO_userView.class);
 		IMainDAO mdao = sqlSession.getMapper(IMainDAO.class);
 		IUserDAO uDao = sqlSession.getMapper(IUserDAO.class);
+		IStoreMainDAO smDao = sqlSession.getMapper(IStoreMainDAO.class);
 		
 		int st_num = Integer.parseInt(request.getParameter("st_num"));
 		//System.out.println(st_num);
@@ -55,6 +56,27 @@ public class stDetailController
 		
 		model.addAttribute("user", user);
 		
+		// user에게 등록된 가게가 있는지 조회 (사업자인지)
+		int storeCheck = uDao.storeCheck(user_num);
+		int user_st_check=0;
+		
+		if (storeCheck > 0)	// 사업자
+		{
+			// user에게 등록된 가게 리스트 조회(다수일 수 있음)
+			ArrayList<StoreDTO> st_list = smDao.searchStoreInfo(user_num);
+			
+			// user에게 등록된 가게 리스트 안에 있는 st_num과 
+			for (StoreDTO st_n : st_list)
+			{   // 현재 상세보기할 st_num이 같을 때
+				if(st_n.getSt_num() == st_num)
+				{
+					user_st_check=1;
+				}
+			}
+		}
+		
+		model.addAttribute("user_st_check", user_st_check);
+					
 		// 가게 기본 사항
 		model.addAttribute("store", dao.store(st_num));
 		
