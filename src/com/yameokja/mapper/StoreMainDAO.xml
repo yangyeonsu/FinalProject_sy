@@ -88,6 +88,7 @@
 		FROM CHBOX_LABEL
 	</select>
 	
+
 	<delete id="stOCdelete">
 		DELTE
 		FROM ST_OPENCLOSE
@@ -169,6 +170,11 @@
 		VALUES(MENUSEQ.NEXTVAL, #{st_num}, #{menu_name}, #{price}, #{image_link, jdbcType=VARCHAR})
 	</insert>
 
+
+	<!-- 댓글 테이블에 리뷰번호 알아내기 -->
+	<select id="">
+		
+	</select>
 </mapper>
 
 

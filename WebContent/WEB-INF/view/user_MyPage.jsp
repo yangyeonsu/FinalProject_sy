@@ -68,6 +68,15 @@
 			$('#checkOverlay').attr("value", "false");
 		});
 	});
+	
+	$(document).ready(function()
+	{
+		$(".myPageBtn").click(function()
+		{
+			var userNum = "${user.user_num}";
+			window.location.href="usermodify.action?user_num=" +userNum;
+		});
+	});
 </script>
 
 
@@ -87,7 +96,10 @@
 			
 			<!-- 가운데 마이 페이지 영역 -->
 			<div class="col-md-8">
-				<div class="mypage">마이 페이지</div>
+				<div class="mypage">
+					마이 페이지
+					<input type="button" class="myPageBtn" value="개인정보수정" style="background-color: #EBC0B7; border-radius: 5px;" >
+				</div>
 				
 				<!-- 개인 정보 영역 -->
 				<div class="id">
