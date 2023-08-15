@@ -22,7 +22,31 @@ public interface IStoreMainDAO
 	
 	public ArrayList<FoodLabelDTO> foodLabel();
 	public ArrayList<PayLabelDTO> payLabel();
-	public ArrayList<String> weekDayLabel();
-	public ArrayList<String> weekWeekendDayLabel();
+	public ArrayList<StoreOpencloseDTO> weekDayLabel();
+	public ArrayList<weekWeekendDayLabel> weekWeekendDayLabel();
 	public ArrayList<ChboxDTO> chBoxLabel();
+	
+	// 업데이트 하기 위한 삭제 과정
+	public int stOCdelete(int st_num);
+	public int bOCdelete(int st_num);
+	public int holidaydelete(int st_num);
+	public int paysdelete(int st_num);
+	public int chBoxdelete(int st_num);
+	public int stKeysdelete(int st_num);
+	public int foodCatdelete(int st_num);
+	public int menudelete(int st_num);
+	
+	
+	// 업데이트 후 삽입
+	public int stOCinsert(@Param("st_num")int st_num, @Param("day_num")int day_num
+			, @Param("start_time")String start_time, @Param("end_time")String end_time);
+	public int bOCinsert(@Param("st_num")int st_num, @Param("week_weekend_num")int week_weekend_num
+			, @Param("start_breaktime")String start_time, @Param("end_breaktime")String end_breaktime);
+	public int holidayinsert(@Param("day_num")int day_num, @Param("st_num")int st_num);
+	public int paysinsert(@Param("pay_num")int pay_num, @Param("st_num")int st_num);
+	public int chBoxinsert(@Param("st_num")int st_num, @Param("chbox_num")int chbox_num, @Param("yn_num")int yn_num);
+	public int stKeysinsert(@Param("st_num")int st_num, @Param("st_key_num")int st_key_num);
+	public int foodCatinsert(@Param("food_num")int food_num, @Param("st_num")int st_num);
+	public int menuinsert(@Param("st_num")int st_num, @Param("menu_name")String menu_name
+			, @Param("price")int price, @Param("image_link")String image_link);
 }
