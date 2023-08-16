@@ -694,6 +694,20 @@ i {
 <script type="text/javascript"
 	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
 
+<script type="text/javascript">
+
+var log_num = ${session.log_num}
+
+$(document).ready(function() {
+	if(${sessionScope.log_num } == 1/*  || log_num != '' */)
+	{
+		window.open("Stfirstloginstdego.action?st_num="+${st_num}, "a", "width=400, height=300, left=100, top=50");
+		/* window.location.href = "deletelognum.action?st_num="+${st_num }; */
+	}
+});
+
+</script>
+
 <!-- 배너 스크립트 -->
 <script type="text/javascript">
 	$(function()
@@ -805,7 +819,7 @@ $(document).ready(function()
         sendReplyButtons.toggle();
     });
 	 */
-	 
+
     $(".review_reply_btn").click(function(event) 
     {
         var thisForm = $(this).closest('.rvReplyForm'); // 해당 버튼의 폼을 선택
@@ -1122,7 +1136,7 @@ $(function name()
 						<c:if test="${empty reviews }">
 							<div class="none">"작성된 리뷰가 존재하지 않습니다."</div>
 						</c:if>
-						<c:forEach var="list" items="${rv_list }">
+						<%-- <c:forEach var="list" items="${rv_list }"> --%>
 						<c:forEach var="rv" items="${reviews }">
 							
 							<c:set var="rn" value="${rv.rv_num }" />
@@ -1133,9 +1147,20 @@ $(function name()
 										<button type="button" class="repBtn rvBtn"
 											onclick="popupOpen()" value="${rv.rv_num }">신고하기
 										</button>
-										<button type="button" class="replyBtn rvBtn" value="${rv.rv_num }">
-											답글달기
-										</button>
+							
+										<c:choose>
+											<c:when test="${fn:contains(rvReplyNumList, rn) }">
+												<button type="button" class="replyBtn rvBtn" value="${rv.rv_num }" disabled="disabled">
+													답글달기
+												</button>
+											</c:when>
+											
+											<c:otherwise>
+												<button type="button" class="replyBtn rvBtn" value="${rv.rv_num }">
+													답글달기
+												</button>
+											</c:otherwise>
+										</c:choose>
 										
 									</div>
 								</div>
@@ -1194,19 +1219,23 @@ $(function name()
 								</div>
 								<div class="regDate" align="right">${rv.reg_date }</div>
 								
-								<c:if test="${rv.rv_num == list.rv_num}">
-								<div class="replyBox" align="right" id="div${rv.rv_num }">
-									사장님 : ${list.reply_content}
+								<div class="replyList">
+									<c:forEach var="reply" items="${rvReplyList}" >
+										<c:if test="${reply.rv_num == rn }">
+											사장님 : ${reply.reply_content }
+										</c:if>
+									</c:forEach>
 								</div>
-								</c:if>
 								<div class="replyBox" align="right" id="div${rv.rv_num }" style="display: none;">
+
 									사장님 : <input type="text" class="rvApplyContent"  id="rvApplyContent${rv.rv_num }"> <input type="button" class="completeBtn" value="완료">
+
 								</div>
 							</div>
 							<input type="hidden" value="${rn }" name="rvNumHidden"> 
 							<input type="hidden" value="" name="rep_rs_num">
 						</c:forEach>
-						</c:forEach>
+						<%-- </c:forEach> --%>
 					</div>
 					<!-- id="revList" -->
 

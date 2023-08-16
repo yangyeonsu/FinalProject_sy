@@ -14,7 +14,7 @@
 <script type="text/javascript">
 
 	function moveClose() {
-	  opener.location.href="stdetailmodify.action";
+	  opener.location.href="stdetailmodify.action?st_num="+${param.st_num};
 	  self.close();
 	}
 

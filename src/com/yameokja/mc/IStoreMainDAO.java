@@ -40,6 +40,11 @@ public interface IStoreMainDAO
 	public int menudelete(int st_num);
 	public int stsearchKeydelete(int st_num);
 	
+	// 가게 첫 로그인
+	public int checkfirstlogin(int st_num);
+	public int findfirstlogin(int st_num);
+	public int deletelognum(int log_num);
+	
 	
 	// 업데이트 후 삽입
 	public int stOCinsert(@Param("st_num")int st_num, @Param("day_num")int day_num
@@ -55,9 +60,17 @@ public interface IStoreMainDAO
 	public int foodCatinsert(@Param("food_num")int food_num, @Param("st_num")int st_num);
 	public int menuinsert(@Param("st_num")int st_num, @Param("menu_name")String menu_name
 			, @Param("price")int price, @Param("image_link")String image_link);
+
+	
+	public ArrayList<Integer> rvReplyNumList(int st_num);
+	
+	// 리뷰 답글 가져오기
+	public ArrayList<StoreRvReplyDTO> rvReply(int st_num);
+
 	public int searchKeyinsert(@Param("st_num")int st_num, @Param("search_name")String search_name);
 	public int stsearchKeyUpdate(@Param("st_num")int st_num, @Param("search_name")String search_name);
 	public int searchKeyselect(@Param("st_num")int st_num, @Param("search_name")String search_name);
 	public int stsearchKeyinsert(@Param("st_num")int st_num, @Param("search_num")int search_num);
 	public int stsearchKeyselect(@Param("st_num")int st_num, @Param("search_num")int search_num);
+
 }
