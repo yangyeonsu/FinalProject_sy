@@ -12,6 +12,7 @@ public interface IUserDAO
 {
 	public int userLoginCheck(@Param("user_id")String user_id, @Param("user_pw")String user_pw);
 	public int idCheck(String user_id);
+	// 닉네임중복확인
 	public int nickCheck(String user_nick);
 	public int joinSend(UserDTO user);
 	public int userNumCheck(String user_num);
@@ -37,4 +38,7 @@ public interface IUserDAO
 	public List<StoreDTO> searchComparingBox(String user_num);
 	
 	public List<AlarmDTO> userAlarm(String user_num);
+	
+	// (ajax)닉네임중복검사
+	public int nickName(@Param("nickName") String nickName);
 }

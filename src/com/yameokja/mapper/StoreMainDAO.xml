@@ -49,6 +49,31 @@
 		ORDER BY RV_NUM DESC
 	</select>
 	
+	<!-- 첫 로그인 유무 -->
+	<select id="checkfirstlogin" resultType="java.lang.Integer">
+		SELECT COUNT(IFL.IN_F_LOG_NUM) AS IN_F_LOG_NUM
+		FROM IN_F_LOG IFL
+		RIGHT JOIN IN_PROCESS IP ON IFL.IN_PROCESS_NUM = IP.IN_PROCESS_NUM
+		LEFT JOIN IN_APPLY IA ON IP.IN_APPLY_NUM = IA.IN_APPLY_NUM
+		LEFT JOIN ST_LIST SL ON IP.IN_PROCESS_NUM = SL.IN_PROCESS_NUM
+		WHERE ST_NUM = #{st_num}
+	</select>
+	
+	<select id="findfirstlogin" resultType="java.lang.Integer">
+		SELECT IFL.IN_F_LOG_NUM AS IN_F_LOG_NUM
+		FROM IN_F_LOG IFL
+		RIGHT JOIN IN_PROCESS IP ON IFL.IN_PROCESS_NUM = IP.IN_PROCESS_NUM
+		LEFT JOIN IN_APPLY IA ON IP.IN_APPLY_NUM = IA.IN_APPLY_NUM
+		LEFT JOIN ST_LIST SL ON IP.IN_PROCESS_NUM = SL.IN_PROCESS_NUM
+		WHERE ST_NUM = #{st_num}
+	</select>
+	
+	<delete id="deletelognum">
+		DELETE
+		FROM IN_F_LOG
+		WHERE IN_F_LOG_NUM = #{IN_F_LOG_NUM}
+	</delete>
+	
 	<!-- 리뷰 답글 insert -->
 	<insert id="reviewReply">
 		INSERT INTO RV_REPLY(REPLY_NUM, RV_NUM, REPLY_CONTENT, REG_DATE)
@@ -90,7 +115,7 @@
 	
 
 	<delete id="stOCdelete">
-		DELTE
+		DELETE
 		FROM ST_OPENCLOSE
 		WHERE ST_NUM = #{st_num}
 	</delete>
@@ -100,34 +125,34 @@
 	</insert>
 	
 	<delete id="bOCdelete">
-		DELTE
+		DELETE
 		FROM BREAKTIME
 		WHERE ST_NUM = #{st_num}
 	</delete>
 	<insert id="bOCinsert">
 		INSERT INTO BREAKTIME(BREAKTIME_NUM, ST_NUM, WEEK_WEEKEND_NUM, START_BREAKTIME, END_BREAKTIME)
-		VALUES(BREAKTIMESEQ.NEXTVAL, #{st_num}, #{week_weekend_num}
+		VALUES(400, #{st_num}, #{week_weekend_num}
 		, #{start_breaktime, jdbcType=VARCHAR}, #{end_breaktime, jdbcType=VARCHAR})
 	</insert>
 	
 	<delete id="holidaydelete">
-		DELTE
+		DELETE
 		FROM ST_HOLIDAY
 		WHERE ST_NUM = #{st_num}
 	</delete>
 	<insert id="holidayinsert">
 		INSERT INTO ST_HOLIDAY(HOLIDAY_NUM, DAY_NUM, ST_NUM)
-		VALUES(HOLIDAYSEQ.NEXTVAL, #{day_num}, #{st_num})
+		VALUES(400, #{day_num}, #{st_num})
 	</insert>
 	
 	<delete id="paysdelete">
-		DELTE
+		DELETE
 		FROM ST_PAY
 		WHERE ST_NUM = #{st_num}
 	</delete>
 	<insert id="paysinsert">
 		INSERT INTO ST_PAY(ST_PAY_NUM, PAY_NUM, ST_NUM)
-		VALUES(PAYSEQ.NEXTVAL, #{pay_num}, #{st_num})
+		VALUES(400, #{pay_num}, #{st_num})
 	</insert>
 	
 	<delete id="chBoxdelete">
@@ -137,8 +162,25 @@
 	</delete>
 	<insert id="chBoxinsert">
 		INSERT INTO ST_CHBOX(ST_CHBOX_NUM, ST_NUM, CHBOX_NUM, YN_NUM)
-		VALUES(CHBOXSEQ.NEXTVAL, #{st_num}, #{chbox_num}, #{yn_num})
+		VALUES(400, #{st_num}, #{chbox_num}, #{yn_num})
 	</insert>
+	<select id="chBoxselect" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM ST_CHBOX
+		WHERE ST_NUM = #{st_num}
+		  AND CHBOX_NUM = #{chbox_num}
+	</select>
+	<update id="chBoxupdate">
+		UPDATE ST_CHBOX
+		<if test='yn_num eq -1'>
+		SET YN_NUM = #{jdbcType=INTEGER}
+		</if>
+		<if test='yn_num  ne "num"'>
+		SET YN_NUM = #{yn_num, jdbcType=INTEGER}
+		</if>
+		WHERE ST_NUM = #{st_num}
+		  AND CHBOX_NUM = #{chbox_num}
+	</update>
 	
 	<delete id="stKeysdelete">
 		DELETE
@@ -147,7 +189,7 @@
 	</delete>
 	<insert id="stKeysinsert">
 		INSERT INTO ST_KEY(ST_CHOSEN_KEY_NUM, ST_NUM, ST_KEY_NUM)
-		VALUES(STKEYSEQ.NEXTVAL, #{st_num}, #{st_key_num})
+		VALUES(400, #{st_num}, #{st_key_num})
 	</insert>
 	
 	<delete id="foodCatdelete">
@@ -157,7 +199,7 @@
 	</delete>
 	<insert id="foodCatinsert">
 		INSERT INTO ST_FOOD(ST_FOOD_NUM, FOOD_NUM, ST_NUM)
-		VALUES(STFOODSEQ.NEXTVAL, #{food_num}, #{st_num})
+		VALUES(400, #{food_num}, #{st_num})
 	</insert>
 	
 	<delete id="menudelete">
@@ -167,16 +209,31 @@
 	</delete>
 	<insert id="menuinsert">
 		INSERT INTO MENU(MENU_NUM, ST_NUM, MENU_NAME, PRICE, IMAGE_LINK)
-		VALUES(MENUSEQ.NEXTVAL, #{st_num}, #{menu_name}, #{price}, #{image_link, jdbcType=VARCHAR})
+		VALUES(400, #{st_num}, #{menu_name}, #{price}, #{image_link, jdbcType=VARCHAR})
 	</insert>
 	
-	<delete id="stsearchKey"></delete>
-
-
-	<!-- 댓글 테이블에 리뷰번호 알아내기 -->
-	<select id="">
-		
+	<delete id="stsearchKeydelete">
+		DELETE
+		FROM ST_SEARCH_KEY
+		WHERE ST_NUM = #{st_num}
+	</delete>
+	<insert id="searchKeyinsert">
+		INSERT INTO SEARCH_KEY(SEARCH_NUM, ST_NUM, SEARCH_NAME, COUNT)
+		VALUES(400, #{st_num}, #{search_name}, DEFAULT)
+	</insert>
+	<update id="stsearchKeyUpdate">
+		UPDATE SEARCH_KEY
+		SET COUNT = COUNT + 1
+		WHERE ST_NUM = #{st_num}
+		  AND SEARCH_NAME = #{search_name}
+	</update>
+	<select id="searchKeyselect" resultType="java.lang.Integer">
+		SELECT NVL(COUNT(SEARCH_NUM), -1)
+		FROM SEARCH_KEY
+		WHERE ST_NUM = #{st_num}
+		  AND SEARCH_NAME= #{search_name}
 	</select>
+
 	
 	<!-- 해당 가게의 해당 리뷰의 답글 가져오기 -->
 	<select id="rvReply" resultType="com.yameokja.mc.StoreRvReplyDTO">
@@ -195,6 +252,18 @@
 		WHERE RB.ST_NUM = #{st_num}
 	</select>
 	
+
+	<insert id="stsearchKeyinsert">
+		INSERT INTO ST_SEARCH_KEY(ST_NUM, SEARCH_NUM)
+		VALUES(#{st_num}, #{search_num})
+	</insert>
+	<select id="stsearchKeyselect" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM ST_SEARCH_KEY
+		WHERE ST_NUM = #{st_num}
+		  AND SEARCH_NUM = #{search_num}
+	</select>
+
 </mapper>
 
 

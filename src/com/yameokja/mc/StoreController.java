@@ -35,7 +35,7 @@ public class StoreController
 	@Autowired
     private ServletContext servletContext;
 	
-	@RequestMapping(value="/storemain.action", method=RequestMethod.GET)
+	@RequestMapping(value="/storemain.action", method= {RequestMethod.GET, RequestMethod.POST})
 	public String storeMainLoad(HttpServletRequest request, Model model)
 	{
 		HttpSession session = request.getSession();
@@ -63,6 +63,7 @@ public class StoreController
 		model.addAttribute("user", user);
 		
 		ArrayList<StoreDTO> st_list = smDao.searchStoreInfo(user_num);
+		
 		int st_num;
 		
 		if(smDao.searchRepStore(user_num) == null)
@@ -72,6 +73,141 @@ public class StoreController
 		
 		
 		session.setAttribute("st_num", st_num);
+		model.addAttribute("st_num", st_num);
+				
+		ArrayList<HashMap<String, String>> hashmaplist = smDao.rv_key_sum(st_num);
+		
+		ArrayList<String> rv_labels = new ArrayList<String>();
+		ArrayList<String> rv_data = new ArrayList<String>();
+		 
+		for (HashMap<String, String> hashMap : hashmaplist)
+		{
+			rv_labels.add("'" +hashMap.get("RV_KEY_NAME")+"'");
+			rv_data.add(String.valueOf(hashMap.get("COUNT_RV_KEY")));
+		}
+		
+		
+		ArrayList<HashMap<String, String>> star_transition = smDao.star_transition(st_num);
+		
+		ArrayList<String> star_labels = new ArrayList<String>();
+		ArrayList<String> star_data = new ArrayList<String>();
+		 
+		for (HashMap<String, String> star : star_transition)
+		{
+			star_labels.add("'" +star.get("QUARTER_START_DATE")+"'");
+			star_data.add(String.valueOf(star.get("AVERAGE_STAR_SCORE")));
+		}
+		
+		
+		// 가게 리뷰목록
+		ArrayList<StoreReviewDTO> reviews = dao.reviews(st_num);
+		
+		if(reviews.size() > 0)
+		{
+			model.addAttribute("reviews", reviews);
+		}
+		else
+			model.addAttribute("reviews", null);
+		
+		// 가게 리뷰 사진 목록
+		ArrayList<StoreRvPhotoDTO> rvPhotos = dao.rvPhoto(st_num);
+		
+		model.addAttribute("rvPhotos", rvPhotos);
+		
+		model.addAttribute("st_list", st_list);
+		
+		model.addAttribute("rv_labels", rv_labels.subList(0, 5));
+		model.addAttribute("rv_data", rv_data.subList(0, 5));
+		
+		model.addAttribute("star_labels", star_labels);
+		model.addAttribute("star_data", star_data);
+		
+		model.addAttribute("rv_key_list", smDao.rv_key_sum(st_num));
+		model.addAttribute("rv_list", smDao.rv_list(st_num));
+		
+		ArrayList<ReviewDTO> arr = smDao.rv_list(st_num);
+		for (ReviewDTO reviewDTO : arr)
+		{
+			System.out.println(reviewDTO.getReply_content());
+		}
+		/* model.addAttribute("reply_content", reply_content(rv_num)); */
+		
+		model.addAttribute("alarm", uDao.userAlarm(user_num));
+		
+		int log_num = smDao.checkfirstlogin(st_num);
+		if (log_num != 0) {
+		    // 메서드가 null (또는 0)을 반환했을 경우의 처리
+			int inif_log = smDao.findfirstlogin(st_num);
+			smDao.deletelognum(inif_log);
+			session.setAttribute("log_num", 1);
+		} 
+		
+		
+		result = "/WEB-INF/view/StoreMainPage.jsp";
+		
+		return result;
+	}
+	
+	/*
+	 * @RequestMapping(value="/deletelognum.action", method = {RequestMethod.POST,
+	 * RequestMethod.GET}) public String deletelognum(HttpServletRequest request,
+	 * Model model) { String result = "";
+	 * 
+	 * HttpSession session = request.getSession(); IStoreMainDAO smDao =
+	 * sqlSession.getMapper(IStoreMainDAO.class);
+	 * 
+	 * String log_num = (String) session.getAttribute("log_num");
+	 * System.out.println(log_num);
+	 * 
+	 * 
+	 * 
+	 * 
+	 * result = "/WEB-INF/view/StoreMainPage.jsp";
+	 * 
+	 * return result; }
+	 */
+	
+	@RequestMapping(value="/Stfirstloginstdego.action", method = {RequestMethod.POST, RequestMethod.GET})
+	public String stfirstlogingo()
+	{
+		String result = "";
+		
+		result = "/WEB-INF/view/Stfirstloginstdego.jsp";
+		
+		return result;
+	}
+	
+	@RequestMapping(value="/storeinfo.action", method=RequestMethod.GET)
+	public String storeInfoLoad(HttpServletRequest request, Model model)
+	{
+		HttpSession session = request.getSession();
+		String result = "";
+		
+		/* int st_num = Integer.parseInt(str_st_num); */ 
+		
+		IstDetailDAO_userView dao = sqlSession.getMapper(IstDetailDAO_userView.class);
+		IStoreMainDAO smDao = sqlSession.getMapper(IStoreMainDAO.class);
+		IUserDAO uDao = sqlSession.getMapper(IUserDAO.class);
+		
+		
+		String user_num = (String)session.getAttribute("user_num");
+		
+		UserDTO user = uDao.searchUserInfo(user_num, "num");
+
+		LocalDate currentDate = LocalDate.now();
+		int month = currentDate.getMonthValue();
+
+		if (month < 7)
+			user.setUser_grade(uDao.firstHalf(user_num).user_grade);
+		else
+			user.setUser_grade(uDao.secondHalf(user_num).user_grade);
+
+		model.addAttribute("user", user);
+		
+		ArrayList<StoreDTO> st_list = smDao.searchStoreInfo(user_num);
+		
+		int st_num = Integer.parseInt(request.getParameter("stNum"));
+		model.addAttribute("st_num", st_num);
 				
 		ArrayList<HashMap<String, String>> hashmaplist = smDao.rv_key_sum(st_num);
 		
@@ -141,7 +277,7 @@ public class StoreController
 		return result;
 	}
 	
-	@RequestMapping(value="/stdetailmodify.action", method = RequestMethod.POST)
+	@RequestMapping(value="/stdetailmodify.action", method = {RequestMethod.POST, RequestMethod.GET})
 	public String stDetailModify(HttpServletRequest request, Model model)
 	{
 		String result = "";
@@ -154,7 +290,7 @@ public class StoreController
 		IUserDAO uDao = sqlSession.getMapper(IUserDAO.class);
 		
 		String user_num = (String)session.getAttribute("user_num");
-		int st_num = (int) session.getAttribute("st_num");
+		int st_num = Integer.parseInt(request.getParameter("st_num"));
 		
 		UserDTO user = uDao.searchUserInfo(user_num, "num");
 
@@ -165,8 +301,12 @@ public class StoreController
 			user.setUser_grade(uDao.firstHalf(user_num).user_grade);
 		else
 			user.setUser_grade(uDao.secondHalf(user_num).user_grade);
+		
+		ArrayList<StoreDTO> st_list = sdao.searchStoreInfo(user_num);
 
 		model.addAttribute("user", user);
+		model.addAttribute("st_num", st_num);
+		model.addAttribute("st_list", st_list);
 		
 		// 가게가 선택할 수 있는 카테고리
 		model.addAttribute("foodLabel", sdao.foodLabel());
@@ -296,6 +436,7 @@ public class StoreController
 			user.setUser_grade(uDao.firstHalf(user_num).user_grade);
 		else
 			user.setUser_grade(uDao.secondHalf(user_num).user_grade);
+		
 
 		model.addAttribute("user", user);
 		session.setAttribute("st_num", st_num);
@@ -369,19 +510,21 @@ public class StoreController
             {
                 if (item.isFormField() && item.getFieldName().equals("st_num"))
                 {
-                	
+                	System.out.println(item.getString(CHARSET));
             		st_num = Integer.parseInt(item.getString(CHARSET));
                 }
             }
 			
 			smdao.stOCdelete(st_num);
+			smdao.holidaydelete(st_num);
 			smdao.bOCdelete(st_num);
 			smdao.holidaydelete(st_num);
 			smdao.paysdelete(st_num);
-			smdao.chBoxdelete(st_num);
 			smdao.stKeysdelete(st_num);
 			smdao.foodCatdelete(st_num);
 			smdao.menudelete(st_num);
+			smdao.stsearchKeydelete(st_num);
+			
 			
 			
 			
@@ -417,15 +560,26 @@ public class StoreController
             {
                 if (item.isFormField())
                 {
-                	
-                   	if(menuMap.keySet().contains(item.getFieldName().substring(0, 4)))
+                	if(item.getFieldName().substring(0, 4).equals("file"))
                 	{
-                		if (item.getFieldName().substring(item.getFieldName().length()-1).equals("m"))
-                			menuMap.get(item.getFieldName().substring(0, 4)).setMenu_name(item.getString(CHARSET)); 
-                		else if (item.getFieldName().substring(item.getFieldName().length()-1).equals("p"))
-                			menuMap.get(item.getFieldName().substring(0, 4)).setPrice(Integer.parseInt(item.getString(CHARSET)));
-                		
-                		System.out.println(item.getString(CHARSET));
+	                   	if(menuMap.keySet().contains(item.getFieldName().substring(0, item.getFieldName().length()-1)))
+	                	{
+	                		if (item.getFieldName().substring(item.getFieldName().length()-1).equals("m"))
+	                			menuMap.get(item.getFieldName().substring(0, 4)).setMenu_name(item.getString(CHARSET)); 
+	                		else if (item.getFieldName().substring(item.getFieldName().length()-1).equals("p"))
+	                			menuMap.get(item.getFieldName().substring(0, 4)).setPrice(Integer.parseInt(item.getString(CHARSET)));
+	                	}
+	                   	else
+	                   	{
+	                   		StoreMenuDTO menu = new StoreMenuDTO();
+	                   		
+	                   		if (item.getFieldName().substring(item.getFieldName().length()-1).equals("m"))
+	                			menu.setMenu_name(item.getString(CHARSET)); 
+	                		else if (item.getFieldName().substring(item.getFieldName().length()-1).equals("p"))
+	                			menu.setPrice(Integer.parseInt(item.getString(CHARSET)));
+	                   		
+	                   		//menuMap.put(item.getFieldName().substring(0, item.getFieldName().length()-1), value)
+	                   	}
                 	}
                    	else if(item.getFieldName().substring(0, item.getFieldName().length()-1).equals("openTime"))
                    	{
@@ -480,7 +634,9 @@ public class StoreController
                    	}
                    	else if(item.getFieldName().substring(0, item.getFieldName().length()-1).equals("rest"))
                    	{
-                   		Integer.parseInt(item.getFieldName().substring(item.getFieldName().length()-1));
+                   		int dayNum = Integer.parseInt(item.getFieldName().substring(item.getFieldName().length()-1));
+                   		
+                   		smdao.holidayinsert(dayNum, st_num);
                    	}
                    	else if(item.getFieldName().substring(0, item.getFieldName().length()-1).equals("breakOT"))
                    	{
@@ -546,7 +702,14 @@ public class StoreController
                    		{
                    			System.out.println(chb);
                    			
-                   			smdao.chBoxinsert(st_num, Integer.parseInt(chb), 1);
+                   			int chbNum = Integer.parseInt(chb);
+                   			
+                   			if (smdao.chBoxselect(st_num, chbNum) == 0)
+                   				smdao.chBoxinsert(st_num, chbNum, 1);
+                   			else
+                   			{
+                   				smdao.chBoxupdate(1, st_num, chbNum);
+                   			}
                    		}
                    	}
                    	else if(item.getFieldName().equals("chBoxX"))
@@ -555,7 +718,27 @@ public class StoreController
                    		{
                    			System.out.println(chb);
                    			
-                   			smdao.chBoxinsert(st_num, Integer.parseInt(chb), 2);                   			
+                   			int chbNum = Integer.parseInt(chb);
+                   			
+                   			if (smdao.chBoxselect(st_num, chbNum) == 0)
+                   				smdao.chBoxinsert(st_num, chbNum, 2);
+                   			else
+                   			{
+                   				smdao.chBoxupdate(2, st_num, chbNum);
+                   			}                 			
+                   		}
+                   	}
+                   	else if(item.getFieldName().equals("uncheck"))
+                   	{
+                   		for (String chb : item.getString(CHARSET).split(","))
+                   		{
+                   			System.out.println(chb);
+                   			
+                   			int chbNum = Integer.parseInt(chb);
+                   			
+                   			if (smdao.chBoxselect(st_num, chbNum) != 0)
+                   				smdao.chBoxupdate(-1, st_num, chbNum);
+                   			
                    		}
                    	}
                    	else if(item.getFieldName().equals("stKeys"))
@@ -587,9 +770,59 @@ public class StoreController
                    	else if(item.getFieldName().equals("searchKey"))
                    	{
                    		String searchkey = item.getString(CHARSET);
+                   		int searchNum = smdao.searchKeyselect(st_num, searchkey);
+                   		
+                   		if (searchNum == -1)
+                   		{
+                   			smdao.searchKeyinsert(st_num, searchkey);
+                   			searchNum = smdao.searchKeyselect(st_num, searchkey);
+                   			smdao.stsearchKeyinsert(st_num, searchNum);
+                   		}
+                   		else
+                   		{
+                   			if (smdao.stsearchKeyselect(st_num, searchNum) == 0)
+                   			{
+                   				smdao.stsearchKeyUpdate(st_num, searchkey);
+                   				smdao.stsearchKeyinsert(st_num, searchNum);
+                   			}
+                   		}
                    	}
                 }
             }
+            
+			/*
+			 * menuMap = new HashMap<String, StoreMenuDTO>(); ArrayList<StoreOpencloseDTO>
+			 * soclist = new ArrayList<StoreOpencloseDTO>(); ArrayList<StoreBreaktimeDTO>
+			 * boclist = new ArrayList<StoreBreaktimeDTO>();
+			 */
+			
+            for (String key : menuMap.keySet()) 
+            {
+                String menuName = menuMap.get(key).getMenu_name();
+                String image = menuMap.get(key).getImage_link();
+                int price = menuMap.get(key).getPrice();
+                
+                smdao.menuinsert(st_num, menuName, price, image);
+            }
+            
+            for (StoreOpencloseDTO socdto : soclist)
+			{
+            	int dayNum = socdto.getDay_num();
+            	String openTime = socdto.getOpen_time();
+            	String closeTime = socdto.getClose_time();
+            	
+            	smdao.stOCinsert(st_num, dayNum, openTime, closeTime);
+				
+			}
+            
+            for (StoreBreaktimeDTO sbdto : boclist)
+			{
+				int wNum = sbdto.getWeek_weekend_num();
+				String startTime = sbdto.getStart_breaktime();
+				String endTime = sbdto.getEnd_breaktime();
+				
+				smdao.bOCinsert(st_num, wNum, startTime, endTime);
+			}
 		}
 		catch (Exception e)
 		{
@@ -597,7 +830,7 @@ public class StoreController
 			System.out.println(e.toString());
 		}
 		
-		return "";
+		return "redirect:storemain.action";
 	}
 	
   

@@ -170,14 +170,15 @@ $(document).ready(function(){
 	
 	function loadFile(input) {
 		
+		var num = $(input).attr("id").slice(-1);
+		
 		var table = document.getElementById('food_table');
 	    var lastRow = table.rows[table.rows.length - 1]; // 맨 뒤에 <tr> 추가
 	    
-	    var cellCount = (lastRow.cells.length)-3;
+	    var cellCount = (lastRow.cells.length)-4;
 		
-		var name = document.getElementById('fileName'+cellCount);
-		alert(cellCount);
-		var container = document.getElementById('image-show'+cellCount);
+		var name = document.getElementById('fileName'+num);
+		var container = document.getElementById('image-show'+num);
 	    
 	    // 이미 업로드된 사진이 있을 경우 삭제
 	    var existingImage = container.querySelector('img');
@@ -361,6 +362,15 @@ $(document).ready(function(){
 			$("#chBoxO").val(chBoxO);
 			$("#chBoxX").val(chBoxX);
 			
+			var uncheck = [];
+			$('input:checkbox[name=chBox]:not(:checked)').each(function() 
+			{
+				var chnum = $(this).attr("id");
+				
+		        uncheck.push(chnum.substring(6))
+		    });
+			$("#uncheck").val(chBoxO);
+			
 			var stKeys = [];
 			$("input:checkbox[name=stKey]:checked").each(function(){
 				
@@ -394,7 +404,7 @@ $(document).ready(function(){
 	
 		<div id="column">
 
-		<c:import url="sideBar_user.jsp"></c:import>
+		<c:import url="sideBar_store.jsp"></c:import>
 
 		</div>
 		
@@ -404,7 +414,7 @@ $(document).ready(function(){
 			
 				<div id="st_detail_header">
 					<h1>${store.st_name } 정보 수정</h1><br>
-					<input type="hidden" id="st_num" name="st_num" value="${session.st_num }">
+					<input type="hidden" id="st_num" name="st_num" value="${st_num }">
 					<hr>
 				</div>
 				
@@ -831,24 +841,24 @@ $(document).ready(function(){
 									<c:forEach begin="0" end="1" varStatus="status">
 										<td>
 									    	<div class="button">
-												<label for="file1">
+												<label for="file${status.index }">
 													👉 음식 사진 업로드 👈
 												</label>
 										    </div>
-										    	<input type="file" id="file${status.index }" name="file${status.index }" accept="image/*" onchange="loadFile(this)">
+										    	<input type="file" class="menuFile" id="file${status.index }" name="file${status.index }" accept="image/*" onchange="loadFile(this)" style="visibility: hidden;">
 										    <div id="image-show${status.index}"></div>
 										    <p id="fileName${status.index}" style="font-size: small"></p>
 											<label id="label menu_label">
-												<p class="label-txt">메뉴이름</p>
+												<p class="menu-label-txt" style="position: absolute;">메뉴이름</p>
 												<input type="text" class="input" name="file${status.index }m" value="">
-												<div class="line-box" style="width:60%; margin-left: 3vw;">
+												<div class="line-box" style="width:60%;">
 												    <div class="line"></div>
 												</div>
 											</label>
 											<label id="label menu_label">
-												<p class="label-txt">가격</p>											
+												<p class="menu-label-txt" style="position: absolute;">가격</p>											
 												<input type="text" class="input" name="file${status.index }p" value="">
-												<div class="line-box" style="width:60%; margin-left: 3vw;">
+												<div class="line-box" style="width:60%;">
 												    <div class="line"></div>
 												</div>
 											</label>
@@ -859,24 +869,24 @@ $(document).ready(function(){
 									<c:forEach var="menu" items="${menuLists }" varStatus="status">
 										<td>
 									    	<div class="button">
-												<label for="file1">
+												<label for="file${status.index }">
 													👉 음식 사진 업로드 👈
 												</label>
 										    </div>
-										    	<input type="file" id="file${status.index }" name="chooseFile" accept="image/*" onchange="loadFile(this)">
+										    	<input type="file" class="menuFile" id="file${status.index }" name="file${status.index }" accept="image/*" onchange="loadFile(this)" style="visibility: hidden;">
 										    <div id="image-show${status.index}"><img alt="" src=""${menu.image_link }></div>
 										    <p id="fileName${status.index }" style="font-size: small"></p>
 											<label id="label menu_label">
-												<p class="label-txt label-active">메뉴이름</p>
+												<p class="menu-label-txt label-active" style="position: absolute;">메뉴이름</p>
 												<input type="text" class="input" value="${menu.menu_name }">
-												<div class="line-box" style="width:60%; margin-left: 3vw;">
+												<div class="line-box" style="width:60%;">
 												    <div class="line"></div>
 												</div>
 											</label>
 											<label id="label menu_label">
-												<p class="label-txt label-active">가격</p>
+												<p class="menu-label-txt label-active" style="position: absolute;">가격</p>
 												<input type="text" class="input" value="${menu.price }">
-												<div class="line-box" style="width:60%; margin-left: 3vw;">
+												<div class="line-box" style="width:60%;">
 												    <div class="line"></div>
 												</div>
 											</label>
@@ -1007,6 +1017,7 @@ $(document).ready(function(){
 									</tr>
 									<input type="hidden" id="chBoxO" name="chBoxO">
 									<input type="hidden" id="chBoxX" name="chBoxX">
+									<input type="hidden" id="uncheck" name="uncheck">
 								</c:forEach>
 						</table>
 					</div>
@@ -1024,24 +1035,33 @@ $(document).ready(function(){
 						<div class="stKey">
 							<c:forEach var="stKey" items="${stKeyLabel }">
 								<c:set var="st_key_num" value="${stkey.st_key_num }"/>
-								<c:set var="stKeys" value="${stKeys }"/>
 								<c:choose>
-									<c:when test="${fn: contains(stKeys, st_key_num) }">
-										<label class="ibmatlabel" for="ibmat${stKey.st_key_num }" style="border-bottom: 3px solid #ef6351;">
-											<input type="checkbox" class="ibmatCB" name="stKey" id="stkey${stKey.st_key_num }" checked="checked">
+									<c:when test="${fn:length(stKeys) == 0}">
+										<label class="ibmatlabel" for="stkey${stKey.st_key_num }">
+											<input type="checkbox" class="ibmatCB" name="stKey" id="stkey${stKey.st_key_num }">
 											${stKey.st_keyword }
 										</label>
 										<br><br>
 									</c:when>
 									<c:otherwise>
-										<label class="ibmatlabel" for="ibmat${stKey.st_key_num }">
-											<input type="checkbox" class="ibmatCB" name="stKey" id="stkey${stKey.st_key_num }">
-											${stKey.st_keyword }
-										</label>
-										<br><br>
+										<c:choose>
+											<c:when test="${fn: contains(stKeys, st_key_num) }">
+												<label class="ibmatlabel" for="stkey${stKey.st_key_num }" style="border-bottom: 3px solid #ef6351;">
+													<input type="checkbox" class="ibmatCB" name="stKey" id="stkey${stKey.st_key_num }" checked="checked">
+													${stKey.st_keyword }
+												</label>
+												<br><br>
+											</c:when>
+											<c:otherwise>
+												<label class="ibmatlabel" for="stkey${stKey.st_key_num }">
+													<input type="checkbox" class="ibmatCB" name="stKey" id="stkey${stKey.st_key_num }">
+													${stKey.st_keyword }
+												</label>
+												<br><br>
+											</c:otherwise>
+										</c:choose>
 									</c:otherwise>
 								</c:choose>
-								
 							</c:forEach>
 							<input type="hidden" name="s" id="stKeys">
 						</div>

@@ -452,11 +452,30 @@ public class UserController
 	    
 	    UserDTO user = udao.userModify(user_num);
 	    //System.out.println(user_num);
-	    System.out.println(user.user_tel);
+	    //System.out.println(user.user_tel);
 	    //System.out.println(user.getUser_ssn1());
 	    model.addAttribute("modify", user);
 		
 		result = "WEB-INF/view/user_modify.jsp";
+		
+		return result;
+	}
+	
+	@RequestMapping(value = "/nicknamecheck.action", method = RequestMethod.POST)
+		@ResponseBody
+	public String nickName(@RequestParam("nickName") String nickName, HttpServletRequest request, Model model, UserDTO user)
+	{
+		String result = "";
+		
+		System.out.println(nickName);
+		
+		IUserDAO udao = sqlSession.getMapper(IUserDAO.class);
+		int count = udao.nickCheck(nickName);
+		
+		System.out.println(nickName);
+		System.out.println(count);
+		
+		result += "{\"count\":\""+count+"\"}";
 		
 		return result;
 	}

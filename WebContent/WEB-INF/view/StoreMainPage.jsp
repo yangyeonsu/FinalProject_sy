@@ -694,6 +694,20 @@ i {
 <script type="text/javascript"
 	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
 
+<script type="text/javascript">
+
+var log_num = ${session.log_num}
+
+$(document).ready(function() {
+	if(${sessionScope.log_num } == 1/*  || log_num != '' */)
+	{
+		window.open("Stfirstloginstdego.action?st_num="+${st_num}, "a", "width=400, height=300, left=100, top=50");
+		/* window.location.href = "deletelognum.action?st_num="+${st_num }; */
+	}
+});
+
+</script>
+
 <!-- 배너 스크립트 -->
 <script type="text/javascript">
 	$(function()
@@ -1013,12 +1027,12 @@ $(function name()
 		
 		 var replyBoxId = $(this).parent().attr("id");
 		
-		 alert(replyBoxId);
+		 //alert(replyBoxId);
 		 var rv_num = replyBoxId.substring(3);
 		 
-		 alert(rv_num);
+		 //alert(rv_num);
 		 
-		var reply_content = $(".rvApplyContent").val();	//-- 답글내용
+		var reply_content = $("#rvApplyContent"+rv_num).val();	//-- 답글내용
 		alert(reply_content);
 		
 		$.ajax({
@@ -1032,7 +1046,7 @@ $(function name()
 			{
 				/* $("#"+replyId).append("<p>" +response+ "</p>"); */
 				//$(".replyBox").html(response)
-				alert("갔다옴");
+				//alert("갔다옴");
 				$("#div"+rv_num).html(response)
 			},
 			error: function(xhr, status, error)
@@ -1085,9 +1099,13 @@ $(function name()
 				</c:if>
 
 				<div class="storemain_bodyTop">
-					<p class="storeName">토리네 도토리묵</p>
+					<c:forEach var="st" items="${st_list }">
+						<c:if test="${st.st_num eq st_num }">
+							<p class="storeName">${st.st_name }</p>
+						</c:if>
+					</c:forEach>
 					<input type="hidden" id="st_num" name="st_num"
-						value="${sessionScope.st_num }">
+						value="${st_num }">
 					<button type="button" class="modifyBtn">가게 정보 수정</button>
 
 				</div>
@@ -1209,8 +1227,9 @@ $(function name()
 									</c:forEach>
 								</div>
 								<div class="replyBox" align="right" id="div${rv.rv_num }" style="display: none;">
-									사장님 : <input type="text" class="rvApplyContent">
-									<input type="button" class="completeBtn" value="완료">
+
+									사장님 : <input type="text" class="rvApplyContent"  id="rvApplyContent${rv.rv_num }"> <input type="button" class="completeBtn" value="완료">
+
 								</div>
 							</div>
 							<input type="hidden" value="${rn }" name="rvNumHidden"> 
@@ -1259,15 +1278,14 @@ $(function name()
 					                </div>
 				                </c:when>
 						        <c:otherwise>
-									    
-									        <div class="review_reply">
-									            <textarea cols="30" rows="2" class="review_reply_txtarea" id="reply_content" name="reply_content"></textarea>
-									            <input type="hidden" name="rv_num" value="${review.rv_num }" />
-									            <div class="sendBtn">
-									                <button type="button" class="review_reply_btn">리뷰답글</button>
-									                <button type="reset" class="review_reply_btn">취소하기</button>
-									            </div>
-									        </div>
+								        <div class="review_reply">
+								            <textarea cols="30" rows="2" class="review_reply_txtarea" id="reply_content" name="reply_content"></textarea>
+								            <input type="hidden" name="rv_num" value="${review.rv_num }" />
+								            <div class="sendBtn">
+								                <button type="button" class="review_reply_btn">리뷰답글</button>
+								                <button type="reset" class="review_reply_btn">취소하기</button>
+								            </div>
+								        </div>
 									    
 								</c:otherwise>
 						    	</c:choose>

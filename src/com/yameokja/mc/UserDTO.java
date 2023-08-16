@@ -5,7 +5,17 @@ public class UserDTO
 	String user_num, user_id, user_pw, user_name, user_ssn1, user_ssn2;
 	String user_tel, user_nickname, user_email, user_grade;
 	int point_sum;
+	String nickName;
 	
+	
+	public String getNickName()
+	{
+		return nickName;
+	}
+	public void setNickName(String nickName)
+	{
+		this.nickName = nickName;
+	}
 	
 	
 	public String getUser_num()
