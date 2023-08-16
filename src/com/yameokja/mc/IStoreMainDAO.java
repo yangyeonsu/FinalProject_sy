@@ -72,5 +72,10 @@ public interface IStoreMainDAO
 	public int searchKeyselect(@Param("st_num")int st_num, @Param("search_name")String search_name);
 	public int stsearchKeyinsert(@Param("st_num")int st_num, @Param("search_num")int search_num);
 	public int stsearchKeyselect(@Param("st_num")int st_num, @Param("search_num")int search_num);
+	
+	// 이의제기요청내역
+	public StAppealRequestDTO StAppealRequest(int st_num);
+	// 페널티 회수요청 내역
+	public StAppealRequestDTO StPenaltyre(int st_num);
 
 }
