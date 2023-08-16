@@ -73,14 +73,14 @@
 <footer>
 	<div class="ftCompany">
 		회사정보<br>
-		상호 : 레드홀릭<br>
-		대표 : 한종훈<br>
-		주소 : 서울 성동구 성덕정 5길 10, 1층<br>
-		개인정보관리 책임자 : 이숙희 (madhjh@redholic.com)<br>
+		상호 : 야먹자어때<br>
+		대표 : 양수현<br>
+		주소 : 서울 마포구 월드컵북로 21, 2층<br>
+		개인정보관리 책임자 : 양수현 (xuhyeon@yameokja.com)<br>
 	</div>
 	
 	<div class="ftNav">
-		회사소개   |   쇼핑가이드   |   개인정보보호정책   |   이용약관
+		회사소개   |   이용 가이드   |   개인정보보호정책   |   이용약관
 	</div>
 	
 	<div class="ftCs">
