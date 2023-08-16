@@ -2,9 +2,9 @@
 
 SELECT USER
 FROM DUAL;
---==>> SCOTT
+--==>> YAMEOKJA
 
-DDDD
+
 -- (현재 SCOTT 으로 연결된 상태)
 
 
