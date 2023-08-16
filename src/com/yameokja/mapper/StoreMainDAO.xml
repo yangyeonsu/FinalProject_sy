@@ -203,10 +203,10 @@
 		  AND SEARCH_NAME = #{search_name}
 	</update>
 	<select id="searchKeyselect" resultType="java.lang.Integer">
-		SELECT NVL(SEARCH_NUM, -1)
+		SELECT NVL(COUNT(SEARCH_NUM), -1)
 		FROM SEARCH_KEY
 		WHERE ST_NUM = #{st_num}
-		  AND SEARCH_NUM = #{searh_name}
+		  AND SEARCH_NAME= #{search_name}
 	</select>
 	<insert id="stsearchKeyinsert">
 		INSERT INTO ST_SEARCH_KEY(ST_NUM, SEARCH_NUM)

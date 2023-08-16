@@ -46,7 +46,17 @@ public class stDetailController
 		IUserDAO uDao = sqlSession.getMapper(IUserDAO.class);
 		IStoreMainDAO smDao = sqlSession.getMapper(IStoreMainDAO.class);
 		
-		int st_num = Integer.parseInt(request.getParameter("st_num"));
+		int st_num = 0;
+		
+		String data = (String) session.getAttribute("flashData");
+		session.removeAttribute("flashData");
+		if (data != null) {
+		    // flashData 값이 null이 아닌 경우의 처리 로직
+			st_num = Integer.parseInt(data);
+		} else {
+		    // flashData 값이 null인 경우의 처리 로직
+			st_num = Integer.parseInt(request.getParameter("st_num"));
+		}
 		//System.out.println(st_num);
 		// 사용자 정보
 		UserDTO user = uDao.searchUserInfo(user_num, "num");
@@ -382,64 +392,31 @@ public class stDetailController
 	@RequestMapping(value="/insertreview.action")
 	public String insertReview(HttpServletRequest request, Model model, HttpServletResponse response)
 	{
-		String result = null;
+		
+		String result = "";
+		
 		// 사용자 정보 st_num
 		HttpSession session = request.getSession();
 		String user_num = (String)session.getAttribute("user_num");
 		
-		// 가게 번호, 별점, 리뷰내용
-		int st_num = Integer.parseInt(request.getParameter("st_num"));
-		int star_score = Integer.parseInt(request.getParameter("starHidden"));
-		String rv_content = request.getParameter("reviewContent");
+		IUserDAO udao = sqlSession.getMapper(IUserDAO.class);
+		UserDTO user = udao.searchUserInfo(user_num, "num");
 		
-		System.out.println("st_num: " + st_num);
-		System.out.println("user_name: " + user_num);
+		LocalDate currentDate = LocalDate.now();
+        int monthValue = currentDate.getMonthValue();
 		
-		// 리뷰키워드 받는 배열
-		String[] rkArr = request.getParameterValues("rkArrHidden");
-		System.out.println("rkArr[0]: " + rkArr[0]);
-		
-		IstDetailDAO_userView dao = sqlSession.getMapper(IstDetailDAO_userView.class);
-		
-		String[] rkList = null;
-		rkList = rkArr[0].split(",");
-		
-		for (int i = 0; i < rkList.length; i++)
+		if (1 <= monthValue && monthValue <= 6)
 		{
-			if(dao.rKeywordSearch(st_num, Integer.parseInt(rkList[i]))==null)
-			{
-				dao.rKeywordInsert(st_num, Integer.parseInt(rkList[i]));
-			}
-			else
-				dao.rKeywordUpdate(st_num, Integer.parseInt(rkList[i]));
-			
-			System.out.println(rkList[i]);
+			user.setPoint_sum(udao.secondHalf(user_num).point_sum);
+			user.setUser_grade(udao.firstHalf(user_num).user_grade);
+		}
+		else if(7 <= monthValue && monthValue <= 12)
+		{
+			user.setPoint_sum(udao.firstHalf(user_num).point_sum);
+			user.setUser_grade(udao.secondHalf(user_num).user_grade);
 		}
 		
-		// rv_box에 insert
-		dao.reviewInsert(user_num, st_num, rv_content, star_score);
-		
-		// 가게 검색 키워드 받는 배열
-		String[] skArr = request.getParameterValues("skArrHidden");
-		
-		String[] skList = null;
-		skList = skArr[0].split(",");
-		
-		for (int i = 0; i < skList.length; i++)
-		{
-			// 작성된 가게 검색키워드가 없으면
-			if(dao.skeywordSearch(st_num, skList[i]) == null)
-			{	// 바로 insert
-				dao.sKeywordInsert(st_num, skList[i]);
-			}
-			else // 작성된 가게 검색키워드가 있으면
-				// 있는 가게 검색 키워드에 count += 1
-				dao.skeywordUpdate(st_num, skList[i]);
-		}
-
-		
-		// 가게상세페이지로 가기 위해 st_num을 model로 전송
-		model.addAttribute("st_num", st_num);
+		model.addAttribute("user", user);
 		
 		
 		// 사진 업로드
@@ -464,9 +441,75 @@ public class stDetailController
 		fileItemFactory.setSizeThreshold(LIMIT_SIZE_BYTES);
 		ServletFileUpload fileUpload = new ServletFileUpload(fileItemFactory);
 		
+		
 		try 
 		{
+			IstDetailDAO_userView dao = sqlSession.getMapper(IstDetailDAO_userView.class);
             List<FileItem> items = fileUpload.parseRequest(request);
+            
+            int st_num = 0;
+            for (FileItem item : items)
+            {
+                if (item.isFormField())	// 파일 형식인지 아닌지 판단
+                {
+                	if (item.getFieldName().equals("st_num"))
+                		st_num = Integer.parseInt(item.getString(CHARSET));
+                }
+            }
+            
+            int star_score = 0;
+            String rv_content = "";
+            ArrayList<String> rkList = new ArrayList<String>();
+            // 가게 검색 키워드 받는 배열
+    		ArrayList<String> skArr = new ArrayList<String>();
+            
+            for (FileItem item : items)
+            {
+                if (item.isFormField())
+                {
+                	// 가게 번호, 별점, 리뷰내용
+                	if (item.getFieldName().equals("starHidden"))
+                		star_score = Integer.parseInt(item.getString(CHARSET));
+                	if (item.getFieldName().equals("reviewContent"))
+                		rv_content = item.getString(CHARSET);
+                	if (item.getFieldName().equals("rkArrHidden"))
+                	{
+                		for (String rvkey : item.getString(CHARSET).split(","))
+                		{
+                			dao.rKeywordInsert(st_num, Integer.parseInt(rvkey));
+                			System.out.println(rvkey);
+                		}
+                	}
+                	if (item.getFieldName().equals("skArrHidden"))
+                	{
+                		for (String sk : item.getString(CHARSET).split(","))
+                		{
+                			int searchNum = smdao.searchKeyselect(st_num, sk);
+                			if (searchNum == -1)
+                       		{
+                       			smdao.searchKeyinsert(st_num, sk);
+                       		}
+                       		else
+                       		{	
+                   				smdao.stsearchKeyUpdate(st_num, sk);
+                       		}
+                		}
+                	}
+                }
+            }
+            
+            // rv_box에 insert
+    		dao.reviewInsert(user_num, st_num, rv_content, star_score);
+
+    		
+    		// 가게상세페이지로 가기 위해 st_num을 model로 전송
+			/* model.addAttribute("st_num", st_num); */
+    		
+    		session.setAttribute("flashData", st_num);
+            
+            System.out.println("st_num: " + st_num);
+    		System.out.println("user_name: " + user_num);
+            
             for (FileItem item : items)
             {
                 if (!item.isFormField())	// 파일 형식인지 아닌지 판단
@@ -483,7 +526,7 @@ public class stDetailController
 	                        srdto.setSt_in_file(String.valueOf(uploadFile));
 	                        
 	                        // rv_num 검색
-	                        int rv_num = dao.searchRvNum(st_num, rv_content, star_score);
+	                        int rv_num = dao.searchRvNum(user_num, st_num, rv_content, star_score);
 	                        dao.rvPhotoInsert(rv_num, String.valueOf(uploadFile));
 	                    }
                 	}
