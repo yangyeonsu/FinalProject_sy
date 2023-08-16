@@ -1085,9 +1085,13 @@ $(function name()
 				</c:if>
 
 				<div class="storemain_bodyTop">
-					<p class="storeName">토리네 도토리묵</p>
+					<c:forEach var="st" items="${st_list }">
+						<c:if test="${st.st_num eq st_num }">
+							<p class="storeName">${st.st_name }</p>
+						</c:if>
+					</c:forEach>
 					<input type="hidden" id="st_num" name="st_num"
-						value="${sessionScope.st_num }">
+						value="${st_num }">
 					<button type="button" class="modifyBtn">가게 정보 수정</button>
 
 				</div>
