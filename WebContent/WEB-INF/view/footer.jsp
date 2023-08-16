@@ -72,7 +72,7 @@
 
 <footer>
 	<div class="ftCompany">
-		회사정보<br>
+		[회사정보]<br>
 		상호 : 야먹자어때<br>
 		대표 : 양수현<br>
 		주소 : 서울 마포구 월드컵북로 21, 2층<br>

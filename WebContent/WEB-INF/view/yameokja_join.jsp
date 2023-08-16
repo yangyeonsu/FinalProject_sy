@@ -316,6 +316,11 @@
 			}
 		});
 		
+		$("#searchBtn").click(function()
+		{
+			return "WEB-INF/view/user_info_search.jsp";
+		});
+		
 	});
 	
 	

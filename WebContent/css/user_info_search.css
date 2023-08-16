@@ -8,6 +8,17 @@ body
 	margin: 0;
 }
 
+#headerImg
+{
+	margin-left: 20vw;
+}
+
+#headerLogo
+{
+	max-width: 10vw;
+    max-height: 15vw;
+}
+
 #infoContainer
 {
 	display: flex;
@@ -18,8 +29,10 @@ body
 
 #searchTitleDiv
 {
-    margin: 5vh 0 5vh 0;
+    margin-top: 10vh;
     width: 50vw;
+    display: flex;
+    align-items: center;
 }
 
 #searchTitle
