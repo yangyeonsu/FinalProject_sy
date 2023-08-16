@@ -91,10 +91,9 @@
 			<ul class="big_menu">
 						
 				<li>가게 리스트<i class="arrow fas fa-angle-right"></i></li>
-
 				<ul class="small_menu">
 					<c:forEach var="st" items="${st_list }">
-						<li><a href="" class="samll_menuA" id="${st.st_num }">${st.st_name }</a>
+						<li><a href="storeinfo.action?stNum=${st.st_num }" class="samll_menuA" id="${st.st_num }">${st.st_name }</a>
 					</c:forEach>
 				</ul>
 			</ul>

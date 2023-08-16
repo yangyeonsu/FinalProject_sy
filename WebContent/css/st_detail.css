@@ -278,6 +278,17 @@ table
   color: rgb(120,120,120);
   transition: ease .3s;
 }
+
+.menu-label-txt
+{
+	position: absolute;
+	padding: 10px;
+	font-family: sans-serif;
+	font-size: .8em;
+	letter-spacing: 1px;
+	color: rgb(120,120,120);
+	transition: ease .3s;
+}
 .label-active {
   top: -3em;
 }
@@ -326,9 +337,9 @@ label {
 }
 
 
-input[name="chooseFile"]
+.menuFile
 {
-    visibility: hidden;
+    display: none;
 }
 
 
