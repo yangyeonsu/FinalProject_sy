@@ -367,7 +367,7 @@ input[type="radio"] {
 
 			<div class="middle">
 				<div class="top">
-					<h1>사업자 등록 인증</h1>
+					<h1>사업자 등록 인증 요청서</h1>
 					<hr>
 				</div>
 
