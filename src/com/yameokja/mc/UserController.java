@@ -479,4 +479,18 @@ public class UserController
 		
 		return result;
 	}
+	
+	@RequestMapping(value="/userinfomodify.action", method = RequestMethod.POST)
+	public String userInfoModify(UserDTO user)
+	{
+		String result = "";
+		
+		IUserDAO dao = sqlSession.getMapper(IUserDAO.class);
+		
+		dao.userInfoModify(user);
+		System.out.println(dao.userInfoModify(user));
+		result = "redirect:main.action";
+		
+		return result;
+	}
 }

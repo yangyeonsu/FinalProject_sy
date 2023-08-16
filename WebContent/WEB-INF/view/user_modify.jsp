@@ -76,9 +76,11 @@
 	    });
 	    
 	    
-	    $(".joinBtn").click(function()
+	    $("#joinBtn").click(function()
 		{
 			//alert("확인");
+	    	$("#updateForm").attr("action", "userinfomodify.action");
+	    	$("#updateForm").submit();
 			
 		});
 	    
@@ -98,6 +100,7 @@
 
 <c:import url="header_user.jsp"></c:import>
 
+<form action="" id="updateForm" method="post">
 <div class="joinContainer">
 	<!-- 회원가입타이틀영역 -->
 	<div class="joinTitleDiv">
@@ -172,20 +175,20 @@
 					<input type="password" id="userPw1">
 				</div>
 				<div>
-					<input type="password" id="userPw2">
+					<input type="password" id="userPw2" value="${user.user_pw }">
 					<i id="pwAcceptText" class="accept">확인되었습니다.</i>
 				</div>
 			</div>
 			
 			<div class="userNickName">
-				<input type="text" id="userNickName">&nbsp;&nbsp;
+				<input type="text" id="userNickName" value="${user.user_nickname }">&nbsp;&nbsp;
 				<button type="button" id="nickNameAccept" class="joinBtn">중복검사</button>
 				<i id="nNAcceptText" class="accept">사용할 수 있는 닉네임입니다.</i>
 				<br>
 			</div>
 			
 			<div class="userEmail">
-				<input type="text" id="userEmail"> @ 
+				<input type="text" id="userEmail" value=${user.user_email }> @ 
 				<select name="email" class="emailSelect">
 					<option value="self" selected="selected">직접입력</option>
 					<option value="naver">naver.com</option>
@@ -196,6 +199,7 @@
 			</div>
 			
 		</div>
+		
 	</div>
 	
 	
@@ -260,13 +264,12 @@
 	<div class="joinBtnDiv">
 		<button type="button" id="joinBtn" class="joinBtn">수정하기</button>
 	</div>
-	
 	<!-- 탈퇴하기 버튼 -->
 	<div class="leaveBtnDiv">
 		<button type="button" id="leaveBtn" class="leaveBtn">계정탈퇴하기</button>
 	</div>
 </div>
-
+</form>
 <c:import url="footer.jsp"></c:import>
 
 </body>
