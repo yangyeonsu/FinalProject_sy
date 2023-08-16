@@ -31,7 +31,13 @@
 			var inNum = $(this).attr("id");
 			/* alert(inNum); */
 			var state = $(this).parent().attr('id');
-			$(location).attr("href","inapplyform.action?in_apply_num="+inNum+"&state="+state);
+			var catValue = $(this).siblings("td:first-child").text();
+			//alert(catValue);
+			
+			if(catValue=="등록")
+				$(location).attr("href","inapplyform.action?in_apply_num="+inNum+"&state="+state);
+			else
+				$(location).attr("href","outapplyform.action?in_apply_num="+inNum+"&state="+state);
 		});
 	});
 	
@@ -72,7 +78,7 @@
 						<c:forEach var="inout" items="${inoutList }">
 						<tr id="${inout.state }">
 							<c:if test="${inout.cat eq '등록' }">
-							<td style="background-color: green;">${inout.cat }</td>
+							<td style="background-color: green;" id="${inout.cat }">${inout.cat }</td>
 							</c:if>
 							<c:if test="${inout.cat eq '폐업' }">
 							<td style="background-color: pink;">${inout.cat }</td>

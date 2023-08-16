@@ -319,6 +319,32 @@ public class AdminMainController
 		return result;
 	}
 	
+	@RequestMapping(value="/outapplyform.action", method= {RequestMethod.GET, RequestMethod.POST})
+	public String outApplyForm(Model model, HttpServletRequest request)
+	{
+		String result = "";
+		HttpSession session = request.getSession();
+		
+		/* int admin_num = (Integer)session.getAttribute("admin_num"); */
+		
+		int in_apply_num = Integer.parseInt(request.getParameter("in_apply_num"));
+		String admin_num = (String)session.getAttribute("admin_num");
+		
+		/*
+		IAdminMainDAO amdao = sqlSesion.getMapper(IAdminMainDAO.class);
+		IAdminFindDAO afdao = sqlSesion.getMapper(IAdminFindDAO.class);
+		
+		model.addAttribute("inapplyupdate", afdao.inapplyupdate(in_apply_num));
+		model.addAttribute("admin_name", amdao.searchNum(admin_num, "num").getAdmin_name());
+		model.addAttribute("in", afdao.inSearch(in_apply_num));
+		model.addAttribute("in_apply_num", in_apply_num);
+		*/
+		result = "/WEB-INF/view/outApplyForm.jsp";
+		
+		return result;
+	}
+	
+	
 	
 	@RequestMapping(value="/filedownload.action", method= {RequestMethod.POST, RequestMethod.GET})
 		@ResponseBody
