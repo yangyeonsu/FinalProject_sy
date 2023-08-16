@@ -51,8 +51,6 @@ public class stDetailController
 		// System.out.println(st_num);
 
 		
-		int st_num = 0;
-		
 		String data = (String) session.getAttribute("flashData");
 		session.removeAttribute("flashData");
 		if (data != null) {
@@ -397,17 +395,7 @@ public class stDetailController
 		String user_num = (String) session.getAttribute("user_num");
 
 
-		// 리뷰키워드 받는 배열
-		String[] rkArr = request.getParameterValues("rkArrHidden");
-		System.out.println("rkArr[0]: " + rkArr[0]);
-
-		IstDetailDAO_userView dao = sqlSession.getMapper(IstDetailDAO_userView.class);
-
-		String[] rkList = null;
-		rkList = rkArr[0].split(",");
-
-
-		String user_num = (String)session.getAttribute("user_num");
+		IstDetailDAO_userView dao = sqlSession.getMapper(IstDetailDAO_userView.class);;
 		
 		IUserDAO udao = sqlSession.getMapper(IUserDAO.class);
 		UserDTO user = udao.searchUserInfo(user_num, "num");
@@ -455,11 +443,14 @@ public class stDetailController
 		try
 		{
 			int st_num = 0;
-			String breakch = "";
 			String rv_content = "";
 			int star_score = 0;
 			int rv_key_num = 0;
 			String search_name = "";
+			
+            ArrayList<String> rkList = new ArrayList<String>();
+            // 가게 검색 키워드 받는 배열
+    		ArrayList<String> skArr = new ArrayList<String>();
 
 			List<FileItem> items = fileUpload.parseRequest(request);
 
@@ -485,24 +476,54 @@ public class stDetailController
 				{
 					search_name = item.getString(CHARSET);
 				}
-				
-			
-				dao.reviewInsert(user_num, st_num, rv_content, star_score);
-				
-				if(dao.rKeywordSearch(st_num, rv_key_num) != null)
-				{
-					dao.rKeywordUpdate(st_num, rv_key_num);
-				}
-				else
-					dao.rKeywordInsert(st_num, rv_key_num);
-				
-				if(dao.skeywordSearch(st_num, search_name) != null)
-				{
-					dao.skeywordUpdate(st_num, search_name);
-				}
-				else
-					dao.sKeywordInsert(st_num, search_name);
 			}
+			
+           
+            
+            for (FileItem item : items)
+            {
+                if (item.isFormField())
+                {
+                	// 가게 번호, 별점, 리뷰내용
+                	if (item.getFieldName().equals("starHidden"))
+                		star_score = Integer.parseInt(item.getString(CHARSET));
+                	if (item.getFieldName().equals("reviewContent"))
+                		rv_content = item.getString(CHARSET);
+                	if (item.getFieldName().equals("rkArrHidden"))
+                	{
+                		for (String rvkey : item.getString(CHARSET).split(","))
+                		{
+                			dao.rKeywordInsert(st_num, Integer.parseInt(rvkey));
+                			System.out.println(rvkey);
+                		}
+                	}
+                	if (item.getFieldName().equals("skArrHidden"))
+                	{
+                		for (String sk : item.getString(CHARSET).split(","))
+                		{
+                			int searchNum = smdao.searchKeyselect(st_num, sk);
+                			if (searchNum == -1)
+                       		{
+                       			smdao.searchKeyinsert(st_num, sk);
+                       		}
+                       		else
+                       		{	
+                   				smdao.stsearchKeyUpdate(st_num, sk);
+                       		}
+                		}
+                	}
+                }
+            }
+            
+            // rv_box에 insert
+    		dao.reviewInsert(user_num, st_num, rv_content, star_score);
+    		
+    		session.setAttribute("flashData", st_num);
+            
+            System.out.println("st_num: " + st_num);
+    		System.out.println("user_name: " + user_num);
+			
+			
 
 			for (FileItem item : items)
 			{
@@ -520,7 +541,7 @@ public class stDetailController
 							srdto.setSt_in_file(String.valueOf(uploadFile));
 
 							// rv_num 검색
-							int rv_num = dao.searchRvNum(st_num, rv_content, star_score);
+							int rv_num = dao.searchRvNum(user_num, st_num, rv_content, star_score);
 							dao.rvPhotoInsert(rv_num, String.valueOf(uploadFile));
 						}
 					}
@@ -562,101 +583,6 @@ public class stDetailController
 			// 가게상세페이지로 가기 위해 st_num을 model로 전송
 			model.addAttribute("st_num", st_num);
 		} catch (Exception e)
-
-		
-		
-		try 
-		{
-			IstDetailDAO_userView dao = sqlSession.getMapper(IstDetailDAO_userView.class);
-            List<FileItem> items = fileUpload.parseRequest(request);
-            
-            int st_num = 0;
-            for (FileItem item : items)
-            {
-                if (item.isFormField())	// 파일 형식인지 아닌지 판단
-                {
-                	if (item.getFieldName().equals("st_num"))
-                		st_num = Integer.parseInt(item.getString(CHARSET));
-                }
-            }
-            
-            int star_score = 0;
-            String rv_content = "";
-            ArrayList<String> rkList = new ArrayList<String>();
-            // 가게 검색 키워드 받는 배열
-    		ArrayList<String> skArr = new ArrayList<String>();
-            
-            for (FileItem item : items)
-            {
-                if (item.isFormField())
-                {
-                	// 가게 번호, 별점, 리뷰내용
-                	if (item.getFieldName().equals("starHidden"))
-                		star_score = Integer.parseInt(item.getString(CHARSET));
-                	if (item.getFieldName().equals("reviewContent"))
-                		rv_content = item.getString(CHARSET);
-                	if (item.getFieldName().equals("rkArrHidden"))
-                	{
-                		for (String rvkey : item.getString(CHARSET).split(","))
-                		{
-                			dao.rKeywordInsert(st_num, Integer.parseInt(rvkey));
-                			System.out.println(rvkey);
-                		}
-                	}
-                	if (item.getFieldName().equals("skArrHidden"))
-                	{
-                		for (String sk : item.getString(CHARSET).split(","))
-                		{
-                			int searchNum = smdao.searchKeyselect(st_num, sk);
-                			if (searchNum == -1)
-                       		{
-                       			smdao.searchKeyinsert(st_num, sk);
-                       		}
-                       		else
-                       		{	
-                   				smdao.stsearchKeyUpdate(st_num, sk);
-                       		}
-                		}
-                	}
-                }
-            }
-            
-            // rv_box에 insert
-    		dao.reviewInsert(user_num, st_num, rv_content, star_score);
-
-    		
-    		// 가게상세페이지로 가기 위해 st_num을 model로 전송
-			/* model.addAttribute("st_num", st_num); */
-    		
-    		session.setAttribute("flashData", st_num);
-            
-            System.out.println("st_num: " + st_num);
-    		System.out.println("user_name: " + user_num);
-            
-            for (FileItem item : items)
-            {
-                if (!item.isFormField())	// 파일 형식인지 아닌지 판단
-                {
-                	if (item.getFieldName().equals("chooseFile"))
-                	{
-	                    if (item.getSize() > 0)
-	                    {
-	                        String separator = File.separator;
-	                        int index =  item.getName().lastIndexOf(separator);
-	                        String fileName = item.getName().substring(index  + 1);
-	                        File uploadFile = new File(savePath_reviewImg +  separator + fileName);
-	                        item.write(uploadFile);
-	                        srdto.setSt_in_file(String.valueOf(uploadFile));
-	                        
-	                        // rv_num 검색
-	                        int rv_num = dao.searchRvNum(user_num, st_num, rv_content, star_score);
-	                        dao.rvPhotoInsert(rv_num, String.valueOf(uploadFile));
-	                    }
-                	}
-                }
-            }
-		}
-		catch (Exception e)
 		{
 			e.printStackTrace();
 			System.out.println(e.toString());

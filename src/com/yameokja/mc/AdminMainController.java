@@ -337,27 +337,28 @@ public class AdminMainController
 		
 	}
 	
-	// 리뷰 신고 반려 일시 
-		@RequestMapping(value="/rvreportre.action", method=RequestMethod.GET)
-		public String rvreportre(Model model,HttpServletRequest request)
-		{
-			HttpSession session = request.getSession();
-			
-			String result = "";
-			String admin_num = (String)session.getAttribute("admin_num");
-			
-			
-			IAdminMainDAO daoM = sqlSesion.getMapper(IAdminMainDAO.class);
-			IAdminFindDAO dao = sqlSesion.getMapper(IAdminFindDAO.class);
-			
-			model.addAttribute("revoupdate", dao.revoupdate(revoNum));
-			model.addAttribute("admin_name", daoM.searchNum(admin_num, "num").getAdmin_name());
-			model.addAttribute("revo", dao.revoSearch(revoNum));
-			
-			result = "/WEB-INF/view/penaltyRevokeForm.jsp";
-			
-			return result;
-		}
+	/*
+	 * // 리뷰 신고 반려 일시
+	 * 
+	 * @RequestMapping(value="/rvreportre.action", method=RequestMethod.GET) public
+	 * String rvreportre(Model model,HttpServletRequest request) { HttpSession
+	 * session = request.getSession();
+	 * 
+	 * String result = ""; String admin_num =
+	 * (String)session.getAttribute("admin_num");
+	 * 
+	 * 
+	 * IAdminMainDAO daoM = sqlSesion.getMapper(IAdminMainDAO.class); IAdminFindDAO
+	 * dao = sqlSesion.getMapper(IAdminFindDAO.class);
+	 * 
+	 * model.addAttribute("revoupdate", dao.revoupdate(revoNum));
+	 * model.addAttribute("admin_name", daoM.searchNum(admin_num,
+	 * "num").getAdmin_name()); model.addAttribute("revo", dao.revoSearch(revoNum));
+	 * 
+	 * result = "/WEB-INF/view/penaltyRevokeForm.jsp";
+	 * 
+	 * return result; }
+	 */
 		
 		
 		// 리뷰 신고 승인 일시
@@ -375,6 +376,8 @@ public class AdminMainController
 			IAdminFindDAO dao = sqlSesion.getMapper(IAdminFindDAO.class);
 			
 			int rep_apply_num = (int) session.getAttribute("rep_apply_num");
+			System.out.println(rep_apply_num);
+			System.out.println(admin_num);
 			
 			model.addAttribute("rvreportaccess", dao.rvreportaccess(rep_apply_num, admin_num));
 			
@@ -383,26 +386,27 @@ public class AdminMainController
 			return result;
 		}
 		
-		// 리뷰 신고 중재 일시
-		@RequestMapping(value="/rvreporthalf.action", method=RequestMethod.GET)
-		public String rvreporthalf(Model model,HttpServletRequest request)
-		{
-			HttpSession session = request.getSession();
-			
-			String result = "";
-			String admin_num = (String)session.getAttribute("admin_num");
-			
-			
-			IAdminMainDAO daoM = sqlSesion.getMapper(IAdminMainDAO.class);
-			IAdminFindDAO dao = sqlSesion.getMapper(IAdminFindDAO.class);
-			
-			model.addAttribute("revoupdate", dao.revoupdate(revoNum));
-			model.addAttribute("admin_name", daoM.searchNum(admin_num, "num").getAdmin_name());
-			model.addAttribute("revo", dao.revoSearch(revoNum));
-			
-			result = "/WEB-INF/view/penaltyRevokeForm.jsp";
-			
-			return result;
-		}
+		/*
+		 * // 리뷰 신고 중재 일시
+		 * 
+		 * @RequestMapping(value="/rvreporthalf.action", method=RequestMethod.GET)
+		 * public String rvreporthalf(Model model,HttpServletRequest request) {
+		 * HttpSession session = request.getSession();
+		 * 
+		 * String result = ""; String admin_num =
+		 * (String)session.getAttribute("admin_num");
+		 * 
+		 * 
+		 * IAdminMainDAO daoM = sqlSesion.getMapper(IAdminMainDAO.class); IAdminFindDAO
+		 * dao = sqlSesion.getMapper(IAdminFindDAO.class);
+		 * 
+		 * model.addAttribute("revoupdate", dao.revoupdate(revoNum));
+		 * model.addAttribute("admin_name", daoM.searchNum(admin_num,
+		 * "num").getAdmin_name()); model.addAttribute("revo", dao.revoSearch(revoNum));
+		 * 
+		 * result = "/WEB-INF/view/penaltyRevokeForm.jsp";
+		 * 
+		 * return result; }
+		 */
 	
 }
