@@ -58,3 +58,5 @@ IS
 
 END CRYPTPACK;
 --==>> Package Body CRYPTPACK이(가) 컴파일되었습니다.
+
+commit;
