@@ -56,7 +56,6 @@
 	.rpt_subtitle
 	{
 		text-align: center;
-
 		width: 8vw;
 		padding: 1vh;
 	}
@@ -72,13 +71,13 @@
 	{
 		text-align: center;
 		width: 8vw;
-		padding: 1vh;;
+		padding: 1vh;
 	}
 	
 	/* 리뷰신고리스트 전체 틀 */
 	.rv_report
 	{
-		padding: 5vw;
+		/* padding: 5vw; */
 		justify-content: center;
 		margin-left: 10vw;
 		padding-top: 0;
@@ -267,21 +266,21 @@
 	<div class="middle">
 	<c:import url="sideBar_store.jsp"></c:import>
 		
-		
-		
-		
 		<div class="right_content">
 			<div class="rv_report">
 				<div class="title">
 					가게정보수정요청 내역
 				</div>
 				<hr>
+				
 				<div class="rv_reportlist">
 					<div class="subtitle">
 						<div class="rpt_subtitle">요청일자</div>
 						<div class="st_name">가게명</div>
 						<div class="rpt_subtitle">처리상태</div>
 						<div class="rpt_subtitle">처리일자</div>
+						<div class="rpt_subtitle">이의제기</div>
+						<div class="rpt_subtitle">패널티회수</div>
 					</div>
 					<c:choose>
 					    <c:when test="${empty user_stupdate_relist}">
@@ -294,6 +293,8 @@
 					                <div class="st_name" onclick="reqPopupOpen()">${udre.st_name }</div>
 					                <div class="rpt_content" id="status" onclick="reqPopupOpen()">${udre.status }</div>
 					                <div class="rpt_content" onclick="reqPopupOpen()">${udre.final_date }</div>
+					            	<div class="rpt_content"><input type="button" value="이의제기" style="background-color:#F7F4EA; border-radius: 3vh; cursor: pointer;"></div>
+					            	<div class="rpt_content"><input type="button" value="패널티회수" style="background-color:#F7F4EA; border-radius: 3vh; cursor: pointer;"></div>
 					            	
 					            	<div id="reject" style="display: none;">${udre.req_process_num }</div>
 					                <div class="rej_rs" style="display: none;">${udre.rej_rs }</div>
@@ -303,6 +304,22 @@
 					        </c:forEach>
 					    </c:otherwise>
 					</c:choose>
+					
+					
+		            <div class="report_content">
+		                <div class="rpt_content" onclick="reqPopupOpen()">1</div>
+		                <div class="st_name" onclick="reqPopupOpen()">1</div>
+		                <div class="rpt_content" id="status" onclick="reqPopupOpen()">1</div>
+		                <div class="rpt_content" onclick="reqPopupOpen()">1</div>
+		            	<div class="rpt_content"><input type="button" value="이의제기" onclick="objPopupOpen()" style="background-color:#F7F4EA; border-radius: 3vh; cursor: pointer;"></div>
+		            	<div class="rpt_content"><input type="button" value="패널티회수" onclick="penPopupOpen()" style="background-color:#F7F4EA; border-radius: 3vh; cursor: pointer;"></div>
+		            	
+		            	<div id="reject" style="display: none;">${udre.req_process_num }</div>
+		                <div class="rej_rs" style="display: none;">${udre.rej_rs }</div>
+		            </div>
+					
+				
+				
 					
 					<!-- 페이징 처리 -->
 					<div class="pagination">
