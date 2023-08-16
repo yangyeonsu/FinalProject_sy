@@ -5,7 +5,6 @@ public class StoreReviewDTO
 	private String user_nickname, rv_content, reg_date, reply_content, user_num;
 	private int rv_num, star_score, rec, nonrec;
 	
-
 	// getter / setter 구성
 	public String getUser_nickname()
 	{
