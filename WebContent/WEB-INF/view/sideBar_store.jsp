@@ -87,7 +87,7 @@
 	<div class="left_sub_menu">
 		<div class="sub_menu">
 			<h2>MENU</h2>
-			<c:if test="${session.st_num != null }">
+			<c:if test="${not empty sessionScope.st_num }">
 			<ul class="big_menu">
 						
 				<li>가게 리스트<i class="arrow fas fa-angle-right"></i></li>

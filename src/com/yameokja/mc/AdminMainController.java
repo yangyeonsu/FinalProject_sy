@@ -170,10 +170,12 @@ public class AdminMainController
 		String admin_num = (String)session.getAttribute("admin_num");
 		int reviewNum = Integer.parseInt(request.getParameter("rep_apply_num"));
 		String state = request.getParameter("state");
+		session.setAttribute("rep_apply_num", reviewNum);
 		
 		IAdminMainDAO daoM = sqlSesion.getMapper(IAdminMainDAO.class);
 		IAdminFindDAO dao = sqlSesion.getMapper(IAdminFindDAO.class);
 		
+		model.addAttribute("rvupdate", dao.rvupdate(reviewNum));
 		model.addAttribute("admin_name", daoM.searchNum(admin_num, "num").getAdmin_name());
 		model.addAttribute("review", dao.rvSearch(reviewNum));
 		model.addAttribute("state", state);
@@ -206,6 +208,7 @@ public class AdminMainController
 		
 		model.addAttribute("store", sddao.store(st_num));
 		model.addAttribute("clikeNum", sddao.clikeNum(st_num));
+		model.addAttribute("stinfoupdate", dao.stinfoupdate(reqNum));
 		ArrayList<StoreKeyDTO> stKeyList =  sddao.stKeys(st_num);
 		if(stKeyList.size()>0)
 		{
@@ -260,6 +263,7 @@ public class AdminMainController
 		IAdminMainDAO daoM = sqlSesion.getMapper(IAdminMainDAO.class);
 		IAdminFindDAO dao = sqlSesion.getMapper(IAdminFindDAO.class);
 		
+		model.addAttribute("objupdate", dao.objupdate(objNum));
 		model.addAttribute("admin_name", daoM.searchNum(admin_num, "num").getAdmin_name());
 		model.addAttribute("obj", dao.objSearch(objNum));
 		
@@ -280,6 +284,8 @@ public class AdminMainController
 		IAdminMainDAO daoM = sqlSesion.getMapper(IAdminMainDAO.class);
 		IAdminFindDAO dao = sqlSesion.getMapper(IAdminFindDAO.class);
 		
+		
+		model.addAttribute("revoupdate", dao.revoupdate(revoNum));
 		model.addAttribute("admin_name", daoM.searchNum(admin_num, "num").getAdmin_name());
 		model.addAttribute("revo", dao.revoSearch(revoNum));
 		
@@ -303,6 +309,7 @@ public class AdminMainController
 		IAdminMainDAO amdao = sqlSesion.getMapper(IAdminMainDAO.class);
 		IAdminFindDAO afdao = sqlSesion.getMapper(IAdminFindDAO.class);
 		
+		model.addAttribute("inapplyupdate", afdao.inapplyupdate(in_apply_num));
 		model.addAttribute("admin_name", amdao.searchNum(admin_num, "num").getAdmin_name());
 		model.addAttribute("in", afdao.inSearch(in_apply_num));
 		model.addAttribute("in_apply_num", in_apply_num);
@@ -315,41 +322,87 @@ public class AdminMainController
 	
 	@RequestMapping(value="/filedownload.action", method= {RequestMethod.POST, RequestMethod.GET})
 		@ResponseBody
-	public void fileDownload(@RequestParam("path") String path, @RequestParam("saveFileName") String saveFileName, HttpServletResponse response
+	public String fileDownload(@RequestParam("path")String path, @RequestParam("fileName")String fileName, HttpServletResponse response
 			, HttpServletRequest request, Model model)
 	{
 		
 		System.out.println(path);
-		System.out.println(saveFileName);
+		System.out.println(fileName);
+
 		
-		fileDown(path, saveFileName, response, request);
+		if (FileManager.doFileDownload(fileName, path, response))
+			return "1";
+		else
+			return "-1";
 		
 	}
 	
-	
-	public boolean fileDown(String path, String saveFileName, HttpServletResponse response, HttpServletRequest request)
-	{
-		/* MediaType.ALL */
-		try
+	// 리뷰 신고 반려 일시 
+		@RequestMapping(value="/rvreportre.action", method=RequestMethod.GET)
+		public String rvreportre(Model model,HttpServletRequest request)
 		{
-			response.setContentType("application/octet-stream");
-
-	        response.setHeader("Content-Disposition", "attachment; fileName=\"" + URLEncoder.encode(saveFileName,"UTF-8")+"\";");
-	        response.setHeader("Content-Transfer-Encoding", "binary");
-
-	        // 파일 읽어 응답
-	        byte[] fileByte = FileUtils.readFileToByteArray(new File(path));
-	        response.getOutputStream().write(fileByte);
-	        response.getOutputStream().flush();
-	        response.getOutputStream().close();
-	        
-	        return true;
+			HttpSession session = request.getSession();
 			
-		} catch (Exception e)
-		{
-			System.out.println(e.toString());
-			return false;
+			String result = "";
+			String admin_num = (String)session.getAttribute("admin_num");
+			
+			
+			IAdminMainDAO daoM = sqlSesion.getMapper(IAdminMainDAO.class);
+			IAdminFindDAO dao = sqlSesion.getMapper(IAdminFindDAO.class);
+			
+			model.addAttribute("revoupdate", dao.revoupdate(revoNum));
+			model.addAttribute("admin_name", daoM.searchNum(admin_num, "num").getAdmin_name());
+			model.addAttribute("revo", dao.revoSearch(revoNum));
+			
+			result = "/WEB-INF/view/penaltyRevokeForm.jsp";
+			
+			return result;
 		}
 		
-	}
+		
+		// 리뷰 신고 승인 일시
+		
+		@RequestMapping(value="/rvreportaccess.action", method=RequestMethod.GET)
+		public String rvreportaccess(Model model,HttpServletRequest request)
+		{
+			HttpSession session = request.getSession();
+			
+			String result = "";
+			String admin_num = (String)session.getAttribute("admin_num");
+			
+			
+			IAdminMainDAO daoM = sqlSesion.getMapper(IAdminMainDAO.class);
+			IAdminFindDAO dao = sqlSesion.getMapper(IAdminFindDAO.class);
+			
+			int rep_apply_num = (int) session.getAttribute("rep_apply_num");
+			
+			model.addAttribute("rvreportaccess", dao.rvreportaccess(rep_apply_num, admin_num));
+			
+			result = "/WEB-INF/view/admin_main.jsp";
+			
+			return result;
+		}
+		
+		// 리뷰 신고 중재 일시
+		@RequestMapping(value="/rvreporthalf.action", method=RequestMethod.GET)
+		public String rvreporthalf(Model model,HttpServletRequest request)
+		{
+			HttpSession session = request.getSession();
+			
+			String result = "";
+			String admin_num = (String)session.getAttribute("admin_num");
+			
+			
+			IAdminMainDAO daoM = sqlSesion.getMapper(IAdminMainDAO.class);
+			IAdminFindDAO dao = sqlSesion.getMapper(IAdminFindDAO.class);
+			
+			model.addAttribute("revoupdate", dao.revoupdate(revoNum));
+			model.addAttribute("admin_name", daoM.searchNum(admin_num, "num").getAdmin_name());
+			model.addAttribute("revo", dao.revoSearch(revoNum));
+			
+			result = "/WEB-INF/view/penaltyRevokeForm.jsp";
+			
+			return result;
+		}
+	
 }

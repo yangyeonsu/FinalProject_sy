@@ -240,6 +240,16 @@ span
 					return;
 				}
 			}
+			
+			var selectedValue = $(".check:checked").val();
+		    
+		    if (selectedValue === "trueR") {			// 반려
+		        window.location.href = "rvreportre.action";
+		    } else if (selectedValue === "trueM") {		// 중재
+		        window.location.href = "rvreporthalf.action";
+		    } else {		// 승인
+		    	window.location.href = "rvreportaccess.action";
+		    }
 		});
 		
 		$(".stInfoBtn").click(function(event)
