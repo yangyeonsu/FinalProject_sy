@@ -1018,7 +1018,7 @@ $(function name()
 		 
 		 //alert(rv_num);
 		 
-		var reply_content = $(".rvApplyContent").val();	//-- 답글내용
+		var reply_content = $("#rvApplyContent"+rv_num).val();	//-- 답글내용
 		alert(reply_content);
 		
 		$.ajax({
@@ -1196,7 +1196,7 @@ $(function name()
 								</div>
 								</c:if>
 								<div class="replyBox" align="right" id="div${rv.rv_num }" style="display: none;">
-									사장님 : <input type="text" class="rvApplyContent" > <input type="button" class="completeBtn" value="완료">
+									사장님 : <input type="text" class="rvApplyContent"  id="rvApplyContent${rv.rv_num }"> <input type="button" class="completeBtn" value="완료">
 								</div>
 							</div>
 							<input type="hidden" value="${rn }" name="rvNumHidden"> 
@@ -1245,15 +1245,14 @@ $(function name()
 					                </div>
 				                </c:when>
 						        <c:otherwise>
-									    
-									        <div class="review_reply">
-									            <textarea cols="30" rows="2" class="review_reply_txtarea" id="reply_content" name="reply_content"></textarea>
-									            <input type="hidden" name="rv_num" value="${review.rv_num }" />
-									            <div class="sendBtn">
-									                <button type="button" class="review_reply_btn">리뷰답글</button>
-									                <button type="reset" class="review_reply_btn">취소하기</button>
-									            </div>
-									        </div>
+								        <div class="review_reply">
+								            <textarea cols="30" rows="2" class="review_reply_txtarea" id="reply_content" name="reply_content"></textarea>
+								            <input type="hidden" name="rv_num" value="${review.rv_num }" />
+								            <div class="sendBtn">
+								                <button type="button" class="review_reply_btn">리뷰답글</button>
+								                <button type="reset" class="review_reply_btn">취소하기</button>
+								            </div>
+								        </div>
 									    
 								</c:otherwise>
 						    	</c:choose>
