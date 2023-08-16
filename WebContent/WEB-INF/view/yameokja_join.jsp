@@ -111,7 +111,7 @@
 				$("#userPwCheck").focus();
 				return;
 			}
-			else if ($("#pwCheckVal").val != "true")
+			else if ($("#pwCheckVal").val() != "true")
 			{
 				$("#pw2Error").html("비밀번호가 일치하지 않습니다.");
 				$("#pw2Error").css("display", "inline");
@@ -306,13 +306,13 @@
 			{
 					$("#pwAcceptText").html("비밀번호가 일치합니다.");
 					$("#pwAcceptText").css("display", "inline");
-					$("#pwCheckVal").val() = "false";
+					$("#pwCheckVal").val("true");
 			}		
 			else
 			{
 				$("#pwAcceptText").html("비밀번호가 일치하지 않습니다.");
 				$("#pwAcceptText").css("display", "inline");
-				$("#pwCheckVal").val() = "true";
+				$("#pwCheckVal").val("false");
 			}
 		});
 		
@@ -444,7 +444,7 @@
 					<option value="self" selected="selected">직접입력</option>
 					<option value="naver">naver.com</option>
 					<option value="kakao">kakao.com</option>
-					<option value="google">google.com</option>
+					<option value="google">gmail.com</option>
 					<option value="yahoo">yahoo.com</option>
 				</select>
 			</div>
