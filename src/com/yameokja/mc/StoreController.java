@@ -63,6 +63,7 @@ public class StoreController
 		model.addAttribute("user", user);
 		
 		ArrayList<StoreDTO> st_list = smDao.searchStoreInfo(user_num);
+		
 		int st_num;
 		
 		if(smDao.searchRepStore(user_num) == null)
@@ -72,6 +73,103 @@ public class StoreController
 		
 		
 		session.setAttribute("st_num", st_num);
+		model.addAttribute("st_num", st_num);
+				
+		ArrayList<HashMap<String, String>> hashmaplist = smDao.rv_key_sum(st_num);
+		
+		ArrayList<String> rv_labels = new ArrayList<String>();
+		ArrayList<String> rv_data = new ArrayList<String>();
+		 
+		for (HashMap<String, String> hashMap : hashmaplist)
+		{
+			rv_labels.add("'" +hashMap.get("RV_KEY_NAME")+"'");
+			rv_data.add(String.valueOf(hashMap.get("COUNT_RV_KEY")));
+		}
+		
+		
+		ArrayList<HashMap<String, String>> star_transition = smDao.star_transition(st_num);
+		
+		ArrayList<String> star_labels = new ArrayList<String>();
+		ArrayList<String> star_data = new ArrayList<String>();
+		 
+		for (HashMap<String, String> star : star_transition)
+		{
+			star_labels.add("'" +star.get("QUARTER_START_DATE")+"'");
+			star_data.add(String.valueOf(star.get("AVERAGE_STAR_SCORE")));
+		}
+		
+		
+		// 가게 리뷰목록
+		ArrayList<StoreReviewDTO> reviews = dao.reviews(st_num);
+		
+		if(reviews.size() > 0)
+		{
+			model.addAttribute("reviews", reviews);
+		}
+		else
+			model.addAttribute("reviews", null);
+		
+		// 가게 리뷰 사진 목록
+		ArrayList<StoreRvPhotoDTO> rvPhotos = dao.rvPhoto(st_num);
+		
+		model.addAttribute("rvPhotos", rvPhotos);
+		
+		model.addAttribute("st_list", st_list);
+		
+		model.addAttribute("rv_labels", rv_labels.subList(0, 5));
+		model.addAttribute("rv_data", rv_data.subList(0, 5));
+		
+		model.addAttribute("star_labels", star_labels);
+		model.addAttribute("star_data", star_data);
+		
+		model.addAttribute("rv_key_list", smDao.rv_key_sum(st_num));
+		model.addAttribute("rv_list", smDao.rv_list(st_num));
+		
+		ArrayList<ReviewDTO> arr = smDao.rv_list(st_num);
+		for (ReviewDTO reviewDTO : arr)
+		{
+			System.out.println(reviewDTO.getReply_content());
+		}
+		/* model.addAttribute("reply_content", reply_content(rv_num)); */
+		
+		model.addAttribute("alarm", uDao.userAlarm(user_num));
+		
+		result = "/WEB-INF/view/StoreMainPage.jsp";
+		
+		return result;
+	}
+	
+	@RequestMapping(value="/storeinfo.action", method=RequestMethod.GET)
+	public String storeInfoLoad(HttpServletRequest request, Model model)
+	{
+		HttpSession session = request.getSession();
+		String result = "";
+		
+		/* int st_num = Integer.parseInt(str_st_num); */ 
+		
+		IstDetailDAO_userView dao = sqlSession.getMapper(IstDetailDAO_userView.class);
+		IStoreMainDAO smDao = sqlSession.getMapper(IStoreMainDAO.class);
+		IUserDAO uDao = sqlSession.getMapper(IUserDAO.class);
+		
+		
+		String user_num = (String)session.getAttribute("user_num");
+		
+		UserDTO user = uDao.searchUserInfo(user_num, "num");
+
+		LocalDate currentDate = LocalDate.now();
+		int month = currentDate.getMonthValue();
+
+		if (month < 7)
+			user.setUser_grade(uDao.firstHalf(user_num).user_grade);
+		else
+			user.setUser_grade(uDao.secondHalf(user_num).user_grade);
+
+		model.addAttribute("user", user);
+		
+		ArrayList<StoreDTO> st_list = smDao.searchStoreInfo(user_num);
+		
+		int st_num = Integer.parseInt(request.getParameter("stNum"));
+		model.addAttribute("st_num", st_num);
 				
 		ArrayList<HashMap<String, String>> hashmaplist = smDao.rv_key_sum(st_num);
 		
@@ -150,7 +248,7 @@ public class StoreController
 		IUserDAO uDao = sqlSession.getMapper(IUserDAO.class);
 		
 		String user_num = (String)session.getAttribute("user_num");
-		int st_num = (int) session.getAttribute("st_num");
+		int st_num = Integer.parseInt(request.getParameter("st_num"));
 		
 		UserDTO user = uDao.searchUserInfo(user_num, "num");
 
@@ -161,8 +259,12 @@ public class StoreController
 			user.setUser_grade(uDao.firstHalf(user_num).user_grade);
 		else
 			user.setUser_grade(uDao.secondHalf(user_num).user_grade);
+		
+		ArrayList<StoreDTO> st_list = sdao.searchStoreInfo(user_num);
 
 		model.addAttribute("user", user);
+		model.addAttribute("st_num", st_num);
+		model.addAttribute("st_list", st_list);
 		
 		// 가게가 선택할 수 있는 카테고리
 		model.addAttribute("foodLabel", sdao.foodLabel());
@@ -292,6 +394,7 @@ public class StoreController
 			user.setUser_grade(uDao.firstHalf(user_num).user_grade);
 		else
 			user.setUser_grade(uDao.secondHalf(user_num).user_grade);
+		
 
 		model.addAttribute("user", user);
 		session.setAttribute("st_num", st_num);
