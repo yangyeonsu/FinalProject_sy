@@ -33,9 +33,9 @@
 	<insert id="joinSend">
 		INSERT INTO USING_USER(USER_NUM, USER_ID, USER_PW, USER_NAME, USER_SSN1, USER_SSN2
 							 , USER_TEL, USER_NICKNAME, REG_DATE ,USER_EMAIL)
-		VALUES(#{userNum}, #{userId}, CRYPTPACK.ENCRYPT(#{userPw},#{userPw})
-			, #{userName}, #{userSsn1}, #{userSsn2}, #{userTel}
-			, #{userNickName}, TO_DATE(SYSDATE, 'YYYY-MM-DD'), #{userEmail, jdbcType=VARCHAR})
+		VALUES(#{user_num}, #{user_id}, CRYPTPACK.ENCRYPT(#{user_pw},#{user_pw})
+			, #{user_name}, #{user_ssn1}, CRYPTPACK.ENCRYPT(#{user_ssn2},#{user_ssn2}), #{user_tel}
+			, #{user_nickname}, TO_DATE(SYSDATE, 'YYYY-MM-DD'), #{user_email, jdbcType=VARCHAR})
 	</insert>
 	
 	<!-- 사용자 번호(난수) 중복 확인 -->
