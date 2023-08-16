@@ -3,6 +3,7 @@
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yameokja.mc.IstDetailDAO_userView">
+
  	<!-- 가게이름, 좋아요수, 평점, 리뷰수, 주소, 전화번호, 가게 이메일, 가게 설명
      , 최대인원수, 가게음식카테고리 -->
  	<select id="store" resultType="com.yameokja.mc.StoreDetailDTO">
@@ -259,7 +260,7 @@
 	<!-- 리뷰 입력 -->
 	<insert id="reviewInsert">
 		INSERT INTO RV_BOX(RV_NUM, USER_NUM, ST_NUM, RV_CONTENT, STAR_SCORE)
-		VALUES (50, #{user_num}, #{st_num}, #{rv_content}, #{star_score})
+		VALUES (53, #{user_num}, #{st_num}, #{rv_content}, #{star_score})
 	</insert>
 	
 	<!-- rv_num 가져오는 쿼리문 -->

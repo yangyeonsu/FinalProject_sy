@@ -177,6 +177,24 @@
 	<select id="">
 		
 	</select>
+	
+	<!-- 해당 가게의 해당 리뷰의 답글 가져오기 -->
+	<select id="rvReply" resultType="com.yameokja.mc.StoreRvReplyDTO">
+		SELECT RR.REPLY_NUM AS REPLY_NUM, RB.RV_NUM AS RV_NUM
+		     , RR.REPLY_CONTENT AS REPLY_CONTENT, RR.REG_DATE AS REG_DATE
+		FROM RV_REPLY RR LEFT JOIN RV_BOX RB
+		   ON RR.RV_NUM = RB.RV_NUM
+		WHERE RB.ST_NUM = #{st_num}
+	</select>
+	
+	<!-- 해당 가게의 답글이 있는 rv_num -->
+	<select id="rvReplyNumList" resultType="java.lang.Integer">
+		SELECT DISTINCT(RB.RV_NUM) AS RV_NUM
+		FROM RV_REPLY RR LEFT JOIN RV_BOX RB
+		  ON RR.RV_NUM = RB.RV_NUM
+		WHERE RB.ST_NUM = #{st_num}
+	</select>
+	
 </mapper>
 
 
