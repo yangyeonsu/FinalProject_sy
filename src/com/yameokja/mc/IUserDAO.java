@@ -43,5 +43,5 @@ public interface IUserDAO
 	public int nickName(@Param("nickName") String nickName);
 	
 	// 개인정보수정에서 회원정보수정
-	public int userInfoModify(UserDTO dto);
+	public int userInfoModify(@Param("user_num") String user_num, @Param("user_pw") String user_pw, @Param("user_nickname") String user_nickname, @Param("user_email") String user_email);
 }

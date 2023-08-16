@@ -151,7 +151,11 @@
 		
 		<!-- 회원정보 입력란 영역 -->
 		<div class="joinInsertDiv">
-		
+			
+			<div class="userNum">
+				<input type="text" id="userNum" name="userNum" style="display: none;" value="${modify.getUser_num() }">
+			</div>
+			
 			<div class="userName">
 				<input type="text" id="userName" readonly="readonly" value="${modify.getUser_name() }">
 			</div>
@@ -175,20 +179,20 @@
 					<input type="password" id="userPw1">
 				</div>
 				<div>
-					<input type="password" id="userPw2" value="${user.user_pw }">
+					<input type="password" id="userPw2" value="${user.user_pw }" name="userPw2">
 					<i id="pwAcceptText" class="accept">확인되었습니다.</i>
 				</div>
 			</div>
 			
 			<div class="userNickName">
-				<input type="text" id="userNickName" value="${user.user_nickname }">&nbsp;&nbsp;
+				<input type="text" id="userNickName" value="${user.user_nickname }" name="userNickName">&nbsp;&nbsp;
 				<button type="button" id="nickNameAccept" class="joinBtn">중복검사</button>
 				<i id="nNAcceptText" class="accept">사용할 수 있는 닉네임입니다.</i>
 				<br>
 			</div>
 			
 			<div class="userEmail">
-				<input type="text" id="userEmail" value=${user.user_email }> @ 
+				<input type="text" id="userEmail" value="${user.user_email }" name="userEmail"> @ 
 				<select name="email" class="emailSelect">
 					<option value="self" selected="selected">직접입력</option>
 					<option value="naver">naver.com</option>
