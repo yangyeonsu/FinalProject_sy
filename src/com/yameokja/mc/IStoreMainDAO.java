@@ -40,6 +40,11 @@ public interface IStoreMainDAO
 	public int menudelete(int st_num);
 	public int stsearchKeydelete(int st_num);
 	
+	// 가게 첫 로그인
+	public int checkfirstlogin(int st_num);
+	public int findfirstlogin(int st_num);
+	public int deletelognum(int log_num);
+	
 	
 	// 업데이트 후 삽입
 	public int stOCinsert(@Param("st_num")int st_num, @Param("day_num")int day_num

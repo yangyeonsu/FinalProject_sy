@@ -35,7 +35,7 @@ public class StoreController
 	@Autowired
     private ServletContext servletContext;
 	
-	@RequestMapping(value="/storemain.action", method=RequestMethod.GET)
+	@RequestMapping(value="/storemain.action", method= {RequestMethod.GET, RequestMethod.POST})
 	public String storeMainLoad(HttpServletRequest request, Model model)
 	{
 		HttpSession session = request.getSession();
@@ -134,7 +134,45 @@ public class StoreController
 		
 		model.addAttribute("alarm", uDao.userAlarm(user_num));
 		
+		int log_num = smDao.checkfirstlogin(st_num);
+		if (log_num != 0) {
+		    // 메서드가 null (또는 0)을 반환했을 경우의 처리
+			int inif_log = smDao.findfirstlogin(st_num);
+			smDao.deletelognum(inif_log);
+			session.setAttribute("log_num", 1);
+		} 
+		
+		
 		result = "/WEB-INF/view/StoreMainPage.jsp";
+		
+		return result;
+	}
+	
+	/*
+	 * @RequestMapping(value="/deletelognum.action", method = {RequestMethod.POST,
+	 * RequestMethod.GET}) public String deletelognum(HttpServletRequest request,
+	 * Model model) { String result = "";
+	 * 
+	 * HttpSession session = request.getSession(); IStoreMainDAO smDao =
+	 * sqlSession.getMapper(IStoreMainDAO.class);
+	 * 
+	 * String log_num = (String) session.getAttribute("log_num");
+	 * System.out.println(log_num);
+	 * 
+	 * 
+	 * 
+	 * 
+	 * result = "/WEB-INF/view/StoreMainPage.jsp";
+	 * 
+	 * return result; }
+	 */
+	
+	@RequestMapping(value="/Stfirstloginstdego.action", method = {RequestMethod.POST, RequestMethod.GET})
+	public String stfirstlogingo()
+	{
+		String result = "";
+		
+		result = "/WEB-INF/view/Stfirstloginstdego.jsp";
 		
 		return result;
 	}
@@ -235,7 +273,7 @@ public class StoreController
 		return result;
 	}
 	
-	@RequestMapping(value="/stdetailmodify.action", method = RequestMethod.POST)
+	@RequestMapping(value="/stdetailmodify.action", method = {RequestMethod.POST, RequestMethod.GET})
 	public String stDetailModify(HttpServletRequest request, Model model)
 	{
 		String result = "";
