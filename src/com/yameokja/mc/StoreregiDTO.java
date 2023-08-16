@@ -118,6 +118,12 @@ public class StoreregiDTO
 	{
 		this.place_file_name = place_file_name;
 	}
+	@Override
+	public String toString()
+	{
+		
+		return "st_num = " + st_in_num + "st_place_num = " + st_place_num + "st_in_file = " + st_in_file + "," + st_tel + "," + st_location + ",";
+	}
 
 	
 	

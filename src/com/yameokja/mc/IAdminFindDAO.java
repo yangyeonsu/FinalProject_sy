@@ -12,4 +12,16 @@ public interface IAdminFindDAO
 	public RevoApplyViewDTO revoSearch(int revo_apply_num);
 	// 가게 등폐업 요청한 가게로 요청내용 찾기
 	public StoreregiDTO inSearch(int in_apply_num);
+	// 가게 
+	public int rvupdate(int rep_apply_num);
+	// 가게 정보 오류 수정 요청 관리자 처리내역 업데이트
+	public int stinfoupdate(int req_apply_num);
+	// 이의 제기 관리자 처리내역 업데이트
+	public int objupdate(int obj_apply_num);
+	// 패널티 회수 처리내역 업데이트
+	public int revoupdate(int revo_apply_num);
+	// 가게등록 처리내역 업데이트
+	public int inapplyupdate(int in_apply_num);
+	// 리뷰 등록 승인
+	public int rvreportaccess(int rep_apply_num, String admin_num);
 }

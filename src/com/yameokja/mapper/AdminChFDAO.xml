@@ -91,6 +91,44 @@
         ON IA.USER_NUM = UU.USER_NUM
         WHERE IN_APPLY_NUM = #{in_apply_num}
 	</select>
+	<!-- 관리자 읽은 날짜 업데이트 -->
+	<update id="rvupdate">
+	    UPDATE REP_APPLY
+		SET ADMIN_READ_DATE = TO_DATE(SYSDATE, 'YYYY-MM-DD')
+		WHERE REP_APPLY_NUM = #{rep_apply_num}
+	</update>
+	
+	<update id="stinfoupdate">
+	    UPDATE REQ_APPLY
+		SET ADMIN_READ_DATE = TO_DATE(SYSDATE, 'YYYY-MM-DD')
+		WHERE REQ_APPLY_NUM = #{req_apply_num}
+	</update>
+	
+	<update id="objupdate">
+	    UPDATE OBJ_APPLY
+		SET ADMIN_READ_DATE = TO_DATE(SYSDATE, 'YYYY-MM-DD')
+		WHERE OBJ_APPLY_NUM = #{obj_apply_num}
+	</update>
+	
+	<update id="revoupdate">
+	    UPDATE REVO_APPLY
+		SET ADMIN_READ_DATE = TO_DATE(SYSDATE, 'YYYY-MM-DD')
+		WHERE REVO_APPLY_NUM = #{revo_apply_num}
+	</update>
+	
+	<update id="inapplyupdate">
+	    UPDATE IN_APPLY
+		SET ADMIN_READ_DATE = TO_DATE(SYSDATE, 'YYYY-MM-DD')
+		WHERE IN_APPLY_NUM = #{in_apply_num}
+	</update>
+	
+	<insert id="rvreportaccess">
+		INSERT INTO REP_PROCESS(REP_PROCESS_NUM, REP_APPLY_NUM, ADMIN_NUM, FINAL_DATE)
+                VALUES(8, #{rep_apply_num}, #{admin_num}, SYSDATE, NULL, NULL)
+	
+	</insert>
 	
 	
+	
+		
 </mapper>
