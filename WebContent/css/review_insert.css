@@ -2,6 +2,14 @@
 
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500&display=swap');
 
+.header
+{
+	position: sticky;
+	top: 0;
+	background-color: white;
+}
+
+
 body
 {
 	font-family: 'IBM Plex Sans KR', sans-serif;

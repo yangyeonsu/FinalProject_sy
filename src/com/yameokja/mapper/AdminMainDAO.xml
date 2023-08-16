@@ -50,7 +50,7 @@
 	
 	<!-- 패널티회수요청리스트 -->
 	<select id="revoList" resultType="com.yameokja.mc.ReportListDTO">
-		SELECT REG_DATE, ST_NAME, REG_STATE, FINAL_DATE, ADMIN_ID, REVO_APPLY_NUM AS REPORT_NUM
+		SELECT REG_DATE, ST_NAME, STATE, FINAL_DATE, ADMIN_ID, REVO_APPLY_NUM AS REPORT_NUM
 		FROM REVO_APPLY_VIEW
 		ORDER BY REG_DATE DESC
 	</select>
@@ -58,7 +58,7 @@
 	
 	<!-- 가게등폐업요청리스트 -->
 	<select id="inoutList" resultType="com.yameokja.mc.ReportListDTO">
-		SELECT CAT, REG_DATE, USER_ID, APPLY_NUM AS REPORT_NUM, FINAL_DATE, ADMIN_ID, STATE
+		SELECT CAT, REG_DATE, USER_ID, FINAL_DATE, ADMIN_ID, STATE, APPLY_NUM AS REPORT_NUM
 		FROM INOUT_APPLY_VIEW
 		ORDER BY REG_DATE DESC
 	</select>

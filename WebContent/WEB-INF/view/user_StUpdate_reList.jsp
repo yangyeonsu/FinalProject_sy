@@ -21,6 +21,13 @@
 <link rel="stylesheet" type="text/css" href="<%=cp%>/css/userMyPage.css">
 
 <style type="text/css">
+
+	.header
+	{
+		position: sticky;
+		top: 0;
+		background-color: white;
+	}
 	
 	/* 메인페이지 */
 	.middle
@@ -119,11 +126,12 @@
 			} else
 			{
 				$('.overlay').css("position", "fixed");
-				$('.overlay').css("width", "100%");
+				$('.overlay').css("width", "77%");
 				$('.overlay').css("height", "100%");
 				$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
 				$('.overlay').css("z-index", "3");
 				$('.overlay').css("margin-top", "1.011vh");
+				$('.overlay').css("margin-left", "23%");
 				$('#checkOverlay').attr("value", "true");
 			}
 
@@ -256,7 +264,7 @@
 	
 	
 	<div class="middle">
-	<c:import url="sideBar_user.jsp"></c:import>
+	<c:import url="sideBar_store.jsp"></c:import>
 		
 		<div class="right_content">
 			<div class="rv_report">
