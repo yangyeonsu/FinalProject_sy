@@ -694,6 +694,20 @@ i {
 <script type="text/javascript"
 	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
 
+<script type="text/javascript">
+
+var log_num = ${session.log_num}
+
+$(document).ready(function() {
+	if(${sessionScope.log_num } == 1/*  || log_num != '' */)
+	{
+		window.open("Stfirstloginstdego.action?st_num="+${st_num}, "a", "width=400, height=300, left=100, top=50");
+		/* window.location.href = "deletelognum.action?st_num="+${st_num }; */
+	}
+});
+
+</script>
+
 <!-- 배너 스크립트 -->
 <script type="text/javascript">
 	$(function()
