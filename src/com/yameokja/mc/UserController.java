@@ -501,4 +501,10 @@ public class UserController
 		
 		return result;
 	}
+	
+	@RequestMapping(value="/userinfosearch.action")
+	public String userInfoSearch(HttpServletRequest request, Model model)
+	{
+		return "WEB-INF/view/user_info_search.jsp";
+	}
 }

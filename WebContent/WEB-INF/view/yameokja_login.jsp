@@ -240,6 +240,12 @@
 			$("#loginForm").attr("action", "join.action");
 			$("#loginForm").submit();
 		});
+		
+		$("#searchBtn").click(function()
+		{
+			$("#loginForm").attr("action", "userinfosearch.action");
+			$("#loginForm").submit();
+		});
 	});
 	
 	function enterkey() 
@@ -266,6 +272,7 @@
 			$("#loginForm").attr("action", "login.action");
 			$("#loginForm").submit();
 	    }
+		
 	}
 
 </script>
