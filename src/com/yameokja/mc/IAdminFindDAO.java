@@ -1,5 +1,7 @@
 package com.yameokja.mc;
 
+import org.apache.ibatis.annotations.Param;
+
 public interface IAdminFindDAO
 {
 	// rep_apply_num으로 요청내용 찾기
@@ -26,4 +28,6 @@ public interface IAdminFindDAO
 	public int inapplyupdate(int in_apply_num);
 	// 리뷰 등록 승인
 	public int rvreportaccess(int rep_apply_num, String admin_num);
+	// 가게 등록 처리
+	public int inprocess(@Param("in_apply_num")int in_apply_num, @Param("admin_num")int admin_num);
 }

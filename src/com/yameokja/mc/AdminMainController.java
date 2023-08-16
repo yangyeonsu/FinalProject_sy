@@ -431,5 +431,27 @@ public class AdminMainController
 		 * 
 		 * return result; }
 		 */
+		
+		@RequestMapping(value="/inapplysend.action", method= {RequestMethod.GET, RequestMethod.POST})
+		public String inApplySend(Model model, HttpServletRequest request)
+		{
+			String result = "";
+			HttpSession session = request.getSession();
+			
+			IAdminFindDAO fdao = sqlSesion.getMapper(IAdminFindDAO.class);
+			IAdminMainDAO dao = sqlSesion.getMapper(IAdminMainDAO.class);
+			
+			
+			int admin_num = Integer.parseInt((String)session.getAttribute("admin_num"));
+			
+			int in_apply_num = Integer.parseInt(request.getParameter("in_apply_num"));
+			
+			fdao.inprocess(in_apply_num, admin_num);
+			
+			model.addAttribute("admin_name", dao.searchNum((String)session.getAttribute("admin_num"), "num").getAdmin_name());
+			
+			return result;
+		}
+		
 	
 }

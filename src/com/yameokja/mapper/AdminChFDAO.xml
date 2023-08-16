@@ -139,7 +139,10 @@
 	
 	</insert>
 	
-	
+	<insert id="inprocess">
+		INSERT INTO IN_PROCESS(IN_PROCESS_NUM, IN_APPLY_NUM, ADMIN_NUM, FINAL_DATE)
+		VALUES(INPROSEQ.NEXTVAL, #{in_apply_num}, #{admin_num}, SYSDATE)		
+	</insert>
 	
 		
 </mapper>
