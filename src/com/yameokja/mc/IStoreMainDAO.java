@@ -75,5 +75,7 @@ public interface IStoreMainDAO
 	
 	// 이의제기요청내역
 	public StAppealRequestDTO StAppealRequest(int st_num);
+	// 페널티 회수요청 내역
+	public StAppealRequestDTO StPenaltyre(int st_num);
 
 }

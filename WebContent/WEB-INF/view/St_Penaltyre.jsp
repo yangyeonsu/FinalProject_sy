@@ -176,7 +176,7 @@
 		<div class="right_content">
 			<div class="rv_report">
 				<div class="title">
-					가게정보수정요청 내역
+					페널티 회수 요청 내역
 				</div>
 				<hr>
 				<div class="rv_reportlist">
@@ -188,16 +188,17 @@
 						<div class="rpt_subtitle">담당 관리자</div>
 					</div>
 					<c:choose>
-					    <c:when test="${empty user_stupdate_relist}">
+					    <c:when test="${empty StPenaltyre}">
 					        <div class="no-data-message">가게정보수정요청 내역이 없습니다.</div>
 					    </c:when>
 					    <c:otherwise>
-					        <c:forEach var="udre" items="${user_stupdate_relist}">
+					        <c:forEach var="sptr" items="${StPenaltyre}">
 					            <div class="report_content">
-					                <div class="rpt_content" onclick="reqPopupOpen()">${udre.reg_date }</div>
-					                <div class="st_name" onclick="reqPopupOpen()">${udre.st_name }</div>
-					                <div class="rpt_content" id="status" onclick="reqPopupOpen()">${udre.status }</div>
-					                <div class="rpt_content" onclick="reqPopupOpen()">${udre.final_date }</div>
+					                <div class="rpt_content">${sptr.reg_date }</div>
+					                <div class="st_name">${sptr.st_name }</div>
+					                <div class="rpt_content" id="status">${sptr.status }</div>
+					                <div class="rpt_content"">${sptr.final_date }</div>
+					                <div class="rpt_content"">${sptr.admin_name }</div>
 					            	
 					            	<div id="reject" style="display: none;">${udre.req_process_num }</div>
 					                <div class="rej_rs" style="display: none;">${udre.rej_rs }</div>
@@ -211,7 +212,7 @@
 					<!-- 페이징 처리 -->
 					<div class="pagination">
 			            <c:choose>
-			                <c:when test="${empty user_stupdate_relist}">
+			                <c:when test="${empty StPenaltyre}">
 			                    <p></p>
 			                </c:when>
 			                <c:otherwise>
