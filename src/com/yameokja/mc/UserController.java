@@ -479,4 +479,26 @@ public class UserController
 		
 		return result;
 	}
+	
+	@RequestMapping(value="/userinfomodify.action", method = RequestMethod.POST)
+	public String userInfoModify(HttpServletRequest request, Model model)
+	{
+		String result = "";
+		
+		IUserDAO dao = sqlSession.getMapper(IUserDAO.class);
+		
+		String user_num = request.getParameter("userNum");
+		String user_pw = request.getParameter("userPw2");
+		String user_nickname = request.getParameter("userNickName");
+		String userEmail = request.getParameter("userEmail");
+		String selectEmail = request.getParameter("email");
+		
+		String user_email = userEmail+"@"+selectEmail;
+		
+		int user = dao.userInfoModify(user_num, user_pw, user_nickname, user_email);
+		model.addAttribute("user", user);
+		result = "redirect:main.action";
+		
+		return result;
+	}
 }

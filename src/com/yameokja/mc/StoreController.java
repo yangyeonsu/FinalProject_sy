@@ -259,6 +259,10 @@ public class StoreController
 		model.addAttribute("rv_key_list", smDao.rv_key_sum(st_num));
 		model.addAttribute("rv_list", smDao.rv_list(st_num));
 		
+		model.addAttribute("rvReplyNumList", smDao.rvReplyNumList(st_num));
+		
+		model.addAttribute("rvReplyList",smDao.rvReply(st_num));
+		
 		ArrayList<ReviewDTO> arr = smDao.rv_list(st_num);
 		for (ReviewDTO reviewDTO : arr)
 		{
