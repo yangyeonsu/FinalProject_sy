@@ -6,8 +6,7 @@
 	<select id="userLoginCheck" resultType="java.lang.Integer">
 		SELECT COUNT(*)
 		FROM USING_USER
-		<!-- WHERE CRYPTPACK.DECRYPT(USER_PW, #{user_pw}) = #{user_pw} -->
-		WHERE USER_PW = #{user_pw}
+		WHERE CRYPTPACK.DECRYPT(USER_PW, #{user_pw}) = #{user_pw}
 		     AND USER_ID = #{user_id}
 	</select>
 	
@@ -34,8 +33,8 @@
 	<insert id="joinSend">
 		INSERT INTO USING_USER(USER_NUM, USER_ID, USER_PW, USER_NAME, USER_SSN1, USER_SSN2
 							 , USER_TEL, USER_NICKNAME, REG_DATE ,USER_EMAIL)
-		VALUES(#{user_num}, #{user_id}, #{user_pw}
-			, #{user_name}, #{user_ssn1}, #{user_ssn2}, #{user_tel}
+		VALUES(#{user_num}, #{user_id}, CRYPTPACK.ENCRYPT(#{user_pw},#{user_pw})
+			, #{user_name}, #{user_ssn1}, CRYPTPACK.ENCRYPT(#{user_ssn2},#{user_ssn2}), #{user_tel}
 			, #{user_nickname}, TO_DATE(SYSDATE, 'YYYY-MM-DD'), #{user_email, jdbcType=VARCHAR})
 	</insert>
 	
