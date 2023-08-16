@@ -327,8 +327,12 @@ public class AdminMainController
 		
 		/* int admin_num = (Integer)session.getAttribute("admin_num"); */
 		
-		int in_apply_num = Integer.parseInt(request.getParameter("in_apply_num"));
+		int out_apply_num = Integer.parseInt(request.getParameter("out_apply_num"));
 		String admin_num = (String)session.getAttribute("admin_num");
+		
+		IAdminFindDAO afdao = sqlSesion.getMapper(IAdminFindDAO.class);
+		
+		model.addAttribute("out", afdao.outSearch(out_apply_num));
 		
 		/*
 		IAdminMainDAO amdao = sqlSesion.getMapper(IAdminMainDAO.class);
