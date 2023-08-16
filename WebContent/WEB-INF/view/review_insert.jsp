@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%
 	request.setCharacterEncoding("UTF-8");
-String cp = request.getContextPath();
+	String cp = request.getContextPath();
 %>
 <!DOCTYPE html>
 <html>
@@ -166,7 +166,7 @@ String cp = request.getContextPath();
 
 </head>
 <body>
-	<form action="" id="userForm" method="post">
+	<form action="" id="userForm" method="post" enctype="multipart/form-data">
 		<c:import url="header_userMain.jsp"></c:import>
 		<div id="container">
 
