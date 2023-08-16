@@ -24,6 +24,13 @@
 <link rel="stylesheet" type="text/css" href="<%=cp%>/css/storeDetail.css">
 
 <style type="text/css">
+
+	.header
+	{
+		position: sticky;
+		top: 0;
+		background-color: white;
+	}
 	
 	/* 메인페이지 */
 	.middle
@@ -316,7 +323,7 @@
 	
 	
 	<div class="middle">
-	<c:import url="sideBar_user.jsp"></c:import>
+	<c:import url="sideBar_store.jsp"></c:import>
 		
 		
 		

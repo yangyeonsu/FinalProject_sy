@@ -167,7 +167,7 @@
 </head>
 <body>
 	<form action="" id="userForm" method="post" enctype="multipart/form-data">
-		<c:import url="header_userMain.jsp"></c:import>
+		<div class="header"><c:import url="header_userMain.jsp"></c:import></div>
 		<div id="container">
 
 			<!-- 리뷰작성 타이틀 -->

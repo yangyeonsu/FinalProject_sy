@@ -38,3 +38,4 @@ BEGIN
     VALUES(POINTSEQ.NEXTVAL, :NEW.USER_NUM, SYSDATE, 1);
 END;
 --==>> Trigger TRG_INSERT_POINT이(가) 컴파일되었습니다.
+

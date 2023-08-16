@@ -15,6 +15,14 @@
 <title>storeErrReportForm.jsp</title>
 
 <style type="text/css">
+
+.header
+{
+	position: sticky;
+	top: 0;
+	background-color: white;
+}
+
 .st_info_insert
 {
 	width: 70vw;
@@ -234,7 +242,7 @@ input[type="radio"]
 <div class="bframe">
 	
 	<!-- header -->
-	<div><c:import url="/WEB-INF/view/header_admin.jsp"></c:import></div>
+	<div class="header"><c:import url="/WEB-INF/view/header_admin.jsp"></c:import></div>
 	
 	<div class="middle">
 		<div class="top">
