@@ -123,8 +123,8 @@
 	</update>
 	
 	<insert id="rvreportaccess">
-		INSERT INTO REP_PROCESS(REP_PROCESS_NUM, REP_APPLY_NUM, ADMIN_NUM, FINAL_DATE)
-                VALUES(8, #{rep_apply_num}, #{admin_num}, SYSDATE, NULL, NULL)
+		INSERT INTO REP_PROCESS(REP_PROCESS_NUM, REP_APPLY_NUM, ADMIN_NUM, FINAL_DATE, REP_READ_DATE, ACCU_READ_DATE)
+                VALUES(9, #{rep_apply_num}, #{admin_num}, TO_DATE(SYSDATE, 'YYYY-MM-DD'), NULL, NULL)
 	
 	</insert>
 	
