@@ -696,7 +696,6 @@ i {
 
 <script type="text/javascript">
 
-var log_num = ${session.log_num}
 
 $(document).ready(function() {
 	if(${sessionScope.log_num } == 1/*  || log_num != '' */)

@@ -128,11 +128,11 @@ public class MainController
 
 		for (int i = 0; i < keywordList.size(); i++)
 		{
-			List<Integer> temp = null;
-			temp = dao.getStoreSearchList(keywordList.get(i));
+			List<Integer> temp = dao.getStoreSearchList(keywordList.get(i));
 
 			for (int j = 0; j < temp.size(); j++)
 			{
+				System.out.println(temp.get(j));
 				finalKeyword.add(temp.get(j));
 			}
 		}

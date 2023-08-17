@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -23,6 +24,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+
+
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.Part;
+
+
 
 @Controller
 public class stDetailController
@@ -168,6 +184,14 @@ public class stDetailController
 
 		// 가게 리뷰 사진 목록
 		ArrayList<StoreRvPhotoDTO> rvPhotos = dao.rvPhoto(st_num);
+		
+		if (rvPhotos.size() > 0)
+		{
+			for (StoreRvPhotoDTO rvphoto : rvPhotos)
+			{
+				
+			}
+		}
 
 		model.addAttribute("rvPhotos", rvPhotos);
 
@@ -199,6 +223,7 @@ public class stDetailController
 
 		return result;
 	}
+	
 
 	@RequestMapping(value = "/reviewrep.action")
 	@ResponseBody

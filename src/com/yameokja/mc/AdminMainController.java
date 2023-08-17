@@ -446,10 +446,24 @@ public class AdminMainController
 			
 			int in_apply_num = Integer.parseInt(request.getParameter("in_apply_num"));
 			
-			fdao.inprocess(in_apply_num, admin_num);
+			int check = fdao.inprocess(in_apply_num, admin_num);
+			
+			System.out.println(check);
+			
+			
+			if (request.getParameter("check").equals("false"))
+			{
+				int process = fdao.getprocessnum(admin_num);
+				
+				if (check==1)
+					fdao.stlistinsert(process);
+			}
+			
 			
 			model.addAttribute("admin_name", dao.searchNum((String)session.getAttribute("admin_num"), "num").getAdmin_name());
 			
+			result = "redirect:adminmain.action";
+
 			return result;
 		}
 		

@@ -30,4 +30,6 @@ public interface IAdminFindDAO
 	public int rvreportaccess(int rep_apply_num, String admin_num);
 	// 가게 등록 처리
 	public int inprocess(@Param("in_apply_num")int in_apply_num, @Param("admin_num")int admin_num);
+	public int getprocessnum(int admin_num);
+	public int stlistinsert(@Param("in_process_num")int in_process_num);
 }

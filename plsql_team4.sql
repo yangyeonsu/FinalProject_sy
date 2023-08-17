@@ -3,7 +3,6 @@ FROM DUAL;
 --==>> YAMEOKJA
 
 
-
 --○ 사용자 등록시 생성번호 자동 삽입 트리거 생성
 CREATE OR REPLACE TRIGGER TRG_INESRT_USER
     BEFORE
@@ -39,3 +38,16 @@ BEGIN
 END;
 --==>> Trigger TRG_INSERT_POINT이(가) 컴파일되었습니다.
 
+
+
+CREATE OR REPLACE TRIGGER TRG_ST_LIST
+    AFTER
+    INSERT ON IN_PROCESS_NUM
+    FOR EACH ROW
+BEGIN
+    DECLARE in_process_num NUMBER;
+    
+    -- 삽입된 행의 IN_PROCESS_NUM 값을 가져오기
+    in_process_num := :NEW.IN_PROCESS_NUM;
+    
+    CASE WHEN 

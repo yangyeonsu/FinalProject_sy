@@ -182,10 +182,16 @@ input[type="radio"] {
                alert("반려사유를 입력해주셔야 합니다.");
                return;
             }
+            $("#check").val("true");
                
          }
+         else
+         {
+        	 $("#check").val("false");
+         }
          
-         $("#adminForm").attr("inapplysend.action");
+         
+         $("#adminForm").attr("action", "inapplysend.action");
          $("#adminForm").submit();
       });
       
@@ -455,10 +461,10 @@ input[type="radio"] {
 					</div>
 					
 					
-					<c:if test="${param.state eq '미확인' }">
+					<c:if test="${param.state eq '미확인' or param.state eq '진행중'}">
 						<div class="checkLabel">
 							<label class="label">
-							<input type="radio" class="check" name="res" id="approve"><span>승인</span></label>
+							<input type="radio" class="check" name="res" id="approve" value="false"><span>승인</span></label>
 							<label class="label"><input type="radio" class="check" name="res" id="reject" value="true"><span>반려</span></label>
 						</div>
 	
@@ -474,9 +480,10 @@ input[type="radio"] {
 						<div class="sendBtn">
 							<input type="button" class="sendResult" value="처리 하기">
 						</div>
+						<input type="hidden" name="check" id="check">
 						
 					</c:if>
-					<c:if test="${param.state ne '미확인' }">
+					<c:if test="${param.state eq '승인' or param.state eq '반려'}">
 						<br><br>
 						<div class="igroup" style="width: 100%; color: red; font-size: 20pt; text-align: center; width: 570px; margin: 0 auto;">
 							처리가 완료된 사업자 등록 인증 요청서 입니다.
