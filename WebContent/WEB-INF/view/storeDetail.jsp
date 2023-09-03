@@ -595,7 +595,7 @@ String cp = request.getContextPath();
 									</div>
 									<div class="revBoard">
 										<div class="storeImgDiv">
-											<img class="storeImg" src="<%=cp%>/images/store_img01.png">
+											<img class="storeImg" src="<%=cp%>/${s.photo_link}">
 										</div>
 
 										<div class="info">
