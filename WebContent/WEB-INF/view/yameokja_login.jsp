@@ -69,19 +69,19 @@
 	/* id+pw+loginBtn */
 	#loginDiv
 	{
-		width: 300px;
-	    height: 200px;
-	    padding-top: 100px;
+	    width: 300px;
+	    height: 25vh;
+	    /* padding-top: 100px; */
 	    display: flex;
 	    flex-direction: column;
+	    justify-content: space-between;
 	}
 	
 	/* 회원가입+회원수정 */
 	#btnDiv
 	{
 	    width: 300px;
-	    height: 100px;
-	    padding-top: 3vh;
+    	height: 5vh;
 	}
 	
 	#joinBtn, #searchBtn
@@ -97,20 +97,21 @@
 	#idPwDiv
 	{
 	    width: 300px;
-	    height: 200px;
+    	height: 15vh;
 	}
 	
 	#user_id, #user_pw
 	{
-	    width: 300px;
-	    height: 35px;
+		width: 300px;
+	    height: 5vh;
 	    border-radius: 5px;
-	    margin-top: 1vh;
+	    /* margin-top: 1vh; */
+	    padding: 0;
 	}
 	
 	#user_pw
 	{
-		margin-top: 30px;
+		margin-top: 3vh;
 	}
 	
 	input[type=text], input[type=password]
@@ -145,16 +146,16 @@
 	#loginBtnDiv
 	{
 		width: 300px;
-	    height: 50px;
+    	height: 6vh;	
 	}
 	
 	#loginBtn
 	{
-		height: 40px;
-		width: 300px;
-		border-radius: 5px;
-		font-size: 12pt;
-		font-weight: bold;
+	    height: 5vh;
+	    width: 300px;
+	    border-radius: 5px;
+	    font-size: 12pt;
+	    font-weight: bold;
 	}
 	
 	.Btn 
