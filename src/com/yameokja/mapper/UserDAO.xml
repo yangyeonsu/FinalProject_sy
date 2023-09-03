@@ -6,8 +6,8 @@
 	<select id="userLoginCheck" resultType="java.lang.Integer">
 		SELECT COUNT(*)
 		FROM USING_USER
-		<!-- WHERE CRYPTPACK.DECRYPT(USER_PW, #{user_pw}) = #{user_pw} -->
-		WHERE USER_PW = #{user_pw}
+		WHERE CRYPTPACK.DECRYPT(USER_PW, #{user_pw}) = #{user_pw}
+		<!-- WHERE USER_PW = #{user_pw} -->
 		     AND USER_ID = #{user_id}
 	</select>
 	
