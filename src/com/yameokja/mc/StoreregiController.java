@@ -130,17 +130,9 @@ public class StoreregiController
                 else
                 {
                 	if (item.getFieldName().equals("st_in_num"))
-                	{
-                		System.out.println(item.getString(CHARSET));
-                		int st_in_num = Integer.parseInt(item.getString(CHARSET));
-                		srdto.setSt_in_num(st_in_num);
-                	}
+                		srdto.setSt_in_num(item.getString(CHARSET));
                 	else if (item.getFieldName().equals("st_place_num"))
-                	{
-                		String tmpStr = item.getString(CHARSET);
-                		int st_place_num = Integer.parseInt(tmpStr.substring(0, tmpStr.length()));
-                		srdto.setSt_place_num(st_place_num);
-                	}
+                		srdto.setSt_place_num(item.getString(CHARSET));
                 	else if (item.getFieldName().equals("st_name"))
                 		srdto.setSt_name(item.getString(CHARSET));
                 	else if (item.getFieldName().equals("st_location"))
@@ -164,7 +156,7 @@ public class StoreregiController
 		
 		dao.St_In_Apply(srdto);
 		
-		return "redirect:usermain.action";
+		return "redirect:main.action";
 	}
 	
 	

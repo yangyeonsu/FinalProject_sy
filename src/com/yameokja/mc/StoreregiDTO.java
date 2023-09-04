@@ -5,7 +5,7 @@ public class StoreregiDTO
 {
 	private String user_num, st_name, st_location, st_location_dt, st_tel, admin_read_date, reg_date;
 	
-	private long st_in_num, st_place_num;
+	private String st_in_num, st_place_num;
 	
 	private String st_in_file, st_place_file;
 	
@@ -85,19 +85,19 @@ public class StoreregiDTO
 	{
 		this.reg_date = reg_date;
 	}
-	public long getSt_in_num()
+	public String getSt_in_num()
 	{
 		return st_in_num;
 	}
-	public void setSt_in_num(long st_in_num)
+	public void setSt_in_num(String st_in_num)
 	{
 		this.st_in_num = st_in_num;
 	}
-	public long getSt_place_num()
+	public String getSt_place_num()
 	{
 		return st_place_num;
 	}
-	public void setSt_place_num(long st_place_num)
+	public void setSt_place_num(String st_place_num)
 	{
 		this.st_place_num = st_place_num;
 	}

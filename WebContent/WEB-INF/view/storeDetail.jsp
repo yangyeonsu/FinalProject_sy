@@ -784,7 +784,7 @@ String cp = request.getContextPath();
 							<c:forEach var="ml" items="${menuLists }">
 								<div class="menu">
 									<div class="menuPhoto">
-										<img class="thumbnail" src="<%=cp %>/images/${ml.image_link }" />
+										<img class="thumbnail" src="${ml.image_link }" />
 									</div>
 									<div class="menuName">"${ml.menu_name }"</div>
 									<div class="menuPrice">

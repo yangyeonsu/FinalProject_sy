@@ -194,7 +194,7 @@
  	<!-- 리뷰 신고 -->
 	<insert id="reviewRepInsert">
 		INSERT INTO REP_APPLY(REP_APPLY_NUM, RV_NUM, USER_NUM, REP_RS_NUM)
-		VALUES (REPAPSEQ.NEXTVAL, #{rv_num}, #{user_num}, #{rep_rs_num})
+		VALUES (REPAPSEQ.NEXTVAL+100, #{rv_num}, #{user_num}, #{rep_rs_num})
 	</insert> 
 
 	<!-- 리뷰 추천/비추천 식별 -->
@@ -247,7 +247,7 @@
 	<!-- 가게정보수정요청 insert -->
 	<insert id="reqApply">
 		INSERT INTO REQ_APPLY(REQ_APPLY_NUM, USER_NUM, ST_CHBOX_NUM, REQ_RS)
-		VALUES (REQAPSEQ.NEXTVAL, #{user_num}, #{st_chbox_num}, #{req_rs})
+		VALUES (REQAPSEQ.NEXTVAL+100, #{user_num}, #{st_chbox_num}, #{req_rs})
 	</insert>
 	
 	<!-- 리뷰키워드 범례 리스트 -->
@@ -259,7 +259,7 @@
 	<!-- 리뷰 입력 -->
 	<insert id="reviewInsert">
 		INSERT INTO RV_BOX(RV_NUM, USER_NUM, ST_NUM, RV_CONTENT, STAR_SCORE)
-		VALUES (RVSEQ.NEXTVAL, #{user_num}, #{st_num}, #{rv_content}, #{star_score})
+		VALUES (RVSEQ.NEXTVAL+100, #{user_num}, #{st_num}, #{rv_content}, #{star_score})
 
 	</insert>
 	
@@ -291,7 +291,7 @@
 	<!-- 리뷰 키워드 입력 -->
 	<insert id="rKeywordInsert">
 		INSERT INTO RV_KEY(CHOSEN_RV_KEY_NUM, ST_NUM, RV_KEY_NUM)
-		VALUES (RVKEYSEQ.NEXTVAL, #{st_num}, #{rv_key_num})
+		VALUES (RVKEYSEQ.NEXTVAL+100, #{st_num}, #{rv_key_num})
 	</insert>
 	
 	<!-- 검색 키워드 존재여부 -->
@@ -329,7 +329,7 @@
 	<!-- 리뷰 사진 입력 -->
 	<insert id="rvPhotoInsert">
 		INSERT INTO RV_PHOTO(RV_PHOTO_NUM, RV_NUM, PHOTO_LINK)
-		VALUES (RVPTSEQ.NEXTVAL, #{rv_num}, #{photo_link})
+		VALUES (RVPTSEQ.NEXTVAL+100, #{rv_num}, #{photo_link})
 	</insert>
  	
 </mapper>
