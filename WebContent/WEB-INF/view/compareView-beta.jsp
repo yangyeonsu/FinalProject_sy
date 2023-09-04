@@ -74,8 +74,8 @@ body {
 }
 
 .cCategory {
-	margin-top: 28.65vh;
-	width: 11vw;
+    margin-top: 30.3vh;
+    width: 11vw;
 }
 
 .cList, .week, .lWeek, .cOptions, .lOptions {

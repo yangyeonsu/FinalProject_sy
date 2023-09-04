@@ -384,17 +384,19 @@
 }
 
 .menuList {
-	display: flex;
+    display: flex;
     margin-top: 50px;
     justify-content: center;
+    flex-wrap: wrap;
 }
 
 .menu {
-	display: flex;
+    display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     padding-right: 2vw;
     padding-left: 2vw;
+    padding-bottom: 2vh;
     align-items: center;
 }
 

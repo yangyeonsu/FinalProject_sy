@@ -7,8 +7,8 @@
 	<select id="adminLoginCheck" resultType="java.lang.Integer">
 		SELECT COUNT(*)
 		FROM ADMIN
-		<!-- WHERE CRYPTPACK.DECRYPT(USER_PW, #{user_pw}) = #{user_pw} -->
-		WHERE ADMIN_PW = #{admin_pw}
+		WHERE CRYPTPACK.DECRYPT(ADMIN_PW, #{admin_pw}) = #{admin_pw}
+		<!-- WHERE ADMIN_PW = #{admin_pw} -->
 		     AND ADMIN_ID = #{admin_id}
 	</select>
 	

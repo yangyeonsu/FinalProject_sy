@@ -351,8 +351,8 @@ span
 /* 가게 구역 DIV */
 .storeList
 {
-    max-width: 65vw;
-    height: 45vh;
+	max-width: 65vw;
+    /* height: 45vh; */
     display: flex;
     flex-direction: row;
     padding-left: 1vw;
@@ -373,6 +373,7 @@ span
     height: 24vh;
     margin-right: 0.7vw;
     margin-left: 0.7vw;
+    margin-bottom: 2.5vh;
     border: 1px solid #f7f4ea;
 }
 
