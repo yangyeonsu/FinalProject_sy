@@ -76,7 +76,4 @@ public class ReqApplyViewDTO
 		this.st_num = st_num;
 	}
 
-	
-	
-
 }
