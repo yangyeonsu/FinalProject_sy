@@ -56,6 +56,9 @@ public interface IMainDAO
 	// 찜 목록에 가게 추가하는 메소드
 	public int jjimInsert(@Param("user_num") String user_num, @Param("st_num") int st_num);
 	
+	// 해당 사용자가 당일 찜한 목록의 갯수 출력 메소드
+	public int jjimTodayCount(@Param("user_num") String user_num);
+	
 	// 찜 목록에 가게 삭제하는 메소드
 	public int jjimDelete(@Param("user_num") String user_num, @Param("st_num") int st_num);
 	
