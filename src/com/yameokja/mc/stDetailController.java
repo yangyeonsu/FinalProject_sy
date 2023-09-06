@@ -64,11 +64,17 @@ public class stDetailController
 
 
 		int st_num = Integer.parseInt(request.getParameter("st_num"));
-		// System.out.println(st_num);
+		System.out.println(st_num);
 
 		
-		/* String data = (String) session.getAttribute("flashData"); */
-		String data = String.valueOf(session.getAttribute("flashData"));
+		//String data = (String) session.getAttribute("flashData");
+		//String data = String.valueOf(session.getAttribute("flashData"));
+		
+		String data = null;
+		
+		if (session.getAttribute("falshDate") != null)
+	         data = (String) session.getAttribute("flashData");
+		
 		session.removeAttribute("flashData");
 		if (data != null) {
 		    // flashData 값이 null이 아닌 경우의 처리 로직
@@ -429,7 +435,6 @@ public class stDetailController
 
 		String user_num = (String) session.getAttribute("user_num");
 
-
 		IstDetailDAO_userView dao = sqlSession.getMapper(IstDetailDAO_userView.class);;
 		
 		IUserDAO udao = sqlSession.getMapper(IUserDAO.class);
@@ -503,7 +508,7 @@ public class stDetailController
 				{
 					star_score = Integer.parseInt(item.getString(CHARSET));
 				}
-				else if (item.isFormField()  && item.getFieldName().equals("rv_key_num"))
+				else if (item.isFormField() && item.getFieldName().equals("rv_key_num"))
 				{
 					rv_key_num = Integer.parseInt(item.getString(CHARSET));
 				}
@@ -528,8 +533,16 @@ public class stDetailController
                 	{
                 		for (String rvkey : item.getString(CHARSET).split(","))
                 		{
-                			dao.rKeywordInsert(st_num, Integer.parseInt(rvkey));
-                			System.out.println(rvkey);
+                			Integer rkSearchNum = dao.rKeywordSearch(st_num, Integer.parseInt(rvkey));
+                			if(rkSearchNum==null)
+                			{
+                				dao.rKeywordInsert(st_num, Integer.parseInt(rvkey));
+                			}
+                			else
+                			{
+                				dao.rKeywordUpdate(st_num, Integer.parseInt(rvkey));
+                			}
+                			System.out.println("rvkey : " + rvkey);
                 		}
                 	}
                 	if (item.getFieldName().equals("skArrHidden"))
