@@ -61,6 +61,9 @@ public class compareViewController_beta
 		{
 			stnumList.add(Integer.parseInt(st_num));
 			/* System.out.println(st_num); */
+			
+			// 비교했던 테이블에 데이터 insert
+			dao.comparedInsert(user_num, Integer.parseInt(st_num));
 		}
 		/* System.out.println(comparedStore); */
 		
@@ -88,7 +91,7 @@ public class compareViewController_beta
 			{
 				if (opencloseDTO.getSt_num() == st_num)
 				{
-					System.out.println(opencloseDTO.getSt_num());
+					//System.out.println(opencloseDTO.getSt_num());
 					stOc.add(opencloseDTO);
 				}
 			}

@@ -139,5 +139,11 @@
 		WHERE  <![CDATA[ ROWNUM <= 1 ]]>
 	</select>
 	 -->
+	 
+	 <!-- 비교했던 테이블에 insert -->
+	 <insert id="comparedInsert">
+	 	INSERT INTO COMPARED_BOX(COMPARED_NUM, USER_NUM, ST_NUM, REG_DATE)
+		VALUES(COMPAREDSEQ.nextval, #{user_num}, #{st_num}, DEFAULT)
+	 </insert>
 	
 </mapper>
