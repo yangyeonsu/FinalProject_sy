@@ -487,6 +487,7 @@ public class stDetailController
 			int star_score = 0;
 			int rv_key_num = 0;
 			String search_name = "";
+			Integer imgCount = null;
 			
             ArrayList<String> rkList = new ArrayList<String>();
             // 가게 검색 키워드 받는 배열
@@ -515,6 +516,10 @@ public class stDetailController
 				else if (item.isFormField() && item.getFieldName().equals("search_name"))
 				{
 					search_name = item.getString(CHARSET);
+				}
+				else if (item.isFormField() && item.getFieldName().equals("imgCount"))
+				{
+					imgCount = Integer.parseInt(item.getString(CHARSET));
 				}
 			}
 			
@@ -630,6 +635,15 @@ public class stDetailController
 			*/
 			// 가게상세페이지로 가기 위해 st_num을 model로 전송
 			model.addAttribute("st_num", st_num);
+			
+			// 리뷰 작성 포인트 추가
+			Integer rvPhotoCount = imgCount;
+			
+			dao.addPoint(user_num, 1);
+			
+			if(rvPhotoCount != null && rvPhotoCount > 0)	
+				dao.addPoint(user_num, 2);
+			
 		} catch (Exception e)
 		{
 			e.printStackTrace();

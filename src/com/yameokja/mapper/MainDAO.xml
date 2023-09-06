@@ -241,6 +241,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		REG_DATE)
 		VALUES (LIKEBOXSEQ.NEXTVAL, #{user_num}, #{st_num}, DEFAULT)
 	</insert>
+	
+	<select id="jjimTodayCount" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS COUNT
+		FROM LIKE_BOX
+		WHERE USER_NUM = #{user_num}
+		  AND REG_DATE = TO_DATE(SYSDATE, 'YY/MM/DD')
+	</select>
 
 	<delete id="jjimDelete">
 		DELETE

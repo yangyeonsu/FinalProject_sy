@@ -275,7 +275,12 @@
 	<insert id="reviewInsert">
 		INSERT INTO RV_BOX(RV_NUM, USER_NUM, ST_NUM, RV_CONTENT, STAR_SCORE)
 		VALUES (RVSEQ.NEXTVAL, #{user_num}, #{st_num}, #{rv_content}, #{star_score})
-
+	</insert>
+	
+	<!-- 포인트 등록 -->
+	<insert id="addPoint">
+		INSERT INTO POINT_HISTORY(POINT_HIS_NUM, USER_NUM, ADD_DATE, POINT_LABEL_NUM)
+		VALUES(POINTSEQ.NEXTVAL, #{user_num}, DEFAULT, #{point_label_num})
 	</insert>
 	
 	<!-- rv_num 가져오는 쿼리문 -->

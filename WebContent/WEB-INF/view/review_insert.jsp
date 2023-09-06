@@ -15,6 +15,9 @@
 	src="http://code.jquery.com/jquery.min.js"></script>
 
 <script type="text/javascript">
+
+	var imgCount = 0;
+	
 	$(function()
 	{
 		$("#submitReviewBtn").click(function()
@@ -57,11 +60,15 @@
 
 			$("input[name=skArrHidden]").attr("value", skArr);
 			alert("검색 키워드 선택값 : " + $("input[name=skArrHidden]").val());
+			
+			$("#imgCount").attr("value", imgCount);
+			alert("사진 첨부 갯수 : " + $("#imgCount").val());
 
 			$("#userForm").attr("action", "insertreview.action");
 			$("#userForm").submit();
 		});
 	});
+
 
 	function loadFile(input)
 	{
@@ -79,6 +86,7 @@
 			
 			// 이미 업로드된 사진이 있을 경우 삭제
 			var existingImage = container.querySelector('img');
+			imgCount -= 1;
 			if (existingImage)
 			{
 				container.removeChild(existingImage);
@@ -97,6 +105,7 @@
 			
 
 			var newImage = document.createElement('img');
+			imgCount += 1;
 			newImage.setAttribute('class', 'img');
 
 			// 이미지 source 가져오기
@@ -112,7 +121,6 @@
 			// 이미지는 화면에 나타나도록 설정
 			newImage.style.visibility = 'visible';
 		}
-		
 	};
 
 	var count = 0;
@@ -303,10 +311,12 @@
 					</div>
 				</div>
 			</div>
+			
 
 			<!-- 리뷰작성완료 버튼 -->
 			<div class="reviewInsertBtnDiv">
 				<input type="hidden" id="st_num" name="st_num" value="${st_num }">
+				<input type="hidden" id="imgCount" name="imgCount" value="">
 				<button type="button" id="submitReviewBtn" class="reviewBtn">작성완료</button>
 			</div>
 
