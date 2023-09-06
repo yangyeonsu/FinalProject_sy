@@ -167,6 +167,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM COMPARING_BOX
 		WHERE
 		USER_NUM = #{user_num})
+		<!-- 
+		SELECT T.ST_NUM
+		FROM
+		(
+		SELECT *
+		FROM
+		STORE_VIEW
+		WHERE ST_NUM IN (SELECT ST_NUM
+		FROM COMPARING_BOX
+		WHERE USER_NUM = '2wmmlh401z')
+		) T JOIN COMPARING_BOX CB
+		ON T.ST_NUM = CB.ST_NUM
+		ORDER BY comparing_num 
+		-->
 	</select>
 
 	<select id="regionList" resultType="com.yameokja.mc.RegionDTO">

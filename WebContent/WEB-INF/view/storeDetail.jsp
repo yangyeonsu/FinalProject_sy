@@ -90,6 +90,11 @@ String cp = request.getContextPath();
 			$('#checkOverlay').attr("value", "false");
 		});
 		
+	});
+	
+	
+	$(function()
+	{
 		$(".comAddBtn").click(function()
 		{
 			var st_num = $(this).val()
@@ -278,9 +283,9 @@ String cp = request.getContextPath();
 			$chbox_num = optionReq[0];
 			//alert("st_num : " + $st_num + ", chbox_num :" + $chbox_num);
 
-			if (optionReq.length == null || optionReq.length == 0)
+			if (optionReq.length == null || optionReq.length == 0 || optionReq.length > 1)
 			{
-				alert("정보수정을 요청하고자 하는 항목 하나를 선택해주세요!");
+				alert("정보수정을 요청하고자 하는 항목을 1개 선택해주세요!");
 				return;
 			}
 			
@@ -289,11 +294,11 @@ String cp = request.getContextPath();
 			
 			reqPopupOpen();
 
-			$("input:checkbox[name=optionCheck]:checked").each(function()
+			/* $("input:checkbox[name=optionCheck]:checked").each(function()
 			{
 				$(this).prop("checked", false);
 				optionTotalChecked = 0;
-			});
+			}); */
 			
 			$.ajax(
 			{
@@ -305,12 +310,16 @@ String cp = request.getContextPath();
 					"chbox_num" : $chbox_num,
 					"st_num" : $st_num
 				},
-				context : this,
+				dataType : "text",
 				success : function(result)
 				{
 					if(result==1)
 					{
 						alert("가게정보 오류수정 요청이 완료되었습니다.");
+					}
+					else if(result==0)
+					{
+						alert("등록되지 않은 가게 정보로 요청이 완료되지 않았습니다.");
 					}
 				},
 				error : function(e)
@@ -319,7 +328,6 @@ String cp = request.getContextPath();
 				}
 			});
 		});
-	
 	});
 	
 	var totalChecked = 0;
@@ -340,7 +348,7 @@ String cp = request.getContextPath();
 
 	}
 
-	var optionTotalChecked = 0;
+	/* var optionTotalChecked = 0;
 
 	function optionCountChecked(field)
 	{
@@ -355,7 +363,7 @@ String cp = request.getContextPath();
 			option.checked = false;
 			optionTotalChecked -= 1;
 		}
-	}
+	} */
 
 
 
@@ -951,7 +959,7 @@ String cp = request.getContextPath();
 											<div class="oplist">
 												<input type="checkbox" id="${checkOption.chbox_name }"
 													value="${checkOption.chbox_num }" name="optionCheck"
-													onclick="optionCountChecked()">
+													><!-- onclick="optionCountChecked()" -->
 
 												<div class="oplistName">
 													<label for="${checkOption.chbox_name }">
