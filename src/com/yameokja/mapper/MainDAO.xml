@@ -210,7 +210,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="comparingInsert">
 		INSERT INTO COMPARING_BOX(COMPARING_NUM, USER_NUM,
 		ST_NUM, REG_DATE)
-		VALUES(COMPARINGSEQ.NEXTVAL+100, #{user_num}, #{st_num},
+		VALUES(COMPARINGSEQ.NEXTVAL, #{user_num}, #{st_num},
 		DEFAULT)
 	</insert>
 
@@ -239,7 +239,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="jjimInsert">
 		INSERT INTO LIKE_BOX(LIKE_NUM, USER_NUM, ST_NUM,
 		REG_DATE)
-		VALUES (LIKEBOXSEQ.NEXTVAL+100, #{user_num}, #{st_num}, DEFAULT)
+		VALUES (LIKEBOXSEQ.NEXTVAL, #{user_num}, #{st_num}, DEFAULT)
 	</insert>
 
 	<delete id="jjimDelete">

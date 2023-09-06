@@ -131,7 +131,7 @@
 		LEFT JOIN USING_USER UU
 		ON T.USER_NUM = UU.USER_NUM
 		WHERE T.ST_NUM = #{st_num, jdbcType=INTEGER}
-        ORDER BY RV_NUM 
+        ORDER BY RV_NUM DESC
 	</select>
 
 	<!-- 리뷰 사진 -->
@@ -144,14 +144,15 @@
 	
  	<!-- 리뷰 키워드 -->
  	<select id="reviewKeys" resultType = "com.yameokja.mc.StoreReviewKeyDTO">
- 		<!-- SELECT RKL.RV_KEY_NAME AS RV_KEY_NAME
+ 		SELECT RKL.RV_KEY_NAME AS RV_KEY_NAME
 		     , T.COUNT AS RV_KEY_COUNT
 		FROM RV_KEY_LABEL RKL RIGHT JOIN (SELECT RV_KEY_NUM, COUNT
 		                                 FROM RV_KEY
 		                                 WHERE ST_NUM = #{st_num, jdbcType=INTEGER}) T
 		  ON RKL.RV_KEY_NUM = T.RV_KEY_NUM
 		WHERE RKL.RV_KEY_NAME IS NOT NULL
-		ORDER BY T.COUNT -->
+		ORDER BY T.COUNT DESC
+		<!-- 
 		SELECT T2.RV_KEY_NAME AS RV_KEY_NAME, COUNT(T2.RV_KEY_NAME) AS RV_KEY_COUNT
 		FROM
 		(
@@ -164,6 +165,7 @@
 		WHERE RKL.RV_KEY_NAME IS NOT NULL
 		) T2
 		GROUP BY T2.RV_KEY_NAME
+		-->
  	</select>
   	
 <!--
