@@ -64,7 +64,7 @@ public class stDetailController
 
 
 		int st_num = Integer.parseInt(request.getParameter("st_num"));
-		System.out.println(st_num);
+		//System.out.println("st_num : " + st_num);
 
 		
 		//String data = (String) session.getAttribute("flashData");

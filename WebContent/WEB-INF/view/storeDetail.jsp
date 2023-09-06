@@ -833,9 +833,11 @@ String cp = request.getContextPath();
 										<div class="rvTop">
 											<div class="userNickname">"${rv.user_nickname }"</div>
 											<div>
+											<c:if test="${user_num ne rv.user_num }">
 												<button type="button" class="repBtn rvBtn"
 													onclick="popupOpen()" value="${rv.rv_num }">신고하기</button>
-
+											</c:if>
+											
 											</div>
 										</div>
 
