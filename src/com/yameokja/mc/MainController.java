@@ -64,20 +64,22 @@ public class MainController
 		else
 			model.addAttribute("jjim_list", null);
 
-		if (hotList.size() > 3)
-			model.addAttribute("hot_list", dao.getStoreList(hotList));
+		if (hotList.size() >= 5)
+		{
+			hotList = hotList.subList(0, 5);
+		}
 		else
 		{
-			for (int i=0; i<5; i++)
+			for (int i=0; i<=5-(hotList.size()); i++)
 			{
 				/* hotList.add(random.nextInt()); */
 				hotList.add(i+1);
 			}
 			
-			/* System.out.println(hotList); */
-			
-			model.addAttribute("hot_list", dao.getStoreList(hotList));
+			//System.out.println(hotList);
 		}
+		
+		model.addAttribute("hot_list", dao.getStoreList(hotList));
 
 		if (comList.size() > 0)
 			model.addAttribute("comList", dao.getStoreList(comList));
@@ -132,7 +134,7 @@ public class MainController
 
 			for (int j = 0; j < temp.size(); j++)
 			{
-				System.out.println(temp.get(j));
+				//System.out.println(temp.get(j));
 				finalKeyword.add(temp.get(j));
 			}
 		}
@@ -475,7 +477,7 @@ public class MainController
 		model.addAttribute("keyword", keyword);
 		
 		// 검색 단어들로 찾은 st_num 리스트
-		//model.addAttribute("firstSearchResult", finalKeyword);
+		model.addAttribute("firstSearchResult", finalKeyword);
 
 		// 필터 검색을 위한 범례리스트
 		model.addAttribute("regionList", dao.regionList());
@@ -544,16 +546,26 @@ public class MainController
 		}
 		
 		ArrayList<Integer> filterResult = dao.filterSearchList(regionCbList, catCbList, stKeyCbList, finalKeyword);
-		
-		if(filterResult==null)
+
+
+		if(filterResult == null)
 		{
-			ArrayList<StoreDTO> searchList = dao.getStoreList(filterResult);
-			
-			model.addAttribute("searchList", searchList);
+			model.addAttribute("searhList", null);
 		}
 		else
 		{
-			model.addAttribute("searhList", null);
+			/*
+			System.out.println("filterSearchList : ");
+			
+			for (Integer integer : filterResult)
+			{
+				System.out.println(integer);
+			}
+			*/
+			
+			ArrayList<StoreDTO> searchList = dao.getStoreList(filterResult);
+			
+			model.addAttribute("searchList", searchList);
 		}
 
 		result = "/WEB-INF/view/user_main_2.jsp";

@@ -67,7 +67,8 @@ public class stDetailController
 		// System.out.println(st_num);
 
 		
-		String data = (String) session.getAttribute("flashData");
+		/* String data = (String) session.getAttribute("flashData"); */
+		String data = String.valueOf(session.getAttribute("flashData"));
 		session.removeAttribute("flashData");
 		if (data != null) {
 		    // flashData 값이 null이 아닌 경우의 처리 로직
@@ -343,20 +344,29 @@ public class stDetailController
 			@RequestParam("chbox_num") int chbox_num, HttpServletRequest request)
 	{
 		int result = 0;
-
+		
 		HttpSession session = request.getSession();
 		String user_num = (String) session.getAttribute("user_num");
 
 		IstDetailDAO_userView dao = sqlSession.getMapper(IstDetailDAO_userView.class);
 
 		// st_num 과 chbox_num으로 st_chbox_num 찾기
-		int st_chbox_num = 0;
-		st_chbox_num = dao.searchStChboxnum(st_num, chbox_num);
-
-		// 찾은 st_chbox_num 으로 req_apply에 데이터 insert
-		result = dao.reqApply(user_num, req_rs, st_chbox_num);
-
-		return result;
+		st_num = Integer.parseInt(request.getParameter("st_num"));
+		System.out.println(st_num);
+		System.out.println(chbox_num);
+		Integer st_chbox_num = dao.searchStChboxnum(st_num, chbox_num);
+		
+		if(st_chbox_num == null)
+		{
+			return result;
+		}
+		else
+		{
+			// 찾은 st_chbox_num 으로 req_apply에 데이터 insert
+			result = dao.reqApply(user_num, req_rs, st_chbox_num);
+			return result;
+		}
+		
 	}
 
 	// 리뷰 작성 폼 연결
@@ -526,8 +536,8 @@ public class stDetailController
                 	{
                 		for (String sk : item.getString(CHARSET).split(","))
                 		{
-                			int searchNum = smdao.searchKeyselect(st_num, sk);
-                			if (searchNum == -1)
+                			Integer searchNum = smdao.searchKeyselect(st_num, sk);
+                			if (searchNum==null)
                        		{
                        			smdao.searchKeyinsert(st_num, sk);
                        		}
