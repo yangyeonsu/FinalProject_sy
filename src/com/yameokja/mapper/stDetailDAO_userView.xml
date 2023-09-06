@@ -106,6 +106,7 @@
  	<select id="reviews" resultType="com.yameokja.mc.StoreReviewDTO">
 		SELECT UU.USER_NICKNAME AS USER_NICKNAME,T.REC AS REC, T.NONREC AS NONREC
 		     , T.RV_CONTENT AS RV_CONTENT, T.STAR_SCORE AS STAR_SCORE, T.REG_DATE AS REG_DATE, T.RV_NUM AS RV_NUM
+		     , T.USER_NUM AS USER_NUM
 		FROM
 		(                          
 		SELECT RB.RV_NUM AS RV_NUM, NVL(RNR.REC, 0) AS REC, NVL(RNR.NONREC, 0) AS NONREC
@@ -274,7 +275,12 @@
 	<insert id="reviewInsert">
 		INSERT INTO RV_BOX(RV_NUM, USER_NUM, ST_NUM, RV_CONTENT, STAR_SCORE)
 		VALUES (RVSEQ.NEXTVAL, #{user_num}, #{st_num}, #{rv_content}, #{star_score})
-
+	</insert>
+	
+	<!-- 포인트 등록 -->
+	<insert id="addPoint">
+		INSERT INTO POINT_HISTORY(POINT_HIS_NUM, USER_NUM, ADD_DATE, POINT_LABEL_NUM)
+		VALUES(POINTSEQ.NEXTVAL, #{user_num}, DEFAULT, #{point_label_num})
 	</insert>
 	
 	<!-- rv_num 가져오는 쿼리문 -->

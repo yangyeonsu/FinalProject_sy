@@ -53,6 +53,8 @@ public interface IstDetailDAO_userView
 	// 리뷰 입력
 	public int reviewInsert(@Param("user_num") String user_num, @Param("st_num") int st_num, @Param("rv_content") String rv_content, @Param("star_score") int star_score);
 	
+	// 리뷰 입력 시 포인트 추가
+	public int addPoint(@Param("user_num") String user_num, @Param("point_label_num") int point_label_num);
 	
 	// 리뷰 키워드 존재여부
 	public Integer rKeywordSearch(@Param("st_num") int st_num, @Param("rv_key_num") int rv_key_num);

@@ -336,10 +336,17 @@ public class MainController
 		String result = "";
 
 		IMainDAO dao = sqlSession.getMapper(IMainDAO.class);
+		IstDetailDAO_userView stDao = sqlSession.getMapper(IstDetailDAO_userView.class);
 
 		if (dao.jjimSearch(user_num, Integer.parseInt(st_num)) == 0)
 		{
 			dao.jjimInsert(user_num, Integer.parseInt(st_num));
+			
+			if(dao.jjimTodayCount(user_num) <= 3)
+			{
+				stDao.addPoint(user_num, 3);
+			}
+			
 			result = "❤️";
 		} else
 		{

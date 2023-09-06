@@ -53,6 +53,12 @@ String cp = request.getContextPath();
 				alert("2개부터 비교 가능합니다.");
 				return;
 			}
+			
+			if ($('input:checkbox[name=comStImgCB]:checked').length == 0)
+			{
+				alert("최소 2개 이상 선택해주세요.");
+				return;
+			}
 
 			var checkArray = "";
 
