@@ -881,36 +881,38 @@ String cp = request.getContextPath();
 
 										<div class="rvBottom">
 											<div class="recNonrecBtnDiv">
-												<c:choose>
-													<c:when
-														test="${not empty userRnList and fn:contains(userRnList, rn)}">
-														<button type="button" id="nonrec${rn }" name="nonrec"
-															class="recBtn rvBtn" value="${rn }">비추천 👎
-															(${rv.nonrec })</button>
-														<button type="button" id="rec${rn }" name="rec"
-															class="recBtn rvBtn" value="${rn }"
-															style="border: 2px solid #ef6351">추천 👍
-															(${rv.rec } )</button>
-													</c:when>
-													<c:when
-														test="${not empty userNrnList and fn:contains(userNrnList, rn)}">
-														<button type="button" id="nonrec${rn }" name="nonrec"
-															class="recBtn rvBtn" value="${rn }"
-															style="border: 2px solid #ef6351">비추천 👎
-															(${rv.nonrec })</button>
-														<button type="button" id="rec${rn }" name="rec"
-															class="recBtn rvBtn" value="${rn }">추천 👍
-															(${rv.rec } )</button>
-													</c:when>
-													<c:otherwise>
-														<button type="button" id="nonrec${rn }" name="nonrec"
-															class="recBtn rvBtn" value="${rn }">비추천 👎
-															(${rv.nonrec })</button>
-														<button type="button" id="rec${rn}" name="rec"
-															class="recBtn rvBtn" value="${rn }">추천 👍
-															(${rv.rec } )</button>
-													</c:otherwise>
-												</c:choose>
+												<c:if test="${user_num ne rv.user_num }">
+													<c:choose>
+														<c:when
+															test="${not empty userRnList and fn:contains(userRnList, rn)}">
+															<button type="button" id="nonrec${rn }" name="nonrec"
+																class="recBtn rvBtn" value="${rn }">비추천 👎
+																(${rv.nonrec })</button>
+															<button type="button" id="rec${rn }" name="rec"
+																class="recBtn rvBtn" value="${rn }"
+																style="border: 2px solid #ef6351">추천 👍
+																(${rv.rec } )</button>
+														</c:when>
+														<c:when
+															test="${not empty userNrnList and fn:contains(userNrnList, rn)}">
+															<button type="button" id="nonrec${rn }" name="nonrec"
+																class="recBtn rvBtn" value="${rn }"
+																style="border: 2px solid #ef6351">비추천 👎
+																(${rv.nonrec })</button>
+															<button type="button" id="rec${rn }" name="rec"
+																class="recBtn rvBtn" value="${rn }">추천 👍
+																(${rv.rec } )</button>
+														</c:when>
+														<c:otherwise>
+															<button type="button" id="nonrec${rn }" name="nonrec"
+																class="recBtn rvBtn" value="${rn }">비추천 👎
+																(${rv.nonrec })</button>
+															<button type="button" id="rec${rn}" name="rec"
+																class="recBtn rvBtn" value="${rn }">추천 👍
+																(${rv.rec } )</button>
+														</c:otherwise>
+													</c:choose>
+												</c:if>
 											</div>
 										</div>
 									</div>
