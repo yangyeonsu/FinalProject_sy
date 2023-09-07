@@ -151,7 +151,12 @@ String cp = request.getContextPath();
 									</label>
 								</div>
 								<!-- 한 가게 가게이름 영역 -->
-								<div class="comStoreNameDiv">${com.st_name}</div>
+								<div class="comStoreNameDiv">
+									<button type="button" value="${com.st_num}" class="comStoreBtn"
+												onclick="location.href='stdetail-userview.action?st_num=${com.st_num}'">
+									${com.st_name }
+									</button>
+								</div>
 							</div>
 						</c:forEach>
 						<c:forEach begin="0" end="${10 - fn:length(comList)}">

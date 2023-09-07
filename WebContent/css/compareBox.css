@@ -70,7 +70,7 @@
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	height: 15vh;
+	height: 8vw;
 }
 
 /* 비교함의 가게영역의 가게 이미지*/
@@ -89,7 +89,7 @@
 /* 비교함의 가게영역 이미지의 label */
 .stLabel
 {
-	max-height:5vw;
+	max-height:4.5vw;
 }
 
 /* 비교함 가게영역의 가게 이미지 CB(CheckBox) */
@@ -176,6 +176,15 @@
 	transition: 0.2s;
 } */
 
+.comStoreBtn
+{
+	width: 4.5vw;
+	border: 1px solid #f7f4ea;
+	background-color: #fff;
+	font-size: 0.2vw;
+	cursor: pointer;
+}
+
 .comDelete
 {
 	display: inline;
@@ -197,7 +206,7 @@
 /* 비교함의 가게 이름 */
 .comStoreNameDiv
 {
-	font-size: 8pt;
+	/* font-size: 8pt; */
 	padding-top: 0.5vw;
 }
 
