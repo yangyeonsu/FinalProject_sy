@@ -596,7 +596,7 @@ String cp = request.getContextPath();
 
 								<div class="background" style="font-weight: bold;">
 									<div class="storeNameDiv">
-										<span style="font-size: 28pt; font-weight: bold;">${s.st_name }</span>
+										<span style="font-size: 2vw; font-weight: bold;">${s.st_name }</span>
 										<input type="hidden" name="st_name" value="${s.st_name }">
 										<button type="button" class="comAddBtn" value="${s.st_num}"
 											style="margin-left: 1vw;">+</button>
