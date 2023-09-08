@@ -346,33 +346,32 @@ public class stDetailController
 	// 가게정보오류수정요청
 	@RequestMapping(value = "/reqapply.action")
 	@ResponseBody
-	public int reqApply(@RequestParam("req_rs") String req_rs, @RequestParam("st_num") int st_num,
+	public String stReqApply(@RequestParam("req_rs") String req_rs, @RequestParam("st_num") int st_num,
 			@RequestParam("chbox_num") int chbox_num, HttpServletRequest request)
 	{
-		int result = 0;
-		
 		HttpSession session = request.getSession();
 		String user_num = (String) session.getAttribute("user_num");
 
 		IstDetailDAO_userView dao = sqlSession.getMapper(IstDetailDAO_userView.class);
 
+		String result = "0";
+		
 		// st_num 과 chbox_num으로 st_chbox_num 찾기
 		st_num = Integer.parseInt(request.getParameter("st_num"));
-		System.out.println(st_num);
-		System.out.println(chbox_num);
+		//System.out.println("st_num :  " + st_num);
+		//System.out.println("chbox_num : " + chbox_num);
 		Integer st_chbox_num = dao.searchStChboxnum(st_num, chbox_num);
 		
-		if(st_chbox_num == null)
-		{
-			return result;
-		}
-		else
+		if(st_chbox_num != null)
 		{
 			// 찾은 st_chbox_num 으로 req_apply에 데이터 insert
-			result = dao.reqApply(user_num, req_rs, st_chbox_num);
-			return result;
+			if(dao.reqApply(user_num, req_rs, st_chbox_num)==1)
+			{
+				result = "1";
+			}
 		}
 		
+		return result;
 	}
 
 	// 리뷰 작성 폼 연결
@@ -430,7 +429,7 @@ public class stDetailController
 		
 		String result = "";
 		
-		// 사용자 정보 st_num
+		// 사용자 정보 user_num
 		HttpSession session = request.getSession();
 
 		String user_num = (String) session.getAttribute("user_num");
@@ -485,45 +484,13 @@ public class stDetailController
 			int st_num = 0;
 			String rv_content = "";
 			int star_score = 0;
-			int rv_key_num = 0;
-			String search_name = "";
 			Integer imgCount = null;
 			
-            ArrayList<String> rkList = new ArrayList<String>();
+            //ArrayList<String> rkList = new ArrayList<String>();
             // 가게 검색 키워드 받는 배열
-    		ArrayList<String> skArr = new ArrayList<String>();
+    		//ArrayList<String> skArr = new ArrayList<String>();
 
 			List<FileItem> items = fileUpload.parseRequest(request);
-
-			for (FileItem item : items)
-			{
-				if (item.isFormField() && item.getFieldName().equals("st_num"))
-				{
-					st_num = Integer.parseInt(item.getString(CHARSET));
-				} 
-				else if (item.isFormField() && item.getFieldName().equals("rv_content"))
-				{
-					rv_content = item.getString(CHARSET);
-				} 
-				else if (item.isFormField() && item.getFieldName().equals("star_score"))
-				{
-					star_score = Integer.parseInt(item.getString(CHARSET));
-				}
-				else if (item.isFormField() && item.getFieldName().equals("rv_key_num"))
-				{
-					rv_key_num = Integer.parseInt(item.getString(CHARSET));
-				}
-				else if (item.isFormField() && item.getFieldName().equals("search_name"))
-				{
-					search_name = item.getString(CHARSET);
-				}
-				else if (item.isFormField() && item.getFieldName().equals("imgCount"))
-				{
-					imgCount = Integer.parseInt(item.getString(CHARSET));
-				}
-			}
-			
-           
             
             for (FileItem item : items)
             {
@@ -534,35 +501,43 @@ public class stDetailController
                 		star_score = Integer.parseInt(item.getString(CHARSET));
                 	if (item.getFieldName().equals("reviewContent"))
                 		rv_content = item.getString(CHARSET);
-                	if (item.getFieldName().equals("rkArrHidden"))
+                	if (item.getFieldName().equals("st_num"))
+                		st_num = Integer.parseInt(item.getString(CHARSET));
+                	if (item.getFieldName().equals("rvArrHidden"))
                 	{
                 		for (String rvkey : item.getString(CHARSET).split(","))
                 		{
-                			Integer rkSearchNum = dao.rKeywordSearch(st_num, Integer.parseInt(rvkey));
-                			if(rkSearchNum==null)
-                			{
-                				dao.rKeywordInsert(st_num, Integer.parseInt(rvkey));
-                			}
-                			else
-                			{
-                				dao.rKeywordUpdate(st_num, Integer.parseInt(rvkey));
-                			}
-                			System.out.println("rvkey : " + rvkey);
+							if(!(rvkey.equals("")) || rvkey!=null )
+							{
+								Integer rvkey_num = dao.rKeywordSearch(st_num, Integer.parseInt(rvkey));
+	                			if(rvkey_num==null)
+	                			{
+	                				dao.rKeywordInsert(st_num, Integer.parseInt(rvkey));
+	                			}
+	                			else
+	                			{
+	                				dao.rKeywordUpdate(st_num, Integer.parseInt(rvkey));
+	                			}
+							}
                 		}
                 	}
                 	if (item.getFieldName().equals("skArrHidden"))
                 	{
                 		for (String sk : item.getString(CHARSET).split(","))
                 		{
-                			Integer searchNum = smdao.searchKeyselect(st_num, sk);
-                			if (searchNum==null)
-                       		{
-                       			smdao.searchKeyinsert(st_num, sk);
-                       		}
-                       		else
-                       		{	
-                   				smdao.stsearchKeyUpdate(st_num, sk);
-                       		}
+                			//System.out.println(!(sk.equals("")));
+                			if(!(sk.equals("")))
+                			{
+	                			Integer searchNum = dao.skeywordSearch(st_num, sk);
+	                			if (searchNum==null)
+	                       		{
+	                       			dao.sKeywordInsert(st_num, sk);
+	                       		}
+	                       		else
+	                       		{	
+	                   				dao.skeywordUpdate(st_num, sk);
+	                       		}
+	                		}
                 		}
                 	}
                 }

@@ -237,6 +237,21 @@ String cp = request.getContextPath();
 		});
 		
 	});
+	
+	function enterkey() 
+	{	
+		if (window.event.keyCode == 13)
+		{
+			if ($("#typingArea").val() == "")
+			{
+				$("#typingArea").focus();
+				return;
+			}
+			
+			$("#userForm").attr("action", "search.action");
+			$("#userForm").submit();
+		}
+	}
 </script>
 
 </head>

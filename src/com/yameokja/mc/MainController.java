@@ -224,7 +224,12 @@ public class MainController
 				 */
 				html += "		</label>";
 				html += "	</div>";
-				html += "	<div class=\"comStoreNameDiv\">"+store.getSt_name()+"</div>";
+				html += "	<div class=\"comStoreNameDiv\">";
+				html += "		<button type=\"button\" value=\"" + String.valueOf(store.getSt_num()) + "\" class=\"comStoreBtn\"";
+				html +=	"			onclick=\"location.href='stdetail-userview.action?st_num=" + String.valueOf(store.getSt_num()) + "'\">"; 
+				html +=				String.valueOf(store.getSt_name()); 
+				html +=	"		</button>";
+				html += "	</div>";
 				html += "</div>";
 			}
 			if (storeList.size() < 10)
@@ -293,7 +298,12 @@ public class MainController
 
 					html += "		</label>";
 					html += "	</div>";
-					html += "	<div class=\"comStoreNameDiv\">"+store.getSt_name()+"</div>";
+					html += "	<div class=\"comStoreNameDiv\">";
+					html += "		<button type=\"button\" value=\"" + String.valueOf(store.getSt_num()) + "\" class=\"comStoreBtn\"";
+					html +=	"			onclick=\"location.href='stdetail-userview.action?st_num=" + String.valueOf(store.getSt_num()) + "'\">"; 
+					html +=				String.valueOf(store.getSt_name()); 
+					html +=	"		</button>";
+					html += "	</div>";
 					html += "</div>";
 				}
 				
@@ -555,9 +565,9 @@ public class MainController
 		ArrayList<Integer> filterResult = dao.filterSearchList(regionCbList, catCbList, stKeyCbList, finalKeyword);
 
 
-		if(filterResult == null)
+		if(filterResult.size() == 0)
 		{
-			model.addAttribute("searhList", null);
+			model.addAttribute("searchList", null);
 		}
 		else
 		{

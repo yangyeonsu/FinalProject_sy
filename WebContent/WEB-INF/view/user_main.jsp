@@ -22,8 +22,6 @@
 
 <link rel="stylesheet" type="text/css" href="<%=cp%>/css/user_main.css">
 
-<link rel="stylesheet" type="text/css" href="<%=cp%>/css/compareBox.css">
-
 <script type="text/javascript">
 	$(document).ready(function()
 	{
