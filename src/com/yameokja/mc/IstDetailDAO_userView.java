@@ -43,7 +43,7 @@ public interface IstDetailDAO_userView
 	// st_chbox_num 찾기
 	public Integer searchStChboxnum(@Param("st_num") int st_num, @Param("chbox_num") int chbox_num);
 	// 가게정보오류수정요청 INSERT
-	public int reqApply(@Param("user_num") String user_num, @Param("req_rs") String req_rs, @Param("st_chbox_num") int st_chbox_num);
+	public Integer reqApply(@Param("user_num") String user_num, @Param("req_rs") String req_rs, @Param("st_chbox_num") int st_chbox_num);
 	
 	
 	// 리뷰 키워드 범례 리스트
