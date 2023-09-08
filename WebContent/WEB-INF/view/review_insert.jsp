@@ -64,8 +64,17 @@
 			$("#imgCount").attr("value", imgCount);
 			alert("사진 첨부 갯수 : " + $("#imgCount").val());
 
-			$("#userForm").attr("action", "insertreview.action");
-			$("#userForm").submit();
+			if(confirm("리뷰 등록 후 수정 또는 삭제 할 수 없습니다. 해당 내용으로 등록하시겠습니까?"))
+			{
+				$("#userForm").attr("action", "insertreview.action");
+				$("#userForm").submit();
+			}
+			else
+			{
+				alert("리뷰 입력을 취소하셨습니다.");
+				return;
+			}
+			
 		});
 	});
 
