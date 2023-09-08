@@ -400,6 +400,31 @@
 	font-weight: bold;
 }
 
+.menuNameHidden
+{
+	display: inline-block;
+  	color: #f7f4ea;
+  	font-weight: bold;
+}
+
+.menuNameHidden 
+{
+	  display: none;		/*평소에 안보여야 하니까 none으로*/
+	  position: absolute;	/*공중에 띄어져있으니까 absolute*/
+	  max-width: 20vw;
+	  border: 3px solid #f7f4ea;
+	  border-radius: 5px;
+	  /*padding: 5px;*/
+	  font-size: 1em;
+	  color: #3a001e;
+	  background-color: white;
+}
+
+.menuName:hover + .menuNameHidden 
+{
+	display: block;
+}
+
 .thumbnail {
     width: 8vw;
     height: 8vw;

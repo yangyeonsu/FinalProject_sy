@@ -16,8 +16,6 @@ String cp = request.getContextPath();
 <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
 <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
 
-<link rel="stylesheet" type="text/css" href="<%=cp%>/css/compareBox.css">
-
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery.min.js"></script>
 
@@ -197,6 +195,27 @@ String cp = request.getContextPath();
 			});
 		});
 		
+		// 특정 메뉴 이름 hover 시 나타나기
+		/*
+		$("#menuName").hover(function()
+		{
+			if($(".menuName").attr("value").length > 11)
+			{
+				id = $(".menuNameHidden").attr("id");
+				id_value = $("#"+id).attr("value");
+				
+				if(id_value.length > 11)
+				{
+					$("#"+id).css("display", "block");
+				}
+			}
+		}, function()
+		{
+			$("#"+id).css("display", "none");
+		});
+		*/
+
+		
 		// 리뷰 작성 페이지로 이동
 		$("#insertReview").click(function()
 		{
@@ -270,6 +289,7 @@ String cp = request.getContextPath();
 		$("#reqBtn").click(function()
 		{
 			$st_num = $("input[name=st_num]").val();
+			// 확인
 			//alert($st_num);
 			
 			var optionReq = [];
@@ -277,29 +297,44 @@ String cp = request.getContextPath();
 			$("input:checkbox[name=optionCheck]:checked").each(function()
 			{
 				optionReq.push($(this).val());
+				// 확인
 				//alert($(this).val());
 			});
 
 			$chbox_num = optionReq[0];
+			// 확인
 			//alert("st_num : " + $st_num + ", chbox_num :" + $chbox_num);
 
+			// 체크박스 선택이 이루어지지 않았다면 alert 후 return
 			if (optionReq.length == null || optionReq.length == 0 || optionReq.length > 1)
 			{
 				alert("정보수정을 요청하고자 하는 항목을 1개 선택해주세요!");
 				return;
 			}
 			
-			$req_rs = $("#reqRs").val();
-			alert("reqRs : " + $req_rs);
+			// 정보수정요청 사유를 입력하지 않았다면 alert 후 return
+			if ($("#reqRs").val() == "")
+			{
+				alert("정보수정요청 사유를 적어주세요!");
+				return;
+			}
 			
-			reqPopupOpen();
+			// 정보수정요청 사유 변수에 할당
+			$req_rs = $("#reqRs").val();
+			// 확인
+			//alert("reqRs : " + $req_rs);
 
-			/* $("input:checkbox[name=optionCheck]:checked").each(function()
+			reqPopupOpen();
+			
+			// 요청 후 입력된 정보 초기화
+			$("input:checkbox[name=optionCheck]:checked").each(function()
 			{
 				$(this).prop("checked", false);
-				optionTotalChecked = 0;
-			}); */
+				/* optionTotalChecked = 0; */
+			});
+			$("#reqRs").val('');
 			
+			// ajax 수행
 			$.ajax(
 			{
 				url : "reqapply.action",
@@ -313,11 +348,11 @@ String cp = request.getContextPath();
 				dataType : "text",
 				success : function(result)
 				{
-					if(result==1)
+					if(result=="1")
 					{
 						alert("가게정보 오류수정 요청이 완료되었습니다.");
 					}
-					else if(result==0)
+					else if(result=="0")
 					{
 						alert("등록되지 않은 가게 정보로 요청이 완료되지 않았습니다.");
 					}
@@ -347,26 +382,6 @@ String cp = request.getContextPath();
 		}
 
 	}
-
-	/* var optionTotalChecked = 0;
-
-	function optionCountChecked(field)
-	{
-		if (field.checked)
-			optionTotalChecked += 1;
-		else
-			optionTotalChecked -= 1;
-
-		if (optionTotalChecked > 1)
-		{
-			alert("한 개만 선택 가능합니다.");
-			option.checked = false;
-			optionTotalChecked -= 1;
-		}
-	} */
-
-
-
 
 	// 모달--------------------------------------------------------------------------
 	function popupOpen()
@@ -794,7 +809,21 @@ String cp = request.getContextPath();
 									<div class="menuPhoto">
 										<img class="thumbnail" src="${ml.image_link }" />
 									</div>
-									<div class="menuName">"${ml.menu_name }"</div>
+									<%-- <div class="menuName">"${ml.menu_name }"</div> --%>
+									<c:choose>
+										<c:when test="${fn:length(ml.menu_name) > 11}">
+											<div class="menuName" id="menuName${ml.menu_num }" value="${ml.menu_name }">
+												${fn:substring(ml.menu_name, 0, 10)}...
+											</div>
+										</c:when>
+										<c:otherwise>
+											<div class="menuName" id="menuName${ml.menu_num }" value="${ml.menu_name }">
+												${ml.menu_name}
+											</div>
+										</c:otherwise>
+									</c:choose>
+									<div class="menuNameHidden" id="menuNameHidden${ml.menu_num }" value="${ml.menu_name }">
+										${ml.menu_name}</div>
 									<div class="menuPrice">
 										<fmt:formatNumber value="${ml.price }" pattern="#,###" />
 										원

@@ -600,8 +600,8 @@ body {
 								<c:set var="dbstocItem" value="${dbstoc[stnnumStatus.index]}" />
 								<c:choose>
 									<c:when test="${fn:length(dbstocItem) < 1}">
-										<c:forEach begin="0" end="7">
-											<div>
+										<c:forEach begin="0" end="6">
+											<div class="lDay">
 												&nbsp;
 											</div>
 										</c:forEach>

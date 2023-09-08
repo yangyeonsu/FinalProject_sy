@@ -14,6 +14,9 @@ String cp = request.getContextPath();
 
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery.min.js"></script>
+	
+<link rel="stylesheet" type="text/css" href="<%=cp%>/css/compareBox.css">
+
 <script type="text/javascript">
 	/* 
 	 $(function()
