@@ -389,7 +389,7 @@ String cp = request.getContextPath();
 			var pays = [];
 			$("input:checkbox[name=pay]:checked").each(function()
 			{
-				pays.push($(this).attr("id").substring(6));
+				pays.push($(this).attr("id").substring(5));
 			});
 			$("#pays").val(pays);
 
