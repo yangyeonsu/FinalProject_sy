@@ -15,12 +15,6 @@ body {
 	margin: 0;
 }
 
-/* 0730 수정
-* {
-	margin: 0px;
-	padding: 0px;
-} */
-
 /* 전체 틀 */
 .container {
 	width: 100%;
@@ -33,16 +27,22 @@ body {
 	display: flex;
 }
 
-.jjimlist {
-	/* background-color: #f7f4ea; */
+/* 가게 대표이미지 버튼 */
+.storeBtn
+{
+	width: 9vw;
+    height: 9vw;
+    border: none;
+    padding: 0;
 }
 
-.jimlist {
+.jimlist, .comlist {
 	display: flex;
 	justify-content: center;
+	margin-bottom: 2vw;
 }
 
-.jimstore
+.jimstore, .comstore
 {
 	width: 10vw;
     display: flex;
@@ -55,13 +55,13 @@ body {
     justify-content: space-around;
 }
 
-.jimstoreImg
+.jimstoreImg, .comstoreImg
 {
 	width: 9vw;
     height: 8vw;
 }
 
-.jimstImg
+.jimstImg, .comstImg
 {
 	max-width: 9vw;
     max-height: 9vw;
@@ -72,7 +72,7 @@ body {
     border-radius: 5px;
 }
 
-.jimstoreName
+.jimstoreName, .comstoreName
 {
 	padding-top: 0.5vw;
 }
@@ -106,7 +106,7 @@ body {
 	/* width: 69vw; */
 	width: 64vw;
     padding: 5vh 0 0 0;
-    margin-left: 6vw;
+    margin-left: 3vw;
 }
 
 .col-md-2 {
@@ -138,6 +138,7 @@ body {
 	display: flex;
 	flex-direction: column;
 	margin-bottom: 8vh;
+	margin-top: 4vw;
 }
 
 .dao {
@@ -241,6 +242,7 @@ body {
 	justify-content: space-between;
 	padding-left: 1vw;
 	padding-right: 1vw;
+	margin-bottom: 1vw;
 }
 
 .title {
@@ -279,4 +281,88 @@ footer {
     margin-top: 5vh;
     justify-content: space-around;
     align-items: flex-start;
+}
+
+/* 모달 */
+#rvPopup
+{
+	overflow: hidden;
+	height: auto;
+	display: block;
+	border-radius: 20px;
+	box-shadow: 1.5px 2px 2px #333;
+	width: 500px;
+	height: 28vw;
+	z-index: 200;
+	position: fixed;
+  	top: 50%;
+  	left: 50%;
+  	/* transform: translate(-50%, -50%); */
+	/* top: 20%;
+	left: 10%; */
+	background-color:#fff;
+}
+
+#rvPopup h4{
+	font-size: 15px;
+    height: 24px;
+    color: #3a001e;
+    font-weight: normal;
+}
+
+#rvPopup h4 a.close{
+    float: right;
+    padding-right: 8px;
+    color: #3a001e;
+    font-family: verdana;
+    margin-right: 2%;
+    font-weight: bold;
+}
+
+#rvPopup h3{
+	text-align: center;
+}
+
+.rvPopCont {
+    display: block;
+    background: #FFF;
+    border: 3px solid #EF6351;
+    padding: 15px 20px;
+    border-radius: 5px;
+    height: 13vw;
+    width: 80%;
+    margin-left: 5%;
+}
+
+.list {
+    /*height: 100%; */
+    width: 100%;
+    /* display: inline-block; */
+    margin-top: 3vw;
+    font-size: 12pt;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#rvPopup .rv{
+    display: flex;
+    /* margin-left: 35%; */
+    margin-top: 3vw;
+    /* height: 40px; */
+    justify-content: center;
+}
+
+#rvPopup #rvBtn, #midPopup #rvBtn{
+	width: 120px;
+	height: 30px;
+	float: left;
+	align-content: center;
+	font-size: 8pt;
+	font-weight: bold;
+	border: 1px solid #ef6351;
+	border-radius: 5px;
+	background-color: #ef6351;
+	color: white;
+	cursor: pointer;
 }
