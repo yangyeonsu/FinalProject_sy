@@ -8,19 +8,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>이의제기 요청 내역</title>
+<title>페널티 회수 요청 내역</title>
 <link rel="stylesheet" type="text/css" href="css/main.css">
 
 <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
 <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
 
+<link rel="stylesheet" type="text/css" href="<%=cp%>/css/reqRepList.css">
 
-
-<link rel="stylesheet" type="text/css" href="<%=cp%>/css/user_main.css">
-<link rel="stylesheet" type="text/css" href="<%=cp%>/css/storeDetail.css">
-<link rel="stylesheet" type="text/css" href="<%=cp%>/css/userMyPage.css">
-
-<style type="text/css">
+<!-- <style type="text/css">
 	
 	/* 메인페이지 */
 	.middle
@@ -99,7 +95,7 @@
 		display: flex;
     	justify-content: center;
     }
-</style>
+</style> -->
 
 <!-- 배너 스크립트 -->
 <script type="text/javascript">
