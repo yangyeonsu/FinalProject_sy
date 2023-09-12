@@ -14,5 +14,7 @@ public interface IcompareViewDAO
 	public ArrayList<StoreCheckDTO> comStcheck(int st_num);										// 가게 체크박스
 	public StoreMenuDTO menuList(int st_num);   												// 가게 메뉴, 가격, 이미지링크
 	public ArrayList<StoreMenuDTO> menuAvg(List<Integer> stList);								// 메뉴 평균 가격
-	public int comparedInsert(@Param("user_num") String user_num, @Param("st_num") int st_num);	// 비교했던 가게 insert
+	public Integer comparedIsNull(@Param("user_num") String user_num, @Param("st_num") int st_num); // 비교했던 가게인지 확인
+	public Integer comparedUpdate(@Param("user_num") String user_num, @Param("st_num") int st_num); // 비교한 적 있으면 update
+	public int comparedInsert(@Param("user_num") String user_num, @Param("st_num") int st_num);		// 비교한 적 없으면 insert
 }

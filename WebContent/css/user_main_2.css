@@ -118,8 +118,8 @@ input::placeholder
 /* 지역+음식카테고리+가게키워드 체크박스 전체 영역 DIV */
 #checkRegion, #checkCat, #checkStKey
 {
-	width: 50vw;
-    height: 80px;
+    width: 50vw;
+    height: 7vw;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
@@ -140,7 +140,7 @@ input::placeholder
 /* 지역+음식카테고리+가게키워드 체크박스 영역 DIV */
 #regionCB, #catCB, #stKeyCB
 {
-	width: 35vw;
+	width: 40vw;
 }
 
 #regionCB input[type=checkbox], #catCB input[type=checkbox], #stKeyCB input[type=checkbox]
