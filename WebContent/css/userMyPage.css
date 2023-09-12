@@ -159,7 +159,7 @@ body {
 	display: flex;
 	justify-content: space-evenly;
 	background-color: white;
-	align-item: center;
+	align-items: center;
 	border: 1px solid #E6E6E6;
 	/* height: 3vh; */
 }

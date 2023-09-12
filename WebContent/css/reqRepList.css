@@ -60,9 +60,11 @@ body
 
 /* 신고 내용 틀 */
 .report_content {
-	display: flex;
-    height: 4vh;
+    display: flex;
+    height: 4vw;
     justify-content: space-around;
+    font-size: 1vw;
+    align-items: center;
 }
 
 /* 신고 내용 */
@@ -70,11 +72,6 @@ body
 	text-align: center;
 	width: 8vw;
 	padding: 1vh;
-}
-
-.report_content {
-    display: flex;
-    justify-content: space-around;
 }
 
 /* 제목 */
