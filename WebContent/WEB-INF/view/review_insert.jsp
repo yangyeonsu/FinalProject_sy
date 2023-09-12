@@ -34,8 +34,9 @@
 			$("input:checkbox[name=rvKeyCb]:checked").each(function()
 			{
 				rkArr.push($(this).val());
+				alert("id : " + $(this).attr("id"));
 			});
-
+			
 			$("#rvArrHidden").val(rkArr);
 			alert("리뷰 키워드 선택값 : " + $("#rvArrHidden").val());
 

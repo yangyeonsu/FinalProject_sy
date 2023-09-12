@@ -364,10 +364,24 @@ public class stDetailController
 		
 		if(st_chbox_num != null)
 		{
-			// 찾은 st_chbox_num 으로 req_apply에 데이터 insert
-			if(dao.reqApply(user_num, req_rs, st_chbox_num)==1)
+			Integer req_apply_num = dao.reqIsNull(st_chbox_num);
+			
+			// 해당 st_chbox_num에 대한 요청이 없거나 이미 처리가 완료된 상황이면 insert
+			if(req_apply_num == null)
 			{
-				result = "1";
+				// 찾은 st_chbox_num 으로 req_apply에 데이터 insert
+				if(dao.reqApply(user_num, req_rs, st_chbox_num)==1)
+				{
+					result = "1";
+				}
+			} 
+			else if(dao.reqRej(req_apply_num) != null && dao.reqObj(req_apply_num)==0 && dao.reqRevo(req_apply_num)==0 && dao.reqPen(req_apply_num)==0)
+			{
+				// 찾은 st_chbox_num 으로 req_apply에 데이터 insert
+				if(dao.reqApply(user_num, req_rs, st_chbox_num)==1)
+				{
+					result = "1";
+				}
 			}
 		}
 		
