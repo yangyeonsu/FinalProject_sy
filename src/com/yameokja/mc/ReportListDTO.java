@@ -6,7 +6,6 @@ public class ReportListDTO
 	private String accu_num, cat, user_id, rep_rs_name;
 	private int report_num;
 	
-	
 	// getter / setter 
 	public String getRep_rs_name()
 	{
