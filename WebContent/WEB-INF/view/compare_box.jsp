@@ -62,6 +62,15 @@ String cp = request.getContextPath();
 				alert("최소 2개 이상 선택해주세요.");
 				return;
 			}
+			
+			if($('#user').val()=='먹린이')
+			{
+				if($('input:checkbox[name=comStImgCB]:checked').length > 2)
+				{
+					alert("'먹린이'등급은 2개까지만 비교가 가능합니다!");
+					return;
+				}
+			}
 
 			var checkArray = "";
 
@@ -70,7 +79,8 @@ String cp = request.getContextPath();
 				checkArray += $(this).attr("id") + ",";
 			});
 
-			alert(checkArray);
+			// 확인
+			//alert(checkArray);
 
 			$("#checkedCompare").attr("value", checkArray);
 
@@ -176,6 +186,7 @@ String cp = request.getContextPath();
 				</c:choose>
 			</div>
 			<input type="hidden" id="checkedCompare" name="checkedCompare">
+			<input type="hidden" id="user" name="user" value="${user.user_grade }">
 		</div>
 
 		<div class="comStoreBtnDiv">

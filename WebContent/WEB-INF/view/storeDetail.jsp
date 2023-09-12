@@ -354,7 +354,7 @@ String cp = request.getContextPath();
 					}
 					else if(result=="0")
 					{
-						alert("등록되지 않은 가게 정보로 요청이 완료되지 않았습니다.");
+						alert("이미 오류수정 요청이 진행중인 요청으로 요청이 완료되지 않았습니다.");
 					}
 				},
 				error : function(e)
@@ -990,9 +990,17 @@ String cp = request.getContextPath();
 									<div class="list">
 										<c:forEach var="checkOption" items="${stCheckList}">
 											<div class="oplist">
-												<input type="checkbox" id="${checkOption.chbox_name }"
-													value="${checkOption.chbox_num }" name="optionCheck"
-													><!-- onclick="optionCountChecked()" -->
+												<c:choose>
+													<c:when test="${checkOption.yesorno eq '-' }">
+														<input type="checkbox" id="${checkOption.chbox_name }"
+															value="${checkOption.chbox_num }" name="optionCheck" disabled="disabled">
+													</c:when>
+													<c:otherwise>
+														<input type="checkbox" id="${checkOption.chbox_name }"
+															value="${checkOption.chbox_num }" name="optionCheck">
+													</c:otherwise>
+												</c:choose>
+												
 
 												<div class="oplistName">
 													<label for="${checkOption.chbox_name }">

@@ -259,11 +259,71 @@
 		  AND CHBOX_NUM = #{chbox_num}
 	</select>
 	
+	<!-- 가게정보수정요청에 ST_CHBOX_NUM이 있는지 확인 -->
+	<select id="reqIsNull" resultType="java.lang.Integer">
+		SELECT T.REQ_APPLY_NUM AS REQ_APPLY_NUM
+		FROM
+		(
+		SELECT REQ_APPLY_NUM, ST_CHBOX_NUM, ROW_NUMBER() OVER(PARTITION BY ST_CHBOX_NUM ORDER BY REG_DATE DESC) AS RN
+		FROM REQ_APPLY
+		) T
+		WHERE T.ST_CHBOX_NUM = #{st_chbox_num}
+		  AND T.RN = 1
+	</select>
+	
+	<!-- 가게정보수정요청 : 요청이 반려되었는지 확인 -->
+	<select id="reqRej" resultType="java.lang.Integer">
+		SELECT RREJ.REQ_REJ_NUM
+		FROM REQ_APPLY RA LEFT JOIN REQ_PROCESS RP
+		  ON RA.REQ_APPLY_NUM = RP.REQ_APPLY_NUM
+		LEFT JOIN REQ_REJ RREJ
+		  ON RP.REQ_PROCESS_NUM = RREJ.REQ_PROCESS_NUM
+		WHERE RA.REQ_APPLY_NUM = #{req_apply_num}
+	</select>
+	
 	<!-- 가게정보수정요청 insert -->
 	<insert id="reqApply">
 		INSERT INTO REQ_APPLY(REQ_APPLY_NUM, USER_NUM, ST_CHBOX_NUM, REQ_RS)
 		VALUES (REQAPSEQ.NEXTVAL, #{user_num}, #{st_chbox_num}, #{req_rs})
 	</insert>
+	
+	<!-- 가게정보수정요청 : 이의제기 내역에서 처리가 완료된 사항인지 판단 -->
+	<select id="reqObj" resultType="java.lang.Integer">
+		SELECT NVL2(OP.FINAL_DATE, 0, 1) AS OBJISNULL
+		FROM REQ_APPLY RA LEFT JOIN REQ_PROCESS RP
+		  ON RA.REQ_APPLY_NUM = RP.REQ_APPLY_NUM
+		LEFT JOIN OBJ_APPLY OA
+		  ON RP.REQ_PROCESS_NUM = OA.REQ_PROCESS_NUM
+		LEFT JOIN OBJ_PROCESS OP
+		  ON OA.OBJ_APPLY_NUM = OP.OBJ_APPLY_NUM
+		WHERE RA.REQ_APPLY_NUM = #{req_apply_num}
+	</select>
+	
+	<!-- 가게정보수정요청 : 패널티 부여 후 수정했다는 요청의 처리가 완료된 사항인지 판단 -->
+	<select id="reqRevo" resultType="java.lang.Integer">
+		SELECT NVL2(REVP.FINAL_DATE, 0, 1) AS REVOISNULL
+		FROM REQ_APPLY RA LEFT JOIN REQ_PROCESS RP
+		  ON RA.REQ_APPLY_NUM = RP.REQ_APPLY_NUM
+		LEFT JOIN PENALTY P
+		  ON RP.REQ_PROCESS_NUM = P.REQ_PROCESS_NUM
+		LEFT JOIN REVO_APPLY REVA
+		  ON P.PEN_GRANT_NUM = REVA.PEN_GRANT_NUM
+		LEFT JOIN REVO_PROCESS REVP
+		  ON REVA.REVO_APPLY_NUM = REVP.REVO_APPLY_NUM
+		WHERE RA.REQ_APPLY_NUM = #{req_apply_num}
+	</select>
+
+	<!-- 가게정보수정요청 : 패널티 부여 후 3일이 지났는지 판단 -->
+	<select id="reqPen" resultType="java.lang.Integer">
+		SELECT CASE WHEN (P.GRANT_DATE - TO_DATE(SYSDATE, 'YY-MM-DD')) >= 3 THEN 0
+		       ELSE 1 
+		       END AS PENISNULL
+		FROM REQ_APPLY RA LEFT JOIN REQ_PROCESS RP
+		  ON RA.REQ_APPLY_NUM = RP.REQ_APPLY_NUM
+		LEFT JOIN PENALTY P
+		  ON RP.REQ_PROCESS_NUM = P.REQ_PROCESS_NUM
+		WHERE RA.REQ_APPLY_NUM = #{req_apply_num}
+	</select>
 	
 	<!-- 리뷰키워드 범례 리스트 -->
 	<select id="reviewKeywords" resultType="com.yameokja.mc.StoreReviewKeyDTO">
