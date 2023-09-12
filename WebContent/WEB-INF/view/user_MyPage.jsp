@@ -68,6 +68,7 @@ String cp = request.getContextPath();
 		$("#rvBtn").click(function()
 		{
 			var userNum = "${user.user_num}";
+			$("#rvRs").val("");
 			window.location.href = "usermodify.action?user_num=" + userNum;
 		});
 	});
@@ -330,7 +331,14 @@ String cp = request.getContextPath();
 									<div class="list0">
 										<div class="list1">${review.rv_num }</div>
 										<div class="list1">${review.st_name }</div>
-										<div class="list1">${review.rv_content }</div>
+										<c:choose>
+											<c:when test="${fn:length(review.rv_content) >= 10 }">
+												<div class="list1">${fn:substring(review.rv_content, 0, 10)}···</div>
+											</c:when>
+											<c:otherwise>
+												<div class="list1">${review.rv_content }</div>
+											</c:otherwise>
+										</c:choose>
 										<div class="list1">${review.reg_date }</div>
 									</div>
 								</c:forEach>
