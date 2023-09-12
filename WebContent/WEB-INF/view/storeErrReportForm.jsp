@@ -1,13 +1,15 @@
-<%@page import="com.yameokja.mc.ReqApplyViewDTO"%>
+<%@ page import="com.yameokja.mc.ReqApplyViewDTO"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <% 
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
 %>
+
 <%
 	ReqApplyViewDTO dto = (ReqApplyViewDTO)request.getAttribute("err");
 %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -219,8 +221,16 @@ input[type="radio"]
 					$("#myTextarea").focus();
 					return;
 				}
+				else
+				{
+					//alert("반려");
+				}
 			}
-			
+			else if($(".check:checked").length != 0 && $(".check:checked").val() != "true")
+			{
+				//alert("승인");
+				window.location.href = "adminmain.action?state=";
+			}
 		});
 		
 	});
@@ -301,6 +311,11 @@ input[type="radio"]
 			$('.bgLayer').css('height', $(window).height() - 0);
 		});
 	});
+	
+	
+	
+	
+	
 </script>
 
 </head>
@@ -350,8 +365,8 @@ input[type="radio"]
 			<c:if test="${state ne '처리완료' }">
 				
 				<div style="width: 87%; text-align: right; margin-top: 1vh;">
-					<label class="label"><input type="radio" class="check" name="res" id="approve"><span id="span">승인</span></label>
-					<label class="label"><input type="radio" class="check" name="res" id="reject" value="true"><span id="span">반려</span></label>
+					<label class="label" id="approve"><input type="radio" class="check" name="res" id="approve"><span id="approve">승인</span></label>
+					<label class="label" id="reject"><input type="radio" class="check" name="res" id="reject" value="true"><span id="reject">반려</span></label>
 				</div>
 				<br><br>
 				
@@ -388,6 +403,7 @@ input[type="radio"]
 	
 	<!-- footer -->
 	<div><c:import url="/WEB-INF/view/footer.jsp"></c:import></div>
+	
 </div>
 </form>
 

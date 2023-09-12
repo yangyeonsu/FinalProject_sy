@@ -271,6 +271,7 @@
 		WHERE ST_NUM = #{st_num}
 		  AND SEARCH_NUM = #{search_num}
 	</select>
+	
 	<!-- 이의 신청 내역 -->
 	<select id="StAppealRequest" resultType="com.yameokja.mc.StAppealRequestDTO">
 		SELECT OA.REG_DATE AS REG_DATE, IA.ST_NAME AS ST_NAME 

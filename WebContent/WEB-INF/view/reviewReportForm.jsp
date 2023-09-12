@@ -365,7 +365,10 @@ span
    		
 		</div> <!-- st_info_insert -->
 	</div>
-   
+
+	<div>
+		<div value=<%=dto.getRep_apply_num() %> style="display: none;"></div>
+	</div>
    
 	<!-- footer -->
 	<div><c:import url="/WEB-INF/view/footer.jsp"></c:import></div>
