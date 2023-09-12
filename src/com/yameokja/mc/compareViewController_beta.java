@@ -63,7 +63,10 @@ public class compareViewController_beta
 			/* System.out.println(st_num); */
 			
 			// 비교했던 테이블에 데이터 insert
-			dao.comparedInsert(user_num, Integer.parseInt(st_num));
+			if(dao.comparedIsNull(user_num, Integer.parseInt(st_num))!=null)
+				dao.comparedUpdate(user_num, Integer.parseInt(st_num));
+			else
+				dao.comparedInsert(user_num, Integer.parseInt(st_num));
 		}
 		/* System.out.println(comparedStore); */
 		

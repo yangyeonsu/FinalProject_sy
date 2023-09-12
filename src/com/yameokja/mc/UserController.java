@@ -219,9 +219,8 @@ public class UserController
         IMainDAO idao = sqlSession.getMapper(IMainDAO.class);
         IUserDAO udao = sqlSession.getMapper(IUserDAO.class);
         
-        List<Integer> ibmatList = idao.getIbmatStNumber(user_num);
-		List<Integer> jjimList = idao.getJjimStNumber(user_num);
-		List<Integer> comList = idao.getStoreComList(user_num);
+		List<StoreDTO> jimList = udao.searchLikeList(user_num);
+		model.addAttribute("likelist", jimList);
 		
 		/* System.out.println(comList); */
 		
@@ -238,6 +237,19 @@ public class UserController
 			user.setUser_grade(udao.secondHalf(user_num).user_grade);
 		}
 		
+		// 비교함 내역
+		List<Integer> comList = idao.getStoreComList(user_num);
+		
+		if (comList.size() > 0)
+			model.addAttribute("comList", idao.getStoreList(comList));
+		else
+			model.addAttribute("comList", null);
+		
+		/*
+		List<Integer> ibmatList = idao.getIbmatStNumber(user_num);
+		List<Integer> jjimList = idao.getJjimStNumber(user_num);
+		
+		
 		if (ibmatList.size() > 0)
 			model.addAttribute("ibmat_list", idao.getStoreList(ibmatList));
 		else
@@ -248,13 +260,8 @@ public class UserController
 		else
 			model.addAttribute("likelist", null);
 
-		if (comList.size() > 0)
-			model.addAttribute("comList", idao.getStoreList(comList));
-		else
-			model.addAttribute("comList", null);
-		
 		model.addAttribute("userJjimList", idao.userJjimSearch(user_num));
-		
+		*/
 		
 		model.addAttribute("user", user);
 		model.addAttribute("rvlist", udao.searchRvList(user_num));
