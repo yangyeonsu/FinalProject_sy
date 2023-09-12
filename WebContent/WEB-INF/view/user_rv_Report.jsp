@@ -10,20 +10,20 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>나의 신고 내역</title>
-<link rel="stylesheet" type="text/css" href="css/main.css">
+<title>나의 리뷰 신고 내역</title>
 
 <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
 <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
 
-<link rel="stylesheet" type="text/css" href="<%=cp%>/css/user_main.css">
-<link rel="stylesheet" type="text/css" href="<%=cp%>/css/userMyPage.css">
+<%-- <link rel="stylesheet" type="text/css" href="<%=cp%>/css/user_main.css">
+<link rel="stylesheet" type="text/css" href="<%=cp%>/css/userMyPage.css"> --%>
 
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 
-<link rel="stylesheet" type="text/css" href="<%=cp%>/css/storeDetail.css">
+<%-- <link rel="stylesheet" type="text/css" href="<%=cp%>/css/storeDetail.css"> --%>
+<link rel="stylesheet" type="text/css" href="<%=cp%>/css/reqRepList.css">
 
-<style type="text/css">
+<!-- <style type="text/css">
 
 	.header
 	{
@@ -104,7 +104,7 @@
 		text-align: center;
 	}
 	
-</style>
+</style> -->
 
 <!-- 배너 스크립트 -->
 <script type="text/javascript">
@@ -373,6 +373,11 @@
 					<c:choose>
 					    <c:when test="${empty user_rv_Report}">
 					        <div class="no-data-message">리뷰 신고 내역이 존재하지 않습니다.</div>
+					    	<c:forEach begin='1' end='10'>
+						    	<div class="report_content">
+
+					            </div>
+					    	</c:forEach>
 					    </c:when>
 					    <c:otherwise>
 					        <c:forEach var="rvreport" items="${user_rv_Report}">

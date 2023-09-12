@@ -2,7 +2,8 @@ package com.yameokja.mc;
 
 public class penaltyListDTO
 {
-	private String reg_date, st_name, write_date;
+	/* private String reg_date, st_name, write_date; */
+	private String reg_date, st_name, final_date;
 	
 	// getter / setter
 	public String getReg_date()
@@ -25,15 +26,14 @@ public class penaltyListDTO
 		this.st_name = st_name;
 	}
 
-	public String getwrite_date()
+	public String getFinal_date()
 	{
-		return write_date;
+		return final_date;
 	}
 
-	public void setwrite_date(String write_date)
+	public void setFinal_date(String final_date)
 	{
-		this.write_date = write_date;
+		this.final_date = final_date;
 	}
-	
-	
+
 }

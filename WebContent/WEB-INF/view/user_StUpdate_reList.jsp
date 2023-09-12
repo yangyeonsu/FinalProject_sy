@@ -8,19 +8,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>나의 신고 내역</title>
-<link rel="stylesheet" type="text/css" href="css/main.css">
+<title>나의 가게정보오류수정요청 내역</title>
 
 <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
 <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
 
+<link rel="stylesheet" type="text/css" href="<%=cp%>/css/reqRepList.css">
 
-
-<link rel="stylesheet" type="text/css" href="<%=cp%>/css/user_main.css">
-<link rel="stylesheet" type="text/css" href="<%=cp%>/css/storeDetail.css">
-<link rel="stylesheet" type="text/css" href="<%=cp%>/css/userMyPage.css">
-
-<style type="text/css">
+<!-- <style type="text/css">
 
 	.header
 	{
@@ -105,7 +100,7 @@
 		display: flex;
     	justify-content: center;
     }
-</style>
+</style> -->
 
 <!-- 배너 스크립트 -->
 <script type="text/javascript">
@@ -285,6 +280,11 @@
 					<c:choose>
 					    <c:when test="${empty user_stupdate_relist}">
 					        <div class="no-data-message">가게정보수정요청 내역이 없습니다.</div>
+					        <c:forEach var="udre" begin="1" end="10">
+					        	<div class="report_content">
+					                
+					            </div>
+					        </c:forEach>
 					    </c:when>
 					    <c:otherwise>
 					        <c:forEach var="udre" items="${user_stupdate_relist}">

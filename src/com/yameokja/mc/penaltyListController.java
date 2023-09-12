@@ -41,5 +41,4 @@ public class penaltyListController
 	    
 	    return result;
 	}
-	
 }

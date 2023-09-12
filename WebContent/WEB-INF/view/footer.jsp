@@ -51,6 +51,8 @@
 		font-family: 'IBM Plex Sans KR', sans-serif;
 		cursor: pointer;
 	}
+	
+
 </style>
 
 <script type="text/javascript">

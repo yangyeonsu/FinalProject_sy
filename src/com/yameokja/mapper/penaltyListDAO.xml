@@ -4,7 +4,7 @@
 <mapper namespace="com.yameokja.mc.IpenaltyListDAO">
 
 	<select id="penList" resultType="com.yameokja.mc.penaltyListDTO">
-	    SELECT REG_DATE, ST_NAME, WRITE_DATE
+	   <!--  SELECT REG_DATE, ST_NAME, WRITE_DATE
 	    FROM 
 	    (
 	        SELECT REG_DATE, ST_NAME, WRITE_DATE
@@ -12,7 +12,15 @@
 			FROM RV_REPORT_VIEW
 			WHERE USER_NUM = #{user_num}
 	    )
-	    WHERE rnum BETWEEN #{startRow} AND #{endRow}
+	    WHERE rnum BETWEEN #{startRow} AND #{endRow} -->
+	    SELECT REG_DATE, ST_NAME, STATE, FINAL_DATE
+		FROM
+		(           
+		SELECT REG_DATE, ST_NAME, STATE, FINAL_DATE, ROW_NUMBER() OVER (ORDER BY REG_DATE DESC) AS RN
+		FROM RV_REPORT_VIEW
+		WHERE USER_NUM = #{user_num}
+		)
+		WHERE RN BETWEEN #{startRow} AND #{endRow}
 	</select>
 	
 </mapper>

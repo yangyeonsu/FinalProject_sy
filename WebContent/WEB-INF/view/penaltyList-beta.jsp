@@ -2,24 +2,20 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	request.setCharacterEncoding("UTF-8");
-	String cp = request.getContextPath();
+String cp = request.getContextPath();
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>나의 신고 내역</title>
-<link rel="stylesheet" type="text/css" href="css/main.css">
 
 <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
 <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
 
+<link rel="stylesheet" type="text/css" href="<%=cp%>/css/reqRepList.css">
 
-<link rel="stylesheet" type="text/css" href="<%=cp%>/css/user_main.css">
-
-<link rel="stylesheet" type="text/css" href="<%=cp%>/css/userMyPage.css">
-
-<style type="text/css">
+<!-- <style type="text/css">
 	.continer{
 		position: static;
 	}
@@ -96,8 +92,57 @@
 		text-align: center;
 	}
 	
-</style>
-	
+</style> -->
+
+<!-- 배너 스크립트 -->
+<script type="text/javascript">
+	$(function()
+	{
+		$(".left_sub_menu").hide();
+		$(".has_sub").click(function()
+		{
+			$(".left_sub_menu").fadeToggle(300);
+			if ($('#checkOverlay').val() == "true")
+			{
+				$('.overlay').css("position", "fixed");
+				$('.overlay').css("width", "0%");
+				$('.overlay').css("height", "0%");
+				$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
+				$('.overlay').css("z-index", "0");
+				$('#checkOverlay').attr("value", "false");
+			} else
+			{
+				$('.overlay').css("position", "fixed");
+				$('.overlay').css("width", "100%");
+				$('.overlay').css("height", "100%");
+				$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
+				$('.overlay').css("z-index", "3");
+				$('.overlay').css("margin-top", "1.011vh");
+				$('#checkOverlay').attr("value", "true");
+			}
+
+		});
+		// 왼쪽메뉴 드롭다운
+		$(".sub_menu ul.small_menu").hide();
+		$(".sub_menu ul.big_menu").click(function()
+		{
+			$("ul", this).slideToggle(300);
+		});
+		// 외부 클릭 시 좌측 사이드 메뉴 숨기기
+		$('.overlay').on('click', function()
+		{
+			$('.left_sub_menu').fadeOut();
+			$('.overlay').css("position", "fixed");
+			$('.overlay').css("width", "0%");
+			$('.overlay').css("height", "0%");
+			$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
+			$('.overlay').css("z-index", "0");
+			$('#checkOverlay').attr("value", "false");
+		});
+	});
+</script>
+
+
 </head>
 <body>
 
@@ -105,19 +150,12 @@
 		<c:import url="header_user.jsp"></c:import>
 	</div>
 
-	
-	
-	
-	<c:import url="sideBar_user.jsp"></c:import>
-		
-		
-		
-		
+	<div class="middle">
+		<c:import url="sideBar_user.jsp"></c:import>
+
 		<div class="right_content">
 			<div class="penalty_report">
-				<div class="title">
-					경고 내역
-				</div>
+				<div class="title">경고 내역</div>
 				<hr>
 				<div class="penaltylist">
 					<div class="subtitle">
@@ -126,49 +164,60 @@
 						<div class="pen_subtitle">처리일자</div>
 					</div>
 					<c:choose>
-					    <c:when test="${empty penList}">
-					        <div class="no-data-message">경고 내역이 없습니다.</div>
-					    </c:when>
-					    <c:otherwise>
-					        <c:forEach var="pl" items="${penList}">
-					            <div class="report_content">
-					                <div class="pen_subtitle">${pl.reg_date }</div>
-					                <div class="st_name">${pl.st_name }</div>
-					                <div class="pen_subtitle">${pl.write_date }</div>
-					            </div>
-					        </c:forEach>
-					    </c:otherwise>
+						<c:when test="${empty penList}">
+							<div class="no-data-message">경고 내역이 없습니다.</div>
+							<c:forEach begin="1" end="10">
+								<div class="report_content">
+								</div>
+							</c:forEach>
+						</c:when>
+						<c:otherwise>
+							<c:forEach var="pl" items="${penList}">
+								<div class="report_content">
+									<div class="pen_subtitle">${pl.reg_date }</div>
+									<div class="st_name">${pl.st_name }</div>
+									<div class="pen_subtitle">${pl.write_date }</div>
+								</div>
+							</c:forEach>
+						</c:otherwise>
 					</c:choose>
-					
+
 					<!-- 페이징 처리 -->
 					<div class="pagination">
-			            <c:choose>
-			                <c:when test="${empty penList}">
-			                    <p></p>
-			                </c:when>
-			                <c:otherwise>
-			                    <ul class="pagination-list">
-			                        <li><a href="${cp}/user_stupdate_relist.action?page=${currentPage - 1}">&laquo; Previous</a></li>
-			                        <c:forEach var="pageNum" begin="1" end="${totalPages}">
-			                            <li><a href="${cp}/user_stupdate_relist.action?page=${pageNum}">${pageNum}</a></li>
-			                        </c:forEach>
-			                        <li><a href="${cp}/user_stupdate_relist.action?page=${currentPage + 1}">Next &raquo;</a></li>
-			                    </ul>
-			                </c:otherwise>
-			            </c:choose>
-			        </div>
-					
-					
+						<c:choose>
+							<c:when test="${empty penList}">
+								<p></p>
+							</c:when>
+							<c:otherwise>
+								<ul class="pagination-list">
+									<li><a
+										href="${cp}/user_stupdate_relist.action?page=${currentPage - 1}">&laquo;
+											Previous</a></li>
+									<c:forEach var="pageNum" begin="1" end="${totalPages}">
+										<li><a
+											href="${cp}/user_stupdate_relist.action?page=${pageNum}">${pageNum}</a></li>
+									</c:forEach>
+									<li><a
+										href="${cp}/user_stupdate_relist.action?page=${currentPage + 1}">Next
+											&raquo;</a></li>
+								</ul>
+							</c:otherwise>
+						</c:choose>
+					</div>
+
+
 				</div>
 			</div>
-		</div><!-- right_content -->
-		
-	</div><!-- .middle end -->
-	
+		</div>
+		<!-- right_content -->
+
+	</div>
+	<!-- .middle end -->
+
 
 
 	<div class="footer">
-		<c:import url="/WEB-INF/view/footer.jsp"></c:import>
+		<c:import url="footer.jsp"></c:import>
 	</div>
 
 </body>
