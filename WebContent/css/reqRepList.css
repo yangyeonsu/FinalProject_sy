@@ -27,7 +27,8 @@ body
     align-items: stretch;
     height: auto;
     min-height: 80%;
-    padding-bottom: 15vh;
+    /* padding-bottom: 15vh; */
+    padding-bottom: 35vh;
 }
 
 .right_content {
@@ -61,7 +62,8 @@ body
 /* 신고 내용 틀 */
 .report_content {
     display: flex;
-    height: 4vw;
+    /* height: 4vw; */
+    height: 3vw;
     justify-content: space-around;
     font-size: 1vw;
     align-items: center;
@@ -99,7 +101,7 @@ body
 
 .footer
 {
-   	height: 15vh;
+   	height: 10vh;
     position: relative;
     transform: translateY(-100%);
 }

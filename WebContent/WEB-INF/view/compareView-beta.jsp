@@ -31,18 +31,17 @@ body {
 	display: flex;
 }
 
-.likeAddBtn
-{
+.likeAddBtn {
 	width: 20px;
-    height: 20px;
-    margin-right: 5px;
-    padding-left: 2px;
-    text-align: center;
-    font-size: 11pt;
-    background-color: transparent;
-    border: none;
-    color: white;
-    cursor: pointer;
+	height: 20px;
+	margin-right: 5px;
+	padding-left: 2px;
+	text-align: center;
+	font-size: 11pt;
+	background-color: transparent;
+	border: none;
+	color: white;
+	cursor: pointer;
 }
 
 .compTitle {
@@ -74,8 +73,8 @@ body {
 }
 
 .cCategory {
-    margin-top: 30.3vh;
-    width: 11vw;
+	margin-top: 30.3vh;
+	width: 11vw;
 }
 
 .cList, .week, .lWeek, .cOptions, .lOptions {
@@ -112,15 +111,15 @@ body {
 }
 
 .ocTitle {
-    font-size: 1rem !important;
+	font-size: 1rem !important;
 }
 
 .lDay {
-    height: 2.48vh;
-    font-size: 0.8rem;
-    padding-top: 0.5vh;
-    /* padding-bottom: 1.5vh; */
-    font-weight: bold;
+	height: 2.48vh;
+	font-size: 0.8rem;
+	padding-top: 0.5vh;
+	/* padding-bottom: 1.5vh; */
+	font-weight: bold;
 }
 
 .lWeek {
@@ -228,42 +227,7 @@ body {
 			$('#checkOverlay').attr("value", "false");
 		});
 		
-		$(document).on("click",".likeAddBtn", function()
-		{
-			$st_num = $(this).val();
-			$user_num = "<%=(String) session.getAttribute("user_num")%>"
-			
-			$.ajax(
-			{
-				url : "jjiminsertdelete.action",
-				type : 'post',
-				data :
-				{
-					"st_num" : $st_num,
-					"user_num" : $user_num
-				},
-				context: this,
-				success : function(result)
-				{
-					$(this).html(result);
-					
-					if(result==='❤')
-					{
-						$(".clikeNum").html(${clikeNum+1});
-					}
-					
-					if(result==='🤍')
-					{
-						$(".clikeNum").html(${clikeNum-1});
-					}
-					
-				},
-				error : function(e)
-				{
-					alert(e.responseText);
-				}
-			});
-		});
+		
 	});
 </script>
 
@@ -282,77 +246,80 @@ body {
 			});
 			$(".compTitle").css("margin-left", "31vw");
 		}
-		
+	});
+	
+	$(function()
+	{
 		$(document).on("click",".likeAddBtn", function()
+		{
+			var st_num = $(this).val();
+			var user_num = "<%=(String) session.getAttribute("user_num")%>"
+			
+			$.ajax(
+			{
+				url : "jjiminsertdelete.action",
+				type : 'post',
+				data :
 				{
-					$st_num = $(this).val();
-					$user_num = "<%=(String) session.getAttribute("user_num")%>"
+					"st_num" : st_num,
+					"user_num" : user_num
+				},
+				context: this,
+				success : function(result)
+				{
+					$(this).html(result);
 					
-					$.ajax(
+					var clikeNum = Number($("#clikeNum"+st_num).html());
+					
+					if(result==='❤️')
 					{
-						url : "jjiminsertdelete.action",
-						type : 'post',
-						data :
-						{
-							"st_num" : $st_num,
-							"user_num" : $user_num
-						},
-						context: this,
-						success : function(result)
-						{
-							$(this).html(result);
-							
-							if(result==='❤')
-							{
-								$(".clikeNum").html(${clikeNum+1});
-							}
-							
-							if(result==='🤍')
-							{
-								$(".clikeNum").html(${clikeNum-1});
-							}
-							
-						},
-						error : function(e)
-						{
-							alert(e.responseText);
-						}
-					});
-				});
-
-				// 비교함에서 삭제
-				$(document).on("click",".comDelete", function()
+						$("#clikeNum"+st_num).html(clikeNum+1);
+					}
+					else if(result==='🤍')
+					{
+						$("#clikeNum"+st_num).html(clikeNum-1);
+					}
+				},
+				error : function(e)
 				{
-					$st_num = $(this).val();
-					$user_num = "<%=(String) session.getAttribute("user_num")%>"
+					alert(e.responseText);
+				}
+			});
+		});
 
-					$.ajax(
+		// 비교함에서 삭제
+		$(document).on("click",".comDelete", function()
+		{
+			$st_num = $(this).val();
+			$user_num = "<%=(String) session.getAttribute("user_num")%>"
+
+			$.ajax(
+			{
+				url : "comdelete.action",
+				type : 'post',
+				data :
+				{
+					"user_num" : $user_num,
+					"st_num" : $st_num
+				},
+				success : function(data)
+				{
+					if (data == "")
 					{
-						url : "comdelete.action",
-						type : 'post',
-						data :
-						{
-							"user_num" : $user_num,
-							"st_num" : $st_num
-						},
-						success : function(data)
-						{
-							if (data == "")
-							{
-								alert("비교함에서 이미 삭제된 가게입니다.");
-							} else
-							{
-								/* alert(data); */
-								alert("비교함에서 삭제되었습니다.");
-								$(".comStoreListDiv").html(data);
-							}
-						},
-						error : function(e)
-						{
-							alert(e.responseText);
-						}
-					});
-				});
+						alert("비교함에서 이미 삭제된 가게입니다.");
+					} else
+					{
+						/* alert(data); */
+						alert("비교함에서 삭제되었습니다.");
+						$(".comStoreListDiv").html(data);
+					}
+				},
+				error : function(e)
+				{
+					alert(e.responseText);
+				}
+			});
+		});
 
 	});
 
@@ -505,187 +472,184 @@ body {
 
 </head>
 <body>
-<form method="post" id="userForm">
-	<div class="header">
-		<c:import url="/WEB-INF/view/header_user.jsp"></c:import>
-	</div>
+	<form method="post" id="userForm">
+		<div class="header">
+			<c:import url="/WEB-INF/view/header_user.jsp"></c:import>
+		</div>
 
-	<div class="mainBody">
+		<div class="mainBody">
 
-		<c:import url="sideBar_user.jsp"></c:import>
+			<c:import url="sideBar_user.jsp"></c:import>
 
 
-		<div class="compareMain">
+			<div class="compareMain">
 
-			<div class="compTitle">
-				<span>비교해보기</span>
-			</div>
-
-			<div id="compareBody" class="compareBody">
-
-				<div class="cCategory">
-					<div class="cCat">
-						<div id="stCatList" class="cList cat">가게 음식 카테고리</div>
-						<div id="stStarAvgList" class="cList">가게 평균 별점</div>
-						<div id="stLikeNumList" class="cList">가게 찜 수</div>
-						<div id="stRvNumList" class="cList bottomL">가게 리뷰 수</div>
-						<div id="sunList" class="lDay">&nbsp;&nbsp;</div>
-						<div id="monList" class="lDay">&nbsp;&nbsp;</div>
-						<div id="tueList" class="lDay">&nbsp;&nbsp;</div>
-						<div id="wedList" class="ocTitle lDay">영업시간</div>
-						<div id="thuList" class="lDay">&nbsp;&nbsp;</div>
-						<div id="friList" class="lDay">&nbsp;&nbsp;</div>
-						<div id="satList" class="lDay">&nbsp;&nbsp;</div>
-						<div id="stBreakTimeList" class="cList">브레이크타임</div>
-
-						<div id="stMenuAvgList" class="cList avgP">가게 평균 가격</div>
-						<div id="stMenuNameList" class="cList cMenu">가게 대표 메뉴 이름</div>
-						<div id="stMaxCList" class="cList">가게 최대 수용 인원</div>
-						<div id="stCbList" class="cList lOptions">가게 옵션 유무</div>
-					</div>
-					<!-- cCat -->
+				<div class="compTitle">
+					<span>비교해보기</span>
 				</div>
 
-				<c:forEach var="tempstN" items="${stnumList }" varStatus="stnnumStatus">
-					<c:set var="st_num" value="${tempstN }" />
-					<div id="compareSpace" class="compareSpace">
-						<c:forEach var="st" items="${store}" varStatus="st_status">
-							<c:if test="${st.st_num == st_num }">
-								<div id="stName${st_num }" class="cName">[ ${st.st_name} ]</div>
-								<div id="stPhoto${st_num }" class="photo">
+				<div id="compareBody" class="compareBody">
+
+					<div class="cCategory">
+						<div class="cCat">
+							<div id="stCatList" class="cList cat">가게 음식 카테고리</div>
+							<div id="stStarAvgList" class="cList">가게 평균 별점</div>
+							<div id="stLikeNumList" class="cList">가게 찜 수</div>
+							<div id="stRvNumList" class="cList bottomL">가게 리뷰 수</div>
+							<div id="sunList" class="lDay">&nbsp;&nbsp;</div>
+							<div id="monList" class="lDay">&nbsp;&nbsp;</div>
+							<div id="tueList" class="lDay">&nbsp;&nbsp;</div>
+							<div id="wedList" class="ocTitle lDay">영업시간</div>
+							<div id="thuList" class="lDay">&nbsp;&nbsp;</div>
+							<div id="friList" class="lDay">&nbsp;&nbsp;</div>
+							<div id="satList" class="lDay">&nbsp;&nbsp;</div>
+							<div id="stBreakTimeList" class="cList">브레이크타임</div>
+
+							<div id="stMenuAvgList" class="cList avgP">가게 평균 가격</div>
+							<div id="stMenuNameList" class="cList cMenu">가게 대표 메뉴 이름</div>
+							<div id="stMaxCList" class="cList">가게 최대 수용 인원</div>
+							<div id="stCbList" class="cList lOptions">가게 옵션 유무</div>
+						</div>
+						<!-- cCat -->
+					</div>
+
+					<c:forEach var="tempstN" items="${stnumList }"
+						varStatus="stnnumStatus">
+						<c:set var="st_num" value="${tempstN }" />
+						<div id="compareSpace" class="compareSpace">
+							<c:forEach var="st" items="${store}" varStatus="st_status">
+								<c:if test="${st.st_num == st_num }">
+									<div id="stName${st_num }" class="cName">[ ${st.st_name}
+										]</div>
+									<div id="stPhoto${st_num }" class="photo">
+										<c:choose>
+											<c:when test="${empty st.photo_link }">
+												<img class="phStore" src="<%=cp%>/images/logo_text.png">
+											</c:when>
+											<c:otherwise>
+												<img class="phStore" src="<%=cp %>/${st.photo_link}">
+											</c:otherwise>
+										</c:choose>
+									</div>
+									<div id="stAddr${st_num }" class="cLo">${st.st_location}</div>
+
+									<div class="cBox">
+										<div id="stCat${st_num }" class="cList cat">${st.food_name}</div>
+										<div id="stStarAvg${st_num }" class="cList">⭐${st.star_avg}</div>
+										<div id="stLikeNum${st_num }" class="cList likeBtnDiv">
+											<c:set var="list" value="${userJjimList}" />
+											<c:set var="num" value="${st_num}" />
+
+											<c:choose>
+												<c:when test="${list.contains(num)}">
+													<button type="button" class="likeAddBtn" value="${st_num}">❤️</button>
+													<span class="clikeNum" id="clikeNum${st_num }"> ${clikeNumList.get(st_num) }
+													</span>
+												</c:when>
+												<c:otherwise>
+													<button type="button" class="likeAddBtn" value="${st_num}">🤍</button>
+													<span class="clikeNum"  id="clikeNum${st_num }"> ${clikeNumList.get(st_num) }
+													</span>
+												</c:otherwise>
+											</c:choose>
+
+										</div>
+
+										<div id="stRevieN${st_num }" class="cList bottomL">${st.rv_count}</div>
+									</div>
+								</c:if>
+							</c:forEach>
+							<!-- cBox -->
+							<div class="cBox">
+								<div class="opCl">
+									<c:set var="dbstocItem" value="${dbstoc[stnnumStatus.index]}" />
 									<c:choose>
-										<c:when test="${empty st.photo_link }">
-											<img class="phStore" src="<%=cp%>/images/logo_text.png">
+										<c:when test="${fn:length(dbstocItem) < 1}">
+											<c:forEach begin="0" end="6">
+												<div class="lDay">&nbsp;</div>
+											</c:forEach>
 										</c:when>
 										<c:otherwise>
-											<img class="phStore" src="<%=cp %>/${st.photo_link}">
+											<c:forEach var="opitem" items="${dbstocItem }">
+												<c:if test="${opitem.st_num == st_num }">
+													<div id="opWeek${st_num }" class="lDay">
+														${opitem.day_name }&nbsp;&nbsp;
+														${opitem.operate_time}&nbsp;&nbsp;
+														<c:choose>
+															<c:when test="${opitem.holiday eq '휴무'}">
+															휴무
+														</c:when>
+															<c:otherwise>
+
+															</c:otherwise>
+														</c:choose>
+													</div>
+												</c:if>
+											</c:forEach>
 										</c:otherwise>
 									</c:choose>
 								</div>
-								<div id="stAddr${st_num }" class="cLo">${st.st_location}</div>
-
-								<div class="cBox">
-									<div id="stCat${st_num }" class="cList cat">${st.food_name}</div>
-									<div id="stStarAvg${st_num }" class="cList">⭐${st.star_avg}</div>
-									<div id="stLikeNum${st_num }" class="cList likeBtnDiv">
-										<c:set var="list" value="${userJjimList}" />
-										<c:set var="num" value="${st_num}" />
-
-										<c:choose>
-											<c:when test="${list.contains(num)}">
-												<button type="button" class="likeAddBtn"
-													value="${st_num}">❤️</button>
-												<span class="clikeNum">
-													${clikeNumList.get(st_num) }
-												</span>
-											</c:when>
-											<c:otherwise>
-												<button type="button" class="likeAddBtn"
-													value="${st_num}">🤍</button>
-												<span class="clikeNum">
-													${clikeNumList.get(st_num) }
-												</span>
-											</c:otherwise>
-										</c:choose>
-
-									</div>
-									
-									<div id="stRevieN${st_num }" class="cList bottomL">${st.rv_count}</div>
-								</div>
-							</c:if>
-						</c:forEach>
-						<!-- cBox -->
-						<div class="cBox">
-							<div class="opCl">
-								<c:set var="dbstocItem" value="${dbstoc[stnnumStatus.index]}" />
-								<c:choose>
-									<c:when test="${fn:length(dbstocItem) < 1}">
-										<c:forEach begin="0" end="6">
-											<div class="lDay">
-												&nbsp;
-											</div>
-										</c:forEach>
-									</c:when>
-									<c:otherwise>
-										<c:forEach var="opitem" items="${dbstocItem }">
-											<c:if test="${opitem.st_num == st_num }">
-												<div id="opWeek${st_num }" class="lDay">
-													${opitem.day_name }&nbsp;&nbsp; ${opitem.operate_time}&nbsp;&nbsp;
-													<c:choose>
-														<c:when test="${opitem.holiday eq '휴무'}">
-															휴무
-														</c:when>
-														<c:otherwise>
-		
-														</c:otherwise>
-													</c:choose>
-												</div>
-											</c:if>
-										</c:forEach>
-									</c:otherwise>
-								</c:choose>
-							</div>
-							<div class="cList bt">
-								<c:forEach var="bt" items="${breakTimeList }">
-									<c:if test="${bt.st_num == st_num }">
+								<div class="cList bt">
+									<c:forEach var="bt" items="${breakTimeList }">
+										<c:if test="${bt.st_num == st_num }">
 										
 											[${bt.week_weekend }] &nbsp; : &nbsp;
 											${bt.start_breaktime }&nbsp;~&nbsp;${bt.end_breaktime } &nbsp;&nbsp;
 										
 										<br>
+										</c:if>
+									</c:forEach>
+								</div>
+
+								<div class="cList">
+									<c:forEach var="menuP" items="${menuAvgLists }">
+										<c:if test="${menuP.st_num==st_num }">
+											<fmt:formatNumber value="${menuP.price_avg}" pattern="#,###" /> 원
+									</c:if>
+									</c:forEach>
+								</div>
+
+								<div id="stMenu${st_num}" class="cList cMenu">
+									<c:forEach var="menu" items="${menuLists }">
+										<c:if test="${menu.st_num==st_num }">
+											<div class="menu">
+												<img class="phMenu" src="<%=cp %>/images/${menu.image_link}">
+												&nbsp;&nbsp; ${menu.menu_name} &nbsp;&nbsp; ${menu.price} <br>
+											</div>
+										</c:if>
+									</c:forEach>
+								</div>
+								<c:forEach var="max" items="${store}">
+									<c:if test="${max.st_num == st_num }">
+										<div id="stMaxC${st_num }" class="cList bottomL">${max.max_customers}</div>
+									</c:if>
+								</c:forEach>
+
+								<c:forEach var="sc" items="${stChekList}">
+									<c:if test="${sc.st_num == st_num }">
+										<div id="${st_num }_${sc.chbox_num}" class="cOpt">
+											${sc.chbox_name} : ${sc.yesorno }</div>
 									</c:if>
 								</c:forEach>
 							</div>
+							<!-- cBox -->
 
-							<div class="cList">
-								<c:forEach var="menuP" items="${menuAvgLists }">
-									<c:if test="${menuP.st_num==st_num }">
-										<fmt:formatNumber value="${menuP.price_avg}" pattern="#,###" /> 원
-									</c:if>
-								</c:forEach>
-							</div>
-
-							<div id="stMenu${st_num}" class="cList cMenu">
-								<c:forEach var="menu" items="${menuLists }">
-									<c:if test="${menu.st_num==st_num }">
-										<div class="menu">
-											<img class="phMenu" src="<%=cp %>/images/${menu.image_link}">
-											&nbsp;&nbsp; ${menu.menu_name} &nbsp;&nbsp; ${menu.price} <br>
-										</div>
-									</c:if>
-								</c:forEach>
-							</div>
-							<c:forEach var="max" items="${store}">
-								<c:if test="${max.st_num == st_num }">
-									<div id="stMaxC${st_num }" class="cList bottomL">${max.max_customers}</div>
-								</c:if>
-							</c:forEach>
-
-							<c:forEach var="sc" items="${stChekList}">
-								<c:if test="${sc.st_num == st_num }">
-									<div id="${st_num }_${sc.chbox_num}" class="cOpt">
-										${sc.chbox_name} : ${sc.yesorno }</div>
-								</c:if>
-							</c:forEach>
 						</div>
-						<!-- cBox -->
+					</c:forEach>
+				</div>
+				<!-- compareBody -->
 
-					</div>
-				</c:forEach>
 			</div>
-			<!-- compareBody -->
+			<!-- class = "compareMain" -->
 
+
+			<c:import url="compare_box.jsp"></c:import>
 		</div>
-		<!-- class = "compareMain" -->
+		<!-- mainBody -->
 
-
-		<c:import url="compare_box.jsp"></c:import>
-	</div>
-	<!-- mainBody -->
-
-	<div class="footer">
-		<c:import url="/WEB-INF/view/footer.jsp"></c:import>
-	</div>
-</form>
+		<div class="footer">
+			<c:import url="/WEB-INF/view/footer.jsp"></c:import>
+		</div>
+	</form>
 </body>
 </html>
