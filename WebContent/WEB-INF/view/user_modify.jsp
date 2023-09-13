@@ -81,7 +81,7 @@
 			//alert("확인");
 	    	$("#updateForm").attr("action", "userinfomodify.action");
 	    	$("#updateForm").submit();
-			
+	    	var closeNewWindow = window.close("about:blank");
 		});
 	    
 	    

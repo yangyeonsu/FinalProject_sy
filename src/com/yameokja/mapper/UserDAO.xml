@@ -11,6 +11,15 @@
 		     AND USER_ID = #{user_id}
 	</select>
 	
+	<!-- 사용자 id 불러오기 -->
+	<select id="userPwCheck" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM USING_USER
+		WHERE CRYPTPACK.DECRYPT(USER_PW, #{user_pw}) = #{user_pw}
+		<!-- WHERE USER_PW = #{user_pw} -->
+		     AND USER_NUM = #{user_num}
+	</select>
+	
 	<!-- 아이디 중복 확인 -->
 	<select id="idCheck" resultType="java.lang.Integer">
 		SELECT COUNT(*) AS COUNT
