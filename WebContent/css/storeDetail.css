@@ -613,6 +613,27 @@
 	float: right;
 }
 
+/* 리뷰 답글 영역 */
+.stOwner
+{
+	font-size: 12pt;
+	font-weight: bold;
+}
+
+.rvReplyDiv
+{
+	margin-left: 2%;
+}
+
+.rvReplyContentDiv
+{
+    border: 2px solid #f7f4ea;
+    border-radius: 5px;
+    padding: 5px;
+	display: flex;
+	width: 98.5%;
+	flex-direction: column;
+}
 
 /* 화면 좌측 사이드 바 영역 */
 .has_sub_menu {
@@ -785,6 +806,13 @@
 
 .list label {
 	margin-top: 5px;
+}
+
+.rvRepLabel
+{
+	height: 150%;
+    font-size: 0.8vw;
+    font-weight: bold;
 }
 
 #commercial, #intended, #wrong, #violent
