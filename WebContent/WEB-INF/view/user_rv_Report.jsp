@@ -399,6 +399,21 @@
 					        </c:forEach>
 					    </c:otherwise>
 					</c:choose>
+					
+					<!-- 페이징 처리 -->
+					<div class="pagination">
+			            <c:choose>
+			                <c:when test="${empty user_rv_Report}">
+			                    <p></p>
+			                </c:when>
+			                <c:otherwise>
+			                    <div class="pageIndex">
+									${pageIndex }
+								</div>
+			                </c:otherwise>
+			            </c:choose>
+			        </div>
+			        
 				</div>
 				
 				

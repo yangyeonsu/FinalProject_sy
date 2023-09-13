@@ -244,9 +244,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="jjimTodayCount" resultType="java.lang.Integer">
 		SELECT COUNT(*) AS COUNT
-		FROM LIKE_BOX
+		FROM POINT_HISTORY
 		WHERE USER_NUM = #{user_num}
-		  AND REG_DATE = TO_DATE(SYSDATE, 'YY/MM/DD')
+		  AND POINT_LABEL_NUM = 3
+		  AND TO_DATE(ADD_DATE, 'YY/MM/DD') = TO_DATE(SYSDATE, 'YY/MM/DD')
 	</select>
 
 	<delete id="jjimDelete">
