@@ -65,9 +65,12 @@ String cp = request.getContextPath();
 
 	$(document).ready(function()
 	{
+		document.concontextmenu = function(){return false;};
+
 		if($("#fail").val() == "fail")
 		{
 			alert("비밀번호 오류입니다.");
+			var closeNewWindow = window.close("about:blank");
 			$("#fail").val("");
 		}
 		
@@ -76,7 +79,9 @@ String cp = request.getContextPath();
 			var userNum = $("#user_num").val();
 			var user_pw = $("#rvRs").val();
 			$("#rvRs").val("");
-			window.location.href = "usermodify.action?user_num="+userNum+"&user_pw="+user_pw;
+			/* window.location.href = "usermodify.action?user_num="+userNum+"&user_pw="+user_pw; */
+			var openNewWindow = window.open("about:blank");
+			openNewWindow.location.href = "usermodify.action?user_num="+userNum+"&user_pw="+user_pw;
 		});
 	});
 

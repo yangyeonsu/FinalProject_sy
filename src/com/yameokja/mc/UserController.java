@@ -271,6 +271,7 @@ public class UserController
 		model.addAttribute("alarm", udao.userAlarm(user_num));
 		String modifyOk =  (String) session.getAttribute("modifyOk");
 		model.addAttribute("modifyOk", modifyOk);
+		
 		session.removeAttribute("modifyOk");
 		
 		result = "WEB-INF/view/user_MyPage.jsp";
@@ -487,9 +488,9 @@ public class UserController
 	{
 		HttpSession session = request.getSession();
 		
-		String user_num = (String)session.getAttribute("user_num");
-		
 		String result = "";
+		
+		String user_num = (String)session.getAttribute("user_num");
 		
 		IUserDAO udao = sqlSession.getMapper(IUserDAO.class);
 	    
