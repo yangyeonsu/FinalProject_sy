@@ -459,18 +459,26 @@ public class UserController
 		String result = "";
 		
 		IUserDAO uDao = sqlSession.getMapper(IUserDAO.class);
-		int check = uDao.userPwCheck(user_num, user_pw);
-		
-		if(check==1)
-		{
-			result = "redirect:usermodifyOk.action";
-		}
-		else
+		if(user_pw == "")
 		{
 			result = "redirect:usermypage.action";
 			session.setAttribute("modifyOk", "fail");
 		}
-
+		else
+		{
+			int check = uDao.userPwCheck(user_num, user_pw);
+			
+			if(check==1)
+			{
+				result = "redirect:usermodifyOk.action";
+			}
+			else
+			{
+				result = "redirect:usermypage.action";
+				session.setAttribute("modifyOk", "fail");
+			}
+		}
+		
 		return result;
 	}
 	
