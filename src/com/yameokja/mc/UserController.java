@@ -269,7 +269,9 @@ public class UserController
 		model.addAttribute("tastekeyword", udao.searchTasteKeyword(user_num));
 		
 		model.addAttribute("alarm", udao.userAlarm(user_num));
-
+		String modifyOk =  (String) session.getAttribute("modifyOk");
+		model.addAttribute("modifyOk", modifyOk);
+		session.removeAttribute("modifyOk");
 		
 		result = "WEB-INF/view/user_MyPage.jsp";
 		
@@ -447,6 +449,32 @@ public class UserController
 	}
 	
 	@RequestMapping(value="/usermodify.action", method = {RequestMethod.GET, RequestMethod.POST})
+	public String modifyCheck(HttpServletRequest request, Model model, String user_num, String user_pw)
+	{
+		HttpSession session = request.getSession();
+		
+		//String user_num = (String) request.getAttribute("user_num");
+		//String user_pw = (String) request.getAttribute("user_pw");
+		
+		String result = "";
+		
+		IUserDAO uDao = sqlSession.getMapper(IUserDAO.class);
+		int check = uDao.userPwCheck(user_num, user_pw);
+		
+		if(check==1)
+		{
+			result = "redirect:usermodifyOk.action";
+		}
+		else
+		{
+			result = "redirect:usermypage.action";
+			session.setAttribute("modifyOk", "fail");
+		}
+
+		return result;
+	}
+	
+	@RequestMapping(value="/usermodifyOk.action", method = {RequestMethod.GET, RequestMethod.POST})
 	public String modify(HttpServletRequest request, Model model)
 	{
 		HttpSession session = request.getSession();

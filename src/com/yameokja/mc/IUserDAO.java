@@ -11,6 +11,7 @@ import java.util.HashMap;
 public interface IUserDAO
 {
 	public int userLoginCheck(@Param("user_id")String user_id, @Param("user_pw")String user_pw);
+	public int userPwCheck(@Param("user_num")String user_num, @Param("user_pw")String user_pw);
 	public int idCheck(String user_id);
 	// 닉네임중복확인
 	public int nickCheck(String user_nick);
