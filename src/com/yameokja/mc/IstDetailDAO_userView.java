@@ -27,6 +27,8 @@ public interface IstDetailDAO_userView
 	public ArrayList<Integer> userRnList(@Param("st_num") int st_num, @Param("user_num") String user_num);	// 특정 유저가 가게의 리뷰에 누른 추천/비추천 내역
 	public ArrayList<Integer> userNrnList(@Param("st_num") int st_num, @Param("user_num") String user_num);	// 특정 유저가 가게의 리뷰에 누른 추천/비추천 내역
 
+	// 리뷰 신고 범례 리스트
+	public ArrayList<reviewRepDTO> reviewRepLabel();
 	// 리뷰 신고
 	public int reviewRepInsert(@Param("rv_num") int rv_num, @Param("user_num") String user_num, @Param("rep_rs_num") int rep_rs_num);	
 	// 리뷰 식별
@@ -57,7 +59,6 @@ public interface IstDetailDAO_userView
 	
 	// 리뷰 키워드 범례 리스트
 	public ArrayList<StoreReviewKeyDTO> reviewKeywords();
-	
 	
 	// 리뷰 입력
 	public int reviewInsert(@Param("user_num") String user_num, @Param("st_num") int st_num, @Param("rv_content") String rv_content, @Param("star_score") int star_score);

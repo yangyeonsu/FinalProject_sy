@@ -202,6 +202,10 @@ public class stDetailController
 
 		model.addAttribute("rvPhotos", rvPhotos);
 
+		// 리뷰 답글
+		model.addAttribute("rvReplyList",smDao.rvReply(st_num));
+		
+		// 비교함 영역
 		if (comList.size() > 0)
 			model.addAttribute("comList", mdao.getStoreList(comList));
 		else
@@ -225,6 +229,10 @@ public class stDetailController
 		model.addAttribute("userNrnList", userNrnList);
 
 		model.addAttribute("userJjimList", mdao.userJjimSearch(user_num));
+		
+		// 리뷰 신고 범례 리스트
+		ArrayList<reviewRepDTO> rvRepList = dao.reviewRepLabel();
+		model.addAttribute("rvRepList", rvRepList);
 
 		result = "/WEB-INF/view/storeDetail.jsp";
 

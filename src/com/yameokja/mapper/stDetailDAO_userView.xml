@@ -186,7 +186,7 @@
 		  AND RB.ST_NUM = #{st_num}
 	</select> -->
 	
-	
+	<!-- 해당 사용자가 누른 리뷰 추천 / 비추천 내역 -->
 	<select id="userRnList" resultType="java.lang.Integer">
 		SELECT RB.RV_NUM AS RV_NUM
 		FROM RV_REC_NONREC RRN LEFT JOIN RV_BOX RB
@@ -205,6 +205,12 @@
 		  AND RRN.REC_NONREC_NUMBER = 2
 	</select>
 	
+	<!-- 리뷰 신고 항목 -->
+	<select id="reviewRepLabel" resultType="com.yameokja.mc.reviewRepDTO">
+		SELECT REP_RS_NUM, REP_RS_NAME
+		FROM REP_RS_LABEL
+		ORDER BY REP_RS_NUM
+	</select>
 
  	<!-- 리뷰 신고 -->
 	<insert id="reviewRepInsert">
