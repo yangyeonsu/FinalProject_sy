@@ -226,6 +226,11 @@ String cp = request.getContextPath();
 		// 신고하기 버튼 눌렀을 때
 		$(".repBtn").click(function()
 		{
+			$("input:checkbox[name=reviewRep]:checked").each(function()
+			{
+				$(this).prop("checked", false);
+				totalChecked = 0;
+			});
 			alert($(this).val());
 			$("input[name=rvNumHidden]").attr("value", $(this).val());
 		});
@@ -285,6 +290,16 @@ String cp = request.getContextPath();
 			});
 		});
 		
+		// 가게정보오류수정 버튼 눌렀을 때
+		$("#modifyReqBtn").click(function()
+		{
+			$("input:checkbox[name=optionCheck]:checked").each(function()
+			{
+				$(this).prop("checked", false);
+				optionTotalChecked = 0;
+			});
+		});
+				
 		// 가게 정보 오류 수정 요청
 		$("#reqBtn").click(function()
 		{
@@ -330,7 +345,7 @@ String cp = request.getContextPath();
 			$("input:checkbox[name=optionCheck]:checked").each(function()
 			{
 				$(this).prop("checked", false);
-				/* optionTotalChecked = 0; */
+				optionTotalChecked = 0;
 			});
 			$("#reqRs").val('');
 			
@@ -380,7 +395,23 @@ String cp = request.getContextPath();
 			field.checked = false;
 			totalChecked -= 1;
 		}
+	}
+	
+	var optionTotalChecked = 0;
 
+	function optionCountChecked(field)
+	{
+		if (field.checked)
+			optionTotalChecked += 1;
+		else
+			optionTotalChecked -= 1;
+
+		if (optionTotalChecked > 1)
+		{
+			alert("한 개만 선택 가능합니다.");
+			field.checked = false;
+			optionTotalChecked -= 1;
+		}
 	}
 
 	// 모달--------------------------------------------------------------------------
@@ -944,6 +975,15 @@ String cp = request.getContextPath();
 												</c:if>
 											</div>
 										</div>
+										
+										<div class="rvReplyDiv">
+											<c:forEach var="rvReply" items="${rvReplyList }">
+												<c:if test="${rvReply.rv_num==rn}">
+													<div class="stOwner">↳ "사장님"</div>
+													<div class="rvReplyContentDiv" id="${rn }">${rvReply.reply_content}</div>
+												</c:if>
+											</c:forEach>
+										</div>
 									</div>
 								</c:forEach>
 								<input type="hidden" value="" name="rvNumHidden"> <input
@@ -958,21 +998,14 @@ String cp = request.getContextPath();
 								<h3>리뷰신고</h3>
 								<div class="popCont">
 									<div class="list">
-										<label for="commercial"> <input type="checkbox"
-											class="reviewRep" id="commercial" name="reviewRep" value="1"
-											onclick="CountChecked(this)">원치 않는 상업적인 리뷰
-										</label><br> <br> <label for="intended"> <input
-											type="checkbox" id="intended" name="reviewRep"
-											class="reviewRep" value="2" onclick="CountChecked(this)">악의적인
-											리뷰
-										</label><br> <br> <label for="wrong"> <input
-											type="checkbox" id="wrong" name="reviewRep" class="reviewRep"
-											value="3" onclick="CountChecked(this)">잘못된 정보
-										</label><br> <br> <label for="violent"> <input
-											type="checkbox" id="violent" name="reviewRep"
-											class="reviewRep" value="4" onclick="CountChecked(this)">욕설,
-											성적, 폭력적인 리뷰
-										</label><br> <br>
+										<c:forEach var="rvRep" items="${rvRepList}">
+											<div class="rvRepLabel">
+												<label for="${rvRep.rep_rs_name }"> <input type="checkbox"
+													class="reviewRep" id="${rvRep.rep_rs_name }" name="reviewRep" value="${rvRep.rep_rs_num }"
+													onclick="CountChecked(this)">${rvRep.rep_rs_name }
+												</label>
+											</div>
+										</c:forEach>
 									</div>
 								</div>
 								<div class="dec">
@@ -993,11 +1026,13 @@ String cp = request.getContextPath();
 												<c:choose>
 													<c:when test="${checkOption.yesorno eq '-' }">
 														<input type="checkbox" id="${checkOption.chbox_name }"
-															value="${checkOption.chbox_num }" name="optionCheck" disabled="disabled">
+															value="${checkOption.chbox_num }"
+															onclick = "optionCountChecked(this)" name="optionCheck" disabled="disabled">
 													</c:when>
 													<c:otherwise>
 														<input type="checkbox" id="${checkOption.chbox_name }"
-															value="${checkOption.chbox_num }" name="optionCheck">
+															value="${checkOption.chbox_num }"
+															onclick = "optionCountChecked(this)" name="optionCheck">
 													</c:otherwise>
 												</c:choose>
 												
