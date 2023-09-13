@@ -65,11 +65,23 @@ String cp = request.getContextPath();
 
 	$(document).ready(function()
 	{
+		document.concontextmenu = function(){return false;};
+
+		if($("#fail").val() == "fail")
+		{
+			alert("비밀번호 오류입니다.");
+			var closeNewWindow = window.close("about:blank");
+			$("#fail").val("");
+		}
+		
 		$("#rvBtn").click(function()
 		{
-			var userNum = "${user.user_num}";
+			var userNum = $("#user_num").val();
+			var user_pw = $("#rvRs").val();
 			$("#rvRs").val("");
-			window.location.href = "usermodify.action?user_num=" + userNum;
+			/* window.location.href = "usermodify.action?user_num="+userNum+"&user_pw="+user_pw; */
+			var openNewWindow = window.open("about:blank");
+			openNewWindow.location.href = "usermodify.action?user_num="+userNum+"&user_pw="+user_pw;
 		});
 	});
 
@@ -171,6 +183,7 @@ String cp = request.getContextPath();
 						마이 페이지 <input type="button" class="myPageBtn" value="개인정보수정"
 							onclick="pwPopupOpen()"
 							style="background-color: #EBC0B7; border-radius: 5px;">
+						<input type="hidden" id="fail" value="${modifyOk}">
 					</div>
 
 					<!-- 개인 정보 영역 -->
@@ -202,6 +215,7 @@ String cp = request.getContextPath();
 								</c:choose>
 							</div>
 						</div>
+						<input type="hidden" id="user_num" value="${user.user_num }">
 					</div>
 
 					<!-- 개인이 찜한 목록 -->
