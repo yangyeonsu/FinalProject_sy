@@ -1075,7 +1075,7 @@ $(function name()
 
 		<div class="container">
 
-			<c:import url="sideBar_store.jsp"></c:import>
+			<c:import url="sideBar_user.jsp""></c:import>
 
 			<div class="storemain_body">
 				<c:if test="">

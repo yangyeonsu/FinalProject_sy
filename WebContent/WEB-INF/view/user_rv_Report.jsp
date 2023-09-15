@@ -323,7 +323,7 @@
 	
 	
 	<div class="middle">
-	<c:import url="sideBar_store.jsp"></c:import>
+	<c:import url="sideBar_user.jsp"></c:import>
 		
 		
 		
