@@ -152,7 +152,7 @@
 	</delete>
 	<insert id="paysinsert">
 		INSERT INTO ST_PAY(ST_PAY_NUM, PAY_NUM, ST_NUM)
-		VALUES(PAYSEQ.NEXTVAL, #{pay_num}, #{st_num})
+		VALUES(STPAYSEQ.NEXTVAL, #{pay_num}, #{st_num})
 	</insert>
 	
 	<delete id="chBoxdelete">
