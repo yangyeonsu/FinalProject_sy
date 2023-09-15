@@ -101,15 +101,16 @@
 			<ul class="big_menu">
 				<li>접수 내역<i class="arrow fas fa-angle-right"></i></li>
 				<ul class="small_menu">
-					<li><a href="user_rv_report.action" class="small_menuA">리뷰신고</a></li>
-					<li><a href="user_stupdate_relist.action" class="small_menuA">가게정보수정요청</a></li>
+					<li><a href="user_rv_report.action" class="small_menuA">리뷰신고 내역</a></li>
+					<li><a href="user_stupdate_relist.action" class="small_menuA">가게정보오류수정요청 내역</a></li>
 				</ul>
 			</ul>
 			<ul class="big_menu">
 				<li><a class="small_menuA">경고내역</a></li>
 				<ul class="small_menu">
-					<li><a href="penaltyList.action" class="small_menuA">패널티확인</a></li>
-					<li><a href="stinfoupdaterelist.action" class="small_menuA">가게정보수정요청</a></li>
+					<li><a href="stinfoupdaterelist.action" class="small_menuA">가게정보오류수정요청 경고 내역</a></li>
+					<li><a href="penaltylist.action" class="small_menuA">패널티 회수 요청 내역</a></li>
+					<li><a href="Objlist.action" class="small_menuA">이의제기 요청 내역</a></li>
 				</ul>
 			</ul>
 			<ul class="big_menu">
