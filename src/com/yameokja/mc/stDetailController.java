@@ -63,7 +63,7 @@ public class stDetailController
 		IStoreMainDAO smDao = sqlSession.getMapper(IStoreMainDAO.class);
 
 
-		int st_num = Integer.parseInt(request.getParameter("st_num"));
+//		int st_num = Integer.parseInt(request.getParameter("st_num"));
 		//System.out.println("st_num : " + st_num);
 
 		
@@ -71,9 +71,10 @@ public class stDetailController
 		//String data = String.valueOf(session.getAttribute("flashData"));
 		
 		String data = null;
+		int st_num;
 		
-		if (session.getAttribute("falshDate") != null)
-	         data = (String) session.getAttribute("flashData");
+		if (session.getAttribute("flashData") != null)
+	         data = String.valueOf(session.getAttribute("flashData"));
 		
 		session.removeAttribute("flashData");
 		if (data != null) {
@@ -446,7 +447,7 @@ public class stDetailController
 
 	// 리뷰 입력
 	@RequestMapping(value = "/insertreview.action")
-	public String insertReview(HttpServletRequest request, Model model, HttpServletResponse response)
+	public String insertReview(HttpServletRequest request, HttpServletResponse response)
 	{
 		
 		String result = "";
@@ -460,22 +461,6 @@ public class stDetailController
 		
 		IUserDAO udao = sqlSession.getMapper(IUserDAO.class);
 		UserDTO user = udao.searchUserInfo(user_num, "num");
-		
-		LocalDate currentDate = LocalDate.now();
-        int monthValue = currentDate.getMonthValue();
-		
-		if (1 <= monthValue && monthValue <= 6)
-		{
-			user.setPoint_sum(udao.secondHalf(user_num).point_sum);
-			user.setUser_grade(udao.firstHalf(user_num).user_grade);
-		}
-		else if(7 <= monthValue && monthValue <= 12)
-		{
-			user.setPoint_sum(udao.firstHalf(user_num).point_sum);
-			user.setUser_grade(udao.secondHalf(user_num).user_grade);
-		}
-		
-		model.addAttribute("user", user);
 		
 
 		// 사진 업로드
@@ -513,6 +498,17 @@ public class stDetailController
     		//ArrayList<String> skArr = new ArrayList<String>();
 
 			List<FileItem> items = fileUpload.parseRequest(request);
+			for (FileItem item : items)
+            {
+                if (item.isFormField() && item.getFieldName().equals("st_num"))
+                {
+                	System.out.println(item.getString(CHARSET));
+            		st_num = Integer.parseInt(item.getString(CHARSET));
+                }
+            }
+			
+			System.out.println(st_num);
+			
             
             for (FileItem item : items)
             {
@@ -523,8 +519,6 @@ public class stDetailController
                 		star_score = Integer.parseInt(item.getString(CHARSET));
                 	if (item.getFieldName().equals("reviewContent"))
                 		rv_content = item.getString(CHARSET);
-                	if (item.getFieldName().equals("st_num"))
-                		st_num = Integer.parseInt(item.getString(CHARSET));
                 	if (item.getFieldName().equals("rvArrHidden"))
                 	{
                 		for (String rvkey : item.getString(CHARSET).split(","))
@@ -631,7 +625,7 @@ public class stDetailController
 			}
 			*/
 			// 가게상세페이지로 가기 위해 st_num을 model로 전송
-			model.addAttribute("st_num", st_num);
+//			model.addAttribute("st_num", st_num);
 			
 			// 리뷰 작성 포인트 추가
 			Integer rvPhotoCount = imgCount;
