@@ -97,8 +97,21 @@
 				</ul>
 			</ul>
 			<ul class="big_menu">
-				<li><a href="userrvpenalty.action" class="small_menuA">경고 내역</a></li>
+				<li>경고 내역<i class="arrow fas fa-angle-right"></i></li>
+				<ul class="small_menu">
+					<li><a href="userrvpenalty.action" class="small_menuA">리뷰 경고 내역</a></li>
+					<c:if test="${not empty sessionScope.st_num }">
+					<li><a href="stinfoupdaterelist.action" class="small_menuA">가게정보오류수정요청 경고 내역</a></li>
+					<li><a href="penaltylist.action" class="small_menuA">패널티 회수 요청 내역</a></li>
+					<li><a href="Objlist.action" class="small_menuA">이의제기 요청 내역</a></li>
+					</c:if>
+				</ul>
 			</ul>
+			<c:if test="${not empty sessionScope.st_num }">
+			<ul class="big_menu">
+    			<li><a href="storeOutform.action?user_num=${user_num}" class="small_menuA">폐업신청</a></li>
+			</ul>
+			</c:if>
 		</div>
 	</div>
 	<div class="overlay">
