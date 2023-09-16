@@ -381,7 +381,7 @@
 					        <c:forEach var="rvreport" items="${rvReportList}">
 					            <div class="report_content">
 					                <div class="rpt_content" onclick="rvPopupOpen()">${rvreport.reg_date }</div>
-					                <div class="rpt_content st_name" onclick="rvPopupOpen()">${rvreport.st_name }</div>
+					                <div class="rpt_content" onclick="rvPopupOpen()">${rvreport.st_name }</div>
 					                <div class="rpt_content" onclick="rvPopupOpen()">${rvreport.accu_id }</div>
 					                <div class="rpt_content" id="status" onclick="rvPopupOpen()">${rvreport.state }</div>
 					                <div class="rpt_content" onclick="rvPopupOpen()">${rvreport.final_date }</div>

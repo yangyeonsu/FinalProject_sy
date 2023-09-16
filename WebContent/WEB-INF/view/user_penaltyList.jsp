@@ -163,6 +163,7 @@ String cp = request.getContextPath();
 						<div class="pen_subtitle">신고일자</div>
 						<div class="st_name">가게명</div>
 						<div class="pen_subtitle">리뷰내용</div>
+						<div class="pen_subtitle">신고내용</div>
 						<div class="pen_subtitle">처리상태</div>
 						<div class="pen_subtitle">처리일자</div>
 					</div>
@@ -177,15 +178,17 @@ String cp = request.getContextPath();
 							<c:forEach var="pl" items="${penaltyList}">
 								<div class="report_content">
 									<div class="rpt_content">${pl.reg_date }</div>
-									<div class="rpt_content st_name">${pl.st_name }</div>
+									<div class="rpt_content">${pl.st_name }</div>
 									<c:choose>
-										<c:when test="${fn:length(pl.rv_content) >= 10 }">
-											<div class="rpt_content">${fn:substring(pl.rv_content, 0, 10)}···</div>
+										<c:when test="${fn:length(pl.rv_content) > 9 }">
+											<div class="rpt_content rep_rs" id="repNum${pl.rep_apply_num}">${fn:substring(pl.rv_content, 0, 9)}···</div>
 										</c:when>
 										<c:otherwise>
-											<div class="rpt_content">${pl.rv_content }</div>
+											<div class="rpt_content rep_rs" id="repNum${pl.rep_apply_num}">${pl.rv_content }</div>
 										</c:otherwise>
 									</c:choose>
+									<div class="rep_rs_hidden" id="repNum${pl.rep_apply_num}">${pl.rv_content }</div>
+									<div class="rpt_content" >${pl.rep_rs_name }</div>
 									<div class="rpt_content">${pl.state }</div>
 									<div class="rpt_content">${pl.final_date }</div>
 								</div>

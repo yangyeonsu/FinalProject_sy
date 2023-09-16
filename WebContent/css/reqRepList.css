@@ -76,18 +76,36 @@ body
 	padding: 1vh;
 }
 
+.rep_rs_hidden
+{
+	display: inline-block;
+  	color: #f7f4ea;
+}
+
+.rep_rs_hidden
+{
+  	display: none;		/*평소에 안보여야 하니까 none으로*/
+    position: absolute;	/*공중에 띄어져있으니까 absolute*/
+    max-width: 20vw;
+    border: 3px solid #f7f4ea;
+    border-radius: 5px;
+    font-size: 1em;
+    color: #3a001e;
+    left: 51vw;
+    background-color: white;
+}
+
+.rep_rs:hover + .rep_rs_hidden
+{
+	display: block;
+}
+
 /* 제목 */
 .title {
 	width: 100%;
 	text-align: center;
 	font-size: 2em;
 	font-weight: bold;
-}
-
-.st_name {
-	text-align: center;
-	width: 12vw;
-	padding: 1vh;;
 }
 
 .no-data-message {
