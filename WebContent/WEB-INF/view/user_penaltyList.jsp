@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%
 	request.setCharacterEncoding("UTF-8");
 String cp = request.getContextPath();
@@ -8,7 +9,7 @@ String cp = request.getContextPath();
 <html>
 <head>
 <meta charset="UTF-8">
-<title>신고 받은 경고 내역</title>
+<title>나의 신고 받은 내역</title>
 
 <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
 <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
@@ -161,22 +162,32 @@ String cp = request.getContextPath();
 					<div class="subtitle">
 						<div class="pen_subtitle">신고일자</div>
 						<div class="st_name">가게명</div>
+						<div class="pen_subtitle">리뷰내용</div>
+						<div class="pen_subtitle">처리상태</div>
 						<div class="pen_subtitle">처리일자</div>
 					</div>
 					<c:choose>
-						<c:when test="${empty user_penaltyList}">
+						<c:when test="${empty penaltyList}">
+							<br>
 							<div class="no-data-message">경고 내역이 없습니다.</div>
-							<c:forEach begin="1" end="10">
-								<div class="report_content">
-								</div>
-							</c:forEach>
+							<div class="report_content">
+							</div>
 						</c:when>
 						<c:otherwise>
-							<c:forEach var="pl" items="${penList}">
+							<c:forEach var="pl" items="${penaltyList}">
 								<div class="report_content">
-									<div class="pen_subtitle">${pl.reg_date }</div>
-									<div class="st_name">${pl.st_name }</div>
-									<div class="pen_subtitle">${pl.write_date }</div>
+									<div class="rpt_content">${pl.reg_date }</div>
+									<div class="rpt_content st_name">${pl.st_name }</div>
+									<c:choose>
+										<c:when test="${fn:length(pl.rv_content) >= 10 }">
+											<div class="rpt_content">${fn:substring(pl.rv_content, 0, 10)}···</div>
+										</c:when>
+										<c:otherwise>
+											<div class="rpt_content">${pl.rv_content }</div>
+										</c:otherwise>
+									</c:choose>
+									<div class="rpt_content">${pl.state }</div>
+									<div class="rpt_content">${pl.final_date }</div>
 								</div>
 							</c:forEach>
 						</c:otherwise>
@@ -184,8 +195,8 @@ String cp = request.getContextPath();
 
 					<!-- 페이징 처리 -->
 					<div class="pagination">
-						<!-- <c:choose>
-							<c:when test="${empty penList}">
+						<%-- <c:choose>
+							<c:when test="${empty penaltyList}">
 								<p></p>
 							</c:when>
 							<c:otherwise>
@@ -202,10 +213,9 @@ String cp = request.getContextPath();
 											&raquo;</a></li>
 								</ul>
 							</c:otherwise>
-						</c:choose>
-						 -->
+						</c:choose> --%>
 						<c:choose>
-			                <c:when test="${empty penList}">
+			                <c:when test="${empty penaltyList}">
 			                    <p></p>
 			                </c:when>
 			                <c:otherwise>
