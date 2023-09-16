@@ -365,27 +365,25 @@
 				<div class="rv_reportlist">
 					<div class="subtitle">
 						<div class="rpt_subtitle">신고일자</div>
-						<div class="st_name">가게명</div>
+						<div class="rpt_subtitle st_name">가게명</div>
 						<div class="rpt_subtitle">피신고자ID</div>
 						<div class="rpt_subtitle">처리상태</div>
 						<div class="rpt_subtitle">처리일자</div>
 					</div>
 					<c:choose>
-					    <c:when test="${empty user_rv_Report}">
+					    <c:when test="${empty rvReportList}">
+					    	<br>
 					        <div class="no-data-message">리뷰 신고 내역이 존재하지 않습니다.</div>
-					    	<c:forEach begin='1' end='10'>
-						    	<div class="report_content">
-
-					            </div>
-					    	</c:forEach>
+					    	<div class="report_content">
+				            </div>
 					    </c:when>
 					    <c:otherwise>
-					        <c:forEach var="rvreport" items="${user_rv_Report}">
+					        <c:forEach var="rvreport" items="${rvReportList}">
 					            <div class="report_content">
 					                <div class="rpt_content" onclick="rvPopupOpen()">${rvreport.reg_date }</div>
-					                <div class="st_name" onclick="rvPopupOpen()">${rvreport.st_name }</div>
-					                <div class="rpt_content" onclick="rvPopupOpen()">${rvreport.reporteduserid }</div>
-					                <div class="rpt_content" id="status" onclick="rvPopupOpen()">${rvreport.status }</div>
+					                <div class="rpt_content st_name" onclick="rvPopupOpen()">${rvreport.st_name }</div>
+					                <div class="rpt_content" onclick="rvPopupOpen()">${rvreport.accu_id }</div>
+					                <div class="rpt_content" id="status" onclick="rvPopupOpen()">${rvreport.state }</div>
 					                <div class="rpt_content" onclick="rvPopupOpen()">${rvreport.final_date }</div>
 					                
 					                <div id="reject" style="display: none;">${rvreport.rep_rej_num }</div>
@@ -403,7 +401,7 @@
 					<!-- 페이징 처리 -->
 					<div class="pagination">
 			            <c:choose>
-			                <c:when test="${empty user_rv_Report}">
+			                <c:when test="${empty rvReportList}">
 			                    <p></p>
 			                </c:when>
 			                <c:otherwise>
@@ -461,11 +459,6 @@
 					</div>
 					
 				</div>
-				
-				
-				
-				
-				
 			</div>
 		</div><!-- right_content -->
 		

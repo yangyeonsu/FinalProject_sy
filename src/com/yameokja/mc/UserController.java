@@ -279,7 +279,7 @@ public class UserController
 		return result;
 	}
 	
-	// 사용자가 가게정보오류수정 요청 한 내역
+	// 사용자가 가게정보오류수정 요청한 내역
 	@RequestMapping(value="/user_stupdate_relist.action", method=RequestMethod.GET)
 	public String userstUpdatereListform(HttpServletRequest request, Model model)
 	{
@@ -297,7 +297,7 @@ public class UserController
 	    
 	    
 	    
-	    IUserstupdaterelistDAO dao = sqlSession.getMapper(IUserstupdaterelistDAO.class);
+	    IUserSidebarDAO dao = sqlSession.getMapper(IUserSidebarDAO.class);
 	    IUserDAO udao = sqlSession.getMapper(IUserDAO.class);
 	    
 	    UserDTO user = udao.searchUserInfo(user_num, "num");
@@ -333,8 +333,8 @@ public class UserController
 	    
 	    if (dao.count_relist(user_num) % itemsPerPage != 0)
 	    	totalPage++;
-	    System.out.println(currentPage);
-	    System.out.println(totalPage);
+	    //System.out.println(currentPage);
+	    //System.out.println(totalPage);
 	    // 전체 페이지 수 보다 표시할 페이지가 큰 경우
 		// 표시할 페이지를 전체 페이지로 처리
 		// → 데이터를 삭제해서 페이지가 줄어들었을 경우...
@@ -354,15 +354,15 @@ public class UserController
 	    
 	    model.addAttribute("pageIndex", Paging.pageIndexList(currentPage, totalPage, actionName));
 	    List<UserStupdaterelistDTO> user_stupdate_relist = dao.user_stupdate_relist(user_num, startRow, endRow);
-	    System.out.println(user_stupdate_relist);
+	    //System.out.println(user_stupdate_relist);
 	    model.addAttribute("user", user);
-	    model.addAttribute("user_stupdate_relist", user_stupdate_relist);
+	    model.addAttribute("stupdateReList", user_stupdate_relist);
 	    result = "/WEB-INF/view/user_StUpdate_reList.jsp";
 	    
 	    return result;
 	};
 	
-	// 사용자가 리뷰 신고 한 내역
+	// 사용자가 리뷰 신고한 내역
 	@RequestMapping(value="/user_rv_report.action", method=RequestMethod.GET)
 	public String rvReportListform(HttpServletRequest request, Model model)
 	{
@@ -376,7 +376,7 @@ public class UserController
 	    
 	    String result = null;
 	    
-	    IuserrvReportDAO dao = sqlSession.getMapper(IuserrvReportDAO.class);
+	    IUserSidebarDAO dao = sqlSession.getMapper(IUserSidebarDAO.class);
 	    IUserDAO udao = sqlSession.getMapper(IUserDAO.class);
 	    
 	    UserDTO user = udao.searchUserInfo(user_num, "num");
@@ -412,8 +412,8 @@ public class UserController
  	    
  	    if (dao.count_replist(user_num) % itemsPerPage != 0)
  	    	totalPage++;
- 	    System.out.println(currentPage);
- 	    System.out.println(totalPage);
+ 	    //System.out.println(currentPage);
+ 	    //System.out.println(totalPage);
  	    // 전체 페이지 수 보다 표시할 페이지가 큰 경우
  		// 표시할 페이지를 전체 페이지로 처리
  		// → 데이터를 삭제해서 페이지가 줄어들었을 경우...
@@ -426,8 +426,8 @@ public class UserController
 	    
  	    model.addAttribute("pageIndex", Paging.pageIndexList(currentPage, totalPage, actionName));
 	    List<UserrvreportDTO> rvReportList = dao.user_rv_Report(user_num, startRow, endRow); // 여러 개의 DTO 객체를 리스트로 가져옴
-	    System.out.println(rvReportList);
-	    model.addAttribute("user_rv_Report", rvReportList); // 리스트를 전달
+	    //System.out.println(rvReportList);
+	    model.addAttribute("rvReportList", rvReportList); // 리스트를 전달
 	    model.addAttribute("user", user);
 	    result = "/WEB-INF/view/user_rv_Report.jsp";
 	    
@@ -448,7 +448,7 @@ public class UserController
 	    
 	    String result = null;
 	    
-	    IuserrvReportDAO dao = sqlSession.getMapper(IuserrvReportDAO.class);
+	    IUserSidebarDAO dao = sqlSession.getMapper(IUserSidebarDAO.class);
 	    IUserDAO udao = sqlSession.getMapper(IUserDAO.class);
 	    
 	    // 사용자 정보
@@ -482,12 +482,12 @@ public class UserController
  	    int itemsPerPage = 10;
  	    
  	    // 전체 데이터 수 구해서 총 페이지 수 계산
- 	    int totalPage = dao.count_replist(user_num) / itemsPerPage;
+ 	    int totalPage = dao.count_penlist(user_num) / itemsPerPage;
  	    
  	    if (dao.count_replist(user_num) % itemsPerPage != 0)
  	    	totalPage++;
- 	    System.out.println(currentPage);
- 	    System.out.println(totalPage);
+ 	    //System.out.println(currentPage);
+ 	    //System.out.println(totalPage);
  	    // 전체 페이지 수 보다 표시할 페이지가 큰 경우
  		// 표시할 페이지를 전체 페이지로 처리
  		// → 데이터를 삭제해서 페이지가 줄어들었을 경우...
@@ -501,8 +501,12 @@ public class UserController
  	    model.addAttribute("pageIndex", Paging.pageIndexList(currentPage, totalPage, actionName));
  	    
  	    // 데이터베이스에서 사용자가 작성한 리뷰에 대해 신고 받은 내역 가져오기
+ 	    List<penaltyListDTO> penaltyList = dao.user_penList(user_num, startRow, endRow);
+ 	    //System.out.println(penaltyList);
+	    model.addAttribute("penaltyList", penaltyList); // 리스트를 전달
+	    model.addAttribute("user", user);
  	    
-		result = "/WEB-INF/view/peneltyList-beta.jsp";
+		result = "/WEB-INF/view/user_penaltyList.jsp";
 		
 		return result;
 	}
