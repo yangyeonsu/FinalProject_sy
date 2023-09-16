@@ -249,7 +249,6 @@ public class UserController
 		List<Integer> ibmatList = idao.getIbmatStNumber(user_num);
 		List<Integer> jjimList = idao.getJjimStNumber(user_num);
 		
-		
 		if (ibmatList.size() > 0)
 			model.addAttribute("ibmat_list", idao.getStoreList(ibmatList));
 		else
@@ -259,9 +258,10 @@ public class UserController
 			model.addAttribute("likelist", idao.getStoreList(jjimList));
 		else
 			model.addAttribute("likelist", null);
-
-		model.addAttribute("userJjimList", idao.userJjimSearch(user_num));
 		*/
+		
+		List<Integer> jjimList = idao.userJjimSearch(user_num);
+		model.addAttribute("userJjimList", idao.getStoreList(jjimList));
 		
 		model.addAttribute("user", user);
 		model.addAttribute("rvlist", udao.searchRvList(user_num));
