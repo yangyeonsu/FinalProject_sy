@@ -2,7 +2,7 @@ package com.yameokja.mc;
 
 public class UserStupdaterelistDTO
 {
-	private String reg_date, st_name, status, final_date;
+	private String reg_date, st_name, state, final_date;
 
 	/* REQ_APPLY_NUM, REQ_PROCESS_NUM, REJ_RS 추가*/
 	
@@ -38,8 +38,6 @@ public class UserStupdaterelistDTO
 		this.rej_rs = rej_rs;
 	}
 
-	
-	
 	public String getReg_date()
 	{
 		return reg_date;
@@ -59,14 +57,14 @@ public class UserStupdaterelistDTO
 		this.st_name = st_name;
 	}
 
-	public String getStatus()
+	public String getState()
 	{
-		return status;
+		return state;
 	}
 
-	public void setStatus(String status)
+	public void setState(String state)
 	{
-		this.status = status;
+		this.state = state;
 	}
 
 	public String getFinal_date()
@@ -78,6 +76,5 @@ public class UserStupdaterelistDTO
 	{
 		this.final_date = final_date;
 	}
-	
-	
+
 }

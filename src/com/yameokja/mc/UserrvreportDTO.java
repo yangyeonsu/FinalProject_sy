@@ -2,7 +2,7 @@ package com.yameokja.mc;
 
 public class UserrvreportDTO
 {
-	private String reg_date, st_name, reporteduserid, final_date, status;
+	private String reg_date, st_name, accu_id, final_date, state;
 	
 	private String rep_rej_num;
 	private String rej_rs;
@@ -10,8 +10,8 @@ public class UserrvreportDTO
 	private String rep_mid_num;
 	private String mid_rs;
 	
-	// getter / setter
 	
+	// getter / setter
 	public String getRej_rs()
 	{
 		return rej_rs;
@@ -22,7 +22,6 @@ public class UserrvreportDTO
 		this.rej_rs = rej_rs;
 	}
 	
-
 	public String getRep_rej_num()
 	{
 		return rep_rej_num;
@@ -32,10 +31,7 @@ public class UserrvreportDTO
 	{
 		this.rep_rej_num = rep_rej_num;
 	}
-	
-	
-	
-	
+
 	public String getRep_mid_num()
 	{
 		return rep_mid_num;
@@ -56,9 +52,6 @@ public class UserrvreportDTO
 		this.mid_rs = mid_rs;
 	}
 
-	
-	
-	
 	public String getReg_date()
 	{
 		return reg_date;
@@ -78,16 +71,14 @@ public class UserrvreportDTO
 	{
 		this.st_name = st_name;
 	}
-
-	public String getReporteduserid()
-	{
-		return reporteduserid;
-	}
-
-	public void setReporteduserid(String reporteduserid)
-	{
-		this.reporteduserid = reporteduserid;
-	}
+	
+	/*
+	 * public String getReporteduserid() { return reporteduserid; }
+	 * 
+	 * public void setReporteduserid(String reporteduserid) { this.reporteduserid =
+	 * reporteduserid; }
+	 */
+	
 
 	public String getFinal_date()
 	{
@@ -99,15 +90,26 @@ public class UserrvreportDTO
 		this.final_date = final_date;
 	}
 
-	public String getStatus()
+	public String getAccu_id()
 	{
-		return status;
+		return accu_id;
 	}
 
-	public void setStatus(String status)
+	public void setAccu_id(String accu_id)
 	{
-		this.status = status;
+		this.accu_id = accu_id;
 	}
+
+	public String getState()
+	{
+		return state;
+	}
+
+	public void setState(String state)
+	{
+		this.state = state;
+	}
+	
 	
 	
 }

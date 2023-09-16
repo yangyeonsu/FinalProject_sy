@@ -3,7 +3,7 @@ package com.yameokja.mc;
 public class penaltyListDTO
 {
 	/* private String reg_date, st_name, write_date; */
-	private String reg_date, st_name, final_date;
+	private String reg_date, st_name, state, final_date, rv_content;
 	
 	// getter / setter
 	public String getReg_date()
@@ -34,6 +34,25 @@ public class penaltyListDTO
 	public void setFinal_date(String final_date)
 	{
 		this.final_date = final_date;
+	}
+	public String getState()
+	{
+		return state;
+	}
+
+	public void setState(String state)
+	{
+		this.state = state;
+	}
+
+	public String getRv_content()
+	{
+		return rv_content;
+	}
+
+	public void setRv_content(String rv_content)
+	{
+		this.rv_content = rv_content;
 	}
 
 }

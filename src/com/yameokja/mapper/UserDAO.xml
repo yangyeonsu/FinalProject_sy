@@ -214,7 +214,7 @@
 		    USER_EMAIL=#{user_email}
 		WHERE USER_NUM = #{user_num}
 	</update>
-	
+  	
 </mapper>
 
 

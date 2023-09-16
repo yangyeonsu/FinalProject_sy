@@ -264,32 +264,30 @@
 		<div class="right_content">
 			<div class="rv_report">
 				<div class="title">
-					가게정보수정요청 내역
+					가게정보오류수정요청 내역
 				</div>
 				<hr>
 				
 				<div class="rv_reportlist">
 					<div class="subtitle">
 						<div class="rpt_subtitle">요청일자</div>
-						<div class="st_name">가게명</div>
+						<div class="rpt_subtitle st_name">가게명</div>
 						<div class="rpt_subtitle">처리상태</div>
 						<div class="rpt_subtitle">처리일자</div>
 					</div>
 					<c:choose>
-					    <c:when test="${empty user_stupdate_relist}">
-					        <div class="no-data-message">가게정보수정요청 내역이 없습니다.</div>
-					        <c:forEach var="udre" begin="1" end="10">
-					        	<div class="report_content">
-					                
-					            </div>
-					        </c:forEach>
+					    <c:when test="${empty stupdateReList}">
+					    	<br>
+					        <div class="no-data-message">가게정보오류수정요청 내역이 없습니다.</div>
+				        	<div class="report_content">
+				            </div>
 					    </c:when>
 					    <c:otherwise>
-					        <c:forEach var="udre" items="${user_stupdate_relist}">
+					        <c:forEach var="udre" items="${stupdateReList}">
 					            <div class="report_content">
 					                <div class="rpt_content" onclick="reqPopupOpen()">${udre.reg_date }</div>
-					                <div class="st_name" onclick="reqPopupOpen()">${udre.st_name }</div>
-					                <div class="rpt_content" id="status" onclick="reqPopupOpen()">${udre.status }</div>
+					                <div class="rpt_content st_name" onclick="reqPopupOpen()">${udre.st_name }</div>
+					                <div class="rpt_content" id="status" onclick="reqPopupOpen()">${udre.state }</div>
 					                <div class="rpt_content" onclick="reqPopupOpen()">${udre.final_date }</div>
 					            	
 					            	<div id="reject" style="display: none;">${udre.req_process_num }</div>
@@ -302,7 +300,7 @@
 					<!-- 페이징 처리 -->
 					<div class="pagination">
 			            <c:choose>
-			                <c:when test="${empty user_stupdate_relist}">
+			                <c:when test="${empty stupdateReList}">
 			                    <p></p>
 			                </c:when>
 			                <c:otherwise>
