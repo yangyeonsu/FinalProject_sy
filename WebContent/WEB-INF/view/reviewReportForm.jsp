@@ -193,6 +193,7 @@ span
 	
 	$(function ()
 	{
+		
 		$(".check").change(function() 
 		{
 		    if ($(this).is(":checked")) 
@@ -241,16 +242,18 @@ span
 				}
 			}
 			
+			
 			var selectedValue = $(".check:checked").val();
 		    
 		    if (selectedValue === "trueR") {			// 반려
 		        window.location.href = "rvreportre.action";
 		    } else if (selectedValue === "trueM") {		// 중재
 		        window.location.href = "rvreporthalf.action";
-		    } else {		// 승인
-		    	window.location.href = "rvreportaccess.action";
+		    } else {									// 승인
+		    	window.location.href = "rvreportaccess.action?rep_apply_num="+$("#rep_apply_num").val();
 		    }
 		});
+		
 		
 		$(".stInfoBtn").click(function(event)
 		{
@@ -367,7 +370,7 @@ span
 	</div>
 
 	<div>
-		<div value=<%=dto.getRep_apply_num() %> style="display: none;"></div>
+		<input type="hidden" id="rep_apply_num" name="rep_apply_num" value="<%=dto.getRep_apply_num() %>">
 	</div>
    
 	<!-- footer -->
