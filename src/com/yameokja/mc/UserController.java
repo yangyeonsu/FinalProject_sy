@@ -261,7 +261,10 @@ public class UserController
 		*/
 		
 		List<Integer> jjimList = idao.userJjimSearch(user_num);
-		model.addAttribute("userJjimList", idao.getStoreList(jjimList));
+		if (jjimList.size() > 0)
+			model.addAttribute("userJjimList", idao.getStoreList(jjimList));
+		else
+			model.addAttribute("userJjimList", null);
 		
 		model.addAttribute("user", user);
 		model.addAttribute("rvlist", udao.searchRvList(user_num));
