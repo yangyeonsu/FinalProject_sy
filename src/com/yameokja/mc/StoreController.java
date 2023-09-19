@@ -71,7 +71,6 @@ public class StoreController
 		else
 			st_num = smDao.searchRepStore(user_num);
 		
-		
 		session.setAttribute("st_num", st_num);
 		model.addAttribute("st_num", st_num);
 				
