@@ -385,7 +385,6 @@ public class AdminMainController
 		
 		
 		// 리뷰 신고 승인 일시
-		
 		@RequestMapping(value="/rvreportaccess.action", method=RequestMethod.GET)
 		public String rvreportaccess(Model model,HttpServletRequest request)
 		{
@@ -398,11 +397,15 @@ public class AdminMainController
 			IAdminMainDAO daoM = sqlSesion.getMapper(IAdminMainDAO.class);
 			IAdminFindDAO dao = sqlSesion.getMapper(IAdminFindDAO.class);
 			
-			int rep_apply_num = (int) session.getAttribute("rep_apply_num");
+			int rep_apply_num = Integer.parseInt(request.getParameter("rep_apply_num"));
+			//int rep_apply_num = session.setAttribute(repNum,"rep_apply_num");
 			System.out.println(rep_apply_num);
 			System.out.println(admin_num);
 			
-			model.addAttribute("rvreportaccess", dao.rvreportaccess(rep_apply_num, admin_num));
+			//System.out.println(admin_num);
+			
+			model.addAttribute(""
+					+ "", dao.rvreportaccess(rep_apply_num, admin_num));
 			
 			result = "/WEB-INF/view/admin_main.jsp";
 			
