@@ -229,12 +229,12 @@ String cp = request.getContextPath();
 
 						<div class="jimlist">
 							<c:choose>
-								<c:when test="${empty likelist}">
+								<c:when test="${empty userJjimList}">
 									<div class="jimstore">찜한 가게가 없습니다.</div>
 								</c:when>
 								<c:otherwise>
 									<div class="jimlist">
-										<c:forEach var="store" items="${likelist}" end="5">
+										<c:forEach var="store" items="${userJjimList}" end="5">
 											<div class="jimstore">
 												<div class="jimstoreImg">
 													<c:choose>

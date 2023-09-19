@@ -214,7 +214,9 @@ public class stDetailController
 
 		// 사용자의 해당 가게 추천/비추천 내역
 		ArrayList<Integer> userRnList = dao.userRnList(st_num, user_num);
+		System.out.println(userRnList);
 		ArrayList<Integer> userNrnList = dao.userNrnList(st_num, user_num);
+		System.out.println(userNrnList);
 
 		/*
 		 * for (userRvRecDTO dto : userReviewList) {
@@ -226,7 +228,7 @@ public class stDetailController
 		 * if(userReviewList.size()>0) { model.addAttribute("userReviewList",
 		 * userReviewList); } else model.addAttribute("userReviewList", null);
 		 */
-		model.addAttribute("userRnist", userRnList);
+		model.addAttribute("userRnList", userRnList);
 		model.addAttribute("userNrnList", userNrnList);
 
 		model.addAttribute("userJjimList", mdao.userJjimSearch(user_num));

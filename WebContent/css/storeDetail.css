@@ -614,13 +614,19 @@
 }
 
 /* 리뷰 답글 영역 */
+.rvReplyDiv
+{
+	display: flex;
+	flex-direction: column;
+}
+
 .stOwner
 {
 	font-size: 12pt;
 	font-weight: bold;
 }
 
-.rvReplyDiv
+.rvReplyContent
 {
 	margin-left: 2%;
 }
@@ -633,6 +639,14 @@
 	display: flex;
 	width: 98.5%;
 	flex-direction: column;
+}
+
+.repRegDate
+{
+	font-size: 8pt;
+    color: #4d4b4b;
+    width: 10vw;
+    margin-left: 88.5%;
 }
 
 /* 화면 좌측 사이드 바 영역 */
