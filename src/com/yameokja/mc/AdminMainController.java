@@ -404,10 +404,11 @@ public class AdminMainController
 			
 			//System.out.println(admin_num);
 			
-			model.addAttribute(""
-					+ "", dao.rvreportaccess(rep_apply_num, admin_num));
+			int accessNum = dao.rvreportAccess(rep_apply_num, admin_num);
 			
-			result = "/WEB-INF/view/admin_main.jsp";
+			//model.addAttribute(""+ "", dao.rvreportaccess(rep_apply_num, admin_num));
+			
+			result = "redirect:adminmain.action";
 			
 			return result;
 		}
