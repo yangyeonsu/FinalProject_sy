@@ -90,6 +90,16 @@
 		<div class="sub_menu">
 			<h2>MENU</h2>
 			<ul class="big_menu">
+				<c:if test="${not empty sessionScope.st_num }">
+				<li>가게 리스트<i class="arrow fas fa-angle-right"></i></li>
+				<ul class="small_menu">
+					<c:forEach var="st" items="${st_list }">
+						<li><a href="storeinfo.action?stNum=${st.st_num }" class="samll_menuA" id="${st.st_num }">${st.st_name }</a>
+					</c:forEach>
+				</ul>
+				</c:if>
+			</ul>
+			<ul class="big_menu">
 				<li>접수 내역<i class="arrow fas fa-angle-right"></i></li>
 				<ul class="small_menu">
 					<li><a href="user_rv_report.action" class="small_menuA">리뷰신고 내역</a></li>
@@ -103,7 +113,7 @@
 					<c:if test="${not empty sessionScope.st_num }">
 					<li><a href="stinfoupdaterelist.action" class="small_menuA">가게정보오류수정요청 경고 내역</a></li>
 					<li><a href="penaltylist.action" class="small_menuA">패널티 회수 요청 내역</a></li>
-					<li><a href="Objlist.action" class="small_menuA">이의제기 요청 내역</a></li>
+					<li><a href="objlist.action" class="small_menuA">이의제기 요청 내역</a></li>
 					</c:if>
 				</ul>
 			</ul>

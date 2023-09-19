@@ -15,93 +15,6 @@
 
 <link rel="stylesheet" type="text/css" href="<%=cp%>/css/reqRepList.css">
 
-<!-- <style type="text/css">
-
-	.header
-	{
-		position: sticky;
-		top: 0;
-		background-color: white;
-	}
-	
-	/* 메인페이지 */
-	.middle
-	{
-		display: flex;
-		width: 97vw;
-		padding: 0px;
-		align-items: stretch;
-	}
-	.rv_reportlist
-	{
-		display: flex;
-		flex-direction: column;
-		padding: 1vw;
-		border: 0.3vw solid #F7F4EA;
-		border-radius: 40px;
-	}
-	/* 부제 틀 */
-	.subtitle
-	{
-		display: flex;
-		background-color: #F7F4EA;
-		border-radius: 10px 10px 0 0;
-	}
-	/* 부제 */
-	.rpt_subtitle
-	{
-		text-align: center;
-		width: 8vw;
-		padding: 1vh;
-	}
-	
-	/* 신고 내용 틀 */
-	.report_content
-	{
-		display: flex;
-
-	}
-	/* 신고 내용 */
-	.rpt_content
-	{
-		text-align: center;
-		width: 8vw;
-		padding: 1vh;
-	}
-	
-	/* 리뷰신고리스트 전체 틀 */
-	.rv_report
-	{
-		/* padding: 5vw; */
-		justify-content: center;
-		margin-left: 10vw;
-		padding-top: 0;
-	}
-	/* 제목 */
-	.title
-	{
-		width: 100%;
-		text-align: center;
-		font-size: 2em;
-	}
-	.st_name
-	{
-		text-align: center;
-		width: 12vw;
-		padding: 1vh;;
-	}
-	.no-data-message
-	{
-		text-align: center;
-	}
-	
-	.pageIndex
-	{
-		display: flex;
-    	justify-content: center;
-    }
-</style> -->
-
 <!-- 배너 스크립트 -->
 <script type="text/javascript">
 	$(function()
@@ -279,7 +192,7 @@
 					</div>
 					<c:choose>
 					    <c:when test="${empty user_stupdate_relist}">
-					        <div class="no-data-message">가게정보수정요청 내역이 없습니다.</div>
+					        <div class="no-data-message">가게 정보 수정 요청 내역이 없습니다.</div>
 					        <c:forEach var="udre" begin="1" end="10">
 					        	<div class="report_content">
 					                
@@ -293,6 +206,8 @@
 					                <div class="st_name" onclick="reqPopupOpen()">${udre.st_name }</div>
 					                <div class="rpt_content" id="status" onclick="reqPopupOpen()">${udre.status }</div>
 					                <div class="rpt_content" onclick="reqPopupOpen()">${udre.final_date }</div>
+					                <div class="rpt_obj"><button>이의제기</button></div>
+					                <div class="rpt_revoke"><button>패널티회수</button></div>
 					            	
 					            	<div id="reject" style="display: none;">${udre.req_process_num }</div>
 					                <div class="rej_rs" style="display: none;">${udre.rej_rs }</div>

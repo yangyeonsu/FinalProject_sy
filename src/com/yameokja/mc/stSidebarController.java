@@ -1,6 +1,7 @@
 package com.yameokja.mc;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,8 +37,12 @@ public class stSidebarController
 
 	    IStinfoUpdaterelistDAO dao = sqlSession.getMapper(IStinfoUpdaterelistDAO.class);
 	    IUserDAO udao = sqlSession.getMapper(IUserDAO.class);
+	    IStoreMainDAO smDao = sqlSession.getMapper(IStoreMainDAO.class);
 	    
 	    UserDTO user = udao.searchUserInfo(user_num, "num");
+	    
+	    ArrayList<StoreDTO> st_list = smDao.searchStoreInfo(user_num);
+		model.addAttribute("st_list", st_list);
 	    
 	    
 	    // 이전 페이지(?)로부터 넘어온 게시물 번호 수신
@@ -83,7 +88,7 @@ public class stSidebarController
 	    model.addAttribute("pageIndex", Paging.pageIndexList(currentPage, totalPage, actionName));
 	    model.addAttribute("user", user);
 	    model.addAttribute("stinfoupdatelist", stinfoupdatelist);
-	    result = "/WEB-INF/view/St_update_reList.jsp";
+	    result = "/WEB-INF/view/st_update_reLis.jsp";
 	    
 	    return result;
 	};
@@ -104,8 +109,12 @@ public class stSidebarController
 
 	    IStinfoUpdaterelistDAO dao = sqlSession.getMapper(IStinfoUpdaterelistDAO.class);
 	    IUserDAO udao = sqlSession.getMapper(IUserDAO.class);
+	    IStoreMainDAO smDao = sqlSession.getMapper(IStoreMainDAO.class);
 	    
 	    UserDTO user = udao.searchUserInfo(user_num, "num");
+	    
+	    ArrayList<StoreDTO> st_list = smDao.searchStoreInfo(user_num);
+		model.addAttribute("st_list", st_list);
 	    
 	    
 	    // 이전 페이지(?)로부터 넘어온 게시물 번호 수신
@@ -177,8 +186,12 @@ public class stSidebarController
 
 	    IStinfoUpdaterelistDAO dao = sqlSession.getMapper(IStinfoUpdaterelistDAO.class);
 	    IUserDAO udao = sqlSession.getMapper(IUserDAO.class);
+	    IStoreMainDAO smDao = sqlSession.getMapper(IStoreMainDAO.class);
 	    
 	    UserDTO user = udao.searchUserInfo(user_num, "num");
+	    
+	    ArrayList<StoreDTO> st_list = smDao.searchStoreInfo(user_num);
+		model.addAttribute("st_list", st_list);
 	    
 	    
 	    // 이전 페이지(?)로부터 넘어온 게시물 번호 수신
