@@ -246,11 +246,17 @@ span
 			var selectedValue = $(".check:checked").val();
 		    
 		    if (selectedValue === "trueR") {			// 반려
-		        window.location.href = "rvreportre.action";
+		        //window.location.href = "rvreportre.action";
+		        $("#adminForm").attr("action", "rvreportre.action");
+				$("#adminForm").submit();
 		    } else if (selectedValue === "trueM") {		// 중재
-		        window.location.href = "rvreporthalf.action";
+		        //window.location.href = "rvreporthalf.action";
+		        $("#adminForm").attr("action", "rvreporthalf.action");
+				$("#adminForm").submit();
 		    } else {									// 승인
-		    	window.location.href = "rvreportaccess.action?rep_apply_num="+$("#rep_apply_num").val();
+		    	//window.location.href = "rvreportaccess.action?rep_apply_num="+$("#rep_apply_num").val();
+		    	$("#adminForm").attr("action", "rvreportaccess.action");
+				$("#adminForm").submit();
 		    }
 		});
 		

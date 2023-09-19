@@ -133,14 +133,14 @@
 		WHERE IN_APPLY_NUM = #{in_apply_num}
 	</update>
 	
-	<insert id="rvreportaccess">
+	<insert id="rvreportAccess">
 		INSERT INTO REP_PROCESS(REP_PROCESS_NUM, REP_APPLY_NUM, ADMIN_NUM, FINAL_DATE, REP_READ_DATE, ACCU_READ_DATE)
-        VALUES(REPPROSEQ.NEXTVAL+100, #{rep_apply_num}, #{admin_num}, TO_DATE(SYSDATE, 'YYYY-MM-DD'), NULL, NULL)
+        VALUES(REPPROSEQ.NEXTVAL, #{rep_apply_num}, #{admin_num}, TO_DATE(SYSDATE, 'YYYY-MM-DD'), NULL, NULL)
 	</insert>
 	
 	<insert id="inprocess">
 		INSERT INTO IN_PROCESS(IN_PROCESS_NUM, IN_APPLY_NUM, ADMIN_NUM, FINAL_DATE)
-		VALUES(INPROSEQ.NEXTVAL+100, #{in_apply_num}, #{admin_num}, SYSDATE)		
+		VALUES(INPROSEQ.NEXTVAL, #{in_apply_num}, #{admin_num}, SYSDATE)		
 	</insert>
 	
 	<select id="getprocessnum" resultType="java.lang.Integer">
@@ -156,7 +156,7 @@
 	
 	<insert id="stlistinsert">
 		INSERT INTO ST_LIST(ST_NUM, IN_PROCESS_NUM, REGION_NUM)
-		VALUES(STLISTSEQ.NEXTVAL+100, #{in_process_num}, 1)
+		VALUES(STLISTSEQ.NEXTVAL, #{in_process_num}, 1)
 	</insert>
 		
 </mapper>
