@@ -286,7 +286,7 @@
 					        <c:forEach var="udre" items="${stupdateReList}">
 					            <div class="report_content">
 					                <div class="rpt_content" onclick="reqPopupOpen()">${udre.reg_date }</div>
-					                <div class="rpt_content st_name" onclick="reqPopupOpen()">${udre.st_name }</div>
+					                <div class="rpt_content" onclick="reqPopupOpen()">${udre.st_name }</div>
 					                <div class="rpt_content" id="status" onclick="reqPopupOpen()">${udre.state }</div>
 					                <div class="rpt_content" onclick="reqPopupOpen()">${udre.final_date }</div>
 					            	
