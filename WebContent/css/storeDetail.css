@@ -618,17 +618,13 @@
 {
 	display: flex;
 	flex-direction: column;
+	margin-left: 2%;
 }
 
 .stOwner
 {
 	font-size: 12pt;
 	font-weight: bold;
-}
-
-.rvReplyContent
-{
-	margin-left: 2%;
 }
 
 .rvReplyContentDiv
@@ -641,12 +637,10 @@
 	flex-direction: column;
 }
 
-.repRegDate
+.replyDate
 {
-	font-size: 8pt;
-    color: #4d4b4b;
-    width: 10vw;
-    margin-left: 88.5%;
+    display: flex;
+    justify-content: flex-end;
 }
 
 /* 화면 좌측 사이드 바 영역 */
