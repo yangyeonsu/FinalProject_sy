@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>review_insert</title>
+<title>리뷰 입력</title>
 <link rel="stylesheet" type="text/css" href="css/review_insert.css">
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery.min.js"></script>
