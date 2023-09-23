@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 public interface IstDetailDAO_userView
 {
+	public String stIsOut(int st_num);										// 폐업 여부
 	public ArrayList<StoreOpencloseDTO> openClose(int st_num);  			// 영업시간 + 휴무
 	public ArrayList<StoreBreaktimeDTO> breakTime(int st_num);	 			// 브레이크 타임
 	public ArrayList<StoreDetailDTO> store(int st_num);	     				// 가게이름, 좋아요 수, 별점 평균, 리뷰 수, 전화번호, 주소...

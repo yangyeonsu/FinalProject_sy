@@ -3,6 +3,19 @@
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yameokja.mc.IstDetailDAO_userView">
+	<!-- 폐업된 가게인지 아닌지 판단 -->
+	<select id="stIsOut" resultType="java.lang.String">
+		SELECT NVL2(OP.OUT_APPLY_NUM, '폐업', '운영') AS ISOUT
+		FROM ST_LIST SL JOIN IN_PROCESS IP
+		ON SL.IN_PROCESS_NUM = IP.IN_PROCESS_NUM
+		LEFT JOIN IN_APPLY IA
+		ON IP.IN_APPLY_NUM = IA.IN_APPLY_NUM
+		LEFT JOIN OUT_APPLY OA
+		ON IP.IN_PROCESS_NUM = OA.IN_PROCESS_NUM
+		LEFT JOIN OUT_PROCESS OP
+		ON OA.OUT_APPLY_NUM = OP.OUT_APPLY_NUM
+		WHERE ST_NUM = #{st_num, jdbcType=INTEGER}
+	</select>
 
  	<!-- 가게이름, 좋아요수, 평점, 리뷰수, 주소, 전화번호, 가게 이메일, 가게 설명
      , 최대인원수, 가게음식카테고리 -->
@@ -168,23 +181,6 @@
 		GROUP BY T2.RV_KEY_NAME
 		-->
  	</select>
-  	
-<!--
-	리뷰 등록
- 	<insert id="reviewInsert">
- 		INSERT INTO RV_BOX(RVBOXSEQ.NEXTVAL, USER_NUM, ST_NUM, RV_CONTENT, STAR_SCORE, REG_DATE)
-		VALUES(#{user_num}, #{st_num}, #{rv_content}, #{star_score}, DEFAULT)
- 	</insert>
--->
-		
-	<!-- 해당 유저가 해당 가게 리뷰에 누른 추천/비추천 내역 -->
-	<!-- <select id="userReviewList" resultType="com.yameokja.mc.userRvRecDTO">
-		SELECT RB.RV_NUM AS RV_NUM, RRN.REC_NONREC_NUMBER AS REC_NONREC_NUMBER
-		FROM RV_REC_NONREC RRN LEFT JOIN RV_BOX RB
-		  ON RRN.RV_NUM = RB.RV_NUM
-		WHERE RRN.USER_NUM = #{user_num}
-		  AND RB.ST_NUM = #{st_num}
-	</select> -->
 	
 	<!-- 해당 사용자가 누른 리뷰 추천 / 비추천 내역 -->
 	<select id="userRnList" resultType="java.lang.Integer">

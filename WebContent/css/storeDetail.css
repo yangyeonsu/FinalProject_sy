@@ -74,6 +74,21 @@
     color: white;
 }
 
+.noComAddBtn
+{
+	width: 20px;
+    height: 20px;
+    margin-top: 5px;
+    margin-left: 5px;
+    text-align: center;
+    font-size: 8pt;
+    border-radius: 50px;
+    background-color: #f17867;
+    border: 1px solid #f17867;
+    color: white;
+    filter: opacity(40%);
+}
+
 
 .revBoard {
     width: 30vw;
@@ -119,6 +134,21 @@
     border: none;
     color: white;
     cursor: pointer;
+}
+
+.noLikeAddBtn
+{
+	width: 20px;
+    height: 20px;
+    margin-right: 5px;
+    padding-left: 2px;
+    text-align: center;
+    /* font-size: 15pt; */
+    font-size: 1vw;
+    background-color: transparent;
+    border: none;
+    color: white;
+    filter: opacity(40%);
 }
 
 .likeRevC
@@ -378,6 +408,22 @@
     cursor: pointer;
 }
 
+#noModifyReqBtn
+{
+	margin-top: 1vw;
+    width: 8vw;
+    height: 20px;
+    border: 1px solid #f7f4ea;
+    border-radius: 5px;
+    color: #4d4b4b;
+    font-weight: bold;
+    box-shadow: 3px 3px 3px #f7f4ea;
+    background-color: #fff;
+    margin-right: 0.8vw;
+    font-size: 0.5vw;
+    filter: opacity(40%);
+}
+
 #modifyReqBtn:hover
 {
 	background-color: #f7f4ea;
@@ -496,6 +542,22 @@
     cursor: pointer;
 }
 
+#noInsertReview
+{    
+    margin-bottom: 1vw;
+    width: 6.2vw;
+    height: 30px;
+    border: 1px solid #ef6351;
+    border-radius: 5px;
+    color: #4d4b4b;
+    font-weight: bold;
+    box-shadow: 2px 2px 2px #ef6351;
+    background-color: #fff;
+    margin-right: 0.8vw;
+    font-size: 0.6vw;
+    filter: opacity(50%);
+}
+
 #insertReview:hover
 {    
     background-color: #fce2de;
@@ -546,6 +608,22 @@
     height: 30px;
     cursor: pointer;
     box-shadow: 2.5px 2.5px 2.5px #f7f4ea;
+}
+
+.noRepBtn, .noRecBtn
+{
+	border-radius: 8px;
+    border: none;
+    background-color: #fff;
+    margin-left: 5px;
+    height: 30px;
+    box-shadow: 2.5px 2.5px 2.5px #f7f4ea;
+    filter: opacity(40%);
+}
+
+.noRecBtn
+{
+	float: right;
 }
 
 .repBtn
