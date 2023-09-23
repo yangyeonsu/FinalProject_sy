@@ -238,22 +238,45 @@ String cp = request.getContextPath();
 											<div class="jimstore">
 												<div class="jimstoreImg">
 													<c:choose>
-														<c:when test="${store.photo_link eq '' }">
-
-															<button type="button" value="${store.st_num}"
-																class="storeBtn"
-																onclick="location.href='stdetail-userview.action?st_num=${store.st_num}'">
-																<img src="<%=cp%>/images/logo_text.png" class="jimstImg"
-																	alt="...">
-															</button>
+														<c:when test="${empty store.photo_link}">
+															<c:choose>
+																<c:when test="${store.isout eq '폐업'}">
+																	<button type="button" value="${store.st_num}"
+																		class="storeBtn"
+																		onclick="location.href='stdetail-userview.action?st_num=${store.st_num}'">
+																		<img src="<%=cp%>/images/logo_text.png" class="jimstImg"
+																			alt="..." style="filter: grayscale(100%);">
+																	</button>
+																</c:when>
+																<c:otherwise>
+																	<button type="button" value="${store.st_num}"
+																		class="storeBtn"
+																		onclick="location.href='stdetail-userview.action?st_num=${store.st_num}'">
+																		<img src="<%=cp%>/images/logo_text.png" class="jimstImg"
+																			alt="...">
+																	</button>
+																</c:otherwise>
+															</c:choose>
 														</c:when>
 														<c:otherwise>
-															<button type="button" value="${store.st_num}"
-																class="storeBtn"
-																onclick="location.href='stdetail-userview.action?st_num=${store.st_num}'">
-																<img src="<%=cp %>/${store.photo_link }"
-																	class="jimstImg" alt="...">
-															</button>
+															<c:choose>
+																<c:when test="${store.isout eq '폐업'}">
+																	<button type="button" value="${store.st_num}"
+																		class="storeBtn"
+																		onclick="location.href='stdetail-userview.action?st_num=${store.st_num}'">
+																		<img src="<%=cp %>/${store.photo_link }"
+																			class="jimstImg" alt="..." style="filter: grayscale(100%);">
+																	</button>
+																</c:when>
+																<c:otherwise>
+																	<button type="button" value="${store.st_num}"
+																		class="storeBtn"
+																		onclick="location.href='stdetail-userview.action?st_num=${store.st_num}'">
+																		<img src="<%=cp %>/${store.photo_link }"
+																			class="jimstImg" alt="...">
+																	</button>
+																</c:otherwise>
+															</c:choose>
 														</c:otherwise>
 													</c:choose>
 												</div>
@@ -291,20 +314,44 @@ String cp = request.getContextPath();
 											<div class="comstoreImg">
 												<c:choose>
 													<c:when test="${empty store.photo_link}">
-														<button type="button" value="${store.st_num}"
-															class="storeBtn"
-															onclick="location.href='stdetail-userview.action?st_num=${store.st_num}'">
-															<img src="<%=cp%>/images/logo_text.png" class="comstImg"
-																alt="...">
-														</button>
+														<c:choose>
+															<c:when test="${store.isout eq '폐업' }">
+																<button type="button" value="${store.st_num}"
+																	class="storeBtn"
+																	onclick="location.href='stdetail-userview.action?st_num=${store.st_num}'">
+																	<img src="<%=cp%>/images/logo_text.png" class="comstImg"
+																		alt="..." style="filter: grayscale(100%);">
+																</button>
+															</c:when>
+															<c:otherwise>
+																<button type="button" value="${store.st_num}"
+																	class="storeBtn"
+																	onclick="location.href='stdetail-userview.action?st_num=${store.st_num}'">
+																	<img src="<%=cp%>/images/logo_text.png" class="comstImg"
+																		alt="...">
+																</button>
+															</c:otherwise>
+														</c:choose>
 													</c:when>
 													<c:otherwise>
-														<button type="button" value="${store.st_num}"
-															class="storeBtn"
-															onclick="location.href='stdetail-userview.action?st_num=${store.st_num}'">
-															<img src="<%=cp %>/${store.photo_link }" class="comstImg"
-																alt="...">
-														</button>
+														<c:choose>
+															<c:when test="${store.isout eq '폐업' }">
+																<button type="button" value="${store.st_num}"
+																	class="storeBtn"
+																	onclick="location.href='stdetail-userview.action?st_num=${store.st_num}'">
+																	<img src="<%=cp %>/${store.photo_link }" class="comstImg"
+																		alt="..." style="filter: grayscale(100%);">
+																</button>
+															</c:when>
+															<c:otherwise>
+																<button type="button" value="${store.st_num}"
+																	class="storeBtn"
+																	onclick="location.href='stdetail-userview.action?st_num=${store.st_num}'">
+																	<img src="<%=cp %>/${store.photo_link }" class="comstImg"
+																		alt="...">
+																</button>
+															</c:otherwise>
+														</c:choose>
 													</c:otherwise>
 												</c:choose>
 											</div>

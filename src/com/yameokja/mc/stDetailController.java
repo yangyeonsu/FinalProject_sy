@@ -190,7 +190,7 @@ public class stDetailController
 		} else
 			model.addAttribute("reviews", null);
 
-		// 가게 리뷰 사진 목록
+		// 가게 리뷰 사진 목록 --> 구현 미완
 		ArrayList<StoreRvPhotoDTO> rvPhotos = dao.rvPhoto(st_num);
 		
 		if (rvPhotos.size() > 0)
@@ -214,9 +214,9 @@ public class stDetailController
 
 		// 사용자의 해당 가게 추천/비추천 내역
 		ArrayList<Integer> userRnList = dao.userRnList(st_num, user_num);
-		System.out.println(userRnList);
+		//System.out.println(userRnList);
 		ArrayList<Integer> userNrnList = dao.userNrnList(st_num, user_num);
-		System.out.println(userNrnList);
+		//System.out.println(userNrnList);
 
 		/*
 		 * for (userRvRecDTO dto : userReviewList) {
@@ -231,11 +231,15 @@ public class stDetailController
 		model.addAttribute("userRnList", userRnList);
 		model.addAttribute("userNrnList", userNrnList);
 
+		// 사용자가 찜한 목록
 		model.addAttribute("userJjimList", mdao.userJjimSearch(user_num));
 		
 		// 리뷰 신고 범례 리스트
 		ArrayList<reviewRepDTO> rvRepList = dao.reviewRepLabel();
 		model.addAttribute("rvRepList", rvRepList);
+		
+		// 폐업한 가게인지 아닌지 판단
+		model.addAttribute("stisout", dao.stIsOut(st_num));
 
 		result = "/WEB-INF/view/storeDetail.jsp";
 
@@ -480,7 +484,7 @@ public class stDetailController
 			review_img_dir.mkdirs();
 		}
 
-		IStoreMainDAO smdao = sqlSession.getMapper(IStoreMainDAO.class);
+		//IStoreMainDAO smdao = sqlSession.getMapper(IStoreMainDAO.class);
 
 		DiskFileItemFactory fileItemFactory = new DiskFileItemFactory();
 		fileItemFactory.setRepository(review_img_dir);

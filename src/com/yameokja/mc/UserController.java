@@ -260,15 +260,24 @@ public class UserController
 			model.addAttribute("likelist", null);
 		*/
 		
+		// 찜한 가게 내역
 		List<Integer> jjimList = idao.userJjimSearch(user_num);
+		
 		if (jjimList.size() > 0)
 			model.addAttribute("userJjimList", idao.getStoreList(jjimList));
 		else
 			model.addAttribute("userJjimList", null);
 		
+		// 사용자 정보
 		model.addAttribute("user", user);
+		
+		// 작성한 리뷰 내역
 		model.addAttribute("rvlist", udao.searchRvList(user_num));
+		
+		// 비교했던 가게 내역
 		model.addAttribute("comparedlist", udao.searchComparedList(user_num));
+		
+		// 입맛키워드
 		model.addAttribute("tastekeyword", udao.searchTasteKeyword(user_num));
 		
 		model.addAttribute("alarm", udao.userAlarm(user_num));

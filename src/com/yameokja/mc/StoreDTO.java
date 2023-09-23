@@ -4,7 +4,7 @@ package com.yameokja.mc;
 public class StoreDTO
 {
 	// 주요 속성 구성
-	private String st_name, photo_link;
+	private String st_name, photo_link, isout;
 	private double star_avg;
 	private int st_num, rv_count;
 	
@@ -50,6 +50,13 @@ public class StoreDTO
 	{
 		this.rv_count = rv_count;
 	}
-	
+	public String getIsout()
+	{
+		return isout;
+	}
+	public void setIsout(String isout)
+	{
+		this.isout = isout;
+	}
 
 }
