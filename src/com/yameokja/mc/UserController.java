@@ -139,13 +139,11 @@ public class UserController
 	{
 		String result = "";
 		
-		System.out.println(user_nick);
-		
 		IUserDAO udao = sqlSession.getMapper(IUserDAO.class);
 		int count = udao.nickCheck(user_nick);
 		
-		System.out.println(user_nick);
-		System.out.println(count);
+		System.out.println("user_nick : " + user_nick);
+		System.out.println("count : " + count);
 		
 		result += "{\"count\":\""+count+"\"}";
 		
@@ -550,6 +548,7 @@ public class UserController
 		String result = "";
 		
 		IUserDAO uDao = sqlSession.getMapper(IUserDAO.class);
+		
 		if(user_pw == "")
 		{
 			result = "redirect:usermypage.action";
@@ -582,19 +581,41 @@ public class UserController
 		
 		String user_num = (String)session.getAttribute("user_num");
 		
+		LocalDate currentDate = LocalDate.now();
+        int monthValue = currentDate.getMonthValue();
+        
 		IUserDAO udao = sqlSession.getMapper(IUserDAO.class);
+		UserDTO user = udao.searchUserInfo(user_num, "num");
+		
+		if (1 <= monthValue && monthValue <= 6)
+		{
+			user.setPoint_sum(udao.secondHalf(user_num).point_sum);
+			user.setUser_grade(udao.firstHalf(user_num).user_grade);
+		}
+		else if(7 <= monthValue && monthValue <= 12)
+		{
+			user.setPoint_sum(udao.firstHalf(user_num).point_sum);
+			user.setUser_grade(udao.secondHalf(user_num).user_grade);
+		}
 	    
-	    UserDTO user = udao.userModify(user_num);
-	    //System.out.println(user_num);
+	    UserDTO modify = udao.userModify(user_num);
+	    
+	    // 입맛키워드 범례
+	    model.addAttribute("tasteKLabel", udao.tasteKeyword());
+	 	model.addAttribute("userTasteKLabel", udao.searchTasteKeyword(user_num));
+	    
+	 	//System.out.println(user_num);
 	    //System.out.println(user.user_tel);
 	    //System.out.println(user.getUser_ssn1());
-	    model.addAttribute("modify", user);
+	 	model.addAttribute("user", user);
+	    model.addAttribute("modify", modify);
 		
 		result = "WEB-INF/view/user_modify.jsp";
 		
 		return result;
 	}
 	
+	/*
 	@RequestMapping(value = "/nicknamecheck.action", method = RequestMethod.POST)
 		@ResponseBody
 	public String nickName(@RequestParam("nickName") String nickName, HttpServletRequest request, Model model, UserDTO user)
@@ -613,6 +634,7 @@ public class UserController
 		
 		return result;
 	}
+	*/
 	
 	@RequestMapping(value="/userinfomodify.action", method = RequestMethod.POST)
 	public String userInfoModify(HttpServletRequest request, Model model)
@@ -622,16 +644,64 @@ public class UserController
 		IUserDAO dao = sqlSession.getMapper(IUserDAO.class);
 		
 		String user_num = request.getParameter("userNum");
-		String user_pw = request.getParameter("userPw2");
+		System.out.println("user_num : " + user_num);
+		String user_pw = request.getParameter("userPwCheck");
+		System.out.println("user_pw : " + user_pw);
 		String user_nickname = request.getParameter("userNickName");
-		String userEmail = request.getParameter("userEmail");
-		String selectEmail = request.getParameter("email");
+		System.out.println("user_nickname : " + user_nickname);
+		String user_email = request.getParameter("userEmailFinal");
+		System.out.println("user_email : " + user_email);
 		
-		String user_email = userEmail+"@"+selectEmail;
+		String[] ibmatCbList = null;
+		String[] ibmatChk = request.getParameterValues("ibmatChk");
+		System.out.println(ibmatChk.length);
+		System.out.println(ibmatChk[0]);
 		
-		int user = dao.userInfoModify(user_num, user_pw, user_nickname, user_email);
-		model.addAttribute("user", user);
-		result = "redirect:main.action";
+		if(user_pw != "")
+		{
+			System.out.println("비번 변경");
+			// 사용자 비밀번호 update
+			dao.userPwUpdate(user_num, user_pw);
+		}
+		
+		if((dao.nickCheck(user_nickname)==0) && (user_nickname != ""))
+		{
+			// 사용자 닉네임 update
+			dao.userNicknameUpdate(user_num, user_nickname);
+		}
+		
+		if(user_email != "")
+		{
+			// 사용자 이메일 update
+			dao.userEmailUpdate(user_num, user_email);
+		}
+		
+		// 사용자 입맛 키워드 없앰
+		if(ibmatChk[0] == "")
+		{
+			// 사용자 입맛 키워드 delete
+			dao.userIbmatDelete(user_num);
+		}
+		
+		// 사용자 입맛 키워드 추가 및 수정
+		if (ibmatChk[0] != "")
+		{
+			ibmatCbList = ibmatChk[0].split(",");
+			System.out.println("ibmatCbList : " + ibmatCbList[0]);
+			
+			// 사용자 입맛 키워드 delete
+			dao.userIbmatDelete(user_num);
+			
+			for (String ibmat : ibmatCbList)
+			{
+				// 사용자 입맛 키워드 insert
+				dao.userIbmatInsert(user_num, Integer.parseInt(ibmat));			
+			}
+		}
+		
+		//int user = dao.userModify(user_num);
+		//model.addAttribute("user", user);
+		result = "redirect:usermypage.action";
 		
 		return result;
 	}

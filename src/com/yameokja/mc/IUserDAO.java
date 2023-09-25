@@ -28,7 +28,11 @@ public interface IUserDAO
 	
 	public String searchStoreInfo(String user_num);
 	
-	public List<String> searchTasteKeyword(String user_num);
+	// 입맛 키워드 범례
+	public List<TasteLabelDTO> tasteKeyword();
+	
+	// 사용자 입맛 키워드
+	public List<TasteLabelDTO> searchTasteKeyword(@Param("user_num") String user_num);
 	
 	public List<StoreDTO> searchComparedList(String user_num);
 	
@@ -44,5 +48,21 @@ public interface IUserDAO
 	public int nickName(@Param("nickName") String nickName);
 	
 	// 개인정보수정에서 회원정보수정
-	public int userInfoModify(@Param("user_num") String user_num, @Param("user_pw") String user_pw, @Param("user_nickname") String user_nickname, @Param("user_email") String user_email);
+	//public int userInfoModify(@Param("user_num") String user_num, @Param("user_pw") String user_pw, @Param("user_nickname") String user_nickname, @Param("user_email") String user_email);
+
+	// 개인정보수정에서 입맛키워드 삭제
+	public int userIbmatDelete(@Param("user_num") String user_num);
+	
+	// 개인정보수정에서 입맛키워드 입력
+	public int userIbmatInsert(@Param("user_num") String user_num, @Param("taste_num") int taste_num);
+
+	// 개인정보수정에서 비밀번호 update
+	public int userPwUpdate(@Param("user_num") String user_num, @Param("user_pw") String user_pw);
+	
+	// 개인정보수정에서 닉네임 update
+	public int userNicknameUpdate(@Param("user_num") String user_num, @Param("user_nickname") String user_nickname);	
+	
+	// 개인정보수정에서 이메일 update
+	public int userEmailUpdate(@Param("user_num") String user_num, @Param("user_email") String user_email);
+
 }

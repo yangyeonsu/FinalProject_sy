@@ -82,6 +82,7 @@ String cp = request.getContextPath();
 			/* window.location.href = "usermodify.action?user_num="+userNum+"&user_pw="+user_pw; */
 			var openNewWindow = window.open("about:blank");
 			openNewWindow.location.href = "usermodify.action?user_num="+userNum+"&user_pw="+user_pw;
+			pwPopupOpen();
 		});
 	});
 
@@ -202,14 +203,14 @@ String cp = request.getContextPath();
 						</div>
 						<div class="id1">
 							<div class="title9">키워드</div>
-							<div class="sub9">
+							<div class="keyword">
 								<c:choose>
-									<c:when test="${empty usermp_ukeyword}">
+									<c:when test="${empty tastekeyword}">
 						                키워드가 없습니다.
 						            </c:when>
 									<c:otherwise>
-										<c:forEach var="keyword" items="${usermp_ukeyword}">
-						                    ${keyword.ukeyword}
+										<c:forEach var="keyword" items="${tastekeyword}">
+						                    ${keyword.taste_keyword} &nbsp;&nbsp;
 						                </c:forEach>
 									</c:otherwise>
 								</c:choose>

@@ -204,6 +204,15 @@ body {
     text-align: center;
 }
 
+.keyword
+{
+	display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    height: 50%;
+    font-size: 0.8vw;
+    align-items: center;
+}
 
 .side {
 	color: black;
