@@ -2,6 +2,7 @@ package com.yameokja.mc;
 
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -602,8 +603,21 @@ public class UserController
 	    
 	    // 입맛키워드 범례
 	    model.addAttribute("tasteKLabel", udao.tasteKeyword());
-	 	model.addAttribute("userTasteKLabel", udao.searchTasteKeyword(user_num));
 	    
+	    List<TasteLabelDTO> userTasteK = udao.searchTasteKeyword(user_num);
+
+		List<Integer> userTasteKLabel = new ArrayList<Integer>();
+		
+		if(userTasteK.size() > 0)
+		{
+			for (TasteLabelDTO userTaste : userTasteK)
+			{
+				userTasteKLabel.add(userTaste.getTaste_num());
+			}
+		}
+		
+		model.addAttribute("userTasteKLabel", userTasteKLabel);
+		
 	 	//System.out.println(user_num);
 	    //System.out.println(user.user_tel);
 	    //System.out.println(user.getUser_ssn1());
@@ -644,18 +658,18 @@ public class UserController
 		IUserDAO dao = sqlSession.getMapper(IUserDAO.class);
 		
 		String user_num = request.getParameter("userNum");
-		System.out.println("user_num : " + user_num);
+		//System.out.println("user_num : " + user_num);
 		String user_pw = request.getParameter("userPwCheck");
-		System.out.println("user_pw : " + user_pw);
+		//System.out.println("user_pw : " + user_pw);
 		String user_nickname = request.getParameter("userNickName");
-		System.out.println("user_nickname : " + user_nickname);
+		//System.out.println("user_nickname : " + user_nickname);
 		String user_email = request.getParameter("userEmailFinal");
-		System.out.println("user_email : " + user_email);
+		//System.out.println("user_email : " + user_email);
 		
 		String[] ibmatCbList = null;
 		String[] ibmatChk = request.getParameterValues("ibmatChk");
-		System.out.println(ibmatChk.length);
-		System.out.println(ibmatChk[0]);
+		//System.out.println(ibmatChk.length);
+		//System.out.println(ibmatChk[0]);
 		
 		if(user_pw != "")
 		{

@@ -17,21 +17,18 @@
 	$(document).ready(function()
 	{
 		$(".accept").css("display", "none");
-		/* 
-		$(".userIbmatChk").each(function()
+		
+		// 기존에 체크했던 입맛키워드 표시하기
+		$("input:checkbox[name='ibmatCB']").each(function()
 		{
-			$(".ibmatCB").each(function()
+			if($("#userIbmatChk").val().indexOf($(this).val()) != -1)
 			{
-				var uid = null;
-				
-				if($(".userIbmatChk").val() == $("ibmatCB").val())
-				{
-					uid = $("ibmatDB").attr("id");
-					$(".ibmatlabel[for="+ uid +"]").css("border-bottom","3px solid #ef6351");
-				}
-			})
+				$(this).prop("checked", true);
+				$(".ibmatlabel[for="+$(this).val()+"]").css("border-bottom","3px solid #ef6351");
+			}
 		})
-		 */
+		
+		// 입맛키워드 선택 시 border-bottom 추가
 		$(".ibmatlabel").click(function()
 		{
 			$(".ibmatCB").each(function()
@@ -159,12 +156,12 @@
 			$("#userForm").attr("action", "filterSearch.action");
 			$("#userForm").submit();
 			
-			alert("입맛키워드 : " + $("#ibmatChk").val());
-	    	
 	    	$("#updateForm").attr("action", "userinfomodify.action");
-	    	alert("비번 : " + $("#userPwCheck").val());
-	    	alert("닉네임 : " + $("#userNickName").val());
-	    	alert("이메일 : " + $("#userEmailFinal").val());
+			// 확인
+			//alert("입맛키워드 : " + $("#ibmatChk").val());
+	    	//alert("비번 : " + $("#userPwCheck").val());
+	    	//alert("닉네임 : " + $("#userNickName").val());
+	    	//alert("이메일 : " + $("#userEmailFinal").val());
 	    	
 	    	$("#updateForm").submit();
 	    	
@@ -304,9 +301,7 @@
 		</div>
 	
 		<div class="ibmatSelectDiv">
-			<c:forEach var="userTasteK" items="${userTasteKLabel }">
-				<input type="hidden" name="userIbmatChk" class="userIbmatChk" id="user${userTasteK.taste_num }" value="${userTasteK.taste_num }">
-			</c:forEach>
+			<input type="hidden" name="userIbmatChk" class="userIbmatChk" id="userIbmatChk" value="${userTasteKLabel}">
 			<c:forEach var="tasteK" items="${tasteKLabel }" varStatus="status">
 				<label class="ibmatlabel" for="${tasteK.taste_num }">
 				<input type="checkbox" class="ibmatCB" name="ibmatCB" id="${tasteK.taste_num }" value="${tasteK.taste_num }">
