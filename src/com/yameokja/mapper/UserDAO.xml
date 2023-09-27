@@ -87,9 +87,15 @@
 		WHERE USER_NUM = #{user_num}
 	</select>
 	
+	<!-- 입맛 키워드 범례 -->
+	<select id="tasteKeyword" resultType="com.yameokja.mc.TasteLabelDTO">
+		SELECT TASTE_NUM, TASTE_KEYWORD
+		FROM TASTE_LABEL
+	</select>
+	
 	<!-- 유저 입맛 키워드 찾기 -->
-	<select id="searchTasteKeyword" resultType="java.lang.String">
-		SELECT TL.TASTE_KEYWORD AS TASTE_KEYWORD
+	<select id="searchTasteKeyword" resultType="com.yameokja.mc.TasteLabelDTO">
+		SELECT TL.TASTE_NUM AS TASTE_NUM, TL.TASTE_KEYWORD AS TASTE_KEYWORD
 		FROM USER_TASTE UT JOIN TASTE_LABEL TL
 		ON UT.TASTE_NUM = TL.TASTE_NUM
 		WHERE UT.USER_NUM = #{user_num}
@@ -249,7 +255,7 @@
 	</select>
 	
 	<select id="userModify" resultType="com.yameokja.mc.UserDTO">
-		SELECT USER_NUM, USER_NAME, USER_SSN1, USER_SSN2, USER_ID, USER_TEL
+		SELECT USER_NUM, USER_NAME, USER_SSN1, USER_SSN2, USER_ID, USER_TEL, USER_EMAIL, USER_NICKNAME
 		FROM USING_USER
 		WHERE USER_NUM = #{user_num}
 	</select>
@@ -261,15 +267,48 @@
 		WHERE USER_NICKNAME = #{nickName}
 	</select>
 	
-	<!-- 개인정보수정에서 회원정보수정 -->
+	<!-- 개인정보수정에서 회원정보수정
 	<update id="userInfoModify">
 		UPDATE USING_USER
 		SET USER_PW = #{user_pw},
 		    USER_NICKNAME=#{user_nickname},
 		    USER_EMAIL=#{user_email}
 		WHERE USER_NUM = #{user_num}
+	</update> -->
+	
+  	<!-- 개인정보수정에서 입맛키워드삭제 -->
+  	<update id="userIbmatDelete">
+  		DELETE
+		FROM USER_TASTE
+		WHERE USER_NUM = #{user_num}
+  	</update>
+	
+	<!-- 개인정보수정에서 입맛키워드입력 -->
+	<insert id="userIbmatInsert">
+		INSERT INTO USER_TASTE(USER_TASTE_NUM, USER_NUM, TASTE_NUM)
+		VALUES(TASTESEQ.NEXTVAL, #{user_num}, #{taste_num})
+	</insert>
+	
+	<!-- 개인정보수정에서 비밀번호 update -->
+	<update id="userPwUpdate">
+		UPDATE USING_USER
+		SET USER_PW = CRYPTPACK.ENCRYPT(#{user_pw},#{user_pw})
+		WHERE USER_NUM = #{user_num}
 	</update>
-  	
+	
+	<!-- 개인정보수정에서 닉네임 update -->
+	<update id="userNicknameUpdate">
+		UPDATE USING_USER
+		SET USER_NICKNAME = #{user_nickname}
+		WHERE USER_NUM = #{user_num}
+	</update>
+	
+	<!-- 개인정보수정에서 이메일 update -->
+	<update id="userEmailUpdate">
+		UPDATE USING_USER
+		SET USER_EMAIL = #{user_email}
+		WHERE USER_NUM = #{user_num}
+	</update> 
 </mapper>
 
 
