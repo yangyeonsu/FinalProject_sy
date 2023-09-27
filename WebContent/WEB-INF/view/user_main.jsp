@@ -276,7 +276,7 @@
 						<div class="storeList">
 							<c:choose>
 								<c:when
-									test="${fn:length(jjim_list) == 0 or fn:length(jjim_list) == null}">
+									test="${fn:length(jjim_list) == 0 or jjim_list == null}">
 									<p>
 										찜한 가게가 존재하지 않습니다.<br> 마음에 드는 가게들을 찜해보세요.
 									</p>
@@ -355,7 +355,7 @@
 						<div class="storeList">
 							<c:choose>
 								<c:when
-									test="${fn:length(ibamt_list) == 0 or fn:length(ibamt_list) == null}">
+									test="${fn:length(ibmat_list) == 0 or ibmat_list == null}">
 									<p>
 										선택된 추천 받고 싶은 입맛이 존재하지 않습니다.<br> 정보 수정 페이지에서 추천 받고 싶은 입맛을
 										선택해 주세요.
