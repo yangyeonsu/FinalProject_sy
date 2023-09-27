@@ -82,6 +82,7 @@ String cp = request.getContextPath();
 			/* window.location.href = "usermodify.action?user_num="+userNum+"&user_pw="+user_pw; */
 			var openNewWindow = window.open("about:blank");
 			openNewWindow.location.href = "usermodify.action?user_num="+userNum+"&user_pw="+user_pw;
+			pwPopupOpen();
 		});
 	});
 
@@ -105,7 +106,7 @@ String cp = request.getContextPath();
 			document.all.rvPopup.style.visibility = "visible";
 			bgLayerOpen();
 			//alert("visible check");
-
+			
 			var $layerPopupObj = $('#rvPopup');
 
 			var left = ($(window).scrollLeft() + ($(window).width() - $layerPopupObj
@@ -120,6 +121,8 @@ String cp = request.getContextPath();
 				'position' : 'absolute'
 			});
 			$('body').css('position', 'relative').append($layerPopupObj);
+			
+			$("#rvRs").focus();
 
 			return false;
 		} else
@@ -160,6 +163,20 @@ String cp = request.getContextPath();
 
 			});
 		}
+	}
+	
+	function enterkey() 
+	{
+		if (window.event.keyCode == 13) 
+		{
+			var userNum = $("#user_num").val();
+			var user_pw = $("#rvRs").val();
+			$("#rvRs").val("");
+			/* window.location.href = "usermodify.action?user_num="+userNum+"&user_pw="+user_pw; */
+			var openNewWindow = window.open("about:blank");
+			openNewWindow.location.href = "usermodify.action?user_num="+userNum+"&user_pw="+user_pw;
+			pwPopupOpen();
+	    }
 	}
 </script>
 
@@ -202,14 +219,14 @@ String cp = request.getContextPath();
 						</div>
 						<div class="id1">
 							<div class="title9">키워드</div>
-							<div class="sub9">
+							<div class="keyword">
 								<c:choose>
-									<c:when test="${empty usermp_ukeyword}">
+									<c:when test="${empty tastekeyword}">
 						                키워드가 없습니다.
 						            </c:when>
 									<c:otherwise>
-										<c:forEach var="keyword" items="${usermp_ukeyword}">
-						                    ${keyword.ukeyword}
+										<c:forEach var="keyword" items="${tastekeyword}">
+						                    ${keyword.taste_keyword} &nbsp;&nbsp;
 						                </c:forEach>
 									</c:otherwise>
 								</c:choose>
@@ -422,7 +439,7 @@ String cp = request.getContextPath();
 						<div class="list">
 							<div class="reqRs">
 								비밀번호 입력&nbsp;&nbsp;&nbsp;
-								<input type="password" class="rej_rs_content" id="rvRs">
+								<input type="password" class="rej_rs_content" id="rvRs" onkeyup="enterkey()">
 							</div>
 						</div>
 						<div class="rv">
