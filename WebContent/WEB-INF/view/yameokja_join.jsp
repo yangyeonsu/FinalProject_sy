@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>user_join.jsp</title>
+<title>회원가입</title>
 <link rel="stylesheet" type="text/css" href="<%=cp%>/css/user_join.css">
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript">
@@ -28,6 +28,12 @@
 				$(".ibmatlabel[for="+id+"]").css("border-bottom","3px solid #ef6351");
 			else
 				$(".ibmatlabel[for="+id+"]").css("border-bottom","none");
+		});
+		
+		
+		$("#backBtn").click(function()
+		{
+			$(location).attr("href","yameokja.action");
 		});
 		
 		
@@ -133,7 +139,46 @@
 				return;
 			}
 			
-			$("#joinForm").attr("action", "joinsend.action");
+			// 이메일 입력
+	    	if($("#userEmail").val().includes('@'))
+	    	{
+	    		$("#userEmailFinal").val($("#userEmail").val());
+	    		//alert($("#userEmailFinal").val());
+	    	}
+	    	else if(($("#userEmail").val() != "") && ($("#userEmail2").val()=='self'))
+	    	{
+	    		alert("이메일 형식을 확인해주세요");
+	    		$("#userEmail2").focus();
+	    		return;
+	    	}
+	    	else if(($("#userEmail").val() != ""))
+	    	{
+	    		$("#userEmailFinal").val($("#userEmail").val() + '@' + $("#userEmail2").val());
+	    		//alert($("#userEmailFinal").val());
+	    	}
+
+	    	// 입맛 키워드 선택
+	    	var ibmatChk = [];
+
+			$("input:checkbox[name=ibmatCB]:checked").each(function(){
+				ibmatChk.push($(this).val()); 
+			});
+
+			$("#ibmatChk").val(ibmatChk);
+
+			$("#userForm").attr("action", "filterSearch.action");
+			$("#userForm").submit();
+			
+	    	$("#updateForm").attr("action", "userinfomodify.action");
+			// 확인
+			alert("입맛키워드 : " + $("#ibmatChk").val());
+	    	alert("비번 : " + $("#userPwCheck").val());
+	    	alert("닉네임 : " + $("#userNickName").val());
+	    	alert("이메일 : " + $("#userEmailFinal").val());
+	    	
+	    	alert("회원가입이 완료되었습니다.");
+			
+	    	$("#joinForm").attr("action", "joinsend.action");
 			$("#joinForm").submit();			
 			
 		});
@@ -320,7 +365,6 @@
 		{
 			return "WEB-INF/view/user_info_search.jsp";
 		});
-		
 	});
 	
 	
@@ -444,14 +488,16 @@
 			</div>
 			
 			<div class="userEmail">
-				<input type="text" id="user_email" name="user_email"> @ 
-				<select name="email" class="emailSelect">
+				<input type="text" id="userEmail" name="userEmail"> @ 
+				<select name="email" id="userEmail2" class="emailSelect">
 					<option value="self" selected="selected">직접입력</option>
-					<option value="naver">naver.com</option>
-					<option value="kakao">kakao.com</option>
-					<option value="google">gmail.com</option>
-					<option value="yahoo">yahoo.com</option>
+					<option value="naver.com">naver.com</option>
+					<option value="kakao.com">kakao.com</option>
+					<option value="daum.net">daum.net</option>
+					<option value="gmail.com">gmail.com</option>
+					<option value="nate.com">nate.com</option>
 				</select>
+				<input type="hidden" id="userEmailFinal" name="userEmailFinal">
 			</div>
 			
 		</div>
@@ -466,54 +512,20 @@
 		</div>
 	
 		<div class="ibmatSelectDiv">
-			<div class="selectLeft">
-				<label class="ibmatlabel" for="ibmat1">
-					<input type="checkbox" class="ibmatCB" id="ibmat1">
-					진라면 순한맛 맵기가 좋아요
+			<c:forEach var="tasteK" items="${tasteKLabel }" varStatus="status">
+				<label class="ibmatlabel" for="${tasteK.taste_num }">
+				<input type="checkbox" class="ibmatCB" name="ibmatCB" id="${tasteK.taste_num }" value="${tasteK.taste_num }">
+				${tasteK.taste_keyword }
 				</label>
-				<br><br>
-				
-				
-				<label class="ibmatlabel" for="ibmat2">
-					<input type="checkbox" class="ibmatCB" id="ibmat2">
-					신라면 맵기가 좋아요
-				</label>
-				<br><br>
-			
-				<label class="ibmatlabel" for="ibmat3">
-					<input type="checkbox" class="ibmatCB" id="ibmat3">
-					불닭 맵기가 좋아요
-				</label>
-				<br><br>
-					
-			
-				<label class="ibmatlabel" for="ibmat4">
-					<input type="checkbox" class="ibmatCB" id="ibmat4">
-					담백한게 좋아요
-				</label>
-				<br><br>
-			</div>
-			
-			<div class="selectRight">	
-				<label class="ibmatlabel" for="ibmat5">
-					<input type="checkbox" class="ibmatCB" id="ibmat5">
-					단맛이 좋아요
-				</label>
-				<br><br>
-			
-				<label class="ibmatlabel" for="ibmat6">
-					<input type="checkbox" class="ibmatCB" id="ibmat6">
-					향신료는 어려워요
-				</label>
-				<br><br>
-				
-			</div>
+			</c:forEach>
+			<input type="hidden" name="ibmatChk" id="ibmatChk">
 		</div>
 	</div>
 	
 	<!-- 가입하기 버튼 -->
 	<div class="joinBtnDiv">
 		<button type="button" id="joinBtn" class="joinBtn">가입하기</button>
+		<button type="button" id="backBtn" class="joinBtn">돌아가기</button>
 	</div>
 </div>
 
