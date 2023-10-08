@@ -457,7 +457,7 @@ String cp = request.getContextPath();
 
 			<div id="column">
 
-				<c:import url="sideBar_store.jsp"></c:import>
+				<c:import url="sideBar_user.jsp"></c:import>
 
 			</div>
 
