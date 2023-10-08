@@ -96,7 +96,7 @@ body
 }
 
 /* input 태그 높이 조정 */
-#user_name, #user_ssn1, #user_ssn2, #user_tel, #AcceptNum, #user_id, #user_pw, #userPwCheck, #user_nickname, #user_email, #userEmail2
+#user_name, #user_ssn1, #user_ssn2, #user_tel, #AcceptNum, #user_id, #user_pw, #userPwCheck, #user_nickname, #userEmail, #userEmail2
 /* input[type=text], input[type=password] */
 {
 	height: 25px;
@@ -269,7 +269,8 @@ body
     border: 2px solid #ef6351;
     border-radius: 30px;
     padding-top: 5vh;
-    font-size: 0.9vw;
+    font-size: 1.1vw;
+    flex-wrap: wrap;
 }
 
 .ibmatlabel:active
@@ -286,6 +287,10 @@ body
 	cursor: pointer;
 }
 
+.ibmatlabel
+{
+	height: 2vw;
+}
 
 .ibmatCB
 {
