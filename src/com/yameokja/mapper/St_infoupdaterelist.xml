@@ -27,7 +27,7 @@
 	</select>
 
 	<select id="stinfoupdatelist" resultType="com.yameokja.mc.StinfoUpdaterelistDTO">
-	     SELECT FINAL_DATE, OBJYN, PTYN
+	     <!-- SELECT FINAL_DATE, OBJYN, PTYN
 			    FROM (
 			        SELECT RP.FINAL_DATE AS FINAL_DATE
 		    , CASE WHEN OA.REG_DATE IS NOT NULL THEN '○'
@@ -49,6 +49,33 @@
 		WHERE IA.USER_NUM = #{user_num}
 		AND RP.FINAL_DATE IS NOT NULL
 	    )
-	    WHERE  RNUM BETWEEN #{startRow} AND #{endRow}
+	    WHERE  RNUM BETWEEN #{startRow} AND #{endRow} -->
+	    SELECT REQ_APPLY_NUM, ST_NUM, FINAL_DATE, CHECK_LABEL, RNUM                                  
+		FROM(
+		    SELECT RAV.REQ_APPLY_NUM AS REQ_APPLY_NUM, RAV.ST_NAME AS ST_NUM, TO_CHAR(RP.FINAL_DATE, 'YYYY-MM-DD') AS FINAL_DATE,
+		        CASE WHEN OA.OBJ_APPLY_NUM IS NULL
+		                  AND TO_DATE(RP.FINAL_DATE, 'YYYY-MM-DD') + INTERVAL '3' DAY > TO_DATE(SYSDATE, 'YYYY-MMM-DD') THEN '둘다가능'
+		             WHEN OBR.OBJ_REJ_NUM IS NOT NULL THEN '패널티회수가능'                
+		             ELSE '둘다불가능'
+		        END AS CHECK_LABEL,
+		        ROW_NUMBER() OVER (ORDER BY RP.FINAL_DATE DESC) AS RNUM
+		    FROM REQ_APPLY_VIEW RAV
+		    RIGHT JOIN REQ_PROCESS RP
+		        ON RAV.REQ_APPLY_NUM = RP.REQ_APPLY_NUM
+		        LEFT JOIN OBJ_APPLY OA
+		        ON RP.REQ_PROCESS_NUM = OA.REQ_PROCESS_NUM
+		        LEFT JOIN OBJ_PROCESS OP
+		        ON OA.OBJ_APPLY_NUM = OP.OBJ_APPLY_NUM
+		        LEFT JOIN OBJ_REJ OBR
+		        ON OP.OBJ_PROCESS_NUM = OBR.OBJ_PROCESS_NUM
+		        LEFT JOIN PENALTY P
+		        ON RP.REQ_PROCESS_NUM = P.REQ_PROCESS_NUM
+		        LEFT JOIN REVO_APPLY RA
+		        ON P.PEN_GRANT_NUM = RA.PEN_GRANT_NUM
+		        WHERE RP.REQ_PROCESS_NUM NOT IN (SELECT REQ_PROCESS_NUM
+		                                      FROM REQ_REJ)
+		) T
+		WHERE  RNUM BETWEEN #{startRow} AND #{endRow}
+		                                  
 	</select>
 </mapper>

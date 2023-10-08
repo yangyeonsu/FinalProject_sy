@@ -175,7 +175,7 @@ public class stSidebarController
 	public String stObjList(HttpServletRequest request, Model model) 
 	{
 		HttpSession session = request.getSession();
-	    String user_num = (String)session.getAttribute("user_num");
+	    String user_num = (String) session.getAttribute("user_num");
 	    
 	    LocalDate currentDate = LocalDate.now();
         int monthValue = currentDate.getMonthValue();

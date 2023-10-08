@@ -697,13 +697,13 @@ i {
 <script type="text/javascript">
 
 
-$(document).ready(function() {
-	if(${sessionScope.log_num } == 1/*  || log_num != '' */)
+/* $(document).ready(function() {
+	if(${sessionScope.log_num } == 1)
 	{
 		window.open("Stfirstloginstdego.action?st_num="+${st_num}, "a", "width=400, height=300, left=100, top=50");
-		/* window.location.href = "deletelognum.action?st_num="+${st_num }; */
+		//window.location.href = "deletelognum.action?st_num="+${st_num };
 	}
-});
+}); */
 
 </script>
 

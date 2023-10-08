@@ -185,8 +185,8 @@
 					<div class="subtitle">
 						<div class="rpt_subtitle">요청일자</div>
 						<div class="st_name">가게명</div>
-						<div class="rpt_subtitle">처리상태</div>
 						<div class="rpt_subtitle">처리일자</div>
+						<div class="rpt_subtitle">패널티부여일자</div>
 						<div class="rpt_subtitle">이의제기</div>
 						<div class="rpt_subtitle">패널티회수</div>
 					</div>
