@@ -107,9 +107,14 @@ public class UserController
 	}
 	
 	@RequestMapping(value="/join.action", method=RequestMethod.POST)
-	public String join()
+	public String join(Model model)
 	{
 		String result = "";
+		
+		IUserDAO udao = sqlSession.getMapper(IUserDAO.class);
+		
+		// 입맛키워드 범례
+	    model.addAttribute("tasteKLabel", udao.tasteKeyword());
 		
 		result = "/WEB-INF/view/yameokja_join.jsp";
 		
@@ -153,26 +158,53 @@ public class UserController
 	
 	
 	@RequestMapping(value="/joinsend.action", method=RequestMethod.POST)
-	public String joinSend(UserDTO user)
+	public String joinSend(HttpServletRequest request, UserDTO user)
 	{
 		String result = "";
 		String user_num = "";
 		int check = 0;
 		
-		IUserDAO udao = sqlSession.getMapper(IUserDAO.class);
+		IUserDAO dao = sqlSession.getMapper(IUserDAO.class);
 		
 		do
 		{
 			user_num = randStr();
-			check = udao.userNumCheck(user_num);
+			check = dao.userNumCheck(user_num);
 			
 		} while (check != 0);
 		
 		user.setUser_num(user_num);
 		
-		int count = udao.joinSend(user);
+		int count = dao.joinSend(user);
 		
+		String user_email = request.getParameter("userEmailFinal");
+		System.out.println("user_email : " + user_email);
 		
+		String[] ibmatCbList = null;
+		String[] ibmatChk = request.getParameterValues("ibmatChk");
+		//System.out.println(ibmatChk.length);
+		//System.out.println(ibmatChk[0]);
+		
+		if(user_email != "")
+		{
+			// 사용자 이메일 update
+			dao.userEmailUpdate(user_num, user_email);
+		}
+		
+		// 사용자 입맛 키워드 추가 및 수정
+		if (ibmatChk[0] != "")
+		{
+			ibmatCbList = ibmatChk[0].split(",");
+			System.out.println("ibmatCbList : " + ibmatCbList[0]);
+			
+			for (String ibmat : ibmatCbList)
+			{
+				System.out.println("입맛키워드 : " + ibmat);
+				// 사용자 입맛 키워드 insert
+				dao.userIbmatInsert(user_num, Integer.parseInt(ibmat));			
+			}
+		}
+
 		result = "redirect:yameokja.action";
 		
 		return result;
@@ -673,7 +705,7 @@ public class UserController
 		
 		if(user_pw != "")
 		{
-			System.out.println("비번 변경");
+			//System.out.println("비번 변경");
 			// 사용자 비밀번호 update
 			dao.userPwUpdate(user_num, user_pw);
 		}
