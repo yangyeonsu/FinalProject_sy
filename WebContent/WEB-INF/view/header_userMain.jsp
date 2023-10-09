@@ -59,7 +59,6 @@
 	.menuBtn
 	{
 		display: flex;
-		width: 7vw;
 		flex-direction: row-reverse;
 	}
 	
@@ -77,19 +76,32 @@
 	
 	.sub_list
 	{
-		position: relative;
+		/* position: relative;
 	    display: flex;
 	    flex-direction: row-reverse;
-	    width: 65vw;
+	    width: 65vw; */
+	    
+	    position: relative;
+	    display: flex;
+	    flex-direction: row-reverse;
+	    width: 15vw;
+	    padding-left: 54vw;
 	}
 	
 	.mypage_menu
 	{
-		position: relative;
+		/* position: relative;
 	    transition-duration: 0.5s;
 	    font-size: 0.8vw;
 	    background-color: #f5f3e7;
-	    margin-right: 4vw;
+	    margin-right: 4vw; */
+	    
+	    position: relative;
+	    transition-duration: 0.5s;
+	    font-size: 0.8vw;
+	    padding-right: 1.5vw;
+	    background-color: #f5f3e7;
+	    margin-right: 7.3vw;
 	}
 	
 	.person_listA
