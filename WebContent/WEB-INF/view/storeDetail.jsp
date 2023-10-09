@@ -43,7 +43,6 @@ String cp = request.getContextPath();
 			$(".recBtn").css("pointer-events", "none");
 		}
 
-		// 왼쪽 사이드 바
 		$(".left_sub_menu").hide();
 		$(".has_sub").click(function()
 		{
@@ -63,19 +62,18 @@ String cp = request.getContextPath();
 				$('.overlay').css("height", "100%");
 				$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
 				$('.overlay').css("z-index", "3");
-				$('.overlay').css("margin-top", "1.011vh");
+				//$('.overlay').css("margin-top", "1.011vh");
 				$('#checkOverlay').attr("value", "true");
 			}
 
 		});
-		
 		// 왼쪽메뉴 드롭다운
 		$(".sub_menu ul.small_menu").hide();
 		$(".sub_menu ul.big_menu").click(function()
 		{
+			$(".sub_menu ul.small_menu").not(this).fadeOut(250);
 			$("ul", this).slideToggle(300);
 		});
-		
 		// 외부 클릭 시 좌측 사이드 메뉴 숨기기
 		$('.overlay').on('click', function()
 		{

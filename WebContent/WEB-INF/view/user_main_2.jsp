@@ -260,7 +260,9 @@ String cp = request.getContextPath();
 
 	<form action="" id="userForm" method="POST">
 
-		<c:import url="header_userMain.jsp"></c:import>
+		<div class="header">
+			<c:import url="header_userMain.jsp"></c:import>
+		</div>
 
 		<div class=container>
 
