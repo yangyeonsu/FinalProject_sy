@@ -18,29 +18,26 @@ String cp = request.getContextPath();
 <!-- JS 
 <script src="assets/js/main.js"></script> -->
 
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link
-	href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap"
-	rel="stylesheet">
-<link
-	href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Orbit&display=swap"
-	rel="stylesheet">
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"
 	rel="stylesheet">
 <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
 
 <style type="text/css">
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500&display=swap');
+
+body
+{
+	font-family: 'IBM Plex Sans KR', sans-serif;
+	margin: 0;
+}
+
 .container {
 	position: static;
 	display: flex;
 	justify-content: flex-start;
 	width: 100%;
 	align-items: stretch;
-	/* font-family: 'Black Han Sans', sans-serif; */
-	font-family: 'Orbit', sans-serif;
 	margin: 0;
 }
 
@@ -65,8 +62,9 @@ header {
 }
 
 .storeName {
-	font-family: 'Black Han Sans', sans-serif;
 	font-size: 40pt;
+	font-family: 'IBM Plex Sans KR', sans-serif;
+	font-weight: bold;
 }
 
 .storemain_chart {
@@ -410,7 +408,6 @@ i {
 	float: right;
 	padding-right: 8px;
 	color: #3a001e;
-	font-family: verdana;
 	margin-right: 2%;
 }
 
@@ -512,7 +509,6 @@ i {
 	float: right;
 	padding-right: 8px;
 	color: #3a001e;
-	font-family: verdana;
 	margin-right: 2%;
 	font-weight: bold;
 }
@@ -632,7 +628,6 @@ i {
 	float: right;
 	padding-right: 8px;
 	color: #3a001e;
-	font-family: verdana;
 	margin-right: 2%;
 	font-weight: bold;
 }
@@ -730,7 +725,7 @@ i {
 				$('.overlay').css("height", "100%");
 				$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
 				$('.overlay').css("z-index", "3");
-				$('.overlay').css("margin-top", "1.011vh");
+				//$('.overlay').css("margin-top", "1.011vh");
 				$('#checkOverlay').attr("value", "true");
 			}
 
@@ -1114,7 +1109,8 @@ $(function name()
 							<h3>별점 추이</h3>
 						</div>
 						<div class="chart_content">
-							<canvas id="myChart" width="1100px" height="300px"></canvas>
+							<%-- <canvas id="myChart" width="1100px" height="300px"></canvas> --%>
+							<canvas id="myChart" width="800px" height="300px"></canvas>
 						</div>
 					</div>
 					<div class="storemain_rekey">
