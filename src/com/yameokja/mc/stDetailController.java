@@ -104,11 +104,12 @@ public class stDetailController
 		// user에게 등록된 가게가 있는지 조회 (사업자인지)
 		int storeCheck = uDao.storeCheck(user_num);
 		int user_st_check = 0;
+		ArrayList<StoreDTO> st_list=null;
 
 		if (storeCheck > 0) // 사업자
 		{
 			// user에게 등록된 가게 리스트 조회(다수일 수 있음)
-			ArrayList<StoreDTO> st_list = smDao.searchStoreInfo(user_num);
+			st_list = smDao.searchStoreInfo(user_num);
 
 			// user에게 등록된 가게 리스트 안에 있는 st_num과
 			for (StoreDTO st_n : st_list)
@@ -119,6 +120,8 @@ public class stDetailController
 				}
 			}
 		}
+		
+		model.addAttribute("st_list", st_list);
 
 		model.addAttribute("user_st_check", user_st_check);
 

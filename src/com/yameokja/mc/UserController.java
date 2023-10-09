@@ -249,6 +249,7 @@ public class UserController
 		
         IMainDAO idao = sqlSession.getMapper(IMainDAO.class);
         IUserDAO udao = sqlSession.getMapper(IUserDAO.class);
+        IStoreMainDAO smDao = sqlSession.getMapper(IStoreMainDAO.class);
         
 		List<StoreDTO> jimList = udao.searchLikeList(user_num);
 		model.addAttribute("likelist", jimList);
@@ -268,6 +269,19 @@ public class UserController
 			user.setUser_grade(udao.secondHalf(user_num).user_grade);
 		}
 		
+		// 사업자이면 가게 정보 함께 넘김
+		ArrayList<StoreDTO> st_list=null;
+
+		UserDTO userInfo = udao.searchUserInfo(user.user_id, "id");
+		session.setAttribute("user_num", userInfo.user_num);
+		
+		int storeCheck = udao.storeCheck(userInfo.user_num);
+		
+		if (storeCheck > 0)
+			st_list = smDao.searchStoreInfo(user_num);
+	
+		model.addAttribute("st_list", st_list);
+	
 		// 비교함 내역
 		List<Integer> comList = idao.getStoreComList(user_num);
 		
