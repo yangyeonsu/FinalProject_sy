@@ -283,7 +283,7 @@ String cp = request.getContextPath();
 					<div id="inputDiv">
 						<!-- 검색창 -->
 						<input type="text" id="typingArea" name="typingArea"
-							class="insert" value=" ${keyword }">
+							class="insert" value="${keyword }">
 						<button type="button" id="searchBtn" name="searchBtn">
 							<img id="searchIcon" src="<%=cp%>/images/search_icon.png">
 						</button>
@@ -487,10 +487,12 @@ String cp = request.getContextPath();
 
 
 				<!-- 더보기 버튼 -->
-				<div class="searchMore">
-					<button type="button" id="searchMore" style="margin: auto;">검색
-						결과 더보기</button>
-				</div>
+				<c:if test="${fn:length(searchList) > 30}">
+					<div class="searchMore">
+						<button type="button" id="searchMore" style="margin: auto;">검색
+							결과 더보기</button>
+					</div>
+				</c:if>
 
 			</div>
 			<!-- mainDiv end -->

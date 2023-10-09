@@ -33,6 +33,7 @@ public class compareViewController_beta
 		IUserDAO uDao = sqlSession.getMapper(IUserDAO.class);
 		IMainDAO mdao = sqlSession.getMapper(IMainDAO.class);
 		IstDetailDAO_userView sdDao = sqlSession.getMapper(IstDetailDAO_userView .class);
+		IStoreMainDAO smDao = sqlSession.getMapper(IStoreMainDAO.class);
 		
 		// 사용자 정보
 		UserDTO user = uDao.searchUserInfo(user_num, "num");
@@ -46,6 +47,19 @@ public class compareViewController_beta
 			user.setUser_grade(uDao.secondHalf(user_num).user_grade);
 		
 		model.addAttribute("user", user);
+		
+		// 사업자이면 가게 정보 함께 넘김
+		ArrayList<StoreDTO> st_list=null;
+
+		UserDTO userInfo = uDao.searchUserInfo(user.user_id, "id");
+		session.setAttribute("user_num", userInfo.user_num);
+		
+		int storeCheck = uDao.storeCheck(userInfo.user_num);
+		
+		if (storeCheck > 0)
+			st_list = smDao.searchStoreInfo(user_num);
+	
+		model.addAttribute("st_list", st_list);
 		
 		/*
 		 * System.out.println(checkedCompare.substring(0, checkedCompare.length() - 1));
