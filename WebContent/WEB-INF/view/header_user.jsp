@@ -55,7 +55,6 @@ body {
 
 .menuBtn {
 	display: flex;
-	width: 7vw;
 	flex-direction: row-reverse;
 }
 
@@ -70,20 +69,33 @@ a {
 }
 
 .sub_list {
-	position: relative;
+/* 	position: relative;
 	display: flex;
 	flex-direction: row-reverse;
 	width: 65vw;
-	margin-left: 4.3vw;
+	margin-left: 4.3vw; */
+	
+	position: relative;
+    display: flex;
+    flex-direction: row-reverse;
+    width: 15vw;
+    padding-left: 56vw;
 }
 
 .mypage_menu {
-	position: relative;
+	/* position: relative;
 	transition-duration: 0.5s;
 	font-size: 0.8vw;
 	padding-right: 1.8vw;
 	background-color: #f5f3e7;
-	margin-right: 4vw;
+	margin-right: 4vw; */
+	
+	position: relative;
+    transition-duration: 0.5s;
+    font-size: 0.8vw;
+    padding-right: 1.5vw;
+    background-color: #f5f3e7;
+    margin-right: 7.3vw;
 }
 
 .person_listA {
