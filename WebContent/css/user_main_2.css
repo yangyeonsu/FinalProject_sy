@@ -12,6 +12,14 @@ body
 	font-family: 'IBM Plex Sans KR', sans-serif;
 }
 
+.header
+{
+	position: sticky;
+	top: 0;
+	background-color: white;
+	z-index: 200;
+}
+
 /* ---------------------------------------------------------- */
 /* main 영역 */
 

@@ -734,6 +734,7 @@ i {
 		$(".sub_menu ul.small_menu").hide();
 		$(".sub_menu ul.big_menu").click(function()
 		{
+			$(".sub_menu ul.small_menu").not(this).fadeOut(250);
 			$("ul", this).slideToggle(300);
 		});
 		// 외부 클릭 시 좌측 사이드 메뉴 숨기기
