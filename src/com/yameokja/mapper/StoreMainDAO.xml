@@ -29,7 +29,7 @@
 		                   ON RKL.RV_KEY_NUM = RK.RV_KEY_NUM
 		                   LEFT JOIN ST_LIST SL
 		                       ON RK.ST_NUM = SL.ST_NUM
-		WHERE SL.ST_NUM = #{st_num} OR SL.ST_NUM IS NULL
+		WHERE SL.ST_NUM = #{st_num}
 		ORDER BY RK.COUNT DESC
 	</select>
 	
