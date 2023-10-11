@@ -114,10 +114,16 @@ public class StoreController
 		
 		model.addAttribute("st_list", st_list);
 		
-		if (rv_labels.size() > 0)
+		if (rv_labels.size() >= 5)
 			model.addAttribute("rv_labels", rv_labels.subList(0, 5));
-		if (rv_data.size() > 0)
+		else
+			model.addAttribute("rv_labels", rv_labels);
+		if (rv_data.size() >= 5)
 			model.addAttribute("rv_data", rv_data.subList(0, 5));
+		else
+			model.addAttribute("rv_data", rv_data);
+		
+		
 		
 		model.addAttribute("star_labels", star_labels);
 		model.addAttribute("star_data", star_data);
