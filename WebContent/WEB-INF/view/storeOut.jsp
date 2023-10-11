@@ -41,9 +41,10 @@
 
 .input_group
 {
-	/* border: 1px solid gray; */
-	border-radius: 5px;
 	display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 33vw;
 }
 
 .inputform
@@ -58,16 +59,17 @@
 .title
 {
 	background-color: #F7F4EA;
-	width: 8vw;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	border-radius: 10px 0 0 10px;
-	margin-right: 1vw;
+    width: 8vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px 0 0 10px;
+    margin-right: 1vw;
+    height: 3vw;
 }
 .cfb
 {
-	height: 3.3vh;
+	height: 2.7vw;
 }
 
 .igroup
@@ -78,6 +80,14 @@
 	display: flex;
 }
 
+.igroup-select
+{
+	margin-left: 15vw;
+    margin-top: 5vh;
+    width: 55vw;
+    display: flex;
+    align-items: center;
+}
 
 .button
 {
@@ -117,12 +127,6 @@ button
                 
 }
 
-.input_group 
-{
-    display: flex;
-    align-items: center;
-}
-
 .file
 {
 	position: absolute;
@@ -146,9 +150,10 @@ button
 #st_in_num
 {
 	width: 26vw;
-	border-radius: 0 10px 10px 0;
-	border: 1px solid #ccc;
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 0 10px 10px 0;
+    border: 1px solid #ccc;
+    height: 2.7vw;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .upload-name
@@ -191,7 +196,7 @@ function displayAndSetFileName()
     	uploadNameInput.value = null;
     }
 }
-
+/*
 function st_in_numcheck() 
 {
 	var st_in_num = document.getElementById("st_in_num").value;
@@ -211,6 +216,60 @@ function st_in_numcheck()
 		return;
 	}	
 }
+*/
+
+$(function()
+{
+	$("#st_in_num").click(function()
+	{
+		if($("#st_list option:selected").attr('id')=="")
+		{
+			alert("폐업할 사업장을 선택해주세요!");
+			$("#st_list").focus();
+			return;
+		}
+	});
+	
+	$("#submitBtn").click(function()
+	{
+		// 사용자, 가게 번호
+		st_num = $("#st_list option:selected").attr('id');
+		alert(st_num);
+		user_num = $("#user_num").val();
+		alert(user_num);
+		
+		// 사용자가 입력한 사업장등록번호
+		st_in_num = $("#st_in_num").val();
+		alert(st_in_num);
+		
+		$.ajax(
+		{
+			url : "storeoutcheck.action",
+			type : "POST",
+			data : { "user_num" : user_num
+					, "st_num" : st_num
+					, "st_in_num" : st_in_num },
+			dataType : "text",
+			success : function(data)
+			{
+				if (data=="1")
+				{
+					alert("인증되었습니다.");
+					$("#err1").text("인증되었습니다.").css("display", "inline");
+					$("#check_num").val("true");
+				} else
+				{
+					$("#err1").text("잘못된 사업자 등록 번호 입니다.").css("display", "inline");
+					$("#check_num").val("false");
+				}
+			},
+			error : function(e)
+			{
+				alert(e.responseText);
+			}
+		});
+	});
+});
 
 
 $(function()
@@ -221,11 +280,28 @@ $(function()
 		
         if ($("#st_in_num").val() == "") 
         {
-            $("#err1").text("사업자 등록번호를 입력해주세요.").css("display", "inline");
+            $("#err1").text("사업장 관리번호를 입력해주세요.").css("display", "inline");
             return;
         }
         
+        if ($("#check_num").val() != "true")
+        {
+        	$("#err1").text("사업장 관리번호가 올바르지 않습니다.").css("display", "inline");
+            return;
+        }
+        
+        if ($("#oContent").val() == "")
+        {
+        	alert("폐업사유를 입력해주세요.");
+        	$("#oContent").focus();
+         	return;
+        }
+        
+        st_num = $("#st_list option:selected").attr('id');
+        $("#st_num").val(st_num);
+        
         // 폼 submit 액션 처리 수행
+        $("#outForm").attr("action", "storeOutinsert.action");
         $("#outForm").submit();
     });
 });
@@ -234,60 +310,74 @@ $(function()
 <body>
 <div class="mainFrame">
 	
-	<form action="storeOutinsert.action" method="post" id="outForm">
+	<form action="" method="post" id="outForm">
 	
-	<div><c:import url="header_user.jsp"></c:import></div> <!-- header -->
-	
-	<div class="center">
-		<div class="head">
-			<h1>사업장 폐업 신청</h1>
-			<hr />
-		</div> <!-- .head -->
+		<div><c:import url="header_user.jsp"></c:import></div> <!-- header -->
 		
-		<!-- 폐업 신청 -->
-		<div class="out_insert">
-			
-			<!-- 사업장 번호 확인 -->
-			<div class="igroup">
-				<div class="title">
-					사업장 번호 확인
-				</div>
-				<div class="input_group">
-				    <input type="text" id="st_in_num" name="st_in_num">
-				    <input type="hidden" class="check_num" id="check_num" value="${placeNum }"/>
-					<button type="button" class="cfb" onclick="st_in_numcheck()">인증하기</button>
-				</div>
-				<span id="err1" style="color: red; font-weight: bold; display: none;">잘못된 사업자 등록 번호 입니다.</span>
+		<div class="center">
+			<div class="head">
+				<h1>사업장 폐업 신청</h1>
+				<hr />
 			</div>
 			
+			<!-- 폐업 신청 -->
+			<div class="out_insert">
 			
-			<!-- 폐업 사유 -->
-			<div class="igroup">
-				<div class="title">폐업사유</div>
-				<div class="content">
-					<textarea rows="" cols="" class="contentform" id="oContent"
-					placeholder="폐업 사유를 입력해주세요"></textarea>
+				<!-- 폐업할 사업장 선택 -->
+				<div class="igroup-select">
+					<div class="title">
+						사업장 선택
+					</div>
+					<div>
+						<select name="st_list" id="st_list">
+							<option id="" selected="selected">----폐업 신청 진행 가게 선택----</option>
+							<c:forEach var="st" items="${st_list }">
+								<option id="${st.st_num }">${st.st_name}</option>
+							</c:forEach>
+						</select>
+					</div>
 				</div>
-			</div> <!-- .out_content -->
+				
+				<!-- 사업장 번호 확인 -->
+				<div class="igroup-select">
+					<div class="title">
+						사업장 번호 확인
+					</div>
+					<div class="input_group">
+					    <input type="text" id="st_in_num" name="st_in_num">
+					    <input type="hidden" class="check_num" id="check_num" value="false"/>
+						<button type="button" class="cfb" id="submitBtn">인증하기</button>
+					</div>
+					<i id="err1" style="color: red; display: none; font-size: 10pt;" >잘못된 사업자 등록 번호 입니다.</i>
+				</div>
+				
+				
+				<!-- 폐업 사유 -->
+				<div class="igroup">
+					<div class="title">폐업사유</div>
+					<div class="content">
+						<textarea rows="" cols="" class="contentform" id="oContent"
+						placeholder="폐업 사유를 입력해주세요"></textarea>
+					</div>
+				</div> <!-- .out_content -->
+				
+				
+				<div class="button">
+					<button type="button" id="insert">신청</button>
+					<button type="reset">목록으로</button><br>
+				</div>
+				
+				
+				<!-- user_num -->
+				<input type="hidden" name="user_num" id="user_num" value="${user_num }">
+				<input type="hidden" name="st_num" id="st_num">
+			</div> <!-- .out_insert -->
 			
-			
-			<div class="button">
-				<button type="submit" id="insert">신청</button>
-				<button type="reset">목록으로</button><br>
-			</div>
-			
-			
-			<!-- user_num -->
-			<input type="hidden" name="user_num" value="<%= userNum %>">
-			<input type="hidden" name="st_num" value="<%= stNum %>">
-
-		</div> <!-- .out_insert -->
 		
-	
-	</div> <!-- .center -->
-	
-	<!-- footer -->
-	<div><c:import url="footer.jsp"></c:import></div>
+		</div> <!-- .center -->
+		
+		<!-- footer -->
+		<div><c:import url="footer.jsp"></c:import></div>
 	
 	</form> <!-- #outform -->
 </div>	<!-- class="mainFrame" -->

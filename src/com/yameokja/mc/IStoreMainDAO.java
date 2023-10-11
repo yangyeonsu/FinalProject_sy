@@ -11,6 +11,7 @@ import com.sun.org.glassfish.gmbal.ParameterNames;
 public interface IStoreMainDAO
 {
 	public ArrayList<StoreDTO> searchStoreInfo(String user_num);
+	public ArrayList<StoreDTO> searchoutstore(String user_num);
 	public Integer searchRepStore(String user_num);
 	public ArrayList<HashMap<String, String>> star_transition(int st_num);
 	public ArrayList<HashMap<String, String>> rv_key_sum(int st_num);
@@ -80,5 +81,9 @@ public interface IStoreMainDAO
 	public StAppealRequestDTO StAppealRequest(int st_num);
 	// 페널티 회수요청 내역
 	public StAppealRequestDTO StPenaltyre(int st_num);
+	
+	// 가게 폐업 추가
+	public String placeNum(@Param("user_num") String user_num, @Param("st_num") Integer st_num);
+	public int st_Out_apply(@Param("user_num") String user_num, @Param("st_num") Integer st_num);
 
 }
