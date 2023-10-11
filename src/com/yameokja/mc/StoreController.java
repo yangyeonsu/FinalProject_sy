@@ -132,11 +132,6 @@ public class StoreController
 		model.addAttribute("rv_list", smDao.rv_list(st_num));
 		
 		ArrayList<ReviewDTO> arr = smDao.rv_list(st_num);
-		for (ReviewDTO reviewDTO : arr)
-		{
-			System.out.println(reviewDTO.getReply_content());
-		}
-		/* model.addAttribute("reply_content", reply_content(rv_num)); */
 		
 		model.addAttribute("alarm", uDao.userAlarm(user_num));
 		
@@ -1095,6 +1090,113 @@ public class StoreController
 	    
 	    return result;
 	}
+
+	@RequestMapping(value = "/storeOutform.action", method={RequestMethod.POST, RequestMethod.GET})
+	public String storeOuttForm(HttpServletRequest request, Model model)
+	{	
+		String result = null;
+		
+		IUserDAO udao = sqlSession.getMapper(IUserDAO.class);
+		IStoreMainDAO smDao = sqlSession.getMapper(IStoreMainDAO.class);
+		
+		HttpSession session = request.getSession();
+	    String user_num = (String)session.getAttribute("user_num");
+	    
+	    // header 사용자 정보
+	    LocalDate currentDate = LocalDate.now();
+        int monthValue = currentDate.getMonthValue();
+		
+		UserDTO user = udao.searchUserInfo(user_num, "num");
+		
+	    if (1 <= monthValue && monthValue <= 6)
+		{
+			user.setPoint_sum(udao.secondHalf(user_num).point_sum);
+			user.setUser_grade(udao.firstHalf(user_num).user_grade);
+		}
+		else if(7 <= monthValue && monthValue <= 12)
+		{
+			user.setPoint_sum(udao.firstHalf(user_num).point_sum);
+			user.setUser_grade(udao.secondHalf(user_num).user_grade);
+		}
+	    
+	    model.addAttribute("user", user);
+	    
+	    // 가게 리스트
+		ArrayList<StoreDTO> st_list = smDao.searchoutstore(user_num);
+		model.addAttribute("st_list", st_list);
+		
+		result = "/WEB-INF/view/storeOut.jsp";
+		
+		return result;
+	}
+
 	
+	@RequestMapping(value="/storeoutcheck.action", method=RequestMethod.POST)
+		@ResponseBody
+	public String placeNumCheck(@RequestParam("user_num") String user_num, @RequestParam("st_num") String st_num, @RequestParam("st_in_num") String st_in_num, Model model)
+	{
+		String result = null;
+		
+		int st_num_n = Integer.parseInt(st_num);
+		
+		// 사업장 관리번호
+		IStoreMainDAO dao = sqlSession.getMapper(IStoreMainDAO.class);
+		
+		if(st_in_num.equals(dao.placeNum(user_num, st_num_n)))
+			result = "1";
+		
+		return result;
+	}
+	
+	@RequestMapping(value = "/storeOutinsert.action", method=RequestMethod.POST)
+	public String StoreOutinsert(HttpServletRequest request, HttpServletResponse response) 
+	{	
+		
+		System.out.println("Received user_num: " + request.getParameter("user_num"));
+		System.out.println("Received st_num: " + request.getParameter("st_num"));
+
+		
+		IStoreMainDAO dao = sqlSession.getMapper(IStoreMainDAO.class);
+		
+		try 
+		{	
+			String usernum = request.getParameter("user_num");
+			String stnum = request.getParameter("st_num");
+			
+			
+			if(usernum == null || "null".equals(usernum) || usernum.isEmpty() 
+				|| stnum == null || "null".equals(stnum) || stnum.isEmpty()) 
+			{
+			    return "storeOutform.action?user_num=" + usernum + "&st_num=" + stnum;
+			}
+			
+			if(usernum == null || usernum.trim().isEmpty() 
+					||  stnum == null || stnum.trim().isEmpty()) 
+			{
+				return "storeOutform.action?user_num=" + usernum + "&st_num=" + stnum;
+			}
+
+			String user_num = usernum;
+			int st_num = Integer.parseInt(stnum);
+			
+			int res = dao.st_Out_apply(user_num, st_num);
+			
+			System.out.println("user_num: " + usernum);
+			System.out.println("st_num: " + stnum);
+			
+			if (res == 0) 
+			{
+				return "storeOutform.action?user_num=" + user_num + "&st_num=" + st_num;
+			}
+				
+		} 
+		catch (Exception e) 
+		{
+			System.out.println(e.toString());
+		}
+		
+		return "redirect:main.action";
+		
+	}
   
 }

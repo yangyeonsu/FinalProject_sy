@@ -12,6 +12,20 @@
 		ORDER BY REG_DATE DESC
 	</select>
 	
+	<select id="searchoutstore" resultType="com.yameokja.mc.StoreDTO">
+		SELECT ST_NUM, ST_NAME
+		FROM STORE_VIEW
+         WHERE IN_PROCESS_NUM  NOT IN (SELECT IN_PROCESS_NUM
+                                    FROM OUT_APPLY
+                                    WHERE IN_PROCESS_NUM NOT IN (SELECT OA.IN_PROCESS_NUM
+                                                                FROM OUT_APPLY OA RIGHT JOIN OUT_PROCESS OP
+                                                                ON OA.OUT_APPLY_NUM = OP.OUT_APPLY_NUM
+                                                                RIGHT JOIN OUT_REJ ORJ
+                                                                ON OP.OUT_PROCESS_NUM = ORJ.OUT_PROCESS_NUM))
+          AND USER_NUM = #{user_num}
+		ORDER BY REG_DATE DESC
+	</select>
+	
 	<select id="searchRepStore" resultType="java.lang.Integer">
 		SELECT ST_NUM
 		FROM REP_STORE
@@ -314,6 +328,27 @@
 		RIGHT JOIN IN_APPLY IA ON IP.IN_APPLY_NUM = IA.IN_APPLY_NUM
 		WHERE SL.ST_NUM = #{st_num}
 	</select>
+	
+	<select id="placeNum" resultType="java.lang.String">
+		SELECT IA.ST_PLACE_NUM AS ST_PLACE_NUM
+		FROM IN_APPLY IA
+		JOIN IN_PROCESS IP ON IA.IN_APPLY_NUM = IP.IN_APPLY_NUM
+		JOIN ST_LIST SL ON SL.IN_PROCESS_NUM = IP.IN_PROCESS_NUM
+		WHERE IA.USER_NUM = #{user_num} AND SL.ST_NUM = #{st_num}
+	</select>
+	
+	<insert id="st_Out_apply">
+		INSERT INTO OUT_APPLY (OUT_APPLY_NUM, IN_PROCESS_NUM, REG_DATE, ADMIN_READ_DATE)
+		SELECT 
+		    (SELECT NVL(MAX(OUT_APPLY_NUM)+1,0) FROM OUT_APPLY) AS OUT_APPLY_NUM
+		    , IP.IN_PROCESS_NUM AS IN_PROCESS_NUM
+		    , SYSDATE
+		    , NULL
+		FROM IN_PROCESS IP
+		JOIN IN_APPLY IA ON IA.IN_APPLY_NUM = IP.IN_APPLY_NUM
+		JOIN ST_LIST SL ON SL.IN_PROCESS_NUM = IP.IN_PROCESS_NUM
+		WHERE IA.USER_NUM = #{user_num, jdbcType=INTEGER} AND SL.ST_NUM = #{st_num, jdbcType=INTEGER}
+	</insert>
 </mapper>
 
 
