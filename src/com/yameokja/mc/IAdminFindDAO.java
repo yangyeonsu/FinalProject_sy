@@ -26,8 +26,16 @@ public interface IAdminFindDAO
 	public int revoupdate(int revo_apply_num);
 	// 가게등록 처리내역 업데이트
 	public int inapplyupdate(int in_apply_num);
-	// 리뷰 등록 승인
+	// 리뷰 신고 처리 및 승인
 	public int rvreportAccess(@Param("rep_apply_num") int rep_apply_num, @Param("admin_num") String admin_num);
+	// rep_process_num 찾기
+	public int searchRepProNum(@Param("rep_apply_num") int rep_apply_num, @Param("admin_num") String admin_num);
+	// 리뷰 신고 중재
+	public int rvreportHalf(@Param("mid_rs")String mid_rs, @Param("rep_process_num")int rep_process_num);
+	// 리뷰 신고 반려
+	public int rvreportRej(@Param("rej_rs")String rej_rs, @Param("rep_process_num")int rep_process_num);
+	// 리뷰 중재/반려 사유
+	public MidRejRsDTO rvreportMidRejRs(@Param("rep_process_num") int rep_process_num);
 	// 가게 등록 처리
 	public int inprocess(@Param("in_apply_num")int in_apply_num, @Param("admin_num")int admin_num);
 	public int getprocessnum(int admin_num);
