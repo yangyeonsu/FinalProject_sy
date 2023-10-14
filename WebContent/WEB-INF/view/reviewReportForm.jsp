@@ -291,7 +291,7 @@ span
 		   <hr>
 		</div>
       
-	      <!-- 입력 부분 -->
+	    <!-- 입력 부분 -->
 		<div class="st_info_insert">
 		<!-- test="{state eq "ㅊㄹ" -->
 	      

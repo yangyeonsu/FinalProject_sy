@@ -23,6 +23,7 @@ public class AdminMainController
 	@Autowired
 	private SqlSession sqlSesion;
 	
+	// 관리자메인화면
 	@RequestMapping(value="/adminmain.action", method=RequestMethod.GET)
 	public String allList(HttpServletRequest request, Model model)
 	{
@@ -46,6 +47,7 @@ public class AdminMainController
 		return result;
 	}
 	
+	// 리뷰신고 리스트
 	@RequestMapping(value="/reviewListView.action", method=RequestMethod.GET)
 	public String reviewListView(HttpServletRequest request, Model model)
 	{
@@ -63,6 +65,7 @@ public class AdminMainController
 		return result;
 	}
 	
+	// 가게정보수정요청 리스트
 	@RequestMapping(value="/storeErrView.action", method=RequestMethod.GET)
 	public String storeErrView(HttpServletRequest request, Model model)
 	{
@@ -80,6 +83,7 @@ public class AdminMainController
 		return result;
 	}
 	
+	// 이의제기 리스트
 	@RequestMapping(value="/objectionView.action", method = RequestMethod.GET)
 	public String objectionView(HttpServletRequest request, Model model)
 	{
@@ -98,6 +102,7 @@ public class AdminMainController
 		return result;
 	}
 	
+	// 패널티 리스트
 	@RequestMapping(value = "/penaltyView.action", method = RequestMethod.GET)
 	public String penaltyView(HttpServletRequest request, Model model)
 	{
@@ -115,6 +120,7 @@ public class AdminMainController
 		return result;
 	}
 	
+	// 등폐업 리스트
 	@RequestMapping(value = "/inoutView.action", method = RequestMethod.GET)
 	public String inoutView(HttpServletRequest request, Model model)
 	{
@@ -435,6 +441,63 @@ public class AdminMainController
 		 * 
 		 * return result; }
 		 */
+		
+		
+		
+			// 가게정보수정 승인 일시
+			@RequestMapping(value="/errreportaccess.action", method=RequestMethod.GET)
+			public String errreportaccess(Model model,HttpServletRequest request)
+			{
+				HttpSession session = request.getSession();
+				
+				String result = "";
+				String admin_num = (String)session.getAttribute("admin_num");
+				
+				
+				IAdminMainDAO daoM = sqlSesion.getMapper(IAdminMainDAO.class);
+				IAdminFindDAO dao = sqlSesion.getMapper(IAdminFindDAO.class);
+				
+				int req_apply_num = Integer.parseInt(request.getParameter("req_apply_num"));
+				System.out.println(req_apply_num);
+				System.out.println(admin_num);
+				
+				//System.out.println(admin_num);
+				
+				int accessNum = dao.rvreportAccess(req_apply_num, admin_num);
+				
+				//model.addAttribute(""+ "", dao.rvreportaccess(rep_apply_num, admin_num));
+				
+				result = "redirect:adminmain.action";
+				
+				return result;
+			}
+			
+			/*
+			 * // 리뷰 신고 중재 일시
+			 * 
+			 * @RequestMapping(value="/rvreporthalf.action", method=RequestMethod.GET)
+			 * public String rvreporthalf(Model model,HttpServletRequest request) {
+			 * HttpSession session = request.getSession();
+			 * 
+			 * String result = ""; String admin_num =
+			 * (String)session.getAttribute("admin_num");
+			 * 
+			 * 
+			 * IAdminMainDAO daoM = sqlSesion.getMapper(IAdminMainDAO.class); IAdminFindDAO
+			 * dao = sqlSesion.getMapper(IAdminFindDAO.class);
+			 * 
+			 * model.addAttribute("revoupdate", dao.revoupdate(revoNum));
+			 * model.addAttribute("admin_name", daoM.searchNum(admin_num,
+			 * "num").getAdmin_name()); model.addAttribute("revo", dao.revoSearch(revoNum));
+			 * 
+			 * result = "/WEB-INF/view/penaltyRevokeForm.jsp";
+			 * 
+			 * return result; }
+			 */
+		
+		
+		
+		
 		
 		@RequestMapping(value="/inapplysend.action", method= {RequestMethod.GET, RequestMethod.POST})
 		public String inApplySend(Model model, HttpServletRequest request)

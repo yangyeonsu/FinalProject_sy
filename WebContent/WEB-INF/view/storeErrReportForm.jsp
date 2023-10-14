@@ -221,16 +221,27 @@ input[type="radio"]
 					$("#myTextarea").focus();
 					return;
 				}
-				else
-				{
-					//alert("반려");
-				}
 			}
+			/* 
 			else if($(".check:checked").length != 0 && $(".check:checked").val() != "true")
 			{
 				//alert("승인");
 				window.location.href = "adminmain.action?state=";
 			}
+			*/
+			
+			var selectedValue = $(".check:checked").val();
+		    
+		    if (selectedValue === "true") {			// 반려
+		        //window.location.href = "errreportre.action";
+		        $("#adminForm").attr("action", "errreportre.action");
+				$("#adminForm").submit();
+		    } else {									// 승인
+		    	//window.location.href = "errreportaccess.action?rep_apply_num="+$("#rep_apply_num").val();
+		    	$("#adminForm").attr("action", "errreportaccess.action");
+				$("#adminForm").submit();
+		    }
+			
 		});
 		
 	});
@@ -320,7 +331,7 @@ input[type="radio"]
 
 </head>
 <body>
-<form id="adminForm" method="post">
+<form id="adminForm" method="get">
 <div class="bframe">
 	
 	<!-- header -->
@@ -365,8 +376,8 @@ input[type="radio"]
 			<c:if test="${state ne '처리완료' }">
 				
 				<div style="width: 87%; text-align: right; margin-top: 1vh;">
-					<label class="label" id="approve"><input type="radio" class="check" name="res" id="approve"><span id="approve">승인</span></label>
-					<label class="label" id="reject"><input type="radio" class="check" name="res" id="reject" value="true"><span id="reject">반려</span></label>
+					<label class="label"><input type="radio" class="check" name="res" id="approve"><span id="span">승인</span></label>
+					<label class="label"><input type="radio" class="check" name="res" id="reject" value="true"><span id="span">반려</span></label>
 				</div>
 				<br><br>
 				
@@ -397,9 +408,11 @@ input[type="radio"]
 			<c:import url="storeDetail_modal.jsp"></c:import>
 		</div>
 		
-		
 	</div>
 	
+	<div>
+		<input type="hidden" id="req_apply_num" name="req_apply_num" value="<%=dto.getReq_apply_num() %>">
+	</div>
 	
 	<!-- footer -->
 	<div><c:import url="/WEB-INF/view/footer.jsp"></c:import></div>
