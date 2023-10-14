@@ -134,54 +134,12 @@
 	position: static;
 }
 
-/* 체크박스 동그랗게 만들다가 만 코드 */
-/*
-.comStImgCB
-{
-	display: inline;
-	position: relative;
-	top: 1.6vw;
-	left: 3.5vw;
-	height: 1rem;
-	width: 1rem;
-	accent-color: #ef6351;
-	cursor: pointer;
-	appearance: none;
-	border-radius: 50px;
-	border: 1px solid #999;
-} 
-
-.circle
-{
-	display: inline-block;
-	width: 20px; height: 20px;
-	border: 2px solid #333;
-	box-sizing: border-box;
-	border-radius: 10px;
-	position: relative; top: 4px;
-	cursor: pointer;
-}
-
-.comStImgCB:checked + .circle:after{ opacity: 1; }
-.comStImgCB{position: absolute; left: -999em;}
-
-.circle:after
-{
-	content: '\221A';
-	content: '\22C1';
-	font-size: 24px; color: #333;
-	position: absolute; top: -14px; left: 0px;
-	
-	opacity: 0;
-	transition: 0.2s;
-} */
-
 .comStoreBtn
 {
 	width: 4.5vw;
 	border: 1px solid #f7f4ea;
 	background-color: #fff;
-	font-size: 0.2vw;
+	font-size: 0.5vw;
 	cursor: pointer;
 }
 
@@ -195,7 +153,7 @@
     width: 1.1vw;
     border: #fff;
     background-color: #f7f4ea;
-    font-size: 0.005vw;
+    font-size: 0.5vw;
     color: #3a001e;
     border-radius: 5px;
     text-align: center;
