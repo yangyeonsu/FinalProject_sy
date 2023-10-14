@@ -85,6 +85,39 @@ String cp = request.getContextPath();
 			openNewWindow.location.href = "usermodify.action?user_num="+userNum+"&user_pw="+user_pw;
 			pwPopupOpen();
 		});
+		
+		$(document).on("click",".comDelete", function()
+		{
+			$st_num = $(this).val();
+			$user_num = "<%=(String) session.getAttribute("user_num")%>"
+
+			$.ajax(
+			{
+				url : "comdelete.action",
+				type : 'post',
+				data :
+				{
+					"user_num" : $user_num,
+					"st_num" : $st_num
+				},
+				success : function(data)
+				{
+					if (data == "")
+					{
+						alert("비교함에서 이미 삭제된 가게입니다.");
+					} else
+					{
+						/* alert(data); */
+						alert("비교함에서 삭제되었습니다.");
+						$(".comStoreListDiv").html(data);
+					}
+				},
+				error : function(e)
+				{
+					alert(e.responseText);
+				}
+			});
+		});
 	});
 
 	// 모달 -------------------------------------
