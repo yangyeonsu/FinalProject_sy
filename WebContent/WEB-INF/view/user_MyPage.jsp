@@ -199,8 +199,7 @@ String cp = request.getContextPath();
 				<div class="col-md-8">
 					<div class="mypage">
 						마이 페이지 <input type="button" class="myPageBtn" value="개인정보수정"
-							onclick="pwPopupOpen()"
-							style="background-color: #EBC0B7; border-radius: 5px;">
+							onclick="pwPopupOpen()">
 						<input type="hidden" id="fail" value="${modifyOk}">
 					</div>
 

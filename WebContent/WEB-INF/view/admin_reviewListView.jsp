@@ -15,9 +15,21 @@
 <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
 
 <style type="text/css">
-	.continer{
-		position: static;
-	}
+body
+{
+	margin: 0px;
+}
+
+.continer{
+	position: static;
+}
+
+footer
+{
+	position: absolute;
+    bottom: 0;
+    width: 97vw !important;
+}
 	
 </style>
 
@@ -93,11 +105,10 @@
 				</div>
 				<div class="back" id="more">
 					<h3></h3>
-					<a href="mainAdminView.action" class="backBtn" style="font-size: 10pt;">뒤로가기</a>
+					<a href="adminmain.action" class="backBtn" style="font-size: 10pt;">뒤로가기</a>
 				</div>
 			</div>
 		</div>
-	</div>
 	
 	<!-- footer -->
 	<c:import url="footer.jsp"></c:import>

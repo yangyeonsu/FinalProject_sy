@@ -3,6 +3,7 @@ package com.yameokja.mc;
 public class UserrvreportDTO
 {
 	private String reg_date, st_name, accu_id, final_date, state;
+	private int rep_process_num;
 	
 	private String rep_rej_num;
 	private String rej_rs;
@@ -12,6 +13,7 @@ public class UserrvreportDTO
 	
 	
 	// getter / setter
+	
 	public String getRej_rs()
 	{
 		return rej_rs;
@@ -20,6 +22,16 @@ public class UserrvreportDTO
 	public void setRej_rs(String rej_rs)
 	{
 		this.rej_rs = rej_rs;
+	}
+
+	public int getRep_process_num()
+	{
+		return rep_process_num;
+	}
+
+	public void setRep_process_num(int rep_process_num)
+	{
+		this.rep_process_num = rep_process_num;
 	}
 	
 	public String getRep_rej_num()
