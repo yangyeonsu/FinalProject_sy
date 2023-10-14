@@ -439,9 +439,10 @@ public class stDetailController
 		model.addAttribute("st_num", st_num);
 		model.addAttribute("st_name", st_name);
 
-		System.out.println("st_num: " + st_num);
-		System.out.println("st_name: " + st_name);
-		System.out.println("user_name: " + user_num);
+		// 확인
+		//System.out.println("st_num: " + st_num);
+		//System.out.println("st_name: " + st_name);
+		//System.out.println("user_name: " + user_num);
 
 		IstDetailDAO_userView dao = sqlSession.getMapper(IstDetailDAO_userView.class);
 

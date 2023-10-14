@@ -37,6 +37,19 @@ body {
     padding: 0;
 }
 
+.myPageBtn
+{
+	width: 6vw;
+    height: 4vh;
+    margin-left: 2vh;
+    border-radius: 10px;
+    font-size: 0.6vw;
+    border: 1px solid #ef6351;
+    background-color: white;
+    color: #ef6351;
+    cursor: pointer;
+}
+
 .jimlist, .comlist {
 	display: flex;
 	justify-content: center;
@@ -272,10 +285,12 @@ body {
 }
 .mypage
 {
-	font-size: 25pt;
+    font-size: 25pt;
     font-weight: bold;
     margin-top: 3vh;
     margin-bottom: 7vh;
+    display: flex;
+    align-items: center;
 }
 
 /* (0730)추가 */

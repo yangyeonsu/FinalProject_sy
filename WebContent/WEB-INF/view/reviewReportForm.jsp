@@ -16,6 +16,10 @@
 <meta charset="UTF-8">
 <title>reviewReportForm.jsp</title>
 <style type="text/css">
+body
+{
+	margin: 0px;
+}
 
 .st_info_insert
 {
@@ -89,11 +93,18 @@
    width: 5vw;
    padding: 1vh;
    background-color: #F7F4EA;
+	border-radius: 0 5px 5px 0;
 }
 .tcontent1
 {
    padding: 1vh;
 }
+
+.content
+{
+	width: 44vw;
+}
+
 .more
 {
    display: flex;
@@ -134,6 +145,13 @@ cursor: not-allowed;
     justify-content: center;
     margin-top: 1%;
     
+}
+
+.backBtn
+{
+    padding-right: 2vw;
+    font-size: 10pt;
+    float: right;
 }
 
 .checkLabel
@@ -246,15 +264,12 @@ span
 			var selectedValue = $(".check:checked").val();
 		    
 		    if (selectedValue === "trueR") {			// 반려
-		        //window.location.href = "rvreportre.action";
-		        $("#adminForm").attr("action", "rvreportre.action");
+		        $("#adminForm").attr("action", "rvreportrej.action");
 				$("#adminForm").submit();
 		    } else if (selectedValue === "trueM") {		// 중재
-		        //window.location.href = "rvreporthalf.action";
 		        $("#adminForm").attr("action", "rvreporthalf.action");
 				$("#adminForm").submit();
 		    } else {									// 승인
-		    	//window.location.href = "rvreportaccess.action?rep_apply_num="+$("#rep_apply_num").val();
 		    	$("#adminForm").attr("action", "rvreportaccess.action");
 				$("#adminForm").submit();
 		    }
@@ -271,8 +286,6 @@ span
 			window.location.href="stdetail-userview.action?st_num="+stNum;
 			
 		});
-		
-		
 	});
    
 </script>
@@ -293,8 +306,6 @@ span
       
 	      <!-- 입력 부분 -->
 		<div class="st_info_insert">
-		<!-- test="{state eq "ㅊㄹ" -->
-	      
 	          
 		<div class="repot_date_list">
 			<div class="more">
@@ -354,10 +365,10 @@ span
 			</div>
 			
 			<div class="igroup2" style="width: 100%;">
-           		<textarea id="myTextarea2" style="width: 72%; height: 10em; resize: none;" placeholder="반려사유를 입력해주세요."></textarea>
+           		<textarea id="myTextarea2" name="myTextarea2" style="width: 72%; height: 10em; resize: none;" placeholder="반려사유를 입력해주세요."></textarea>
 	        </div>
 	        <div class="igroup2" style="width: 100%;">
-           		<textarea id="myTextarea1" style="width: 72%; height: 10em; resize: none;" placeholder="중재사유를 입력해주세요."></textarea>
+           		<textarea id="myTextarea1" name="myTextarea1" style="width: 72%; height: 10em; resize: none;" placeholder="중재사유를 입력해주세요."></textarea>
 	        </div>
 	   		
 	   		<div class="sendBtn">
@@ -365,11 +376,38 @@ span
 			</div>
 		</c:if>
 		<c:if test="${state eq '처리완료' }">
+			<div class="igroup">
+				<div class="lbox">
+				<c:choose> 
+					<c:when test="${rvRs.mid_rej=='중재' }">
+					<div class="title1">
+						${rvRs.mid_rej }
+					</div>
+					<div class="tcontent1 content">
+						${rvRs.mid_rs }
+					</div>
+					</c:when>
+					<c:when test="${rvRs.mid_rej=='반려' }">
+					<div class="title1">
+						${rvRs.mid_rej }
+					</div>
+					<div class="tcontent1 content">
+						${rvRs.rej_rs }
+					</div>
+					</c:when>
+				</c:choose>
+				</div>
+			</div>
 			<br><br>
 			<div class="igroup" style="width: 100%; color: red; font-size: 20pt; text-align: center; width: 410px; margin: 0 auto">
 				처리가 완료된 리뷰신고서 입니다.
 			</div>
 		</c:if>
+		
+		<div class="back" id="more">
+			<h3></h3>
+			<a href="reviewListView.action" class="backBtn" style="font-size: 10pt;">뒤로가기</a>
+		</div>
         
    		
 		</div> <!-- st_info_insert -->
@@ -380,7 +418,7 @@ span
 	</div>
    
 	<!-- footer -->
-	<div><c:import url="/WEB-INF/view/footer.jsp"></c:import></div>
+	<c:import url="/WEB-INF/view/footer.jsp"></c:import>
 
 </div>
 </form>

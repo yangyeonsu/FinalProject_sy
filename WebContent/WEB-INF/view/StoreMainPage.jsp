@@ -57,8 +57,9 @@ header {
 
 .storemain_bodyTop {
 	position: static;
-	display: flex;
-	height: 15vh
+    display: flex;
+    height: 15vh;
+    align-items: center;
 }
 
 .storeName {
@@ -192,7 +193,6 @@ h3 {
 	/* font-size: small; */
 	width: 6vw;
 	height: 5vh;
-	margin-top: 3.2vw;
 	margin-left: 2vh;
 	border-radius: 10px;
 	font-size: 0.6vw;
