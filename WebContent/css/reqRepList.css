@@ -12,12 +12,13 @@ body
 	height: 100vh;
 }
 
-/* body {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	height: 100vh;
-} */
+.header
+{
+	position: sticky;
+	top: 0;
+	background-color: white;
+	z-index: 200;
+}
 
 /* 메인페이지 */
 .middle {
@@ -123,3 +124,105 @@ body
     position: relative;
     transform: translateY(-100%);
 }
+
+#rvPopup, #midPopup
+{
+	overflow: hidden;
+	height: auto;
+	display: block;
+	border-radius: 20px;
+	box-shadow: 1.5px 2px 2px #333;
+	width: 27%;
+	height: 50%;
+	z-index: 200;
+	position: fixed;
+  	top: 50%;
+  	left: 50%;
+  	/* transform: translate(-50%, -50%); */
+	/* top: 20%;
+	left: 10%; */
+	background-color:#fff;
+}
+
+#rvPopup h4, #midPopup h4{
+	font-size: 15px;
+	height: 24px;
+	padding: 8px 0 2px 15px;
+	color: #3a001e;
+	font-weight: normal;
+}
+
+#rvPopup h4 a.close, #midPopup h4 a.close {
+    float: right;
+    padding-right: 8px;
+    color: #3a001e;
+    font-family: verdana;
+    margin-right: 2%;
+    font-weight: bold;
+}
+
+#rvPopup h3, #midPopup h3 {
+	text-align: center;
+}
+
+.rvPopCont {
+    display: block;
+    background: #FFF;
+    border: 3px solid #EF6351;
+    padding: 15px 20px;
+    border-radius: 5px;
+    height: 33%;
+    width: 80%;
+    margin-left: 5%;
+}
+
+.reqPopCont .list {
+    height: 100%;
+    width: 100%;
+    /* display: inline-block; */
+    margin: 0;
+    font-size: 12pt;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#rvPopup .rv, #midPopup .rv{
+	margin-top: 10%;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#rvPopup .rvBtn, #midPopup .rvBtn{
+	width: 120px;
+	height: 30px;
+	float: left;
+	align-content: center;
+	font-size: 8pt;
+	font-weight: bold;
+	border: 1px solid #ef6351;
+	border-radius: 5px;
+	background-color: #ef6351;
+	color: white;
+	cursor: pointer;
+}
+
+.rej_rs_content, .mid_rs_content
+{
+	width: 100%;
+}
+
+.bgLayer {
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: #f7f4ea;
+	opacity: .5;
+	filter: alpha(opacity = 50);
+	z-index: 15;
+} 

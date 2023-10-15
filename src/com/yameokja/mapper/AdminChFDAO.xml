@@ -133,10 +133,45 @@
 		WHERE IN_APPLY_NUM = #{in_apply_num}
 	</update>
 	
+	<!-- 리뷰신고 처리 겸 승인 -->
 	<insert id="rvreportAccess">
 		INSERT INTO REP_PROCESS(REP_PROCESS_NUM, REP_APPLY_NUM, ADMIN_NUM, FINAL_DATE, REP_READ_DATE, ACCU_READ_DATE)
         VALUES(REPPROSEQ.NEXTVAL, #{rep_apply_num}, #{admin_num}, TO_DATE(SYSDATE, 'YYYY-MM-DD'), NULL, NULL)
 	</insert>
+	
+	<!-- REP_RPOCESS_NUM 찾기 -->
+	<select id="searchRepProNum" resultType="java.lang.Integer">
+		SELECT REP_PROCESS_NUM
+		FROM REP_PROCESS
+		WHERE REP_APPLY_NUM = #{rep_apply_num}
+		  AND ADMIN_NUM = #{admin_num}
+	</select>
+	
+	<!-- 리뷰신고 중재 -->
+	<insert id="rvreportHalf">
+		INSERT INTO REP_MID(REP_MID_NUM, MID_RS, REP_PROCESS_NUM)
+		VALUES(REPMIDSEQ.NEXTVAL, #{mid_rs}, #{rep_process_num})
+	</insert>
+
+	<!-- 리뷰신고 반려 -->
+	<insert id="rvreportRej">
+		INSERT INTO REP_REJ(REP_REJ_NUM, REJ_RS, REP_PROCESS_NUM)
+		VALUES(REPREJSEQ.NEXTVAL, #{rej_rs}, #{rep_process_num})
+	</insert>
+	
+	<!-- 리뷰신고 중재/반려 사유 -->
+	<select id="rvreportMidRejRs" resultType="com.yameokja.mc.MidRejRsDTO">
+		SELECT CASE WHEN RM.REP_MID_NUM IS NOT NULL THEN '중재'
+		            WHEN RR.REP_REJ_NUM IS NOT NULL THEN '반려'
+		            ELSE '처리중' END AS MID_REJ
+		       , RM.MID_RS AS MID_RS
+		       , RR.REJ_RS AS REJ_RS
+		FROM RV_REPORT_VIEW RRV LEFT JOIN REP_MID RM
+		  ON RRV.REP_PROCESS_NUM = RM.REP_PROCESS_NUM
+		LEFT JOIN REP_REJ RR
+		  ON RRV.REP_PROCESS_NUM = RR.REP_PROCESS_NUM
+		WHERE RRV.REP_PROCESS_NUM = #{rep_process_num}
+	</select>
 	
 	<insert id="inprocess">
 		INSERT INTO IN_PROCESS(IN_PROCESS_NUM, IN_APPLY_NUM, ADMIN_NUM, FINAL_DATE)

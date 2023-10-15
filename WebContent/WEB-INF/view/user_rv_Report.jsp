@@ -15,96 +15,9 @@
 <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
 <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
 
-<%-- <link rel="stylesheet" type="text/css" href="<%=cp%>/css/user_main.css">
-<link rel="stylesheet" type="text/css" href="<%=cp%>/css/userMyPage.css"> --%>
-
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 
-<%-- <link rel="stylesheet" type="text/css" href="<%=cp%>/css/storeDetail.css"> --%>
 <link rel="stylesheet" type="text/css" href="<%=cp%>/css/reqRepList.css">
-
-<!-- <style type="text/css">
-
-	.header
-	{
-		position: sticky;
-		top: 0;
-		background-color: white;
-	}
-	
-	/* 메인페이지 */
-	.middle
-	{
-		display: flex;
-		width: 97vw;
-		padding: 0px;
-		align-items: stretch;
-	}
-	.rv_reportlist
-	{
-		display: flex;
-		flex-direction: column;
-		padding: 1vw;
-		border: 0.3vw solid #F7F4EA;
-		border-radius: 40px;
-	}
-	/* 부제 틀 */
-	.subtitle
-	{
-		display: flex;
-		background-color: #F7F4EA;
-		border-radius: 10px 10px 0 0;
-	}
-	/* 부제 */
-	.rpt_subtitle
-	{
-		text-align: center;
-
-		width: 8vw;
-		padding: 1vh;
-	}
-	
-	/* 신고 내용 틀 */
-	.report_content
-	{
-		display: flex;
-
-	}
-	/* 신고 내용 */
-	.rpt_content
-	{
-		text-align: center;
-		width: 8vw;
-		padding: 1vh;;
-	}
-	
-	/* 리뷰신고리스트 전체 틀 */
-	.rv_report
-	{
-		padding: 5vw;
-		justify-content: center;
-		margin-left: 10vw;
-		padding-top: 0;
-	}
-	/* 제목 */
-	.title
-	{
-		width: 100%;
-		text-align: center;
-		font-size: 2em;
-	}
-	.st_name
-	{
-		text-align: center;
-		width: 12vw;
-		padding: 1vh;;
-	}
-	.no-data-message
-	{
-		text-align: center;
-	}
-	
-</style> -->
 
 <!-- 배너 스크립트 -->
 <script type="text/javascript">
@@ -152,131 +65,100 @@
 			$('#checkOverlay').attr("value", "false");
 		});
 	});
-	
-	
-	// 모달----------------------------------------------------------------
-	function rvPopupOpen()
-	{
-		//alert("확인");
-		/* 
-		var rvreport = {
-				status: "반려"
-		}; 
-		 */
-		/* if (rvreport.status === "처리완료") { */
-		var status = $("#status").html();
-		//alert(status);
-		
-		if (status == "처리완료") 
-		{
-	        //alert("rvreport의 상태는 '처리완료'입니다.");
-	        
-	        var reject = $("#reject").html();
-	        var mid = $("#mid").html();
-	        //alert(mid);
-	        
-	        // 처리상태가 반려일 때 모달창 띄우기
-	        if(reject=="반려")
-	        {
-				//alert("반려~");
-	        	var rejRsElements = document.querySelectorAll(".rej_rs");
-	            var rejRsContentElements = document.querySelectorAll(".rej_rs_content");
-	            
-	            //alert(rejRsContentElements);
 
-	            for (var i = 0; i < rejRsElements.length; i++) {
-	                var rejRsValue = rejRsElements[i].textContent;
-	                rejRsContentElements[i].textContent = rejRsValue;
-	            }
-	        	
-		        if (document.all.rvPopup.style.visibility == "hidden")
-				{
-					//alert("확인");
-					
-					document.all.rvPopup.style.visibility = "visible";
-					bgLayerOpen();
-					
-					//alert("확인");
-					
-					var $layerPopupObj = $('#rvPopup');
-					var left = ($(window).scrollLeft() + ($(window).width() - $layerPopupObj
-							.width()) / 2);
-					var top = ($(window).scrollTop() + ($(window).height() - $layerPopupObj
-							.height()) / 4);
-		
-					$layerPopupObj.css(
-					{
-						'left' : left,
-						'top' : top,
-						'position' : 'absolute'
-					});
-					$('body').css('position', 'relative').append($layerPopupObj);
-		
-					return false;
-				} 
-				else
-				{
-					document.all.rvPopup.style.visibility = "hidden";
-					bgLayerClear();
-					return false;
-				}
-	        }
-	        
-	        
-	        
-	        
-	        
-			if(mid=="중재")
+	// 반려/중재 사유 모달
+	$(document).on('click', '.rpt_content', function() {
+	    var repProcessNum = $(this).attr('id');
+	    var rejRsValue = $("#rej_rs" + repProcessNum).val();
+	    var midRsValue = $("#mid_rs" + repProcessNum).val();
+    	
+	    
+	    if(midRsValue!="")
+	    {
+	    	$("#midRs").html(midRsValue);
+	    	
+	    	if (document.all.midPopup.style.visibility == "hidden")
 			{
-				//alert("중재~");	
-				var midRsElements = document.querySelectorAll(".mid_rs");
-	            var midRsContentElements = document.querySelectorAll(".mid_rs_content");
-	            
-	            //alert(midRsContentElements);
-	            
-	            for (var i = 0; i < midRsElements.length; i++) {
-	                var midRsValue = midRsElements[i].textContent;
-	                midRsContentElements[i].textContent = midRsValue;
-	            }
-	            
-	            if (document.all.midPopup.style.visibility == "hidden")
-				{
-					//alert("확인");
-					
-					document.all.midPopup.style.visibility = "visible";
-					bgLayerOpen();
-					
-					//alert("visible check");
-					
-					var $layerPopupObj = $('#midPopup');
-					var left = ($(window).scrollLeft() + ($(window).width() - $layerPopupObj
-							.width()) / 2);
-					var top = ($(window).scrollTop() + ($(window).height() - $layerPopupObj
-							.height()) / 4);
-		
-					$layerPopupObj.css(
-					{
-						'left' : left,
-						'top' : top,
-						'position' : 'absolute'
-					});
-					$('body').css('position', 'relative').append($layerPopupObj);
-		
-					return false;
-					
-				} 
-				else
-				{
-					document.all.midPopup.style.visibility = "hidden";
-					bgLayerClear();
-					return false;
-				}
-	            
-			}
-	        
-	    }
-	}
+				//alert("확인");
+				
+				document.all.midPopup.style.visibility = "visible";
+				bgLayerOpen();
+				
+				//alert("visible check");
+				
+				var $layerPopupObj = $('#midPopup');
+				var left = ($(window).scrollLeft() + ($(window).width() - $layerPopupObj
+						.width()) / 2);
+				var top = ($(window).scrollTop() + ($(window).height() - $layerPopupObj
+						.height()) / 4);
 	
+				$layerPopupObj.css(
+				{
+					'left' : left,
+					'top' : top,
+					'position' : 'absolute'
+				});
+				$('body').css('position', 'relative').append($layerPopupObj);
+	
+				return false;
+				
+			} 
+			else
+			{
+				document.all.midPopup.style.visibility = "hidden";
+				bgLayerClear();
+				return false;
+			}
+	    }
+	    else if(rejRsValue!="")
+	    {
+	    	$("#rvRs").html(rejRsValue);
+			
+			if (document.all.rvPopup.style.visibility == "hidden")
+			{
+				document.all.rvPopup.style.visibility = "visible";
+				bgLayerOpen();
+				
+				var $layerPopupObj = $('#rvPopup');
+				var left = ($(window).scrollLeft() + ($(window).width() - $layerPopupObj
+						.width()) / 2);
+				var top = ($(window).scrollTop() + ($(window).height() - $layerPopupObj
+						.height()) / 4);
+
+				$layerPopupObj.css(
+				{
+					'left' : left,
+					'top' : top,
+					'position' : 'absolute'
+				});
+				$('body').css('position', 'relative').append($layerPopupObj);
+
+				return false;
+			} 
+			else
+			{
+				document.all.rvPopup.style.visibility = "hidden";
+				bgLayerClear();
+				return false;
+			}
+	    }
+	});
+	
+	function rvPopupOpen(element)
+	{
+		if ($(element).attr("id") == "mid")
+		{
+			document.all.midPopup.style.visibility = "hidden";
+			bgLayerClear();
+			return false;
+		}
+		else
+		{
+			document.all.rvPopup.style.visibility = "hidden";
+			bgLayerClear();
+			return false;
+		}
+	}
 	
 	function bgLayerOpen()
 	{
@@ -309,7 +191,6 @@
 			});
 		}
 	}
-	
 </script>
 	
 
@@ -320,13 +201,8 @@
 		<c:import url="header_user.jsp"></c:import>
 	</div>
 
-	
-	
 	<div class="middle">
 	<c:import url="sideBar_user.jsp"></c:import>
-		
-		
-		
 		
 		<div class="right_content">
 			<div class="rv_report">
@@ -334,33 +210,6 @@
 					리뷰 신고 내역
 				</div>
 				<hr>
-				<%-- 
-				<div class="rv_reportlist">
-					<div class="subtitle">
-						<div class="rpt_subtitle">신고일자</div>
-						<div class="st_name">가게명</div>
-						<div class="rpt_subtitle">피신고자ID</div>
-						<div class="rpt_subtitle">처리상태</div>
-						<div class="rpt_subtitle">처리일자</div>
-					</div>
-					<c:choose>
-					    <c:when test="${empty user_rv_Report}">
-					        <div class="no-data-message">리뷰 신고 내역이 존재하지 않습니다.</div>
-					    </c:when>
-					    <c:otherwise>
-					        <c:forEach var="rvreport" items="${user_rv_Report}">
-					            <div class="report_content">
-					                <div class="rpt_content" id="">${rvreport.reg_date }</div>
-					                <div class="st_name">${rvreport.st_name }</div>
-					                <div class="rpt_content">${rvreport.reporteduserid }</div>
-					                <div class="rpt_content">${rvreport.status }</div>
-					                <div class="rpt_content">${rvreport.final_date }</div>
-					            </div>
-					        </c:forEach>
-					    </c:otherwise>
-					</c:choose>
-				</div>
-				--%>
 				
 				<div class="rv_reportlist">
 					<div class="subtitle">
@@ -379,21 +228,33 @@
 					    </c:when>
 					    <c:otherwise>
 					        <c:forEach var="rvreport" items="${rvReportList}">
-					            <div class="report_content">
-					                <div class="rpt_content" onclick="rvPopupOpen()">${rvreport.reg_date }</div>
-					                <div class="rpt_content" onclick="rvPopupOpen()">${rvreport.st_name }</div>
-					                <div class="rpt_content" onclick="rvPopupOpen()">${rvreport.accu_id }</div>
-					                <div class="rpt_content" id="status" onclick="rvPopupOpen()">${rvreport.state }</div>
-					                <div class="rpt_content" onclick="rvPopupOpen()">${rvreport.final_date }</div>
-					                
-					                <div id="reject" style="display: none;">${rvreport.rep_rej_num }</div>
-					                <div class="rej_rs" style="display: none;">${rvreport.rej_rs }</div>
-					                
-					                <div id="mid" style="display: none;">${rvreport.rep_mid_num }</div>
-					                <div class="mid_rs" style="display: none;">${rvreport.mid_rs }</div>
-					                
-					            </div>
-					           
+					        	<c:choose>
+					        		<c:when test="${rvreport.state=='처리완료' }">
+										 <div class="report_content">
+							                <div class="rpt_content" id="${rvreport.rep_process_num}">${rvreport.reg_date }</div>
+							                <div class="rpt_content" id="${rvreport.rep_process_num}">${rvreport.st_name }</div>
+							                <div class="rpt_content" id="${rvreport.rep_process_num}">${rvreport.accu_id }</div>
+							                <div class="rpt_content" id="${rvreport.rep_process_num}">${rvreport.state }</div>
+							                <div class="rpt_content" id="${rvreport.rep_process_num}">${rvreport.final_date }</div>
+							                
+							                <div id="reject" style="display: none;">${rvreport.rep_rej_num}</div>
+							                <input type="hidden" class="rej_rs" id="rej_rs${rvreport.rep_process_num}" value="${rvreport.rej_rs}">
+							                							                
+							                <div id="mid" style="display: none;">${rvreport.rep_mid_num}</div>
+							                <input type="hidden" class="mid_rs" id="mid_rs${rvreport.rep_process_num}" value="${rvreport.mid_rs}">
+							                
+							            </div>								        		
+					        		</c:when>
+					        		<c:otherwise>
+					        			 <div class="report_content">
+							                <div class="rpt_content">${rvreport.reg_date }</div>
+							                <div class="rpt_content">${rvreport.st_name }</div>
+							                <div class="rpt_content">${rvreport.accu_id }</div>
+							                <div class="rpt_content">${rvreport.state }</div>
+							                <div class="rpt_content">${rvreport.final_date }</div>
+							            </div>
+					        		</c:otherwise>
+					        	</c:choose>
 					        </c:forEach>
 					    </c:otherwise>
 					</c:choose>
@@ -418,20 +279,20 @@
 				<!-- 반려모달 -->
 				<div id="rvPopup" style="position: absolute; visibility: hidden;">
 					<h4>
-						<a href="#" class="close" onClick="javascript:rvPopupOpen()">Ⅹ</a>
+						<a href="#" class="close" id="rej" onClick="rvPopupOpen(this)">Ⅹ</a>
 					</h4>
 					<h3>리뷰신고 반려사유</h3>
 					<div class="rvPopCont">
 						<div class="list">
 							<div class="reqRs">
 								<h5 style="margin-top: 0">반려사유 &nbsp;&nbsp;&nbsp; </h5>
-								<%-- <textarea rows="5" cols="42" id="rvRs" style="resize: none; margin-top: 3vh;">${rvreport.rej_rs }</textarea> --%>
-								<textarea class="rej_rs_content" rows="5" cols="42" id="rvRs" style="resize: none; margin-top: 3vh;" disabled="disabled"></textarea>
+								<textarea class="rej_rs_content" rows="5" cols="42" id="rvRs" style="resize: none;" disabled="disabled">
+								</textarea>
 							</div>
 							
 						</div>
 						<div class="rv">
-							<button id="rvBtn" onClick="javascript:rvPopupOpen()">확인</button>
+							<button class="rvBtn" id="rej" onClick="rvPopupOpen(this)">확인</button>
 						</div>
 					</div>
 					
@@ -441,30 +302,27 @@
 				<!-- 중재모달 -->
 				<div id="midPopup" style="position: absolute; visibility: hidden;">
 					<h4>
-						<a href="#" class="close" onClick="javascript:rvPopupOpen()">Ⅹ</a>
+						<a href="#" class="close" id="mid" onClick="rvPopupOpen(this)">Ⅹ</a>
 					</h4>
 					<h3>리뷰신고 중재사유</h3>
 					<div class="rvPopCont">
 						<div class="list">
 							<div class="midRs">
-								<h5 style="margin-top: 0">반려사유 &nbsp;&nbsp;&nbsp; </h5>
-								<%-- <textarea rows="5" cols="42" id="rvRs" style="resize: none; margin-top: 3vh;">${rvreport.rej_rs }</textarea> --%>
-								<textarea class="mid_rs_content" rows="5" cols="42" id="midRs" style="resize: none; margin-top: 3vh;" disabled="disabled"></textarea>
+								<h5 style="margin-top: 0">중재사유 &nbsp;&nbsp;&nbsp; </h5>
+								<textarea class="mid_rs_content" rows="5" cols="42" id="midRs" style="resize: none;" disabled="disabled">
+								</textarea>
 							</div>
 							
 						</div>
 						<div class="rv">
-							<button id="rvBtn" onClick="javascript:rvPopupOpen()">확인</button>
+							<button class="rvBtn" id="mid" onClick="rvPopupOpen(this)">확인</button>
 						</div>
 					</div>
 					
 				</div>
 			</div>
 		</div><!-- right_content -->
-		
 	</div><!-- .middle end -->
-	
-
 
 	<div class="footer">
 		<c:import url="footer.jsp"></c:import>

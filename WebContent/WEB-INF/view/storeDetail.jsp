@@ -1053,13 +1053,13 @@ String cp = request.getContextPath();
 											</div>
 										</div>
 										<c:forEach var="rvReply" items="${rvReplyList }">
-										<div class="rvReplyDiv">
-												<c:if test="${rvReply.rv_num==rn}">
+											<c:if test="${rvReply.rv_num==rn}">
+												<div class="rvReplyDiv">
 													<div class="stOwner">↳ "사장님"</div>
 													<div class="rvReplyContentDiv" id="${rn }">${rvReply.reply_content}</div>
-												</c:if>
-										</div>
-										<div class="regDate replyDate">${rvReply.reg_date }</div>
+												</div>
+												<div class="regDate replyDate">${rvReply.reg_date }</div>
+											</c:if>
 										</c:forEach>
 									</div>
 								</c:forEach>
