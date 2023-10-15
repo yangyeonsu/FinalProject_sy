@@ -177,7 +177,7 @@ input[type="radio"] {
          }
          else if($(".check:checked").val() == "true")
          {
-            if($("#myTextarea").val().trim() == "" || $("#myTextarea").val().trim() == null)
+            if($("#memo").val().trim() == "" || $("#memo").val().trim() == null)
             {
                alert("반려사유를 입력해주셔야 합니다.");
                return;
@@ -472,15 +472,15 @@ input[type="radio"] {
 						<div class="igroup rejText">
 							<div class="title">반려 사유</div>
 							<div class="rejReason">
-								<textarea id="myTextarea" name="memo" rows="4" cols="50" placeholder="반려사유를 입력해주세요."></textarea>
+								<textarea id="memo" name="memo" rows="4" cols="50" placeholder="반려사유를 입력해주세요."></textarea>
 							</div>
 						</div>
 						
 						<br><br>
 						<div class="sendBtn">
 							<input type="button" class="sendResult" value="처리 하기">
-						</div>
-						<input type="hidden" name="check" id="check">
+							<input type="hidden" name="check" id="check">
+						</div>						
 						
 					</c:if>
 					<c:if test="${param.state eq '승인' or param.state eq '반려'}">

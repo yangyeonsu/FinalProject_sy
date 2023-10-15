@@ -323,9 +323,14 @@ public class AdminMainController
 		int out_apply_num = Integer.parseInt(request.getParameter("out_apply_num"));
 		String admin_num = (String)session.getAttribute("admin_num");
 		
+		IAdminMainDAO amdao = sqlSesion.getMapper(IAdminMainDAO.class);
 		IAdminFindDAO afdao = sqlSesion.getMapper(IAdminFindDAO.class);
 		
+		
+		model.addAttribute("outapplyupdate", afdao.outapplyupdate(out_apply_num));
 		model.addAttribute("out", afdao.outSearch(out_apply_num));
+		model.addAttribute("admin_name", amdao.searchNum(admin_num, "num").getAdmin_name());
+		model.addAttribute("out_apply_num", out_apply_num);
 		
 		/*
 		IAdminMainDAO amdao = sqlSesion.getMapper(IAdminMainDAO.class);
@@ -450,17 +455,66 @@ public class AdminMainController
 			
 			int in_apply_num = Integer.parseInt(request.getParameter("in_apply_num"));
 			
-			int check = fdao.inprocess(in_apply_num, admin_num);
+			String check = request.getParameter("check");
 			
-			System.out.println(check);
+			int checkNum = fdao.inprocess(in_apply_num, admin_num);
+			
+			System.out.println(checkNum);
 			
 			
-			if (request.getParameter("check").equals("false"))
+			if (checkNum == 1)
 			{
-				int process = fdao.getprocessnum(admin_num);
-				
-				if (check==1)
+				int process = fdao.getinprocessnum(in_apply_num);
+				if (check.equals("false"))
 					fdao.stlistinsert(process);
+				else if (check.equals("true"))
+				{
+					String rej_rs = request.getParameter("memo");
+					fdao.inrej(rej_rs, process);
+				}
+			}
+			
+			
+			model.addAttribute("admin_name", dao.searchNum((String)session.getAttribute("admin_num"), "num").getAdmin_name());
+			
+			result = "redirect:adminmain.action";
+
+			return result;
+		}
+		
+		
+		@RequestMapping(value="/outapplysend.action", method= {RequestMethod.GET, RequestMethod.POST})
+		public String outApplySend(Model model, HttpServletRequest request)
+		{
+			String result = "";
+			HttpSession session = request.getSession();
+			
+			IAdminFindDAO fdao = sqlSesion.getMapper(IAdminFindDAO.class);
+			IAdminMainDAO dao = sqlSesion.getMapper(IAdminMainDAO.class);
+			
+			
+			int admin_num = Integer.parseInt((String)session.getAttribute("admin_num"));
+			
+			int out_apply_num = Integer.parseInt(request.getParameter("out_apply_num"));
+			
+			String check = request.getParameter("check");
+			
+			int checkNum = fdao.outprocess(out_apply_num, admin_num);
+			
+			System.out.println(checkNum);
+			
+			
+			if (checkNum == 1)
+			{
+				int process = fdao.getoutprocessnum(out_apply_num);
+				
+				/*if (check.equals("false"))
+					fdao.stlistinsert(process);*/
+				if (check.equals("true"))
+				{
+					String rej_rs = request.getParameter("memo");
+					fdao.outrej(rej_rs, process);
+				}
 			}
 			
 			
