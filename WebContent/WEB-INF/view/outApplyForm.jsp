@@ -268,14 +268,20 @@ input[type="radio"] {
 			}
 			else if($(".check:checked").val() == "true")
 			{
-			   if($("#myTextarea").val().trim() == "" || $("#myTextarea").val().trim() == null)
-			   {
-			      alert("반려사유를 입력해주셔야 합니다.");
-			      return;
-			   }
-			      
+				if($("#myTextarea").val().trim() == "" || $("#myTextarea").val().trim() == null)
+				{
+				   alert("반려사유를 입력해주셔야 합니다.");
+				   return;
+				}
+				$("#check").val("true");
+			}
+			else
+			{
+				$("#check").val("false");
 			}
 			
+			$("#adminForm").attr("action", "outapplysend.action");
+			$("#adminForm").submit();
 			
 		});
 	});
@@ -288,9 +294,9 @@ input[type="radio"] {
 <body>
 <div class="mainFrame">
 	
-	<form action="storeOutinsert.action" method="post" id="outForm">
+	<form method="post" id="adminForm">
 	
-	<div><c:import url="header_user.jsp"></c:import></div> <!-- header -->
+	<div><c:import url="header_admin.jsp"></c:import></div> <!-- header -->
 	
 	<div class="center">
 		<div class="head">
@@ -308,12 +314,12 @@ input[type="radio"] {
 				</div>
 				<div class="input_group">
 				    <input type="text" id="st_in_num" name="st_in_num" value="${out.st_place_num }" disabled="disabled">
-				    <%-- <input type="hidden" class="check_num" id="check_num" value="${placeNum }"/> --%>
+				    <input type="hidden" class="out_apply_num" name="out_apply_num" value="${out_apply_num }"/>
 				</div>
 			</div>
 			
 			
-			<c:if test="${param.state eq '미확인' }">
+			<c:if test="${param.state eq '미확인' or param.state eq '진행중'}">
 				<div class="checkLabel">
 					<label class="label">
 					<input type="radio" class="check" name="res" id="approve"><span>승인</span></label>
@@ -331,10 +337,11 @@ input[type="radio"] {
 				<br><br>
 				<div class="sendBtn">
 					<input type="button" class="sendResult" value="처리 하기">
+					<input type="hidden" name="check" id="check">
 				</div>
 				
 			</c:if>
-			<c:if test="${param.state ne '미확인' }">
+			<c:if test="${param.state eq '승인' or param.state eq '반려'}">
 				<br><br>
 				<div class="igroup" style="width: 100%; color: red; font-size: 20pt; text-align: center; width: 450px; margin: 0 auto;">
 					처리가 완료된 사업장 폐업 요청서 입니다.

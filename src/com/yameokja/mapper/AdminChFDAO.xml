@@ -178,20 +178,42 @@
 		VALUES(INPROSEQ.NEXTVAL, #{in_apply_num}, #{admin_num}, SYSDATE)		
 	</insert>
 	
-	<select id="getprocessnum" resultType="java.lang.Integer">
-		SELECT IN_PROCESS_NUM
-		FROM (
-		    SELECT IN_PROCESS_NUM
-			FROM IN_PROCESS
-			WHERE ADMIN_NUM = #{admin_num}
-			ORDER BY FINAL_DATE
-		)
-		WHERE ROWNUM = 1
+	<select id="getinprocessnum" resultType="java.lang.Integer">
+	    SELECT IN_PROCESS_NUM
+		FROM IN_PROCESS
+		WHERE IN_APPLY_NUM = #{IN_APPLY_NUM}
 	</select>
 	
 	<insert id="stlistinsert">
 		INSERT INTO ST_LIST(ST_NUM, IN_PROCESS_NUM, REGION_NUM)
 		VALUES(STLISTSEQ.NEXTVAL, #{in_process_num}, 1)
+	</insert>
+	
+	<insert id="inrej">
+		INSERT INTO IN_REJ(ST_NUM, REJ_RS, 	IN_PROCESS_NUM)
+		VALUES(INREJSEQ.NEXTVAL, #{rej_rs}, #{in_process_num})
+	</insert>
+	
+	<update id="outapplyupdate">
+	    UPDATE OUT_APPLY
+		SET ADMIN_READ_DATE = TO_DATE(SYSDATE, 'YYYY-MM-DD')
+		WHERE OUT_APPLY_NUM = #{out_apply_num}
+	</update>
+	
+	<insert id="outprocess">
+		INSERT INTO OUT_PROCESS(OUT_PROCESS_NUM, OUT_APPLY_NUM, ADMIN_NUM, FINAL_DATE)
+		VALUES(OUTPROSEQ.NEXTVAL, #{out_apply_num}, #{admin_num}, SYSDATE)		
+	</insert>
+	
+	<select id="getoutprocessnum" resultType="java.lang.Integer">
+	    SELECT OUT_PROCESS_NUM
+		FROM OUT_PROCESS
+		WHERE OUT_APPLY_NUM = #{out_apply_num}
+	</select>
+	
+	<insert id="outrej">
+		INSERT INTO IN_REJ(ST_NUM, REJ_RS, OUT_PROCESS_NUM)
+		VALUES(OUTREJSEQ.NEXTVAL, #{rej_rs}, #{out_process_num})
 	</insert>
 		
 </mapper>

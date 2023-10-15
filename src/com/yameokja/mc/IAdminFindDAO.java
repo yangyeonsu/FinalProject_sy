@@ -38,6 +38,15 @@ public interface IAdminFindDAO
 	public MidRejRsDTO rvreportMidRejRs(@Param("rep_process_num") int rep_process_num);
 	// 가게 등록 처리
 	public int inprocess(@Param("in_apply_num")int in_apply_num, @Param("admin_num")int admin_num);
-	public int getprocessnum(int admin_num);
+	public int getinprocessnum(int in_apply_num);
 	public int stlistinsert(@Param("in_process_num")int in_process_num);
+	
+	public int inrej(@Param("rej_rs")String rej_rs, @Param("in_process_num")int in_process_num);
+	
+	public int outapplyupdate(int out_apply_num);
+	
+	public int outprocess(@Param("out_apply_num")int out_apply_num, @Param("admin_num")int admin_num);
+	public int getoutprocessnum(int out_apply_num);
+	
+	public int outrej(@Param("rej_rs")String rej_rs, @Param("out_process_num")int out_process_num);
 }
