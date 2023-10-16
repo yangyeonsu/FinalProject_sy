@@ -14,7 +14,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>reviewReportForm.jsp</title>
+<title>리뷰 신고서</title>
 <style type="text/css">
 body
 {
@@ -249,6 +249,11 @@ span
 					$("#myTextarea1").focus();
 					return;
 				}
+				else
+				{
+					alert("중재");
+					$("#check").val("mid");
+				}
 			}
 			else if($(".check:checked").val() == "trueR")
 			{
@@ -258,33 +263,20 @@ span
 					$("#myTextarea2").focus();
 					return;
 				}
+				else
+				{
+					alert("반려");
+					$("#check").val("res");
+				}
 			}
-			
-			
-			var selectedValue = $(".check:checked").val();
-		    
-		    if (selectedValue === "trueR") {			// 반려
-		        $("#adminForm").attr("action", "rvreportrej.action");
-				$("#adminForm").submit();
-		    } else if (selectedValue === "trueM") {		// 중재
-		        $("#adminForm").attr("action", "rvreporthalf.action");
-				$("#adminForm").submit();
-		    } else {									// 승인
-		    	$("#adminForm").attr("action", "rvreportaccess.action");
-				$("#adminForm").submit();
-		    }
-		});
-		
-		
-		$(".stInfoBtn").click(function(event)
-		{
-			alert("확인");
-			event.preventDefault();
-			
-			var stNum = $(this).val();
-			/* $(location).attr("href","stdetail-userview.action?st_num="+stNum); */
-			window.location.href="stdetail-userview.action?st_num="+stNum;
-			
+			else if($(".check:checked").length != 0 && $(".check:checked").val() != "trueR" && $(".check:checked").val() != "trueM")
+			{
+				alert("승인");
+			}
+											
+			// 폼 submit 액션 처리 수행
+	    	$("#adminForm").attr("action", "rvreportsend.action");
+			$("#adminForm").submit();
 		});
 	});
    
@@ -373,6 +365,8 @@ span
 	   		
 	   		<div class="sendBtn">
 				<input type="button" class="sendResult" value="처리 하기">
+				<input type="hidden" name="check" id="check">
+				<input type="hidden" name="req_apply_num" value="${err.req_apply_num }">
 			</div>
 		</c:if>
 		<c:if test="${state eq '처리완료' }">
