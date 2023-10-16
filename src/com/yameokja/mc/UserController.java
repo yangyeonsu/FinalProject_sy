@@ -92,7 +92,7 @@ public class UserController
 			
 			if (check == 1)
 			{
-				String admin_num = iDao.searchNum(user.user_id, "id").getAdmin_num();
+				int admin_num = iDao.searchNumId(user.user_id).getAdmin_num();
 				session.setAttribute("admin_num", admin_num);
 				
 				result = "redirect:adminmain.action";
