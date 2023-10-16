@@ -47,7 +47,7 @@ Package Body DBMS_SQLHASH이(가) 컴파일되었습니다.
 
 
 --○ 헤딩 패키지를 사용할 수 있도록 권한 부여
-GRANT EXECUTE ON DBMS_OBFUSCATION_TOOLKIT TO yamaddae;
+GRANT EXECUTE ON DBMS_OBFUSCATION_TOOLKIT TO team4;
 --==>> Grant을(를) 성공했습니다.
 -- GRANT 계정으로 DBMS_OBFUSCATION_TOOLKIT 패키지의
 -- 프로시저를 사용할 수 있도록 권한 부여
