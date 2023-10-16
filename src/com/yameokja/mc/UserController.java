@@ -70,6 +70,7 @@ public class UserController
 		
 		IUserDAO uDao = sqlSession.getMapper(IUserDAO.class);
 		IAdminMainDAO iDao = sqlSession.getMapper(IAdminMainDAO.class);
+		IStoreMainDAO smDao = sqlSession.getMapper(IStoreMainDAO.class);
 		
 		check = uDao.userLoginCheck(user.user_id, user.user_pw);
 		
@@ -78,9 +79,9 @@ public class UserController
 			UserDTO userInfo = uDao.searchUserInfo(user.user_id, "id");
 			session.setAttribute("user_num", userInfo.user_num);
 			
-			int storeCheck = uDao.storeCheck(userInfo.user_num);
+			ArrayList<StoreDTO> st_list = smDao.searchStoreInfo(userInfo.user_num);
 			
-			if (storeCheck > 0)
+			if (st_list.size() > 0)
 				result = "redirect:storemain.action";
 			else
 				result = "redirect:main.action";
