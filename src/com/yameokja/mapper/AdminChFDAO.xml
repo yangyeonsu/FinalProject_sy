@@ -173,6 +173,26 @@
 		WHERE RRV.REP_PROCESS_NUM = #{rep_process_num}
 	</select>
 	
+	<!-- 가게정보오류수정요청 처리 및 승인 -->
+	<insert id="reqProcess">
+		INSERT INTO REQ_PROCESS(REQ_PROCESS_NUM, REQ_APPLY_NUM, ADMIN_NUM, FINAL_DATE, USER_READ_DATE, ST_READ_DATE)
+		VALUES(REQPROSEQ.NEXTVAL, #{req_apply_num}, #{admin_num}, SYSDATE, NULL, NULL)
+	</insert>
+	
+	<!-- 가게정보오류수정요청 req_process_num 찾기 -->
+	<select id="getReqProNum" resultType="java.lang.Integer">
+		SELECT REQ_PROCESS_NUM
+		FROM REQ_PROCESS
+		WHERE REQ_APPLY_NUM = #{req_apply_num}
+		  AND ADMIN_NUM = #{admin_num}
+	</select>
+	
+	<!-- 가게정보오류수정요청 반려 -->
+	<insert id="reqRej">
+		INSERT INTO REQ_REJ(REQ_REJ_NUM, REQ_PROCESS_NUM, REJ_RS)
+		VALUES(REQREJSEQ.NEXTVAL, #{req_process_num}, #{rej_rs})
+	</insert>
+	
 	<insert id="inprocess">
 		INSERT INTO IN_PROCESS(IN_PROCESS_NUM, IN_APPLY_NUM, ADMIN_NUM, FINAL_DATE)
 		VALUES(INPROSEQ.NEXTVAL, #{in_apply_num}, #{admin_num}, SYSDATE)		
@@ -190,7 +210,7 @@
 	</insert>
 	
 	<insert id="inrej">
-		INSERT INTO IN_REJ(ST_NUM, REJ_RS, 	IN_PROCESS_NUM)
+		INSERT INTO IN_REJ(IN_REJ, REJ_RS, 	IN_PROCESS_NUM)
 		VALUES(INREJSEQ.NEXTVAL, #{rej_rs}, #{in_process_num})
 	</insert>
 	
@@ -212,7 +232,7 @@
 	</select>
 	
 	<insert id="outrej">
-		INSERT INTO IN_REJ(ST_NUM, REJ_RS, OUT_PROCESS_NUM)
+		INSERT INTO IN_REJ(OUT_REJ_NUM, REJ_RS, OUT_PROCESS_NUM)
 		VALUES(OUTREJSEQ.NEXTVAL, #{rej_rs}, #{out_process_num})
 	</insert>
 		
