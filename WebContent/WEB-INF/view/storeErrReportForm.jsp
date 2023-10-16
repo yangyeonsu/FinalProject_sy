@@ -223,13 +223,13 @@ input[type="radio"]
 				}
 				else
 				{
-					alert("반려");
+					//alert("반려");
 					$("#check").val("false");
 				}
 			}
 			else if($(".check:checked").length != 0 && $(".check:checked").val() != "true")
 			{
-				alert("승인");
+				//alert("승인");
 				$("#check").val("true");
 			}
 			

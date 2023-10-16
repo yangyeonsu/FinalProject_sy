@@ -27,9 +27,9 @@ public interface IAdminFindDAO
 	// 가게등록 처리내역 업데이트
 	public int inapplyupdate(int in_apply_num);
 	// 리뷰 신고 처리 및 승인
-	public int rvreportAccess(@Param("rep_apply_num") int rep_apply_num, @Param("admin_num") String admin_num);
+	public int rvreportAccess(@Param("rep_apply_num") int rep_apply_num, @Param("admin_num") int admin_num);
 	// rep_process_num 찾기
-	public int searchRepProNum(@Param("rep_apply_num") int rep_apply_num, @Param("admin_num") String admin_num);
+	public int searchRepProNum(@Param("rep_apply_num") int rep_apply_num, @Param("admin_num") int admin_num);
 	// 리뷰 신고 중재
 	public int rvreportHalf(@Param("mid_rs")String mid_rs, @Param("rep_process_num")int rep_process_num);
 	// 리뷰 신고 반려

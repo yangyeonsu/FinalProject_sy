@@ -28,7 +28,7 @@ public class AdminMainController
 		HttpSession session = request.getSession();
 
 		String result = "";
-		String admin_num = (String) session.getAttribute("admin_num");
+		int admin_num = (int) session.getAttribute("admin_num");
 
 		IAdminMainDAO dao = sqlSesion.getMapper(IAdminMainDAO.class);
 
@@ -50,7 +50,7 @@ public class AdminMainController
 		HttpSession session = request.getSession();
 
 		String result = "";
-		String admin_num = (String) session.getAttribute("admin_num");
+		int admin_num = (int) session.getAttribute("admin_num");
 
 		IAdminMainDAO dao = sqlSesion.getMapper(IAdminMainDAO.class);
 
@@ -67,7 +67,7 @@ public class AdminMainController
 		HttpSession session = request.getSession();
 
 		String result = "";
-		String admin_num = (String) session.getAttribute("admin_num");
+		int admin_num = (int) session.getAttribute("admin_num");
 
 		IAdminMainDAO dao = sqlSesion.getMapper(IAdminMainDAO.class);
 
@@ -84,7 +84,7 @@ public class AdminMainController
 		HttpSession session = request.getSession();
 
 		String result = "";
-		String admin_num = (String) session.getAttribute("admin_num");
+		int admin_num = (int) session.getAttribute("admin_num");
 
 		IAdminMainDAO dao = sqlSesion.getMapper(IAdminMainDAO.class);
 
@@ -102,7 +102,7 @@ public class AdminMainController
 		HttpSession session = request.getSession();
 
 		String result = "";
-		String admin_num = (String) session.getAttribute("admin_num");
+		int admin_num = (int) session.getAttribute("admin_num");
 
 		IAdminMainDAO dao = sqlSesion.getMapper(IAdminMainDAO.class);
 
@@ -119,7 +119,7 @@ public class AdminMainController
 		HttpSession session = request.getSession();
 
 		String result = "";
-		String admin_num = (String) session.getAttribute("admin_num");
+		int admin_num = (int) session.getAttribute("admin_num");
 
 		IAdminMainDAO dao = sqlSesion.getMapper(IAdminMainDAO.class);
 
@@ -137,7 +137,7 @@ public class AdminMainController
 		HttpSession session = request.getSession();
 
 		String result = "";
-		String admin_num = (String) session.getAttribute("admin_num");
+		int admin_num = (int) session.getAttribute("admin_num");
 
 		IAdminMainDAO dao = sqlSesion.getMapper(IAdminMainDAO.class);
 
@@ -159,7 +159,7 @@ public class AdminMainController
 		HttpSession session = request.getSession();
 
 		String result = "";
-		String admin_num = (String) session.getAttribute("admin_num");
+		int admin_num = (int) session.getAttribute("admin_num");
 		int reviewNum = Integer.parseInt(request.getParameter("rep_apply_num"));
 		String state = request.getParameter("state");
 		session.setAttribute("rep_apply_num", reviewNum);
@@ -190,7 +190,7 @@ public class AdminMainController
 		HttpSession session = request.getSession();
 
 		String result = "";
-		String admin_num = (String) session.getAttribute("admin_num");
+		int admin_num = (int) session.getAttribute("admin_num");
 		int reqNum = Integer.parseInt(request.getParameter("req_apply_num"));
 		String state = request.getParameter("state");
 
@@ -251,7 +251,7 @@ public class AdminMainController
 		HttpSession session = request.getSession();
 
 		String result = "";
-		String admin_num = (String) session.getAttribute("admin_num");
+		int admin_num = (int) session.getAttribute("admin_num");
 		int objNum = Integer.parseInt(request.getParameter("obj_apply_num"));
 
 		IAdminMainDAO daoM = sqlSesion.getMapper(IAdminMainDAO.class);
@@ -272,7 +272,7 @@ public class AdminMainController
 		HttpSession session = request.getSession();
 
 		String result = "";
-		String admin_num = (String) session.getAttribute("admin_num");
+		int admin_num = (int) session.getAttribute("admin_num");
 		int revoNum = Integer.parseInt(request.getParameter("revo_apply_num"));
 
 		IAdminMainDAO daoM = sqlSesion.getMapper(IAdminMainDAO.class);
@@ -296,7 +296,7 @@ public class AdminMainController
 		/* int admin_num = (Integer)session.getAttribute("admin_num"); */
 
 		int in_apply_num = Integer.parseInt(request.getParameter("in_apply_num"));
-		String admin_num = (String) session.getAttribute("admin_num");
+		int admin_num = (int) session.getAttribute("admin_num");
 
 		IAdminMainDAO amdao = sqlSesion.getMapper(IAdminMainDAO.class);
 		IAdminFindDAO afdao = sqlSesion.getMapper(IAdminFindDAO.class);
@@ -321,7 +321,7 @@ public class AdminMainController
 
 		int out_apply_num = Integer.parseInt(request.getParameter("out_apply_num"));
 
-		String admin_num = (String)session.getAttribute("admin_num");
+		int admin_num = (int)session.getAttribute("admin_num");
 		
 		IAdminMainDAO amdao = sqlSesion.getMapper(IAdminMainDAO.class);
 		IAdminFindDAO afdao = sqlSesion.getMapper(IAdminFindDAO.class);
@@ -362,98 +362,50 @@ public class AdminMainController
 			return "-1";
 
 	}
-
-	// 리뷰 신고 처리 및 승인
-	@RequestMapping(value = "/rvreportaccess.action", method = RequestMethod.GET)
-	public String rvreportaccess(Model model, HttpServletRequest request)
+	
+	// 리뷰 신고 처리 (승인/중재/반려)
+	@RequestMapping(value = "/rvreportsend.action", method = RequestMethod.GET)
+	public String rvReportSend(Model model, HttpServletRequest request)
 	{
-		HttpSession session = request.getSession();
-
 		String result = "";
-		String admin_num = (String) session.getAttribute("admin_num");
+		HttpSession session = request.getSession();
 
 		IAdminFindDAO dao = sqlSesion.getMapper(IAdminFindDAO.class);
 
-		int rep_apply_num = Integer.parseInt(request.getParameter("rep_apply_num"));
-		System.out.println("rep_apply_num :" + rep_apply_num);
-		System.out.println("admin_num : " + admin_num);
-
-		// rep_process table <- insert
-		int accessNum = dao.rvreportAccess(rep_apply_num, admin_num);
-
-		result = "redirect:adminmain.action";
-
-		return result;
-	}
-
-	// 리뷰 신고 중재
-	@RequestMapping(value = "/rvreporthalf.action", method = RequestMethod.GET)
-	public String rvreporthalf(Model model, HttpServletRequest request)
-	{
-		HttpSession session = request.getSession();
-
-		String result = "";
-		String admin_num = (String) session.getAttribute("admin_num");
-
-		IAdminFindDAO dao = sqlSesion.getMapper(IAdminFindDAO.class);
+		int admin_num = Integer.parseInt((String) session.getAttribute("admin_num"));
 
 		int rep_apply_num = Integer.parseInt(request.getParameter("rep_apply_num"));
-		System.out.println("rep_apply_num :" + rep_apply_num);
-		System.out.println("admin_num : " + admin_num);
-		
+
+		String check = request.getParameter("check");
+
 		// rep_process table <- insert
-		int accessNum = dao.rvreportAccess(rep_apply_num, admin_num);
+		int checkNum = dao.rvreportAccess(rep_apply_num, admin_num);
 		
-		// rep_process_num
-		int rep_process_num = dao.searchRepProNum(rep_apply_num, admin_num);
-		
-		String mid_rs = request.getParameter("myTextarea1");
-		System.out.println("mid_rs : " + mid_rs);
-		
-		// rep_mid table <- insert
-		int midNum = dao.rvreportHalf(mid_rs, rep_process_num);
-		
-		//??
-		//model.addAttribute("revoupdate", dao.revoupdate(revoNum));
-		//model.addAttribute("admin_name", daoM.searchNum(admin_num, "num").getAdmin_name());
-		//model.addAttribute("revo", dao.revoSearch(revoNum));
+		if(checkNum == 1)
+		{
+			// rep_process_num
+			int rep_process_num = dao.searchRepProNum(rep_apply_num, admin_num);
+			System.out.println("rep_process_num : " + rep_process_num);
 
-		result = "redirect:adminmain.action";
+			// 중재 처리
+			if(check.equals("mid"))
+			{
+				String mid_rs = request.getParameter("myTextarea1");
+				System.out.println("mid_rs : " + mid_rs);
+				
+				// rep_mid table <- insert
+				int midNum = dao.rvreportHalf(mid_rs, rep_process_num);
+			}
+			// 반려 처리
+			else if(check.equals("res"))
+			{
+				String rej_rs = request.getParameter("myTextarea2");
+				System.out.println("rej_rs : " + rej_rs);
 
-		return result;
-	}
-
-	// 리뷰 신고 반려
-	@RequestMapping(value = "/rvreportrej.action", method = RequestMethod.GET)
-	public String rvreportrej(Model model, HttpServletRequest request)
-	{
-		HttpSession session = request.getSession();
-
-		String result = "";
-		String admin_num = (String) session.getAttribute("admin_num");
-
-		IAdminFindDAO dao = sqlSesion.getMapper(IAdminFindDAO.class);
-
-		int rep_apply_num = Integer.parseInt(request.getParameter("rep_apply_num"));
-		System.out.println("rep_apply_num :" + rep_apply_num);
-		System.out.println("admin_num : " + admin_num);
-		
-		// rep_process table <- insert
-		int accessNum = dao.rvreportAccess(rep_apply_num, admin_num);
-		
-		// rep_process_num
-		int rep_process_num = dao.searchRepProNum(rep_apply_num, admin_num);
-		System.out.println("rep_process_num : " + rep_process_num);
-
-		String rej_rs = request.getParameter("myTextarea2");
-		System.out.println("rej_rs : " + rej_rs);
-
-		// rep_rej table <- insert
-		int rejNum = dao.rvreportRej(rej_rs, rep_process_num);
-		
-		//model.addAttribute("revoupdate", dao.revoupdate(revoNum));
-		//model.addAttribute("admin_name", daoM.searchNum(admin_num, "num").getAdmin_name());
-		//model.addAttribute("revo", dao.revoSearch(revoNum));
+				// rep_rej table <- insert
+				int rejNum = dao.rvreportRej(rej_rs, rep_process_num);
+			}
+		}
 
 		result = "redirect:adminmain.action";
 

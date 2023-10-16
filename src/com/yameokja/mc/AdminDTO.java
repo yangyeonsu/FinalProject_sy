@@ -2,8 +2,9 @@ package com.yameokja.mc;
 
 public class AdminDTO
 {
-	private String admin_id, admin_num, admin_pw, admin_name;
+	private String admin_id, admin_pw, admin_name;
 	private String reg_date;
+	private int admin_num;
 	
 	
 	public String getAdmin_id()
@@ -15,15 +16,14 @@ public class AdminDTO
 		this.admin_id = admin_id;
 	}
 	
-	public String getAdmin_num()
+	public int getAdmin_num()
 	{
 		return admin_num;
 	}
-	public void setAdmin_num(String admin_num)
+	public void setAdmin_num(int admin_num)
 	{
 		this.admin_num = admin_num;
 	}
-	
 	public String getAdmin_pw()
 	{
 		return admin_pw;
