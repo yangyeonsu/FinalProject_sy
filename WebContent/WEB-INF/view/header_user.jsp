@@ -229,6 +229,30 @@ a {
 									test="${fn:length(alarm) == 0 or fn:length(alarm) == null}">
 									<li>현재 알람이 존재하지 않습니다.
 								</c:when>
+								<c:when test="${al.commentary eq 'REQ_ST' }">
+									<c:choose>
+										<c:when test="${al.check_date eq '-' }">
+											<li><a href="#" class="alarm NonCheck">회원님의 가게에
+											정보 수정 요청이 들어왔습니다.</a>
+										</c:when>
+										<c:otherwise>
+											<li><a href="#" class="alarm checked">회원님의 가게에
+											정보 수정 요청이 들어왔습니다.</a>
+										</c:otherwise>
+									</c:choose>
+								</c:when>
+								<c:when test="${al.commentary eq 'OBJ_PRO' }">
+									<c:choose>
+										<c:when test="${al.check_date eq '-' }">
+											<li><a href="#" class="alarm NonCheck">회원님이 요청하신
+											이의 제기 신청이 처리 완료 되었습니다.</a>
+										</c:when>
+										<c:otherwise>
+											<li><a href="#" class="alarm checked">회원님이 요청하신
+											이의 제기 신청이 처리 완료 되었습니다.</a>
+										</c:otherwise>
+									</c:choose>
+								</c:when>
 								<c:when test="${al.commentary eq 'REQ_REJECT' }">
 									<c:choose>
 										<c:when test="${al.check_date eq '-' }">
@@ -286,6 +310,42 @@ a {
 										<c:otherwise>
 											<li><a href="#" class="alarm checked">회원님이 요청하신
 													리뷰신고가 처리 완료 되었습니다.</a>
+										</c:otherwise>
+									</c:choose>
+								</c:when>
+								<c:when test="${al.commentary eq 'PENALTY' }">
+									<c:choose>
+										<c:when test="${al.check_date eq '-' }">
+											<li><a href="#" class="alarm NonCheck">회원님이 요청하신
+													패널티 회수 요청이 처리 완료 되었습니다.</a>
+										</c:when>
+										<c:otherwise>
+											<li><a href="#" class="alarm checked">회원님이 요청하신
+													패널티 회수 요청이 처리 완료 되었습니다.</a>
+										</c:otherwise>
+									</c:choose>
+								</c:when>
+								<c:when test="${al.commentary eq 'IN' }">
+									<c:choose>
+										<c:when test="${al.check_date eq '-' }">
+											<li><a href="#" class="alarm NonCheck">회원님이 요청하신
+													가게 등록 신청이 처리 완료 되었습니다.</a>
+										</c:when>
+										<c:otherwise>
+											<li><a href="#" class="alarm checked">회원님이 요청하신
+													가게 등록 신청이 처리 완료 되었습니다.</a>
+										</c:otherwise>
+									</c:choose>
+								</c:when>
+								<c:when test="${al.commentary eq 'OUT' }">
+									<c:choose>
+										<c:when test="${al.check_date eq '-' }">
+											<li><a href="#" class="alarm NonCheck">회원님이 요청하신
+													가게 폐업 신청이 처리 완료 되었습니다.</a>
+										</c:when>
+										<c:otherwise>
+											<li><a href="#" class="alarm checked">회원님이 요청하신
+													가게 폐업 신청이 처리 완료 되었습니다.</a>
 										</c:otherwise>
 									</c:choose>
 								</c:when>
