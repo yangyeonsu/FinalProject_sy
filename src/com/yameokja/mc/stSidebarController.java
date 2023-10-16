@@ -40,6 +40,16 @@ public class stSidebarController
 	    IStoreMainDAO smDao = sqlSession.getMapper(IStoreMainDAO.class);
 	    
 	    UserDTO user = udao.searchUserInfo(user_num, "num");
+	    if (1 <= monthValue && monthValue <= 6)
+		{
+			user.setPoint_sum(udao.secondHalf(user_num).point_sum);
+			user.setUser_grade(udao.firstHalf(user_num).user_grade);
+		}
+		else if(7 <= monthValue && monthValue <= 12)
+		{
+			user.setPoint_sum(udao.firstHalf(user_num).point_sum);
+			user.setUser_grade(udao.secondHalf(user_num).user_grade);
+		}
 	    
 	    ArrayList<StoreDTO> st_list = smDao.searchStoreInfo(user_num);
 		model.addAttribute("st_list", st_list);
@@ -84,6 +94,7 @@ public class stSidebarController
 	        startRow, 
 	        endRow
 	    );
+	    
 	    
 	    model.addAttribute("pageIndex", Paging.pageIndexList(currentPage, totalPage, actionName));
 	    model.addAttribute("user", user);

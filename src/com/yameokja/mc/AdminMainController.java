@@ -32,7 +32,7 @@ public class AdminMainController
 
 		IAdminMainDAO dao = sqlSesion.getMapper(IAdminMainDAO.class);
 
-		model.addAttribute("admin_name", dao.searchNum(admin_num, "num").getAdmin_name());
+		model.addAttribute("admin_name", dao.searchNum(admin_num));
 		model.addAttribute("rvList", dao.rvList());
 		model.addAttribute("reqList", dao.reqList());
 		model.addAttribute("objList", dao.objList());
@@ -54,7 +54,7 @@ public class AdminMainController
 
 		IAdminMainDAO dao = sqlSesion.getMapper(IAdminMainDAO.class);
 
-		model.addAttribute("admin_name", dao.searchNum(admin_num, "num").getAdmin_name());
+		model.addAttribute("admin_name", dao.searchNum(admin_num));
 		model.addAttribute("rvList", dao.rvList());
 
 		result = "/WEB-INF/view/admin_reviewListView.jsp";
@@ -71,7 +71,7 @@ public class AdminMainController
 
 		IAdminMainDAO dao = sqlSesion.getMapper(IAdminMainDAO.class);
 
-		model.addAttribute("admin_name", dao.searchNum(admin_num, "num").getAdmin_name());
+		model.addAttribute("admin_name", dao.searchNum(admin_num));
 		model.addAttribute("reqList", dao.reqList());
 
 		result = "/WEB-INF/view/admin_storeErrView.jsp";
@@ -88,7 +88,7 @@ public class AdminMainController
 
 		IAdminMainDAO dao = sqlSesion.getMapper(IAdminMainDAO.class);
 
-		model.addAttribute("admin_name", dao.searchNum(admin_num, "num").getAdmin_name());
+		model.addAttribute("admin_name", dao.searchNum(admin_num));
 		model.addAttribute("objList", dao.objList());
 
 		result = "/WEB-INF/view/admin_objectionView.jsp";
@@ -106,7 +106,7 @@ public class AdminMainController
 
 		IAdminMainDAO dao = sqlSesion.getMapper(IAdminMainDAO.class);
 
-		model.addAttribute("admin_name", dao.searchNum(admin_num, "num").getAdmin_name());
+		model.addAttribute("admin_name", dao.searchNum(admin_num));
 		model.addAttribute("revoList", dao.revoList());
 
 		result = "/WEB-INF/view/admin_penaltyView.jsp";
@@ -123,7 +123,7 @@ public class AdminMainController
 
 		IAdminMainDAO dao = sqlSesion.getMapper(IAdminMainDAO.class);
 
-		model.addAttribute("admin_name", dao.searchNum(admin_num, "num").getAdmin_name());
+		model.addAttribute("admin_name", dao.searchNum(admin_num));
 		model.addAttribute("inoutList", dao.inoutList());
 
 		result = "/WEB-INF/view/admin_inoutView.jsp";
@@ -141,7 +141,7 @@ public class AdminMainController
 
 		IAdminMainDAO dao = sqlSesion.getMapper(IAdminMainDAO.class);
 
-		model.addAttribute("admin_name", dao.searchNum(admin_num, "num").getAdmin_name());
+		model.addAttribute("admin_name", dao.searchNum(admin_num));
 		model.addAttribute("rvList", dao.rvList());
 		model.addAttribute("reqList", dao.reqList());
 		model.addAttribute("objList", dao.objList());
@@ -168,7 +168,7 @@ public class AdminMainController
 		IAdminFindDAO dao = sqlSesion.getMapper(IAdminFindDAO.class);
 
 		model.addAttribute("rvupdate", dao.rvupdate(reviewNum));
-		model.addAttribute("admin_name", daoM.searchNum(admin_num, "num").getAdmin_name());
+		model.addAttribute("admin_name", daoM.searchNum(admin_num));
 		model.addAttribute("review", dao.rvSearch(reviewNum));
 		model.addAttribute("state", state);
 		
@@ -197,7 +197,7 @@ public class AdminMainController
 		IAdminMainDAO daoM = sqlSesion.getMapper(IAdminMainDAO.class);
 		IAdminFindDAO dao = sqlSesion.getMapper(IAdminFindDAO.class);
 
-		model.addAttribute("admin_name", daoM.searchNum(admin_num, "num").getAdmin_name());
+		model.addAttribute("admin_name", daoM.searchNum(admin_num));
 
 		ReqApplyViewDTO err = dao.accuSearch(reqNum);
 		model.addAttribute("err", err);
@@ -258,7 +258,7 @@ public class AdminMainController
 		IAdminFindDAO dao = sqlSesion.getMapper(IAdminFindDAO.class);
 
 		model.addAttribute("objupdate", dao.objupdate(objNum));
-		model.addAttribute("admin_name", daoM.searchNum(admin_num, "num").getAdmin_name());
+		model.addAttribute("admin_name", daoM.searchNum(admin_num));
 		model.addAttribute("obj", dao.objSearch(objNum));
 
 		result = "/WEB-INF/view/objectionReportForm.jsp";
@@ -279,7 +279,7 @@ public class AdminMainController
 		IAdminFindDAO dao = sqlSesion.getMapper(IAdminFindDAO.class);
 
 		model.addAttribute("revoupdate", dao.revoupdate(revoNum));
-		model.addAttribute("admin_name", daoM.searchNum(admin_num, "num").getAdmin_name());
+		model.addAttribute("admin_name", daoM.searchNum(admin_num));
 		model.addAttribute("revo", dao.revoSearch(revoNum));
 
 		result = "/WEB-INF/view/penaltyRevokeForm.jsp";
@@ -302,7 +302,7 @@ public class AdminMainController
 		IAdminFindDAO afdao = sqlSesion.getMapper(IAdminFindDAO.class);
 
 		model.addAttribute("inapplyupdate", afdao.inapplyupdate(in_apply_num));
-		model.addAttribute("admin_name", amdao.searchNum(admin_num, "num").getAdmin_name());
+		model.addAttribute("admin_name", amdao.searchNum(admin_num));
 		model.addAttribute("in", afdao.inSearch(in_apply_num));
 		model.addAttribute("in_apply_num", in_apply_num);
 
@@ -329,7 +329,7 @@ public class AdminMainController
 		
 		model.addAttribute("outapplyupdate", afdao.outapplyupdate(out_apply_num));
 		model.addAttribute("out", afdao.outSearch(out_apply_num));
-		model.addAttribute("admin_name", amdao.searchNum(admin_num, "num").getAdmin_name());
+		model.addAttribute("admin_name", amdao.searchNum(admin_num));
 		model.addAttribute("out_apply_num", out_apply_num);
 
 		/*
@@ -372,7 +372,7 @@ public class AdminMainController
 
 		IAdminFindDAO dao = sqlSesion.getMapper(IAdminFindDAO.class);
 
-		int admin_num = Integer.parseInt((String) session.getAttribute("admin_num"));
+		int admin_num = (int)session.getAttribute("admin_num");
 
 		int rep_apply_num = Integer.parseInt(request.getParameter("rep_apply_num"));
 

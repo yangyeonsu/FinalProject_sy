@@ -232,7 +232,7 @@
 	</select>
 	
 	<insert id="outrej">
-		INSERT INTO IN_REJ(OUT_REJ_NUM, REJ_RS, OUT_PROCESS_NUM)
+		INSERT INTO OUT_REJ(OUT_REJ_NUM, REJ_RS, OUT_PROCESS_NUM)
 		VALUES(OUTREJSEQ.NEXTVAL, #{rej_rs}, #{out_process_num})
 	</insert>
 		

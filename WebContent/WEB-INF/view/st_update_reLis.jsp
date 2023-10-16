@@ -191,7 +191,7 @@
 						<div class="rpt_subtitle">패널티회수</div>
 					</div>
 					<c:choose>
-					    <c:when test="${empty user_stupdate_relist}">
+					    <c:when test="${empty stinfoupdatelist}">
 					        <div class="no-data-message">가게 정보 수정 요청 내역이 없습니다.</div>
 					        <c:forEach var="udre" begin="1" end="10">
 					        	<div class="report_content">
@@ -200,16 +200,16 @@
 					        </c:forEach>
 					    </c:when>
 					    <c:otherwise>
-					        <c:forEach var="udre" items="${user_stupdate_relist}">
+					        <c:forEach var="udre" items="${stinfoupdatelist}">
 					            <div class="report_content">
 					                <div class="rpt_content" onclick="reqPopupOpen()">${udre.reg_date }</div>
 					                <div class="st_name" onclick="reqPopupOpen()">${udre.st_name }</div>
-					                <div class="rpt_content" id="status" onclick="reqPopupOpen()">${udre.status }</div>
+					                <div class="rpt_content" id="status" onclick="reqPopupOpen()">${udre.check_label }</div>
 					                <div class="rpt_content" onclick="reqPopupOpen()">${udre.final_date }</div>
 					                <div class="rpt_obj"><button>이의제기</button></div>
 					                <div class="rpt_revoke"><button>패널티회수</button></div>
 					            	
-					            	<div id="reject" style="display: none;">${udre.req_process_num }</div>
+					            	<div id="reject" style="display: none;">${udre.req_apply_num }</div>
 					                <div class="rej_rs" style="display: none;">${udre.rej_rs }</div>
 					            </div>
 					        </c:forEach>

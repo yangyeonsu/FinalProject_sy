@@ -104,6 +104,7 @@
 				<ul class="small_menu">
 					<li><a href="user_rv_report.action" class="small_menuA">리뷰신고 내역</a></li>
 					<li><a href="user_stupdate_relist.action" class="small_menuA">가게정보오류수정요청 내역</a></li>
+					<li><a href="user_stinout_list.action" class="small_menuA">가게 등/폐업 신청 내역</a></li>
 				</ul>
 			</ul>
 			<ul class="big_menu">
