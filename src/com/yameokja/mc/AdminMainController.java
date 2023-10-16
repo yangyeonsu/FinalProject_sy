@@ -459,7 +459,42 @@ public class AdminMainController
 
 		return result;
 	}
+	
+	// 가게정보오류수정요청 (승인/반려)
+	@RequestMapping(value="/sterrreqsend.action", method= { RequestMethod.GET, RequestMethod.POST })
+	public String stErrReqSend(Model model, HttpServletRequest request)
+	{
+		String result = "";
+		HttpSession session = request.getSession();
 
+		IAdminFindDAO fdao = sqlSesion.getMapper(IAdminFindDAO.class);
+
+		int admin_num = Integer.parseInt((String) session.getAttribute("admin_num"));
+
+		int req_apply_num = Integer.parseInt(request.getParameter("req_apply_num"));
+
+		String check = request.getParameter("check");
+		
+		int checkNum = fdao.reqProcess(req_apply_num, admin_num);
+		
+		if (checkNum == 1)
+		{
+			int process = fdao.getReqProNum(req_apply_num, admin_num);
+			
+			// 반려인 경우 req_rej insert
+			if (check.equals("false"))
+			{
+				String rej_rs = request.getParameter("myTextarea");
+				fdao.reqRej(process, rej_rs);
+			}
+		}
+		
+		result = "redirect:adminmain.action";
+		
+		return result;
+	}
+	
+	// 가게 등록 처리(승인/반려)
 	@RequestMapping(value = "/inapplysend.action", method = { RequestMethod.GET, RequestMethod.POST })
 	public String inApplySend(Model model, HttpServletRequest request)
 	{
@@ -467,7 +502,6 @@ public class AdminMainController
 		HttpSession session = request.getSession();
 
 		IAdminFindDAO fdao = sqlSesion.getMapper(IAdminFindDAO.class);
-		IAdminMainDAO dao = sqlSesion.getMapper(IAdminMainDAO.class);
 
 		int admin_num = Integer.parseInt((String) session.getAttribute("admin_num"));
 
@@ -492,16 +526,13 @@ public class AdminMainController
 				fdao.inrej(rej_rs, process);
 			}
 		}
-			
-			
-		model.addAttribute("admin_name", dao.searchNum((String)session.getAttribute("admin_num"), "num").getAdmin_name());
-		
+
 		result = "redirect:adminmain.action";
 
 		return result;
 	}
 		
-		
+	// 가게 폐업 처리(승인/반려)
 	@RequestMapping(value="/outapplysend.action", method= {RequestMethod.GET, RequestMethod.POST})
 	public String outApplySend(Model model, HttpServletRequest request)
 	{
@@ -509,8 +540,6 @@ public class AdminMainController
 		HttpSession session = request.getSession();
 		
 		IAdminFindDAO fdao = sqlSesion.getMapper(IAdminFindDAO.class);
-		IAdminMainDAO dao = sqlSesion.getMapper(IAdminMainDAO.class);
-		
 		
 		int admin_num = Integer.parseInt((String)session.getAttribute("admin_num"));
 		
@@ -535,10 +564,7 @@ public class AdminMainController
 				fdao.outrej(rej_rs, process);
 			}
 		}
-		
-		
-		model.addAttribute("admin_name", dao.searchNum((String)session.getAttribute("admin_num"), "num").getAdmin_name());
-		
+
 		result = "redirect:adminmain.action";
 
 		return result;
