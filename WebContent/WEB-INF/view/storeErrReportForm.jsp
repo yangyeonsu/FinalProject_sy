@@ -224,15 +224,19 @@ input[type="radio"]
 				else
 				{
 					//alert("반려");
+					$("#check").val("false");
 				}
 			}
 			else if($(".check:checked").length != 0 && $(".check:checked").val() != "true")
 			{
 				//alert("승인");
-				window.location.href = "adminmain.action?state=";
+				$("#check").val("true");
 			}
+			
+			// 폼 submit 액션 처리 수행
+	        $("#adminForm").attr("action", "sterrreqsend.action");
+			$("#adminForm").submit();
 		});
-		
 	});
 	
 	
@@ -371,13 +375,15 @@ input[type="radio"]
 				<br><br>
 				
 				<div class="igroup2" style="width: 100%;">
-					<textarea id="myTextarea" style="width: 72%; height: 10em; resize: none;" placeholder="반려사유를 입력해주세요."></textarea>
+					<textarea id="myTextarea" name="myTextarea" style="width: 72%; height: 10em; resize: none;" placeholder="반려사유를 입력해주세요."></textarea>
 				</div>
 				
 				<br>
 				
 				<div class="sendBtn">
 					<input type="button" class="sendResult" value="처리 하기">
+					<input type="hidden" name="check" id="check">
+					<input type="hidden" name="req_apply_num" value="${err.req_apply_num }">
 				</div>
 				
 			</c:if>

@@ -9,7 +9,7 @@ public interface IAdminMainDAO
 	// 관리자 로그인 확인
 	public int adminLoginCheck(@Param("admin_id")String admin_id, @Param("admin_pw")String admin_pw);
 	// 관리자 번호 찾기
-	public AdminDTO searchNum(@Param("admin_info")String admin_info, @Param("check")String check);
+	public AdminDTO searchNum(@Param("admin_info") int admin_info, @Param("check")String check);
 	// 리뷰신고요청 리스트
 	public ArrayList<ReportListDTO> rvList();
 	// 정보수정요청 리스트
