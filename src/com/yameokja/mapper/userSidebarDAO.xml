@@ -234,6 +234,13 @@
 		WHERE UU.USER_NUM = #{user_num}
 		) T
 		WHERE T.RN BETWEEN #{startRow} AND #{endRow}
-		
+	</select>
+	
+	
+	<!-- 사용자가 요청한 가게정보오류수정요청 내역 -->
+	<select id="count_inoutlist" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS COUNT
+		FROM INOUT_APPLY_VIEW
+		WHERE USER_NUM = #{user_num}
 	</select>
 </mapper>

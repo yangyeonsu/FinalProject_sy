@@ -13,15 +13,17 @@
 	</select>
 	
 	<!-- 관리자 정보 찾기 -->
-	<select id="searchNum" resultType="com.yameokja.mc.AdminDTO">
+	<select id="searchNum" resultType="java.lang.String">
+		SELECT ADMIN_NAME
+		FROM ADMIN
+		WHERE ADMIN_NUM = #{admin_info}
+	</select>
+	
+	<!-- 관리자 정보 찾기 -->
+	<select id="searchNumId" resultType="com.yameokja.mc.AdminDTO">
 		SELECT ADMIN_NUM, ADMIN_NAME
 		FROM ADMIN
-		<if test='check eq "id"'>
 		WHERE ADMIN_ID = #{admin_info}
-		</if>
-		<if test='check eq "num"'>
-		WHERE ADMIN_NUM = #{admin_info}
-		</if>
 	</select>
 
 	<!-- 리뷰신고리스트 -->
