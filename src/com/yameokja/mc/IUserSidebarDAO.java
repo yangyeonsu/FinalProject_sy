@@ -17,4 +17,9 @@ public interface IUserSidebarDAO
 	// 개인이 작성한 리뷰에 대한 경고 내역
 	public int count_penlist(String user_num);
 	public List<penaltyListDTO> user_penList( @Param("user_num") String user_num, @Param("startRow") int startRow, @Param("endRow") int endRow);
+	
+	
+	// 개인이 가게 등/폐업 신청 내역
+	public int count_inoutlist(String user_num);
+
 }
