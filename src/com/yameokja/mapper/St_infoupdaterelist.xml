@@ -27,7 +27,7 @@
 	</select>
 
 	<select id="stinfoupdatelist" resultType="com.yameokja.mc.StinfoUpdaterelistDTO">
-	    SELECT REQ_APPLY_NUM, ST_NUM, FINAL_DATE, REG_DATE, CHECK_LABEL, RNUM                                  
+	    SELECT REQ_APPLY_NUM, ST_NAME, FINAL_DATE, REG_DATE, CHECK_LABEL, RNUM                                  
 		FROM(
 		    SELECT RAV.REQ_APPLY_NUM AS REQ_APPLY_NUM, RAV.ST_NAME AS ST_NAME, TO_CHAR(RP.FINAL_DATE, 'YYYY-MM-DD') AS FINAL_DATE,
                   TO_CHAR(RAV.REG_DATE, 'YYYY-MM-DD') AS REG_DATE,
