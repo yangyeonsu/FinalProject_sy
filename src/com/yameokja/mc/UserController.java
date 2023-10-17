@@ -307,10 +307,10 @@ public class UserController
 		*/
 		
 		// 찜한 가게 내역
-		List<Integer> jjimList = idao.userJjimSearch(user_num);
+		List<StoreDTO> jjimList = udao.searchLikeList(user_num);
 		
 		if (jjimList.size() > 0)
-			model.addAttribute("userJjimList", idao.getStoreList(jjimList));
+			model.addAttribute("userJjimList", jjimList);
 		else
 			model.addAttribute("userJjimList", null);
 		

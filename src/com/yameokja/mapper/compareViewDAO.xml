@@ -4,17 +4,31 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yameokja.mc.IcompareViewDAO">
 	<!-- 가게 -->
-	<!-- 가게이름, 좋아요수, 평점, 리뷰수, 주소, 전화번호, 가게 이메일, 가게 설명, 최대인원수, 가게음식카테고리 -->
+	<!-- 가게이름, 좋아요수, 평점, 리뷰수, 주소, 전화번호, 가게 이메일, 가게 설명, 최대인원수, 가게음식카테고리, 폐업여부 -->
 	<select id="store" resultType="com.yameokja.mc.StoreDetailDTO">
-		SELECT ST_NUM, ST_NAME, ST_LOCATION, ST_TEL, ST_EXPLAIN, MAX_CUSTOMERS
-		, ST_EMAIL, FOOD_NAME, PHOTO_LINK, STAR_AVG, RV_COUNT, USER_NUM
+		<!-- SELECT ST_NUM, ST_NAME, ST_LOCATION, ST_TEL, ST_EXPLAIN, MAX_CUSTOMERS
+		, ST_EMAIL, FOOD_NAME, PHOTO_LINK, STAR_AVG, RV_COUNT, USER_NUM, ISOUT
 		FROM
 		STORE_VIEW
 		WHERE ST_NUM IN (
 		<foreach collection="list" item="st_num" separator=",">
 			#{st_num}
 		</foreach>
-		)
+		) -->
+		
+		SELECT SV.ST_NUM AS ST_NUM, SV.ST_NAME AS ST_NAME, SV.ST_LOCATION AS ST_LOCATION, SV.ST_TEL AS ST_TEL, SV.ST_EXPLAIN AS ST_EXPLAIN, SV.MAX_CUSTOMERS AS MAX_CUSTOMERS
+		        , SV.ST_EMAIL AS ST_EMAIL, SV.FOOD_NAME AS FOOD_NAME, SV.PHOTO_LINK AS PHOTO_LINK, SV.STAR_AVG AS STAR_AVG, SV.RV_COUNT AS RV_COUNT, SV.USER_NUM AS USER_NAME, 
+		        CASE WHEN OP.OUT_PROCESS_NUM IN (SELECT OUT_PROCESS_NUM FROM OUT_REJ) THEN '운영'
+		               WHEN OP.OUT_PROCESS_NUM IS NOT NULL THEN '폐업'
+		               ELSE '운영' END AS ISOUT
+		FROM STORE_VIEW SV JOIN IN_PROCESS IP
+		  ON SV.IN_PROCESS_NUM = IP.IN_PROCESS_NUM
+		LEFT JOIN IN_APPLY IA
+		ON IP.IN_APPLY_NUM = IA.IN_APPLY_NUM
+		LEFT JOIN OUT_APPLY OA
+		ON IP.IN_PROCESS_NUM = OA.IN_PROCESS_NUM
+		LEFT JOIN OUT_PROCESS OP
+		ON OA.OUT_APPLY_NUM = OP.OUT_APPLY_NUM
 	</select>
 
 	<!-- 영업시간 가지고 오는 쿼리문 : 요일, 시작시간, 끝시간, 휴무여부 -->
