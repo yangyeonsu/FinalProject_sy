@@ -16,85 +16,6 @@ String cp = request.getContextPath();
 
 <link rel="stylesheet" type="text/css" href="<%=cp%>/css/reqRepList.css">
 
-<!-- <style type="text/css">
-	.continer{
-		position: static;
-	}
-	
-	/* 메인페이지 */
-	.middle
-	{
-		display: flex;
-		width: 97vw;
-		padding: 0px;
-		align-items: stretch;
-	}
-	.penaltylist
-	{
-		display: flex;
-		flex-direction: column;
-		padding: 1vw;
-		border: 0.3vw solid #F7F4EA;
-		border-radius: 40px;
-	}
-	/* 부제 틀 */
-	.subtitle
-	{
-		display: flex;
-		background-color: #F7F4EA;
-		border-radius: 10px 10px 0 0;
-	}
-	/* 부제 */
-	.pen_subtitle
-	{
-		text-align: center;
-
-		width: 14vw;
-		padding: 1vh;
-	}
-	
-	/* 신고 내용 틀 */
-	.report_content
-	{
-		display: flex;
-
-	}
-	/* 신고 내용 */
-	.rpt_content
-	{
-		text-align: center;
-		width: 8vw;
-		padding: 1vh;;
-	}
-	
-	/* 리뷰신고리스트 전체 틀 */
-	.penalty_report
-	{
-		padding: 5vw;
-		justify-content: center;
-		margin-left: 10vw;
-		padding-top: 0;
-	}
-	/* 제목 */
-	.title
-	{
-		width: 100%;
-		text-align: center;
-		font-size: 2em;
-	}
-	.st_name
-	{
-		text-align: center;
-		width: 14vw;
-		padding: 1vh;;
-	}
-	.no-data-message
-	{
-		text-align: center;
-	}
-	
-</style> -->
-
 <!-- 배너 스크립트 -->
 <script type="text/javascript">
 	$(function()
@@ -118,7 +39,7 @@ String cp = request.getContextPath();
 				$('.overlay').css("height", "100%");
 				$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
 				$('.overlay').css("z-index", "3");
-				$('.overlay').css("margin-top", "1.011vh");
+				//$('.overlay').css("margin-top", "1.011vh");
 				$('#checkOverlay').attr("value", "true");
 			}
 
@@ -127,7 +48,8 @@ String cp = request.getContextPath();
 		$(".sub_menu ul.small_menu").hide();
 		$(".sub_menu ul.big_menu").click(function()
 		{
-			$("ul", this).slideToggle(300);
+			$(".sub_menu ul.small_menu").not(this).fadeOut(250);
+			$("ul", this).stop().slideToggle(300);
 		});
 		// 외부 클릭 시 좌측 사이드 메뉴 숨기기
 		$('.overlay').on('click', function()
@@ -190,7 +112,14 @@ String cp = request.getContextPath();
 									</c:choose>
 									<div class="rep_rs_hidden" id="repNum${pl.rep_apply_num}">${pl.rv_content }</div>
 									<div class="rpt_content" >${pl.rep_rs_name }</div>
-									<div class="rpt_content">${pl.state }</div>
+									<c:choose>
+										<c:when test="${pl.state eq '처리완료' and pl.ismidrej ne '미처리'}">
+											<div class="rpt_content">${pl.state }(${pl.ismidrej })</div>
+										</c:when>
+										<c:otherwise>
+											<div class="rpt_content">${pl.state }</div>
+										</c:otherwise>
+									</c:choose>
 									<div class="rpt_content">${pl.final_date }</div>
 								</div>
 							</c:forEach>
