@@ -140,7 +140,10 @@ public class MainController
 		}
 		
 		// 검색 단어들로 찾은 storeDTO 리스트
-		model.addAttribute("searchList", dao.getStoreList(finalKeyword));
+		if(finalKeyword.size() == 0)
+			model.addAttribute("searchList", null);
+		else
+			model.addAttribute("searchList", dao.getStoreList(finalKeyword));
 		
 		// 검색어
 		model.addAttribute("keyword", keyword);
@@ -366,86 +369,6 @@ public class MainController
 
 		return result;
 	}
-	
-	
-
-	/*
-	@RequestMapping(value = "/filterSearch.action", headers="application/json;"
-		@ResponseBody
-	public String filterSearchStore(@RequestBody Map<String, Object> requestData, Model model) {
-	    @SuppressWarnings("unchecked")
-		ArrayList<String> regionCbList = (ArrayList<String>) requestData.get("regionCbList");
-	    @SuppressWarnings("unchecked")
-		ArrayList<String> catCbList = (ArrayList<String>) requestData.get("catCbList");
-	    @SuppressWarnings("unchecked")
-		ArrayList<String> stKeyCbList = (ArrayList<String>) requestData.get("stKeyCbList");
-	    @SuppressWarnings("unchecked")
-		ArrayList<Integer> resultStoreList = (ArrayList<Integer>) requestData.get("resultStoreList");
-	
-		// 가져온 것 : keyword + 1차 검색 결과 st_num - firstSearchResult
-		// 보내야 할 것 : keyword + 필터검색 한 st_num - filterSearchResult
-
-		IMainDAO dao = sqlSession.getMapper(IMainDAO.class);
-		
-		System.out.println(resultStoreList);
-		System.out.println(regionCbList);
-		System.out.println(catCbList);
-		System.out.println(stKeyCbList);
-		
-		ArrayList<Integer> resultArr = (ArrayList<Integer>) dao.filterSearchList(regionCbList, regionCbList, stKeyCbList, resultStoreList);
-		
-		ArrayList<StoreDTO> storeList = null;
-		String html = "";
-
-		storeList = dao.getStoreList(resultArr);
-			
-		for (StoreDTO store : storeList)
-		{
-			System.out.println(store.getSt_name());
-
-			html += "<div class='store'>";
-			html += "	<div class='stImgBtnDiv'>";
-			html += "		<div class='stImgDiv'>";
-			html += "			<c:set var = 'photo' value='" + store.getPhoto_link() + "'/>";
-			html += "			<c:choose>";
-			html += "				<c:when test='${empty photo}'>";
-			html += "					<img class='stImg' src='<%=cp%>/images/logo_text.png'>";
-			html += "				</c:when>";
-			html += "				<c:otherwise>";
-			html += "					<img class='stImg' src='<%=cp%>/${photo}'>";
-			html += "				</c:otherwise>";
-			html += "			</c:choose>";
-			html += "		</div>";
-			html += "		<div class='likeComAddBtn'>";
-			html += "			<button type='button' class='comAddBtn' value='" + store.getSt_num() + "'></button>";
-			html += "				<div class='likeBtnDiv'>";
-			html += "					<c:set var='list' value='${userJjimList}' />";
-			html += "					<c:set var='num' value='" + store.getSt_num() + "' />";
-			html += "					<c:choose>";
-			html += "						<c:when test='${list.contains(num)}'>";
-			html += "							<button type='button' class='likeAddBtn'";
-			html += "								value='" + store.getSt_num() + "'>❤️</button>";
-			html += "						</c:when>";
-			html += "						<c:otherwise>";
-			html += "							<button type='button' class='likeAddBtn'";
-			html += "								value='" + store.getSt_num() + "'>🤍</button>";
-			html += "						</c:otherwise>";
-			html += "					</c:choose>";
-			html += "				</div>";
-			html += "		</div>";
-			html += "</div>";
-			html += "<div class='name_reviewDiv'>";
-			html += "		<div class='stName'>" + store.getSt_name() + "</div>";
-			html += "			<div class='startReviewDivs'>";
-			html += "				<span>⭐" + store.getStar_avg() + "</span>(" + store.getRv_count() + ")";
-			html += "			</div>";
-			html += "		</div>";
-			html += "</div>";
-
-		}
-		return html;
-	}
-	*/
 
 	@RequestMapping(value = "/filterSearch.action")
 	public String filterSearchStore(HttpServletRequest request, Model model)
