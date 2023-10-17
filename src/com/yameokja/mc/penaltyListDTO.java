@@ -3,7 +3,7 @@ package com.yameokja.mc;
 public class penaltyListDTO
 {
 	/* private String reg_date, st_name, write_date; */
-	private String reg_date, st_name, state, final_date, rv_content, rep_rs_name;
+	private String reg_date, st_name, state, final_date, rv_content, rep_rs_name, ismidrej, rej_rs, mid_rs;
 	private int rep_apply_num;
 	
 	// getter / setter
@@ -73,6 +73,29 @@ public class penaltyListDTO
 	{
 		this.rep_rs_name = rep_rs_name;
 	}
+	public String getIsmidrej()
+	{
+		return ismidrej;
+	}
+	public void setIsmidrej(String ismidrej)
+	{
+		this.ismidrej = ismidrej;
+	}
+	public String getRej_rs()
+	{
+		return rej_rs;
+	}
+	public void setRej_rs(String rej_rs)
+	{
+		this.rej_rs = rej_rs;
+	}
+	public String getMid_rs()
+	{
+		return mid_rs;
+	}
+	public void setMid_rs(String mid_rs)
+	{
+		this.mid_rs = mid_rs;
+	}
 	
-
 }

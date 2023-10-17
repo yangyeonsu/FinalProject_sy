@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>나의 가게정보오류수정요청 내역</title>
+<title>가게정보오류수정요청 경고 내역</title>
 
 <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
 <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
@@ -177,7 +177,7 @@
 		<div class="right_content">
 			<div class="rv_report">
 				<div class="title">
-					가게정보수정요청 내역
+					가게정보오류수정요청 경고 내역
 				</div>
 				<hr>
 				

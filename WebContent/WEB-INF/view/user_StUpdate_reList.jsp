@@ -15,93 +15,6 @@
 
 <link rel="stylesheet" type="text/css" href="<%=cp%>/css/reqRepList.css">
 
-<!-- <style type="text/css">
-
-	.header
-	{
-		position: sticky;
-		top: 0;
-		background-color: white;
-	}
-	
-	/* 메인페이지 */
-	.middle
-	{
-		display: flex;
-		width: 97vw;
-		padding: 0px;
-		align-items: stretch;
-	}
-	.rv_reportlist
-	{
-		display: flex;
-		flex-direction: column;
-		padding: 1vw;
-		border: 0.3vw solid #F7F4EA;
-		border-radius: 40px;
-	}
-	/* 부제 틀 */
-	.subtitle
-	{
-		display: flex;
-		background-color: #F7F4EA;
-		border-radius: 10px 10px 0 0;
-	}
-	/* 부제 */
-	.rpt_subtitle
-	{
-		text-align: center;
-		width: 8vw;
-		padding: 1vh;
-	}
-	
-	/* 신고 내용 틀 */
-	.report_content
-	{
-		display: flex;
-
-	}
-	/* 신고 내용 */
-	.rpt_content
-	{
-		text-align: center;
-		width: 8vw;
-		padding: 1vh;
-	}
-	
-	/* 리뷰신고리스트 전체 틀 */
-	.rv_report
-	{
-		/* padding: 5vw; */
-		justify-content: center;
-		margin-left: 10vw;
-		padding-top: 0;
-	}
-	/* 제목 */
-	.title
-	{
-		width: 100%;
-		text-align: center;
-		font-size: 2em;
-	}
-	.st_name
-	{
-		text-align: center;
-		width: 12vw;
-		padding: 1vh;;
-	}
-	.no-data-message
-	{
-		text-align: center;
-	}
-	
-	.pageIndex
-	{
-		display: flex;
-    	justify-content: center;
-    }
-</style> -->
-
 <!-- 배너 스크립트 -->
 <script type="text/javascript">
 	$(function()
@@ -121,12 +34,11 @@
 			} else
 			{
 				$('.overlay').css("position", "fixed");
-				$('.overlay').css("width", "77%");
+				$('.overlay').css("width", "100%");
 				$('.overlay').css("height", "100%");
 				$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
 				$('.overlay').css("z-index", "3");
-				$('.overlay').css("margin-top", "1.011vh");
-				$('.overlay').css("margin-left", "23%");
+				//$('.overlay').css("margin-top", "1.011vh");
 				$('#checkOverlay').attr("value", "true");
 			}
 
@@ -135,7 +47,8 @@
 		$(".sub_menu ul.small_menu").hide();
 		$(".sub_menu ul.big_menu").click(function()
 		{
-			$("ul", this).slideToggle(300);
+			$(".sub_menu ul.small_menu").not(this).fadeOut(250);
+			$("ul", this).stop().slideToggle(300);
 		});
 		// 외부 클릭 시 좌측 사이드 메뉴 숨기기
 		$('.overlay').on('click', function()
@@ -150,68 +63,50 @@
 		});
 	});
 	
-	
-	// 모달 ----------------------------------------------
-	function reqPopupOpen()
-	{
-		//alert("확인");
+	// 반려 사유 모달
+	$(document).on('click', '.rpt_content', function() {
+	    var reqProcessNum = $(this).attr('id');
+	    var rejRsValue = $("#rej_rs" + reqProcessNum).val();
 		
-		var status = $("#status").html();
-		//alert(status);
-		
-		if (status == "처리완료") 
-		{
-			//alert("status확인");
+	    if(rejRsValue!="")
+	    {
+		    $("#rvRs").html(rejRsValue);
 			
-			var reject = $("#reject").html();
-			
-			if(reject=="반려")
-	        {
+			if (document.all.rvPopup.style.visibility == "hidden")
+			{
+				document.all.rvPopup.style.visibility = "visible";
+				bgLayerOpen();
 				
-	        	var rejRsElements = document.querySelectorAll(".rej_rs");
-	            var rejRsContentElements = document.querySelectorAll(".rej_rs_content");
-	            
-	            //alert(rejRsContentElements);
-
-	            for (var i = 0; i < rejRsElements.length; i++) {
-	                var rejRsValue = rejRsElements[i].textContent;
-	                rejRsContentElements[i].textContent = rejRsValue;
-	            }
-			
-				if (document.all.rvPopup.style.visibility == "hidden")
+				var $layerPopupObj = $('#rvPopup');
+				var left = ($(window).scrollLeft() + ($(window).width() - $layerPopupObj
+						.width()) / 2);
+				var top = ($(window).scrollTop() + ($(window).height() - $layerPopupObj
+						.height()) / 4);
+	
+				$layerPopupObj.css(
 				{
-					//alert("확인");
-					
-					document.all.rvPopup.style.visibility = "visible";
-					bgLayerOpen();
-					
-					//alert("확인");
-					
-					var $layerPopupObj = $('#rvPopup');
-					var left = ($(window).scrollLeft() + ($(window).width() - $layerPopupObj
-							.width()) / 2);
-					var top = ($(window).scrollTop() + ($(window).height() - $layerPopupObj
-							.height()) / 4);
-		
-					$layerPopupObj.css(
-					{
-						'left' : left,
-						'top' : top,
-						'position' : 'absolute'
-					});
-					$('body').css('position', 'relative').append($layerPopupObj);
-		
-					return false;
-				} 
-				else
-				{
-					document.all.rvPopup.style.visibility = "hidden";
-					bgLayerClear();
-					return false;
-				}
-	        }
-		}
-			
+					'left' : left,
+					'top' : top,
+					'position' : 'absolute'
+				});
+				$('body').css('position', 'relative').append($layerPopupObj);
+	
+				return false;
+			} 
+			else
+			{
+				document.all.rvPopup.style.visibility = "hidden";
+				bgLayerClear();
+				return false;
+			}
+	    }
+	});
+	
+	function reqPopupOpen(element)
+	{
+		document.all.rvPopup.style.visibility = "hidden";
+		bgLayerClear();
+		return false;
 	}
 	
 	function bgLayerOpen()
@@ -284,15 +179,34 @@
 					    </c:when>
 					    <c:otherwise>
 					        <c:forEach var="udre" items="${stupdateReList}">
-					            <div class="report_content">
-					                <div class="rpt_content" onclick="reqPopupOpen()">${udre.reg_date }</div>
-					                <div class="rpt_content" onclick="reqPopupOpen()">${udre.st_name }</div>
-					                <div class="rpt_content" id="status" onclick="reqPopupOpen()">${udre.state }</div>
-					                <div class="rpt_content" onclick="reqPopupOpen()">${udre.final_date }</div>
-					            	
-					            	<div id="reject" style="display: none;">${udre.req_process_num }</div>
-					                <div class="rej_rs" style="display: none;">${udre.rej_rs }</div>
-					            </div>
+					        	<c:choose>
+					        		<c:when test="${udre.state=='처리완료'}">
+							            <div class="report_content">
+							                <div class="rpt_content" id="${udre.req_process_num}">${udre.reg_date }</div>
+							                <div class="rpt_content" id="${udre.req_process_num}">${udre.st_name }</div>
+							                <c:choose>
+							                	<c:when test="${udre.isrej ne '미처리'}">
+							                		<div class="rpt_content" id="${udre.req_process_num}">${udre.state }(${udre.isrej })</div>
+							                	</c:when>
+							                	<c:otherwise>
+							                		<div class="rpt_content" id="${udre.req_process_num}">${udre.state }</div>
+							                	</c:otherwise>
+							                </c:choose>
+							                <div class="rpt_content" id="${udre.req_process_num}">${udre.final_date }</div>
+							                
+							            	<div id="reject" style="display: none;">${udre.req_process_num }</div>
+							                <input type="hidden" class="rej_rs" id="rej_rs${udre.req_process_num}" value="${udre.rej_rs}">
+							            </div>
+							        </c:when>
+							        <c:otherwise>
+							        	<div class="report_content">
+							                <div class="rpt_content">${udre.reg_date }</div>
+							                <div class="rpt_content">${udre.st_name }</div>
+							                <div class="rpt_content">${udre.state }</div>
+							                <div class="rpt_content">${udre.final_date }</div>
+							            </div>
+							        </c:otherwise>
+							   	</c:choose>
 					        </c:forEach>
 					    </c:otherwise>
 					</c:choose>
@@ -313,23 +227,23 @@
 			        
 				</div>
 				
-				
+				<!-- 반려사유 모달 -->
 				<div id="rvPopup" style="position: absolute; visibility: hidden;">
 					<h4>
-						<a href="#" class="close" onClick="javascript:reqPopupOpen()">Ⅹ</a>
+						<a href="#" class="close" onClick="reqPopupOpen(this)">Ⅹ</a>
 					</h4>
 					<h3>가게정보수정요청 반려사유</h3>
 					<div class="rvPopCont">
 						<div class="list">
 							<div class="reqRs">
-								<h5 style="margin-top: 0">반려사유 &nbsp;&nbsp;&nbsp; </h5>
-								<%-- <textarea rows="5" cols="42" id="rvRs" style="resize: none; margin-top: 3vh;">${rvreport.rej_rs }</textarea> --%>
-								<textarea class="rej_rs_content" rows="5" cols="42" id="rvRs" style="resize: none; margin-top: 3vh;" disabled="disabled"></textarea>
+								<h5 style="margin-top: 0; margin-bottom: 0">반려사유 </h5>
+								<textarea class="rej_rs_content" rows="5" cols="42" id="rvRs" style="resize: none; margin-top: 3vh;" disabled="disabled">
+								</textarea>
 							</div>
 							
 						</div>
 						<div class="rv">
-							<button id="rvBtn" onClick="javascript:reqPopupOpen()">확인</button>
+							<button class="rvBtn" onClick="reqPopupOpen(this)">확인</button>
 						</div>
 					</div>
 					
