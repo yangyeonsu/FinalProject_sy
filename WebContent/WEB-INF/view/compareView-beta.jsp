@@ -88,12 +88,31 @@ body {
 	font-weight: bold;
 }
 
+.cOut
+{
+	font-size: 1.2rem;
+	font-weight: bold;
+}
+
 .cBox {
 	border-left: 1px solid #EB8F83;
 }
 
 .cList, .cLo {
 	height: 3vh;
+	font-size: 1rem;
+	font-weight: bold;
+	display: flex;
+	text-align: center;
+	justify-content: center;
+	align-items: center;
+}
+
+.topCList
+{
+	padding-top: 1vh;
+	padding-bottom: 1vh;
+	height: 2vh;
 	font-size: 1rem;
 	font-weight: bold;
 	display: flex;
@@ -491,6 +510,7 @@ body {
 
 					<div class="cCategory">
 						<div class="cCat">
+							<div class="topCList">&nbsp;</div>
 							<div id="stCatList" class="cList cat">가게 음식 카테고리</div>
 							<div id="stStarAvgList" class="cList">가게 평균 별점</div>
 							<div id="stLikeNumList" class="cList">가게 찜 수</div>
@@ -518,12 +538,29 @@ body {
 						<div id="compareSpace" class="compareSpace">
 							<c:forEach var="st" items="${store}" varStatus="st_status">
 								<c:if test="${st.st_num == st_num }">
-									<div id="stName${st_num }" class="cName">[ ${st.st_name}
-										]</div>
+									<c:choose>
+										<c:when test="${st.isout eq '폐업'}">
+											<div class="cOut">폐업</div>
+											<div id="stName${st_num }" class="cName">[ <span style="text-decoration: line-through;">
+												${st.st_name }</span>
+											]</div>
+										</c:when>
+										<c:otherwise>
+											<div class="cOut"> &nbsp; </div>
+											<div id="stName${st_num }" class="cName">[ ${st.st_name}
+											]</div>
+										</c:otherwise>
+									</c:choose>
 									<div id="stPhoto${st_num }" class="photo">
 										<c:choose>
 											<c:when test="${empty st.photo_link }">
 												<img class="phStore" src="<%=cp%>/images/logo_text.png">
+											</c:when>
+											<c:when test="${empty st.photo_link and st.isout eq '폐업'}">
+												<img class="phStore" style="filter: grayscale(100%);" src="<%=cp%>/images/logo_text.png">
+											</c:when>
+											<c:when test="${st.isout eq '폐업' }">
+												<img class="phStore" style="filter: grayscale(100%);" src="<%=cp %>/${st.photo_link}">
 											</c:when>
 											<c:otherwise>
 												<img class="phStore" src="<%=cp %>/${st.photo_link}">
