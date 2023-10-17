@@ -204,13 +204,26 @@
 					            <div class="report_content">
 					                <div class="rpt_content" onclick="reqPopupOpen()">${udre.reg_date }</div>
 					                <div class="st_name" onclick="reqPopupOpen()">${udre.st_name }</div>
-					                <div class="rpt_content" id="status" onclick="reqPopupOpen()">${udre.check_label }</div>
 					                <div class="rpt_content" onclick="reqPopupOpen()">${udre.final_date }</div>
-					                <div class="rpt_obj"><button>이의제기</button></div>
-					                <div class="rpt_revoke"><button>패널티회수</button></div>
+					                <div class="rpt_content" id="status" onclick="reqPopupOpen()">패널티 부여일자</div>
+					                <c:choose>
+					                	<c:when test="${udre.check_label eq '둘다가능' }">
+					                		<div class="rpt_obj"><button>이의제기</button></div>
+					                		<div class="rpt_revoke"><button>패널티회수</button></div>
+					                	</c:when>
+					                	<c:when test="${udre.check_label eq '패널티회수가능' }">
+					                		<div class="rpt_obj"><button disabled="disabled">이의제기</button></div>
+					                		<div class="rpt_revoke"><button>패널티회수</button></div>
+					                	</c:when>
+					                	<c:when test="${udre.check_label eq '둘다불가능' }">
+					                		<div class="rpt_obj"><button disabled="disabled">이의제기</button></div>
+					                		<div class="rpt_revoke"><button disabled="disabled">패널티회수</button></div>
+					                	</c:when>
+					                </c:choose>
+					                
 					            	
 					            	<div id="reject" style="display: none;">${udre.req_apply_num }</div>
-					                <div class="rej_rs" style="display: none;">${udre.rej_rs }</div>
+					                <%-- <div class="rej_rs" style="display: none;">${udre.rej_rs }</div> --%>
 					            </div>
 					        </c:forEach>
 					    </c:otherwise>
