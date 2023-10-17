@@ -34,13 +34,16 @@ public interface IUserDAO
 	// 사용자 입맛 키워드
 	public List<TasteLabelDTO> searchTasteKeyword(@Param("user_num") String user_num);
 	
+	// 사용자 비교했던 내역
 	public List<StoreDTO> searchComparedList(String user_num);
 	
+	// 사용자 작성 리뷰 리스트
 	public List<ReviewDTO> searchRvList(String user_num);
 	
+	// 사용자 찜한 내역
 	public List<StoreDTO> searchLikeList(String user_num);
 	
-	public List<StoreDTO> searchComparingBox(String user_num);
+	//public List<StoreDTO> searchComparingBox(String user_num);
 	
 	public List<AlarmDTO> userAlarm(String user_num);
 	

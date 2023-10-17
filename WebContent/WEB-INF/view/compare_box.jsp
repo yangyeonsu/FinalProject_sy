@@ -98,7 +98,6 @@ String cp = request.getContextPath();
 
 	var comTotalChecked = 0;
 
-
 	function comCountChecked(field)
 	{
 		if (field.checked)
@@ -112,7 +111,6 @@ String cp = request.getContextPath();
 			field.checked = false;
 			comTotalChecked -= 1;
 		}
-
 	}
 
 </script>
@@ -150,10 +148,12 @@ String cp = request.getContextPath();
 								<!-- 한 가게 대표사진 영역 -->
 								<div class="comStoreImgDiv">
 									<button type="button" value="${com.st_num}" class="comDelete">X</button>
+									<input type="hidden" id="isStOut" value="${com.isout }">
 									<label for="${com.st_num}" class="stLabel"> <input
 										type="checkbox" class="comStImgCB" name="comStImgCB"
-										id="${com.st_num}" onclick="comCountChecked(this)"> <c:set var="photo"
-											value="${com.photo_link }" /> <c:choose>
+										id="${com.st_num}" onclick="comCountChecked(this)"> 
+										<c:set var="photo" value="${com.photo_link }" /> 
+										<c:choose>
 											<c:when test="${empty photo}">
 												<img class="stImg" src="<%=cp%>/images/logo_text.png">
 											</c:when>

@@ -5,7 +5,7 @@ public class StoreDetailDTO
 {
 	// 주요 속성 구성
 	private String st_name, st_location, st_tel, st_explain, photo_link
-				, reg_date, st_email, food_name;
+				, reg_date, st_email, food_name, isout;
 	private double star_avg;
 	private int st_num, rv_count, max_customers, like_count;
 	
@@ -115,6 +115,12 @@ public class StoreDetailDTO
 	{
 		this.like_count = like_count;
 	}
-	
-
+	public String getIsout()
+	{
+		return isout;
+	}
+	public void setIsout(String isout)
+	{
+		this.isout = isout;
+	}
 }

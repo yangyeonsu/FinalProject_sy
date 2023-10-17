@@ -242,8 +242,11 @@ public class stDetailController
 		model.addAttribute("rvRepList", rvRepList);
 		
 		// 폐업한 가게인지 아닌지 판단
-		model.addAttribute("stisout", dao.stIsOut(st_num));
-
+		if(dao.stIsOut(st_num) == null)
+			model.addAttribute("stisout", "운영");
+		else
+			model.addAttribute("stisout", "폐업");
+		
 		result = "/WEB-INF/view/storeDetail.jsp";
 
 		return result;
