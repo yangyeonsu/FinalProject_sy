@@ -7,7 +7,7 @@ public class UserStupdaterelistDTO
 	/* REQ_APPLY_NUM, REQ_PROCESS_NUM, REJ_RS 추가*/
 	
 	private int req_apply_num;
-	private String req_process_num, rej_rs;
+	private String req_process_num, rej_rs, isrej;
 	
 	// getter / setter
 	public int getReq_apply_num()
@@ -77,4 +77,13 @@ public class UserStupdaterelistDTO
 		this.final_date = final_date;
 	}
 
+	public String getIsrej()
+	{
+		return isrej;
+	}
+
+	public void setIsrej(String isrej)
+	{
+		this.isrej = isrej;
+	}
 }

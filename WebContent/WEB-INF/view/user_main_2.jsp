@@ -140,6 +140,11 @@ String cp = request.getContextPath();
 			$("#foodlabelChk").val(foodlabelChk);
 			$("#stKeyChk").val(stKeyChk);
 			
+			if($(".checkBox").is(":checked"))
+			{
+				$(".checkBox").prop("checked", false); 
+			}
+			
 			$("#userForm").attr("action", "filterSearch.action");
 			$("#userForm").submit();
 		});
@@ -235,6 +240,24 @@ String cp = request.getContextPath();
 			
 			
 		});
+
+		// 필터 검색 범례 유지
+		$('.hiddenRL').each(function(){
+			  var region = $(this).val();
+			  $("#"+region).prop("checked", true);
+		});
+		
+		$('.hiddenCL').each(function(){
+			  var category = $(this).val();
+			  $("#"+category).prop("checked", true);
+		});
+		
+		$('.hiddenSL').each(function(){
+			  var stkey = $(this).val();
+			  alert(stkey);
+			  $("#"+stkey).prop("checked", true);
+		});
+
 		
 	});
 	
@@ -294,33 +317,16 @@ String cp = request.getContextPath();
 							<span>지역</span>
 						</div>
 						<div id="regionCB">
-							<c:forEach var="region" items="${regionList }" varStatus="i"> 
-								<label for="${region.region_name }"> <c:choose>
-										<c:when test="${empty regionChecked}">
-											<input type="checkbox" class="checkBox" name="region"
-												value="${region.region_name }" id="${region.region_name }"> ${region.region_name }
-										</c:when>
-										<c:otherwise>
-											<c:forEach var="rch" items="${regionChecked }">
-												<c:choose>
-													<c:when test="${region.region_name eq rch}">
-														<input type="checkbox" class="checkBox" name="region"
-															value="${region.region_name }"
-															id="${region.region_name }" checked="checked"> ${region.region_name }
-													</c:when>
-													<c:otherwise>
-														<input type="checkbox" class="checkBox" name="region"
-															value="${region.region_name }"
-															id="${region.region_name }"> ${region.region_name }
-													</c:otherwise>
-												</c:choose>
-											</c:forEach>
-										</c:otherwise>
-									</c:choose>
-								</label> 
-								<c:if test="${(i.index+1)%5==0 }"><br></c:if>
-							</c:forEach>
+							<c:forEach var="region" items="${regionList}" varStatus="i">
+								<label for="${region.region_name}">
+						            <input type="checkbox" class="checkBox" name="region" value="${region.region_name}" id="${region.region_name}">${region.region_name}
+						        </label>
+								<c:if test="${(i.index + 1) % 5 == 0 }"><br></c:if>
+					    	</c:forEach>
 						</div>
+						<c:forEach var = "rch" items = "${regionChecked }">
+							<input type="hidden" class="hiddenRL" value="${rch}">
+						</c:forEach>
 					</div>
 
 					<div id="checkCat">
@@ -329,31 +335,14 @@ String cp = request.getContextPath();
 						</div>
 						<div id="catCB">
 							<c:forEach var="foodLabel" items="${foodLabelList }">
-								<label for="${foodLabel.food_name }"> <c:choose>
-										<c:when test="${empty catChecked}">
-											<input type="checkbox" class="checkBox" name="foodLabel"
-												value="${foodLabel.food_name }" id="${foodLabel.food_name }"> ${foodLabel.food_name }
-										</c:when>
-										<c:otherwise>
-											<c:forEach var="cch" items="${catChecked }">
-												<c:choose>
-													<c:when test="${foodLabel.food_name eq cch}">
-														<input type="checkbox" class="checkBox" name="foodLabel"
-															value="${foodLabel.food_name }"
-															id="${foodLabel.food_name }" checked="checked"> ${foodLabel.food_name }
-													</c:when>
-													<c:otherwise>
-														<input type="checkbox" class="checkBox" name="foodLabel"
-															value="${foodLabel.food_name }"
-															id="${foodLabel.food_name }"> ${foodLabel.food_name }
-													</c:otherwise>
-												</c:choose>
-											</c:forEach>
-										</c:otherwise>
-									</c:choose>
+								<label>
+									<input type="checkbox" class="checkBox" name="foodLabel" value="${foodLabel.food_name }" id="${foodLabel.food_name }">${foodLabel.food_name }
 								</label>
 							</c:forEach>
 						</div>
+						<c:forEach var = "cch" items = "${catChecked }">
+							<input type="hidden" class="hiddenCL" value="${cch}">
+						</c:forEach>
 					</div>
 
 					<div id="checkStKey">
@@ -362,30 +351,14 @@ String cp = request.getContextPath();
 						</div>
 						<div id="stKeyCB">
 							<c:forEach var="stKey" items="${stKeyList }">
-								<label for="${stKey.st_keyword }"> <c:choose>
-										<c:when test="${empty stKeyChecked}">
-											<input type="checkbox" class="checkBox" name="stKey"
-												value="${stKey.st_keyword }" id="${stKey.st_keyword }"> ${stKey.st_keyword }
-										</c:when>
-										<c:otherwise>
-											<c:forEach var="sch" items="${stKeyChecked }">
-												<c:choose>
-													<c:when test="${stKey.st_keyword eq sch}">
-														<input type="checkbox" class="checkBox" name="stKey"
-															value="${stKey.st_keyword }" id="${stKey.st_keyword }"
-															checked="checked"> ${stKey.st_keyword }
-													</c:when>
-													<c:otherwise>
-														<input type="checkbox" class="checkBox" name="stKey"
-															value="${stKey.st_keyword }" id="${stKey.st_keyword }"> ${stKey.st_keyword }
-													</c:otherwise>
-												</c:choose>
-											</c:forEach>
-										</c:otherwise>
-									</c:choose>
+								<label for="${stKey.st_keyword }">
+									<input type="checkbox" class="checkBox" name="stKey" value="${stKey.st_keyword }" id="${stKey.st_keyword}">${stKey.st_keyword }
 								</label>
 							</c:forEach>
 						</div>
+						<c:forEach var="sch" items="${stKeyChecked }">
+							<input type="hidden" class="hiddenSL" value="${sch}">
+						</c:forEach>
 					</div>
 
 					<!-- 검색버튼 -->

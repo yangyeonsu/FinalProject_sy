@@ -42,7 +42,7 @@
 				$('.overlay').css("height", "100%");
 				$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
 				$('.overlay').css("z-index", "3");
-				$('.overlay').css("margin-top", "1.011vh");
+				//$('.overlay').css("margin-top", "1.011vh");
 				$('#checkOverlay').attr("value", "true");
 			}
 
@@ -51,7 +51,8 @@
 		$(".sub_menu ul.small_menu").hide();
 		$(".sub_menu ul.big_menu").click(function()
 		{
-			$("ul", this).slideToggle(300);
+			$(".sub_menu ul.small_menu").not(this).fadeOut(250);
+			$("ul", this).stop().slideToggle(300);
 		});
 		// 외부 클릭 시 좌측 사이드 메뉴 숨기기
 		$('.overlay').on('click', function()
@@ -234,7 +235,14 @@
 							                <div class="rpt_content" id="${rvreport.rep_process_num}">${rvreport.reg_date }</div>
 							                <div class="rpt_content" id="${rvreport.rep_process_num}">${rvreport.st_name }</div>
 							                <div class="rpt_content" id="${rvreport.rep_process_num}">${rvreport.accu_id }</div>
-							                <div class="rpt_content" id="${rvreport.rep_process_num}">${rvreport.state }</div>
+							                <c:choose>
+							                	<c:when test="${rvreport.ismidrej ne '미처리'}">
+							                		<div class="rpt_content"  id="${rvreport.rep_process_num}">${rvreport.state }(${rvreport.ismidrej })</div>
+							                	</c:when>
+								                <c:otherwise>
+								                	<div class="rpt_content" id="${rvreport.rep_process_num}">${rvreport.state }</div>
+								                </c:otherwise>
+							                </c:choose>
 							                <div class="rpt_content" id="${rvreport.rep_process_num}">${rvreport.final_date }</div>
 							                
 							                <div id="reject" style="display: none;">${rvreport.rep_rej_num}</div>
@@ -276,7 +284,7 @@
 				</div>
 				
 				
-				<!-- 반려모달 -->
+				<!-- 반려사유 모달 -->
 				<div id="rvPopup" style="position: absolute; visibility: hidden;">
 					<h4>
 						<a href="#" class="close" id="rej" onClick="rvPopupOpen(this)">Ⅹ</a>
@@ -299,7 +307,7 @@
 				</div>
 				
 				
-				<!-- 중재모달 -->
+				<!-- 중재사유 모달 -->
 				<div id="midPopup" style="position: absolute; visibility: hidden;">
 					<h4>
 						<a href="#" class="close" id="mid" onClick="rvPopupOpen(this)">Ⅹ</a>
