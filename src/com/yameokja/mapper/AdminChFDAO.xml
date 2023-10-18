@@ -187,6 +187,12 @@
 		  AND ADMIN_NUM = #{admin_num}
 	</select>
 	
+	<!-- 가게정보오류수정요청 승인 시 패널티 테이블 insert -->
+	<insert id="setPenalty">
+		INSERT INTO PENALTY(PEN_GRANT_NUM, REQ_PROCESS_NUM, GRANT_DATE, PEN_TYPE_NUM)
+		VALUES(PENSEQ.NEXTVAL, #{req_process_num}, SYSDATE, 1)
+	</insert>
+	
 	<!-- 가게정보오류수정요청 반려 -->
 	<insert id="reqRej">
 		INSERT INTO REQ_REJ(REQ_REJ_NUM, REQ_PROCESS_NUM, REJ_RS)
