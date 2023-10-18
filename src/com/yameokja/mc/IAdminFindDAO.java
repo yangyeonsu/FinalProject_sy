@@ -40,6 +40,8 @@ public interface IAdminFindDAO
 	public int reqProcess(@Param("req_apply_num") int req_apply_num, @Param("admin_num") int admin_num);
 	// REQ_PROCESS_NUM 찾기
 	public int getReqProNum(@Param("req_apply_num") int req_apply_num, @Param("admin_num") int admin_num);
+	// 가게정보오류수정요청 승인시 패널티 테이블 insert
+	public int setPenalty(@Param("req_process_num") int req_process_num);
 	// 가게정보오류수정요청 반려
 	public int reqRej(@Param("req_process_num") int req_process_num, @Param("rej_rs") String rej_rs);
 	// 가게 등록 처리
