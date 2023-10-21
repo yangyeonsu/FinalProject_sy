@@ -12,4 +12,11 @@ public interface IStinfoUpdaterelistDAO
         @Param("startRow") int startRow,
         @Param("endRow") int endRow
     );
+	
+	public int count_inoutlist(String user_num);
+	public List<StInoutDTO> stinoutlist(
+	        @Param("user_num") String user_num,
+	        @Param("startRow") int startRow,
+	        @Param("endRow") int endRow
+	);
 }

@@ -71,7 +71,7 @@ public class stSidebarController
 	    int itemsPerPage = 10;
 	    
 	    // 전체 데이터 수 구해서 총 페이지 수 계산
-	    int totalPage = dao.count_relist(user_num) / itemsPerPage;
+	    int totalPage = dao.count_relist(user.user_id) / itemsPerPage;
 	    
 	    if (dao.count_relist(user_num) % itemsPerPage != 0)
 	    	totalPage++;
@@ -323,7 +323,7 @@ public class stSidebarController
 	    int itemsPerPage = 10;
 	    
 	    // 전체 데이터 수 구해서 총 페이지 수 계산
-	    int totalPage = dao.count_relist(user_num) / itemsPerPage;
+	    int totalPage = dao.count_inoutlist(user_num) / itemsPerPage;
 	    
 	    if (dao.count_relist(user_num) % itemsPerPage != 0)
 	    	totalPage++;
@@ -341,7 +341,7 @@ public class stSidebarController
 	    
 	    
 	    
-	    List<StinfoUpdaterelistDTO> stinfoupdatelist = dao.stinfoupdatelist(
+	    List<StInoutDTO> stinoutlist = dao.stinoutlist(
 	        user_num, 
 	        startRow, 
 	        endRow
@@ -349,8 +349,9 @@ public class stSidebarController
 	    
 	    model.addAttribute("pageIndex", Paging.pageIndexList(currentPage, totalPage, actionName));
 	    model.addAttribute("user", user);
+	    model.addAttribute("stinoutlist", stinoutlist);
 	    
-		result = "/WEB-INF/view/St_Appeal_Request.jsp";
+		result = "/WEB-INF/view/St_Inout_Lis.jsp";
 	    
 	    return result;
 	}
