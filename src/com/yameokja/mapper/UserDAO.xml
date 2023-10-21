@@ -175,7 +175,7 @@
 	</select>
 	
 	<select id="userAlarm" resultType="com.yameokja.mc.AlarmDTO">
-		SELECT USER_NUM, CHECK_DATE, COMMENTARY
+		SELECT USER_NUM, CHECK_DATE, COMMENTARY, CHECK_NUM
 		FROM USER_ALARM
 		WHERE USER_NUM = #{user_num}
 		ORDER BY CHECK_DATE	

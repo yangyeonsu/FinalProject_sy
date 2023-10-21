@@ -41,39 +41,44 @@ public class StoreController
 		HttpSession session = request.getSession();
 		String result = "";
 		
-		/* int st_num = Integer.parseInt(str_st_num); */ 
-		
 		IstDetailDAO_userView dao = sqlSession.getMapper(IstDetailDAO_userView.class);
 		IStoreMainDAO smDao = sqlSession.getMapper(IStoreMainDAO.class);
 		IUserDAO uDao = sqlSession.getMapper(IUserDAO.class);
 		
-		
+		// 로그인시 세션에 설정한 유저 번호 가지고 오기
 		String user_num = (String)session.getAttribute("user_num");
-		
+		// 유저 번호를 이용해 유저 정보 가지고 오기
 		UserDTO user = uDao.searchUserInfo(user_num, "num");
 
 		LocalDate currentDate = LocalDate.now();
 		int month = currentDate.getMonthValue();
-
+		
+		// 가지고 온 유저 정보를 이용해 유저 등급 알아내기
 		if (month < 7)
 			user.setUser_grade(uDao.firstHalf(user_num).user_grade);
 		else
 			user.setUser_grade(uDao.secondHalf(user_num).user_grade);
 
+		// 구성한 유저 dto 모델에 추가하기(페이지 이동시 가져가기 위함)
 		model.addAttribute("user", user);
 		
+		// 유저 번호를 이용해 해당 유저의 가게 목록 가지고 오기
 		ArrayList<StoreDTO> st_list = smDao.searchStoreInfo(user_num);
 		
 		int st_num;
 		
+		// 유저가 특정 가게를 대표로 설정 하지 않았다면 가장 최근에 등록한 가게의 번호를
 		if(smDao.searchRepStore(user_num) == null)
 			st_num = st_list.get(0).getSt_num();
+		// 설정했다면 대표가게의 번호를 가지고 온다.
 		else
 			st_num = smDao.searchRepStore(user_num);
 		
+		// 대표가게의 번호를 세션과 모델에 설정
 		session.setAttribute("st_num", st_num);
 		model.addAttribute("st_num", st_num);
 				
+		// 사업자 메인 페이지에 별점 그래프와 리뷰 키워드를 이용한 도넛 차트를 표시하기 위한 데이터 수집
 		ArrayList<HashMap<String, String>> hashmaplist = smDao.rv_key_sum(st_num);
 		
 		ArrayList<String> rv_labels = new ArrayList<String>();
@@ -85,6 +90,7 @@ public class StoreController
 			rv_data.add(String.valueOf(hashMap.get("COUNT_RV_KEY")));
 		}
 		
+		// 누적된 별점을 사분기별로 평점을 낸 데이터 가지고 오기
 		ArrayList<HashMap<String, String>> star_transition = smDao.star_transition(st_num);
 		
 		ArrayList<String> star_labels = new ArrayList<String>();
@@ -96,24 +102,6 @@ public class StoreController
 			star_data.add(String.valueOf(star.get("AVERAGE_STAR_SCORE")));
 		}
 		
-		
-		// 가게 리뷰목록
-		ArrayList<StoreReviewDTO> reviews = dao.reviews(st_num);
-		
-		if(reviews.size() > 0)
-		{
-			model.addAttribute("reviews", reviews);
-		}
-		else
-			model.addAttribute("reviews", null);
-		
-		// 가게 리뷰 사진 목록
-		ArrayList<StoreRvPhotoDTO> rvPhotos = dao.rvPhoto(st_num);
-		
-		model.addAttribute("rvPhotos", rvPhotos);
-		
-		model.addAttribute("st_list", st_list);
-		
 		if (rv_labels.size() >= 5)
 			model.addAttribute("rv_labels", rv_labels.subList(0, 5));
 		else
@@ -123,16 +111,28 @@ public class StoreController
 		else
 			model.addAttribute("rv_data", rv_data);
 		
-		
-		
 		model.addAttribute("star_labels", star_labels);
 		model.addAttribute("star_data", star_data);
 		
+		
+		// 가게 리뷰목록
+		ArrayList<StoreReviewDTO> reviews = dao.reviews(st_num);
+		if(reviews.size() > 0)
+		{
+			model.addAttribute("reviews", reviews);
+		}
+		else
+			model.addAttribute("reviews", null);
+		
+		// 가게 리뷰 사진 목록
+		ArrayList<StoreRvPhotoDTO> rvPhotos = dao.rvPhoto(st_num);
+		model.addAttribute("rvPhotos", rvPhotos);
+		// 가게 리스트
+		model.addAttribute("st_list", st_list);		
+		// 사업자 메인에 보여줄 리뷰 목록
 		model.addAttribute("rv_key_list", smDao.rv_key_sum(st_num));
 		model.addAttribute("rv_list", smDao.rv_list(st_num));
-		
-		ArrayList<ReviewDTO> arr = smDao.rv_list(st_num);
-		
+		// 유저 알람 목록
 		model.addAttribute("alarm", uDao.userAlarm(user_num));
 		
 		int log_num = smDao.checkfirstlogin(st_num);
@@ -507,6 +507,8 @@ public class StoreController
 			String breakch = "";
 			
 			List<FileItem> items = fileUpload.parseRequest(request);
+			
+			// 페이지에서 넘어온 가게 번호 먼저 받아오기
 			for (FileItem item : items)
             {
                 if (item.isFormField() && item.getFieldName().equals("st_num"))
@@ -516,6 +518,8 @@ public class StoreController
                 }
             }
 			
+			
+			// 상세 정보를 등록하기 전 기존 데이터 지우기
 			smdao.stOCdelete(st_num);
 			smdao.holidaydelete(st_num);
 			smdao.bOCdelete(st_num);
@@ -536,6 +540,7 @@ public class StoreController
 			
 			StoreDetailDTO sdto = new StoreDetailDTO();
 			
+			// 메뉴사진 업로드 부분
             for (FileItem item : items)
             {
                 if (!item.isFormField())
@@ -557,6 +562,7 @@ public class StoreController
                 }
             }
             
+            // 사진파일이 아닌 텍스트 데이터 부분
             for (FileItem item : items)
             {
                 if (item.isFormField())
@@ -565,18 +571,6 @@ public class StoreController
                 	{
 	                   	if(menuMap.keySet().contains(item.getFieldName().substring(0, item.getFieldName().length()-1)))
 	                	{
-	                		/*if (item.getFieldName().substring(item.getFieldName().length()-1).equals("m"))
-	                		{
-	                			if (item.getString(CHARSET) != null)
-	                				menuMap.get(item.getFieldName().substring(0, 4)).setMenu_name(item.getString(CHARSET));
-	                		}
-	                			 
-	                		else if (item.getFieldName().substring(item.getFieldName().length()-1).equals("p"))
-	                		{
-	                			if (item.getString(CHARSET) != null)
-	                				menuMap.get(item.getFieldName().substring(0, 4)).setPrice(Integer.parseInt(item.getString(CHARSET)));
-	                		}*/
-	                		
 	                		if (item.getFieldName().endsWith("m"))
 	                		{
 	                		    String fieldNamePrefix = item.getFieldName().substring(0, item.getFieldName().length() - 1);

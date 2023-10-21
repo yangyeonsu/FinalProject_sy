@@ -3,6 +3,7 @@ package com.yameokja.mc;
 public class AlarmDTO
 {
 	private String user_num, check_date, commentary;
+	private int check_num;
 	
 	
 	
@@ -33,6 +34,16 @@ public class AlarmDTO
 	{
 		this.commentary = commentary;
 	}
+	
+	public int getCheck_num()
+	{
+		return check_num;
+	}
+	public void setCheck_num(int check_num)
+	{
+		this.check_num = check_num;
+	}
+	
 	
 	
 	
