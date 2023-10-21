@@ -195,6 +195,12 @@ a {
 		
 		$(".alarm").click(function()
 		{
+			var num = $(this).attr("id");
+			var com = $(this).attr("name");
+			
+			$("#comment").val(com);
+			$("#check_num").val(num);
+			
 			$("#userForm").attr("action", "alarm.action");
 			$("#userForm").submit();
 		})
@@ -244,7 +250,7 @@ a {
 								<c:when test="${al.commentary eq 'REQ_ST' }">
 									<c:choose>
 										<c:when test="${al.check_date eq '-' }">
-											<li><button class="alarm" name="${al.commentary }" id="${al.check_num }">
+											<li><button class="alarm" name="${al.commentary }" id="${al.check_num }" >
 											회원님의 가게에 정보 수정 요청이 들어왔습니다.</button>
 										</c:when>
 										<c:otherwise>
@@ -265,7 +271,7 @@ a {
 										</c:otherwise>
 									</c:choose>
 								</c:when>
-								<c:when test="${al.commentary eq 'REQ_REJECT' }">
+								<c:when test="${al.commentary eq 'REQ_REJ' }">
 									<c:choose>
 										<c:when test="${al.check_date eq '-' }">
 											<li><button class="alarm" name="${al.commentary }" id="${al.check_num }">
@@ -289,7 +295,7 @@ a {
 										</c:otherwise>
 									</c:choose>
 								</c:when>
-								<c:when test="${al.commentary eq 'ACCU_PROCESS' }">
+								<c:when test="${al.commentary eq 'ACCU_PRO' }">
 									<c:choose>
 										<c:when test="${al.check_date eq '-' }">
 											<li><button class="alarm" name="${al.commentary }" id="${al.check_num }">
@@ -365,7 +371,7 @@ a {
 						</c:forEach>
 					</ul>
 					<input type="hidden" name="comment" id="comment">
-					<input type="hidden" name="num" id="num">
+					<input type="hidden" name="check_num" id="check_num">
 				</div>
 			</div>
 		</div>

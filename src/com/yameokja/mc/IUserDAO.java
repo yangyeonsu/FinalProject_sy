@@ -67,5 +67,34 @@ public interface IUserDAO
 	
 	// 개인정보수정에서 이메일 update
 	public int userEmailUpdate(@Param("user_num") String user_num, @Param("user_email") String user_email);
+	
+	// 가게로 들어온 정보 수정 요청 확인
+	public int reqstAlarmCk(int check_num);
+	
+	// 회원이 요청한 이의제기 신청 처리 확인
+	public int objproAlarmCk(int check_num);
 
+	// 신청한 가게 정보 수정 요청의 처리 결과가 달라짐 확인
+	public int reqrejAlarmCk(int check_num);
+	
+	// 작성한 리뷰 신고 알림 확인
+	public int accuapplyAlarmCk(int check_num);
+	
+	// 작성한 리뷰 신고 처리 알림 확인
+	public int accuproAlarmCk(int check_num);
+	
+	// 요청한 가게 정보 수정 요청 처리 확인
+	public int reqAlarmCk(int check_num);
+	
+	// 신고한 리뷰 처리 확인
+	public int repAlarmCk(int check_num);
+
+	// 패널티 회수 요청 처리 확인
+	public int penaltyAlarmCk(int check_num);
+	
+	// 가게 등록 요청 처리 확인
+	public int inAlarmCk(int check_num);
+	
+	// 가게 폐업 요청 처리 확인
+	public int outAlarmCk(int check_num);
 }

@@ -236,6 +236,76 @@
 		SET USER_EMAIL = #{user_email}
 		WHERE USER_NUM = #{user_num}
 	</update> 
+	
+	<!-- 가게로 들어온 가게 정보 수정 요청 확인 -->
+	<update id="reqstAlarmCk">
+		UPDATE REQ_PROCESS
+		SET ST_READ_DATE = SYSDATE
+		WHERE REQ_PROCESS_NUM = #{check_num}
+	</update>
+	
+	<!-- 회원이 요청한 이의제기 신청 처리 확인 -->
+	<update id="objproAlarmCk">
+		UPDATE OBJ_PROCESS
+		SET ST_READ_DATE = SYSDATE
+		WHERE OBJ_PROCESS_NUM = #{check_num}
+	</update>
+	
+	<!-- 신청한 가게 정보 수정 요청의 처리 결과가 달라짐 확인 -->
+	<update id="reqrejAlarmCk">
+		UPDATE OBJ_PROCESS
+		SET USER_READ_DATE = SYSDATE
+		WHERE OBJ_PROCESS_NUM = #{check_num}
+	</update>
+	
+	<!-- 작성한 리뷰 신고 알림 확인 -->
+	<update id="accuapplyAlarmCk">
+		UPDATE REP_APPLY
+		SET ACCU_READ_DATE = SYSDATE
+		WHERE REP_APPLY_NUM = #{check_num}
+	</update>
+	
+	<!-- 작성한 리뷰 신고 처리 알림 확인 -->
+	<update id="accuproAlarmCk">
+		UPDATE REP_PROCESS
+		SET ACCU_READ_DATE = SYSDATE
+		WHERE REP_PROCESS_NUM = #{check_num}
+	</update>
+	
+	<!-- 요청한 가게 정보 수정 요청 처리 확인 -->
+	<update id="reqAlarmCk">
+		UPDATE REQ_PROCESS
+		SET USER_READ_DATE = SYSDATE
+		WHERE REQ_PROCESS_NUM = #{check_num}
+	</update>
+	
+	<!-- 신고한 리뷰 처리 확인 -->
+	<update id="repAlarmCk">
+		UPDATE REP_PROCESS
+		SET REP_READ_DATE = SYSDATE
+		WHERE REP_PROCESS_NUM = #{check_num}
+	</update>
+	
+	<!-- 신고한 리뷰 처리 확인 -->
+	<update id="penaltyAlarmCk">
+		UPDATE REVO_PROCESS
+		SET ST_READ_DATE = SYSDATE
+		WHERE REVO_PRICESS_NUM = #{check_num}
+	</update>
+	
+	<!-- 가게 등록 요청 처리 확인 -->
+	<update id="inAlarmCk">
+		UPDATE IN_PROCESS
+		SET CHECK_DATE = SYSDATE
+		WHERE IN_PROCESS_NUM = #{check_num}
+	</update>
+	
+	<!-- 가게 폐업 요청 처리 확인 -->
+	<update id="outAlarmCk">
+		UPDATE OUT_PROCESS
+		SET CHECK_DATE = SYSDATE
+		WHERE OUT_PROCESS_NUM = #{check_num}
+	</update>
 </mapper>
 
 
