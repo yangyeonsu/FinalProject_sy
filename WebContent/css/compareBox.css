@@ -1,4 +1,9 @@
 @charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500&display=swap');
+*
+{
+	font-family: 'IBM Plex Sans KR', sans-serif;
+}
 
 /* 가게 대표이미지 크기 조정 */
 .stImg
