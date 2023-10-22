@@ -177,19 +177,16 @@ String cp = request.getContextPath();
 		// 필터 검색 범례 유지
 		$('.hiddenRL').each(function(){
 			  var region = $(this).val();
-			  alert(region);
 			  $("#"+region).prop("checked", true);
 		});
 		
 		$('.hiddenCL').each(function(){
 			  var category = $(this).val();
-			  alert(category);
 			  $("#"+category).prop("checked", true);
 		});
 		
 		$('.hiddenSL').each(function(){
 			  var skey = $(this).val();
-			  alert(skey);
 			  $("#"+skey).prop("checked", true);
 		});
 
@@ -269,13 +266,13 @@ String cp = request.getContextPath();
 							<span>음식 카테고리</span>
 						</div>
 						<div id="catCB">
-							<c:forEach var="foodLabel" items="${foodLabelList }">
+							<c:forEach var="foodLabel" items="${foodLabelList}">
 								<label>
-									<input type="checkbox" class="checkBox" name="foodLabel" value="${foodLabel.food_name }" id="${foodLabel.food_name }">${foodLabel.food_name }
+									<input type="checkbox" class="checkBox" name="foodLabel" value="${foodLabel.food_name}" id="${foodLabel.food_name}">${foodLabel.food_name}
 								</label>
 							</c:forEach>
 						</div>
-						<c:forEach var = "cch" items = "${catChecked }">
+						<c:forEach var = "cch" items = "${catChecked}">
 							<input type="hidden" class="hiddenCL" value="${cch}">
 						</c:forEach>
 					</div>
@@ -285,13 +282,13 @@ String cp = request.getContextPath();
 							<span>가게 키워드</span>
 						</div>
 						<div id="stKeyCB">
-							<c:forEach var="stKey" items="${stKeyList }">
-								<label for="${stKey.st_keyword }">
-									<input type="checkbox" class="checkBox" name="stKey" value="${stKey.st_keyword }" id="${stKey.st_keyword}">${stKey.st_keyword }
+							<c:forEach var="stKey" items="${stKeyList}">
+								<label for="${stKey.st_key_num}">
+									<input type="checkbox" class="checkBox" name="stKey" value="${stKey.st_key_num}" id="${stKey.st_key_num}">${stKey.st_keyword}
 								</label>
 							</c:forEach>
 						</div>
-						<c:forEach var="sch" items="${stKeyChecked }">
+						<c:forEach var="sch" items="${stKeyChecked}">
 							<input type="hidden" class="hiddenSL" value="${sch}">
 						</c:forEach>
 					</div>

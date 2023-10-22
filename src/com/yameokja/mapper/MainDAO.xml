@@ -339,7 +339,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ON SK.ST_KEY_NUM = SKL.ST_KEY_NUM
 		RIGHT JOIN ST_LIST SL
 		ON SK.ST_NUM = SL.ST_NUM
-		WHERE SKL.ST_KEYWORD IN (
+		WHERE SKL.ST_KEY_NUM IN (
 		<foreach collection="stKeyCbList" item="name" separator=",">
 			#{name, jdbcType=VARCHAR}
 		</foreach>

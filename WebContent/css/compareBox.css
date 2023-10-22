@@ -1,4 +1,9 @@
 @charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500&display=swap');
+*
+{
+	font-family: 'IBM Plex Sans KR', sans-serif;
+}
 
 /* 가게 대표이미지 크기 조정 */
 .stImg
@@ -115,18 +120,6 @@
 	cursor: pointer;
 }
 
-/* 비교함의 가게영역의 가게 이미지
-.comStoreImgDiv img
-{
-	display: flex;
-    flex-direction: column;
-    max-width: 4.5vw;
-    max-height: 4.5vw;
-    width: 4.5vw;
-    height: 4.5vw;
-    object-fit: cover;
-}
- */
 .comStNoImg
 {
 	max-width: 5vw;
@@ -137,10 +130,10 @@
 .comStoreBtn
 {
 	width: 4.5vw;
-	border: 1px solid #f7f4ea;
-	background-color: #fff;
-	font-size: 0.5vw;
-	cursor: pointer;
+    border: 1px solid #f7f4ea;
+    background-color: #fff;
+    font-size: 0.7vw;
+    cursor: pointer;
 }
 
 .comDelete
@@ -159,6 +152,29 @@
     text-align: center;
     font-weight: bold;
     cursor: pointer;
+}
+
+/* 비교함 폐업 여부 */
+.comIsOutDiv
+{
+	height: 0;
+}
+
+.comIsOut
+{
+	display: inline;
+    position: relative;
+    top: -1.7vw;
+    left: 1.4vw;
+    height: 0.9vw;
+    width: 1.1vw;
+    border: 0px;
+    background-color: #fff;
+    font-size: 0.6vw;
+    color: #ef6351;
+    border-radius: 3px;
+    text-align: center;
+    font-weight: bold;
 }
 
 /* 비교함의 가게 이름 */
