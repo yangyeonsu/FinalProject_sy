@@ -420,6 +420,7 @@ public class UserController
 	    List<UserStupdaterelistDTO> user_stupdate_relist = dao.user_stupdate_relist(user_num, startRow, endRow);
 	    //System.out.println(user_stupdate_relist);
 	    model.addAttribute("user", user);
+	    model.addAttribute("alarm", udao.userAlarm(user_num));
 	    model.addAttribute("stupdateReList", user_stupdate_relist);
 	    result = "/WEB-INF/view/user_StUpdate_reList.jsp";
 	    
@@ -502,6 +503,7 @@ public class UserController
 	    //System.out.println(rvReportList);
 	    model.addAttribute("rvReportList", rvReportList); // 리스트를 전달
 	    model.addAttribute("user", user);
+	    model.addAttribute("alarm", udao.userAlarm(user_num));
 	    result = "/WEB-INF/view/user_rv_Report.jsp";
 	    
 	    return result;
@@ -589,8 +591,11 @@ public class UserController
 	    List<StInoutDTO> stinoutlist = dao.stinoutlist(user.user_id, startRow, endRow);
 	    //System.out.println(user_stupdate_relist);
 	    model.addAttribute("user", user);
+      model.addAttribute("alarm", udao.userAlarm(user_num));
 	    model.addAttribute("stinoutlist", stinoutlist);
 	    result = "/WEB-INF/view/St_Inout_Lis.jsp";
+
+	    
 	    
 	    return result;
 	};
@@ -675,6 +680,7 @@ public class UserController
  	    //System.out.println(penaltyList);
 	    model.addAttribute("penaltyList", penaltyList); // 리스트를 전달
 	    model.addAttribute("user", user);
+	    model.addAttribute("alarm", udao.userAlarm(user_num));
  	    
 		result = "/WEB-INF/view/user_penaltyList.jsp";
 		
