@@ -21,5 +21,10 @@ public interface IUserSidebarDAO
 	
 	// 개인이 가게 등/폐업 신청 내역
 	public int count_inoutlist(String user_num);
+	public List<StInoutDTO> stinoutlist(
+	        @Param("user_id") String user_id,
+	        @Param("startRow") int startRow,
+	        @Param("endRow") int endRow
+	);
 
 }

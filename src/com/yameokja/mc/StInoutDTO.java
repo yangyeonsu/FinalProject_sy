@@ -2,7 +2,7 @@ package com.yameokja.mc;
 
 public class StInoutDTO
 {
-	String cat, reg_date, final_date, state, st_num;
+	String cat, reg_date, final_date, state, st_name;
 	int apply_num;
 	
 	
@@ -42,13 +42,13 @@ public class StInoutDTO
 		this.state = state;
 	}
 	
-	public String getSt_num()
+	public String getSt_name()
 	{
-		return st_num;
+		return st_name;
 	}
-	public void setSt_num(String st_num)
+	public void setSt_name(String st_name)
 	{
-		this.st_num = st_num;
+		this.st_name = st_name;
 	}
 	
 	public int getApply_num()
