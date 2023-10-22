@@ -396,6 +396,8 @@ public class stDetailController
 					result = "1";
 				}
 			} 
+			// reqRej:반려확인 / reqObj:이의제기내역에서 완료되었는지 
+			// reqRevo:패널티부여 후 수정했는지 판단 / reqPen:패널티 부여 후 3일이 지났는지 판단
 			else if(dao.reqRej(req_apply_num) != null && dao.reqObj(req_apply_num)==0 && dao.reqRevo(req_apply_num)==0 && dao.reqPen(req_apply_num)==0)
 			{
 				// 찾은 st_chbox_num 으로 req_apply에 데이터 insert

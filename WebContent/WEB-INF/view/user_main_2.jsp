@@ -149,73 +149,6 @@ String cp = request.getContextPath();
 			$("#userForm").submit();
 		});
 		
-		<%-- 
-		$("#secondSearchBtn").click(function()
-		{
-			$st_num = $(this).attr("value")
-			$user_num = "<%=(String) session.getAttribute("user_num")%>"
-			$keyword = $("#typingArea").attr("value")
-			
-			var resultStoreList = [];
-			var firstSearchResult = ${firstSearchResult};
-			
-			for (var i = 0; i < firstSearchResult.length; i++)
-			{
-				resultStoreList.push(firstSearchResult[i]);
-			}
-			
-			alert(resultStoreList);
-			
-			var regionCbList = [];
-			$("input[name=region]:checked").each(function()
-			{
-				var rChk = $(this).val();
-				regionCbList.push(rChk);
-			});
-			
-			var catCbList = [];
-			$("input[name=foodLabel]:checked").each(function()
-			{
-				var cChk = $(this).val();
-				catCbList.push(cChk);
-			});
-			
-			var stKeyCbList = [];
-			$("input[name=stKey]:checked").each(function()
-			{
-				var sChk = $(this).val();
-				stKeyCbList.push(sChk);
-			});
-
-			param="?regionCbList="a%a%a%;
-			param+="&catCbList="d5pd
-			
-			$.ajax(
-			{
-				url : "filterSearch.action",
-				type : 'post',
-				data :JSON.stringify(
-				{
-				    regionCbList: regionCbList,
-				    catCbList: catCbList,
-				    stKeyCbList: stKeyCbList,
-				    resultStoreList: resultStoreList
-			    }),
-				success : function(data)
-				{
-					alert("확인");
-					$(".storeList").html(data);
-					
-				},
-				error : function(e)
-				{
-					alert(e.responseText);
-				}
-			});
-		}); 
-		--%>
-		
-		
 		$("#comBtn").click(function()
 		{
 			if ($('input:checkbox[name=checkList]').length > 3)
@@ -244,18 +177,20 @@ String cp = request.getContextPath();
 		// 필터 검색 범례 유지
 		$('.hiddenRL').each(function(){
 			  var region = $(this).val();
+			  alert(region);
 			  $("#"+region).prop("checked", true);
 		});
 		
 		$('.hiddenCL').each(function(){
 			  var category = $(this).val();
+			  alert(category);
 			  $("#"+category).prop("checked", true);
 		});
 		
 		$('.hiddenSL').each(function(){
-			  var stkey = $(this).val();
-			  alert(stkey);
-			  $("#"+stkey).prop("checked", true);
+			  var skey = $(this).val();
+			  alert(skey);
+			  $("#"+skey).prop("checked", true);
 		});
 
 		
