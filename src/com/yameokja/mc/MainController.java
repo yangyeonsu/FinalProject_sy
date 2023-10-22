@@ -36,6 +36,8 @@ public class MainController
 
 		IMainDAO dao = sqlSession.getMapper(IMainDAO.class);
 		IUserDAO umDao = sqlSession.getMapper(IUserDAO.class);
+		
+		model.addAttribute("alarm", umDao.userAlarm(user_num));
 
 		List<Integer> ibmatList = dao.getIbmatStNumber(user_num);
 		List<Integer> jjimList = dao.getJjimStNumber(user_num);
@@ -180,6 +182,7 @@ public class MainController
 			user.setUser_grade(umDao.secondHalf(user_num).user_grade);
 
 		model.addAttribute("user", user);
+		model.addAttribute("alarm", umDao.userAlarm(user_num));
 
 		result = "/WEB-INF/view/user_main_2.jsp";
 
@@ -448,6 +451,7 @@ public class MainController
 			user.setUser_grade(umDao.secondHalf(user_num).user_grade);
 
 		model.addAttribute("user", user);
+		model.addAttribute("alarm", umDao.userAlarm(user_num));
 		
 		String[] regionCbList = null;
 		String[] catCbList = null;
