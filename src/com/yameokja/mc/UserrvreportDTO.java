@@ -2,7 +2,7 @@ package com.yameokja.mc;
 
 public class UserrvreportDTO
 {
-	private String reg_date, st_name, accu_id, final_date, state;
+	private String reg_date, st_name, accu_id, final_date, state, ismidrej;
 	private int rep_process_num;
 	
 	private String rep_rej_num;
@@ -120,6 +120,16 @@ public class UserrvreportDTO
 	public void setState(String state)
 	{
 		this.state = state;
+	}
+
+	public String getIsmidrej()
+	{
+		return ismidrej;
+	}
+
+	public void setIsmidrej(String ismidrej)
+	{
+		this.ismidrej = ismidrej;
 	}
 	
 	

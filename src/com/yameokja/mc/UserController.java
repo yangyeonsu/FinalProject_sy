@@ -351,13 +351,10 @@ public class UserController
 	    String actionName = "/user_stupdate_relist.action";
 	    
 	    String result = null;
-	    
-	    
-	    
-	    
-	    
+
 	    IUserSidebarDAO dao = sqlSession.getMapper(IUserSidebarDAO.class);
 	    IUserDAO udao = sqlSession.getMapper(IUserDAO.class);
+	    IStoreMainDAO smDao = sqlSession.getMapper(IStoreMainDAO.class);
 	    
 	    UserDTO user = udao.searchUserInfo(user_num, "num");
 	    
@@ -371,6 +368,14 @@ public class UserController
 			user.setPoint_sum(udao.firstHalf(user_num).point_sum);
 			user.setUser_grade(udao.secondHalf(user_num).user_grade);
 		}
+	    
+	    // 개인 사용자이면서 사업자 사용자인 경우 가게 리스트 넘겨주기
+	    ArrayList<StoreDTO> st_list = smDao.searchStoreInfo(user_num);
+	    
+	    if(st_list.size()==0)
+	    	model.addAttribute("st_list", null);
+	    else
+	    	model.addAttribute("st_list", st_list);
 	    
 	    // 이전 페이지(?)로부터 넘어온 게시물 번호 수신
 		String strNum = request.getParameter("num");
@@ -437,6 +442,7 @@ public class UserController
 	    
 	    IUserSidebarDAO dao = sqlSession.getMapper(IUserSidebarDAO.class);
 	    IUserDAO udao = sqlSession.getMapper(IUserDAO.class);
+	    IStoreMainDAO smDao = sqlSession.getMapper(IStoreMainDAO.class);
 	    
 	    UserDTO user = udao.searchUserInfo(user_num, "num");
 	    
@@ -451,6 +457,14 @@ public class UserController
 			user.setUser_grade(udao.secondHalf(user_num).user_grade);
 		}
 	    
+	    // 개인 사용자이면서 사업자 사용자인 경우 가게 리스트 넘겨주기
+	    ArrayList<StoreDTO> st_list = smDao.searchStoreInfo(user_num);
+	    
+	    if(st_list.size()==0)
+	    	model.addAttribute("st_list", null);
+	    else
+	    	model.addAttribute("st_list", st_list);
+	    
 	    // 이전 페이지(?)로부터 넘어온 게시물 번호 수신
  		String strNum = request.getParameter("num");
  		int num=0;
@@ -463,7 +477,7 @@ public class UserController
  		if (pageNum != null)
  			currentPage = Integer.parseInt(pageNum);
  	    
- 		// 페이지당 아이템 수를 여기에 설정하세요
+ 		// 페이지당 아이템 수를 여기에 설정하세요s
  	    int itemsPerPage = 10;
  	    
  	    // 전체 데이터 수 구해서 총 페이지 수 계산
@@ -507,9 +521,9 @@ public class UserController
 	    
 	    String result = null;
 	    
-	    
 	    IUserSidebarDAO dao = sqlSession.getMapper(IUserSidebarDAO.class);
 	    IUserDAO udao = sqlSession.getMapper(IUserDAO.class);
+	    IStoreMainDAO smDao = sqlSession.getMapper(IStoreMainDAO.class);
 	    
 	    UserDTO user = udao.searchUserInfo(user_num, "num");
 	    
@@ -523,6 +537,14 @@ public class UserController
 			user.setPoint_sum(udao.firstHalf(user_num).point_sum);
 			user.setUser_grade(udao.secondHalf(user_num).user_grade);
 		}
+	    
+	    // 개인 사용자이면서 사업자 사용자인 경우 가게 리스트 넘겨주기
+	    ArrayList<StoreDTO> st_list = smDao.searchStoreInfo(user_num);
+	    
+	    if(st_list.size()==0)
+	    	model.addAttribute("st_list", null);
+	    else
+	    	model.addAttribute("st_list", st_list);
 	    
 	    // 이전 페이지(?)로부터 넘어온 게시물 번호 수신
 		String strNum = request.getParameter("num");
@@ -589,6 +611,7 @@ public class UserController
 	    
 	    IUserSidebarDAO dao = sqlSession.getMapper(IUserSidebarDAO.class);
 	    IUserDAO udao = sqlSession.getMapper(IUserDAO.class);
+	    IStoreMainDAO smDao = sqlSession.getMapper(IStoreMainDAO.class);
 	    
 	    // 사용자 정보
 	    UserDTO user = udao.searchUserInfo(user_num, "num");
@@ -603,6 +626,14 @@ public class UserController
 			user.setPoint_sum(udao.firstHalf(user_num).point_sum);
 			user.setUser_grade(udao.secondHalf(user_num).user_grade);
 		}
+	    
+	    // 개인 사용자이면서 사업자 사용자인 경우 가게 리스트 넘겨주기
+	    ArrayList<StoreDTO> st_list = smDao.searchStoreInfo(user_num);
+	    
+	    if(st_list.size()==0)
+	    	model.addAttribute("st_list", null);
+	    else
+	    	model.addAttribute("st_list", st_list);
 	    
 	    // 페이징 처리
 	    // 이전 페이지(?)로부터 넘어온 게시물 번호 수신

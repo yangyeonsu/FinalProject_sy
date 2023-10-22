@@ -95,7 +95,6 @@ public class stSidebarController
 	        endRow
 	    );
 	    
-	    
 	    model.addAttribute("pageIndex", Paging.pageIndexList(currentPage, totalPage, actionName));
 	    model.addAttribute("user", user);
 	    model.addAttribute("stinfoupdatelist", stinfoupdatelist);

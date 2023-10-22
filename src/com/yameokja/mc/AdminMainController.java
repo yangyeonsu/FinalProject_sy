@@ -394,7 +394,7 @@ public class AdminMainController
 				System.out.println("mid_rs : " + mid_rs);
 				
 				// rep_mid table <- insert
-				int midNum = dao.rvreportHalf(mid_rs, rep_process_num);
+				dao.rvreportHalf(mid_rs, rep_process_num);
 			}
 			// 반려 처리
 			else if(check.equals("res"))
@@ -403,7 +403,7 @@ public class AdminMainController
 				System.out.println("rej_rs : " + rej_rs);
 
 				// rep_rej table <- insert
-				int rejNum = dao.rvreportRej(rej_rs, rep_process_num);
+				dao.rvreportRej(rej_rs, rep_process_num);
 			}
 		}
 
@@ -421,7 +421,7 @@ public class AdminMainController
 
 		IAdminFindDAO fdao = sqlSesion.getMapper(IAdminFindDAO.class);
 
-		int admin_num = Integer.parseInt((String) session.getAttribute("admin_num"));
+		int admin_num = (int) session.getAttribute("admin_num");
 
 		int req_apply_num = Integer.parseInt(request.getParameter("req_apply_num"));
 
@@ -433,8 +433,13 @@ public class AdminMainController
 		{
 			int process = fdao.getReqProNum(req_apply_num, admin_num);
 			
+			// 승인인 경우 penalty insert
+			if (check.equals("true"))
+			{
+				fdao.setPenalty(process);
+			}
 			// 반려인 경우 req_rej insert
-			if (check.equals("false"))
+			else if(check.equals("false"))
 			{
 				String rej_rs = request.getParameter("myTextarea");
 				fdao.reqRej(process, rej_rs);

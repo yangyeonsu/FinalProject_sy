@@ -150,16 +150,20 @@
 		GROUP BY RRN.RV_NUM
 		) RNR
 		ON RB.RV_NUM = RNR.RV_NUM
-        WHERE RB.RV_NUM  NOT IN (SELECT RA.RV_NUM
-                                FROM REP_APPLY RA
-                                WHERE REP_APPLY_NUM NOT IN (SELECT REP_APPLY_NUM
-                                                            FROM REP_REJ RR LEFT JOIN REP_PROCESS RP
-                                                            ON RR.REP_PROCESS_NUM = RP.REP_PROCESS_NUM))
+		WHERE RB.RV_NUM  NOT IN (SELECT RA.RV_NUM
+		                        FROM REP_APPLY RA
+		                        WHERE REP_APPLY_NUM NOT IN (SELECT RP.REP_APPLY_NUM
+		                                                    FROM REP_REJ RR LEFT JOIN REP_PROCESS RP
+		                                                    ON RR.REP_PROCESS_NUM = RP.REP_PROCESS_NUM
+		                                                    UNION
+		                                                    SELECT RP.REP_APPLY_NUM
+		                                                    FROM REP_MID RM LEFT JOIN REP_PROCESS RP
+		                                                    ON RM.REP_PROCESS_NUM = RP.REP_PROCESS_NUM))
 		) T
 		LEFT JOIN USING_USER UU
 		ON T.USER_NUM = UU.USER_NUM
 		WHERE T.ST_NUM = #{st_num, jdbcType=INTEGER}
-        ORDER BY RV_NUM DESC
+		ORDER BY RV_NUM DESC
 	</select>
 
 	<!-- 리뷰 사진 -->

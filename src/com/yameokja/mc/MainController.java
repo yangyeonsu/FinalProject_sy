@@ -485,10 +485,14 @@ public class MainController
 			stKeyCbList = null;
 		}
 		
-		ArrayList<Integer> filterResult = dao.filterSearchList(regionCbList, catCbList, stKeyCbList, finalKeyword);
-
-
-		if(filterResult.size() == 0)
+		ArrayList<Integer> filterResult = null;
+		
+		if(finalKeyword.size()!=0)
+		{
+			filterResult = dao.filterSearchList(regionCbList, catCbList, stKeyCbList, finalKeyword);
+		}
+		
+		if(filterResult==null || filterResult.size() == 0 || filterResult.isEmpty())
 		{
 			model.addAttribute("searchList", null);
 		}
