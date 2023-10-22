@@ -9,6 +9,7 @@ import java.util.Random;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.coyote.RequestGroupInfo;
 
 /*import java.util.ArrayList;
 import java.util.HashMap;*/
@@ -883,4 +884,70 @@ public class UserController
 	{
 		return "WEB-INF/view/user_info_search.jsp";
 	}
+	
+	
+	@RequestMapping(value="/alarm.action")
+	public String alarm(HttpServletRequest request, Model model)
+	{
+		String result = "";
+		
+		IUserDAO dao = sqlSession.getMapper(IUserDAO.class);
+		
+		String comment = request.getParameter("comment");
+		int check_num = Integer.parseInt(request.getParameter("check_num"));
+		
+		if(comment.equals("REQ_ST"))
+		{
+			dao.reqstAlarmCk(check_num);
+			result = "redirect:stinfoupdaterelist.action";
+		}
+		else if(comment.equals("OBJ_PRO"))
+		{
+			dao.objproAlarmCk(check_num);
+			result = "redirect:objlist.action";
+		}
+		else if(comment.equals("REQ_REJ"))
+		{
+			dao.reqrejAlarmCk(check_num);
+			result = "redirect:user_stupdate_relist.action";
+		}
+		else if(comment.equals("ACCU_APPLY"))
+		{
+			dao.accuapplyAlarmCk(check_num);
+			result = "redirect:userrvpenalty.action";
+		}
+		else if(comment.equals("ACCU_PRO"))
+		{
+			dao.accuproAlarmCk(check_num);
+			result = "redirect:userrvpenalty.action";
+		}
+		else if(comment.equals("REQ"))
+		{
+			dao.reqAlarmCk(check_num);
+			result = "redirect:user_stupdate_relist.action";
+		}
+		else if(comment.equals("REP"))
+		{
+			dao.repAlarmCk(check_num);
+			result = "redirect:user_rv_report.action";
+		}
+		else if(comment.equals("PENALTY"))
+		{
+			dao.penaltyAlarmCk(check_num);
+			result = "redirect:penaltylist.action";
+		}
+		else if(comment.equals("IN"))
+		{
+			dao.inAlarmCk(check_num);
+			result = "redirect:user_stinout_list.action";
+		}
+		else if(comment.equals("OUT"))
+		{
+			dao.outAlarmCk(check_num);
+			result = "redirect:user_stinout_list.action";
+		}
+		
+		return result; 
+	}
+	
 }

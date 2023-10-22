@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.yameokja.mc.IStoreMainDAO">
+	<!-- 해당 유저가 가게 회원인지 확인하는 쿼리문 -->
 	<select id="searchStoreInfo" resultType="com.yameokja.mc.StoreDTO">
 		SELECT ST_NUM, ST_NAME
 		FROM STORE_VIEW
@@ -32,6 +33,7 @@
 		WHERE USER_NUM = #{user_num}
 	</select>
 	
+	<!-- 별점 평균 가져오는 쿼리문 -->
 	<select id="star_transition" resultType="java.util.HashMap">
 		SELECT TO_CHAR(TRUNC(REG_DATE, 'Q')) AS QUARTER_START_DATE, AVG(STAR_SCORE) AS AVERAGE_STAR_SCORE
 		FROM RV_BOX
@@ -39,7 +41,7 @@
 		GROUP BY TRUNC(REG_DATE, 'Q')
 		ORDER BY TRUNC(REG_DATE, 'Q')
 	</select>
-	
+	<!-- 리뷰 키워드와 해당 키워드의 갯수 가져오는 쿼리문 -->
 	<select id="rv_key_sum" resultType="java.util.HashMap">
 		SELECT RK.COUNT AS COUNT_RV_KEY, RKL.RV_KEY_NAME AS RV_KEY_NAME
 		FROM RV_KEY_LABEL RKL LEFT JOIN RV_KEY RK

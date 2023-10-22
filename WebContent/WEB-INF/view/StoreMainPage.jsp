@@ -1290,7 +1290,7 @@ $(function name()
 
 		<c:import url="footer.jsp"></c:import>
 
-		<script type="text/javascript">
+	<script type="text/javascript">
 		var context = document.getElementById('myChart').getContext('2d');
 		var myChart = new Chart(context, {type: 'line' // 차트의 형태
 										 // 차트에 들어갈 데이터
