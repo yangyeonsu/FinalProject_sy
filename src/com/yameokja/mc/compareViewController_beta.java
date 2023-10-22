@@ -47,6 +47,8 @@ public class compareViewController_beta
 			user.setUser_grade(uDao.secondHalf(user_num).user_grade);
 		
 		model.addAttribute("user", user);
+		// 유저 알람 목록
+		model.addAttribute("alarm", uDao.userAlarm(user_num));
 		
 		// 사업자이면 가게 정보 함께 넘김
 		ArrayList<StoreDTO> st_list=null;
