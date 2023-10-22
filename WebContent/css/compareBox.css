@@ -130,10 +130,10 @@
 .comStoreBtn
 {
 	width: 4.5vw;
-	border: 1px solid #f7f4ea;
-	background-color: #fff;
-	font-size: 0.5vw;
-	cursor: pointer;
+    border: 1px solid #f7f4ea;
+    background-color: #fff;
+    font-size: 0.7vw;
+    cursor: pointer;
 }
 
 .comDelete
@@ -170,7 +170,7 @@
     width: 1.1vw;
     border: 0px;
     background-color: #fff;
-    font-size: 0.5vw;
+    font-size: 0.6vw;
     color: #ef6351;
     border-radius: 3px;
     text-align: center;
