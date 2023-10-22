@@ -421,7 +421,7 @@ public class AdminMainController
 
 		IAdminFindDAO fdao = sqlSesion.getMapper(IAdminFindDAO.class);
 
-		int admin_num = Integer.parseInt((String) session.getAttribute("admin_num"));
+		int admin_num = (int) session.getAttribute("admin_num");
 
 		int req_apply_num = Integer.parseInt(request.getParameter("req_apply_num"));
 
