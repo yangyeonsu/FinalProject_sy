@@ -18,34 +18,6 @@ String cp = request.getContextPath();
 <link rel="stylesheet" type="text/css" href="<%=cp%>/css/compareBox.css">
 
 <script type="text/javascript">
-	/* 
-	 $(function()
-	 {
-	 $("#comBtn").click(function()
-	 {
-	 if ($('input:checkbox[name=comStImgCB]').length > 3)
-	 {
-	 alert("3개 이상 비교 불가");
-	 return;
-	 }
-	
-	
-	 var checkArray = new Array();
-	
-	 $('input:checkbox[name=comStImgCB]:checked').each(function()
-	 {
-	 checkArray.push($(this).attr("id"));
-	 });
-	
-	 $("#checkedCompare").val(checkArray);
-	
-	 $("#userForm").attr("action","compareView.action");
-	 $("#userForm").submit();
-	
-	
-	 });
-	 });
-	 */
 
 	$(function()
 	{
@@ -148,7 +120,7 @@ String cp = request.getContextPath();
 								<!-- 한 가게 대표사진 영역 -->
 								<div class="comStoreImgDiv">
 									<button type="button" value="${com.st_num}" class="comDelete">X</button>
-									<input type="hidden" id="isStOut" value="${com.isout }">
+									
 									<label for="${com.st_num}" class="stLabel"> <input
 										type="checkbox" class="comStImgCB" name="comStImgCB"
 										id="${com.st_num}" onclick="comCountChecked(this)"> 
@@ -162,6 +134,11 @@ String cp = request.getContextPath();
 											</c:otherwise>
 										</c:choose>
 									</label>
+								</div>
+								<div class="comIsOutDiv">
+								<c:if test="${com.isout eq '폐업'}">
+									<input type="text" value="${com.isout }" class="comIsOut" value="폐업">
+								</c:if>
 								</div>
 								<!-- 한 가게 가게이름 영역 -->
 								<div class="comStoreNameDiv">

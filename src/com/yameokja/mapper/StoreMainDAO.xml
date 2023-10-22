@@ -8,8 +8,10 @@
 		FROM STORE_VIEW
         WHERE IN_PROCESS_NUM NOT IN (SELECT IN_PROCESS_NUM
                                     FROM OUT_PROCESS OP LEFT JOIN OUT_APPLY OA
-                                    ON OP.OUT_APPLY_NUM = OA.OUT_APPLY_NUM)
-          AND USER_NUM = #{user_num}
+                                    ON OP.OUT_APPLY_NUM = OA.OUT_APPLY_NUM
+                                    WHERE OP.OUT_PROCESS_NUM NOT IN (SELECT OUT_PROCESS_NUM
+                                                                     FROM OUT_REJ))
+        AND USER_NUM = #{user_num}
 		ORDER BY REG_DATE DESC
 	</select>
 	
