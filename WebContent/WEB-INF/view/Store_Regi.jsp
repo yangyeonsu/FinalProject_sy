@@ -446,7 +446,7 @@ button
 						사업장 관리 번호
 					</div>
 					<div class="input_group">
-						<input type="text" class="inputform" id="st_place_num" name="st_place_num">
+						<input type="text" class="inputform" id="st_place_num" name="st_place_num" maxlength='11'>
 					</div>
 					<span id="err3" style="color: red; font-weight: bold; display: none;"></span>
 				</div>
