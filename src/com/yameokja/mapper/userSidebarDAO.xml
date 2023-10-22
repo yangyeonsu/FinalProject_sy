@@ -179,10 +179,20 @@
 	</select>
 	
 	
-	<!-- 사용자가 요청한 가게정보오류수정요청 내역 -->
 	<select id="count_inoutlist" resultType="java.lang.Integer">
 		SELECT COUNT(*) AS COUNT
 		FROM INOUT_APPLY_VIEW
-		WHERE USER_NUM = #{user_num}
+		WHERE USER_ID = #{user_id}
+	</select>
+	
+	<select id="stinoutlist" resultType="com.yameokja.mc.StInoutDTO">
+		SELECT CAT, REG_DATE, FINAL_DATE, STATE, ST_NAME, APPLY_NUM, RNUM
+		FROM(
+			SELECT CAT, REG_DATE, FINAL_DATE, STATE, ST_NAME, APPLY_NUM
+				 , ROW_NUMBER() OVER (ORDER BY FINAL_DATE DESC) AS RNUM
+			FROM INOUT_APPLY_VIEW
+			WHERE USER_ID = #{user_id}
+		) T
+		WHERE RNUM BETWEEN #{startRow} AND #{endRow}
 	</select>
 </mapper>

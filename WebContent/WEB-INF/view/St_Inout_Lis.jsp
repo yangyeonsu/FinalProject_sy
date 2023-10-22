@@ -22,13 +22,52 @@
 	
 </style>
 
+<!-- 배너 스크립트 -->
 <script type="text/javascript">
-	
 	$(function()
 	{
-		
+		$(".left_sub_menu").hide();
+		$(".has_sub").click(function()
+		{
+			$(".left_sub_menu").fadeToggle(300);
+			if ($('#checkOverlay').val() == "true")
+			{
+				$('.overlay').css("position", "fixed");
+				$('.overlay').css("width", "0%");
+				$('.overlay').css("height", "0%");
+				$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
+				$('.overlay').css("z-index", "0");
+				$('#checkOverlay').attr("value", "false");
+			} else
+			{
+				$('.overlay').css("position", "fixed");
+				$('.overlay').css("width", "100%");
+				$('.overlay').css("height", "100%");
+				$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
+				$('.overlay').css("z-index", "3");
+				$('.overlay').css("margin-top", "1.011vh");
+				$('#checkOverlay').attr("value", "true");
+			}
+
+		});
+		// 왼쪽메뉴 드롭다운
+		$(".sub_menu ul.small_menu").hide();
+		$(".sub_menu ul.big_menu").click(function()
+		{
+			$("ul", this).slideToggle(300);
+		});
+		// 외부 클릭 시 좌측 사이드 메뉴 숨기기
+		$('.overlay').on('click', function()
+		{
+			$('.left_sub_menu').fadeOut();
+			$('.overlay').css("position", "fixed");
+			$('.overlay').css("width", "0%");
+			$('.overlay').css("height", "0%");
+			$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
+			$('.overlay').css("z-index", "0");
+			$('#checkOverlay').attr("value", "false");
+		});
 	});
-	
 </script>
 
 
@@ -41,14 +80,27 @@
 		
 		
 		
-	<div id="mainDiv">
+	<div id="middle">
 		<c:import url="sideBar_user.jsp"></c:import>
 		
-		<!-- 접수내역관리 -->
+		<div class="right_content">
+			<div class="rv_report">
+				<div class="title">가게 등폐업 요청 내역</div>
+				<hr>
+				<div class="rv_reportlist">
+					<div class="subtitle">
+						<div class="rpt_subtitle">구분</div>
+						<div class="rpt_subtitle">신청일자</div>
+						<div class="rpt_subtitle">가게명</div>
+						<div class="rpt_subtitle">처리상태</div>
+						<div class="rpt_subtitle">처리일자</div>
+					</div>
+		
+		
 		<div id="receive">
 			<h1>가게 등폐업 요청 내역</h1>
 			
-			<!-- 가게 등록/폐업 요청 box -->
+			
 			<div id="inout_Box" style="height: auto;">
 				<div class="more" id="more">
 					<h3><a href="#">가게 등록/폐업 요청</a></h3>
@@ -73,10 +125,10 @@
 							<c:if test="${inout.cat eq '폐업' }">
 							<td style="background-color: pink;">${inout.cat }</td>
 							</c:if>
-							<td class="inTd" id="${inout.report_num }">${inout.reg_date }</td>
-							<td class="inTd" id="${inout.report_num }">${inout.st_name }</td>
-							<td class="inTd" id="${inout.report_num }">${inout.state }</td>
-							<td class="inTd" id="${inout.report_num }">${inout.final_date }</td>
+							<td class="inTd" id="${inout.apply_num }">${inout.reg_date }</td>
+							<td class="inTd" id="${inout.apply_num }">${inout.st_name }</td>
+							<td class="inTd" id="${inout.apply_num }">${inout.state }</td>
+							<td class="inTd" id="${inout.apply_num }">${inout.final_date }</td>
 						</tr>
 						</c:forEach>
 					</tbody>

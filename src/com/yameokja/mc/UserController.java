@@ -564,7 +564,7 @@ public class UserController
 	    int itemsPerPage = 10;
 	    
 	    // 전체 데이터 수 구해서 총 페이지 수 계산
-	    int totalPage = dao.count_inoutlist(user_num) / itemsPerPage;
+	    int totalPage = dao.count_inoutlist(user.user_id) / itemsPerPage;
 	    
 	    if (dao.count_inoutlist(user_num) % itemsPerPage != 0)
 	    	totalPage++;
@@ -588,12 +588,14 @@ public class UserController
 	    
 	    
 	    model.addAttribute("pageIndex", Paging.pageIndexList(currentPage, totalPage, actionName));
-	    List<UserStupdaterelistDTO> user_stupdate_relist = dao.user_stupdate_relist(user_num, startRow, endRow);
+	    List<StInoutDTO> stinoutlist = dao.stinoutlist(user.user_id, startRow, endRow);
 	    //System.out.println(user_stupdate_relist);
 	    model.addAttribute("user", user);
-	    model.addAttribute("alarm", udao.userAlarm(user_num));
-	    model.addAttribute("stupdateReList", user_stupdate_relist);
-	    result = "/WEB-INF/view/user_StUpdate_reList.jsp";
+      model.addAttribute("alarm", udao.userAlarm(user_num));
+	    model.addAttribute("stinoutlist", stinoutlist);
+	    result = "/WEB-INF/view/St_Inout_Lis.jsp";
+
+	    
 	    
 	    return result;
 	};
