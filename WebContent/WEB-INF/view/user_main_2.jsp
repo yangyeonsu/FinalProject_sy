@@ -177,19 +177,16 @@ String cp = request.getContextPath();
 		// 필터 검색 범례 유지
 		$('.hiddenRL').each(function(){
 			  var region = $(this).val();
-			  alert(region);
 			  $("#"+region).prop("checked", true);
 		});
 		
 		$('.hiddenCL').each(function(){
 			  var category = $(this).val();
-			  alert(category);
 			  $("#"+category).prop("checked", true);
 		});
 		
 		$('.hiddenSL').each(function(){
 			  var skey = $(this).val();
-			  alert(skey);
 			  $("#"+skey).prop("checked", true);
 		});
 
