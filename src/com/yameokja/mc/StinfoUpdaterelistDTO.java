@@ -2,8 +2,9 @@ package com.yameokja.mc;
 
 public class StinfoUpdaterelistDTO
 {
-	private String st_name, final_date, reg_date, check_label;
+	private String st_name, final_date, reg_date, check_label, chbox_name, yn_name;
 	private int req_apply_num, rnum;
+	
 	
 	
 	public String getSt_name()
@@ -54,5 +55,22 @@ public class StinfoUpdaterelistDTO
 	{
 		this.rnum = rnum;
 	}
+	public String getChbox_name()
+	{
+		return chbox_name;
+	}
+	public void setChbox_name(String chbox_name)
+	{
+		this.chbox_name = chbox_name;
+	}
+	public String getYn_name()
+	{
+		return yn_name;
+	}
+	public void setYn_name(String yn_name)
+	{
+		this.yn_name = yn_name;
+	}
+	
 	
 }
