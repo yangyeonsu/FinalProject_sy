@@ -2,7 +2,7 @@ package com.yameokja.mc;
 
 public class AlarmDTO
 {
-	private String user_num, check_date, commentary;
+	private String user_num, check_date, commentary, st_name;
 	private int check_num;
 	
 	
@@ -42,6 +42,15 @@ public class AlarmDTO
 	public void setCheck_num(int check_num)
 	{
 		this.check_num = check_num;
+	}
+	
+	public String getSt_name()
+	{
+		return st_name;
+	}
+	public void setSt_name(String st_name)
+	{
+		this.st_name = st_name;
 	}
 	
 	
