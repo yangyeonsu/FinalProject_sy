@@ -116,23 +116,23 @@ a {
 	color: black;
 }
 
-.alarm, .userMenu {
+.alarm, .userMenu, .ala {
 	text-decoration: none;
 	color: #3a001e;
 }
 
-.alarm:active, .userMenu:active {
+.alarm:active, .userMenu:active, .ala:active {
 	text-decoration: none;
 	color: #ef6351;
 }
 
-.alarm:hover, .userMenu:hover {
+.alarm:hover, .userMenu:hover, .ala:hover {
 	text-decoration: none;
 	color: #ef6351;
 	cursor: pointer;
 }
 
-.alarm
+.alarm, .ala
 {
 	background-color: #fff;
     border-radius: 4px;
@@ -150,12 +150,6 @@ a {
 
 .subListBtn {
 	border: 0;
-}
-
-.NonCheck {
-}
-
-.checked {
 }
 </style>
 
@@ -220,6 +214,16 @@ a {
 			
 			$("#comment").val(com);
 			$("#check_num").val(num);
+			$("#check").val("nonchecked");
+			
+			$("#userForm").attr("action", "alarm.action");
+			$("#userForm").submit();
+		})
+		$(".ala").click(function()
+		{
+			var com = $(this).attr("name");
+			
+			$("#comment").val(com);
 			
 			$("#userForm").attr("action", "alarm.action");
 			$("#userForm").submit();
@@ -274,7 +278,7 @@ a {
 											가게 정보 수정 요청 경고 [ ${al.st_name } ]</button>
 										</c:when>
 										<c:otherwise>
-											<li><button class="alarm" name="${al.commentary }" id="a${al.check_num }">
+											<li><button class="ala" name="${al.commentary }" id="a${al.check_num }">
 											가게 정보 수정 요청 경고 [ ${al.st_name } ]</button>
 										</c:otherwise>
 									</c:choose>
@@ -286,7 +290,7 @@ a {
 											이의 제기 신청 처리 완료 [ ${al.st_name } ]</button>
 										</c:when>
 										<c:otherwise>
-											<li><button class="alarm" name="${al.commentary }" id="b${al.check_num }">
+											<li><button class="ala" name="${al.commentary }" id="b${al.check_num }">
 											이의 제기 신청 처리 완료 [ ${al.st_name } ]</button>
 										</c:otherwise>
 									</c:choose>
@@ -298,7 +302,7 @@ a {
 											가게 정보 수정 요청 처리 변경 [ ${al.st_name } ]</button>
 										</c:when>
 										<c:otherwise>
-											<li><button class="alarm" name="${al.commentary }" id="c${al.check_num }">
+											<li><button class="ala" name="${al.commentary }" id="c${al.check_num }">
 											가게 정보 수정 요청 처리 변경 [ ${al.st_name } ]</button>
 										</c:otherwise>
 									</c:choose>
@@ -310,7 +314,7 @@ a {
 											작성한 리뷰 신고 처리 [ ${al.st_name } ]</button>
 										</c:when>
 										<c:otherwise>
-											<li><button class="alarm" name="${al.commentary }" id="e${al.check_num }">
+											<li><button class="ala" name="${al.commentary }" id="e${al.check_num }">
 											작성한 리뷰 신고 처리 [ ${al.st_name } ]</button>
 										</c:otherwise>
 									</c:choose>
@@ -322,7 +326,7 @@ a {
 											작성한 리뷰 신고 처리 완료 [ ${al.st_name } ]</button>
 										</c:when>
 										<c:otherwise>
-											<li><button class="alarm" name="${al.commentary }" id="f${al.check_num }">
+											<li><button class="ala" name="${al.commentary }" id="f${al.check_num }">
 											작성한 리뷰 신고 처리 완료 [ ${al.st_name } ]</button>
 										</c:otherwise>
 									</c:choose>
@@ -334,7 +338,7 @@ a {
 											가게 정보 수정 요청 처리 완료 [ ${al.st_name } ]</button>
 										</c:when>
 										<c:otherwise>
-											<li><button class="alarm" name="${al.commentary }" id="g${al.check_num }">
+											<li><button class="ala" name="${al.commentary }" id="g${al.check_num }">
 											가게 정보 수정 요청 처리 완료 [ ${al.st_name } ]</button>
 										</c:otherwise> 
 									</c:choose>
@@ -346,7 +350,7 @@ a {
 											요청한 리뷰 신고 처리 완료 [ ${al.st_name } ]</button>
 										</c:when>
 										<c:otherwise>
-											<li><button class="alarm" name="${al.commentary }" id="h${al.check_num }">
+											<li><button class="ala" name="${al.commentary }" id="h${al.check_num }">
 											작성한 리뷰 신고 처리 완료 [ ${al.st_name } ]</button>
 										</c:otherwise>
 									</c:choose>
@@ -358,7 +362,7 @@ a {
 											패널티 회수 요청 처리 완료 [ ${al.st_name } ]</button>
 										</c:when>
 										<c:otherwise>
-											<li><button class="alarm" name="${al.commentary }" id=i"${al.check_num }">
+											<li><button class="ala" name="${al.commentary }" id=i"${al.check_num }">
 											패널티 회수 요청 처리 완료 [ ${al.st_name } ]</button>
 										</c:otherwise>
 									</c:choose>
@@ -370,7 +374,7 @@ a {
 											가게 등록 신청 처리 완료 [ ${al.st_name } ]</button>
 										</c:when>
 										<c:otherwise>
-											<li><button class="alarm" name="${al.commentary }" id="j${al.check_num }">
+											<li><button class="ala" name="${al.commentary }" id="j${al.check_num }">
 											가게 등록 신청 처리 완료 [ ${al.st_name } ]</button>
 										</c:otherwise>
 									</c:choose>
@@ -382,7 +386,7 @@ a {
 											가게 등록 신청 처리 완료 [ ${al.st_name } ]</button>
 										</c:when>
 										<c:otherwise>
-											<li><button class="alarm" name="${al.commentary }" id="k${al.check_num }">
+											<li><button class="ala" name="${al.commentary }" id="k${al.check_num }">
 											가게 폐업 신청 처리 완료 [ ${al.st_name } ]</button>
 										</c:otherwise>
 									</c:choose>
@@ -392,6 +396,7 @@ a {
 					</ul>
 					<input type="hidden" name="comment" id="comment">
 					<input type="hidden" name="check_num" id="check_num">
+					<input type="hidden" name="checked" id="checked">
 				</div>
 			</div>
 		</div>

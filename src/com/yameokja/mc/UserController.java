@@ -900,56 +900,68 @@ public class UserController
 		IUserDAO dao = sqlSession.getMapper(IUserDAO.class);
 		
 		String comment = request.getParameter("comment");
-		int check_num = Integer.parseInt(request.getParameter("check_num"));
+		int check_num = 0;
+		if (request.getParameter("checked").equals("nonchecked"))
+			check_num = Integer.parseInt(request.getParameter("check_num"));
 		
 		if(comment.equals("REQ_ST"))
 		{
-			dao.reqstAlarmCk(check_num);
+			if (request.getParameter("checked").equals("nonchecked"))
+				dao.reqstAlarmCk(check_num);
 			result = "redirect:stinfoupdaterelist.action";
 		}
 		else if(comment.equals("OBJ_PRO"))
-		{
-			dao.objproAlarmCk(check_num);
+		{	
+			if (request.getParameter("checked").equals("nonchecked"))
+				dao.objproAlarmCk(check_num);
 			result = "redirect:objlist.action";
 		}
 		else if(comment.equals("REQ_REJ"))
 		{
-			dao.reqrejAlarmCk(check_num);
+			if (request.getParameter("checked").equals("nonchecked"))
+				dao.reqrejAlarmCk(check_num);
 			result = "redirect:user_stupdate_relist.action";
 		}
 		else if(comment.equals("ACCU_APPLY"))
 		{
-			dao.accuapplyAlarmCk(check_num);
+			if (request.getParameter("checked").equals("nonchecked"))
+				dao.accuapplyAlarmCk(check_num);
 			result = "redirect:userrvpenalty.action";
 		}
 		else if(comment.equals("ACCU_PRO"))
 		{
-			dao.accuproAlarmCk(check_num);
+			if (request.getParameter("checked").equals("nonchecked"))
+				dao.accuproAlarmCk(check_num);
 			result = "redirect:userrvpenalty.action";
 		}
 		else if(comment.equals("REQ"))
 		{
-			dao.reqAlarmCk(check_num);
+			if (request.getParameter("checked").equals("nonchecked"))
+				dao.reqAlarmCk(check_num);
 			result = "redirect:user_stupdate_relist.action";
 		}
 		else if(comment.equals("REP"))
 		{
-			dao.repAlarmCk(check_num);
+			if (request.getParameter("checked").equals("nonchecked"))
+				dao.repAlarmCk(check_num);
 			result = "redirect:user_rv_report.action";
 		}
 		else if(comment.equals("PENALTY"))
 		{
-			dao.penaltyAlarmCk(check_num);
+			if (request.getParameter("checked").equals("nonchecked"))
+				dao.penaltyAlarmCk(check_num);
 			result = "redirect:penaltylist.action";
 		}
 		else if(comment.equals("IN"))
 		{
-			dao.inAlarmCk(check_num);
+			if (request.getParameter("checked").equals("nonchecked"))
+				dao.inAlarmCk(check_num);
 			result = "redirect:user_stinout_list.action";
 		}
 		else if(comment.equals("OUT"))
 		{
-			dao.outAlarmCk(check_num);
+			if (request.getParameter("checked").equals("nonchecked"))
+				dao.outAlarmCk(check_num);
 			result = "redirect:user_stinout_list.action";
 		}
 		
