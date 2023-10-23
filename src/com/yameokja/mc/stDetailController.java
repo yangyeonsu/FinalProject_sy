@@ -100,6 +100,8 @@ public class stDetailController
 			user.setUser_grade(uDao.secondHalf(user_num).user_grade);
 
 		model.addAttribute("user", user);
+		// 유저 알람 목록
+		model.addAttribute("alarm", uDao.userAlarm(user_num));
 
 		// user에게 등록된 가게가 있는지 조회 (사업자인지)
 		int storeCheck = uDao.storeCheck(user_num);

@@ -995,6 +995,8 @@ public class StoreController
 	    List<UserStupdaterelistDTO> user_stupdate_relist = dao.user_stupdate_relist(user_num, startRow, endRow);
 	    System.out.println(user_stupdate_relist);
 	    model.addAttribute("user", user);
+	    // 유저 알람 목록
+	 	model.addAttribute("alarm", udao.userAlarm(user_num));
 	    model.addAttribute("StAppealRequest", smdao.StAppealRequest(st_num));
 	    
 	    result = "/WEB-INF/view/St_Appeal_Request.jsp";
@@ -1078,6 +1080,8 @@ public class StoreController
 	    List<UserStupdaterelistDTO> user_stupdate_relist = dao.user_stupdate_relist(user_num, startRow, endRow);
 	    System.out.println(user_stupdate_relist);
 	    model.addAttribute("user", user);
+	    // 유저 알람 목록
+	 	model.addAttribute("alarm", udao.userAlarm(user_num));
 	    model.addAttribute("StPenaltyre", smdao.StPenaltyre(st_num));
 	    
 	    result = "/WEB-INF/view/St_Penaltyre.jsp";
@@ -1114,6 +1118,8 @@ public class StoreController
 		}
 	    
 	    model.addAttribute("user", user);
+	    // 유저 알람 목록
+	 	model.addAttribute("alarm", udao.userAlarm(user_num));
 	    
 	    // 가게 리스트
 		ArrayList<StoreDTO> st_list = smDao.searchoutstore(user_num);

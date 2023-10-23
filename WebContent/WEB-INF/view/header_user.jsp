@@ -165,8 +165,11 @@ a {
 	$(function()
 	{
 		// 헤더 메뉴 안보이게 초기화
-		$(".mypage_menu").hide();
-		$(".alarm_menu").hide();
+		//$(".mypage_menu").hide();
+		//$(".alarm_menu").hide();
+		
+		$(".mypage_menu").css("display", "none");
+		$(".alarm_menu").css("display", "none");
 
 		// 사용자 메뉴 클릭 시 표출
 		$(".mypage_cl").click(function()
@@ -213,7 +216,7 @@ a {
 		
 		$(".alarm").click(function()
 		{
-			var num = $(this).attr("id");
+			var num = $(this).attr("id").substr(1);
 			var com = $(this).attr("name");
 			
 			$("#comment").val(com);
@@ -268,11 +271,11 @@ a {
 								<c:when test="${al.commentary eq 'REQ_ST' }">
 									<c:choose>
 										<c:when test="${al.check_date eq '-' }">
-											<li><button class="alarm" name="${al.commentary }" id="${al.check_num }" >
+											<li><button class="alarm" name="${al.commentary }" id="a${al.check_num }" >
 											회원님의 가게에 정보 수정 요청이 들어왔습니다.</button>
 										</c:when>
 										<c:otherwise>
-											<li><button class="alarm" name="${al.commentary }" id="${al.check_num }">
+											<li><button class="alarm" name="${al.commentary }" id="a${al.check_num }">
 											회원님의 가게에 정보 수정 요청이 들어왔습니다.</button>
 										</c:otherwise>
 									</c:choose>
@@ -280,11 +283,11 @@ a {
 								<c:when test="${al.commentary eq 'OBJ_PRO' }">
 									<c:choose>
 										<c:when test="${al.check_date eq '-' }">
-											<li><button class="alarm" name="${al.commentary }" id="${al.check_num }">
+											<li><button class="alarm" name="${al.commentary }" id="a${al.check_num }">
 											회원님이 요청하신 이의 제기 신청이 처리 완료 되었습니다.</button>
 										</c:when>
 										<c:otherwise>
-											<li><button class="alarm" name="${al.commentary }" id="${al.check_num }">
+											<li><button class="alarm" name="${al.commentary }" id="a${al.check_num }">
 											회원님이 요청하신 이의 제기 신청이 처리 완료 되었습니다.</button>
 										</c:otherwise>
 									</c:choose>
@@ -292,11 +295,11 @@ a {
 								<c:when test="${al.commentary eq 'REQ_REJ' }">
 									<c:choose>
 										<c:when test="${al.check_date eq '-' }">
-											<li><button class="alarm" name="${al.commentary }" id="${al.check_num }">
+											<li><button class="alarm" name="${al.commentary }" id="a${al.check_num }">
 											가게 신고 요청 결과가 변경되었습니다.</button>
 										</c:when>
 										<c:otherwise>
-											<li><button class="alarm" name="${al.commentary }" id="${al.check_num }">
+											<li><button class="alarm" name="${al.commentary }" id="a${al.check_num }">
 											가게 신고 요청 결과가 변경되었습니다.</button>
 										</c:otherwise>
 									</c:choose>
@@ -304,11 +307,11 @@ a {
 								<c:when test="${al.commentary eq 'ACCU_APPLY' }">
 									<c:choose>
 										<c:when test="${al.check_date eq '-' }">
-											<li><button class="alarm" name="${al.commentary }" id="${al.check_num }">
+											<li><button class="alarm" name="${al.commentary }" id="a${al.check_num }">
 											회원님이 작성하신 리뷰가 신고 되었습니다.</button>
 										</c:when>
 										<c:otherwise>
-											<li><button class="alarm" name="${al.commentary }" id="${al.check_num }">
+											<li><button class="alarm" name="${al.commentary }" id="a${al.check_num }">
 											회원님이 작성하신 리뷰가 신고 되었습니다.</button>
 										</c:otherwise>
 									</c:choose>
@@ -316,11 +319,11 @@ a {
 								<c:when test="${al.commentary eq 'ACCU_PRO' }">
 									<c:choose>
 										<c:when test="${al.check_date eq '-' }">
-											<li><button class="alarm" name="${al.commentary }" id="${al.check_num }">
+											<li><button class="alarm" name="${al.commentary }" id="a${al.check_num }">
 											회원님이 작성하신 리뷰에 대한 신고가 처리 완료 되었습니다.</button>
 										</c:when>
 										<c:otherwise>
-											<li><button class="alarm" name="${al.commentary }" id="${al.check_num }">
+											<li><button class="alarm" name="${al.commentary }" id="a${al.check_num }">
 											회원님이 작성하신 리뷰에 대한 신고가 처리 완료 되었습니다.</button>
 										</c:otherwise>
 									</c:choose>
@@ -328,11 +331,11 @@ a {
 								<c:when test="${al.commentary eq 'REQ' }">
 									<c:choose>
 										<c:when test="${al.check_date eq '-' }">
-											<li><button class="alarm" name="${al.commentary }" id="${al.check_num }">
+											<li><button class="alarm" name="${al.commentary }" id="a${al.check_num }">
 											회원님이 요청하신 가게 정보 오류 요청이 처리 완료 되었습니다.</button>
 										</c:when>
 										<c:otherwise>
-											<li><button class="alarm" name="${al.commentary }" id="${al.check_num }">
+											<li><button class="alarm" name="${al.commentary }" id="a${al.check_num }">
 											회원님이 요청하신 가게 정보 오류 요청이 처리 완료 되었습니다.</button>
 										</c:otherwise>
 									</c:choose>
@@ -340,11 +343,11 @@ a {
 								<c:when test="${al.commentary eq 'REP' }">
 									<c:choose>
 										<c:when test="${al.check_date eq '-' }">
-											<li><button class="alarm" name="${al.commentary }" id="${al.check_num }">
+											<li><button class="alarm" name="${al.commentary }" id="a${al.check_num }">
 											회원님이 요청하신 리뷰신고가 처리 완료 되었습니다.</button>
 										</c:when>
 										<c:otherwise>
-											<li><button class="alarm" name="${al.commentary }" id="${al.check_num }">
+											<li><button class="alarm" name="${al.commentary }" id="a${al.check_num }">
 											회원님이 요청하신 리뷰신고가 처리 완료 되었습니다.</button>
 										</c:otherwise>
 									</c:choose>
@@ -352,11 +355,11 @@ a {
 								<c:when test="${al.commentary eq 'PENALTY' }">
 									<c:choose>
 										<c:when test="${al.check_date eq '-' }">
-											<li><button class="alarm" name="${al.commentary }" id="${al.check_num }">
+											<li><button class="alarm" name="${al.commentary }" id="a${al.check_num }">
 											회원님이 요청하신 패널티 회수 요청이 처리 완료 되었습니다.</button>
 										</c:when>
 										<c:otherwise>
-											<li><button class="alarm" name="${al.commentary }" id="${al.check_num }">
+											<li><button class="alarm" name="${al.commentary }" id="a${al.check_num }">
 											회원님이 요청하신 패널티 회수 요청이 처리 완료 되었습니다.</button>
 										</c:otherwise>
 									</c:choose>
@@ -364,11 +367,11 @@ a {
 								<c:when test="${al.commentary eq 'IN' }">
 									<c:choose>
 										<c:when test="${al.check_date eq '-' }">
-											<li><button class="alarm" name="${al.commentary }" id="${al.check_num }">
+											<li><button class="alarm" name="${al.commentary }" id="a${al.check_num }">
 											회원님이 요청하신 가게 등록 신청이 처리 완료 되었습니다.</button>
 										</c:when>
 										<c:otherwise>
-											<li><button class="alarm" name="${al.commentary }" id="${al.check_num }">
+											<li><button class="alarm" name="${al.commentary }" id="a${al.check_num }">
 											회원님이 요청하신 가게 등록 신청이 처리 완료 되었습니다.</button>
 										</c:otherwise>
 									</c:choose>
@@ -376,11 +379,11 @@ a {
 								<c:when test="${al.commentary eq 'OUT' }">
 									<c:choose>
 										<c:when test="${al.check_date eq '-' }">
-											<li><button class="alarm" name="${al.commentary }" id="${al.check_num }">
+											<li><button class="alarm" name="${al.commentary }" id="a${al.check_num }">
 											회원님이 요청하신 가게 폐업 신청이 처리 완료 되었습니다.</button>
 										</c:when>
 										<c:otherwise>
-											<li><button class="alarm" name="${al.commentary }" id="${al.check_num }">
+											<li><button class="alarm" name="${al.commentary }" id="a${al.check_num }">
 											회원님이 요청하신 가게 폐업 신청이 처리 완료 되었습니다.</button>
 										</c:otherwise>
 									</c:choose>
