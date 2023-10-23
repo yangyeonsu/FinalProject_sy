@@ -2,8 +2,8 @@ package com.yameokja.mc;
 
 public class PayLabelDTO
 {
-	int pay_num;
-	String pay_name;
+	private int pay_num;
+	private String pay_name;
 	
 	
 	public int getPay_num()

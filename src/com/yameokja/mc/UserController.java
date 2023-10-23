@@ -9,11 +9,6 @@ import java.util.Random;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.coyote.RequestGroupInfo;
-
-/*import java.util.ArrayList;
-import java.util.HashMap;*/
-
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -73,14 +68,14 @@ public class UserController
 		IAdminMainDAO iDao = sqlSession.getMapper(IAdminMainDAO.class);
 		IStoreMainDAO smDao = sqlSession.getMapper(IStoreMainDAO.class);
 		
-		check = uDao.userLoginCheck(user.user_id, user.user_pw);
+		check = uDao.userLoginCheck(user.getUser_id(), user.getUser_pw());
 		
 		if (check == 1)
 		{
-			UserDTO userInfo = uDao.searchUserInfo(user.user_id, "id");
-			session.setAttribute("user_num", userInfo.user_num);
+			UserDTO userInfo = uDao.searchUserInfo(user.getUser_id(), "id");
+			session.setAttribute("user_num", userInfo.getUser_num());
 			
-			ArrayList<StoreDTO> st_list = smDao.searchStoreInfo(userInfo.user_num);
+			ArrayList<StoreDTO> st_list = smDao.searchStoreInfo(userInfo.getUser_num());
 			
 			if (st_list.size() > 0)
 				result = "redirect:storemain.action";
@@ -89,11 +84,11 @@ public class UserController
 		}
 		else if (check == 0)
 		{
-			check = iDao.adminLoginCheck(user.user_id, user.user_pw);
+			check = iDao.adminLoginCheck(user.getUser_id(), user.getUser_pw());
 			
 			if (check == 1)
 			{
-				int admin_num = iDao.searchNumId(user.user_id).getAdmin_num();
+				int admin_num = iDao.searchNumId(user.getUser_id()).getAdmin_num();
 				session.setAttribute("admin_num", admin_num);
 				
 				result = "redirect:adminmain.action";
@@ -262,22 +257,22 @@ public class UserController
 		
 		if (1 <= monthValue && monthValue <= 6)
 		{
-			user.setPoint_sum(udao.secondHalf(user_num).point_sum);
-			user.setUser_grade(udao.firstHalf(user_num).user_grade);
+			user.setPoint_sum(udao.secondHalf(user_num).getPoint_sum());
+			user.setUser_grade(udao.firstHalf(user_num).getUser_grade());
 		}
 		else if(7 <= monthValue && monthValue <= 12)
 		{
-			user.setPoint_sum(udao.firstHalf(user_num).point_sum);
-			user.setUser_grade(udao.secondHalf(user_num).user_grade);
+			user.setPoint_sum(udao.firstHalf(user_num).getPoint_sum());
+			user.setUser_grade(udao.secondHalf(user_num).getUser_grade());
 		}
 		
 		// 사업자이면 가게 정보 함께 넘김
 		ArrayList<StoreDTO> st_list=null;
 
-		UserDTO userInfo = udao.searchUserInfo(user.user_id, "id");
-		session.setAttribute("user_num", userInfo.user_num);
+		UserDTO userInfo = udao.searchUserInfo(user.getUser_id(), "id");
+		session.setAttribute("user_num", userInfo.getUser_num());
 		
-		int storeCheck = udao.storeCheck(userInfo.user_num);
+		int storeCheck = udao.storeCheck(userInfo.getUser_num());
 		
 		if (storeCheck > 0)
 			st_list = smDao.searchStoreInfo(user_num);
@@ -360,13 +355,13 @@ public class UserController
 	    
 	    if (1 <= monthValue && monthValue <= 6)
 		{
-			user.setPoint_sum(udao.secondHalf(user_num).point_sum);
-			user.setUser_grade(udao.firstHalf(user_num).user_grade);
+			user.setPoint_sum(udao.secondHalf(user_num).getPoint_sum());
+			user.setUser_grade(udao.firstHalf(user_num).getUser_grade());
 		}
 		else if(7 <= monthValue && monthValue <= 12)
 		{
-			user.setPoint_sum(udao.firstHalf(user_num).point_sum);
-			user.setUser_grade(udao.secondHalf(user_num).user_grade);
+			user.setPoint_sum(udao.firstHalf(user_num).getPoint_sum());
+			user.setUser_grade(udao.secondHalf(user_num).getUser_grade());
 		}
 	    
 	    // 개인 사용자이면서 사업자 사용자인 경우 가게 리스트 넘겨주기
@@ -449,13 +444,13 @@ public class UserController
 	    
 	    if (1 <= monthValue && monthValue <= 6)
 		{
-			user.setPoint_sum(udao.secondHalf(user_num).point_sum);
-			user.setUser_grade(udao.firstHalf(user_num).user_grade);
+			user.setPoint_sum(udao.secondHalf(user_num).getPoint_sum());
+			user.setUser_grade(udao.firstHalf(user_num).getUser_grade());
 		}
 		else if(7 <= monthValue && monthValue <= 12)
 		{
-			user.setPoint_sum(udao.firstHalf(user_num).point_sum);
-			user.setUser_grade(udao.secondHalf(user_num).user_grade);
+			user.setPoint_sum(udao.firstHalf(user_num).getPoint_sum());
+			user.setUser_grade(udao.secondHalf(user_num).getUser_grade());
 		}
 	    
 	    // 개인 사용자이면서 사업자 사용자인 경우 가게 리스트 넘겨주기
@@ -531,13 +526,13 @@ public class UserController
 	    
 	    if (1 <= monthValue && monthValue <= 6)
 		{
-			user.setPoint_sum(udao.secondHalf(user_num).point_sum);
-			user.setUser_grade(udao.firstHalf(user_num).user_grade);
+			user.setPoint_sum(udao.secondHalf(user_num).getPoint_sum());
+			user.setUser_grade(udao.firstHalf(user_num).getUser_grade());
 		}
 		else if(7 <= monthValue && monthValue <= 12)
 		{
-			user.setPoint_sum(udao.firstHalf(user_num).point_sum);
-			user.setUser_grade(udao.secondHalf(user_num).user_grade);
+			user.setPoint_sum(udao.firstHalf(user_num).getPoint_sum());
+			user.setUser_grade(udao.secondHalf(user_num).getUser_grade());
 		}
 	    
 	    // 개인 사용자이면서 사업자 사용자인 경우 가게 리스트 넘겨주기
@@ -564,7 +559,7 @@ public class UserController
 	    int itemsPerPage = 10;
 	    
 	    // 전체 데이터 수 구해서 총 페이지 수 계산
-	    int totalPage = dao.count_inoutlist(user.user_id) / itemsPerPage;
+	    int totalPage = dao.count_inoutlist(user.getUser_id()) / itemsPerPage;
 	    
 	    if (dao.count_inoutlist(user_num) % itemsPerPage != 0)
 	    	totalPage++;
@@ -588,15 +583,13 @@ public class UserController
 	    
 	    
 	    model.addAttribute("pageIndex", Paging.pageIndexList(currentPage, totalPage, actionName));
-	    List<StInoutDTO> stinoutlist = dao.stinoutlist(user.user_id, startRow, endRow);
+	    List<StInoutDTO> stinoutlist = dao.stinoutlist(user.getUser_id(), startRow, endRow);
 	    //System.out.println(user_stupdate_relist);
 	    model.addAttribute("user", user);
       model.addAttribute("alarm", udao.userAlarm(user_num));
 	    model.addAttribute("stinoutlist", stinoutlist);
 	    result = "/WEB-INF/view/St_Inout_Lis.jsp";
 
-	    
-	    
 	    return result;
 	};
 	
@@ -623,13 +616,13 @@ public class UserController
 	    
 	    if (1 <= monthValue && monthValue <= 6)
 		{
-			user.setPoint_sum(udao.secondHalf(user_num).point_sum);
-			user.setUser_grade(udao.firstHalf(user_num).user_grade);
+			user.setPoint_sum(udao.secondHalf(user_num).getPoint_sum());
+			user.setUser_grade(udao.firstHalf(user_num).getUser_grade());
 		}
 		else if(7 <= monthValue && monthValue <= 12)
 		{
-			user.setPoint_sum(udao.firstHalf(user_num).point_sum);
-			user.setUser_grade(udao.secondHalf(user_num).user_grade);
+			user.setPoint_sum(udao.firstHalf(user_num).getPoint_sum());
+			user.setUser_grade(udao.secondHalf(user_num).getUser_grade());
 		}
 	    
 	    // 개인 사용자이면서 사업자 사용자인 경우 가게 리스트 넘겨주기
@@ -755,13 +748,13 @@ public class UserController
 		
 		if (1 <= monthValue && monthValue <= 6)
 		{
-			user.setPoint_sum(udao.secondHalf(user_num).point_sum);
-			user.setUser_grade(udao.firstHalf(user_num).user_grade);
+			user.setPoint_sum(udao.secondHalf(user_num).getPoint_sum());
+			user.setUser_grade(udao.firstHalf(user_num).getUser_grade());
 		}
 		else if(7 <= monthValue && monthValue <= 12)
 		{
-			user.setPoint_sum(udao.firstHalf(user_num).point_sum);
-			user.setUser_grade(udao.secondHalf(user_num).user_grade);
+			user.setPoint_sum(udao.firstHalf(user_num).getPoint_sum());
+			user.setUser_grade(udao.secondHalf(user_num).getUser_grade());
 		}
 	    
 	    UserDTO modify = udao.userModify(user_num);

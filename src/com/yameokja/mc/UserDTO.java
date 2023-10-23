@@ -2,10 +2,10 @@ package com.yameokja.mc;
 
 public class UserDTO
 {
-	String user_num, user_id, user_pw, user_name, user_ssn1, user_ssn2;
-	String user_tel, user_nickname, user_email, user_grade;
-	int point_sum;
-	String nickName;
+	private String user_num, user_id, user_pw, user_name, user_ssn1, user_ssn2;
+	private String user_tel, user_nickname, user_email, user_grade;
+	private int point_sum;
+	private String nickName;
 	
 	
 	public String getNickName()

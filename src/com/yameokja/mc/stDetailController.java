@@ -95,9 +95,9 @@ public class stDetailController
 		int month = currentDate.getMonthValue();
 
 		if (month < 7)
-			user.setUser_grade(uDao.firstHalf(user_num).user_grade);
+			user.setUser_grade(uDao.firstHalf(user_num).getUser_grade());
 		else
-			user.setUser_grade(uDao.secondHalf(user_num).user_grade);
+			user.setUser_grade(uDao.secondHalf(user_num).getUser_grade());
 
 		model.addAttribute("user", user);
 		// 유저 알람 목록
@@ -433,12 +433,13 @@ public class stDetailController
 
 		if (1 <= monthValue && monthValue <= 6)
 		{
-			user.setPoint_sum(udao.secondHalf(user_num).point_sum);
-			user.setUser_grade(udao.firstHalf(user_num).user_grade);
-		} else if (7 <= monthValue && monthValue <= 12)
+			user.setPoint_sum(udao.secondHalf(user_num).getPoint_sum());
+			user.setUser_grade(udao.firstHalf(user_num).getUser_grade());
+		}
+		else if(7 <= monthValue && monthValue <= 12)
 		{
-			user.setPoint_sum(udao.firstHalf(user_num).point_sum);
-			user.setUser_grade(udao.secondHalf(user_num).user_grade);
+			user.setPoint_sum(udao.firstHalf(user_num).getPoint_sum());
+			user.setUser_grade(udao.secondHalf(user_num).getUser_grade());
 		}
 
 		model.addAttribute("user", user);
