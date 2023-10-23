@@ -69,7 +69,7 @@ a {
 	position: relative;
     display: flex;
     flex-direction: row-reverse;
-    padding-left: 51.5vw;
+    padding-left: 49vw;
     width: 20vw;
     justify-content: space-between;
 }
@@ -113,23 +113,23 @@ a {
 	color: black;
 }
 
-.alarm, .userMenu {
+.alarm, .userMenu, .ala {
 	text-decoration: none;
 	color: #3a001e;
 }
 
-.alarm:active, .userMenu:active {
+.alarm:active, .userMenu:active, .ala:active {
 	text-decoration: none;
 	color: #ef6351;
 }
 
-.alarm:hover, .userMenu:hover {
+.alarm:hover, .userMenu:hover, .ala:hover {
 	text-decoration: none;
 	color: #ef6351;
 	cursor: pointer;
 }
 
-.alarm
+.alarm, .ala
 {
 	background-color: #fff;
     border-radius: 4px;
@@ -212,6 +212,15 @@ $(function()
 				$("#userForm").attr("action", "alarm.action");
 				$("#userForm").submit();
 			})
+			$(".ala").click(function()
+			{
+				var com = $(this).attr("name");
+				
+				$("#comment").val(com);
+				
+				$("#userForm").attr("action", "alarm.action");
+				$("#userForm").submit();
+			})
 
 		});
 </script>
@@ -246,134 +255,137 @@ $(function()
 				</div>
 				<div class="alarm_menu">
 					<ul class="person_listB">
-						<c:forEach var="al" items="${alarm }">
-							<c:choose>
-								<c:when
-									test="${fn:length(alarm) == 0 or fn:length(alarm) == null}">
-									<li>현재 알람이 존재하지 않습니다.
-								</c:when>
-								<c:when test="${al.commentary eq 'REQ_ST' }">
-									<c:choose>
-										<c:when test="${al.check_date eq '-' }">
-											<li><button class="alarm" name="${al.commentary }" id="a${al.check_num }" >
-											가게 정보 수정 요청 경고 [ ${al.st_name } ]</button>
-										</c:when>
-										<c:otherwise>
-											<li><button class="alarm" name="${al.commentary }" id="a${al.check_num }">
-											가게 정보 수정 요청 경고 [ ${al.st_name } ]</button>
-										</c:otherwise>
-									</c:choose>
-								</c:when>
-								<c:when test="${al.commentary eq 'OBJ_PRO' }">
-									<c:choose>
-										<c:when test="${al.check_date eq '-' }">
-											<li><button class="alarm" name="${al.commentary }" id="b${al.check_num }">
-											이의 제기 신청 처리 완료 [ ${al.st_name } ]</button>
-										</c:when>
-										<c:otherwise>
-											<li><button class="alarm" name="${al.commentary }" id="b${al.check_num }">
-											이의 제기 신청 처리 완료 [ ${al.st_name } ]</button>
-										</c:otherwise>
-									</c:choose>
-								</c:when>
-								<c:when test="${al.commentary eq 'REQ_REJ' }">
-									<c:choose>
-										<c:when test="${al.check_date eq '-' }">
-											<li><button class="alarm" name="${al.commentary }" id="c${al.check_num }">
-											가게 정보 수정 요청 처리 변경 [ ${al.st_name } ]</button>
-										</c:when>
-										<c:otherwise>
-											<li><button class="alarm" name="${al.commentary }" id="c${al.check_num }">
-											가게 정보 수정 요청 처리 변경 [ ${al.st_name } ]</button>
-										</c:otherwise>
-									</c:choose>
-								</c:when>
-								<c:when test="${al.commentary eq 'ACCU_APPLY' }">
-									<c:choose>
-										<c:when test="${al.check_date eq '-' }">
-											<li><button class="alarm" name="${al.commentary }" id="e${al.check_num }">
-											작성한 리뷰 신고 처리 [ ${al.st_name } ]</button>
-										</c:when>
-										<c:otherwise>
-											<li><button class="alarm" name="${al.commentary }" id="e${al.check_num }">
-											작성한 리뷰 신고 처리 [ ${al.st_name } ]</button>
-										</c:otherwise>
-									</c:choose>
-								</c:when>
-								<c:when test="${al.commentary eq 'ACCU_PRO' }">
-									<c:choose>
-										<c:when test="${al.check_date eq '-' }">
-											<li><button class="alarm" name="${al.commentary }" id="f${al.check_num }">
-											작성한 리뷰 신고 처리 완료 [ ${al.st_name } ]</button>
-										</c:when>
-										<c:otherwise>
-											<li><button class="alarm" name="${al.commentary }" id="f${al.check_num }">
-											작성한 리뷰 신고 처리 완료 [ ${al.st_name } ]</button>
-										</c:otherwise>
-									</c:choose>
-								</c:when>
-								<c:when test="${al.commentary eq 'REQ' }">
-									<c:choose>
-										<c:when test="${al.check_date eq '-' }">
-											<li><button class="alarm" name="${al.commentary }" id="g${al.check_num }">
-											가게 정보 수정 요청 처리 완료 [ ${al.st_name } ]</button>
-										</c:when>
-										<c:otherwise>
-											<li><button class="alarm" name="${al.commentary }" id="g${al.check_num }">
-											가게 정보 수정 요청 처리 완료 [ ${al.st_name } ]</button>
-										</c:otherwise> 
-									</c:choose>
-								</c:when>
-								<c:when test="${al.commentary eq 'REP' }">
-									<c:choose>
-										<c:when test="${al.check_date eq '-' }">
-											<li><button class="alarm" name="${al.commentary }" id="h${al.check_num }">
-											요청한 리뷰 신고 처리 완료 [ ${al.st_name } ]</button>
-										</c:when>
-										<c:otherwise>
-											<li><button class="alarm" name="${al.commentary }" id="h${al.check_num }">
-											작성한 리뷰 신고 처리 완료 [ ${al.st_name } ]</button>
-										</c:otherwise>
-									</c:choose>
-								</c:when>
-								<c:when test="${al.commentary eq 'PENALTY' }">
-									<c:choose>
-										<c:when test="${al.check_date eq '-' }">
-											<li><button class="alarm" name="${al.commentary }" id="i${al.check_num }">
-											패널티 회수 요청 처리 완료 [ ${al.st_name } ]</button>
-										</c:when>
-										<c:otherwise>
-											<li><button class="alarm" name="${al.commentary }" id=i"${al.check_num }">
-											패널티 회수 요청 처리 완료 [ ${al.st_name } ]</button>
-										</c:otherwise>
-									</c:choose>
-								</c:when>
-								<c:when test="${al.commentary eq 'IN' }">
-									<c:choose>
-										<c:when test="${al.check_date eq '-' }">
-											<li><button class="alarm" name="${al.commentary }" id="j${al.check_num }">
-											가게 등록 신청 처리 완료 [ ${al.st_name } ]</button>
-										</c:when>
-										<c:otherwise>
-											<li><button class="alarm" name="${al.commentary }" id="j${al.check_num }">
-											가게 등록 신청 처리 완료 [ ${al.st_name } ]</button>
-										</c:otherwise>
-									</c:choose>
-								</c:when>
-								<c:when test="${al.commentary eq 'OUT' }">
-									<c:choose>
-										<c:when test="${al.check_date eq '-' }">
-											<li><button class="alarm" name="${al.commentary }" id="k${al.check_num }">
-											가게 등록 신청 처리 완료 [ ${al.st_name } ]</button>
-										</c:when>
-										<c:otherwise>
-											<li><button class="alarm" name="${al.commentary }" id="k${al.check_num }">
-											가게 폐업 신청 처리 완료 [ ${al.st_name } ]</button>
-										</c:otherwise>
-									</c:choose>
-								</c:when>
-							</c:choose>
-						</c:forEach>
+					<c:choose>
+						<c:when test="${empty alarm}">
+								<li>현재 알람이 존재하지 않습니다.
+						</c:when>
+						<c:otherwise>
+							<c:forEach var="al" items="${alarm }">
+								<c:choose>
+									<c:when test="${al.commentary eq 'REQ_ST' }">
+										<c:choose>
+											<c:when test="${al.check_date eq '-' }">
+												<li><button class="alarm" name="${al.commentary }" id="a${al.check_num }" >
+												가게 정보 수정 요청 경고 [ ${al.st_name } ]</button>
+											</c:when>
+											<c:otherwise>
+												<li><button class="alarm" name="${al.commentary }" id="a${al.check_num }">
+												가게 정보 수정 요청 경고 [ ${al.st_name } ]</button>
+											</c:otherwise>
+										</c:choose>
+									</c:when>
+									<c:when test="${al.commentary eq 'OBJ_PRO' }">
+										<c:choose>
+											<c:when test="${al.check_date eq '-' }">
+												<li><button class="alarm" name="${al.commentary }" id="b${al.check_num }">
+												이의 제기 신청 처리 완료 [ ${al.st_name } ]</button>
+											</c:when>
+											<c:otherwise>
+												<li><button class="alarm" name="${al.commentary }" id="b${al.check_num }">
+												이의 제기 신청 처리 완료 [ ${al.st_name } ]</button>
+											</c:otherwise>
+										</c:choose>
+									</c:when>
+									<c:when test="${al.commentary eq 'REQ_REJ' }">
+										<c:choose>
+											<c:when test="${al.check_date eq '-' }">
+												<li><button class="alarm" name="${al.commentary }" id="c${al.check_num }">
+												가게 정보 수정 요청 처리 변경 [ ${al.st_name } ]</button>
+											</c:when>
+											<c:otherwise>
+												<li><button class="alarm" name="${al.commentary }" id="c${al.check_num }">
+												가게 정보 수정 요청 처리 변경 [ ${al.st_name } ]</button>
+											</c:otherwise>
+										</c:choose>
+									</c:when>
+									<c:when test="${al.commentary eq 'ACCU_APPLY' }">
+										<c:choose>
+											<c:when test="${al.check_date eq '-' }">
+												<li><button class="alarm" name="${al.commentary }" id="e${al.check_num }">
+												작성한 리뷰 신고 처리 [ ${al.st_name } ]</button>
+											</c:when>
+											<c:otherwise>
+												<li><button class="alarm" name="${al.commentary }" id="e${al.check_num }">
+												작성한 리뷰 신고 처리 [ ${al.st_name } ]</button>
+											</c:otherwise>
+										</c:choose>
+									</c:when>
+									<c:when test="${al.commentary eq 'ACCU_PRO' }">
+										<c:choose>
+											<c:when test="${al.check_date eq '-' }">
+												<li><button class="alarm" name="${al.commentary }" id="f${al.check_num }">
+												작성한 리뷰 신고 처리 완료 [ ${al.st_name } ]</button>
+											</c:when>
+											<c:otherwise>
+												<li><button class="alarm" name="${al.commentary }" id="f${al.check_num }">
+												작성한 리뷰 신고 처리 완료 [ ${al.st_name } ]</button>
+											</c:otherwise>
+										</c:choose>
+									</c:when>
+									<c:when test="${al.commentary eq 'REQ' }">
+										<c:choose>
+											<c:when test="${al.check_date eq '-' }">
+												<li><button class="alarm" name="${al.commentary }" id="g${al.check_num }">
+												가게 정보 수정 요청 처리 완료 [ ${al.st_name } ]</button>
+											</c:when>
+											<c:otherwise>
+												<li><button class="alarm" name="${al.commentary }" id="g${al.check_num }">
+												가게 정보 수정 요청 처리 완료 [ ${al.st_name } ]</button>
+											</c:otherwise> 
+										</c:choose>
+									</c:when>
+									<c:when test="${al.commentary eq 'REP' }">
+										<c:choose>
+											<c:when test="${al.check_date eq '-' }">
+												<li><button class="alarm" name="${al.commentary }" id="h${al.check_num }">
+												요청한 리뷰 신고 처리 완료 [ ${al.st_name } ]</button>
+											</c:when>
+											<c:otherwise>
+												<li><button class="alarm" name="${al.commentary }" id="h${al.check_num }">
+												작성한 리뷰 신고 처리 완료 [ ${al.st_name } ]</button>
+											</c:otherwise>
+										</c:choose>
+									</c:when>
+									<c:when test="${al.commentary eq 'PENALTY' }">
+										<c:choose>
+											<c:when test="${al.check_date eq '-' }">
+												<li><button class="alarm" name="${al.commentary }" id="i${al.check_num }">
+												패널티 회수 요청 처리 완료 [ ${al.st_name } ]</button>
+											</c:when>
+											<c:otherwise>
+												<li><button class="alarm" name="${al.commentary }" id=i"${al.check_num }">
+												패널티 회수 요청 처리 완료 [ ${al.st_name } ]</button>
+											</c:otherwise>
+										</c:choose>
+									</c:when>
+									<c:when test="${al.commentary eq 'IN' }">
+										<c:choose>
+											<c:when test="${al.check_date eq '-' }">
+												<li><button class="alarm" name="${al.commentary }" id="j${al.check_num }">
+												가게 등록 신청 처리 완료 [ ${al.st_name } ]</button>
+											</c:when>
+											<c:otherwise>
+												<li><button class="alarm" name="${al.commentary }" id="j${al.check_num }">
+												가게 등록 신청 처리 완료 [ ${al.st_name } ]</button>
+											</c:otherwise>
+										</c:choose>
+									</c:when>
+									<c:when test="${al.commentary eq 'OUT' }">
+										<c:choose>
+											<c:when test="${al.check_date eq '-' }">
+												<li><button class="alarm" name="${al.commentary }" id="k${al.check_num }">
+												가게 등록 신청 처리 완료 [ ${al.st_name } ]</button>
+											</c:when>
+											<c:otherwise>
+												<li><button class="alarm" name="${al.commentary }" id="k${al.check_num }">
+												가게 폐업 신청 처리 완료 [ ${al.st_name } ]</button>
+											</c:otherwise>
+										</c:choose>
+									</c:when>
+								</c:choose>
+							</c:forEach>
+						</c:otherwise>
+					</c:choose>
 					</ul>
 					<input type="hidden" name="comment" id="comment">
 					<input type="hidden" name="check_num" id="check_num">

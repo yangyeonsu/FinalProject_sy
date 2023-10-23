@@ -267,8 +267,7 @@ a {
 					<ul class="person_listB">
 						<c:forEach var="al" items="${alarm }">
 							<c:choose>
-								<c:when
-									test="${fn:length(alarm) == 0 or fn:length(alarm) == null}">
+								<c:when test="${empty alarm}">
 									<li>현재 알람이 존재하지 않습니다.
 								</c:when>
 								<c:when test="${al.commentary eq 'REQ_ST' }">
