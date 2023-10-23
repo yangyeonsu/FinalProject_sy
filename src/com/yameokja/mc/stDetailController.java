@@ -386,21 +386,9 @@ public class stDetailController
 		Integer st_chbox_num = dao.searchStChboxnum(st_num, chbox_num);
 		
 		if(st_chbox_num != null)
-		{
-			Integer req_apply_num = dao.reqIsNull(st_chbox_num);
-			
+		{			
 			// 해당 st_chbox_num에 대한 요청이 없거나 이미 처리가 완료된 상황이면 insert
-			if(req_apply_num == null)
-			{
-				// 찾은 st_chbox_num 으로 req_apply에 데이터 insert
-				if(dao.reqApply(user_num, req_rs, st_chbox_num)==1)
-				{
-					result = "1";
-				}
-			} 
-			// reqRej:반려확인 / reqObj:이의제기내역에서 완료되었는지 
-			// reqRevo:패널티부여 후 수정했는지 판단 / reqPen:패널티 부여 후 3일이 지났는지 판단
-			else if(dao.reqRej(req_apply_num) != null && dao.reqObj(req_apply_num)==0 && dao.reqRevo(req_apply_num)==0 && dao.reqPen(req_apply_num)==0)
+			if(dao.reqCheck(st_chbox_num) == 1)
 			{
 				// 찾은 st_chbox_num 으로 req_apply에 데이터 insert
 				if(dao.reqApply(user_num, req_rs, st_chbox_num)==1)

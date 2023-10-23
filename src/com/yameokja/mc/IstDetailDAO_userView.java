@@ -44,18 +44,10 @@ public interface IstDetailDAO_userView
 
 	// st_chbox_num 찾기
 	public Integer searchStChboxnum(@Param("st_num") int st_num, @Param("chbox_num") int chbox_num);
-	// 가게정보수정요청이 된 st_chbox_num인지 확인
-	public Integer reqIsNull(@Param("st_chbox_num") int st_chbox_num);
 	// 가게정보오류수정요청 INSERT
 	public Integer reqApply(@Param("user_num") String user_num, @Param("req_rs") String req_rs, @Param("st_chbox_num") int st_chbox_num);
-	// 가게정보수정요청이 반려된 st_chbox_num인지 확인
-	public Integer reqRej(@Param("req_apply_num") int req_apply_num);
-	// 가게정보수정요청 : 이의제기 내역에서 처리가 완료된 사항인지 판단
-	public Integer reqObj(@Param("req_apply_num") int req_apply_num);
-	// 가게정보수정요청 : 패널티 부여 후 수정했다는 요청의 처리가 완료된 사항인지 판단
-	public Integer reqRevo(@Param("req_apply_num") int req_apply_num);
-	// 가게정보수정요청 : 패널티 부여 후 3일이 지났는지 판단
-	public Integer reqPen(@Param("req_apply_num") int req_apply_num);
+	// 가게정보수정요청 가능여부 판단
+	public Integer reqCheck(@Param("st_chbox_num") int st_chbox_num);	
 	
 	// 리뷰 키워드 범례 리스트
 	public ArrayList<StoreReviewKeyDTO> reviewKeywords();
