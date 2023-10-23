@@ -2,8 +2,8 @@ package com.yameokja.mc;
 
 public class ObjApplyViewDTO
 {
-	String req_rs, obj_rs, photo_link;
-	int obj_apply_num;
+	private String req_rs, obj_rs, photo_link;
+	private int obj_apply_num;
 	
 	public String getReq_rs()
 	{
