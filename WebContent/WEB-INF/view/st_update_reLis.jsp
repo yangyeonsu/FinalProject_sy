@@ -15,6 +15,19 @@
 
 <link rel="stylesheet" type="text/css" href="<%=cp%>/css/reqRepList.css">
 
+<style type="text/css">
+.rpt_obj, .rpt_revoke
+{
+	background-color: #fff;
+    width: 8vw;
+    height: 2.5vw;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
+}
+</style>
+
 <!-- 배너 스크립트 -->
 <script type="text/javascript">
 	$(function()
@@ -208,19 +221,18 @@
 					                <div class="rpt_content" id="status" onclick="reqPopupOpen()">패널티 부여일자</div>
 					                <c:choose>
 					                	<c:when test="${udre.check_label eq '둘다가능' }">
-					                		<div class="rpt_obj"><button>이의제기</button></div>
-					                		<div class="rpt_revoke"><button>패널티회수</button></div>
+					                		<div class="rpt_content"><button class="rpt_obj">이의제기</button></div>
+					                		<div class="rpt_content"><button class="rpt_revoke">패널티회수</button></div>
 					                	</c:when>
 					                	<c:when test="${udre.check_label eq '패널티회수가능' }">
-					                		<div class="rpt_obj"><button disabled="disabled">이의제기</button></div>
-					                		<div class="rpt_revoke"><button>패널티회수</button></div>
+					                		<div class="rpt_content"><button class="rpt_obj" disabled="disabled">이의제기</button></div>
+					                		<div class="rpt_content"><button class="rpt_revoke">패널티회수</button></div>
 					                	</c:when>
 					                	<c:when test="${udre.check_label eq '둘다불가능' }">
-					                		<div class="rpt_obj"><button disabled="disabled">이의제기</button></div>
-					                		<div class="rpt_revoke"><button disabled="disabled">패널티회수</button></div>
+					                		<div class="rpt_content"><button class="rpt_obj" disabled="disabled">이의제기</button></div>
+					                		<div class="rpt_content"><button class="rpt_revoke" disabled="disabled">패널티회수</button></div>
 					                	</c:when>
 					                </c:choose>
-					                
 					            	
 					            	<div id="reject" style="display: none;">${udre.req_apply_num }</div>
 					                <%-- <div class="rej_rs" style="display: none;">${udre.rej_rs }</div> --%>

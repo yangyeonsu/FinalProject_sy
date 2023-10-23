@@ -2,8 +2,8 @@ package com.yameokja.mc;
 
 public class StInoutDTO
 {
-	String cat, reg_date, final_date, state, st_name;
-	int apply_num;
+	private String cat, reg_date, final_date, state, st_name;
+	private int apply_num;
 	
 	
 	public String getCat()

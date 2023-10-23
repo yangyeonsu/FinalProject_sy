@@ -55,9 +55,9 @@ public class StoreController
 		
 		// 가지고 온 유저 정보를 이용해 유저 등급 알아내기
 		if (month < 7)
-			user.setUser_grade(uDao.firstHalf(user_num).user_grade);
+			user.setUser_grade(uDao.firstHalf(user_num).getUser_grade());
 		else
-			user.setUser_grade(uDao.secondHalf(user_num).user_grade);
+			user.setUser_grade(uDao.secondHalf(user_num).getUser_grade());
 
 		// 구성한 유저 dto 모델에 추가하기(페이지 이동시 가져가기 위함)
 		model.addAttribute("user", user);
@@ -199,9 +199,9 @@ public class StoreController
 		int month = currentDate.getMonthValue();
 
 		if (month < 7)
-			user.setUser_grade(uDao.firstHalf(user_num).user_grade);
+			user.setUser_grade(uDao.firstHalf(user_num).getUser_grade());
 		else
-			user.setUser_grade(uDao.secondHalf(user_num).user_grade);
+			user.setUser_grade(uDao.secondHalf(user_num).getUser_grade());
 
 		model.addAttribute("user", user);
 		
@@ -299,9 +299,9 @@ public class StoreController
 		int month = currentDate.getMonthValue();
 
 		if (month < 7)
-			user.setUser_grade(uDao.firstHalf(user_num).user_grade);
+			user.setUser_grade(uDao.firstHalf(user_num).getUser_grade());
 		else
-			user.setUser_grade(uDao.secondHalf(user_num).user_grade);
+			user.setUser_grade(uDao.secondHalf(user_num).getUser_grade());
 		
 		ArrayList<StoreDTO> st_list = sdao.searchStoreInfo(user_num);
 
@@ -434,10 +434,9 @@ public class StoreController
 		int month = currentDate.getMonthValue();
 
 		if (month < 7)
-			user.setUser_grade(uDao.firstHalf(user_num).user_grade);
+			user.setUser_grade(uDao.firstHalf(user_num).getUser_grade());
 		else
-			user.setUser_grade(uDao.secondHalf(user_num).user_grade);
-		
+			user.setUser_grade(uDao.secondHalf(user_num).getUser_grade());
 
 		model.addAttribute("user", user);
 		session.setAttribute("st_num", st_num);
@@ -943,13 +942,13 @@ public class StoreController
 	    
 	    if (1 <= monthValue && monthValue <= 6)
 		{
-			user.setPoint_sum(udao.secondHalf(user_num).point_sum);
-			user.setUser_grade(udao.firstHalf(user_num).user_grade);
+			user.setPoint_sum(udao.secondHalf(user_num).getPoint_sum());
+			user.setUser_grade(udao.firstHalf(user_num).getUser_grade());
 		}
 		else if(7 <= monthValue && monthValue <= 12)
 		{
-			user.setPoint_sum(udao.firstHalf(user_num).point_sum);
-			user.setUser_grade(udao.secondHalf(user_num).user_grade);
+			user.setPoint_sum(udao.firstHalf(user_num).getPoint_sum());
+			user.setUser_grade(udao.secondHalf(user_num).getUser_grade());
 		}
 	    
 	    // 이전 페이지(?)로부터 넘어온 게시물 번호 수신
@@ -1028,13 +1027,13 @@ public class StoreController
 	    
 	    if (1 <= monthValue && monthValue <= 6)
 		{
-			user.setPoint_sum(udao.secondHalf(user_num).point_sum);
-			user.setUser_grade(udao.firstHalf(user_num).user_grade);
+			user.setPoint_sum(udao.secondHalf(user_num).getPoint_sum());
+			user.setUser_grade(udao.firstHalf(user_num).getUser_grade());
 		}
 		else if(7 <= monthValue && monthValue <= 12)
 		{
-			user.setPoint_sum(udao.firstHalf(user_num).point_sum);
-			user.setUser_grade(udao.secondHalf(user_num).user_grade);
+			user.setPoint_sum(udao.firstHalf(user_num).getPoint_sum());
+			user.setUser_grade(udao.secondHalf(user_num).getUser_grade());
 		}
 	    
 	    // 이전 페이지(?)로부터 넘어온 게시물 번호 수신
@@ -1106,15 +1105,15 @@ public class StoreController
 		
 		UserDTO user = udao.searchUserInfo(user_num, "num");
 		
-	    if (1 <= monthValue && monthValue <= 6)
+		if (1 <= monthValue && monthValue <= 6)
 		{
-			user.setPoint_sum(udao.secondHalf(user_num).point_sum);
-			user.setUser_grade(udao.firstHalf(user_num).user_grade);
+			user.setPoint_sum(udao.secondHalf(user_num).getPoint_sum());
+			user.setUser_grade(udao.firstHalf(user_num).getUser_grade());
 		}
 		else if(7 <= monthValue && monthValue <= 12)
 		{
-			user.setPoint_sum(udao.firstHalf(user_num).point_sum);
-			user.setUser_grade(udao.secondHalf(user_num).user_grade);
+			user.setPoint_sum(udao.firstHalf(user_num).getPoint_sum());
+			user.setUser_grade(udao.secondHalf(user_num).getUser_grade());
 		}
 	    
 	    model.addAttribute("user", user);

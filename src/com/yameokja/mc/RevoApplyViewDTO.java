@@ -4,9 +4,9 @@ public class RevoApplyViewDTO
 {
 	// REVO_APPLY_NUM, USER_ID, REG_DATE, ST_NAME
 	// PEN_TYPE_NAME, REVO_RS, PHOTO_LINK
-	int revo_apply_num;
-	String user_id, reg_date, st_name;
-	String req_rs, revo_rs, photo_link;
+	private int revo_apply_num;
+	private String user_id, reg_date, st_name;
+	private String req_rs, revo_rs, photo_link;
 	
 	// getter / setter
 	public String getUser_id()

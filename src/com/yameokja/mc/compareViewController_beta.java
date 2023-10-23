@@ -42,9 +42,9 @@ public class compareViewController_beta
 		int month = currentDate.getMonthValue();
 
 		if (month < 7)
-			user.setUser_grade(uDao.firstHalf(user_num).user_grade);
+			user.setUser_grade(uDao.firstHalf(user_num).getUser_grade());
 		else
-			user.setUser_grade(uDao.secondHalf(user_num).user_grade);
+			user.setUser_grade(uDao.secondHalf(user_num).getUser_grade());
 		
 		model.addAttribute("user", user);
 		// 유저 알람 목록
@@ -53,10 +53,10 @@ public class compareViewController_beta
 		// 사업자이면 가게 정보 함께 넘김
 		ArrayList<StoreDTO> st_list=null;
 
-		UserDTO userInfo = uDao.searchUserInfo(user.user_id, "id");
-		session.setAttribute("user_num", userInfo.user_num);
+		UserDTO userInfo = uDao.searchUserInfo(user.getUser_id(), "id");
+		session.setAttribute("user_num", userInfo.getUser_num());
 		
-		int storeCheck = uDao.storeCheck(userInfo.user_num);
+		int storeCheck = uDao.storeCheck(userInfo.getUser_num());
 		
 		if (storeCheck > 0)
 			st_list = smDao.searchStoreInfo(user_num);

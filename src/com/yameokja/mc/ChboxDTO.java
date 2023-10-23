@@ -2,8 +2,8 @@ package com.yameokja.mc;
 
 public class ChboxDTO
 {
-	int chbox_num;
-	String chbox_name;
+	private int chbox_num;
+	private String chbox_name;
 	
 	
 	public int getChbox_num()
