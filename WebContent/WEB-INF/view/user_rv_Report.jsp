@@ -230,7 +230,7 @@
 					    <c:otherwise>
 					        <c:forEach var="rvreport" items="${rvReportList}">
 					        	<c:choose>
-					        		<c:when test="${rvreport.state=='처리완료' }">
+					        		<c:when test="${rvreport.state eq '처리완료' }">
 										 <div class="report_content">
 							                <div class="rpt_content" id="${rvreport.rep_process_num}">${rvreport.reg_date }</div>
 							                <div class="rpt_content" id="${rvreport.rep_process_num}">${rvreport.st_name }</div>

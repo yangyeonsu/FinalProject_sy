@@ -514,7 +514,7 @@ public class UserController
 	    LocalDate currentDate = LocalDate.now();
         int monthValue = currentDate.getMonthValue();
 	    
-	    String actionName = "/user_stupdate_relist.action";
+	    String actionName = "/user_stinout_list.action";
 	    
 	    String result = null;
 	    
@@ -586,7 +586,7 @@ public class UserController
 	    List<StInoutDTO> stinoutlist = dao.stinoutlist(user.getUser_id(), startRow, endRow);
 	    //System.out.println(user_stupdate_relist);
 	    model.addAttribute("user", user);
-      model.addAttribute("alarm", udao.userAlarm(user_num));
+        model.addAttribute("alarm", udao.userAlarm(user_num));
 	    model.addAttribute("stinoutlist", stinoutlist);
 	    result = "/WEB-INF/view/St_Inout_Lis.jsp";
 
