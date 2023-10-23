@@ -42,13 +42,13 @@ public class stSidebarController
 	    UserDTO user = udao.searchUserInfo(user_num, "num");
 	    if (1 <= monthValue && monthValue <= 6)
 		{
-			user.setPoint_sum(udao.secondHalf(user_num).point_sum);
-			user.setUser_grade(udao.firstHalf(user_num).user_grade);
+			user.setPoint_sum(udao.secondHalf(user_num).getPoint_sum());
+			user.setUser_grade(udao.firstHalf(user_num).getUser_grade());
 		}
 		else if(7 <= monthValue && monthValue <= 12)
 		{
-			user.setPoint_sum(udao.firstHalf(user_num).point_sum);
-			user.setUser_grade(udao.secondHalf(user_num).user_grade);
+			user.setPoint_sum(udao.firstHalf(user_num).getPoint_sum());
+			user.setUser_grade(udao.secondHalf(user_num).getUser_grade());
 		}
 	    
 	    ArrayList<StoreDTO> st_list = smDao.searchStoreInfo(user_num);
@@ -71,7 +71,7 @@ public class stSidebarController
 	    int itemsPerPage = 10;
 	    
 	    // 전체 데이터 수 구해서 총 페이지 수 계산
-	    int totalPage = dao.count_relist(user.user_id) / itemsPerPage;
+	    int totalPage = dao.count_relist(user.getUser_id()) / itemsPerPage;
 	    
 	    if (dao.count_relist(user_num) % itemsPerPage != 0)
 	    	totalPage++;
@@ -124,13 +124,13 @@ public class stSidebarController
 	    UserDTO user = udao.searchUserInfo(user_num, "num");
 	    if (1 <= monthValue && monthValue <= 6)
 		{
-			user.setPoint_sum(udao.secondHalf(user_num).point_sum);
-			user.setUser_grade(udao.firstHalf(user_num).user_grade);
+			user.setPoint_sum(udao.secondHalf(user_num).getPoint_sum());
+			user.setUser_grade(udao.firstHalf(user_num).getUser_grade());
 		}
 		else if(7 <= monthValue && monthValue <= 12)
 		{
-			user.setPoint_sum(udao.firstHalf(user_num).point_sum);
-			user.setUser_grade(udao.secondHalf(user_num).user_grade);
+			user.setPoint_sum(udao.firstHalf(user_num).getPoint_sum());
+			user.setUser_grade(udao.secondHalf(user_num).getUser_grade());
 		}
 	    
 	    ArrayList<StoreDTO> st_list = smDao.searchStoreInfo(user_num);
@@ -211,13 +211,13 @@ public class stSidebarController
 	    UserDTO user = udao.searchUserInfo(user_num, "num");
 	    if (1 <= monthValue && monthValue <= 6)
 		{
-			user.setPoint_sum(udao.secondHalf(user_num).point_sum);
-			user.setUser_grade(udao.firstHalf(user_num).user_grade);
+			user.setPoint_sum(udao.secondHalf(user_num).getPoint_sum());
+			user.setUser_grade(udao.firstHalf(user_num).getUser_grade());
 		}
 		else if(7 <= monthValue && monthValue <= 12)
 		{
-			user.setPoint_sum(udao.firstHalf(user_num).point_sum);
-			user.setUser_grade(udao.secondHalf(user_num).user_grade);
+			user.setPoint_sum(udao.firstHalf(user_num).getPoint_sum());
+			user.setUser_grade(udao.secondHalf(user_num).getUser_grade());
 		}
 	    
 	    ArrayList<StoreDTO> st_list = smDao.searchStoreInfo(user_num);

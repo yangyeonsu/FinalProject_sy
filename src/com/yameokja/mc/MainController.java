@@ -50,9 +50,9 @@ public class MainController
 		int month = currentDate.getMonthValue();
 
 		if (month < 7)
-			user.setUser_grade(umDao.firstHalf(user_num).user_grade);
+			user.setUser_grade(umDao.firstHalf(user_num).getUser_grade());
 		else
-			user.setUser_grade(umDao.secondHalf(user_num).user_grade);
+			user.setUser_grade(umDao.secondHalf(user_num).getUser_grade());
 
 		model.addAttribute("user", user);
 		
@@ -177,9 +177,9 @@ public class MainController
 		int month = currentDate.getMonthValue();
 
 		if (month < 7)
-			user.setUser_grade(umDao.firstHalf(user_num).user_grade);
+			user.setUser_grade(umDao.firstHalf(user_num).getUser_grade());
 		else
-			user.setUser_grade(umDao.secondHalf(user_num).user_grade);
+			user.setUser_grade(umDao.secondHalf(user_num).getUser_grade());
 
 		model.addAttribute("user", user);
 		model.addAttribute("alarm", umDao.userAlarm(user_num));
@@ -446,9 +446,9 @@ public class MainController
 		int month = currentDate.getMonthValue();
 
 		if (month < 7)
-			user.setUser_grade(umDao.firstHalf(user_num).user_grade);
+			user.setUser_grade(umDao.firstHalf(user_num).getUser_grade());
 		else
-			user.setUser_grade(umDao.secondHalf(user_num).user_grade);
+			user.setUser_grade(umDao.secondHalf(user_num).getUser_grade());
 
 		model.addAttribute("user", user);
 		model.addAttribute("alarm", umDao.userAlarm(user_num));
