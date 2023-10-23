@@ -2,7 +2,7 @@ package com.yameokja.mc;
 
 public class StInoutDTO
 {
-	private String cat, reg_date, final_date, state, st_name;
+	private String cat, reg_date, final_date, state, st_name, in_rej_rs, out_rej_rs;
 	private int apply_num;
 	
 	
@@ -58,6 +58,22 @@ public class StInoutDTO
 	public void setApply_num(int apply_num)
 	{
 		this.apply_num = apply_num;
+	}
+	public String getIn_rej_rs()
+	{
+		return in_rej_rs;
+	}
+	public void setIn_rej_rs(String in_rej_rs)
+	{
+		this.in_rej_rs = in_rej_rs;
+	}
+	public String getOut_rej_rs()
+	{
+		return out_rej_rs;
+	}
+	public void setOut_rej_rs(String out_rej_rs)
+	{
+		this.out_rej_rs = out_rej_rs;
 	}
 	
 	
