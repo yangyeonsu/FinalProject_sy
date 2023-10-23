@@ -1,11 +1,15 @@
 @charset "UTF-8";
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500&display=swap');
 
+*
+{
+	font-family: 'IBM Plex Sans KR', sans-serif;
+}
+
 /* 전체 스크롤 없앰 */
 body
 {
 	margin: 0px;
-	font-family: 'IBM Plex Sans KR', sans-serif;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
