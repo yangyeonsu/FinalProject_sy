@@ -104,18 +104,18 @@
 						<div class="rpt_subtitle">처리일자</div>
 					</div>
 					<c:choose>
-					    <c:when test="${empty StAppealRequest}">
+					    <c:when test="${empty stobjlist}">
 					        <div class="no-data-message">이의제기 내역이 없습니다.</div>
 					    </c:when>
 					    <c:otherwise>
-					        <c:forEach var="star" items="${StAppealRequest}">
+					        <c:forEach var="star" items="${stobjlist}">
 					            <div class="report_content">
 					                <div class="rpt_content" onclick="reqPopupOpen()">${star.reg_date }</div>
 					                <div class="st_name" onclick="reqPopupOpen()">${star.st_name }</div>
-					                <div class="rpt_content" id="status" onclick="reqPopupOpen()">${star.status }</div>
+					                <div class="rpt_content" id="status" onclick="reqPopupOpen()">${star.cat }</div>
 					                <div class="rpt_content" onclick="reqPopupOpen()">${star.final_date }</div>
 					            	
-					            	<div id="reject" style="display: none;">${star.req_process_num }</div>
+					            	<%-- <div id="reject" style="display: none;">${star.req_process_num }</div> --%>
 					                <div class="rej_rs" style="display: none;">${star.rej_rs }</div>
 					                
 					            

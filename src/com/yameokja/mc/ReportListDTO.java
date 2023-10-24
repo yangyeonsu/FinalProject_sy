@@ -3,6 +3,7 @@ package com.yameokja.mc;
 public class ReportListDTO
 {
 	private String reg_date, st_name, state, final_date, admin_id;
+	private String apply_date, rej_rs;
 	private String accu_num, cat, user_id, rep_rs_name;
 	private int report_num;
 	
@@ -79,7 +80,6 @@ public class ReportListDTO
 		this.accu_num = accu_num;
 	}
 
-	
 	public int getReport_num()
 	{
 		return report_num;
@@ -88,6 +88,7 @@ public class ReportListDTO
 	{
 		this.report_num = report_num;
 	}
+	
 	public String getCat()
 	{
 		return cat;
@@ -96,4 +97,24 @@ public class ReportListDTO
 	{
 		this.cat = cat;
 	}
+	
+	public String getApply_date()
+	{
+		return apply_date;
+	}
+	public void setApply_date(String apply_date)
+	{
+		this.apply_date = apply_date;
+	}
+	
+	public String getRej_rs()
+	{
+		return rej_rs;
+	}
+	public void setRej_rs(String rej_rs)
+	{
+		this.rej_rs = rej_rs;
+	}
+	
+	
 }

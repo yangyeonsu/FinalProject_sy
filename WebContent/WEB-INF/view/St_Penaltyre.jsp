@@ -103,19 +103,18 @@
 						<div class="rpt_subtitle">처리일자</div>
 					</div>
 					<c:choose>
-					    <c:when test="${empty StPenaltyre}">
+					    <c:when test="${empty strevolist}">
 					        <div class="no-data-message">패널티 회수 요청 내역이 없습니다.</div>
 					    </c:when>
 					    <c:otherwise>
-					        <c:forEach var="sptr" items="${StPenaltyre}">
+					        <c:forEach var="sptr" items="${strevolist}">
 					            <div class="report_content">
 					                <div class="rpt_content">${sptr.reg_date }</div>
 					                <div class="st_name">${sptr.st_name }</div>
-					                <div class="rpt_content" id="status">${sptr.status }</div>
+					                <div class="rpt_content" id="status">${sptr.cat }</div>
 					                <div class="rpt_content"">${sptr.final_date }</div>
-					                <div class="rpt_content"">${sptr.admin_name }</div>
 					            	
-					            	<div id="reject" style="display: none;">${udre.req_process_num }</div>
+					            	<%-- <div id="reject" style="display: none;">${udre.req_process_num }</div> --%>
 					                <div class="rej_rs" style="display: none;">${udre.rej_rs }</div>
 					                
 					            

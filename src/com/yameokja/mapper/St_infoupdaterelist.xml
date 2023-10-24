@@ -151,4 +151,48 @@
 		VALUES(REVOAPSEQ.NEXTVAL, #{pen_grant_num}, #{st_chbox_num}, #{revo_rs}, SYSDATE)
 	</insert>
 	
+	<select id="count_objlist" resultType="java.lang.Integer">
+	    SELECT COUNT(*) AS COUNT
+	    FROM OBJ_APPLY_VIEW
+	    WHERE USER_ID = #{user_id}
+	</select>
+	
+	<select id="stobjlist" resultType="com.yameokja.mc.ReportListDTO">
+		SELECT APPLY_NUM, REG_DATE, ST_NAME, FINAL_DATE, RNUM, REJ_RS, CAT
+		FROM
+		(
+		    SELECT OAV.OBJ_APPLY_NUM AS APPLY_NUM, OAV.REG_DATE AS REG_DATE, OAV.ST_NAME AS ST_NAME
+		    	  , NVL(TO_CHAR(OP.FINAL_DATE, 'YYYY-MM-DD'), '-') AS FINAL_DATE AS FINAL_DATE
+			      , OAV.STATE AS CAT, ORR.REJ_RS AS REJ_RS, ROW_NUMBER() OVER (ORDER BY OAV.REG_DATE DESC) AS RNUM
+			FROM OBJ_APPLY_VIEW OAV LEFT JOIN OBJ_PROCESS OP
+			ON OAV.OBJ_APPLY_NUM = OP.OBJ_APPLY_NUM
+			LEFT JOIN OBJ_REJ ORR
+			ON OP.OBJ_PROCESS_NUM = ORR.OBJ_PROCESS_NUM
+		    WHERE OAV.USER_ID = #{user_id}
+		) T
+		WHERE RNUM BETWEEN #{startRow} AND #{endRow}
+	</select>
+	
+	<select id="count_revolist" resultType="java.lang.Integer">
+	    SELECT COUNT(*) AS COUNT
+	    FROM REVO_APPLY_VIEW
+	    WHERE USER_ID = #{user_id}
+	</select>
+	
+	<select id="strevolist" resultType="com.yameokja.mc.ReportListDTO">
+		SELECT APPLY_NUM, REG_DATE, ST_NAME, FINAL_DATE, RNUM, CAT, REJ_RS
+		FROM
+		(
+		    SELECT RAV.REVO_APPLY_NUM AS APPLY_NUM, RAV.REG_DATE AS REG_DATE, RAV.STATE AS CAT, RAV.ST_NAME AS ST_NAME
+		        , NVL(TO_CHAR(RP.FINAL_DATE, 'YYYY-MM-DD'), '-') AS FINAL_DATE, RR.REJ_RS AS REJ_RS
+		        , ROW_NUMBER() OVER (ORDER BY RAV.REG_DATE DESC) AS RNUM
+		    FROM REVO_APPLY_VIEW RAV LEFT JOIN REVO_PROCESS RP
+		    ON RAV.REVO_APPLY_NUM = RP.REVO_APPLY_NUM
+		    LEFT JOIN REVO_REJ RR
+		    ON RP.REVO_PROCESS_NUM = RR.REVO_PROCESS_NUM
+		    WHERE RAV.USER_ID = #{user_id}
+		) T
+		WHERE RNUM BETWEEN #{startRow} AND #{endRow}
+	</select>
+	
 </mapper>
