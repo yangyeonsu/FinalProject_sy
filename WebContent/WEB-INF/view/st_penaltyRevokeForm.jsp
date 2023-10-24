@@ -165,20 +165,72 @@ body
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <script type="text/javascript">
+	$(function()
+	{
+		$(".left_sub_menu").hide();
+		$(".has_sub").click(function()
+		{
+			$(".left_sub_menu").fadeToggle(300);
+			if ($('#checkOverlay').val() == "true")
+			{
+				$('.overlay').css("position", "fixed");
+				$('.overlay').css("width", "0%");
+				$('.overlay').css("height", "0%");
+				$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
+				$('.overlay').css("z-index", "0");
+				$('#checkOverlay').attr("value", "false");
+			} else
+			{
+				$('.overlay').css("position", "fixed");
+				$('.overlay').css("width", "77%");
+				$('.overlay').css("height", "100%");
+				$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
+				$('.overlay').css("z-index", "3");
+				$('.overlay').css("margin-top", "1.011vh");
+				$('.overlay').css("margin-left", "23%");
+				$('#checkOverlay').attr("value", "true");
+			}
+
+		});
+		// 왼쪽메뉴 드롭다운
+		$(".sub_menu ul.small_menu").hide();
+		$(".sub_menu ul.big_menu").click(function()
+		{
+			$("ul", this).slideToggle(300);
+		});
+		// 외부 클릭 시 좌측 사이드 메뉴 숨기기
+		$('.overlay').on('click', function()
+		{
+			$('.left_sub_menu').fadeOut();
+			$('.overlay').css("position", "fixed");
+			$('.overlay').css("width", "0%");
+			$('.overlay').css("height", "0%");
+			$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
+			$('.overlay').css("z-index", "0");
+			$('#checkOverlay').attr("value", "false");
+		});
+	});
 
 </script>
 
 </head>
 <body>
-<form id="adminForm" method="post">
+<form action="revoapply.action" id="userForm" method="post">
 <div class="bframe">
 	
+	
 	<!-- header -->
-	<div><c:import url="/WEB-INF/view/header_admin.jsp"></c:import></div>
+	<div class="header">
+		<c:import url="header_user.jsp"></c:import>
+	</div>
+
+	
 	
 	<div class="middle">
+	<c:import url="sideBar_user.jsp"></c:import>
 		<div class="top">
 			<h1>패널티 회수 요청서</h1>
+			<input type="hidden" id="req_apply_num" name="req_apply_num" value="${req.req_apply_num }">
 			<hr>
 		</div>
 		
@@ -187,16 +239,16 @@ body
 		
 			<div class="st_info_insert2">
 				<div class="igroup">
-					<h2>${err.getSt_name()}</h2>
+					<h2>${req.st_name }</h2>
 				</div>
 			
 			
 				<div class="igroup">
 					<div style="width: 40%;">
-						${err.getChbox_name() }
+						${req.chbox_name }
 					</div>
 					<div>
-						${err.getYn_name() }
+						${req.yn_name }
 					</div>
 				</div>
 				<br>
@@ -207,7 +259,7 @@ body
 					</div>
 				</div>
 				<div class="igroup2" style="width: 100%;">
-					<textarea id="objReport" readonly="readonly" style="width: 72%; height: 5em; 3px; resize: none;">${obj.getReq_rs() }</textarea>
+					<textarea id="objReport" readonly="readonly" style="width: 72%; height: 5em; 3px; resize: none;">${req.req_rs }</textarea>
 				</div>
 				
 				<br><br>
@@ -221,7 +273,7 @@ body
 				</div>
 				
 				<div class="igroup2" style="width: 100%;">
-					<textarea id="objRs" placeholder="패널티 회수 요청 사유를 입력해주세요." style="width: 72%; height: 5em; 3px; resize: none;"></textarea>
+					<textarea id="revo_rs" name="regvo_rs" placeholder="패널티 회수 요청 사유를 입력해주세요." style="width: 72%; height: 5em; 3px; resize: none;"></textarea>
 				</div>
 				
 				<br>
