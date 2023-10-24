@@ -215,7 +215,7 @@ body
 
 </head>
 <body>
-<form id="adminForm" method="post">
+<form action="revoapply.action" id="userForm" method="post">
 <div class="bframe">
 	
 	
@@ -230,6 +230,7 @@ body
 	<c:import url="sideBar_user.jsp"></c:import>
 		<div class="top">
 			<h1>패널티 회수 요청서</h1>
+			<input type="hidden" id="req_apply_num" name="req_apply_num" value="${req.req_apply_num }">
 			<hr>
 		</div>
 		
@@ -272,7 +273,7 @@ body
 				</div>
 				
 				<div class="igroup2" style="width: 100%;">
-					<textarea id="objRs" placeholder="패널티 회수 요청 사유를 입력해주세요." style="width: 72%; height: 5em; 3px; resize: none;"></textarea>
+					<textarea id="revo_rs" name="regvo_rs" placeholder="패널티 회수 요청 사유를 입력해주세요." style="width: 72%; height: 5em; 3px; resize: none;"></textarea>
 				</div>
 				
 				<br>

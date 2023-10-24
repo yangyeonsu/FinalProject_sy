@@ -320,6 +320,53 @@ public class stSidebarController
 		
 	}
 	
+	// 패널티 회수 신청
+	@RequestMapping(value="/revoapply.action", method=RequestMethod.POST)
+	public String stRevoApply(HttpServletRequest request, Model model)
+	{
+		HttpSession session = request.getSession();
+		String user_num = (String)session.getAttribute("user_num");
+		
+		String result = "";
+		
+		LocalDate currentDate = LocalDate.now();
+        int monthValue = currentDate.getMonthValue();
+        
+        IUserDAO udao = sqlSession.getMapper(IUserDAO.class);
+        IStoreMainDAO smDao = sqlSession.getMapper(IStoreMainDAO.class);
+        IStinfoUpdaterelistDAO suDao = sqlSession.getMapper(IStinfoUpdaterelistDAO.class);
+        
+        UserDTO user = udao.searchUserInfo(user_num, "num");
+	    if (1 <= monthValue && monthValue <= 6)
+		{
+			user.setPoint_sum(udao.secondHalf(user_num).getPoint_sum());
+			user.setUser_grade(udao.firstHalf(user_num).getUser_grade());
+		}
+		else if(7 <= monthValue && monthValue <= 12)
+		{
+			user.setPoint_sum(udao.firstHalf(user_num).getPoint_sum());
+			user.setUser_grade(udao.secondHalf(user_num).getUser_grade());
+		}
+	    model.addAttribute("user", user);
+	    
+	    ArrayList<StoreDTO> st_list = smDao.searchStoreInfo(user_num);
+		model.addAttribute("st_list", st_list);
+		
+		model.addAttribute("alarm", udao.userAlarm(user_num));
+		
+		int req_apply_num = Integer.parseInt(request.getParameter("req_apply_num"));
+
+		int pen_grant_num = suDao.findPenNum(req_apply_num);
+		int st_chbox_num = 0;
+		String revo_rs = request.getParameter("revo_rs");
+
+		int check = suDao.revoapply(pen_grant_num, st_chbox_num, revo_rs);
+		
+		result = "redirect:penaltylist.action";
+		
+		return result;		
+	}
+	
 	
 	// 패널티 회수 요청 내역
 	@RequestMapping(value="/penaltylist.action", method=RequestMethod.GET)
