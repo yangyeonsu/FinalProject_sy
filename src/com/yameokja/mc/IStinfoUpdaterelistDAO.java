@@ -13,4 +13,6 @@ public interface IStinfoUpdaterelistDAO
         @Param("endRow") int endRow
     );
 	
+	public ReqApplyViewDTO reqRs(int req_apply_num);
+	
 }

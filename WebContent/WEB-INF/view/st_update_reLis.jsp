@@ -76,6 +76,33 @@
 		});
 	});
 	
+	$(function()
+	{
+		
+		$(".rpt_obj").click(function()
+		{
+			var num = $(this).attr("id").substr(1);
+			
+			$("#reqnum").val(num);
+			
+			$("#userForm").attr("action", "objectionform.action");
+			$("#userForm").submit();
+						
+		});
+		
+		$(".rpt_revoke").click(function()
+		{
+			var num = $(this).attr("id").substr(1);
+			
+			$("#reqnum").val(num);
+			
+			$("#userForm").attr("action", "revokeform.action");
+			$("#userForm").submit();
+						
+		});
+		
+	});
+	
 	
 	// 모달 ----------------------------------------------
 	function reqPopupOpen()
@@ -177,118 +204,117 @@
 
 </head>
 <body>
-
-	<div class="header">
-		<c:import url="header_user.jsp"></c:import>
-	</div>
-
+	<form action="" id="userForm" method="post">
+		<div class="header">
+			<c:import url="header_user.jsp"></c:import>
+		</div>
 	
-	
-	<div class="middle">
-	<c:import url="sideBar_user.jsp"></c:import>
 		
-		<div class="right_content">
-			<div class="rv_report">
-				<div class="title">
-					가게정보오류수정요청 경고 내역
-				</div>
-				<hr>
-				
-				<div class="rv_reportlist">
-					<div class="subtitle">
-						<div class="rpt_subtitle">요청일자</div>
-						<div class="st_name">가게명</div>
-						<div class="rpt_subtitle">처리일자</div>
-						<div class="rpt_subtitle">패널티부여일자</div>
-						<div class="rpt_subtitle">이의제기</div>
-						<div class="rpt_subtitle">패널티회수</div>
+		
+		<div class="middle">
+		<c:import url="sideBar_user.jsp"></c:import>
+			
+			<div class="right_content">
+				<div class="rv_report">
+					<div class="title">
+						가게정보오류수정요청 경고 내역
 					</div>
-					<c:choose>
-					    <c:when test="${empty stinfoupdatelist}">
-					        <div class="no-data-message">가게 정보 수정 요청 내역이 없습니다.</div>
-					        <c:forEach var="udre" begin="1" end="10">
-					        	<div class="report_content">
-					                
-					            </div>
-					        </c:forEach>
-					    </c:when>
-					    <c:otherwise>
-					        <c:forEach var="udre" items="${stinfoupdatelist}">
-					            <div class="report_content">
-					                <div class="rpt_content" onclick="reqPopupOpen()">${udre.reg_date }</div>
-					                <div class="st_name" onclick="reqPopupOpen()">${udre.st_name }</div>
-					                <div class="rpt_content" onclick="reqPopupOpen()">${udre.final_date }</div>
-					                <div class="rpt_content" id="status" onclick="reqPopupOpen()">패널티 부여일자</div>
-					                <c:choose>
-					                	<c:when test="${udre.check_label eq '둘다가능' }">
-					                		<div class="rpt_content"><button class="rpt_obj">이의제기</button></div>
-					                		<div class="rpt_content"><button class="rpt_revoke">패널티회수</button></div>
-					                	</c:when>
-					                	<c:when test="${udre.check_label eq '패널티회수가능' }">
-					                		<div class="rpt_content"><button class="rpt_obj" disabled="disabled">이의제기</button></div>
-					                		<div class="rpt_content"><button class="rpt_revoke">패널티회수</button></div>
-					                	</c:when>
-					                	<c:when test="${udre.check_label eq '둘다불가능' }">
-					                		<div class="rpt_content"><button class="rpt_obj" disabled="disabled">이의제기</button></div>
-					                		<div class="rpt_content"><button class="rpt_revoke" disabled="disabled">패널티회수</button></div>
-					                	</c:when>
-					                </c:choose>
-					            	
-					            	<div id="reject" style="display: none;">${udre.req_apply_num }</div>
-					                <%-- <div class="rej_rs" style="display: none;">${udre.rej_rs }</div> --%>
-					            </div>
-					        </c:forEach>
-					    </c:otherwise>
-					</c:choose>
+					<hr>
 					
-					<!-- 페이징 처리 -->
-					<div class="pagination">
-			            <c:choose>
-			                <c:when test="${empty user_stupdate_relist}">
-			                    <p></p>
-			                </c:when>
-			                <c:otherwise>
-			                    <div class="pageIndex">
-									${pageIndex }
+					<div class="rv_reportlist">
+						<div class="subtitle">
+							<div class="rpt_subtitle">요청일자</div>
+							<div class="st_name">가게명</div>
+							<div class="rpt_subtitle">처리일자</div>
+							<div class="rpt_subtitle">패널티부여일자</div>
+							<div class="rpt_subtitle">이의제기</div>
+							<div class="rpt_subtitle">패널티회수</div>
+						</div>
+						<c:choose>
+						    <c:when test="${empty stinfoupdatelist}">
+						        <div class="no-data-message">가게 정보 수정 요청 내역이 없습니다.</div>
+						        <c:forEach var="udre" begin="1" end="10">
+						        	<div class="report_content">
+						                
+						            </div>
+						        </c:forEach>
+						    </c:when>
+						    <c:otherwise>
+						        <c:forEach var="udre" items="${stinfoupdatelist}">
+						            <div class="report_content">
+						                <div class="rpt_content" onclick="reqPopupOpen()">${udre.reg_date }</div>
+						                <div class="st_name" onclick="reqPopupOpen()">${udre.st_name }</div>
+						                <div class="rpt_content" onclick="reqPopupOpen()">${udre.final_date }</div>
+						                <div class="rpt_content" id="status" onclick="reqPopupOpen()">패널티 부여일자</div>
+						                <c:choose>
+						                	<c:when test="${udre.check_label eq '둘다가능' }">
+						                		<div class="rpt_content"><button class="rpt_obj" id="u${udre.req_apply_num }">이의제기</button></div>
+						                		<div class="rpt_content"><button class="rpt_revoke" id="v${udre.req_apply_num }">패널티회수</button></div>
+						                	</c:when>
+						                	<c:when test="${udre.check_label eq '패널티회수가능' }">
+						                		<div class="rpt_content"><button class="rpt_obj" disabled="disabled">이의제기</button></div>
+						                		<div class="rpt_content"><button class="rpt_revoke" id="v${udre.req_apply_num }">패널티회수</button></div>						                	</c:when>
+						                	<c:when test="${udre.check_label eq '둘다불가능' }">
+						                		<div class="rpt_content"><button class="rpt_obj" disabled="disabled">이의제기</button></div>                                                                                                                                                                                                    
+						                		<div class="rpt_content"><button class="rpt_revoke" disabled="disabled">패널티회수</button></div>
+						                	</c:when>
+						                </c:choose>
+						            	
+						            	<div id="reject" style="display: none;">${udre.req_apply_num }</div>
+						                <%-- <div class="rej_rs" style="display: none;">${udre.rej_rs }</div> --%>
+						            </div>
+						        </c:forEach>
+						    </c:otherwise>                 
+						</c:choose>
+						
+						<!-- 페이징 처리 -->
+						<div class="pagination">
+				            <c:choose>
+				                <c:when test="${empty user_stupdate_relist}">
+				                    <p></p>
+				                </c:when>
+				                <c:otherwise>
+				                    <div class="pageIndex">
+										${pageIndex }
+									</div>
+				                </c:otherwise>
+				            </c:choose>
+				        </div>
+				        
+					</div>
+					
+					
+					<div id="rvPopup" style="position: absolute; visibility: hidden;">
+						<h4>
+							<a href="#" class="close" onClick="javascript:reqPopupOpen()">Ⅹ</a>
+						</h4>
+						<h3>가게정보수정요청 반려사유</h3>
+						<div class="rvPopCont">
+							<div class="list">
+								<div class="reqRs">
+									<h5 style="margin-top: 0">반려사유 &nbsp;&nbsp;&nbsp; </h5>
+									<%-- <textarea rows="5" cols="42" id="rvRs" style="resize: none; margin-top: 3vh;">${rvreport.rej_rs }</textarea> --%>
+									<textarea class="rej_rs_content" rows="5" cols="42" id="rvRs" style="resize: none; margin-top: 3vh;" disabled="disabled"></textarea>
 								</div>
-			                </c:otherwise>
-			            </c:choose>
-			        </div>
-			        
-				</div>
-				
-				
-				<div id="rvPopup" style="position: absolute; visibility: hidden;">
-					<h4>
-						<a href="#" class="close" onClick="javascript:reqPopupOpen()">Ⅹ</a>
-					</h4>
-					<h3>가게정보수정요청 반려사유</h3>
-					<div class="rvPopCont">
-						<div class="list">
-							<div class="reqRs">
-								<h5 style="margin-top: 0">반려사유 &nbsp;&nbsp;&nbsp; </h5>
-								<%-- <textarea rows="5" cols="42" id="rvRs" style="resize: none; margin-top: 3vh;">${rvreport.rej_rs }</textarea> --%>
-								<textarea class="rej_rs_content" rows="5" cols="42" id="rvRs" style="resize: none; margin-top: 3vh;" disabled="disabled"></textarea>
+								
 							</div>
-							
+							<div class="rv">
+								<button id="rvBtn" onClick="javascript:reqPopupOpen()">확인</button>
+							</div>
 						</div>
-						<div class="rv">
-							<button id="rvBtn" onClick="javascript:reqPopupOpen()">확인</button>
-						</div>
+						
 					</div>
 					
 				</div>
-				
-			</div>
-		</div><!-- right_content -->
+			</div><!-- right_content -->
+			<input type="hidden" id="reqnum" name="reqnum">
+		</div><!-- .middle end -->
 		
-	</div><!-- .middle end -->
 	
-
-
-	<div class="footer">
-		<c:import url="footer.jsp"></c:import>
-	</div>
-
+	
+		<div class="footer">
+			<c:import url="footer.jsp"></c:import>
+		</div>
+	</form>
 </body>
 </html>

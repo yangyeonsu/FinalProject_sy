@@ -115,7 +115,12 @@
 		            AND IA.USER_NUM = #{user_num}
 		) T
 		WHERE RNUM BETWEEN #{startRow} AND #{endRow}
-		
+	</select>
+	
+	<select id="reqRs" resultType="com.yameokja.mc.ReqApplyViewDTO">
+		SELECT REG_DATE, REQ_RS, CHBOX_NAME, YN_NAME, ST_NAME
+		FROM REQ_APPLY_VIEW
+		WHERE REQ_APPLY_NUM = #{req_num}
 	</select>
 	
 </mapper>
