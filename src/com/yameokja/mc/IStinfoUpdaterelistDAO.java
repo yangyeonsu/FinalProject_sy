@@ -15,4 +15,7 @@ public interface IStinfoUpdaterelistDAO
 	
 	public ReqApplyViewDTO reqRs(int req_apply_num);
 	
+	public int findReqProNum(int req_apply_num);
+	public int objapply(@Param("req_process_num")int req_process_num, @Param("obj_rs")String obj_rs);
+	
 }

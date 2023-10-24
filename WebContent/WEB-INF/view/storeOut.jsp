@@ -301,8 +301,8 @@ $(function()
         $("#st_num").val(st_num);
         
         // 폼 submit 액션 처리 수행
-        $("#outForm").attr("action", "storeOutinsert.action");
-        $("#outForm").submit();
+        $("#userForm").attr("action", "storeOutinsert.action");
+        $("#userForm").submit();
     });
 });
 </script>
@@ -310,7 +310,7 @@ $(function()
 <body>
 <div class="mainFrame">
 	
-	<form action="" method="post" id="outForm">
+	<form action="" method="post" id="userForm">
 	
 		<div><c:import url="header_user.jsp"></c:import></div> <!-- header -->
 		

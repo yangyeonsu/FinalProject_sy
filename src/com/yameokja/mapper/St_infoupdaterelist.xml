@@ -117,10 +117,24 @@
 		WHERE RNUM BETWEEN #{startRow} AND #{endRow}
 	</select>
 	
+	<!-- 이의제기 신청 폼으로 전송 -->
 	<select id="reqRs" resultType="com.yameokja.mc.ReqApplyViewDTO">
-		SELECT REG_DATE, REQ_RS, CHBOX_NAME, YN_NAME, ST_NAME
+		SELECT REG_DATE, REQ_RS, CHBOX_NAME, YN_NAME, ST_NAME, REQ_APPLY_NUM
 		FROM REQ_APPLY_VIEW
 		WHERE REQ_APPLY_NUM = #{req_num}
 	</select>
+	
+	<!-- req_apply_num을 통해 req_process_num 찾아오기 -->
+	<select id="findReqProNum" resultType="java.lang.Integer">
+		SELECT REQ_PROCESS_NUM
+		FROM REQ_PROCESS
+		WHERE REQ_APPLY_NUM = #{req_apply_num}
+	</select>
+	
+	<!-- 이의제기 신청 -->
+	<insert id="objapply">
+		INSERT INTO OBJ_APPLY(OBJ_APPLY_NUM, OBJ_RS, REQ_PROCESS_NUM, REG_DATE)
+		VALUES(OBJAPSEQ.NEXTVAL, #{obj_rs}, #{req_process_num}, SYSDATE)
+	</insert>
 	
 </mapper>

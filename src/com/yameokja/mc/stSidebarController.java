@@ -104,6 +104,95 @@ public class stSidebarController
 	    return result;
 	};
 	
+	// 이의제기 폼
+	@RequestMapping(value="/objectionform.action", method=RequestMethod.POST)
+	public String stObjForm(HttpServletRequest request, Model model) 
+	{	
+		HttpSession session = request.getSession();
+		String user_num = (String)session.getAttribute("user_num");
+		
+		String result = "";
+		
+		LocalDate currentDate = LocalDate.now();
+        int monthValue = currentDate.getMonthValue();
+        
+        IUserDAO udao = sqlSession.getMapper(IUserDAO.class);
+        IStoreMainDAO smDao = sqlSession.getMapper(IStoreMainDAO.class);
+        IStinfoUpdaterelistDAO suDao = sqlSession.getMapper(IStinfoUpdaterelistDAO.class);
+        
+        UserDTO user = udao.searchUserInfo(user_num, "num");
+	    if (1 <= monthValue && monthValue <= 6)
+		{
+			user.setPoint_sum(udao.secondHalf(user_num).getPoint_sum());
+			user.setUser_grade(udao.firstHalf(user_num).getUser_grade());
+		}
+		else if(7 <= monthValue && monthValue <= 12)
+		{
+			user.setPoint_sum(udao.firstHalf(user_num).getPoint_sum());
+			user.setUser_grade(udao.secondHalf(user_num).getUser_grade());
+		}
+	    model.addAttribute("user", user);
+	    
+	    ArrayList<StoreDTO> st_list = smDao.searchStoreInfo(user_num);
+		model.addAttribute("st_list", st_list);
+		
+		model.addAttribute("alarm", udao.userAlarm(user_num));
+		
+		int req_num = Integer.parseInt(request.getParameter("reqnum"));
+		
+		model.addAttribute("req", suDao.reqRs(req_num));		
+		
+		result = "/WEB-INF/view/st_objectionForm.jsp";
+	    
+	    return result;
+	}
+	
+	// 이의제기 신청
+	@RequestMapping(value="/objapply.action", method=RequestMethod.POST)
+	public String stObjApply(HttpServletRequest request, Model model)
+	{
+		HttpSession session = request.getSession();
+		String user_num = (String)session.getAttribute("user_num");
+		
+		String result = "";
+		
+		LocalDate currentDate = LocalDate.now();
+        int monthValue = currentDate.getMonthValue();
+        
+        IUserDAO udao = sqlSession.getMapper(IUserDAO.class);
+        IStoreMainDAO smDao = sqlSession.getMapper(IStoreMainDAO.class);
+        IStinfoUpdaterelistDAO suDao = sqlSession.getMapper(IStinfoUpdaterelistDAO.class);
+        
+        UserDTO user = udao.searchUserInfo(user_num, "num");
+	    if (1 <= monthValue && monthValue <= 6)
+		{
+			user.setPoint_sum(udao.secondHalf(user_num).getPoint_sum());
+			user.setUser_grade(udao.firstHalf(user_num).getUser_grade());
+		}
+		else if(7 <= monthValue && monthValue <= 12)
+		{
+			user.setPoint_sum(udao.firstHalf(user_num).getPoint_sum());
+			user.setUser_grade(udao.secondHalf(user_num).getUser_grade());
+		}
+	    model.addAttribute("user", user);
+	    
+	    ArrayList<StoreDTO> st_list = smDao.searchStoreInfo(user_num);
+		model.addAttribute("st_list", st_list);
+		
+		model.addAttribute("alarm", udao.userAlarm(user_num));
+		
+		int req_apply_num = Integer.parseInt(request.getParameter("req_apply_num"));
+
+		int req_process_num = suDao.findReqProNum(req_apply_num);
+		String obj_rs = request.getParameter("obj_rs");
+
+		int check = suDao.objapply(req_process_num, obj_rs);
+		
+		result = "redirect:objlist.action";
+		
+		return result;		
+	}
+	
 	// 이의제기요청 내역
 	@RequestMapping(value="/objlist.action", method=RequestMethod.GET)
 	public String stObjList(HttpServletRequest request, Model model) 
@@ -114,7 +203,7 @@ public class stSidebarController
 	    LocalDate currentDate = LocalDate.now();
         int monthValue = currentDate.getMonthValue();
 	    
-	    String actionName = "/stinfoupdaterelist.action";
+	    String actionName = "/objlist.action";
 	    
 	    String result = null;
 
@@ -187,9 +276,9 @@ public class stSidebarController
 	    return result;
 	}
 	
-	// 이의제기 폼
-	@RequestMapping(value="/objectionform.action", method=RequestMethod.POST)
-	public String stObjForm(HttpServletRequest request, Model model) 
+	// 패널티회수 폼
+	@RequestMapping(value="/revokeform.action", method=RequestMethod.POST)
+	public String stRevoForm(HttpServletRequest request, Model model) 
 	{	
 		HttpSession session = request.getSession();
 		String user_num = (String)session.getAttribute("user_num");
@@ -221,15 +310,16 @@ public class stSidebarController
 		
 		model.addAttribute("alarm", udao.userAlarm(user_num));
 		
-		int req_num = Integer.parseInt(request.getParameter("reqnum"));
+		int req_num = Integer.parseInt(request.getParameter("reqnum"));	
 		
-		model.addAttribute("req", suDao.reqRs(req_num));		
+		model.addAttribute("req", suDao.reqRs(req_num));
 		
-		result = "/WEB-INF/view/st_objectionForm.jsp";
+		result = "/WEB-INF/view/st_penaltyRevokeForm.jsp";
 	    
 	    return result;
 		
 	}
+	
 	
 	// 패널티 회수 요청 내역
 	@RequestMapping(value="/penaltylist.action", method=RequestMethod.GET)
@@ -317,48 +407,4 @@ public class stSidebarController
 	    
 	    return result;
 	};
-	
-	// 패널티회수 폼
-	@RequestMapping(value="/revokeform.action", method=RequestMethod.POST)
-	public String stRevoForm(HttpServletRequest request, Model model) 
-	{	
-		HttpSession session = request.getSession();
-		String user_num = (String)session.getAttribute("user_num");
-		
-		String result = "";
-		
-		LocalDate currentDate = LocalDate.now();
-        int monthValue = currentDate.getMonthValue();
-        
-        IUserDAO udao = sqlSession.getMapper(IUserDAO.class);
-        IStoreMainDAO smDao = sqlSession.getMapper(IStoreMainDAO.class);
-        IStinfoUpdaterelistDAO suDao = sqlSession.getMapper(IStinfoUpdaterelistDAO.class);
-        
-        UserDTO user = udao.searchUserInfo(user_num, "num");
-	    if (1 <= monthValue && monthValue <= 6)
-		{
-			user.setPoint_sum(udao.secondHalf(user_num).getPoint_sum());
-			user.setUser_grade(udao.firstHalf(user_num).getUser_grade());
-		}
-		else if(7 <= monthValue && monthValue <= 12)
-		{
-			user.setPoint_sum(udao.firstHalf(user_num).getPoint_sum());
-			user.setUser_grade(udao.secondHalf(user_num).getUser_grade());
-		}
-	    model.addAttribute("user", user);
-	    
-	    ArrayList<StoreDTO> st_list = smDao.searchStoreInfo(user_num);
-		model.addAttribute("st_list", st_list);
-		
-		model.addAttribute("alarm", udao.userAlarm(user_num));
-		
-		int req_num = Integer.parseInt(request.getParameter("reqnum"));	
-		
-		model.addAttribute("req", suDao.reqRs(req_num));
-		
-		result = "/WEB-INF/view/st_penaltyRevokeForm.jsp";
-	    
-	    return result;
-		
-	}
 }

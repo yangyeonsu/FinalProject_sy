@@ -210,12 +210,44 @@ body
 			$('#checkOverlay').attr("value", "false");
 		});
 	});
+	
+	/* function displayAndSetFileName1() {
+	    var fileInput = document.getElementById("file1");
+	    var uploadNameInput = document.getElementById("upload-name1");
 
+	    if (fileInput.files.length > 0) {
+	        var uploadedFileName = fileInput.files[0].name;
+	        uploadNameInput.value = uploadedFileName;
+	    }
+	    else {
+	    	uploadNameInput.value = null;
+	    }
+	} */
+	
+	$(function(){
+		
+		$(".sendResult").click(function()
+		{
+			
+			if($("#objRs").val().trim() == "" || $("#objRs").val().trim() == null)
+			{
+				alert("이의제기 사유를 입력해주셔야 합니다.");
+				$("#objRs").focus();
+				return;
+			}
+			
+			$("#userForm").submit();		
+		});
+
+		
+	});
+	
+	
 </script>
 
 </head>
 <body>
-<form id="adminForm" method="post">
+<form action="objapply.action" id="userForm" method="post">
 <div class="bframe">
 	
 	<!-- header -->
@@ -229,6 +261,7 @@ body
 	<c:import url="sideBar_user.jsp"></c:import>
 		<div class="top">
 			<h1>이의제기 요청서</h1>
+			<input type="hidden" id="req_apply_num" name="req_apply_num" value="${req.req_apply_num }">
 			<hr>
 		</div>
 		
@@ -271,7 +304,7 @@ body
 				</div>
 				
 				<div class="igroup2" style="width: 100%;">
-					<textarea id="objRs" placeholder="이의제기 사유를 입력해주세요." style="width: 72%; height: 5em; 3px; resize: none;"></textarea>
+					<textarea id="objRs" placeholder="이의제기 사유를 입력해주세요." name="obj_rs" style="width: 72%; height: 5em; 3px; resize: none;"></textarea>
 				</div>
 				
 				<br>
@@ -288,7 +321,7 @@ body
 					
 				<br><br>
 				<div class="sendBtn">
-					<input type="button" class="sendResult" value="요청 하기">
+					<button type="button" class="sendResult" id="sendResult">요청 하기</button>
 				</div>
 
 			</div>
