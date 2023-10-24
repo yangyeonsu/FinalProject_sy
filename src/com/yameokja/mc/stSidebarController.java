@@ -262,14 +262,15 @@ public class stSidebarController
 	    
 	    
 	    
-	    List<StinfoUpdaterelistDTO> stinfoupdatelist = dao.stinfoupdatelist(
-	        user_num, 
+	    List<ReportListDTO> stobjlist = dao.stobjlist(
+	        user.getUser_id(), 
 	        startRow, 
 	        endRow
 	    );
 	    
 	    model.addAttribute("pageIndex", Paging.pageIndexList(currentPage, totalPage, actionName));
 	    model.addAttribute("user", user);
+	    model.addAttribute("stobjlist", stobjlist);
 	    
 		result = "/WEB-INF/view/St_Appeal_Request.jsp";
 	    
@@ -436,20 +437,16 @@ public class stSidebarController
 	    
 	    
 	    
-	    List<StinfoUpdaterelistDTO> stinfoupdatelist = dao.stinfoupdatelist(
-	        user_num, 
+	    List<ReportListDTO> strevolist = dao.strevolist(
+	        user.getUser_id(), 
 	        startRow, 
 	        endRow
 	    );
 	    
 	    model.addAttribute("pageIndex", Paging.pageIndexList(currentPage, totalPage, actionName));
 	    model.addAttribute("user", user);
+	    model.addAttribute("strevolist", strevolist);
 	    
-	    IpenaltyListDAO plDao = sqlSession.getMapper(IpenaltyListDAO.class);
-	    
-	    List<penaltyListDTO> penList = plDao.penList(user_num, startRow, endRow);
-	    
-	    model.addAttribute("penList", penList);
 	    result = "/WEB-INF/view/St_Penaltyre.jsp";
 	    
 	    return result;

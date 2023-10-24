@@ -23,4 +23,19 @@ public interface IStinfoUpdaterelistDAO
 	public int findPenNum(int req_apply_num);
 	public int revoapply(@Param("pen_grant_num")int pen_grant_num, @Param("st_chbox_num")int st_chbox_num, @Param("revo_rs")String revo_rs);
 	
+	
+	public int count_objlist(String user_num);
+	public List<ReportListDTO> stobjlist(
+        @Param("user_id") String user_id,
+        @Param("startRow") int startRow,
+        @Param("endRow") int endRow
+    );
+	
+	
+	public int count_revolist(String user_num);
+	public List<ReportListDTO> strevolist(
+        @Param("user_id") String user_id,
+        @Param("startRow") int startRow,
+        @Param("endRow") int endRow
+    );
 }

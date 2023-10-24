@@ -56,6 +56,10 @@
 					<li><a href="user_rv_report.action" class="small_menuA">리뷰신고 내역</a></li>
 					<li><a href="user_stupdate_relist.action" class="small_menuA">가게정보오류수정요청 내역</a></li>
 					<li><a href="user_stinout_list.action" class="small_menuA">가게 등/폐업 신청 내역</a></li>
+					<c:if test="${not empty sessionScope.st_num }">
+					<li><a href="objlist.action" class="small_menuA">이의제기 요청 내역</a></li>
+					<li><a href="penaltylist.action" class="small_menuA">패널티 회수 요청 내역</a></li>		
+					</c:if>
 				</ul>
 			</ul>
 			<ul class="big_menu">
@@ -64,8 +68,6 @@
 					<li><a href="userrvpenalty.action" class="small_menuA">리뷰 경고 내역</a></li>
 					<c:if test="${not empty sessionScope.st_num }">
 					<li><a href="stinfoupdaterelist.action" class="small_menuA">가게정보오류수정요청 경고 내역</a></li>
-					<li><a href="penaltylist.action" class="small_menuA">패널티 회수 요청 내역</a></li>
-					<li><a href="objlist.action" class="small_menuA">이의제기 요청 내역</a></li>
 					</c:if>
 				</ul>
 			</ul>
