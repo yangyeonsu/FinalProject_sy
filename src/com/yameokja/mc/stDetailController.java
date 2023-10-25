@@ -534,7 +534,7 @@ public class stDetailController
                 }
             }
 			
-			System.out.println(st_num);
+			//System.out.println(st_num);
 			
             
             for (FileItem item : items)
@@ -591,8 +591,8 @@ public class stDetailController
     		
     		session.setAttribute("flashData", st_num);
             
-            System.out.println("st_num: " + st_num);
-    		System.out.println("user_name: " + user_num);
+            //System.out.println("st_num: " + st_num);
+    		//System.out.println("user_name: " + user_num);
 			
 			
 

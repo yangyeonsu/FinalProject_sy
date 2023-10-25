@@ -328,7 +328,7 @@ public class StoreController
 		}
 		else
 			model.addAttribute("stKeys", null);
-		System.out.println(stKeyList);
+		//System.out.println(stKeyList);
 		
 		// 가게 영업시간 + 휴무일
 		ArrayList<StoreOpencloseDTO> openClose =  dao.openClose(st_num);
@@ -459,8 +459,8 @@ public class StoreController
 		String html= "";
 		
 		
-		System.out.println(rv_num);
-		System.out.println(reply_content);
+		//System.out.println(rv_num);
+		//System.out.println(reply_content);
 		
 		
 		IStoreMainDAO dao = sqlSession.getMapper(IStoreMainDAO.class);
@@ -512,7 +512,7 @@ public class StoreController
             {
                 if (item.isFormField() && item.getFieldName().equals("st_num"))
                 {
-                	System.out.println(item.getString(CHARSET));
+                	//System.out.println(item.getString(CHARSET));
             		st_num = Integer.parseInt(item.getString(CHARSET));
                 }
             }
@@ -971,8 +971,8 @@ public class StoreController
 	    
 	    if (dao.count_relist(user_num) % itemsPerPage != 0)
 	    	totalPage++;
-	    System.out.println(currentPage);
-	    System.out.println(totalPage);
+	    //System.out.println(currentPage);
+	    //System.out.println(totalPage);
 	    // 전체 페이지 수 보다 표시할 페이지가 큰 경우
 		// 표시할 페이지를 전체 페이지로 처리
 		// → 데이터를 삭제해서 페이지가 줄어들었을 경우...
@@ -992,7 +992,7 @@ public class StoreController
 	    int st_num = (int)session.getAttribute("st_num");
 	    model.addAttribute("pageIndex", Paging.pageIndexList(currentPage, totalPage, actionName));
 	    List<UserStupdaterelistDTO> user_stupdate_relist = dao.user_stupdate_relist(user_num, startRow, endRow);
-	    System.out.println(user_stupdate_relist);
+	    //System.out.println(user_stupdate_relist);
 	    model.addAttribute("user", user);
 	    // 유저 알람 목록
 	 	model.addAttribute("alarm", udao.userAlarm(user_num));
@@ -1056,8 +1056,8 @@ public class StoreController
 	    
 	    if (dao.count_relist(user_num) % itemsPerPage != 0)
 	    	totalPage++;
-	    System.out.println(currentPage);
-	    System.out.println(totalPage);
+	    //System.out.println(currentPage);
+	    //System.out.println(totalPage);
 	    // 전체 페이지 수 보다 표시할 페이지가 큰 경우
 		// 표시할 페이지를 전체 페이지로 처리
 		// → 데이터를 삭제해서 페이지가 줄어들었을 경우...
@@ -1077,7 +1077,7 @@ public class StoreController
 	    int st_num = (int)session.getAttribute("st_num");
 	    model.addAttribute("pageIndex", Paging.pageIndexList(currentPage, totalPage, actionName));
 	    List<UserStupdaterelistDTO> user_stupdate_relist = dao.user_stupdate_relist(user_num, startRow, endRow);
-	    System.out.println(user_stupdate_relist);
+	    //System.out.println(user_stupdate_relist);
 	    model.addAttribute("user", user);
 	    // 유저 알람 목록
 	 	model.addAttribute("alarm", udao.userAlarm(user_num));
@@ -1151,8 +1151,8 @@ public class StoreController
 	public String StoreOutinsert(HttpServletRequest request, HttpServletResponse response) 
 	{	
 		
-		System.out.println("Received user_num: " + request.getParameter("user_num"));
-		System.out.println("Received st_num: " + request.getParameter("st_num"));
+		//System.out.println("Received user_num: " + request.getParameter("user_num"));
+		//System.out.println("Received st_num: " + request.getParameter("st_num"));
 
 		
 		IStoreMainDAO dao = sqlSession.getMapper(IStoreMainDAO.class);
@@ -1180,8 +1180,8 @@ public class StoreController
 			
 			int res = dao.st_Out_apply(user_num, st_num);
 			
-			System.out.println("user_num: " + usernum);
-			System.out.println("st_num: " + stnum);
+			//System.out.println("user_num: " + usernum);
+			//System.out.println("st_num: " + stnum);
 			
 			if (res == 0) 
 			{
