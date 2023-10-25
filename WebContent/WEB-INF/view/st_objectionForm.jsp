@@ -238,8 +238,6 @@ body
 			
 			$("#userForm").submit();		
 		});
-
-		
 	});
 	
 	
