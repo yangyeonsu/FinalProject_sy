@@ -249,6 +249,27 @@ public class stDetailController
 		else
 			model.addAttribute("stisout", "폐업");
 		
+		// 가게정보오류수정요청 경고 내역이 있는지 판단
+		List<Integer> check = dao.reqNullCheck(st_num);
+		
+		String reqNullCheck = "";
+		
+		if(check.size()>0)
+		{
+			for (int i = 0; i < check.size(); i++)
+			{
+				if(i==(check.size()-1))
+				{
+					reqNullCheck += (String.valueOf(check.get(i)));
+				}
+				else
+					reqNullCheck += (String.valueOf(check.get(i))+",");
+			}
+		}
+		
+
+		model.addAttribute("reqNullCheck", reqNullCheck);
+		
 		result = "/WEB-INF/view/storeDetail.jsp";
 
 		return result;

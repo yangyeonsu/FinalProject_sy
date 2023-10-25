@@ -347,7 +347,6 @@
     width: 25vw;
     margin-top: 1vw;
     padding: 0 0 0 1vw;
-    align-items: flex-end;
     border-left: 3px solid #f7f4ea;
     margin-left: 0.5vw;
 }
@@ -392,6 +391,21 @@
 	text-align: center;
 }
 
+#chN
+{
+	border: 2px solid #ef6351;
+    background-color: #fff;
+    border-radius: 10px;
+    width: 3vw;
+    height: 1.5vw;
+    position: absolute;
+    z-index: 20;
+    right: 29.8vw;
+    font-size: 0.8vw;
+    margin-top: 1.1vw;
+    font-weight: bold;
+}
+
 #modifyReqBtn
 {
 	margin-top: 1vw;
@@ -406,6 +420,7 @@
     margin-right: 0.8vw;
     font-size: 0.5vw;
     cursor: pointer;
+    float: right;
 }
 
 #noModifyReqBtn
@@ -628,7 +643,7 @@
 
 .repBtn
 {
-	font-size: 0.2vw;
+	font-size: 1vw;
 	box-shadow: 2.5px 3px 2.5px #f7f4ea;
 }
 
