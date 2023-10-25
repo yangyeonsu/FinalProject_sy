@@ -286,7 +286,7 @@
 	</insert>
 	
 	<!-- 가게정보수정요청 가능여부 판단 -->
-	<select id="reqCheck" resultType="java.lang.Integer">
+	<select id="reqCheck1" resultType="java.lang.Integer">
 		SELECT CKNUM
 		FROM(
 		    SELECT CASE WHEN RP.REQ_PROCESS_NUM IS NOT NULL AND RR.REQ_REJ_NUM IS NOT NULL THEN 1
@@ -336,6 +336,7 @@
 		    LEFT JOIN REVO_REJ RVR
 		    ON RVP.REVO_PROCESS_NUM = RVR.REVO_PROCESS_NUM
 		    WHERE RA.ST_CHBOX_NUM = #{st_chbox_num}
+		      AND P.PEN_TYPE_NUM = 1
 		) T
 		WHERE T.RN = 1
 	</select>
