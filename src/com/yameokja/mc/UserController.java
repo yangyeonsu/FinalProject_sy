@@ -128,7 +128,7 @@ public class UserController
 		IUserDAO udao = sqlSession.getMapper(IUserDAO.class);
 		int count = udao.idCheck(user_id);
 		
-		System.out.println(count);
+		//System.out.println(count);
 		
 		result += "{\"count\":\""+count+"\"}";
 		
@@ -145,8 +145,8 @@ public class UserController
 		IUserDAO udao = sqlSession.getMapper(IUserDAO.class);
 		int count = udao.nickCheck(user_nick);
 		
-		System.out.println("user_nick : " + user_nick);
-		System.out.println("count : " + count);
+		//System.out.println("user_nick : " + user_nick);
+		//System.out.println("count : " + count);
 		
 		result += "{\"count\":\""+count+"\"}";
 		

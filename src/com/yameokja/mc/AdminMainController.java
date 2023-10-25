@@ -393,8 +393,8 @@ public class AdminMainController
 			HttpServletResponse response, HttpServletRequest request, Model model)
 	{
 
-		System.out.println(path);
-		System.out.println(fileName);
+		//System.out.println(path);
+		//System.out.println(fileName);
 
 		if (FileManager.doFileDownload(fileName, path, response))
 			return "1";
@@ -425,13 +425,13 @@ public class AdminMainController
 		{
 			// rep_process_num
 			int rep_process_num = dao.searchRepProNum(rep_apply_num, admin_num);
-			System.out.println("rep_process_num : " + rep_process_num);
+			//System.out.println("rep_process_num : " + rep_process_num);
 
 			// 중재 처리
 			if(check.equals("mid"))
 			{
 				String mid_rs = request.getParameter("myTextarea1");
-				System.out.println("mid_rs : " + mid_rs);
+				//System.out.println("mid_rs : " + mid_rs);
 				
 				// rep_mid table <- insert
 				dao.rvreportHalf(mid_rs, rep_process_num);
@@ -440,7 +440,7 @@ public class AdminMainController
 			else if(check.equals("res"))
 			{
 				String rej_rs = request.getParameter("myTextarea2");
-				System.out.println("rej_rs : " + rej_rs);
+				//System.out.println("rej_rs : " + rej_rs);
 
 				// rep_rej table <- insert
 				dao.rvreportRej(rej_rs, rep_process_num);
@@ -508,7 +508,7 @@ public class AdminMainController
 		
 		int checkNum = fdao.inprocess(in_apply_num, admin_num);
 
-		System.out.println(checkNum);
+		//System.out.println(checkNum);
 			
 			
 		if (checkNum == 1)
@@ -546,7 +546,7 @@ public class AdminMainController
 		
 		int checkNum = fdao.outprocess(out_apply_num, admin_num);
 		
-		System.out.println(checkNum);
+		//System.out.println(checkNum);
 		
 		
 		if (checkNum == 1)
