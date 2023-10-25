@@ -145,7 +145,7 @@ input[type="radio"]
         background-color:  #F7F4EA;
 }
 
-#myTextarea
+#rej_rs, #rever_rs
 {
 	display: none;
 }
@@ -168,9 +168,16 @@ input[type="radio"]
 			if ($(this).is(":checked")) 
 			{
 				if ($(this).val() == "true")
-					$("#myTextarea").css("display", "flex");
+				{
+					$("#rej_rs").css("display", "flex");
+					$("#rever_rs").css("display", "none");
+				}
 				else
-					$("#myTextarea").css("display", "none");
+				{
+					$("#rever_rs").css("display", "flex");
+					$("#rej_rs").css("display", "none");
+				}
+					
 			}
 		});
 		 
@@ -185,13 +192,28 @@ input[type="radio"]
 			}
 			else if($(".check:checked").val() == "true")
 			{
-				if($("#myTextarea").val().trim() == "" || $("#myTextarea").val().trim() == null)
+				if($("#rej_rs").val().trim() == "" || $("#rej_rs").val().trim() == null)
 				{
 					alert("반려사유를 입력해주셔야 합니다.");
-					$("#myTextarea").focus();
+					$("#rej_rs").focus();
 					return;
 				}
+				
+				$("#checklabel").val("true");
 			}
+			else
+			{
+				if($("#rever_rs").val().trim() == "" || $("#rever_rs").val().trim() == null)
+				{
+					alert("가게 정보 수정 요청 처리 결과 변경 사유를 입력해주셔야 합니다.");
+					$("#rever_rs").focus();
+					return;
+				}
+				
+				$("#checklabel").val("false");
+			}
+			
+			$("#adminForm").submit();
 			
 		});
 		
@@ -200,7 +222,7 @@ input[type="radio"]
 
 </head>
 <body>
-<form id="adminForm" method="post">
+<form action="objpro.action" id="adminForm" method="post">
 <div class="bframe">
 	
 	<!-- header -->
@@ -209,6 +231,7 @@ input[type="radio"]
 	<div class="middle">
 		<div class="top">
 			<h1>이의제기요청서</h1>
+			<input type="hidden" id="obj_apply_num" name="obj_apply_num" value="${obj.obj_apply_num }">
 			<hr>
 		</div>
 		
@@ -239,29 +262,33 @@ input[type="radio"]
 					<div style="width: 100%;">
 						${obj.getPhoto_link() }
 						
-						<c:if test="${state ne '처리완료' }">
+						<c:if test="${obj.state ne '처리완료' }">
 							<button id="button" style="font-size: 8pt;">파일다운로드</button>
 						</c:if>
 					</div>
 				</div>
 				
-				<c:if test="${state ne '처리완료' }">
+				<c:if test="${obj.state ne '처리완료' }">
 					<div style="width: 87%; text-align: right; margin-top: 1vh;">
-						<label class="label"><input type="radio" class="check" name="res" id="approve"><span id="span">승인</span></label>
+						<label class="label"><input type="radio" class="check" name="res" id="approve" value="false"><span id="span">승인</span></label>
 						<label class="label"><input type="radio" class="check" name="res" id="reject" value="true"><span id="span">반려</span></label>
 					</div>
 					
 					<div class="igroup2" style="width: 100%;">
-						<textarea id="myTextarea" style="width: 72%; height: 10em; resize: none;" placeholder="반려사유를 입력해주세요."></textarea>
+						<textarea id="rej_rs" name="rej_rs" style="width: 72%; height: 10em; resize: none;" placeholder="반려사유를 입력해주세요."></textarea>
+					</div>
+					<div class="igroup2" style="width: 100%;">
+						<textarea id="rever_rs" name="rever_rs" style="width: 72%; height: 10em; resize: none;" placeholder="가게 정보 요청 처리 결과 변경 사유를 입력해주세요."></textarea>
 					</div>
 					
 					<br><br>
 					<div class="sendBtn">
 						<input type="button" class="sendResult" value="처리 하기">
+						<input type="hidden" id="checklabel" name="checklabel">
 					</div>
 				</c:if>
 				
-				<c:if test="${state eq '처리완료' }">
+				<c:if test="${obj.state eq '처리완료' }">
 					<br><br>
 					<div class="igroup" style="width: 100%; color: red; font-size: 20pt; text-align: center; width: 465px; margin: 0 auto;">
 						처리가 완료된 이의제기요청서 입니다.
