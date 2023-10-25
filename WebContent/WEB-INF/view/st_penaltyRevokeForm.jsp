@@ -210,6 +210,23 @@ body
 			$('#checkOverlay').attr("value", "false");
 		});
 	});
+	
+	
+	$(function(){
+		
+		$(".sendResult").click(function()
+		{
+			
+			if($("#revo_rs").val().trim() == "" || $("#revo_rs").val().trim() == null)
+			{
+				alert("이의제기 사유를 입력해주셔야 합니다.");
+				$("#revo_rs").focus();
+				return;
+			}
+			
+			$("#userForm").submit();		
+		});
+	});
 
 </script>
 
@@ -273,7 +290,7 @@ body
 				</div>
 				
 				<div class="igroup2" style="width: 100%;">
-					<textarea id="revo_rs" name="regvo_rs" placeholder="패널티 회수 요청 사유를 입력해주세요." style="width: 72%; height: 5em; 3px; resize: none;"></textarea>
+					<textarea id="revo_rs" name="revo_rs" placeholder="패널티 회수 요청 사유를 입력해주세요." style="width: 72%; height: 5em; 3px; resize: none;"></textarea>
 				</div>
 				
 				<br>

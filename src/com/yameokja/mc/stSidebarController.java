@@ -358,10 +358,9 @@ public class stSidebarController
 		int req_apply_num = Integer.parseInt(request.getParameter("req_apply_num"));
 
 		int pen_grant_num = suDao.findPenNum(req_apply_num);
-		int st_chbox_num = 0;
 		String revo_rs = request.getParameter("revo_rs");
 
-		int check = suDao.revoapply(pen_grant_num, st_chbox_num, revo_rs);
+		int check = suDao.revoapply(pen_grant_num, revo_rs);
 		
 		result = "redirect:penaltylist.action";
 		

@@ -139,7 +139,7 @@
 	
 	<!-- req_apply_num을 통해 req_process_num 찾아오기 -->
 	<select id="findPenNum" resultType="java.lang.Integer">
-		SELECT PEN_GRANT_NUM
+		SELECT P.PEN_GRANT_NUM
 		FROM REQ_PROCESS RP LEFT JOIN PENALTY P
 		ON RP.REQ_PROCESS_NUM = P.REQ_PROCESS_NUM
 		WHERE RP.REQ_APPLY_NUM = #{req_apply_num}
@@ -147,8 +147,8 @@
 	
 	<!-- 패널티회수 신청 -->
 	<insert id="revoapply">
-		INSERT INTO REVO_APPLY(REVO_APPLY_NUM, PEN_GRANT_NUM, ST_CHBOX_NUM, REVO_RS, REG_DATE)
-		VALUES(REVOAPSEQ.NEXTVAL, #{pen_grant_num}, #{st_chbox_num}, #{revo_rs}, SYSDATE)
+		INSERT INTO REVO_APPLY(REVO_APPLY_NUM, PEN_GRANT_NUM, REVO_RS, REG_DATE)
+		VALUES(REVOAPSEQ.NEXTVAL, #{pen_grant_num}, #{revo_rs}, SYSDATE)
 	</insert>
 	
 	<select id="count_objlist" resultType="java.lang.Integer">

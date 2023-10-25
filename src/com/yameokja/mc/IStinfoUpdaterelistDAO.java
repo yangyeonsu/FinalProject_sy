@@ -21,7 +21,7 @@ public interface IStinfoUpdaterelistDAO
 	
 	// 패널티회수신청
 	public int findPenNum(int req_apply_num);
-	public int revoapply(@Param("pen_grant_num")int pen_grant_num, @Param("st_chbox_num")int st_chbox_num, @Param("revo_rs")String revo_rs);
+	public int revoapply(@Param("pen_grant_num")int pen_grant_num, @Param("revo_rs")String revo_rs);
 	
 	
 	public int count_objlist(String user_num);
