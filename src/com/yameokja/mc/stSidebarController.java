@@ -76,8 +76,8 @@ public class stSidebarController
 	    
 	    if (dao.count_relist(user_num) % itemsPerPage != 0)
 	    	totalPage++;
-	    System.out.println(currentPage);
-	    System.out.println(totalPage);
+	    //System.out.println(currentPage);
+	    //System.out.println(totalPage);
 	    // 전체 페이지 수 보다 표시할 페이지가 큰 경우
 		// 표시할 페이지를 전체 페이지로 처리
 		// → 데이터를 삭제해서 페이지가 줄어들었을 경우...
@@ -248,8 +248,8 @@ public class stSidebarController
 	    
 	    if (dao.count_relist(user_num) % itemsPerPage != 0)
 	    	totalPage++;
-	    System.out.println(currentPage);
-	    System.out.println(totalPage);
+	    //System.out.println(currentPage);
+	    //System.out.println(totalPage);
 	    // 전체 페이지 수 보다 표시할 페이지가 큰 경우
 		// 표시할 페이지를 전체 페이지로 처리
 		// → 데이터를 삭제해서 페이지가 줄어들었을 경우...
@@ -422,8 +422,8 @@ public class stSidebarController
 	    
 	    if (dao.count_relist(user_num) % itemsPerPage != 0)
 	    	totalPage++;
-	    System.out.println(currentPage);
-	    System.out.println(totalPage);
+	    //System.out.println(currentPage);
+	    //System.out.println(totalPage);
 	    // 전체 페이지 수 보다 표시할 페이지가 큰 경우
 		// 표시할 페이지를 전체 페이지로 처리
 		// → 데이터를 삭제해서 페이지가 줄어들었을 경우...
