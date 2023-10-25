@@ -91,6 +91,18 @@ String cp = request.getContextPath();
 	
 	$(function()
 	{
+		var reqNullCheck = $("#reqNullCheck").val();
+		
+		
+		var reqNC = reqNullCheck.split(",");
+		
+		for (var i = 0; i < reqNC.length; i++)
+		{
+			var chid = $("#c"+reqNC[i]).val();
+			
+			$("#cc"+chid).html("<button id='chN'>경고</button>");
+		}
+		
 		$(".comAddBtn").click(function()
 		{
 			var st_num = $(this).val()
@@ -821,11 +833,12 @@ String cp = request.getContextPath();
 									<div id="explain" class="siList2">${s.st_explain }</div>
 								</div>
 							</div>
-
+							
 							<div class="storeChecks">
 								<c:if test="${empty stCheckList }">
 									<div class="none">해당 항목이 존재하지 않습니다.</div>
 								</c:if>
+								<i style="font-size: 0.7vw;">"경고" : 올바르지 않은 내용이라 정보 수정 요청이 들어온 항목.</i>
 								<div class="storeCheck">
 									<div class="stCheckListName">
 										<가게 옵션>
@@ -838,9 +851,13 @@ String cp = request.getContextPath();
 									<div class="storeCheck">
 										<div class="stCheckName">${stCheck.chbox_name }</div>
 										<div class="stCheckYesorno">${stCheck.yesorno }</div>
+										<div class="stCheckNum" id="cc${stCheck.chbox_num}">
+											<input type="hidden" id="c${stCheck.chbox_num }" value="${stCheck.chbox_num }">
+										</div>
 									</div>
 								</c:forEach>
-
+								<input type="hidden" id="reqNullCheck" value="${reqNullCheck}">
+								
 								<div class="stCheckModifyReq">
 									<c:choose>
 										<c:when test="${stisout eq '폐업' }">
@@ -931,13 +948,13 @@ String cp = request.getContextPath();
 											<div class="userNickname">"${rv.user_nickname }"</div>
 											<div>
 											<c:choose>
-												<c:when test="${(stisout eq '폐업') and (user_num ne rv.user_num)}">
+												<c:when test="${(stisout eq '폐업') or (user_num eq rv.user_num)}">
 													<button type="button" class="noRepBtn" value="${rv.rv_num }">신고하기</button>
 												</c:when>
-												<c:when test="${user_num ne rv.user_num}">
-													<button type="button" class="repBtn rvBtn"
+												<c:otherwise>
+													<button type="button" class="rvBtn"
 													onclick="popupOpen()" value="${rv.rv_num }">신고하기</button>
-												</c:when>
+												</c:otherwise>
 											</c:choose>
 											</div>
 										</div>
@@ -982,41 +999,41 @@ String cp = request.getContextPath();
 
 										<div class="rvBottom">
 											<div class="recNonrecBtnDiv">
-												<c:if test="${user_num ne rv.user_num }">
-													<c:choose>
-														<c:when test="${stisout eq '폐업'}">
-															<c:choose>
-																<c:when
-																	test="${not empty userRnList and fn:contains(userRnList, rn)}">
-																	<button type="button" id="nonrec${rn }" name="nonrec"
-																		class="noRecBtn" value="${rn }">비추천 👎
-																		(${rv.nonrec })</button>
-																	<button type="button" id="rec${rn }" name="rec"
-																		class="noRecBtn" value="${rn }"
-																		style="border: 2px solid #ef6351">추천 👍
-																		(${rv.rec } )</button>
-																</c:when>
-																<c:when
-																	test="${not empty userNrnList and fn:contains(userNrnList, rn)}">
-																	<button type="button" id="nonrec${rn }" name="nonrec"
-																		class="noRecBtn" value="${rn }"
-																		style="border: 2px solid #ef6351">비추천 👎
-																		(${rv.nonrec })</button>
-																	<button type="button" id="rec${rn }" name="rec"
-																		class="noRecBtn" value="${rn }">추천 👍
-																		(${rv.rec } )</button>
-																</c:when>
-																<c:otherwise>
-																	<button type="button" id="nonrec${rn }" name="nonrec"
-																		class="noRecBtn" value="${rn }">비추천 👎
-																		(${rv.nonrec })</button>
-																	<button type="button" id="rec${rn}" name="rec"
-																		class="noRecBtn" value="${rn }">추천 👍
-																		(${rv.rec } )</button>
-																</c:otherwise>
-															</c:choose>
-														</c:when>
-														<c:otherwise>
+												<c:choose>
+													<c:when test="${(stisout eq '폐업') or (user_num eq rv.user_num)}">
+														<c:choose>
+															<c:when
+																test="${not empty userRnList and fn:contains(userRnList, rn)}">
+																<button type="button" id="nonrec${rn }" name="nonrec"
+																	class="noRecBtn" value="${rn }">비추천 👎
+																	(${rv.nonrec })</button>
+																<button type="button" id="rec${rn }" name="rec"
+																	class="noRecBtn" value="${rn }"
+																	style="border: 2px solid #ef6351">추천 👍
+																	(${rv.rec })</button>
+															</c:when>
+															<c:when
+																test="${not empty userNrnList and fn:contains(userNrnList, rn)}">
+																<button type="button" id="nonrec${rn }" name="nonrec"
+																	class="noRecBtn" value="${rn }"
+																	style="border: 2px solid #ef6351">비추천 👎
+																	(${rv.nonrec })</button>
+																<button type="button" id="rec${rn }" name="rec"
+																	class="noRecBtn" value="${rn }">추천 👍
+																	(${rv.rec })</button>
+															</c:when>
+															<c:otherwise>
+																<button type="button" id="nonrec${rn }" name="nonrec"
+																	class="noRecBtn" value="${rn }">비추천 👎
+																	(${rv.nonrec })</button>
+																<button type="button" id="rec${rn}" name="rec"
+																	class="noRecBtn" value="${rn }">추천 👍
+																	(${rv.rec })</button>
+															</c:otherwise>
+														</c:choose>
+													</c:when>
+													<c:otherwise>
+														<c:if test="${user_num ne rv.user_num }">
 															<c:choose>
 																<c:when
 																	test="${not empty userRnList and fn:contains(userRnList, rn)}">
@@ -1026,7 +1043,7 @@ String cp = request.getContextPath();
 																	<button type="button" id="rec${rn }" name="rec"
 																		class="recBtn rvBtn" value="${rn }"
 																		style="border: 2px solid #ef6351">추천 👍
-																		(${rv.rec } )</button>
+																		(${rv.rec })</button>
 																</c:when>
 																<c:when
 																	test="${not empty userNrnList and fn:contains(userNrnList, rn)}">
@@ -1036,7 +1053,7 @@ String cp = request.getContextPath();
 																		(${rv.nonrec })</button>
 																	<button type="button" id="rec${rn }" name="rec"
 																		class="recBtn rvBtn" value="${rn }">추천 👍
-																		(${rv.rec } )</button>
+																		(${rv.rec })</button>
 																</c:when>
 																<c:otherwise>
 																	<button type="button" id="nonrec${rn }" name="nonrec"
@@ -1044,12 +1061,12 @@ String cp = request.getContextPath();
 																		(${rv.nonrec })</button>
 																	<button type="button" id="rec${rn}" name="rec"
 																		class="recBtn rvBtn" value="${rn }">추천 👍
-																		(${rv.rec } )</button>
+																		(${rv.rec })</button>
 																</c:otherwise>
 															</c:choose>
-														</c:otherwise>
-													</c:choose>
-												</c:if>
+														</c:if>
+													</c:otherwise>
+												</c:choose>
 											</div>
 										</div>
 										<c:forEach var="rvReply" items="${rvReplyList }">
@@ -1099,7 +1116,7 @@ String cp = request.getContextPath();
 								<div class="reqPopCont">
 									<div class="list">
 										<c:forEach var="checkOption" items="${stCheckList}">
-											<div class="oplist">
+											<div class="oplist" id="cm${checkOption.chbox_num }">
 												<c:choose>
 													<c:when test="${checkOption.yesorno eq '-' }">
 														<input type="checkbox" id="${checkOption.chbox_name }"

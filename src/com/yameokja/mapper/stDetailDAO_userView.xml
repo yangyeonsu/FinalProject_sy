@@ -286,7 +286,7 @@
 	</insert>
 	
 	<!-- 가게정보수정요청 가능여부 판단 -->
-	<select id="reqCheck" resultType="java.lang.Integer">
+	<select id="reqCheck1" resultType="java.lang.Integer">
 		SELECT CKNUM
 		FROM(
 		    SELECT CASE WHEN RP.REQ_PROCESS_NUM IS NOT NULL AND RR.REQ_REJ_NUM IS NOT NULL THEN 1
@@ -336,8 +336,72 @@
 		    LEFT JOIN REVO_REJ RVR
 		    ON RVP.REVO_PROCESS_NUM = RVR.REVO_PROCESS_NUM
 		    WHERE RA.ST_CHBOX_NUM = #{st_chbox_num}
+		      AND P.PEN_TYPE_NUM = 1
 		) T
 		WHERE T.RN = 1
+	</select>
+	
+	<select id="reqNullCheck" resultType="java.lang.Integer">
+		SELECT K.CK AS CKK
+		FROM
+		(
+		SELECT CASE WHEN CKNUM=1 THEN T.ST_CHBOX_NUM
+		            END AS CK
+		FROM(
+		    SELECT CASE WHEN RP.REQ_PROCESS_NUM IS NOT NULL AND RR.REQ_REJ_NUM IS NOT NULL THEN 1
+		                WHEN RP.REQ_PROCESS_NUM IS NOT NULL AND RR.REQ_REJ_NUM IS NULL 
+		                    THEN
+		                        CASE WHEN OA.OBJ_APPLY_NUM IS NOT NULL
+		                                THEN
+		                                   CASE WHEN OP.OBJ_PROCESS_NUM IS NOT NULL AND ORR.OBJ_REJ_NUM IS NULL THEN 1
+		                                         WHEN OP.OBJ_PROCESS_NUM IS NOT NULL AND ORR.OBJ_REJ_NUM IS NOT NULL
+		                                            THEN 
+		                                                CASE WHEN RVA.REVO_APPLY_NUM IS NOT NULL
+		                                                    THEN
+		                                                        CASE WHEN RVP.REVO_PROCESS_NUM IS NOT NULL AND RVR.REVO_REJ_NUM IS NULL THEN 1
+		                                                             WHEN RVP.REVO_PROCESS_NUM IS NOT NULL AND RVR.REVO_REJ_NUM IS NOT NULL THEN 0
+		                                                             ELSE 0
+		                                                        END
+		                                                    ELSE 0
+		                                                END
+		                                        END
+		                                WHEN RVA.REVO_APPLY_NUM IS NOT NULL
+		                                    THEN
+		                                        CASE WHEN RVP.REVO_PROCESS_NUM IS NOT NULL AND RVR.REVO_REJ_NUM IS NULL THEN 1
+		                                             WHEN RVP.REVO_PROCESS_NUM IS NOT NULL AND RVR.REVO_REJ_NUM IS NOT NULL THEN 0
+		                                             ELSE 0
+		                                        END
+		                                ELSE 0
+		                            END
+		                ELSE 0
+		            END AS CKNUM,
+		            ROW_NUMBER() OVER(PARTITION BY RA.ST_CHBOX_NUM ORDER BY RA.REG_DATE DESC) AS RN
+		            , SC.ST_CHBOX_NUM
+		    FROM REQ_APPLY RA LEFT JOIN REQ_PROCESS RP
+		    ON RA.REQ_APPLY_NUM = RP.REQ_APPLY_NUM
+		    LEFT JOIN REQ_REJ RR
+		    ON RP.REQ_PROCESS_NUM = RR.REQ_PROCESS_NUM
+		    LEFT JOIN OBJ_APPLY OA
+		    ON RP.REQ_PROCESS_NUM = OA.REQ_PROCESS_NUM
+		    LEFT JOIN OBJ_PROCESS OP
+		    ON OA.OBJ_APPLY_NUM = OP.OBJ_APPLY_NUM
+		    LEFT JOIN OBJ_REJ ORR
+		    ON OP.OBJ_PROCESS_NUM = ORR.OBJ_PROCESS_NUM
+		    LEFT JOIN PENALTY P
+		    ON RP.REQ_PROCESS_NUM = P.REQ_PROCESS_NUM
+		    LEFT JOIN REVO_APPLY RVA
+		    ON P.PEN_GRANT_NUM = RVA.PEN_GRANT_NUM
+		    LEFT JOIN REVO_PROCESS RVP
+		    ON RVA.REVO_APPLY_NUM = RVP.REVO_APPLY_NUM
+		    LEFT JOIN REVO_REJ RVR
+		    ON RVP.REVO_PROCESS_NUM = RVR.REVO_PROCESS_NUM
+		    LEFT JOIN ST_CHBOX SC
+		    ON RA.ST_CHBOX_NUM = SC.ST_CHBOX_NUM
+		    WHERE SC.ST_NUM = #{st_num}
+		) T
+		WHERE T.RN = 1
+		) K
+		WHERE K.CK IS NOT NULL
 	</select>
 	
 	<!-- 리뷰키워드 범례 리스트 -->

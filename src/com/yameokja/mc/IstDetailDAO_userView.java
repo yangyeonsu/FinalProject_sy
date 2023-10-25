@@ -6,6 +6,7 @@
 package com.yameokja.mc;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -48,6 +49,8 @@ public interface IstDetailDAO_userView
 	public Integer reqApply(@Param("user_num") String user_num, @Param("req_rs") String req_rs, @Param("st_chbox_num") int st_chbox_num);
 	// 가게정보수정요청 가능여부 판단
 	public Integer reqCheck(@Param("st_chbox_num") int st_chbox_num);	
+	// 가게정보수정요청 경고 받은 st_chbox_num list
+	public List<Integer> reqNullCheck(@Param("st_num") int st_num);
 	
 	// 리뷰 키워드 범례 리스트
 	public ArrayList<StoreReviewKeyDTO> reviewKeywords();
