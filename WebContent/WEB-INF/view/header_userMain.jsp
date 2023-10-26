@@ -69,7 +69,7 @@ a {
 	position: relative;
     display: flex;
     flex-direction: row-reverse;
-    padding-left: 49vw;
+    padding-left: 49.7vw;
     width: 20vw;
     justify-content: space-between;
 }
@@ -83,7 +83,7 @@ a {
 	border-radius: 4px;
 	border: 2px solid #f5f3e7;
 	padding: 0.5vw;
-	width: 6vw;
+	width: 6.5vw;
 }
 
 .person_listA li, .person_listB li {

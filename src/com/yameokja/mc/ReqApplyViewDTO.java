@@ -2,7 +2,7 @@ package com.yameokja.mc;
 
 public class ReqApplyViewDTO
 {
-	private String st_name, chbox_name, yn_name, req_rs, user_id, reg_date;
+	private String st_name, chbox_name, yn_name, req_rs, user_id, reg_date, rej_rs, req_state;
 	private int req_apply_num, st_num;
 	
 	
@@ -83,6 +83,26 @@ public class ReqApplyViewDTO
 	public void setReg_date(String reg_date)
 	{
 		this.reg_date = reg_date;
+	}
+
+	public String getRej_rs()
+	{
+		return rej_rs;
+	}
+
+	public void setRej_rs(String rej_rs)
+	{
+		this.rej_rs = rej_rs;
+	}
+
+	public String getReq_state()
+	{
+		return req_state;
+	}
+
+	public void setReq_state(String req_state)
+	{
+		this.req_state = req_state;
 	}
 	
 	

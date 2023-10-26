@@ -95,10 +95,35 @@
 	font-size: small;
 	display: none;
 }
+
+.title1
+{
+   width: 5vw;
+   padding: 1vh;
+   background-color: #F7F4EA;
+	border-radius: 0 5px 5px 0;
+}
+.tcontent1
+{
+   padding: 1vh;
+}
+
 .input_group {
     display: flex;
     align-items: center;
 }
+
+.content
+{
+	width: 44vw;
+}
+
+.lbox
+{
+   display: flex;
+   border: 1px solid  #F7F4EA;
+}
+
 .title
 {
 	background-color: #F7F4EA;
@@ -388,13 +413,31 @@ input[type="radio"]
 				
 			</c:if>
 			
-			<c:if test="${state eq '처리완료' }">
-				<br><br>
-				<div class="igroup" style="width: 100%; color: red; font-size: 20pt; text-align: center; width: 570px; margin: 0 auto;">
-					처리가 완료된 가게정보오류수정요청서 입니다.
-				</div>
-			</c:if>
-			
+			<c:choose> 
+				<c:when test="${err.req_state=='반려' }">
+					<div class="igroup">
+						<div class="lbox">
+							<div class="title1">
+								${err.req_state}
+							</div>
+							<div class="tcontent1 content">
+								${err.rej_rs }
+							</div>
+						</div>
+					</div>
+					<br><br>
+					<div class="igroup" style="width: 100%; color: red; font-size: 20pt; text-align: center; width: 570px; margin: 0 auto;">
+						처리가 완료된 가게정보오류수정요청서 입니다.
+					</div>
+				</c:when>
+				<c:when test="${err.req_state=='승인' }">
+					<br><br>
+					<div class="igroup" style="width: 100%; color: red; font-size: 20pt; text-align: center; width: 570px; margin: 0 auto;">
+						처리가 완료된 가게정보오류수정요청서 입니다.
+					</div>
+				</c:when>
+			</c:choose>
+
 		</div>
 		<div class="stDetailPopup" id="popup" style="position: absolute; visibility: hidden;">
 			<h4>
