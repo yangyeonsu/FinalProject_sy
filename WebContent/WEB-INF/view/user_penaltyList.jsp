@@ -128,25 +128,6 @@ String cp = request.getContextPath();
 
 					<!-- 페이징 처리 -->
 					<div class="pagination">
-						<%-- <c:choose>
-							<c:when test="${empty penaltyList}">
-								<p></p>
-							</c:when>
-							<c:otherwise>
-								<ul class="pagination-list">
-									<li><a
-										href="${cp}/user_stupdate_relist.action?page=${currentPage - 1}">&laquo;
-											Previous</a></li>
-									<c:forEach var="pageNum" begin="1" end="${totalPages}">
-										<li><a
-											href="${cp}/user_stupdate_relist.action?page=${pageNum}">${pageNum}</a></li>
-									</c:forEach>
-									<li><a
-										href="${cp}/user_stupdate_relist.action?page=${currentPage + 1}">Next
-											&raquo;</a></li>
-								</ul>
-							</c:otherwise>
-						</c:choose> --%>
 						<c:choose>
 			                <c:when test="${empty penaltyList}">
 			                    <p></p>
