@@ -41,7 +41,7 @@
 				$('.overlay').css("height", "100%");
 				$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
 				$('.overlay').css("z-index", "3");
-				$('.overlay').css("margin-top", "1.011vh");
+				//$('.overlay').css("margin-top", "1.011vh");
 				$('#checkOverlay').attr("value", "true");
 			}
 
@@ -50,7 +50,8 @@
 		$(".sub_menu ul.small_menu").hide();
 		$(".sub_menu ul.big_menu").click(function()
 		{
-			$("ul", this).slideToggle(300);
+			$(".sub_menu ul.small_menu").not(this).fadeOut(250);
+			$("ul", this).stop().slideToggle(300);
 		});
 		// 외부 클릭 시 좌측 사이드 메뉴 숨기기
 		$('.overlay').on('click', function()
@@ -205,6 +206,7 @@
 			<div class="rv_report">
 				<div class="title">가게 등폐업 요청 내역</div>
 				<hr>
+				<i style="font-size: 0.8vw; margin-left: 68%">"반려"인 항목을 클릭하면 반려 사유를 볼 수 있습니다.</i>
 				<div class="rv_reportlist">
 					<div class="subtitle">
 						<div class="rpt_subtitle">구분</div>
@@ -300,7 +302,7 @@
 					<div class="rvPopCont">
 						<div class="list">
 							<div class="rejRs">
-								<h5 style="margin-top: 0">반려사유 &nbsp;&nbsp;&nbsp; </h5>
+								<h5 style="margin-top: 0; margin-bottom:  0;">반려사유</h5>
 								<textarea class="rej_rs_content" rows="5" cols="42" id="inRs" style="resize: none;" disabled="disabled">
 								</textarea>
 							</div>

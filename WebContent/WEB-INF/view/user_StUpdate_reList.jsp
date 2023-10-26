@@ -67,6 +67,7 @@
 	$(document).on('click', '.rpt_content', function() {
 	    var reqProcessNum = $(this).attr('id');
 	    var rejRsValue = $("#rej_rs" + reqProcessNum).val();
+	    var reRsValue = $("#re_rs" + reqProcessNum).val();
 		
 	    if(rejRsValue!="")
 	    {
@@ -100,13 +101,54 @@
 				return false;
 			}
 	    }
+	    else if(reRsValue!="")
+	    {
+			$("#reRs").html(reRsValue);
+			
+			if (document.all.midPopup.style.visibility == "hidden")
+			{
+				document.all.midPopup.style.visibility = "visible";
+				bgLayerOpen();
+				
+				var $layerPopupObj = $('#midPopup');
+				var left = ($(window).scrollLeft() + ($(window).width() - $layerPopupObj
+						.width()) / 2);
+				var top = ($(window).scrollTop() + ($(window).height() - $layerPopupObj
+						.height()) / 4);
+	
+				$layerPopupObj.css(
+				{
+					'left' : left,
+					'top' : top,
+					'position' : 'absolute'
+				});
+				$('body').css('position', 'relative').append($layerPopupObj);
+	
+				return false;
+			} 
+			else
+			{
+				document.all.rvPopup.style.visibility = "hidden";
+				bgLayerClear();
+				return false;
+			}
+	    }
 	});
 	
 	function reqPopupOpen(element)
 	{
-		document.all.rvPopup.style.visibility = "hidden";
-		bgLayerClear();
-		return false;
+		if ($(element).attr("id") == "re")
+		{
+			document.all.midPopup.style.visibility = "hidden";
+			bgLayerClear();
+			return false;
+		}
+		else
+		{
+			document.all.rvPopup.style.visibility = "hidden";
+			bgLayerClear();
+			return false;
+		}
 	}
 	
 	function bgLayerOpen()
@@ -162,7 +204,7 @@
 					가게정보오류수정요청 내역
 				</div>
 				<hr>
-				
+				<i style="font-size: 0.8vw; margin-left: 68%">"반려"/"거절"인 항목을 클릭하면 사유를 볼 수 있습니다.</i>
 				<div class="rv_reportlist">
 					<div class="subtitle">
 						<div class="rpt_subtitle">요청일자</div>
@@ -185,8 +227,11 @@
 							                <div class="rpt_content" id="${udre.req_process_num}">${udre.reg_date }</div>
 							                <div class="rpt_content" id="${udre.req_process_num}">${udre.st_name }</div>
 							                <c:choose>
-							                	<c:when test="${udre.isrej ne '미처리'}">
+							                	<c:when test="${udre.isrej eq '반려'}">
 							                		<div class="rpt_content" id="${udre.req_process_num}">${udre.state }(${udre.isrej })</div>
+							                	</c:when>
+							                	<c:when test="${udre.isrej eq '거절' }">
+							                		<div class="rpt_content" id="${udre.req_process_num}">${udre.state }(<span style="text-decoration: line-through;">승인</span> ${udre.isrej })</div>
 							                	</c:when>
 							                	<c:otherwise>
 							                		<div class="rpt_content" id="${udre.req_process_num}">${udre.state }</div>
@@ -196,6 +241,7 @@
 							                
 							            	<div id="reject" style="display: none;">${udre.req_process_num }</div>
 							                <input type="hidden" class="rej_rs" id="rej_rs${udre.req_process_num}" value="${udre.rej_rs}">
+							            	<input type="hidden" class="re_rs" id="re_rs${udre.req_process_num }" value="${udre.reverse_rs }">
 							            </div>
 							        </c:when>
 							        <c:otherwise>
@@ -230,7 +276,7 @@
 				<!-- 반려사유 모달 -->
 				<div id="rvPopup" style="position: absolute; visibility: hidden;">
 					<h4>
-						<a href="#" class="close" onClick="reqPopupOpen(this)">Ⅹ</a>
+						<a href="#" class="close" id="rej" onClick="reqPopupOpen(this)">Ⅹ</a>
 					</h4>
 					<h3>가게정보수정요청 반려사유</h3>
 					<div class="rvPopCont">
@@ -242,7 +288,28 @@
 							</div>
 						</div>
 						<div class="rv">
-							<button class="rvBtn" onClick="reqPopupOpen(this)">확인</button>
+							<button class="rvBtn" id="rej" onClick="reqPopupOpen(this)">확인</button>
+						</div>
+					</div>
+					
+				</div>
+				
+				<!-- 거절 사유 모달 -->
+				<div id="midPopup" style="position: absolute; visibility: hidden;">
+					<h4>
+						<a href="#" class="close" id="re" onClick="reqPopupOpen(this)">Ⅹ</a>
+					</h4>
+					<h3>가게정보수정요청 거절 사유</h3>
+					<div class="rvPopCont">
+						<div class="list">
+							<div class="reqRs">
+								<h5 style="margin-top: 0; margin-bottom: 0">거절 사유 </h5>
+								<textarea class="rej_rs_content" rows="5" cols="42" id="reRs" style="resize: none;" disabled="disabled">
+								</textarea>
+							</div>
+						</div>
+						<div class="rv">
+							<button class="rvBtn" id="re" onClick="reqPopupOpen(this)">확인</button>
 						</div>
 					</div>
 					
