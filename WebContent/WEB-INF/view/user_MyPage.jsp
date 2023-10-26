@@ -248,7 +248,7 @@ String cp = request.getContextPath();
 						</div>
 						<div class="id1">
 							<div class="title9">포인트</div>
-							<div class="sub9">${user.point_sum}pt</div>
+							<div class="sub9">${pointSum}pt</div>
 						</div>
 						<div class="id1">
 							<div class="title9">키워드</div>

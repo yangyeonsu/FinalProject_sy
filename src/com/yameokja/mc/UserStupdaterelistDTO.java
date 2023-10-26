@@ -7,7 +7,7 @@ public class UserStupdaterelistDTO
 	/* REQ_APPLY_NUM, REQ_PROCESS_NUM, REJ_RS 추가*/
 	
 	private int req_apply_num;
-	private String req_process_num, rej_rs, isrej;
+	private String req_process_num, rej_rs, isrej, reverse_rs;
 	
 	// getter / setter
 	public int getReq_apply_num()
@@ -86,4 +86,15 @@ public class UserStupdaterelistDTO
 	{
 		this.isrej = isrej;
 	}
+
+	public String getReverse_rs()
+	{
+		return reverse_rs;
+	}
+
+	public void setReverse_rs(String reverse_rs)
+	{
+		this.reverse_rs = reverse_rs;
+	}
+	
 }

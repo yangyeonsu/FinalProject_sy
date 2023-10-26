@@ -2,7 +2,7 @@ package com.yameokja.mc;
 
 public class ObjApplyViewDTO
 {
-	private String req_rs, obj_rs, photo_link, state;
+	private String req_rs, obj_rs, photo_link, state, obj_state, obj_rej_rs;
 	private int obj_apply_num;
 	
 	public String getReq_rs()
@@ -47,5 +47,21 @@ public class ObjApplyViewDTO
 		this.state = state;
 	}
 	
+	public String getObj_state()
+	{
+		return obj_state;
+	}
+	public void setObj_state(String obj_state)
+	{
+		this.obj_state = obj_state;
+	}
+	public String getObj_rej_rs()
+	{
+		return obj_rej_rs;
+	}
+	public void setObj_rej_rs(String obj_rej_rs)
+	{
+		this.obj_rej_rs = obj_rej_rs;
+	}
 	
 }

@@ -14,7 +14,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>storeErrReportForm.jsp</title>
+<title>가게정보오류수정 요청서</title>
 
 <link rel="stylesheet" type="text/css" href="<%=cp%>/css/st_modal.css">
 

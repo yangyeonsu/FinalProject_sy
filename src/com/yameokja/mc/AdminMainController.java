@@ -476,7 +476,10 @@ public class AdminMainController
 			// 승인인 경우 penalty insert
 			if (check.equals("true"))
 			{
-				fdao.setPenalty(process);
+				if(fdao.countPenalty(process)>=5)
+					fdao.setPenalty(process, 2);
+				else
+					fdao.setPenalty(process, 1);
 			}
 			// 반려인 경우 req_rej insert
 			else if(check.equals("false"))

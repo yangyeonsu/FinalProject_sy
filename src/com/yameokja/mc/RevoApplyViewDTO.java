@@ -6,7 +6,7 @@ public class RevoApplyViewDTO
 	// PEN_TYPE_NAME, REVO_RS, PHOTO_LINK
 	private int revo_apply_num;
 	private String user_id, reg_date, st_name;
-	private String req_rs, revo_rs, photo_link;
+	private String req_rs, revo_rs, photo_link, revo_rej_rs, revo_rej_state;
 	
 	// getter / setter
 	public String getUser_id()
@@ -66,6 +66,21 @@ public class RevoApplyViewDTO
 	{
 		this.photo_link = photo_link;
 	}
-	
-	
+	public String getRevo_rej_rs()
+	{
+		return revo_rej_rs;
+	}
+	public void setRevo_rej_rs(String revo_rej_rs)
+	{
+		this.revo_rej_rs = revo_rej_rs;
+	}
+	public String getRevo_rej_state()
+	{
+		return revo_rej_state;
+	}
+	public void setRevo_rej_state(String revo_rej_state)
+	{
+		this.revo_rej_state = revo_rej_state;
+	}
+		
 }
