@@ -28,6 +28,10 @@ public interface IUserDAO
 	
 	public String searchStoreInfo(String user_num);
 	
+	// 현재 분기 포인트 합
+	public int recentFPointSum(@Param("user_num") String user_num);
+	public int recentSPointSum(@Param("user_num") String user_num);
+	
 	// 입맛 키워드 범례
 	public List<TasteLabelDTO> tasteKeyword();
 	

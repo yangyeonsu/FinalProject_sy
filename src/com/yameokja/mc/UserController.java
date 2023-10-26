@@ -255,16 +255,24 @@ public class UserController
 		
 		UserDTO user = udao.searchUserInfo(user_num, "num");
 		
+		int pointSum = 0;
+		
 		if (1 <= monthValue && monthValue <= 6)
 		{
 			user.setPoint_sum(udao.secondHalf(user_num).getPoint_sum());
 			user.setUser_grade(udao.firstHalf(user_num).getUser_grade());
+			// 현재 분기 포인트 합
+			pointSum = udao.recentFPointSum(user_num);
 		}
 		else if(7 <= monthValue && monthValue <= 12)
 		{
 			user.setPoint_sum(udao.firstHalf(user_num).getPoint_sum());
 			user.setUser_grade(udao.secondHalf(user_num).getUser_grade());
+			// 현재 분기 포인트 합
+			pointSum = udao.recentSPointSum(user_num);
 		}
+		
+		model.addAttribute("pointSum", pointSum);
 		
 		// 사업자이면 가게 정보 함께 넘김
 		ArrayList<StoreDTO> st_list=null;

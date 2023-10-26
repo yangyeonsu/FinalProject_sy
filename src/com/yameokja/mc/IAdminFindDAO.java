@@ -41,7 +41,9 @@ public interface IAdminFindDAO
 	// REQ_PROCESS_NUM 찾기
 	public int getReqProNum(@Param("req_apply_num") int req_apply_num, @Param("admin_num") int admin_num);
 	// 가게정보오류수정요청 승인시 패널티 테이블 insert
-	public int setPenalty(@Param("req_process_num") int req_process_num);
+	public int setPenalty(@Param("req_process_num") int req_process_num, @Param("pen_type_num") int pen_type_num);
+	// 가게정보오류수정요청 승인시 1번 패널티 수 카운트
+	public int countPenalty(@Param("req_process_num") int req_process_num);
 	// 가게정보오류수정요청 반려
 	public int reqRej(@Param("req_process_num") int req_process_num, @Param("rej_rs") String rej_rs);
 	//이의제기 승인

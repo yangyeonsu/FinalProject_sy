@@ -47,12 +47,11 @@
 			} else
 			{
 				$('.overlay').css("position", "fixed");
-				$('.overlay').css("width", "77%");
+				$('.overlay').css("width", "100%");
 				$('.overlay').css("height", "100%");
 				$('.overlay').css("background", "rgba(0, 0, 0, 0.7)");
 				$('.overlay').css("z-index", "3");
-				$('.overlay').css("margin-top", "1.011vh");
-				$('.overlay').css("margin-left", "23%");
+				//$('.overlay').css("margin-top", "1.011vh");
 				$('#checkOverlay').attr("value", "true");
 			}
 
@@ -61,7 +60,8 @@
 		$(".sub_menu ul.small_menu").hide();
 		$(".sub_menu ul.big_menu").click(function()
 		{
-			$("ul", this).slideToggle(300);
+			$(".sub_menu ul.small_menu").not(this).fadeOut(250);
+			$("ul", this).stop().slideToggle(300);
 		});
 		// 외부 클릭 시 좌측 사이드 메뉴 숨기기
 		$('.overlay').on('click', function()
