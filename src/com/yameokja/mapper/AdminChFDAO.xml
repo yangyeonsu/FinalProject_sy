@@ -219,8 +219,16 @@
 	<!-- 가게정보오류수정요청 승인 시 패널티 테이블 insert -->
 	<insert id="setPenalty">
 		INSERT INTO PENALTY(PEN_GRANT_NUM, REQ_PROCESS_NUM, GRANT_DATE, PEN_TYPE_NUM)
-		VALUES(PENSEQ.NEXTVAL, #{req_process_num}, SYSDATE, 1)
+		VALUES(PENSEQ.NEXTVAL, #{req_process_num}, SYSDATE, #{pen_type_num})
 	</insert>
+	
+	<!-- 가게정보오류수정요청 승인 시 패널티 1번이 5번 되었을 경우 찾기 -->
+	<select id="countPenalty">
+		SELECT COUNT(PEN_GRANT_NUM) AS COUNT
+		FROM PENALTY
+		WHERE REQ_PROCESS_NUM = #{req_process_num}
+		  AND GRANT_DATE >= ADD_MONTHS(SYSDATE, -6)
+	</select>
 	
 	<!-- 가게정보오류수정요청 반려 -->
 	<insert id="reqRej">
