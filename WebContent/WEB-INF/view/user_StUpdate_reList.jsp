@@ -237,10 +237,9 @@
 						<div class="list">
 							<div class="reqRs">
 								<h5 style="margin-top: 0; margin-bottom: 0">반려사유 </h5>
-								<textarea class="rej_rs_content" rows="5" cols="42" id="rvRs" style="resize: none; margin-top: 3vh;" disabled="disabled">
+								<textarea class="rej_rs_content" rows="5" cols="42" id="rvRs" style="resize: none;" disabled="disabled">
 								</textarea>
 							</div>
-							
 						</div>
 						<div class="rv">
 							<button class="rvBtn" onClick="reqPopupOpen(this)">확인</button>
