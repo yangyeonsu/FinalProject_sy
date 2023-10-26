@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>storeErrReportForm.jsp</title>
+<title>이의제기 요청서</title>
 
 <style type="text/css">
 .st_info_insert
@@ -99,6 +99,30 @@
 	height: 3vh;
 	padding: 0.5vh 0.5vh 0.5vh 0.5vh
 }
+
+.title1
+{
+   width: 5vw;
+   padding: 1vh;
+   background-color: #F7F4EA;
+	border-radius: 0 5px 5px 0;
+}
+.tcontent1
+{
+   padding: 1vh;
+}
+
+.content
+{
+	width: 44vw;
+}
+
+.lbox
+{
+   display: flex;
+   border: 1px solid  #F7F4EA;
+}
+
 #span
 {
 	padding-top: 10px;
@@ -268,7 +292,7 @@ input[type="radio"]
 					</div>
 				</div>
 				
-				<c:if test="${obj.state ne '처리완료' }">
+				<c:if test="${obj.getState() ne '처리완료' }">
 					<div style="width: 87%; text-align: right; margin-top: 1vh;">
 						<label class="label"><input type="radio" class="check" name="res" id="approve" value="false"><span id="span">승인</span></label>
 						<label class="label"><input type="radio" class="check" name="res" id="reject" value="true"><span id="span">반려</span></label>
@@ -288,13 +312,24 @@ input[type="radio"]
 					</div>
 				</c:if>
 				
-				<c:if test="${obj.state eq '처리완료' }">
+				<c:if test="${obj.getState() eq '처리완료' }">
+					<div class="igroup">
+						<div class="lbox">
+							<c:if test="${obj.getObj_state() eq '반려' }">
+								<div class="title1">
+									${obj.getObj_state() }
+								</div>
+								<div class="tcontent1 content">
+									${obj.getObj_rej_rs() }
+								</div>
+							</c:if>
+						</div>
+					</div>
 					<br><br>
-					<div class="igroup" style="width: 100%; color: red; font-size: 20pt; text-align: center; width: 465px; margin: 0 auto;">
-						처리가 완료된 이의제기요청서 입니다.
+					<div class="igroup" style="width: 100%; color: red; font-size: 20pt; text-align: center; width: 410px; margin: 0 auto">
+						처리가 완료된 리뷰신고서 입니다.
 					</div>
 				</c:if>
-				
 			</div>
 		</div>
 	</div>

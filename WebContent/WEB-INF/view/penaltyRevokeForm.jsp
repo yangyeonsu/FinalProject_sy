@@ -12,7 +12,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>storeErrReportForm.jsp</title>
+<title>패널티 회수 신청서</title>
 
 <style type="text/css">
 
@@ -297,7 +297,7 @@ input[type="radio"]
 				<c:if test="${state ne '처리완료' }">
 					<div style="width: 87%; text-align: right; margin-top: 1vh;">
 						<label class="label"><input type="radio" class="check" name="res" id="approve"><span id="span" style="font-size: 9pt; padding: 0 auto;">승인</span></label>
-						<label class="label"><input type="radio" class="check" name="res" id="reject" value="true"><span id="span">반려</span></label>
+						<label class="label"><input type="radio" class="check" name="res" id="reject" value="true"><span id="span" style="font-size: 9pt; padding: 0 auto;">반려</span></label>
 					</div>
 					
 					<br>
@@ -313,6 +313,18 @@ input[type="radio"]
 				</c:if>
 				
 				<c:if test="${state eq '처리완료' }">
+					<div class="igroup">
+						<div class="lbox">
+							<c:if test="${revo.getRevo_rej_state() eq '반려' }">
+								<div class="title1">
+									${revo.getRevo_rej_state() }
+								</div>
+								<div class="tcontent1 content">
+									${revo.getRevo_rej_rs() }
+								</div>
+							</c:if>
+						</div>
+					</div>
 					<br><br>
 					<div class="igroup" style="width: 100%; color: red; font-size: 20pt; text-align: center; width: 510px; margin: 0 auto;">
 						처리가 완료된 패널티 회수 신청서 입니다.
