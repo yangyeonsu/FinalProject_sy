@@ -44,6 +44,17 @@ public interface IAdminFindDAO
 	public int setPenalty(@Param("req_process_num") int req_process_num);
 	// 가게정보오류수정요청 반려
 	public int reqRej(@Param("req_process_num") int req_process_num, @Param("rej_rs") String rej_rs);
+	//이의제기 승인
+	public int objProcess(@Param("obj_apply_num")int obj_apply_num, @Param("admin_num")int admin_num);
+	//OBJ_PROCESS_NUM 찾기
+	public int searchOpNum(int obj_apply_num);
+	//이의제기 반려
+	public int objRej(@Param("rej_rs")String rej_rs, @Param("obj_apply_num")int obj_apply_num);
+	//처리 결과 변경
+	public int reverseRs(@Param("reverse_rs")String reverse_rs, @Param("obj_process_num")int obj_processs_num);
+	
+	
+	
 	// 가게 등록 처리
 	public int inprocess(@Param("in_apply_num")int in_apply_num, @Param("admin_num")int admin_num);
 	public int getinprocessnum(int in_apply_num);
