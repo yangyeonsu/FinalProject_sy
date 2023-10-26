@@ -60,6 +60,7 @@
      		 , OAV.REQ_RS AS REQ_RS
 			 , OAV.OBJ_RS AS OBJ_RS
 			 , OP.PHOTO_LINK AS PHOTO_LINK
+			 , OAV.STATE AS STATE
 		FROM OBJ_APPLY_VIEW OAV
 		LEFT JOIN OBJ_PHOTO OP
 		ON OP.OBJ_APPLY_NUM = OAV.OBJ_APPLY_NUM
@@ -197,6 +198,31 @@
 	<insert id="reqRej">
 		INSERT INTO REQ_REJ(REQ_REJ_NUM, REQ_PROCESS_NUM, REJ_RS)
 		VALUES(REQREJSEQ.NEXTVAL, #{req_process_num}, #{rej_rs})
+	</insert>
+	
+	<!-- 이의 제기 승인 -->
+	<insert id="objProcess">
+		INSERT INTO OBJ_PROCESS(OBJ_PROCESS_NUM, OBJ_APPLY_NUM, FINAL_DATE, ADMIN_NUM)
+		VALUES(OBJPROSEQ.NEXTVAL, #{obj_apply_num}, SYSDATE, #{admin_num})
+	</insert>
+	
+	<!-- 이의제기 obj_process_num 찾기 -->
+	<select id="searchOpNum" resultType="java.lang.Integer">
+		SELECT OBJ_PROCESS_NUM
+		FROM OBJ_PROCESS
+		WHERE OBJ_APPLY_NUM = #{obj_apply_num}
+	</select>
+	
+	<!-- 이의 제기 반려 -->
+	<insert id="objRej">
+		INSERT INTO OBJ_REJ(OBJ_REJ_NUM, REJ_RS, OBJ_PROCESS_NUM)
+		VALUES(OBJREJSEQ.NEXTVAL, #{rej_rs}, #{obj_process_num})
+	</insert>
+	
+	<!-- 가게 정보 수정 요청 결과 변경 -->
+	<insert id="reverseRs">
+		INSERT INTO APPLY_REVERSE(APPLY_REVERSE_NUM, REVERSE_RS, OBJ_PROCESS_NUM)
+		VALUES(REVERSEQ.NEXTVAL, #{reverse_rs}, #{obj_process_num})
 	</insert>
 	
 	<insert id="inprocess">

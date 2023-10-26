@@ -265,6 +265,46 @@ public class AdminMainController
 
 		return result;
 	}
+	
+	@RequestMapping(value = "/objpro.action", method = RequestMethod.POST)
+	public String objectionProcess(Model model, HttpServletRequest request, ObjApplyViewDTO dto)
+	{
+		HttpSession session = request.getSession();
+
+		String result = "";
+		int admin_num = (int) session.getAttribute("admin_num");
+		
+		IAdminMainDAO daoM = sqlSesion.getMapper(IAdminMainDAO.class);
+		IAdminFindDAO dao = sqlSesion.getMapper(IAdminFindDAO.class); 
+		
+		int obj_apply_num = Integer.parseInt(request.getParameter("obj_apply_num"));
+		
+		int check = dao.objProcess(obj_apply_num, admin_num);
+		
+		int obj_process_num = dao.searchOpNum(obj_apply_num);
+		
+		System.out.println(obj_process_num);
+		
+		String checklabel = request.getParameter("checklabel");
+		
+		if (checklabel.equals("true"))
+		{
+			String rej_rs = request.getParameter("rej_rs");
+			dao.objRej(rej_rs, obj_process_num);
+			
+		}
+		else if (checklabel.equals("false"))
+		{
+			String reverse_rs = request.getParameter("rever_rs");
+			dao.reverseRs(reverse_rs, obj_process_num);
+		}
+		
+		model.addAttribute("admin_name", daoM.searchNum(admin_num));
+		
+		result = "redirect:objectionView.action";
+
+		return result;
+	}
 
 	@RequestMapping(value = "/penaltyrevokeform.action", method = RequestMethod.GET)
 	public String penaltyRevokeForm(Model model, HttpServletRequest request, RevoApplyViewDTO dto)
