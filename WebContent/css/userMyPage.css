@@ -1,0 +1,406 @@
+@charset "UTF-8";
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500&display=swap');
+.header
+{
+	position: sticky;
+	top: 0;
+	background-color: white;
+	z-index: 200;
+}
+
+
+body {
+	width: 97vw;
+	font-family: 'IBM Plex Sans KR', sans-serif;
+	margin: 0;
+}
+
+/* 전체 틀 */
+.container {
+	width: 100%;
+	align-items: stretch;
+	padding: 0px;
+}
+
+.middle {
+	width: 97vw;
+	display: flex;
+}
+
+/* 가게 대표이미지 버튼 */
+.storeBtn
+{
+	width: 9vw;
+    height: 9vw;
+    border: none;
+    padding: 0;
+}
+
+.myPageBtn
+{
+	width: 6vw;
+    height: 4vh;
+    margin-left: 2vh;
+    border-radius: 10px;
+    font-size: 0.6vw;
+    border: 1px solid #ef6351;
+    background-color: white;
+    color: #ef6351;
+    cursor: pointer;
+}
+
+.jimlist, .comlist {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 2vw;
+}
+
+.jimstore, .comstore
+{
+	width: 10vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 11.5vw;
+    margin-right: 0.5vw;
+    margin-left: 0.5vw;
+    border: 1.5px solid #f7f4ea;
+    justify-content: space-around;
+}
+
+.jimstoreImg, .comstoreImg
+{
+	width: 9vw;
+    height: 8vw;
+}
+
+.jimstImg, .comstImg
+{
+	max-width: 9vw;
+    max-height: 9vw;
+    width: 9vw;
+    height: 9vw;
+    object-fit: cover;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.jimstoreName, .comstoreName
+{
+	padding-top: 0.5vw;
+}
+
+
+/* .card {
+	width: 8vw;
+	background-color: #f7f4ea;
+	border: 1px solid #E09A8D;
+	margin: 1vw;
+	padding: 1vh;
+	background-color: #EF6851;
+}
+
+.card1 {
+	width: 4vw;
+	background-color: white;
+	border: 1px solid #E09A8D;
+	margin: 0.3vw;
+	padding: 0.5vh;
+	background-color: #EF6851;
+	justify-content: center;
+} 
+
+.card-img-top {
+	border: 1px solid #E09A8D;
+	width: 100%;
+}*/
+
+.col-md-8 {
+	/* width: 69vw; */
+	width: 64vw;
+    padding: 5vh 0 0 0;
+    margin-left: 3vw;
+}
+
+.col-md-2 {
+	width: 14vw;
+	/* height: 100vh; */
+	display: flex;
+	flex-direction: column;
+	/* padding-top: 1.5vh; */
+	font-size: 20px;
+	/* align-items: center; */
+	
+}
+
+
+.see1 {
+	display: flex;
+	flex-direction: column;
+	width: 80%;
+	/* height: 90%; */
+	justify-content: center;
+	/* overflow: overlay; */
+	text-align: center;
+	align-items: center
+}
+
+.stalist {
+	/* background-color: #f7f4ea; */
+	/* padding: 1vw; */
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 8vh;
+	margin-top: 4vw;
+}
+
+.dao {
+	right: 5vw;
+}
+
+.list1 {
+	/* background-color: white; */
+	/* border: 1px solid #E6E6E6; */
+	width: 10vw;
+	/* height: 3vh;
+	align-items: center; */
+	padding: 1vh;
+	text-align: center;
+}
+
+.list0 {
+	display: flex;
+	justify-content: space-evenly;
+	background-color: white;
+	align-items: center;
+	border: 1px solid #E6E6E6;
+	/* height: 3vh; */
+}
+#list0
+{
+	background-color: #f7f4ea;
+}
+
+#list1 {
+	/* background-color: #f7f4ea; */
+	display: flex;
+}
+
+.id {
+	display: flex;
+	/* flex-direction: column; */
+	background-color: #f7f4ea;
+	
+	margin-bottom: 15vh;
+	
+}
+
+.id1 {
+	border: 1px solid #E6E6E6;
+	flex-grow: 1;
+	padding: 1vh;
+	align-items: center;
+	background-color: white;
+	/* background-color: #FFFDE7; */
+	
+}
+.title9
+{
+	font-size: 15pt;
+    font-weight: bold;
+    background-color: #f7f4ea;
+    text-align: center;
+}
+.sub9
+{
+	font-size: 15pt;
+    text-align: center;
+}
+
+.keyword
+{
+	display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    height: 50%;
+    font-size: 0.8vw;
+    align-items: center;
+}
+
+.side {
+	color: black;
+	border: 1px solid #A4A4A4;
+	background-color: #E6E6E6;
+	height: 3vh;
+}
+
+.side:hover {
+	background-color: gray;
+	color: white;
+}
+
+/* .card-text {
+	text-align: center;
+}
+ */
+.ado {
+	display: flex;
+	align-items: center;
+}
+
+/* #ado
+{
+	padding-right: 1vw;
+	
+} */
+/* .adoi
+{
+	align-items: center;
+} */
+
+.ta {
+	/* margin-top:1vh; */
+	display: flex;
+	justify-content: space-between;
+	padding-left: 1vw;
+	padding-right: 1vw;
+	margin-bottom: 1vw;
+}
+
+.title {
+	font-weight: bold;
+    font-size: 13pt;
+    width: 15vw;
+}
+
+/* .title2 {
+	font-size: 30px;
+} */
+
+.left-btn {
+	display: flex;
+	flex-direction: column;
+	margin-top: 5.6vh;
+}
+.mypage
+{
+    font-size: 25pt;
+    font-weight: bold;
+    margin-top: 3vh;
+    margin-bottom: 7vh;
+    display: flex;
+    align-items: center;
+}
+
+/* (0730)추가 */
+footer {
+    display: flex;
+    width: 94.9vw;
+    height: 15vh;
+    font-size: 0.8vw;
+    color: #9b9b9b;
+    background-color: #f9f9f9;
+    padding-top: 20vh;
+    padding-left: 4vw;
+    margin-top: 5vh;
+    justify-content: space-around;
+    align-items: flex-start;
+}
+
+/* 모달 */
+.bgLayer {
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: #f7f4ea;
+	opacity: .5;
+	filter: alpha(opacity = 50);
+	z-index: 15;
+} 
+
+#rvPopup
+{
+	overflow: hidden;
+	height: auto;
+	display: block;
+	border-radius: 20px;
+	box-shadow: 1.5px 2px 2px #333;
+	width: 500px;
+	height: 28vw;
+	z-index: 200;
+	position: fixed;
+  	top: 50%;
+  	left: 50%;
+  	/* transform: translate(-50%, -50%); */
+	/* top: 20%;
+	left: 10%; */
+	background-color:#fff;
+}
+
+#rvPopup h4{
+	font-size: 15px;
+    height: 24px;
+    color: #3a001e;
+    font-weight: normal;
+}
+
+#rvPopup h4 a.close{
+    float: right;
+    padding-right: 8px;
+    color: #3a001e;
+    font-family: verdana;
+    margin-right: 2%;
+    font-weight: bold;
+}
+
+#rvPopup h3{
+	text-align: center;
+}
+
+.rvPopCont {
+    display: block;
+    background: #FFF;
+    border: 3px solid #EF6351;
+    padding: 15px 20px;
+    border-radius: 5px;
+    height: 13vw;
+    width: 80%;
+    margin-left: 5%;
+}
+
+.list {
+    /*height: 100%; */
+    width: 100%;
+    /* display: inline-block; */
+    margin-top: 3vw;
+    font-size: 12pt;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#rvPopup .rv{
+    display: flex;
+    /* margin-left: 35%; */
+    margin-top: 3vw;
+    /* height: 40px; */
+    justify-content: center;
+}
+
+#rvPopup #rvBtn, #midPopup #rvBtn{
+	width: 120px;
+	height: 30px;
+	float: left;
+	align-content: center;
+	font-size: 8pt;
+	font-weight: bold;
+	border: 1px solid #ef6351;
+	border-radius: 5px;
+	background-color: #ef6351;
+	color: white;
+	cursor: pointer;
+}

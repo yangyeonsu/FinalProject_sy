@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yameokja.mc.IpenaltyListDAO">
+
+	<select id="penList" resultType="com.yameokja.mc.penaltyListDTO">
+	   <!--  SELECT REG_DATE, ST_NAME, WRITE_DATE
+	    FROM 
+	    (
+	        SELECT REG_DATE, ST_NAME, WRITE_DATE
+	    	 , ROW_NUMBER() OVER (ORDER BY REG_DATE DESC) AS rnum
+			FROM RV_REPORT_VIEW
+			WHERE USER_NUM = #{user_num}
+	    )
+	    WHERE rnum BETWEEN #{startRow} AND #{endRow} -->
+	    SELECT REG_DATE, ST_NAME, STATE, FINAL_DATE
+		FROM
+		(           
+		SELECT REG_DATE, ST_NAME, STATE, FINAL_DATE, ROW_NUMBER() OVER (ORDER BY REG_DATE DESC) AS RN
+		FROM RV_REPORT_VIEW
+		WHERE USER_NUM = #{user_num}
+		)
+		WHERE RN BETWEEN #{startRow} AND #{endRow}
+	</select>
+	
+</mapper>

@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yameokja.mc.IUserSidebarDAO">
+
+	<!-- 사용자가 신고한 리뷰 내역 -->
+	<select id="count_replist" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS COUNT
+		FROM REP_APPLY
+		WHERE USER_NUM = #{user_num}
+	</select>
+
+	<select id="user_rv_Report" resultType="com.yameokja.mc.UserrvreportDTO">
+		<!-- 
+		SELECT REG_DATE, ST_NAME, REPORTEDUSERID, STATUS, FINAL_DATE
+		FROM (
+			SELECT RA.REG_DATE AS REG_DATE, IA.ST_NAME AS ST_NAME, UU.USER_ID AS REPORTEDUSERID, CASE WHEN RA.ADMIN_READ_DATE IS NULL THEN '미확인'
+	                                                                       WHEN RA.ADMIN_READ_DATE IS NOT NULL AND RP.FINAL_DATE IS NULL THEN '처리중'
+	                                                                       ELSE '처리완료'
+	                                                                       END AS STATUS
+	                                                                       , RP.FINAL_DATE AS FINAL_DATE
+	                                                                       ,ROW_NUMBER() OVER (ORDER BY RA.REG_DATE DESC) AS RNUM
+			FROM REP_APPLY RA JOIN RV_BOX RB
+			ON RA.RV_NUM = RB.RV_NUM
+			JOIN ST_LIST SL
+			ON RB.ST_NUM = SL.ST_NUM
+			JOIN IN_PROCESS IP
+			ON SL.IN_PROCESS_NUM = IP.IN_PROCESS_NUM
+			JOIN IN_APPLY IA
+			ON IP.IN_APPLY_NUM = IA.IN_APPLY_NUM
+			JOIN USER_LIST UL
+			ON RB.USER_NUM = UL.USER_NUM
+			JOIN USING_USER UU
+			ON UL.USER_NUM = UU.USER_NUM
+			JOIN REP_PROCESS RP
+			ON RA.REP_APPLY_NUM = RP.REP_APPLY_NUM
+			WHERE RA.USER_NUM = #{user_num}
+		)
+		WHERE RNUM BETWEEN #{startRow} AND #{endRow}
+		 -->
+		
+		<!-- 	
+		SELECT REG_DATE, ST_NAME, REPORTEDUSERID, STATUS, FINAL_DATE, REP_REJ_NUM, REJ_RS, REP_MID_NUM, MID_RS
+		FROM (
+		    SELECT RA.REG_DATE AS REG_DATE
+		         , IA.ST_NAME AS ST_NAME
+		         , UU.USER_ID AS REPORTEDUSERID
+		         , CASE WHEN RA.ADMIN_READ_DATE IS NULL THEN '미확인'
+		                WHEN RA.ADMIN_READ_DATE IS NOT NULL AND RP.FINAL_DATE IS NULL THEN '처리중'
+		                ELSE '처리완료'
+		                END AS STATUS
+		         , RP.FINAL_DATE AS FINAL_DATE
+		         , ROW_NUMBER() OVER (ORDER BY RA.REG_DATE DESC) AS RNUM
+		         , CASE WHEN RR.REP_REJ_NUM IS NOT NULL THEN '반려'
+		                ELSE 'NULL'
+		                END AS REP_REJ_NUM
+		         , RR.REJ_RS AS REJ_RS
+                 , CASE WHEN RM.REP_MID_NUM IS NOT NULL THEN '중재'
+		                ELSE 'NULL'
+		                END AS REP_MID_NUM
+                 , RM.MID_RS AS MID_RS
+		    FROM REP_APPLY RA JOIN RV_BOX RB
+		    ON RA.RV_NUM = RB.RV_NUM
+		    JOIN ST_LIST SL
+		    ON RB.ST_NUM = SL.ST_NUM
+		    JOIN IN_PROCESS IP
+		    ON SL.IN_PROCESS_NUM = IP.IN_PROCESS_NUM
+		    JOIN IN_APPLY IA
+		    ON IP.IN_APPLY_NUM = IA.IN_APPLY_NUM
+		    JOIN USER_LIST UL
+		    ON RB.USER_NUM = UL.USER_NUM
+		    JOIN USING_USER UU
+		    ON UL.USER_NUM = UU.USER_NUM
+		    JOIN REP_PROCESS RP
+		    ON RA.REP_APPLY_NUM = RP.REP_APPLY_NUM
+		    LEFT JOIN REP_REJ RR
+		    ON RP.REP_PROCESS_NUM = RR.REP_PROCESS_NUM
+            LEFT JOIN REP_MID RM
+            ON RP.REP_PROCESS_NUM = RM.REP_PROCESS_NUM
+		    WHERE RA.USER_NUM = #{user_num}
+		)
+		WHERE RNUM BETWEEN #{startRow} AND #{endRow} 
+		-->
+		
+		SELECT TO_CHAR(T.REG_DATE, 'YY/MM/DD') AS REG_DATE, T.ST_NAME AS ST_NAME, T.ACCU_NUM AS ACCU_ID, T.STATE AS STATE, T.FINAL_DATE AS FINAL_DATE, T.RV_CONTENT AS RV_CONTENT
+      		, T.REP_PROCESS_NUM AS REP_PROCESS_NUM , T.ISMIDREJ AS ISMIDREJ, T.REJ_RS AS REJ_RS, T.MID_RS AS MID_RS
+		FROM
+		(
+		SELECT RRV.REG_DATE, RRV.ACCU_NUM, RRV.ST_NAME, RRV.STATE, RRV.FINAL_DATE, RB.RV_CONTENT, ROW_NUMBER() OVER (ORDER BY RRV.REG_DATE DESC) AS RN
+		, RRV.ISMIDREJ AS ISMIDREJ, RRV.MID_RS AS MID_RS, RRV.REJ_RS AS REJ_RS
+		, RP.REP_PROCESS_NUM AS REP_PROCESS_NUM
+		FROM RV_REPORT_VIEW RRV LEFT JOIN RV_BOX RB
+		  ON RRV.RV_NUM = RB.RV_NUM
+		LEFT JOIN REP_PROCESS RP
+		  ON RRV.REP_APPLY_NUM = RP.REP_APPLY_NUM
+		LEFT JOIN REP_REJ RR
+		  ON RP.REP_PROCESS_NUM = RR.REP_PROCESS_NUM
+		LEFT JOIN REP_MID RM
+		  ON RP.REP_PROCESS_NUM = RM.REP_PROCESS_NUM
+		WHERE RRV.USER_NUM = #{user_num}
+		) T
+		WHERE T.RN BETWEEN #{startRow} AND #{endRow}
+	</select>
+	
+	<!-- 사용자가 요청한 가게정보오류수정요청 내역 -->
+	<select id="count_relist" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS COUNT
+		FROM REQ_APPLY
+		WHERE USER_NUM = #{user_num}
+	</select>
+
+	<select id="user_stupdate_relist" resultType="com.yameokja.mc.UserStupdaterelistDTO">
+	    SELECT TO_CHAR(T.REG_DATE, 'YY/MM/DD') AS REG_DATE, T.ST_NAME AS ST_NAME, T.STATE AS STATE, T.FINAL_DATE AS FINAL_DATE
+		     , T.REQ_PROCESS_NUM AS REQ_PROCESS_NUM, T.REJ_RS AS REJ_RS, T.ISREJ AS ISREJ, AR.REVERSE_RS AS REVERSE_RS
+		FROM
+		(
+		SELECT RAV.REG_DATE, RAV.ST_NAME, RAV.STATE, RAV.FINAL_DATE, ROW_NUMBER() OVER (ORDER BY RAV.REG_DATE DESC) AS RN, RP.REQ_PROCESS_NUM AS REQ_PROCESS_NUM
+		       , RR.REJ_RS AS REJ_RS
+		       , CASE WHEN RP.REQ_PROCESS_NUM IN (SELECT REQ_PROCESS_NUM FROM REQ_REJ) THEN '반려'
+		              WHEN RP.REQ_PROCESS_NUM = (SELECT OA.REQ_PROCESS_NUM 
+		                                         FROM APPLY_REVERSE AR LEFT JOIN OBJ_PROCESS OP
+		                                           ON AR.OBJ_PROCESS_NUM = OP.OBJ_PROCESS_NUM
+		                                         LEFT JOIN OBJ_APPLY OA
+		                                           ON OP.OBJ_APPLY_NUM = OA.OBJ_APPLY_NUM
+		                                         LEFT JOIN REQ_PROCESS RP
+		                                           ON OA.REQ_PROCESS_NUM = RP.REQ_PROCESS_NUM) THEN '거절'
+		              ELSE '미처리' END ISREJ
+		FROM REQ_APPLY_VIEW RAV LEFT JOIN USING_USER UU
+		  ON RAV.USER_ID = UU.USER_ID
+		LEFT JOIN REQ_PROCESS RP
+		  ON RAV.REQ_APPLY_NUM = RP.REQ_APPLY_NUM
+		LEFT JOIN REQ_REJ RR
+		  ON RR.REQ_PROCESS_NUM = RP.REQ_PROCESS_NUM
+		WHERE UU.USER_NUM = #{user_num}
+		) T
+		LEFT JOIN OBJ_APPLY OA
+		  ON T.REQ_PROCESS_NUM = OA.REQ_PROCESS_NUM
+		LEFT JOIN OBJ_PROCESS OP
+		  ON OA.OBJ_APPLY_NUM = OP.OBJ_APPLY_NUM
+		LEFT JOIN APPLY_REVERSE AR
+		  ON OP.OBJ_PROCESS_NUM = AR.OBJ_PROCESS_NUM
+		WHERE T.RN BETWEEN #{startRow} AND #{endRow}
+	</select>
+	
+	<!-- 사용자가 작성한 리뷰가 신고 당한 내역 -->
+	<select id="count_penlist" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS COUNT
+		FROM REP_APPLY RA LEFT JOIN RV_BOX RB
+		  ON RA.RV_NUM = RB.RV_NUM
+		WHERE RB.USER_NUM = #{user_num}
+	</select>
+	
+	<select id="user_penList" resultType="com.yameokja.mc.penaltyListDTO">
+	   <!--  SELECT REG_DATE, ST_NAME, WRITE_DATE
+	    FROM 
+	    (
+	        SELECT REG_DATE, ST_NAME, WRITE_DATE
+	    	 , ROW_NUMBER() OVER (ORDER BY REG_DATE DESC) AS rnum
+			FROM RV_REPORT_VIEW
+			WHERE USER_NUM = #{user_num}
+	    )
+	    WHERE rnum BETWEEN #{startRow} AND #{endRow} -->
+	   <!--  
+	    SELECT REG_DATE, ST_NAME, STATE, FINAL_DATE
+		FROM
+		(           
+		SELECT REG_DATE, ST_NAME, STATE, FINAL_DATE, ROW_NUMBER() OVER (ORDER BY REG_DATE DESC) AS RN
+		FROM RV_REPORT_VIEW
+		WHERE USER_NUM = #{user_num}
+		)
+		WHERE RN BETWEEN #{startRow} AND #{endRow}
+		-->
+		
+		SELECT T.REP_APPLY_NUM AS REP_APPLY_NUM, TO_CHAR(T.REG_DATE, 'YY/MM/DD') AS REG_DATE, T.ST_NAME AS ST_NAME, T.USER_ID AS ACCU_ID, T.STATE AS STATE, T.FINAL_DATE AS FINAL_DATE, T.RV_CONTENT AS RV_CONTENT
+		       , T.REP_RS_NAME AS REP_RS_NAME, T.ISMIDREJ AS ISMIDREJ, T.MID_RS AS MID_RS, T.REJ_RS AS REJ_RS
+		FROM
+		(
+		SELECT RRV.REP_APPLY_NUM, RRV.REG_DATE, UU.USER_ID, RRV.ST_NAME, RRV.STATE, RRV.FINAL_DATE, RB.RV_CONTENT, RRL.REP_RS_NAME, ROW_NUMBER() OVER (ORDER BY RRV.REG_DATE DESC) AS RN
+		        , RRV.ISMIDREJ AS ISMIDREJ, RRV.MID_RS AS MID_RS, RRV.REJ_RS AS REJ_RS
+		FROM RV_REPORT_VIEW RRV LEFT JOIN RV_BOX RB
+		  ON RRV.RV_NUM = RB.RV_NUM
+		LEFT JOIN USING_USER UU
+		  ON RRV.ACCU_NUM = UU.USER_ID
+		LEFT JOIN REP_PROCESS RP
+		  ON RRV.REP_APPLY_NUM = RP.REP_APPLY_NUM
+		LEFT JOIN REP_APPLY RA
+		  ON RRV.REP_APPLY_NUM = RA.REP_APPLY_NUM
+		LEFT JOIN REP_RS_LABEL RRL
+		  ON RA.REP_RS_NUM = RRL.REP_RS_NUM
+		WHERE UU.USER_NUM = #{user_num}
+		) T
+		WHERE T.RN BETWEEN #{startRow} AND #{endRow}
+	</select>
+	
+	
+	<select id="count_inoutlist" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS COUNT
+		FROM INOUT_APPLY_VIEW
+		WHERE USER_ID = #{user_id}
+	</select>
+	
+	<select id="stinoutlist" resultType="com.yameokja.mc.StInoutDTO">
+		SELECT T.CAT AS CAT, T.REG_DATE AS REG_DATE, T.FINAL_DATE AS FINAL_DATE
+		    , T.STATE AS STATE, T.ST_NAME AS ST_NAME, T.APPLY_NUM AS APPLY_NUM, T.RNUM AS RNUM
+		    , T.IN_REJ_RS AS IN_REJ_RS, T.OUT_REJ_RS AS OUT_REJ_RS
+		FROM(
+		    SELECT IAV.CAT, IAV.REG_DATE, IAV.FINAL_DATE, IAV.STATE, IAV.ST_NAME, IAV.APPLY_NUM
+		         , ROW_NUMBER() OVER (ORDER BY IAV.FINAL_DATE DESC) AS RNUM
+		         , IR.REJ_RS AS IN_REJ_RS, ORR.REJ_RS AS OUT_REJ_RS
+		    FROM INOUT_APPLY_VIEW IAV LEFT JOIN IN_PROCESS IP
+		      ON IAV.APPLY_NUM = IP.IN_APPLY_NUM
+		    LEFT JOIN IN_REJ IR
+		      ON IP.IN_PROCESS_NUM = IR.IN_PROCESS_NUM
+		    LEFT JOIN OUT_PROCESS OP
+		      ON IAV.APPLY_NUM = OP.OUT_APPLY_NUM
+		    LEFT JOIN OUT_REJ ORR
+		      ON OP.OUT_PROCESS_NUM = ORR.OUT_PROCESS_NUM
+			WHERE USER_ID = #{user_id}
+		) T
+		WHERE RNUM BETWEEN #{startRow} AND #{endRow}
+	</select>
+</mapper>

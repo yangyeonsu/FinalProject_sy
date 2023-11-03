@@ -1,0 +1,45 @@
+@charset "UTF-8";
+
+
+/* 모달 */
+#popup{
+	overflow: hidden;
+	height: auto;
+	display: block;
+	border-radius: 3px;
+	box-shadow: 1px 1.5px 1.5px #333;
+	width: 70vw;
+	height: 90%;
+	z-index: 200;
+	position: fixed;
+  	top: 50%;
+  	/* left: 50%; */
+  	/* transform: translate(-50%, -50%); */
+	/* top: 20%;
+	left: 10%; */
+	background-color:rgba(251, 251, 246, 0.8);
+	max-height: calc(100vh - 200px);
+    overflow-y: auto;
+}
+
+#popup h4 a.close
+{
+	float: right;
+	padding-right: 8px;
+	color: #3a001e;
+	font-family: verdana;
+	margin-right: 2%;
+}
+
+.bgLayer {
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: #000;
+	opacity: .5;
+	filter: alpha(opacity = 50);
+	z-index: 15;
+} 

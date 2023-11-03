@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yameokja.mc.IAdminFindDAO">
+	
+	<!-- 리뷰신고 요청자로 요청내용 찾기 
+	리뷰신고 요청자로 요청내용 찾기
+	신고자, 신고일, 피신고자, 작성일, 리뷰신고카테고리명, 가게이름
+	-->
+	<select id="rvSearch" resultType="com.yameokja.mc.RvApplyViewDTO">
+		
+		SELECT RRV.REP_APPLY_NUM AS REP_APPLY_NUM
+		     , RRV.USER_ID AS USER_ID
+		     , TO_CHAR(RRV.REG_DATE, 'YYYY-MM-DD') AS REG_DATE
+		     , RRV.ACCU_NUM AS ACCU_NUM
+		     , TO_CHAR(RB.REG_DATE,'YYYY-MM-DD') AS WRITE_DATE
+		     , RRV.REP_RS_NAME AS REP_RS_NAME
+		     , RRV.ST_NAME AS ST_NAME
+		     , RB.ST_NUM AS ST_NUM
+		     , RB.RV_CONTENT AS RV_CONTENT
+		FROM RV_REPORT_VIEW RRV
+		LEFT JOIN RV_BOX RB
+		ON RRV.RV_NUM = RB.RV_NUM
+		WHERE RRV.REP_APPLY_NUM=#{rep_apply_num}
+		
+		
+		
+		<!-- 
+		SELECT RRV.REP_APPLY_NUM AS REP_APPLY_NUM
+		     , RRV.USER_ID AS USER_ID
+		     , RRV.REG_DATE AS REG_DATE
+		     , RRV.ACCU_NUM AS ACCU_NUM
+		     , RB.REG_DATE AS WRITE_DATE
+		     , RRV.REP_RS_NAME AS REP_RS_NAME
+		     , RRV.ST_NAME AS ST_NAME
+		     , RRV.STATE AS STATE
+		     , RRV.FINAL_DATE AS FINAL_DATE
+		     , RRV.ADMIN_ID AS ADMIN_ID
+		FROM RV_REPORT_VIEW RRV
+		LEFT JOIN RV_BOX RB
+		ON RRV.USER_NUM = RB.USER_NUM
+		WHERE REP_APPLY_NUM=#{rep_apply_num};
+		 -->
+	</select>
+		
+	<!-- 정보수정 요청한 내용 가져오기
+	가게명 체크박스항목명 여부명 정보오류요청사유 요청자
+	-->
+	<select id="accuSearch" resultType="com.yameokja.mc.ReqApplyViewDTO">
+		SELECT RAV.REQ_APPLY_NUM AS REQ_APPLY_NUM, RAV.ST_NAME AS ST_NAME, RAV.CHBOX_NAME AS CHBOX_NAME
+		     , RAV.YN_NAME AS YN_NAME, RAV.REQ_RS AS REQ_RS, RAV.USER_ID AS USER_ID, RAV.ST_NUM AS ST_NUM
+		     , RR.REJ_RS AS REJ_RS
+		     , CASE WHEN REJ_RS IS NOT NULL THEN '반려'
+		            WHEN RP.FINAL_DATE IS NOT NULL AND REJ_RS IS NULL THEN '승인'
+		            ELSE '처리중'
+		       END AS REQ_STATE
+		FROM REQ_APPLY_VIEW RAV LEFT JOIN REQ_PROCESS RP
+		  ON RAV.REQ_APPLY_NUM = RP.REQ_APPLY_NUM
+		LEFT JOIN REQ_REJ RR
+		  ON RP.REQ_PROCESS_NUM = RR.REQ_PROCESS_NUM
+		WHERE RAV.REQ_APPLY_NUM = #{req_apply_num}
+	</select>
+	
+	<!-- 이의제기 요청 내용 가져오기
+	정보오류요청사유 이의제기사유 이의제기사진
+	-->
+	<select id="objSearch" resultType="com.yameokja.mc.ObjApplyViewDTO">
+		SELECT OAV.OBJ_APPLY_NUM AS OBJ_APPLY_NUM
+     		 , OAV.REQ_RS AS REQ_RS
+			 , OAV.OBJ_RS AS OBJ_RS
+			 , OP.PHOTO_LINK AS PHOTO_LINK
+             , OAV.STATE AS STATE
+             , ORR.REJ_RS AS OBJ_REJ_RS
+             , OPR.FINAL_DATE
+             , CASE WHEN ORR.REJ_RS IS NOT NULL THEN '반려'
+		            WHEN OPR.FINAL_DATE IS NOT NULL AND ORR.REJ_RS IS NULL THEN '승인'
+		            ELSE '처리중'
+		       END AS OBJ_STATE
+		FROM OBJ_APPLY_VIEW OAV
+		LEFT JOIN OBJ_PHOTO OP
+		ON OP.OBJ_APPLY_NUM = OAV.OBJ_APPLY_NUM
+        LEFT JOIN OBJ_PROCESS OPR
+        ON OAV.OBJ_APPLY_NUM = OPR.OBJ_APPLY_NUM
+        LEFT JOIN OBJ_REJ ORR
+        ON OPR.OBJ_PROCESS_NUM = ORR.OBJ_PROCESS_NUM
+		WHERE OAV.OBJ_APPLY_NUM = #{obj_apply_num}
+	</select>
+	
+	
+	<!-- 패널티회수 요청 가게 내용 가져오기
+	아이디 신청날짜 가게명 패널티받은사유 패널티회수요청사유 첨부파일
+	-->
+	<select id="revoSearch" resultType="com.yameokja.mc.RevoApplyViewDTO">
+		SELECT RAV.REVO_APPLY_NUM AS REVO_APPLY_NUM, RAV.USER_ID AS USER_ID, TO_CHAR(RAV.REG_DATE, 'YYYY-MM-DD') AS REG_DATE
+		     , RAV.ST_NAME AS ST_NAME, RAV.REQ_RS AS REQ_RS, RAV.REVO_RS AS REVO_RS, RAV.PHOTO_LINK AS PHOTO_LINK
+		     , RR.REJ_RS AS REVO_REJ_RS
+		     , CASE WHEN RR.REJ_RS IS NOT NULL THEN '반려'
+		            WHEN RAV.FINAL_DATE != '-' AND RR.REJ_RS IS NULL THEN '승인'
+		            ELSE '처리중'
+		       END AS REVO_REJ_STATE
+		FROM REVO_APPLY_VIEW RAV LEFT JOIN REVO_PROCESS RP
+		ON RAV.REVO_APPLY_NUM = RP.REVO_APPLY_NUM
+		LEFT JOIN REVO_REJ RR
+		ON RP.REVO_PROCESS_NUM = RR.REVO_PROCESS_NUM
+		WHERE RAV.REVO_APPLY_NUM = #{revo_apply_num}
+	</select>
+	
+	
+	<!-- 가게 등폐업 요청 가게 요청내용 가져오기 
+	등록 → 서류파일(사업자등록증파일,사업장관리증파일), 사업자등록번호, 사업장관리번호, 가게명, 가게주소, 가게상세주소, 가게번호
+	폐업 → 사업장번호(ST_PLACE_NUM) OUT_APPLY_NUM
+	-->
+	<select id="inSearch" resultType="com.yameokja.mc.StoreregiDTO">
+		SELECT IA.REG_DATE AS REG_DATE, IA.ST_IN_NUM AS ST_IN_NUM, IA.ST_IN_FILE AS ST_IN_FILE
+			 , REGEXP_SUBSTR(IA.ST_IN_FILE, '[^\\]*$') AS IN_FILE_NAME
+			 , IA.ST_PLACE_NUM AS ST_PLACE_NUM, IA.ST_PLACE_FILE AS ST_PLACE_FILE
+			 , REGEXP_SUBSTR(IA.ST_PLACE_FILE, '[^\\]*$') AS PLACE_FILE_NAME, UU.USER_ID AS USER_ID
+			 , IA.ST_NAME AS ST_NAME, IA.ST_LOCATION AS ST_LOCATION, IA.ST_LOCATION_DT AS ST_LOCATION_DT, IA.ST_TEL AS ST_TEL
+		FROM IN_APPLY IA LEFT JOIN USING_USER UU
+        ON IA.USER_NUM = UU.USER_NUM
+        WHERE IN_APPLY_NUM = #{in_apply_num}
+	</select>
+	
+	<select id="outSearch" resultType="com.yameokja.mc.StoreregiDTO">
+		SELECT IA.ST_PLACE_NUM AS ST_PLACE_NUM
+		FROM IN_APPLY IA 
+		LEFT JOIN IN_PROCESS IP
+		ON IA.IN_APPLY_NUM = IP.IN_APPLY_NUM
+		LEFT JOIN OUT_APPLY OA
+		ON IP.IN_PROCESS_NUM = OA.IN_PROCESS_NUM
+		WHERE OUT_APPLY_NUM = #{out_apply_num}
+	</select>
+	
+	<!-- 관리자 읽은 날짜 업데이트 -->
+	<update id="rvupdate">
+	    UPDATE REP_APPLY
+		SET ADMIN_READ_DATE = TO_DATE(SYSDATE, 'YYYY-MM-DD')
+		WHERE REP_APPLY_NUM = #{rep_apply_num}
+	</update>
+	
+	<update id="stinfoupdate">
+	    UPDATE REQ_APPLY
+		SET ADMIN_READ_DATE = TO_DATE(SYSDATE, 'YYYY-MM-DD')
+		WHERE REQ_APPLY_NUM = #{req_apply_num}
+	</update>
+	
+	<update id="objupdate">
+	    UPDATE OBJ_APPLY
+		SET ADMIN_READ_DATE = TO_DATE(SYSDATE, 'YYYY-MM-DD')
+		WHERE OBJ_APPLY_NUM = #{obj_apply_num}
+	</update>
+	
+	<update id="revoupdate">
+	    UPDATE REVO_APPLY
+		SET ADMIN_READ_DATE = TO_DATE(SYSDATE, 'YYYY-MM-DD')
+		WHERE REVO_APPLY_NUM = #{revo_apply_num}
+	</update>
+	
+	<update id="inapplyupdate">
+	    UPDATE IN_APPLY
+		SET ADMIN_READ_DATE = TO_DATE(SYSDATE, 'YYYY-MM-DD')
+		WHERE IN_APPLY_NUM = #{in_apply_num}
+	</update>
+	
+	<!-- 리뷰신고 처리 겸 승인 -->
+	<insert id="rvreportAccess">
+		INSERT INTO REP_PROCESS(REP_PROCESS_NUM, REP_APPLY_NUM, ADMIN_NUM, FINAL_DATE, REP_READ_DATE, ACCU_READ_DATE)
+        VALUES(REPPROSEQ.NEXTVAL, #{rep_apply_num}, #{admin_num}, TO_DATE(SYSDATE, 'YYYY-MM-DD'), NULL, NULL)
+	</insert>
+	
+	<!-- REP_RPOCESS_NUM 찾기 -->
+	<select id="searchRepProNum" resultType="java.lang.Integer">
+		SELECT REP_PROCESS_NUM
+		FROM REP_PROCESS
+		WHERE REP_APPLY_NUM = #{rep_apply_num}
+		  AND ADMIN_NUM = #{admin_num}
+	</select>
+	
+	<!-- 리뷰신고 중재 -->
+	<insert id="rvreportHalf">
+		INSERT INTO REP_MID(REP_MID_NUM, MID_RS, REP_PROCESS_NUM)
+		VALUES(REPMIDSEQ.NEXTVAL, #{mid_rs}, #{rep_process_num})
+	</insert>
+
+	<!-- 리뷰신고 반려 -->
+	<insert id="rvreportRej">
+		INSERT INTO REP_REJ(REP_REJ_NUM, REJ_RS, REP_PROCESS_NUM)
+		VALUES(REPREJSEQ.NEXTVAL, #{rej_rs}, #{rep_process_num})
+	</insert>
+	
+	<!-- 리뷰신고 중재/반려 사유 -->
+	<select id="rvreportMidRejRs" resultType="com.yameokja.mc.MidRejRsDTO">
+		SELECT CASE WHEN RM.REP_MID_NUM IS NOT NULL THEN '중재'
+		            WHEN RR.REP_REJ_NUM IS NOT NULL THEN '반려'
+		            ELSE '처리중' END AS MID_REJ
+		       , RM.MID_RS AS MID_RS
+		       , RR.REJ_RS AS REJ_RS
+		FROM RV_REPORT_VIEW RRV LEFT JOIN REP_MID RM
+		  ON RRV.REP_PROCESS_NUM = RM.REP_PROCESS_NUM
+		LEFT JOIN REP_REJ RR
+		  ON RRV.REP_PROCESS_NUM = RR.REP_PROCESS_NUM
+		WHERE RRV.REP_PROCESS_NUM = #{rep_process_num}
+	</select>
+	
+	<!-- 가게정보오류수정요청 처리 및 승인 -->
+	<insert id="reqProcess">
+		INSERT INTO REQ_PROCESS(REQ_PROCESS_NUM, REQ_APPLY_NUM, ADMIN_NUM, FINAL_DATE, USER_READ_DATE, ST_READ_DATE)
+		VALUES(REQPROSEQ.NEXTVAL, #{req_apply_num}, #{admin_num}, SYSDATE, NULL, NULL)
+	</insert>
+	
+	<!-- 가게정보오류수정요청 req_process_num 찾기 -->
+	<select id="getReqProNum" resultType="java.lang.Integer">
+		SELECT REQ_PROCESS_NUM
+		FROM REQ_PROCESS
+		WHERE REQ_APPLY_NUM = #{req_apply_num}
+		  AND ADMIN_NUM = #{admin_num}
+	</select>
+	
+	<!-- 가게정보오류수정요청 승인 시 패널티 테이블 insert -->
+	<insert id="setPenalty">
+		INSERT INTO PENALTY(PEN_GRANT_NUM, REQ_PROCESS_NUM, GRANT_DATE, PEN_TYPE_NUM)
+		VALUES(PENSEQ.NEXTVAL, #{req_process_num}, SYSDATE, #{pen_type_num})
+	</insert>
+	
+	<!-- 가게정보오류수정요청 승인 시 패널티 1번이 5번 되었을 경우 찾기 -->
+	<select id="countPenalty">
+		SELECT COUNT(PEN_GRANT_NUM) AS COUNT
+		FROM PENALTY
+		WHERE REQ_PROCESS_NUM = #{req_process_num}
+		  AND GRANT_DATE >= ADD_MONTHS(SYSDATE, -6)
+	</select>
+	
+	<!-- 가게정보오류수정요청 반려 -->
+	<insert id="reqRej">
+		INSERT INTO REQ_REJ(REQ_REJ_NUM, REQ_PROCESS_NUM, REJ_RS)
+		VALUES(REQREJSEQ.NEXTVAL, #{req_process_num}, #{rej_rs})
+	</insert>
+	
+	<!-- 이의 제기 승인 -->
+	<insert id="objProcess">
+		INSERT INTO OBJ_PROCESS(OBJ_PROCESS_NUM, OBJ_APPLY_NUM, FINAL_DATE, ADMIN_NUM)
+		VALUES(OBJPROSEQ.NEXTVAL, #{obj_apply_num}, SYSDATE, #{admin_num})
+	</insert>
+	
+	<!-- 이의 제기 승인 시 패널티 삭제 -->
+	<delete id="delPenalty">
+		DELETE
+		FROM PENALTY
+		WHERE REQ_PROCESS_NUM = (SELECT OA.REQ_PROCESS_NUM
+		                         FROM OBJ_PROCESS OP LEFT JOIN OBJ_APPLY OA
+		                         ON OP.OBJ_APPLY_NUM = OA.OBJ_APPLY_NUM
+		                         WHERE OP.OBJ_PROCESS_NUM NOT IN (SELECT OBJ_PROCESS_NUM
+		                                                          FROM OBJ_REJ)
+		                         AND OP.OBJ_PROCESS_NUM = #{obj_process_num})
+	</delete>
+	
+	<!-- 이의제기 obj_process_num 찾기 -->
+	<select id="searchOpNum" resultType="java.lang.Integer">
+		SELECT OBJ_PROCESS_NUM
+		FROM OBJ_PROCESS
+		WHERE OBJ_APPLY_NUM = #{obj_apply_num}
+	</select>
+	
+	<!-- 이의 제기 반려 -->
+	<insert id="objRej">
+		INSERT INTO OBJ_REJ(OBJ_REJ_NUM, REJ_RS, OBJ_PROCESS_NUM)
+		VALUES(OBJREJSEQ.NEXTVAL, #{rej_rs}, #{obj_process_num})
+	</insert>
+	
+	<!-- 가게 정보 수정 요청 결과 변경 -->
+	<insert id="reverseRs">
+		INSERT INTO APPLY_REVERSE(APPLY_REVERSE_NUM, REVERSE_RS, OBJ_PROCESS_NUM)
+		VALUES(REVERSEQ.NEXTVAL, #{reverse_rs}, #{obj_process_num})
+	</insert>
+	
+	<!-- 패널티 회수 요청 승인 -->
+	<insert id="revoProcess">
+		INSERT INTO REVO_PROCESS(REVO_PROCESS_NUM, REVO_APPLY_NUM, FINAL_DATE, ADMIN_NUM)
+		VALUES(REVORPOSEQ.NEXTVAL, #{revo_apply_num}, SYSDATE, #{admin_num})
+	</insert>
+	
+	<!-- 패널티회수요청 revo_process_num 찾기 -->
+	<select id="searchRpNum" resultType="java.lang.Integer">
+		SELECT REVO_PROCESS_NUM
+		FROM REVO_PROCESS
+		WHERE REVO_APPLY_NUM = #{revo_apply_num}
+	</select>
+	
+	<!-- 패널티 회수 요청 반려 -->
+	<insert id="revoRej">
+		INSERT INTO REVO_REJ(REVO_REJ_NUM, REJ_RS, REVO_PROCESS_NUM)
+		VALUES(REVOREJSEQ.NEXTVAL, #{rej_rs}, #{revo_process_num})
+	</insert>
+	
+	<insert id="inprocess">
+		INSERT INTO IN_PROCESS(IN_PROCESS_NUM, IN_APPLY_NUM, ADMIN_NUM, FINAL_DATE)
+		VALUES(INPROSEQ.NEXTVAL, #{in_apply_num}, #{admin_num}, SYSDATE)		
+	</insert>
+	
+	<select id="getinprocessnum" resultType="java.lang.Integer">
+	    SELECT IN_PROCESS_NUM
+		FROM IN_PROCESS
+		WHERE IN_APPLY_NUM = #{IN_APPLY_NUM}
+	</select>
+	
+	<insert id="stlistinsert">
+		INSERT INTO ST_LIST(ST_NUM, IN_PROCESS_NUM, REGION_NUM)
+		VALUES(STLISTSEQ.NEXTVAL, #{in_process_num}, 1)
+	</insert>
+	
+	<insert id="inrej">
+		INSERT INTO IN_REJ(IN_REJ, REJ_RS, 	IN_PROCESS_NUM)
+		VALUES(INREJSEQ.NEXTVAL, #{rej_rs}, #{in_process_num})
+	</insert>
+	
+	<update id="outapplyupdate">
+	    UPDATE OUT_APPLY
+		SET ADMIN_READ_DATE = TO_DATE(SYSDATE, 'YYYY-MM-DD')
+		WHERE OUT_APPLY_NUM = #{out_apply_num}
+	</update>
+	
+	<insert id="outprocess">
+		INSERT INTO OUT_PROCESS(OUT_PROCESS_NUM, OUT_APPLY_NUM, ADMIN_NUM, FINAL_DATE)
+		VALUES(OUTPROSEQ.NEXTVAL, #{out_apply_num}, #{admin_num}, SYSDATE)		
+	</insert>
+	
+	<select id="getoutprocessnum" resultType="java.lang.Integer">
+	    SELECT OUT_PROCESS_NUM
+		FROM OUT_PROCESS
+		WHERE OUT_APPLY_NUM = #{out_apply_num}
+	</select>
+	
+	<insert id="outrej">
+		INSERT INTO OUT_REJ(OUT_REJ_NUM, REJ_RS, OUT_PROCESS_NUM)
+		VALUES(OUTREJSEQ.NEXTVAL, #{rej_rs}, #{out_process_num})
+	</insert>
+		
+</mapper>

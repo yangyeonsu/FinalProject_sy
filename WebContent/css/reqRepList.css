@@ -1,0 +1,232 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500&display=swap');
+
+*
+{
+	font-family: 'IBM Plex Sans KR', sans-serif;
+}
+
+/* 전체 스크롤 없앰 */
+body
+{
+	margin: 0px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: 100vh;
+}
+
+.header
+{
+	position: sticky;
+	top: 0;
+	background-color: white;
+	z-index: 200;
+}
+
+/* 메인페이지 */
+.middle {
+	display: flex;
+    width: 100%;
+    padding: 0px;
+    align-items: stretch;
+    height: auto;
+    min-height: 80%;
+    /* padding-bottom: 15vh; */
+    padding-bottom: 35vh;
+}
+
+.right_content {
+	width: 60%;
+    margin-left: 20%;
+}
+
+.rv_reportlist, .penaltylist {
+	display: flex;
+	flex-direction: column;
+	padding: 1vw;
+	border: 0.3vw solid #F7F4EA;
+	border-radius: 40px;
+}
+/* 부제 틀 */
+.subtitle {
+	display: flex;
+	background-color: #F7F4EA;
+	border-radius: 10px 10px 0 0;
+	width: 100%;
+	justify-content: space-around;
+}
+/* 부제 */
+.rpt_subtitle, .pen_subtitle, .st_name, .pen_subtitle {
+	text-align: center;
+	width: 12vw;
+	font-size: 1.2vw;
+	padding: 1vh;
+}
+
+/* 신고 내용 틀 */
+.report_content {
+    display: flex;
+    /* height: 4vw; */
+    height: 3vw;
+    justify-content: space-around;
+    font-size: 1vw;
+    align-items: center;
+}
+
+/* 신고 내용 */
+.rpt_content {
+	text-align: center;
+	width: 20%;
+	padding: 1vh;
+}
+
+.rep_rs_hidden
+{
+	display: inline-block;
+  	color: #f7f4ea;
+}
+
+.rep_rs_hidden
+{
+  	display: none;		/*평소에 안보여야 하니까 none으로*/
+    position: absolute;	/*공중에 띄어져있으니까 absolute*/
+    max-width: 20vw;
+    border: 3px solid #f7f4ea;
+    border-radius: 5px;
+    font-size: 1em;
+    color: #3a001e;
+    left: 51vw;
+    background-color: white;
+}
+
+.rep_rs:hover + .rep_rs_hidden
+{
+	display: block;
+}
+
+/* 제목 */
+.title {
+	width: 100%;
+	text-align: center;
+	font-size: 2em;
+	font-weight: bold;
+}
+
+.no-data-message {
+	text-align: center;
+}
+
+.pageIndex {
+	display: flex;
+	justify-content: center;
+}
+
+.footer
+{
+   	height: 10vh;
+    position: relative;
+    transform: translateY(-100%);
+}
+
+#rvPopup, #midPopup
+{
+	overflow: hidden;
+	height: auto;
+	display: block;
+	border-radius: 20px;
+	box-shadow: 1.5px 2px 2px #333;
+	width: 27%;
+	height: 50%;
+	z-index: 200;
+	position: fixed;
+  	top: 50%;
+  	left: 50%;
+  	/* transform: translate(-50%, -50%); */
+	/* top: 20%;
+	left: 10%; */
+	background-color:#fff;
+}
+
+#rvPopup h4, #midPopup h4{
+	font-size: 15px;
+	height: 24px;
+	padding: 8px 0 2px 15px;
+	color: #3a001e;
+	font-weight: normal;
+}
+
+#rvPopup h4 a.close, #midPopup h4 a.close {
+    float: right;
+    padding-right: 8px;
+    color: #3a001e;
+    font-family: verdana;
+    margin-right: 2%;
+    font-weight: bold;
+}
+
+#rvPopup h3, #midPopup h3 {
+	text-align: center;
+}
+
+.rvPopCont {
+    display: block;
+    background: #FFF;
+    border: 3px solid #EF6351;
+    padding: 15px 20px;
+    border-radius: 5px;
+    height: 33%;
+    width: 80%;
+    margin-left: 5%;
+}
+
+.reqPopCont .list {
+    height: 100%;
+    width: 100%;
+    /* display: inline-block; */
+    margin: 0;
+    font-size: 12pt;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#rvPopup .rv, #midPopup .rv{
+	margin-top: 10%;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#rvPopup .rvBtn, #midPopup .rvBtn{
+	width: 120px;
+	height: 30px;
+	float: left;
+	align-content: center;
+	font-size: 8pt;
+	font-weight: bold;
+	border: 1px solid #ef6351;
+	border-radius: 5px;
+	background-color: #ef6351;
+	color: white;
+	cursor: pointer;
+}
+
+.rej_rs_content, .mid_rs_content
+{
+	width: 100%;
+}
+
+.bgLayer {
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: #f7f4ea;
+	opacity: .5;
+	filter: alpha(opacity = 50);
+	z-index: 15;
+} 

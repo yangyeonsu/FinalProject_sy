@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yameokja.mc.IMainDAO">
+
+	<select id="getStoreList" resultType="com.yameokja.mc.StoreDTO">
+		SELECT SV.ST_NAME AS ST_NAME, SV.PHOTO_LINK AS PHOTO_LINK, SV.STAR_AVG AS STAR_AVG, SV.RV_COUNT AS RV_COUNT, SV.ST_NUM AS ST_NUM
+		        , CASE WHEN OP.OUT_PROCESS_NUM IN (SELECT OUT_PROCESS_NUM FROM OUT_REJ) THEN '운영'
+		               WHEN OP.OUT_PROCESS_NUM IS NOT NULL THEN '폐업'
+		               ELSE '운영' END AS ISOUT
+		FROM STORE_VIEW SV JOIN IN_PROCESS IP
+		  ON SV.IN_PROCESS_NUM = IP.IN_PROCESS_NUM
+		LEFT JOIN IN_APPLY IA
+		ON IP.IN_APPLY_NUM = IA.IN_APPLY_NUM
+		LEFT JOIN OUT_APPLY OA
+		ON IP.IN_PROCESS_NUM = OA.IN_PROCESS_NUM
+		LEFT JOIN OUT_PROCESS OP
+		ON OA.OUT_APPLY_NUM = OP.OUT_APPLY_NUM
+		WHERE
+		ST_NUM IN (
+		<foreach collection="list" item="st_num" separator=",">
+			#{st_num}
+		</foreach>
+		)
+	</select>
+
+	<select id="getIbmatStNumber" resultType="java.lang.Integer">
+		SELECT F.ST_NUM
+		FROM
+		(
+		SELECT ROWNUM, T.ST_NUM
+		FROM
+		(
+		SELECT ST_NUM,
+		COUNT(USER_NUM) AS COUNT
+		FROM COMPARED_BOX
+		WHERE USER_NUM IN (
+		SELECT
+		U.USER_NUM
+		FROM
+		(
+		SELECT ROWNUM, I.*
+		FROM
+		(
+		SELECT USER_NUM,
+		COUNT(TASTE_NUM) AS COUNT
+		FROM USER_TASTE
+		WHERE TASTE_NUM IN (
+		SELECT
+		TASTE_NUM
+		FROM USER_TASTE
+		WHERE USER_NUM = #{user_num}
+		)
+		GROUP BY USER_NUM
+		ORDER BY COUNT DESC
+		) I
+		) U
+		                              <![CDATA[WHERE ROWNUM<=10]]>
+		) 
+		        <![CDATA[AND ADD_MONTHS(SYSDATE, -6) < REG_DATE]]>
+		AND ST_NUM NOT IN 
+		(
+        SELECT SL.ST_NUM
+        FROM IN_PROCESS IP LEFT JOIN ST_LIST SL
+          ON IP.IN_PROCESS_NUM = SL.IN_PROCESS_NUM
+        LEFT JOIN OUT_APPLY OA
+          ON IP.IN_PROCESS_NUM = OA.IN_PROCESS_NUM
+        RIGHT JOIN OUT_PROCESS OP
+          ON OA.OUT_APPLY_NUM = OP.OUT_APPLY_NUM
+        WHERE OP.OUT_PROCESS_NUM NOT IN (SELECT OUT_PROCESS_NUM FROM OUT_REJ)
+        )
+		GROUP BY ST_NUM
+		ORDER BY COUNT DESC
+		) T
+		) F
+		<![CDATA[WHERE ROWNUM <= 5]]>
+	</select>
+
+	<select id="getJjimStNumber" resultType="java.lang.Integer">
+		SELECT F.ST_NUM
+		FROM
+		(
+		SELECT COUNT(ST_NUM) AS COUNT, ST_NUM
+		FROM ST_KEY
+		WHERE ST_KEY_NUM
+		IN
+		(
+		SELECT T.ST_KEY_NUM
+		FROM
+		(
+		SELECT ROWNUM, K.*
+		FROM
+		(
+		SELECT SK.ST_KEY_NUM, COUNT(ST.ST_NUM) AS COUNT
+		FROM ST_KEY SK RIGHT JOIN (
+		SELECT ST_NUM
+		FROM LIKE_BOX
+		WHERE USER_NUM=#{user_num}
+		) ST
+		ON SK.ST_NUM = ST.ST_NUM
+		GROUP BY SK.ST_KEY_NUM
+		ORDER BY COUNT DESC
+		) K
+		)T
+		<![CDATA[WHERE ROWNUM<=5]]>
+		)
+		AND ST_NUM NOT IN (SELECT ST_NUM
+		FROM LIKE_BOX
+		WHERE USER_NUM=#{user_num})
+		AND ST_NUM NOT IN 
+		(
+        SELECT SL.ST_NUM
+        FROM IN_PROCESS IP LEFT JOIN ST_LIST SL
+          ON IP.IN_PROCESS_NUM = SL.IN_PROCESS_NUM
+        LEFT JOIN OUT_APPLY OA
+          ON IP.IN_PROCESS_NUM = OA.IN_PROCESS_NUM
+        RIGHT JOIN OUT_PROCESS OP
+          ON OA.OUT_APPLY_NUM = OP.OUT_APPLY_NUM
+        WHERE OP.OUT_PROCESS_NUM NOT IN (SELECT OUT_PROCESS_NUM FROM OUT_REJ)
+        )
+		GROUP BY ST_NUM
+		<![CDATA[HAVING COUNT(ST_NUM) >= 2]]>
+		ORDER BY DBMS_RANDOM.RANDOM
+		)F
+		<![CDATA[WHERE ROWNUM<=5]]>
+	</select>
+
+	<select id="getHotStNumber" resultType="java.lang.Integer">
+		SELECT L.ST_NUM
+		FROM
+		(SELECT T.ST_NUM
+		FROM
+		(SELECT ST_NUM, COUNT(LIKE_NUM)
+		AS COUNT
+		, ROW_NUMBER() OVER(ORDER BY COUNT(LIKE_NUM) DESC)
+		FROM
+		LIKE_BOX
+		WHERE ST_NUM NOT IN (SELECT SL.ST_NUM
+                            FROM IN_PROCESS IP LEFT JOIN ST_LIST SL
+                              ON IP.IN_PROCESS_NUM = SL.IN_PROCESS_NUM
+                            LEFT JOIN OUT_APPLY OA
+                              ON IP.IN_PROCESS_NUM = OA.IN_PROCESS_NUM
+                            RIGHT JOIN OUT_PROCESS OP
+                              ON OA.OUT_APPLY_NUM = OP.OUT_APPLY_NUM
+                            WHERE OP.OUT_PROCESS_NUM NOT IN (SELECT OUT_PROCESS_NUM FROM OUT_REJ))
+            <![CDATA[AND EXTRACT(MONTH FROM SYSDATE) - 3 <= EXTRACT(MONTH FROM REG_DATE)]]>
+		GROUP BY ST_NUM
+		ORDER BY COUNT DESC) T
+		    <![CDATA[WHERE ROWNUM <= 100]]>
+		ORDER BY DBMS_RANDOM.VALUE) L
+		<![CDATA[WHERE ROWNUM <= 5]]>
+	</select>
+
+	<select id="getStoreSearchList" resultType="java.lang.Integer">
+		SELECT ST_NUM
+		FROM
+		SEARCH_KEY
+		WHERE SEARCH_NAME LIKE #{keyword}
+		  AND COUNT >= 1
+		UNION
+		SELECT
+		ST_NUM
+		FROM
+		STORE_VIEW
+		WHERE ST_NAME LIKE #{keyword}
+		OR ST_LOCATION LIKE #{keyword}
+		OR FOOD_NAME LIKE #{keyword}
+		UNION
+		SELECT ST_NUM
+		FROM MENU
+		WHERE MENU_NAME
+		LIKE #{keyword}
+		UNION
+		SELECT T1.ST_NUM
+		FROM
+		(
+		SELECT ST_NUM, SKL.ST_KEYWORD
+		AS ST_KEYWORD
+		FROM ST_KEY SK LEFT JOIN ST_KEY_LABEL SKL
+		ON SK.ST_KEY_NUM
+		= SKL.ST_KEY_NUM
+		WHERE ST_KEYWORD LIKE #{keyword}
+		) T1
+		UNION
+		SELECT
+		T2.ST_NUM
+		FROM
+		(
+		SELECT SL.ST_NUM, RKL.RV_KEY_NAME AS RV_KEY_NAME
+		FROM
+		RV_KEY RK LEFT JOIN RV_KEY_LABEL RKL
+		ON RK.RV_KEY_NUM = RKL.RV_KEY_NUM
+		LEFT JOIN ST_LIST SL
+		ON RK.ST_NUM = SL.ST_NUM
+		WHERE RKL.RV_KEY_NAME LIKE
+		#{keyword}
+		) T2
+		MINUS
+		SELECT SL.ST_NUM
+		FROM IN_PROCESS IP LEFT JOIN ST_LIST SL
+		  ON IP.IN_PROCESS_NUM = SL.IN_PROCESS_NUM
+		LEFT JOIN OUT_APPLY OA
+		  ON IP.IN_PROCESS_NUM = OA.IN_PROCESS_NUM
+		RIGHT JOIN OUT_PROCESS OP
+		  ON OA.OUT_APPLY_NUM = OP.OUT_APPLY_NUM
+		WHERE OP.OUT_PROCESS_NUM NOT IN (SELECT OUT_PROCESS_NUM FROM OUT_REJ) 
+	</select>
+
+	<select id="getStoreComList" resultType="java.lang.Integer">
+		SELECT ST_NUM
+		FROM
+		STORE_VIEW
+		WHERE ST_NUM IN (SELECT ST_NUM
+		FROM COMPARING_BOX
+		WHERE
+		USER_NUM = #{user_num})
+		<!-- 
+		SELECT T.ST_NUM
+		FROM
+		(
+		SELECT *
+		FROM
+		STORE_VIEW
+		WHERE ST_NUM IN (SELECT ST_NUM
+		FROM COMPARING_BOX
+		WHERE USER_NUM = '2wmmlh401z')
+		) T JOIN COMPARING_BOX CB
+		ON T.ST_NUM = CB.ST_NUM
+		ORDER BY comparing_num 
+		-->
+	</select>
+
+	<select id="regionList" resultType="com.yameokja.mc.RegionDTO">
+		SELECT REGION_NUM,
+		REGION_NAME
+		FROM REGION
+	</select>
+
+	<select id="foodLabelList"
+		resultType="com.yameokja.mc.FoodLabelDTO">
+		SELECT FOOD_NUM, FOOD_NAME
+		FROM FOOD_LABEL
+	</select>
+
+	<select id="stKeyList" resultType="com.yameokja.mc.StKeyDTO">
+		SELECT ST_KEY_NUM, ST_KEYWORD
+		FROM ST_KEY_LABEL
+	</select>
+
+	<select id="comparingSearch" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS COUNT
+		FROM COMPARING_BOX
+		WHERE USER_NUM = #{user_num}
+		AND ST_NUM = #{st_num}
+	</select>
+
+	<insert id="comparingInsert">
+		INSERT INTO COMPARING_BOX(COMPARING_NUM, USER_NUM,
+		ST_NUM, REG_DATE)
+		VALUES(COMPARINGSEQ.NEXTVAL, #{user_num}, #{st_num},
+		DEFAULT)
+	</insert>
+
+	<delete id="comparingDelete">
+		DELETE
+		FROM COMPARING_BOX
+		WHERE USER_NUM = #{user_num}
+		AND ST_NUM = #{st_num}
+	</delete>
+
+	<select id="userJjimSearch" resultType="java.lang.Integer">
+		SELECT ST_NUM
+		FROM
+		LIKE_BOX
+		WHERE USER_NUM = #{user_num}
+	</select>
+
+	<select id="jjimSearch" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS COUNT
+		FROM
+		LIKE_BOX
+		WHERE USER_NUM = #{user_num}
+		AND ST_NUM = #{st_num}
+	</select>
+
+	<insert id="jjimInsert">
+		INSERT INTO LIKE_BOX(LIKE_NUM, USER_NUM, ST_NUM,
+		REG_DATE)
+		VALUES (LIKEBOXSEQ.NEXTVAL, #{user_num}, #{st_num}, DEFAULT)
+	</insert>
+	
+	<select id="jjimTodayCount" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS COUNT
+		FROM POINT_HISTORY
+		WHERE USER_NUM = #{user_num}
+		  AND POINT_LABEL_NUM = 3
+		  AND TO_DATE(ADD_DATE, 'YY/MM/DD') = TO_DATE(SYSDATE, 'YY/MM/DD')
+	</select>
+
+	<delete id="jjimDelete">
+		DELETE
+		FROM LIKE_BOX
+		WHERE USER_NUM = #{user_num}
+		AND
+		ST_NUM = #{st_num}
+	</delete>
+
+	<select id="filterSearchList" resultType="java.lang.Integer">
+		SELECT T.ST_NUM
+		FROM
+		(
+		SELECT SL.ST_NUM
+		FROM ST_LIST SL JOIN REGION R
+		ON
+		SL.REGION_NUM = R.REGION_NUM
+		WHERE R.REGION_NAME IN (
+		<foreach collection="regionCbList" item="name" separator=",">
+			#{name, jdbcType=VARCHAR}
+		</foreach>
+		)
+		UNION
+		SELECT SL.ST_NUM
+		FROM ST_LIST SL LEFT JOIN ST_FOOD SF
+		ON SL.ST_NUM = SF.ST_NUM
+		LEFT JOIN FOOD_LABEL FL
+		ON SF.FOOD_NUM = FL.FOOD_NUM
+		WHERE FL.FOOD_NAME IN (
+		<foreach collection="catCbList" item="name" separator=",">
+			#{name,
+			jdbcType=VARCHAR}
+		</foreach>
+		)
+		UNION
+		SELECT DISTINCT(SL.ST_NUM)
+		FROM ST_KEY SK LEFT JOIN ST_KEY_LABEL
+		SKL
+		ON SK.ST_KEY_NUM = SKL.ST_KEY_NUM
+		RIGHT JOIN ST_LIST SL
+		ON SK.ST_NUM = SL.ST_NUM
+		WHERE SKL.ST_KEY_NUM IN (
+		<foreach collection="stKeyCbList" item="name" separator=",">
+			#{name, jdbcType=VARCHAR}
+		</foreach>
+		)
+		) T
+		WHERE T.ST_NUM IN (
+		<foreach collection="finalKeyword" item="st_num" separator=",">
+			#{st_num, jdbcType=INTEGER}
+		</foreach>
+		)
+	</select>
+</mapper>

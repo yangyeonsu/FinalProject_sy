@@ -1,0 +1,272 @@
+@charset "UTF-8";
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500&display=swap');
+
+.header
+{
+	position: sticky;
+	top: 0;
+	background-color: white;
+}
+
+
+body
+{
+	font-family: 'IBM Plex Sans KR', sans-serif;
+	margin: 0;
+}
+
+#container
+{
+	display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 45vw;
+    /* height: 100%; */
+    margin-left: 27vw;
+}
+
+.bigTitle
+{
+    font-size: 25pt;
+    font-weight: bold;
+    float: left;
+    background-color: #f7f4ea;
+}
+
+.middleTitle
+{
+	font-size: 15pt;
+    font-weight: bold;
+    margin-bottom: 1vh;
+    background-color: #f7f4ea;
+    width: 45vw;
+}
+
+.box1
+{
+    width: 45vw;
+    margin-bottom: 5vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.box2
+{
+    height: 15vh;
+    width: 45vw;
+}
+
+.box3
+{
+	height: 10vh;
+    width: 45vw;
+}
+
+.reviewBtn
+{
+	width: 8vw;
+	height: 25px;
+	border-radius: 5px;
+	font-size: 0.6vw;
+	border: 1px solid #ef6351;
+	background-color: white;
+  	color: #ef6351;
+  	cursor: pointer;
+  	align-content: center;
+}
+
+.reviewBtn:hover
+{
+	width: 8vw;
+	height: 25px;
+	border-radius: 5px;
+	font-size: 0.6vw;
+	border: 1px solid #ef6351;
+	background-color: white;
+  	color: #ef6351;
+  	cursor: pointer;
+  	align-content: center;
+  	box-shadow: 0 0 5px #ef6351;
+}
+
+.reviewBtn:active
+{
+	width: 8vw;
+	height: 25px;
+	border-radius: 5px;
+	font-size: 0.6vw;
+	border: 1px solid #ef6351;
+	background-color: #f9ab9f;
+  	color: #ef6351;
+  	cursor: pointer;
+  	align-content: center;
+  	box-shadow: 0 0 5px #ef6351;
+}
+
+.reviewTitleDiv
+{
+    margin-bottom: 5vh;
+    width: 45vw;
+}
+
+.reviewKeywordCB
+{
+	border: 2px solid #f7f4ea;
+    width: 40vw;
+    height: 30vh;
+    margin-bottom: 3vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    font-size: 10pt;
+    padding: 1vw;
+}
+
+.stCb
+{
+	display: flex;
+	flex-direction: column;
+	width: 40vw;
+	justify-content: space-between;
+}
+
+.stCbList
+{
+	margin-top: 1vw;
+    margin-bottom: 1vw;
+}
+
+.stCbList label
+{
+	margin-right: 1vw;
+}
+
+input[type=checkbox]
+{
+	transform: scale(1.3);
+    accent-color: #ef6351;
+    position: relative;
+    top: 0.1vw;
+    margin-right: 0.5vw;
+}
+
+.searchKeyword
+{
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 1vw;
+}
+
+.searchKeywordtxt
+{
+    width: 6vw;
+    margin-right: 1vw;
+    margin-left: 0.5vw;
+}
+
+#starSelect
+{
+	width: 150px;
+	height: 30px;
+	font-size: 13pt;
+	margin-left: 0.5vw;
+}
+
+.reviewInsertDiv
+{
+	display: flex;
+    justify-content: flex-start;
+    width: 44vw;
+}
+
+.reviewPhotoDiv
+{
+    margin-top: 1vw;
+    width: 43vw;
+    display: flex;
+}
+
+.photoAdd
+{
+	width: 10vw;
+}
+
+.rvPhotoDiv
+{
+	width: 43vw;
+    height: 60px;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.rvphotospan
+{
+	font-size: 10pt;
+}
+
+.plusBtn
+{
+	margin-top: 1vw;
+    width: 8vw;
+    height: 20px;
+    border: 1px solid #ede9d0;
+    border-radius: 5px;
+    color: #4d4b4b;
+    font-weight: bold;
+    box-shadow: 3px 3px 3px #ede9d0;
+    background-color: #fff;
+    margin-right: 0.8vw;
+    font-size: 0.6vw;
+    cursor: pointer;
+}
+
+.plusBtn:hover
+{
+	background-color: #f8f5eb;
+}
+
+.image-show img
+{
+	max-width: 8vw;
+    max-height: 8vw;
+    object-fit: cover;
+    visibility: visible;
+}
+
+.reviewInsertBtnDiv 
+{
+    width: 45vw;
+    display: flex;
+    justify-content: center;
+}
+
+#submitBtn
+{
+	height: 30px;
+	width: 150px;
+	font-weight: bold;
+}
+
+#submitReviewBtn
+{
+    margin-top: 1vw;
+    width: 8vw;
+    height: 25px;
+    border: 1px solid #f9ab9f;
+    border-radius: 5px;
+    color: #4d4b4b;
+    font-weight: bold;
+    box-shadow: 3px 3px 3px #ef6351;
+    background-color: #fff;
+    margin-right: 0.8vw;
+    font-size: 0.6vw;
+    cursor: pointer;
+}
+
+#submitReviewBtn:hover
+{
+    background-color: #feeae7;
+}

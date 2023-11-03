@@ -1,0 +1,494 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yameokja.mc.IstDetailDAO_userView">
+	<!-- 폐업된 가게인지 아닌지 판단 -->
+	<select id="stIsOut" resultType="java.lang.Integer">
+		<!-- 
+		SELECT NVL2(OP.OUT_APPLY_NUM, '폐업', '운영') AS ISOUT
+		FROM ST_LIST SL JOIN IN_PROCESS IP
+		ON SL.IN_PROCESS_NUM = IP.IN_PROCESS_NUM
+		LEFT JOIN IN_APPLY IA
+		ON IP.IN_APPLY_NUM = IA.IN_APPLY_NUM
+		LEFT JOIN OUT_APPLY OA
+		ON IP.IN_PROCESS_NUM = OA.IN_PROCESS_NUM
+		LEFT JOIN OUT_PROCESS OP
+		ON OA.OUT_APPLY_NUM = OP.OUT_APPLY_NUM
+		WHERE ST_NUM = #{st_num, jdbcType=INTEGER}
+		-->
+		
+		SELECT SL.ST_NUM
+		FROM ST_LIST SL JOIN IN_PROCESS IP
+		ON SL.IN_PROCESS_NUM = IP.IN_PROCESS_NUM
+		LEFT JOIN IN_APPLY IA
+		ON IP.IN_APPLY_NUM = IA.IN_APPLY_NUM
+		LEFT JOIN OUT_APPLY OA
+		ON IP.IN_PROCESS_NUM = OA.IN_PROCESS_NUM
+		LEFT JOIN OUT_PROCESS OP
+		ON OA.OUT_APPLY_NUM = OP.OUT_APPLY_NUM
+		WHERE OP.OUT_PROCESS_NUM NOT IN (SELECT OUT_PROCESS_NUM FROM OUT_REJ)
+		AND ST_NUM = #{st_num, jdbcType=INTEGER}
+	</select>
+
+ 	<!-- 가게이름, 좋아요수, 평점, 리뷰수, 주소, 전화번호, 가게 이메일, 가게 설명
+     , 최대인원수, 가게음식카테고리 -->
+ 	<select id="store" resultType="com.yameokja.mc.StoreDetailDTO">
+ 		SELECT ST_NUM, ST_NAME, ST_LOCATION, ST_TEL, ST_EXPLAIN, MAX_CUSTOMERS
+		, ST_EMAIL, FOOD_NAME, PHOTO_LINK, STAR_AVG, RV_COUNT, USER_NUM
+		FROM STORE_VIEW
+		WHERE ST_NUM = #{st_num, jdbcType=INTEGER}	
+ 	</select>
+
+ 	<!-- 가게 찜 수 -->
+ 	<select id="clikeNum" resultType="java.lang.Integer"> 
+ 		SELECT COUNT(*) AS LIKE_COUNT
+		FROM LIKE_BOX
+		WHERE ST_NUM = #{st_num, jdbcType=INTEGER}
+ 	</select>
+ 	 	 	
+ 	<!-- 가게 키워드 -->
+ 	<select id="stKeys" resultType="com.yameokja.mc.StoreKeyDTO">
+ 		SELECT SK.ST_KEY_NUM AS ST_KEY_NUM
+		     , SKL.ST_KEYWORD AS ST_KEYWORD
+		FROM ST_KEY SK LEFT JOIN ST_KEY_LABEL SKL
+		  ON SK.ST_KEY_NUM = SKL.ST_KEY_NUM
+		WHERE SK.ST_NUM = #{st_num, jdbcType=INTEGER}
+ 	</select>
+ 	
+ 	<!-- 가게 키워드 -->
+ 	<select id="stKeysStr" resultType="java.lang.Integer">
+ 		SELECT SKL.ST_KEY_NUM AS ST_KEY_NUM
+		FROM ST_KEY SK LEFT JOIN ST_KEY_LABEL SKL
+		  ON SK.ST_KEY_NUM = SKL.ST_KEY_NUM
+		WHERE SK.ST_NUM = #{st_num, jdbcType=INTEGER}
+ 	</select>
+ 	
+ 	
+ 	<!-- 영업시간 가지고 오는 쿼리문 : 요일, 시작시간, 끝시간, 휴무여부 -->
+ 	<select id="openClose" resultType="com.yameokja.mc.StoreOpencloseDTO">
+	 	SELECT W.DAY_NUM AS DAY_NUM, W.DAY_NAME AS DAY_NAME, S.ST_NUM AS ST_NUM, O.START_TIME||' ~ '||O.END_TIME AS OPERATE_TIME
+		     , NVL2(H.HOLIDAY_NUM,'휴무', '-') AS HOLIDAY
+		FROM WEEKDAY_LABEL W
+		CROSS JOIN (
+		    SELECT DISTINCT ST_NUM FROM ST_OPENCLOSE
+		) S
+		LEFT JOIN ST_OPENCLOSE O ON W.DAY_NUM = O.DAY_NUM AND S.ST_NUM = O.ST_NUM
+		LEFT JOIN ST_HOLIDAY H ON W.DAY_NUM = H.DAY_NUM AND S.ST_NUM = H.ST_NUM
+		WHERE S.ST_NUM = #{st_num, jdbcType=INTEGER}
+		ORDER BY S.ST_NUM, W.DAY_NUM
+ 	</select>
+ 	
+ 	<!-- 브레이크 타임 -->
+ 	<select id="breakTime" resultType="com.yameokja.mc.StoreBreaktimeDTO">
+ 		SELECT WWL.WEEK_WEEKEND AS WEEK_WEEKEND
+			, BT.START_BREAKTIME AS START_BREAKTIME
+			, BT.END_BREAKTIME AS END_BREAKTIME
+			, SL.ST_NUM AS ST_NUM
+		FROM ST_LIST SL
+		JOIN BREAKTIME BT ON SL.ST_NUM = BT.ST_NUM
+		JOIN WEEK_WEEKEND_LABEL WWL ON BT.WEEK_WEEKEND_NUM = WWL.WEEK_WEEKEND_NUM
+		WHERE SL.ST_NUM = #{st_num, jdbcType=INTEGER}
+ 	</select>
+ 	
+ 	<!-- 결제수단 -->
+ 	<select id="stPay" resultType="java.lang.String">
+ 		SELECT PL.PAY_NAME
+		FROM ST_LIST SL LEFT JOIN ST_PAY SP
+		  ON SL.ST_NUM = SP.ST_NUM
+		JOIN PAY_LABEL PL
+		  ON SP.PAY_NUM = PL.PAY_NUM
+		WHERE SL.ST_NUM = #{st_num, jdbcType=INTEGER}
+ 	</select>
+ 	
+ 	<!-- 체크박스 -->
+ 	<select id="stcheck" resultType="com.yameokja.mc.StoreCheckDTO">
+ 		SELECT CL2.CHBOX_NUM AS CHBOX_NUM
+ 			 , CL2.CHBOX_NAME AS CHBOX_NAME
+		     , CASE T.YN_NUM WHEN 1 THEN '○'
+		                     WHEN 2 THEN 'Ⅹ'
+		                     ELSE '-'
+		       END AS YESORNO
+             , T.ST_NUM AS ST_NUM
+		FROM
+		(
+		SELECT CL.CHBOX_NUM AS CHBOX_NUM, CL.CHBOX_NAME AS CHBOX_NAME, SC.YN_NUM AS YN_NUM, SC.ST_NUM AS ST_NUM
+		FROM CHBOX_LABEL CL LEFT JOIN ST_CHBOX SC
+        ON CL.CHBOX_NUM = SC.CHBOX_NUM
+        WHERE ST_NUM = #{st_num, jdbcType=INTEGER}
+		) T
+		RIGHT JOIN CHBOX_LABEL CL2
+		ON CL2.CHBOX_NUM = T.CHBOX_NUM
+		ORDER BY CL2.CHBOX_NUM
+ 	</select>
+ 	
+ 	<!-- 메뉴 및 가격 가져오기-->
+ 	<select id="menuLists" resultType="com.yameokja.mc.StoreMenuDTO">
+ 		SELECT MENU_NUM, MENU_NAME, PRICE, IMAGE_LINK
+		FROM MENU
+		WHERE ST_NUM = #{st_num, jdbcType=INTEGER}
+ 	</select>
+
+ 	<!-- 리뷰 + 추천 비추천 가져오기 -->
+ 	<select id="reviews" resultType="com.yameokja.mc.StoreReviewDTO">
+		SELECT UU.USER_NICKNAME AS USER_NICKNAME,T.REC AS REC, T.NONREC AS NONREC
+		     , T.RV_CONTENT AS RV_CONTENT, T.STAR_SCORE AS STAR_SCORE, T.REG_DATE AS REG_DATE, T.RV_NUM AS RV_NUM
+		     , T.USER_NUM AS USER_NUM
+		FROM
+		(                          
+		SELECT RB.RV_NUM AS RV_NUM, NVL(RNR.REC, 0) AS REC, NVL(RNR.NONREC, 0) AS NONREC
+		     , RB.USER_NUM AS USER_NUM, RB.RV_CONTENT AS RV_CONTENT, RB.STAR_SCORE AS STAR_SCORE
+		     , RB.REG_DATE AS REG_DATE, RB.ST_NUM AS ST_NUM
+		FROM RV_BOX RB
+		LEFT JOIN                           
+		(
+		SELECT RRN.RV_NUM AS RV_NUM
+		     , SUM(CASE WHEN RN.REC_NONREC_NAME = '추천' THEN 1 ELSE 0 END) AS REC
+		     , SUM(CASE WHEN RN.REC_NONREC_NAME = '비추천' THEN 1 ELSE 0 END) AS NONREC
+		FROM RV_REC_NONREC RRN LEFT JOIN REC_NONREC RN
+		ON RRN.REC_NONREC_NUMBER = RN.REC_NONREC_NUMBER
+		GROUP BY RRN.RV_NUM
+		) RNR
+		ON RB.RV_NUM = RNR.RV_NUM
+		WHERE RB.RV_NUM  NOT IN (SELECT RA.RV_NUM
+		                        FROM REP_APPLY RA
+		                        WHERE REP_APPLY_NUM NOT IN (SELECT RP.REP_APPLY_NUM
+		                                                    FROM REP_REJ RR LEFT JOIN REP_PROCESS RP
+		                                                    ON RR.REP_PROCESS_NUM = RP.REP_PROCESS_NUM
+		                                                    UNION
+		                                                    SELECT RP.REP_APPLY_NUM
+		                                                    FROM REP_MID RM LEFT JOIN REP_PROCESS RP
+		                                                    ON RM.REP_PROCESS_NUM = RP.REP_PROCESS_NUM))
+		) T
+		LEFT JOIN USING_USER UU
+		ON T.USER_NUM = UU.USER_NUM
+		WHERE T.ST_NUM = #{st_num, jdbcType=INTEGER}
+		ORDER BY RV_NUM DESC
+	</select>
+
+	<!-- 리뷰 사진 -->
+	<select id="rvPhoto" resultType="com.yameokja.mc.StoreRvPhotoDTO">
+		SELECT RB.RV_NUM AS RV_NUM, RP.PHOTO_LINK AS PHOTO_LINK
+		FROM RV_BOX RB JOIN RV_PHOTO RP
+		  ON RB.RV_NUM = RP.RV_NUM
+		WHERE RB.ST_NUM = #{st_num, jdbcType=INTEGER}
+	</select>
+	
+ 	<!-- 리뷰 키워드 -->
+ 	<select id="reviewKeys" resultType = "com.yameokja.mc.StoreReviewKeyDTO">
+ 		SELECT RKL.RV_KEY_NAME AS RV_KEY_NAME
+		     , T.COUNT AS RV_KEY_COUNT
+		FROM RV_KEY_LABEL RKL RIGHT JOIN (SELECT RV_KEY_NUM, COUNT
+		                                 FROM RV_KEY
+		                                 WHERE ST_NUM = #{st_num, jdbcType=INTEGER}) T
+		  ON RKL.RV_KEY_NUM = T.RV_KEY_NUM
+		WHERE RKL.RV_KEY_NAME IS NOT NULL
+		ORDER BY T.COUNT DESC
+		<!-- 
+		SELECT T2.RV_KEY_NAME AS RV_KEY_NAME, COUNT(T2.RV_KEY_NAME) AS RV_KEY_COUNT
+		FROM
+		(
+		SELECT RKL.RV_KEY_NAME AS RV_KEY_NAME
+		     , T.COUNT AS RV_KEY_COUNT
+		FROM RV_KEY_LABEL RKL RIGHT JOIN (SELECT RV_KEY_NUM, COUNT
+		                                 FROM RV_KEY
+		                                 WHERE ST_NUM = #{st_num, jdbcType=INTEGER}) T
+		  ON RKL.RV_KEY_NUM = T.RV_KEY_NUM
+		WHERE RKL.RV_KEY_NAME IS NOT NULL
+		) T2
+		GROUP BY T2.RV_KEY_NAME
+		-->
+ 	</select>
+	
+	<!-- 해당 사용자가 누른 리뷰 추천 / 비추천 내역 -->
+	<select id="userRnList" resultType="java.lang.Integer">
+		SELECT RB.RV_NUM AS RV_NUM
+		FROM RV_REC_NONREC RRN LEFT JOIN RV_BOX RB
+		  ON RRN.RV_NUM = RB.RV_NUM
+		WHERE RRN.USER_NUM = #{user_num}
+		  AND RB.ST_NUM = #{st_num}
+		  AND RRN.REC_NONREC_NUMBER = 1
+	</select>
+	
+	<select id="userNrnList" resultType="java.lang.Integer">
+		SELECT RB.RV_NUM AS RV_NUM
+		FROM RV_REC_NONREC RRN LEFT JOIN RV_BOX RB
+		  ON RRN.RV_NUM = RB.RV_NUM
+		WHERE RRN.USER_NUM = #{user_num}
+		  AND RB.ST_NUM = #{st_num}
+		  AND RRN.REC_NONREC_NUMBER = 2
+	</select>
+	
+	<!-- 리뷰 신고 항목 -->
+	<select id="reviewRepLabel" resultType="com.yameokja.mc.reviewRepDTO">
+		SELECT REP_RS_NUM, REP_RS_NAME
+		FROM REP_RS_LABEL
+		ORDER BY REP_RS_NUM
+	</select>
+
+ 	<!-- 리뷰 신고 -->
+	<insert id="reviewRepInsert">
+		INSERT INTO REP_APPLY(REP_APPLY_NUM, RV_NUM, USER_NUM, REP_RS_NUM)
+		VALUES (REPAPSEQ.NEXTVAL, #{rv_num}, #{user_num}, #{rep_rs_num})
+	</insert> 
+
+	<!-- 리뷰 추천/비추천 식별 -->
+	<select id="searchRec" resultType="java.lang.String">
+		SELECT REC_NONREC_NUMBER
+		FROM RV_REC_NONREC
+		WHERE RV_NUM= #{rv_num}
+		  AND USER_NUM= #{user_num}
+	</select>
+	
+	<!-- 리뷰 추천/비추천 등록 -->
+	<insert id="reviewRecInsert">
+		INSERT INTO RV_REC_NONREC(RV_NUM, USER_NUM, REC_NONREC_NUMBER)
+		VALUES(#{rv_num}, #{user_num}, #{rec_nonrec_number})
+	</insert>
+	
+	<!-- 리뷰 추천/비추천 등록 취소 -->
+	<delete id="reviewRecRemove">
+		DELETE
+		FROM RV_REC_NONREC
+		WHERE RV_NUM=#{rv_num}
+		  AND USER_NUM= #{user_num}
+		  AND REC_NONREC_NUMBER= #{rec_nonrec_number}
+	</delete>
+	
+	<!-- 리뷰 추천/비추천 수정 -->
+	<update id="reviewRecModify">
+		UPDATE RV_REC_NONREC
+		SET REC_NONREC_NUMBER = #{rec_nonrec_number}, REG_DATE = TO_DATE(SYSDATE)
+		WHERE RV_NUM= #{rv_num}
+		  AND USER_NUM = #{user_num}
+	</update>
+	
+	<!-- 리뷰 추천/비추천 카운트 -->
+	<select id="reviewRecCount" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS REC_COUNT
+		FROM RV_REC_NONREC
+		WHERE RV_NUM = #{rv_num}
+		  AND REC_NONREC_NUMBER = #{rec_nonrec_number}
+	</select>
+	
+	<!-- chbox_num -> st_chbox_num 찾는 쿼리문 -->
+	<select id="searchStChboxnum" resultType="java.lang.Integer">
+		SELECT ST_CHBOX_NUM
+		FROM ST_CHBOX
+		WHERE ST_NUM = #{st_num}
+		  AND CHBOX_NUM = #{chbox_num}
+	</select>
+	
+	<!-- 가게정보수정요청 insert -->
+	<insert id="reqApply">
+		INSERT INTO REQ_APPLY(REQ_APPLY_NUM, USER_NUM, ST_CHBOX_NUM, REQ_RS)
+		VALUES (REQAPSEQ.NEXTVAL, #{user_num}, #{st_chbox_num}, #{req_rs})
+	</insert>
+	
+	<!-- 가게정보수정요청 가능여부 판단 -->
+	<select id="reqCheck1" resultType="java.lang.Integer">
+		SELECT CKNUM
+		FROM(
+		    SELECT CASE WHEN RP.REQ_PROCESS_NUM IS NOT NULL AND RR.REQ_REJ_NUM IS NOT NULL THEN 1
+		                WHEN RP.REQ_PROCESS_NUM IS NOT NULL AND RR.REQ_REJ_NUM IS NULL 
+		                    THEN
+		                        CASE WHEN OA.OBJ_APPLY_NUM IS NOT NULL
+		                                THEN
+		                                   CASE WHEN OP.OBJ_PROCESS_NUM IS NOT NULL AND ORR.OBJ_REJ_NUM IS NULL THEN 1
+		                                         WHEN OP.OBJ_PROCESS_NUM IS NOT NULL AND ORR.OBJ_REJ_NUM IS NOT NULL
+		                                            THEN 
+		                                                CASE WHEN RVA.REVO_APPLY_NUM IS NOT NULL
+		                                                    THEN
+		                                                        CASE WHEN RVP.REVO_PROCESS_NUM IS NOT NULL AND RVR.REVO_REJ_NUM IS NULL THEN 1
+		                                                             WHEN RVP.REVO_PROCESS_NUM IS NOT NULL AND RVR.REVO_REJ_NUM IS NOT NULL THEN 0
+		                                                             ELSE 0
+		                                                        END
+		                                                    ELSE 0
+		                                                END
+		                                        END
+		                                WHEN RVA.REVO_APPLY_NUM IS NOT NULL
+		                                    THEN
+		                                        CASE WHEN RVP.REVO_PROCESS_NUM IS NOT NULL AND RVR.REVO_REJ_NUM IS NULL THEN 1
+		                                             WHEN RVP.REVO_PROCESS_NUM IS NOT NULL AND RVR.REVO_REJ_NUM IS NOT NULL THEN 0
+		                                             ELSE 0
+		                                        END
+		                                ELSE 0
+		                            END
+		                ELSE 0
+		            END AS CKNUM,
+		            ROW_NUMBER() OVER(PARTITION BY RA.ST_CHBOX_NUM ORDER BY RA.REG_DATE DESC) AS RN
+		    FROM REQ_APPLY RA LEFT JOIN REQ_PROCESS RP
+		    ON RA.REQ_APPLY_NUM = RP.REQ_APPLY_NUM
+		    LEFT JOIN REQ_REJ RR
+		    ON RP.REQ_PROCESS_NUM = RR.REQ_PROCESS_NUM
+		    LEFT JOIN OBJ_APPLY OA
+		    ON RP.REQ_PROCESS_NUM = OA.REQ_PROCESS_NUM
+		    LEFT JOIN OBJ_PROCESS OP
+		    ON OA.OBJ_APPLY_NUM = OP.OBJ_APPLY_NUM
+		    LEFT JOIN OBJ_REJ ORR
+		    ON OP.OBJ_PROCESS_NUM = ORR.OBJ_PROCESS_NUM
+		    LEFT JOIN PENALTY P
+		    ON RP.REQ_PROCESS_NUM = P.REQ_PROCESS_NUM
+		    LEFT JOIN REVO_APPLY RVA
+		    ON P.PEN_GRANT_NUM = RVA.PEN_GRANT_NUM
+		    LEFT JOIN REVO_PROCESS RVP
+		    ON RVA.REVO_APPLY_NUM = RVP.REVO_APPLY_NUM
+		    LEFT JOIN REVO_REJ RVR
+		    ON RVP.REVO_PROCESS_NUM = RVR.REVO_PROCESS_NUM
+		    WHERE RA.ST_CHBOX_NUM = #{st_chbox_num}
+		      AND P.PEN_TYPE_NUM = 1
+		) T
+		WHERE T.RN = 1
+	</select>
+	
+	<select id="reqNullCheck" resultType="java.lang.Integer">
+		SELECT K.CK AS CKK
+		FROM
+		(
+		SELECT CASE WHEN CKNUM=1 THEN T.ST_CHBOX_NUM
+		            END AS CK
+		FROM(
+		    SELECT CASE WHEN RP.REQ_PROCESS_NUM IS NOT NULL AND RR.REQ_REJ_NUM IS NOT NULL THEN 1
+		                WHEN RP.REQ_PROCESS_NUM IS NOT NULL AND RR.REQ_REJ_NUM IS NULL 
+		                    THEN
+		                        CASE WHEN OA.OBJ_APPLY_NUM IS NOT NULL
+		                                THEN
+		                                   CASE WHEN OP.OBJ_PROCESS_NUM IS NOT NULL AND ORR.OBJ_REJ_NUM IS NULL THEN 1
+		                                         WHEN OP.OBJ_PROCESS_NUM IS NOT NULL AND ORR.OBJ_REJ_NUM IS NOT NULL
+		                                            THEN 
+		                                                CASE WHEN RVA.REVO_APPLY_NUM IS NOT NULL
+		                                                    THEN
+		                                                        CASE WHEN RVP.REVO_PROCESS_NUM IS NOT NULL AND RVR.REVO_REJ_NUM IS NULL THEN 1
+		                                                             WHEN RVP.REVO_PROCESS_NUM IS NOT NULL AND RVR.REVO_REJ_NUM IS NOT NULL THEN 0
+		                                                             ELSE 0
+		                                                        END
+		                                                    ELSE 0
+		                                                END
+		                                        END
+		                                WHEN RVA.REVO_APPLY_NUM IS NOT NULL
+		                                    THEN
+		                                        CASE WHEN RVP.REVO_PROCESS_NUM IS NOT NULL AND RVR.REVO_REJ_NUM IS NULL THEN 1
+		                                             WHEN RVP.REVO_PROCESS_NUM IS NOT NULL AND RVR.REVO_REJ_NUM IS NOT NULL THEN 0
+		                                             ELSE 0
+		                                        END
+		                                ELSE 0
+		                            END
+		                ELSE 0
+		            END AS CKNUM,
+		            ROW_NUMBER() OVER(PARTITION BY RA.ST_CHBOX_NUM ORDER BY RA.REG_DATE DESC) AS RN
+		            , SC.ST_CHBOX_NUM
+		    FROM REQ_APPLY RA LEFT JOIN REQ_PROCESS RP
+		    ON RA.REQ_APPLY_NUM = RP.REQ_APPLY_NUM
+		    LEFT JOIN REQ_REJ RR
+		    ON RP.REQ_PROCESS_NUM = RR.REQ_PROCESS_NUM
+		    LEFT JOIN OBJ_APPLY OA
+		    ON RP.REQ_PROCESS_NUM = OA.REQ_PROCESS_NUM
+		    LEFT JOIN OBJ_PROCESS OP
+		    ON OA.OBJ_APPLY_NUM = OP.OBJ_APPLY_NUM
+		    LEFT JOIN OBJ_REJ ORR
+		    ON OP.OBJ_PROCESS_NUM = ORR.OBJ_PROCESS_NUM
+		    LEFT JOIN PENALTY P
+		    ON RP.REQ_PROCESS_NUM = P.REQ_PROCESS_NUM
+		    LEFT JOIN REVO_APPLY RVA
+		    ON P.PEN_GRANT_NUM = RVA.PEN_GRANT_NUM
+		    LEFT JOIN REVO_PROCESS RVP
+		    ON RVA.REVO_APPLY_NUM = RVP.REVO_APPLY_NUM
+		    LEFT JOIN REVO_REJ RVR
+		    ON RVP.REVO_PROCESS_NUM = RVR.REVO_PROCESS_NUM
+		    LEFT JOIN ST_CHBOX SC
+		    ON RA.ST_CHBOX_NUM = SC.ST_CHBOX_NUM
+		    WHERE SC.ST_NUM = #{st_num}
+		) T
+		WHERE T.RN = 1
+		) K
+		WHERE K.CK IS NOT NULL
+	</select>
+	
+	<!-- 리뷰키워드 범례 리스트 -->
+	<select id="reviewKeywords" resultType="com.yameokja.mc.StoreReviewKeyDTO">
+		SELECT RV_KEY_NUM, RV_KEY_NAME
+		FROM RV_KEY_LABEL
+	</select>
+	
+	<!-- 리뷰 입력 -->
+	<insert id="reviewInsert">
+		INSERT INTO RV_BOX(RV_NUM, USER_NUM, ST_NUM, RV_CONTENT, STAR_SCORE)
+		VALUES (RVSEQ.NEXTVAL, #{user_num}, #{st_num}, #{rv_content}, #{star_score})
+	</insert>
+	
+	<!-- 포인트 등록 -->
+	<insert id="addPoint">
+		INSERT INTO POINT_HISTORY(POINT_HIS_NUM, USER_NUM, ADD_DATE, POINT_LABEL_NUM)
+		VALUES(POINTSEQ.NEXTVAL, #{user_num}, DEFAULT, #{point_label_num})
+	</insert>
+	
+	<!-- rv_num 가져오는 쿼리문 -->
+	<select id="rv_num" resultType="java.lang.Integer">
+		SELECT RV_NUM
+		FROM RV_BOX
+		WHERE USER_NUM = #{user_num}
+		  AND ST_NUM = #{st_num}
+		  AND RV_CONTENT = #{rv_content}
+	</select>
+	
+	<!-- 리뷰 키워드 존재여부 -->
+	<select id="rKeywordSearch" resultType="java.lang.Integer">
+		SELECT RV_KEY_NUM
+		FROM RV_KEY
+		WHERE ST_NUM = #{st_num}
+		  AND RV_KEY_NUM = #{rv_key_num}
+	</select>
+	
+	<!-- 리뷰 키워드 존재시 count + 1 -->
+	<update id="rKeywordUpdate">
+		UPDATE RV_KEY
+		SET COUNT = COUNT + 1
+		WHERE ST_NUM = #{st_num}
+		  AND RV_KEY_NUM = #{rv_key_num}
+	</update>
+	
+	<!-- 리뷰 키워드 입력 -->
+	<insert id="rKeywordInsert">
+		INSERT INTO RV_KEY(CHOSEN_RV_KEY_NUM, ST_NUM, RV_KEY_NUM)
+		VALUES (RVKEYSEQ.NEXTVAL, #{st_num}, #{rv_key_num})
+	</insert>
+	
+	<!-- 검색 키워드 존재여부 -->
+	<select id="skeywordSearch" resultType="java.lang.Integer">
+		SELECT SEARCH_NUM
+		FROM SEARCH_KEY
+		WHERE ST_NUM = #{st_num}
+		  AND SEARCH_NAME = #{search_name}
+	</select>
+	
+	<!-- 검색 키워드 존재시 count + 1 -->
+	<update id="skeywordUpdate">
+		UPDATE SEARCH_KEY
+		SET COUNT = COUNT + 1
+		WHERE ST_NUM = #{st_num}
+		  AND SEARCH_NAME = #{search_name}
+	</update>
+	
+	<!-- 검색 키워드 입력 -->
+	<insert id="sKeywordInsert">
+		INSERT INTO SEARCH_KEY(SEARCH_NUM, ST_NUM, SEARCH_NAME)
+		VALUES (SEARCHKEYSEQ.NEXTVAL, #{st_num}, #{search_name})
+	</insert>
+	
+	<!-- 리뷰 사진 입력을 위한 rv_num 검색 -->
+	<select id="searchRvNum" resultType="java.lang.Integer">
+		SELECT RV_NUM
+		FROM RV_BOX
+		WHERE USER_NUM = #{user_num, jdbcType=VARCHAR}
+		  AND ST_NUM = #{st_num, jdbcType=INTEGER}
+		  AND RV_CONTENT = #{rv_content, jdbcType=VARCHAR}
+		  AND STAR_SCORE = #{star_score, jdbcType=INTEGER}
+	</select>
+	
+	<!-- 리뷰 사진 입력 -->
+	<insert id="rvPhotoInsert">
+		INSERT INTO RV_PHOTO(RV_PHOTO_NUM, RV_NUM, PHOTO_LINK)
+		VALUES (RVPTSEQ.NEXTVAL, #{rv_num}, #{photo_link})
+	</insert>
+ 	
+</mapper>

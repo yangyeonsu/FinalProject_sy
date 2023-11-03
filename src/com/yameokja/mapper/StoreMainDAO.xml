@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yameokja.mc.IStoreMainDAO">
+	<!-- 해당 유저가 가게 회원인지 확인하는 쿼리문 -->
+	<select id="searchStoreInfo" resultType="com.yameokja.mc.StoreDTO">
+		SELECT ST_NUM, ST_NAME
+		FROM STORE_VIEW
+        WHERE IN_PROCESS_NUM NOT IN (SELECT IN_PROCESS_NUM
+                                    FROM OUT_PROCESS OP LEFT JOIN OUT_APPLY OA
+                                    ON OP.OUT_APPLY_NUM = OA.OUT_APPLY_NUM
+                                    WHERE OP.OUT_PROCESS_NUM NOT IN (SELECT OUT_PROCESS_NUM
+                                                                     FROM OUT_REJ))
+        AND USER_NUM = #{user_num}
+		ORDER BY REG_DATE DESC
+	</select>
+	
+	<select id="searchoutstore" resultType="com.yameokja.mc.StoreDTO">
+		SELECT ST_NUM, ST_NAME
+		FROM STORE_VIEW
+         WHERE IN_PROCESS_NUM  NOT IN (SELECT IN_PROCESS_NUM
+                                    FROM OUT_APPLY
+                                    WHERE IN_PROCESS_NUM NOT IN (SELECT OA.IN_PROCESS_NUM
+                                                                FROM OUT_APPLY OA RIGHT JOIN OUT_PROCESS OP
+                                                                ON OA.OUT_APPLY_NUM = OP.OUT_APPLY_NUM
+                                                                RIGHT JOIN OUT_REJ ORJ
+                                                                ON OP.OUT_PROCESS_NUM = ORJ.OUT_PROCESS_NUM))
+          AND USER_NUM = #{user_num}
+		ORDER BY REG_DATE DESC
+	</select>
+	
+	<select id="searchRepStore" resultType="java.lang.Integer">
+		SELECT ST_NUM
+		FROM REP_STORE
+		WHERE USER_NUM = #{user_num}
+	</select>
+	
+	<!-- 별점 평균 가져오는 쿼리문 -->
+	<select id="star_transition" resultType="java.util.HashMap">
+		SELECT TO_CHAR(TRUNC(REG_DATE, 'Q')) AS QUARTER_START_DATE, AVG(STAR_SCORE) AS AVERAGE_STAR_SCORE
+		FROM RV_BOX
+		WHERE ST_NUM = #{st.num}
+		GROUP BY TRUNC(REG_DATE, 'Q')
+		ORDER BY TRUNC(REG_DATE, 'Q')
+	</select>
+	<!-- 리뷰 키워드와 해당 키워드의 갯수 가져오는 쿼리문 -->
+	<select id="rv_key_sum" resultType="java.util.HashMap">
+		SELECT RK.COUNT AS COUNT_RV_KEY, RKL.RV_KEY_NAME AS RV_KEY_NAME
+		FROM RV_KEY_LABEL RKL LEFT JOIN RV_KEY RK
+		                   ON RKL.RV_KEY_NUM = RK.RV_KEY_NUM
+		                   LEFT JOIN ST_LIST SL
+		                       ON RK.ST_NUM = SL.ST_NUM
+		WHERE SL.ST_NUM = #{st_num}
+		ORDER BY RK.COUNT DESC
+	</select>
+	
+	<select id="rv_list" resultType="com.yameokja.mc.ReviewDTO">
+		<!-- SELECT UU.USER_NICKNAME AS USER_NICKNAME, RB.RV_CONTENT AS RV_CONTENT, RB.REG_DATE AS REG_DATE, RB.RV_NUM AS RV_NUM
+		FROM RV_BOX RB LEFT JOIN USING_USER UU
+		ON RB.USER_NUM = UU.USER_NUM
+		WHERE RB.ST_NUM = #{st_num}
+		ORDER BY RV_NUM DESC -->
+		SELECT UU.USER_NICKNAME AS USER_NICKNAME, RB.RV_CONTENT AS RV_CONTENT
+		    , RB.REG_DATE AS REG_DATE, RB.RV_NUM AS RV_NUM
+		    , RR.REPLY_CONTENT AS REPLY_CONTENT
+		FROM RV_BOX RB 
+		LEFT JOIN USING_USER UU ON RB.USER_NUM = UU.USER_NUM
+		LEFT JOIN RV_REPLY RR ON RB.RV_NUM = RR.RV_NUM
+		WHERE RB.ST_NUM = #{st_num}
+		ORDER BY RV_NUM DESC
+	</select>
+	
+	<!-- 첫 로그인 유무 -->
+	<select id="checkfirstlogin" resultType="java.lang.Integer">
+		SELECT COUNT(IFL.IN_F_LOG_NUM) AS IN_F_LOG_NUM
+		FROM IN_F_LOG IFL
+		RIGHT JOIN IN_PROCESS IP ON IFL.IN_PROCESS_NUM = IP.IN_PROCESS_NUM
+		LEFT JOIN IN_APPLY IA ON IP.IN_APPLY_NUM = IA.IN_APPLY_NUM
+		LEFT JOIN ST_LIST SL ON IP.IN_PROCESS_NUM = SL.IN_PROCESS_NUM
+		WHERE ST_NUM = #{st_num}
+	</select>
+	
+	<select id="findfirstlogin" resultType="java.lang.Integer">
+		SELECT IFL.IN_F_LOG_NUM AS IN_F_LOG_NUM
+		FROM IN_F_LOG IFL
+		RIGHT JOIN IN_PROCESS IP ON IFL.IN_PROCESS_NUM = IP.IN_PROCESS_NUM
+		LEFT JOIN IN_APPLY IA ON IP.IN_APPLY_NUM = IA.IN_APPLY_NUM
+		LEFT JOIN ST_LIST SL ON IP.IN_PROCESS_NUM = SL.IN_PROCESS_NUM
+		WHERE ST_NUM = #{st_num}
+	</select>
+	
+	<delete id="deletelognum">
+		DELETE
+		FROM IN_F_LOG
+		WHERE IN_F_LOG_NUM = #{IN_F_LOG_NUM}
+	</delete>
+	
+	<!-- 리뷰 답글 insert -->
+	<insert id="reviewReply">
+		INSERT INTO RV_REPLY(REPLY_NUM, RV_NUM, REPLY_CONTENT, REG_DATE)
+		VALUES ((SELECT NVL(MAX(REPLY_NUM), 0) + 1 FROM RV_REPLY)
+		    	,#{rv_num}, #{reply_content}, SYSDATE)
+	</insert>
+	
+	<!-- 가게가 선택할 수 있는 음식 카테고리 -->
+	<select id="foodLabel" resultType="com.yameokja.mc.FoodLabelDTO">
+		SELECT FOOD_NUM, FOOD_NAME
+		FROM FOOD_LABEL
+	</select>
+	
+	<!-- 가게가 선택할 수 있는 결제 카테고리 -->
+	<select id="payLabel" resultType="com.yameokja.mc.PayLabelDTO">
+		SELECT PAY_NUM, PAY_NAME
+		FROM PAY_LABEL
+	</select>
+	
+	<!-- 요일 라벨 가져오는 카테고리 -->
+	<select id="weekDayLabel" resultType="com.yameokja.mc.StoreOpencloseDTO">
+		SELECT DAY_NAME, DAY_NUM
+		FROM WEEKDAY_LABEL
+		ORDER BY DAY_NUM
+	</select>
+	
+	<!-- 평일 주말 라벨 -->
+	<select id="weekWeekendDayLabel" resultType="com.yameokja.mc.weekWeekendDayLabel">
+		SELECT WEEK_WEEKEND, WEEK_WEEKEND_NUM
+		FROM WEEK_WEEKEND_LABEL
+		ORDER BY WEEK_WEEKEND_NUM
+	</select>
+
+	<!-- 가게 체크박스 라벨 -->
+	<select id="chBoxLabel" resultType="com.yameokja.mc.ChboxDTO">
+		SELECT CHBOX_NUM, CHBOX_NAME
+		FROM CHBOX_LABEL
+	</select>
+	
+
+	<delete id="stOCdelete">
+		DELETE
+		FROM ST_OPENCLOSE
+		WHERE ST_NUM = #{st_num}
+	</delete>
+	<insert id="stOCinsert">
+		INSERT INTO ST_OPENCLOSE(ST_NUM, DAY_NUM, START_TIME, END_TIME)
+		VALUES(#{st_num}, #{day_num}, #{start_time, jdbcType=VARCHAR}, #{end_time, jdbcType=VARCHAR})
+	</insert>
+	
+	<delete id="bOCdelete">
+		DELETE
+		FROM BREAKTIME
+		WHERE ST_NUM = #{st_num}
+	</delete>
+	<insert id="bOCinsert">
+		INSERT INTO BREAKTIME(BREAKTIME_NUM, ST_NUM, WEEK_WEEKEND_NUM, START_BREAKTIME, END_BREAKTIME)
+		VALUES(BREAKTIMESEQ.NEXTVAL, #{st_num}, #{week_weekend_num}
+		, #{start_breaktime, jdbcType=VARCHAR}, #{end_breaktime, jdbcType=VARCHAR})
+	</insert>
+	
+	<delete id="holidaydelete">
+		DELETE
+		FROM ST_HOLIDAY
+		WHERE ST_NUM = #{st_num}
+	</delete>
+	<insert id="holidayinsert">
+		INSERT INTO ST_HOLIDAY(HOLIDAY_NUM, DAY_NUM, ST_NUM)
+		VALUES(HOLIDAYSEQ.NEXTVAL, #{day_num}, #{st_num})
+	</insert>
+	
+	<delete id="paysdelete">
+		DELETE
+		FROM ST_PAY
+		WHERE ST_NUM = #{st_num}
+	</delete>
+	<insert id="paysinsert">
+		INSERT INTO ST_PAY(ST_PAY_NUM, PAY_NUM, ST_NUM)
+		VALUES(STPAYSEQ.NEXTVAL, #{pay_num}, #{st_num})
+	</insert>
+	
+	<delete id="chBoxdelete">
+		DELETE
+		FROM ST_CHBOX
+		WHERE ST_NUM = #{st_num}
+	</delete>
+	<insert id="chBoxinsert">
+		INSERT INTO ST_CHBOX(ST_CHBOX_NUM, ST_NUM, CHBOX_NUM, YN_NUM)
+		VALUES(CHBOXSEQ.NEXTVAL, #{st_num}, #{chbox_num}, #{yn_num})
+	</insert>
+	<select id="chBoxselect" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM ST_CHBOX
+		WHERE ST_NUM = #{st_num}
+		  AND CHBOX_NUM = #{chbox_num}
+	</select>
+	<update id="chBoxupdate">
+	    UPDATE ST_CHBOX
+	  	SET YN_NUM = #{yn_num, jdbcType=INTEGER}
+	    WHERE ST_NUM = #{st_num}
+	    AND CHBOX_NUM = #{chbox_num}
+	</update>
+	<!-- <update id="chBoxupdate">
+		UPDATE ST_CHBOX
+		SET YN_NUM = #{yn_num, jdbcType=INTEGER}
+		WHERE ST_NUM = #{st_num}
+		  AND CHBOX_NUM = #{chbox_num}
+	</update> -->
+	<!-- <delete id="chBoxdeleteone">
+		DELETE
+		FROM ST_CHBOX
+		WHERE ST_NUM = #{st_num}
+		  AND CHBOX_NUM = #{chbox_num}
+	</delete> -->
+	
+	
+	<delete id="stKeysdelete">
+		DELETE
+		FROM ST_KEY
+		WHERE ST_NUM = #{st_num}
+	</delete>
+	<insert id="stKeysinsert">
+		INSERT INTO ST_KEY(ST_CHOSEN_KEY_NUM, ST_NUM, ST_KEY_NUM)
+		VALUES(STSKSEQ.NEXTVAL, #{st_num}, #{st_key_num})
+	</insert>
+	
+	<delete id="foodCatdelete">
+		DELETE
+		FROM ST_FOOD
+		WHERE ST_NUM = #{st_num}
+	</delete>
+	<insert id="foodCatinsert">
+		INSERT INTO ST_FOOD(ST_FOOD_NUM, FOOD_NUM, ST_NUM)
+		VALUES(FOODSEQ.NEXTVAL, #{food_num}, #{st_num})
+	</insert>
+	
+	<delete id="menudelete">
+		DELETE
+		FROM MENU
+		WHERE ST_NUM = #{st_num}
+	</delete>
+	<insert id="menuinsert">
+		INSERT INTO MENU(MENU_NUM, ST_NUM, MENU_NAME, PRICE, IMAGE_LINK)
+		VALUES(MENUSEQ.NEXTVAL, #{st_num}, #{menu_name}, #{price}, #{image_link, jdbcType=VARCHAR})
+	</insert>
+	
+	<delete id="stsearchKeydelete">
+		DELETE
+		FROM ST_SEARCH_KEY
+		WHERE ST_NUM = #{st_num}
+	</delete>
+	<insert id="searchKeyinsert">
+		INSERT INTO SEARCH_KEY(SEARCH_NUM, ST_NUM, SEARCH_NAME, COUNT)
+		VALUES(SEARCHKEYSEQ.NEXTVAL, #{st_num}, #{search_name}, DEFAULT)
+	</insert>
+	<update id="stsearchKeyUpdate">
+		UPDATE SEARCH_KEY
+		SET COUNT = COUNT + 1
+		WHERE ST_NUM = #{st_num}
+		  AND SEARCH_NAME = #{search_name}
+	</update>
+	<select id="searchKeyselect" resultType="java.lang.Integer">
+		SELECT SEARCH_NUM
+		FROM SEARCH_KEY
+		WHERE ST_NUM = #{st_num}
+		  AND SEARCH_NAME= #{search_name}
+	</select>
+
+	
+	<!-- 해당 가게의 해당 리뷰의 답글 가져오기 -->
+	<select id="rvReply" resultType="com.yameokja.mc.StoreRvReplyDTO">
+		SELECT RR.REPLY_NUM AS REPLY_NUM, RB.RV_NUM AS RV_NUM
+		     , RR.REPLY_CONTENT AS REPLY_CONTENT, RR.REG_DATE AS REG_DATE
+		FROM RV_REPLY RR LEFT JOIN RV_BOX RB
+		   ON RR.RV_NUM = RB.RV_NUM
+		WHERE RB.ST_NUM = #{st_num}
+	</select>
+	
+	<!-- 해당 가게의 답글이 있는 rv_num -->
+	<select id="rvReplyNumList" resultType="java.lang.Integer">
+		SELECT DISTINCT(RB.RV_NUM) AS RV_NUM
+		FROM RV_REPLY RR LEFT JOIN RV_BOX RB
+		  ON RR.RV_NUM = RB.RV_NUM
+		WHERE RB.ST_NUM = #{st_num}
+	</select>
+	
+
+	<insert id="stsearchKeyinsert">
+		INSERT INTO ST_SEARCH_KEY(ST_NUM, SEARCH_NUM)
+		VALUES(#{st_num}, #{search_num})
+	</insert>
+	<select id="stsearchKeyselect" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM ST_SEARCH_KEY
+		WHERE ST_NUM = #{st_num}
+		  AND SEARCH_NUM = #{search_num}
+	</select>
+	
+	<!-- 이의 신청 내역 -->
+	<select id="StAppealRequest" resultType="com.yameokja.mc.StAppealRequestDTO">
+		SELECT OA.REG_DATE AS REG_DATE, IA.ST_NAME AS ST_NAME 
+				, CASE WHEN OA.ADMIN_READ_DATE IS NULL AND OP.FINAL_DATE IS NULL THEN '미확인'
+                             WHEN OA.ADMIN_READ_DATE IS NOT NULL AND OP.FINAL_DATE IS NULL THEN '처리중'
+                             ELSE '처리 완료'
+                             END AS STATUS
+                , OP.FINAL_DATE AS FINAL_DATE, AM.ADMIN_NAME AS ADMIN_NAME
+		FROM OBJ_APPLY OA
+		LEFT JOIN OBJ_PROCESS OP ON OA.OBJ_APPLY_NUM = OP.OBJ_APPLY_NUM
+		RIGHT JOIN ADMIN AM ON OP.ADMIN_NUM = AM.ADMIN_NUM
+		RIGHT JOIN REQ_PROCESS RP ON OA.REQ_PROCESS_NUM = RP.REQ_PROCESS_NUM
+		RIGHT JOIN REQ_APPLY RA ON RP.REQ_APPLY_NUM = RA.REQ_APPLY_NUM
+		RIGHT JOIN ST_CHBOX SC ON RA.ST_CHBOX_NUM = SC.ST_CHBOX_NUM
+		RIGHT JOIN ST_LIST SL ON SC.ST_NUM = SL.ST_NUM
+		RIGHT JOIN IN_PROCESS IP ON SL.IN_PROCESS_NUM = IP.IN_PROCESS_NUM
+		RIGHT JOIN IN_APPLY IA ON IP.IN_APPLY_NUM = IA.IN_APPLY_NUM
+		WHERE SL.ST_NUM = #{st_num}
+	</select>
+	
+	<!-- 페널티 회수 요청 내역 -->
+	<select id="StPenaltyre" resultType="com.yameokja.mc.StAppealRequestDTO">
+		SELECT DISTINCT RA.REG_DATE AS REG_DATE, IA.ST_NAME AS ST_NAME , CASE WHEN RA.ADMIN_READ_DATE IS NULL AND RP.FINAL_DATE IS NULL THEN '미확인'
+		                                        WHEN RA.ADMIN_READ_DATE IS NOT NULL AND RP.FINAL_DATE IS NULL THEN '처리중'
+		                                        ELSE '처리 완료'
+		                                        END AS STATE
+		                           , RP.FINAL_DATE AS , AM.ADMIN_NAME AS ADMIN_NAME
+		FROM REVO_APPLY RA
+		LEFT JOIN REVO_PROCESS RP ON RA.REVO_APPLY_NUM = RP.REVO_APPLY_NUM
+		RIGHT JOIN ADMIN AM ON RP.ADMIN_NUM = AM.ADMIN_NUM
+		RIGHT JOIN PENALTY PT ON RA.PEN_GRANT_NUM = PT.PEN_GRANT_NUM
+		RIGHT JOIN REQ_PROCESS RPC ON PT.REQ_PROCESS_NUM = RPC.REQ_PROCESS_NUM
+		RIGHT JOIN REQ_APPLY REQA ON RPC.REQ_APPLY_NUM = REQA.REQ_APPLY_NUM
+		RIGHT JOIN ST_CHBOX SC ON REQA.ST_CHBOX_NUM = SC.ST_CHBOX_NUM
+		RIGHT JOIN ST_LIST SL ON SC.ST_NUM = SL.ST_NUM
+		RIGHT JOIN IN_PROCESS IP ON SL.IN_PROCESS_NUM = IP.IN_PROCESS_NUM
+		RIGHT JOIN IN_APPLY IA ON IP.IN_APPLY_NUM = IA.IN_APPLY_NUM
+		WHERE SL.ST_NUM = #{st_num}
+	</select>
+	
+	<select id="placeNum" resultType="java.lang.String">
+		SELECT IA.ST_PLACE_NUM AS ST_PLACE_NUM
+		FROM IN_APPLY IA
+		JOIN IN_PROCESS IP ON IA.IN_APPLY_NUM = IP.IN_APPLY_NUM
+		JOIN ST_LIST SL ON SL.IN_PROCESS_NUM = IP.IN_PROCESS_NUM
+		WHERE IA.USER_NUM = #{user_num} AND SL.ST_NUM = #{st_num}
+	</select>
+	
+	<insert id="st_Out_apply">
+		INSERT INTO OUT_APPLY (OUT_APPLY_NUM, IN_PROCESS_NUM, REG_DATE, ADMIN_READ_DATE)
+		SELECT 
+		    (SELECT NVL(MAX(OUT_APPLY_NUM)+1,0) FROM OUT_APPLY) AS OUT_APPLY_NUM
+		    , IP.IN_PROCESS_NUM AS IN_PROCESS_NUM
+		    , SYSDATE
+		    , NULL
+		FROM IN_PROCESS IP
+		JOIN IN_APPLY IA ON IA.IN_APPLY_NUM = IP.IN_APPLY_NUM
+		JOIN ST_LIST SL ON SL.IN_PROCESS_NUM = IP.IN_PROCESS_NUM
+		WHERE IA.USER_NUM = #{user_num, jdbcType=INTEGER} AND SL.ST_NUM = #{st_num, jdbcType=INTEGER}
+	</insert>
+</mapper>
+
+
+
+
+
+                           
+
+

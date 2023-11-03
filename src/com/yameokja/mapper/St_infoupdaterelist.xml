@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yameokja.mc.IStinfoUpdaterelistDAO">
+	<select id="count_relist" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS COUNT
+		FROM REQ_PROCESS RP LEFT JOIN REQ_APPLY RA
+		        ON RP.REQ_APPLY_NUM = RA.REQ_APPLY_NUM
+		        LEFT JOIN ST_CHBOX SC
+		        ON RA.ST_CHBOX_NUM = SC.ST_CHBOX_NUM
+		        LEFT JOIN ST_LIST SL
+		        ON SC.ST_NUM = SL.ST_NUM
+		        LEFT JOIN IN_PROCESS IP
+		        ON SL.IN_PROCESS_NUM = IP.IN_PROCESS_NUM
+		        LEFT JOIN IN_APPLY IA
+		        ON IP.IN_APPLY_NUM = IA.IN_APPLY_NUM
+		        LEFT JOIN OUT_APPLY OA
+		        ON IP.IN_PROCESS_NUM = OA.IN_PROCESS_NUM
+		        LEFT JOIN OUT_PROCESS OP
+		        ON OA.OUT_APPLY_NUM = OP.OUT_APPLY_NUM
+		        LEFT JOIN OUT_REJ OREJ
+		        ON OP.OUT_PROCESS_NUM = OREJ.OUT_PROCESS_NUM
+		        LEFT JOIN OBJ_APPLY OBA
+		        ON RP.REQ_PROCESS_NUM = OBA.REQ_PROCESS_NUM
+		        LEFT JOIN OBJ_PROCESS OBP
+		        ON OBA.OBJ_APPLY_NUM = OBP.OBJ_APPLY_NUM
+		        LEFT JOIN OBJ_REJ OBR
+		        ON OBP.OBJ_PROCESS_NUM = OBR.OBJ_PROCESS_NUM
+		        LEFT JOIN PENALTY P
+		        ON RP.REQ_PROCESS_NUM = P.REQ_PROCESS_NUM
+		        LEFT JOIN REVO_APPLY RVA
+		        ON P.PEN_GRANT_NUM = RVA.PEN_GRANT_NUM
+		        LEFT JOIN REVO_PROCESS RVP
+		        ON RVA.REVO_APPLY_NUM = RVP.REVO_APPLY_NUM
+		        LEFT JOIN REVO_REJ RR
+		        ON RVP.REVO_PROCESS_NUM = RR.REVO_PROCESS_NUM
+		        LEFT JOIN CHBOX_LABEL CL
+		        ON SC.CHBOX_NUM = CL.CHBOX_NUM
+		        LEFT JOIN YN_LABEL YL
+		        ON SC.YN_NUM = YL.YN_NUM
+		        WHERE RP.REQ_PROCESS_NUM IS NOT NULL
+		        	AND RP.REQ_PROCESS_NUM NOT IN (SELECT REQ_PROCESS_NUM
+		                                      FROM REQ_REJ)
+		            AND IA.USER_NUM = #{user_num}
+	</select>
+
+	<select id="stinfoupdatelist" resultType="com.yameokja.mc.StinfoUpdaterelistDTO">
+	    SELECT REQ_APPLY_NUM, ST_NAME, FINAL_DATE, REG_DATE, CHBOX_NAME,YN_NAME, CHECK_LABEL, RNUM                                  
+		FROM(
+		    SELECT RA.REQ_APPLY_NUM AS REQ_APPLY_NUM, IA.ST_NAME AS ST_NAME, TO_CHAR(RP.FINAL_DATE, 'YYYY-MM-DD') AS FINAL_DATE
+		        , RA.REG_DATE AS REG_DATE, CL.CHBOX_NAME AS CHBOX_NAME, YL.YN_NAME AS YN_NAME
+		        , CASE WHEN OP.OUT_PROCESS_NUM IS NOT NULL AND OREJ.OUT_REJ_NUM IS NULL THEN '둘다불가능'
+		               WHEN TO_DATE(RP.FINAL_DATE, 'YYYY-MM-DD') + INTERVAL '3' DAY > TO_DATE(SYSDATE, 'YYYY-MM-DD')
+		                THEN 
+		                    CASE WHEN OBA.OBJ_APPLY_NUM IS NOT NULL 
+		                        THEN
+		                            CASE WHEN OBP.OBJ_PROCESS_NUM IS NOT NULL AND OBR.OBJ_REJ_NUM IS NULL THEN '둘다불가능'
+		                              WHEN OBP.OBJ_PROCESS_NUM IS NOT NULL AND OBR.OBJ_REJ_NUM IS NOT NULL THEN '패널티회수가능'
+		                              ELSE '둘다불가능'
+		                            END
+		                        WHEN RVA.REVO_APPLY_NUM IS NOT NULL
+		                            THEN 
+		                                CASE WHEN RVP.REVO_PROCESS_NUM IS NOT NULL AND RR.REVO_REJ_NUM IS NULL THEN '둘다불가능'
+		                                    WHEN RVP.REVO_PROCESS_NUM IS NOT NULL AND RR.REVO_REJ_NUM IS NOT NULL THEN '패널티회수가능'
+		                                    ELSE '둘다불가능'
+		                                END
+		                        ELSE '둘다가능' 
+		                    END
+		                WHEN RVA.REVO_APPLY_NUM IS NOT NULL
+		                    THEN 
+		                        CASE WHEN RVP.REVO_PROCESS_NUM IS NOT NULL AND RR.REVO_REJ_NUM IS NULL THEN '둘다불가능'
+		                            WHEN RVP.REVO_PROCESS_NUM IS NOT NULL AND RR.REVO_REJ_NUM IS NOT NULL THEN '패널티회수가능'
+		                            ELSE '둘다불가능'
+		                        END
+		                ELSE '패널티회수가능'
+		        END AS CHECK_LABEL
+		        , ROW_NUMBER() OVER (ORDER BY RP.FINAL_DATE DESC) AS RNUM
+		    FROM REQ_PROCESS RP LEFT JOIN REQ_APPLY RA
+		        ON RP.REQ_APPLY_NUM = RA.REQ_APPLY_NUM
+		        LEFT JOIN ST_CHBOX SC
+		        ON RA.ST_CHBOX_NUM = SC.ST_CHBOX_NUM
+		        LEFT JOIN ST_LIST SL
+		        ON SC.ST_NUM = SL.ST_NUM
+		        LEFT JOIN IN_PROCESS IP
+		        ON SL.IN_PROCESS_NUM = IP.IN_PROCESS_NUM
+		        LEFT JOIN IN_APPLY IA
+		        ON IP.IN_APPLY_NUM = IA.IN_APPLY_NUM
+		        LEFT JOIN OUT_APPLY OA
+		        ON IP.IN_PROCESS_NUM = OA.IN_PROCESS_NUM
+		        LEFT JOIN OUT_PROCESS OP
+		        ON OA.OUT_APPLY_NUM = OP.OUT_APPLY_NUM
+		        LEFT JOIN OUT_REJ OREJ
+		        ON OP.OUT_PROCESS_NUM = OREJ.OUT_PROCESS_NUM
+		        LEFT JOIN OBJ_APPLY OBA
+		        ON RP.REQ_PROCESS_NUM = OBA.REQ_PROCESS_NUM
+		        LEFT JOIN OBJ_PROCESS OBP
+		        ON OBA.OBJ_APPLY_NUM = OBP.OBJ_APPLY_NUM
+		        LEFT JOIN OBJ_REJ OBR
+		        ON OBP.OBJ_PROCESS_NUM = OBR.OBJ_PROCESS_NUM
+		        LEFT JOIN PENALTY P
+		        ON RP.REQ_PROCESS_NUM = P.REQ_PROCESS_NUM
+		        LEFT JOIN REVO_APPLY RVA
+		        ON P.PEN_GRANT_NUM = RVA.PEN_GRANT_NUM
+		        LEFT JOIN REVO_PROCESS RVP
+		        ON RVA.REVO_APPLY_NUM = RVP.REVO_APPLY_NUM
+		        LEFT JOIN REVO_REJ RR
+		        ON RVP.REVO_PROCESS_NUM = RR.REVO_PROCESS_NUM
+		        LEFT JOIN CHBOX_LABEL CL
+		        ON SC.CHBOX_NUM = CL.CHBOX_NUM
+		        LEFT JOIN YN_LABEL YL
+		        ON SC.YN_NUM = YL.YN_NUM
+		        WHERE RP.REQ_PROCESS_NUM IS NOT NULL
+		        	AND RP.REQ_PROCESS_NUM NOT IN (SELECT REQ_PROCESS_NUM
+		                                      FROM REQ_REJ)
+		            AND IA.USER_NUM = #{user_num}
+		) T
+		WHERE RNUM BETWEEN #{startRow} AND #{endRow}
+	</select>
+	
+	<!-- 이의제기 및 패널티회수 신청 폼으로 전송 -->
+	<select id="reqRs" resultType="com.yameokja.mc.ReqApplyViewDTO">
+		SELECT REG_DATE, REQ_RS, CHBOX_NAME, YN_NAME, ST_NAME, REQ_APPLY_NUM
+		FROM REQ_APPLY_VIEW
+		WHERE REQ_APPLY_NUM = #{req_num}
+	</select>
+	
+	<!-- req_apply_num을 통해 req_process_num 찾아오기 -->
+	<select id="findReqProNum" resultType="java.lang.Integer">
+		SELECT REQ_PROCESS_NUM
+		FROM REQ_PROCESS
+		WHERE REQ_APPLY_NUM = #{req_apply_num}
+	</select>
+	
+	<!-- 이의제기 신청 -->
+	<insert id="objapply">
+		INSERT INTO OBJ_APPLY(OBJ_APPLY_NUM, OBJ_RS, REQ_PROCESS_NUM, REG_DATE)
+		VALUES(OBJAPSEQ.NEXTVAL, #{obj_rs}, #{req_process_num}, SYSDATE)
+	</insert>
+	
+	<!-- req_apply_num을 통해 req_process_num 찾아오기 -->
+	<select id="findPenNum" resultType="java.lang.Integer">
+		SELECT P.PEN_GRANT_NUM
+		FROM REQ_PROCESS RP LEFT JOIN PENALTY P
+		ON RP.REQ_PROCESS_NUM = P.REQ_PROCESS_NUM
+		WHERE RP.REQ_APPLY_NUM = #{req_apply_num}
+	</select>
+	
+	<!-- 패널티회수 신청 -->
+	<insert id="revoapply">
+		INSERT INTO REVO_APPLY(REVO_APPLY_NUM, PEN_GRANT_NUM, REVO_RS, REG_DATE)
+		VALUES(REVOAPSEQ.NEXTVAL, #{pen_grant_num}, #{revo_rs}, SYSDATE)
+	</insert>
+	
+	<select id="count_objlist" resultType="java.lang.Integer">
+	    SELECT COUNT(*) AS COUNT
+	    FROM OBJ_APPLY_VIEW
+	    WHERE USER_ID = #{user_id}
+	</select>
+	
+	<select id="stobjlist" resultType="com.yameokja.mc.ReportListDTO">
+		SELECT APPLY_NUM, REG_DATE, ST_NAME, FINAL_DATE, RNUM, REJ_RS, CAT
+		FROM
+		(
+		    SELECT OAV.OBJ_APPLY_NUM AS APPLY_NUM, OAV.REG_DATE AS REG_DATE, OAV.ST_NAME AS ST_NAME
+		    	  , NVL(TO_CHAR(OP.FINAL_DATE, 'YYYY-MM-DD'), '-') AS FINAL_DATE
+			      , OAV.STATE AS CAT, ORR.REJ_RS AS REJ_RS, ROW_NUMBER() OVER (ORDER BY OAV.REG_DATE DESC) AS RNUM
+			FROM OBJ_APPLY_VIEW OAV LEFT JOIN OBJ_PROCESS OP
+			ON OAV.OBJ_APPLY_NUM = OP.OBJ_APPLY_NUM
+			LEFT JOIN OBJ_REJ ORR
+			ON OP.OBJ_PROCESS_NUM = ORR.OBJ_PROCESS_NUM
+		    WHERE OAV.USER_ID = #{user_id}
+		) T
+		WHERE RNUM BETWEEN #{startRow} AND #{endRow}
+	</select>
+	
+	<select id="count_revolist" resultType="java.lang.Integer">
+	    SELECT COUNT(*) AS COUNT
+	    FROM REVO_APPLY_VIEW
+	    WHERE USER_ID = #{user_id}
+	</select>
+	
+	<select id="strevolist" resultType="com.yameokja.mc.ReportListDTO">
+		SELECT APPLY_NUM, REG_DATE, ST_NAME, FINAL_DATE, RNUM, CAT, REJ_RS
+		FROM
+		(
+		    SELECT RAV.REVO_APPLY_NUM AS APPLY_NUM, RAV.REG_DATE AS REG_DATE, RAV.STATE AS CAT, RAV.ST_NAME AS ST_NAME
+		        , NVL(TO_CHAR(RP.FINAL_DATE, 'YYYY-MM-DD'), '-') AS FINAL_DATE, RR.REJ_RS AS REJ_RS
+		        , ROW_NUMBER() OVER (ORDER BY RAV.REG_DATE DESC) AS RNUM
+		    FROM REVO_APPLY_VIEW RAV LEFT JOIN REVO_PROCESS RP
+		    ON RAV.REVO_APPLY_NUM = RP.REVO_APPLY_NUM
+		    LEFT JOIN REVO_REJ RR
+		    ON RP.REVO_PROCESS_NUM = RR.REVO_PROCESS_NUM
+		    WHERE RAV.USER_ID = #{user_id}
+		) T
+		WHERE RNUM BETWEEN #{startRow} AND #{endRow}
+	</select>
+	
+</mapper>
